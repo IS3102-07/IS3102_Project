@@ -14,7 +14,7 @@ import javax.persistence.Id;
 //added 2
 /**
  *
- * @author Administrator
+ * @author Administrator awdawdawd
  */
 // added 1
 @Entity
