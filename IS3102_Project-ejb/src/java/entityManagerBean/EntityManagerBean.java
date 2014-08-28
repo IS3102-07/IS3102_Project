@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 @LocalBean
 public class EntityManagerBean {
-    @PersistenceContext(unitName = "EntityManagerBeanPersistenceUnit")
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     public void persist(Object object) {
