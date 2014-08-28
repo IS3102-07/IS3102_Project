@@ -17,6 +17,7 @@ import javax.persistence.Id;
  * @author Administrator awdawdawd
  */
 // added 1
+/////
 @Entity
 public class BillOfMaterial implements Serializable {
     private static final long serialVersionUID = 1L;
