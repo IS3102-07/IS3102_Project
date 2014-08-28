@@ -22,7 +22,7 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;   
-    
+    private String name;
  
     
     public Customer(){}
