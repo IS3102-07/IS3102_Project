@@ -5,7 +5,7 @@
  */
 
 package entityManagerBean;
-
+//testing123
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +17,7 @@ import javax.persistence.Id;
  * @author Administrator awdawdawd
  */
 // added 1
+/////
 @Entity
 public class BillOfMaterial implements Serializable {
     private static final long serialVersionUID = 1L;
