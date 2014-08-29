@@ -4,28 +4,26 @@
  * and open the template in the editor.
  */
 
-package entityManagerBean;
+package em;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//gdsfhkdss
+
 /**
  *
  * @author Administrator
  */
 @Entity
-public class Customer implements Serializable {
+public class PurchaseOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;   
-    private String name;
- 
+    private Long id;
     
-    public Customer(){}
+    public PurchaseOrderEntity() {}
     
     public Long getId() {
         return id;
@@ -45,10 +43,10 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customer)) {
+        if (!(object instanceof PurchaseOrderEntity)) {
             return false;
         }
-        Customer other = (Customer) object;
+        PurchaseOrderEntity other = (PurchaseOrderEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -57,7 +55,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.Customer[ id=" + id + " ]";
+        return "entityManagerBean.PurchaseOrder[ id=" + id + " ]";
     }
     
 }

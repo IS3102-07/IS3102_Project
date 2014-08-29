@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package entityManagerBean;
+package em;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -12,20 +6,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- *
- * @author Administrator
- */
 @Entity
-public class RawMaterial implements Serializable {
+public class MemberEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id;   
+    private String name;
+    private String type;
+    private String hashedPassword;
+    private LoyaltyTierEntity loyaltyTier;
     
-    public RawMaterial() {}
+    public void create(String name, String type, String password){
+        this.name=name;
+        this.type=type;
+        this.hashedPassword=password; //Todo HASHING password functtionality
+    }
     
-    public Long getId() {
+    public void setLoyalty(LoyaltyTierEntity loyaltyTier) {
+        this.loyaltyTier = loyaltyTier;
+    }
+    public Long getMemberID() {
         return id;
     }
 
@@ -43,10 +44,10 @@ public class RawMaterial implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RawMaterial)) {
+        if (!(object instanceof MemberEntity)) {
             return false;
         }
-        RawMaterial other = (RawMaterial) object;
+        MemberEntity other = (MemberEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -55,7 +56,7 @@ public class RawMaterial implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.RawMaterial[ id=" + id + " ]";
+        return "entityManagerBean.Customer[ id=" + id + " ]";
     }
     
 }

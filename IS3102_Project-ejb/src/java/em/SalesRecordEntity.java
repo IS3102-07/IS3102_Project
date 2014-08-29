@@ -1,4 +1,4 @@
-package entityManagerBean;
+package em;
 
 import java.io.Serializable;
 import java.util.Date;
