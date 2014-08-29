@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package em;
 
 import java.io.Serializable;
@@ -11,15 +17,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class ItemEntity implements Serializable {
+public class CountryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String materialID;
-    private String description;
-    private String imageURL;
+    private String currency; //TODO: why isit double in class?
     @OneToMany(cascade={CascadeType.ALL})
     private Collection<ItemCountryEntity> itemCountry = new ArrayList<ItemCountryEntity>();
 
@@ -31,16 +35,9 @@ public class ItemEntity implements Serializable {
         this.id = id;
     }
     
-    public void create(String name, String materialID, String description, String imageURL, CountryEntity country, Integer retailPrice) {
-        this.setName(name); //TODO: not inside class diagram yet
-        this.materialID = materialID;
-        this.description = description;
-        this.imageURL = imageURL;
-        
-        ItemCountryEntity itemCountryPrice = new ItemCountryEntity();
-        itemCountryPrice.create(country, retailPrice);
-        this.itemCountry.add(itemCountryPrice);
-        
+    public void create(String name, String currency){
+        this.name = name;
+        this.currency = currency;
     }
 
     @Override
@@ -53,10 +50,10 @@ public class ItemEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ItemEntity)) {
+        if (!(object instanceof CountryEntity)) {
             return false;
         }
-        ItemEntity other = (ItemEntity) object;
+        CountryEntity other = (CountryEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -65,31 +62,7 @@ public class ItemEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "em.ItemEntity[ id=" + id + " ]";
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getMaterialID() {
-        return materialID;
-    }
-
-    public void setMaterialID(String materialID) {
-        this.materialID = materialID;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+        return "em.CountryEntity[ id=" + id + " ]";
     }
 
     /**
