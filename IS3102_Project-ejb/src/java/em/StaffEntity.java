@@ -1,61 +1,88 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package em;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- *
- * @author Administrator
- */
 @Entity
 public class StaffEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
-    public StaffEntity(){}
-    
-    public Long getId() {
-        return id;
+    private String identificationNo;
+    private String name;
+    private String gender;
+    private String phone;
+    private String enail;
+    private String address;
+    private String username;
+    private String password;
+
+    public StaffEntity() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getIdentificationNo() {
+        return identificationNo;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public void setIdentificationNo(String identificationNo) {
+        this.identificationNo = identificationNo;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StaffEntity)) {
-            return false;
-        }
-        StaffEntity other = (StaffEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public String toString() {
-        return "entityManagerBean.Staff[ id=" + id + " ]";
+    public void setName(String name) {
+        this.name = name;
     }
-    
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEnail() {
+        return enail;
+    }
+
+    public void setEnail(String enail) {
+        this.enail = enail;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
