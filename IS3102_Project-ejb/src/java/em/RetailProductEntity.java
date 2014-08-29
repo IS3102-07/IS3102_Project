@@ -17,13 +17,13 @@ import javax.persistence.Id;
  * @author Administrator
  */
 @Entity
-public class LoyaltyProgram implements Serializable {
+public class RetailProductEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public LoyaltyProgram(){}
+    public RetailProductEntity() {}
     
     public Long getId() {
         return id;
@@ -43,10 +43,10 @@ public class LoyaltyProgram implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LoyaltyProgram)) {
+        if (!(object instanceof RetailProductEntity)) {
             return false;
         }
-        LoyaltyProgram other = (LoyaltyProgram) object;
+        RetailProductEntity other = (RetailProductEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -55,7 +55,7 @@ public class LoyaltyProgram implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.LoyaltyProgram[ id=" + id + " ]";
+        return "entityManagerBean.RetailProduct[ id=" + id + " ]";
     }
     
 }

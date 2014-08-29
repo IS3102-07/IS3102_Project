@@ -17,13 +17,13 @@ import javax.persistence.Id;
  * @author Administrator
  */
 @Entity
-public class RawMaterial implements Serializable {
+public class RawMaterialEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    public RawMaterial() {}
+    public RawMaterialEntity() {}
     
     public Long getId() {
         return id;
@@ -43,10 +43,10 @@ public class RawMaterial implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RawMaterial)) {
+        if (!(object instanceof RawMaterialEntity)) {
             return false;
         }
-        RawMaterial other = (RawMaterial) object;
+        RawMaterialEntity other = (RawMaterialEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

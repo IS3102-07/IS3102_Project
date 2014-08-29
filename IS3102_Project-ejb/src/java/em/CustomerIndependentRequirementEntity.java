@@ -17,14 +17,12 @@ import javax.persistence.Id;
  * @author Administrator
  */
 @Entity
-public class RestaurantMenuItem implements Serializable {
+public class CustomerIndependentRequirementEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    public RestaurantMenuItem(){}
-    
+
     public Long getId() {
         return id;
     }
@@ -43,10 +41,10 @@ public class RestaurantMenuItem implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RestaurantMenuItem)) {
+        if (!(object instanceof CustomerIndependentRequirementEntity)) {
             return false;
         }
-        RestaurantMenuItem other = (RestaurantMenuItem) object;
+        CustomerIndependentRequirementEntity other = (CustomerIndependentRequirementEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -55,7 +53,7 @@ public class RestaurantMenuItem implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.RestaurantMenuItem[ id=" + id + " ]";
+        return "entityManagerBean.CustomerIndependentRequirement[ id=" + id + " ]";
     }
     
 }

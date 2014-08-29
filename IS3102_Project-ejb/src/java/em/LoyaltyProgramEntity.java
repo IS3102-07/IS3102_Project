@@ -5,27 +5,25 @@
  */
 
 package em;
-//testing123
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//added 2
+
 /**
  *
- * @author Administrator awdawdawd
+ * @author Administrator
  */
-// added 1
-/////
 @Entity
-public class BillOfMaterial implements Serializable {
+public class LoyaltyProgramEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    public BillOfMaterial() {}
+
+    public LoyaltyProgramEntity(){}
     
     public Long getId() {
         return id;
@@ -45,10 +43,10 @@ public class BillOfMaterial implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof BillOfMaterial)) {
+        if (!(object instanceof LoyaltyProgramEntity)) {
             return false;
         }
-        BillOfMaterial other = (BillOfMaterial) object;
+        LoyaltyProgramEntity other = (LoyaltyProgramEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -57,7 +55,7 @@ public class BillOfMaterial implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.BillOfMaterial[ id=" + id + " ]";
+        return "entityManagerBean.LoyaltyProgram[ id=" + id + " ]";
     }
     
 }
