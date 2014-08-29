@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 
 @Entity
-public class SalesRecord implements Serializable {
+public class SalesRecordEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -21,7 +21,7 @@ public class SalesRecord implements Serializable {
     private String currency;
     private Boolean handledByStaff;
 
-    public SalesRecord() {
+    public SalesRecordEntity() {
     }
 
     public Long getId() {
