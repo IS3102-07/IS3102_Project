@@ -1,5 +1,6 @@
 package HelperClass;
 
+import em.LoyaltyTierEntity;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,9 +16,10 @@ public class MemberData implements Serializable {
     private Integer zipCode;
     private String username;
     private Integer points;
+    private LoyaltyTierEntity loyaltyTier;
 
     /* Creates a new instance  */
-    public void create(Long id, String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, Integer points) {
+    public void create(Long id, String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, Integer points, LoyaltyTierEntity loyaltyTierEntity) {
         this.setId(id);
         this.setName(name);
         this.setAddress(address);
@@ -28,7 +30,8 @@ public class MemberData implements Serializable {
         this.setCity(city);
         this.setZipCode(zipCode);
         this.setUsername(username);
-        this.setZipCode(zipCode);
+        this.setPoints(points);
+        this.setLoyaltyTier(loyaltyTier);
     }
 
     public String getName() { return name; }
@@ -43,20 +46,8 @@ public class MemberData implements Serializable {
         this.id = id;
     }
 
-    public String getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.setPhone(phone);
+    public void setPhone(Integer phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -93,13 +84,6 @@ public class MemberData implements Serializable {
      */
     public void setDOB(Date DOB) {
         this.DOB = DOB;
-    }
-
-    /**
-     * @param phone the phone to set
-     */
-    public void setPhone(Integer phone) {
-        this.phone = phone;
     }
 
     /**
@@ -170,6 +154,27 @@ public class MemberData implements Serializable {
      */
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    /**
+     * @return the loyaltyTier
+     */
+    public LoyaltyTierEntity getLoyaltyTier() {
+        return loyaltyTier;
+    }
+
+    /**
+     * @param loyaltyTier the loyaltyTier to set
+     */
+    public void setLoyaltyTier(LoyaltyTierEntity loyaltyTier) {
+        this.loyaltyTier = loyaltyTier;
+    }
+
+    /**
+     * @return the phone
+     */
+    public Integer getPhone() {
+        return phone;
     }
 
 }
