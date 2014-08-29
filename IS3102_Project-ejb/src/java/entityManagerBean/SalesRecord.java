@@ -32,11 +32,6 @@ public class SalesRecord implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "entityManagerBean.SalesRecord[ id=" + id + " ]";
-    }
-
     public Date getCreatedDate() {
         return createdDate;
     }
