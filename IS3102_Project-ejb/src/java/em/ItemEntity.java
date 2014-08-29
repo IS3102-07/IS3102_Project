@@ -21,7 +21,7 @@ public class ItemEntity implements Serializable {
     private String description;
     private String imageURL;
     @OneToMany(cascade={CascadeType.ALL})
-    private Collection<ItemCountryEntity> itemCountry = new ArrayList<ItemCountryEntity>();
+    private Collection<ItemCountryEntity> itemCountryList = new ArrayList<ItemCountryEntity>();
 
     public Long getId() {
         return id;
@@ -31,16 +31,11 @@ public class ItemEntity implements Serializable {
         this.id = id;
     }
     
-    public void create(String name, String materialID, String description, String imageURL, CountryEntity country, Integer retailPrice) {
-        this.setName(name); //TODO: not inside class diagram yet
+    public void create(String name, String materialID, String description, String imageURL) {
+        this.name = name; //TODO: not inside class diagram yet
         this.materialID = materialID;
         this.description = description;
-        this.imageURL = imageURL;
-        
-        ItemCountryEntity itemCountryPrice = new ItemCountryEntity();
-        itemCountryPrice.create(country, retailPrice);
-        this.itemCountry.add(itemCountryPrice);
-        
+        this.imageURL = imageURL;        
     }
 
     @Override
@@ -92,18 +87,19 @@ public class ItemEntity implements Serializable {
         this.imageURL = imageURL;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    public Collection<ItemCountryEntity> getItemCountryList() {
+        return itemCountryList;
+    }
+
+    public void setItemCountryList(Collection<ItemCountryEntity> itemCountry) {
+        this.itemCountryList = itemCountry;
+    }
 }

@@ -37,7 +37,7 @@ public class CountryEntity implements Serializable {
     
     public void create(String name, String currency){
         this.name = name;
-        this.currency = currency;
+        this.setCurrency(currency);
     }
 
     @Override
@@ -77,6 +77,20 @@ public class CountryEntity implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+        return currency;
+    }
+
+    /**
+     * @param currency the currency to set
+     */
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
     
 }
