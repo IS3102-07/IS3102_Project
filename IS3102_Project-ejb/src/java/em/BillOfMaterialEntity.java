@@ -19,13 +19,13 @@ import javax.persistence.Id;
 // added 1
 /////
 @Entity
-public class BillOfMaterial implements Serializable {
+public class BillOfMaterialEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    public BillOfMaterial() {}
+    public BillOfMaterialEntity() {}
     
     public Long getId() {
         return id;
@@ -45,10 +45,10 @@ public class BillOfMaterial implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof BillOfMaterial)) {
+        if (!(object instanceof BillOfMaterialEntity)) {
             return false;
         }
-        BillOfMaterial other = (BillOfMaterial) object;
+        BillOfMaterialEntity other = (BillOfMaterialEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
