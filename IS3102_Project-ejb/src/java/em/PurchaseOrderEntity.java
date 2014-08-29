@@ -17,13 +17,13 @@ import javax.persistence.Id;
  * @author Administrator
  */
 @Entity
-public class PlannedIndependentRequirement implements Serializable {
+public class PurchaseOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    public PlannedIndependentRequirement(){}
+    public PurchaseOrderEntity() {}
     
     public Long getId() {
         return id;
@@ -43,10 +43,10 @@ public class PlannedIndependentRequirement implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PlannedIndependentRequirement)) {
+        if (!(object instanceof PurchaseOrderEntity)) {
             return false;
         }
-        PlannedIndependentRequirement other = (PlannedIndependentRequirement) object;
+        PurchaseOrderEntity other = (PurchaseOrderEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -55,7 +55,7 @@ public class PlannedIndependentRequirement implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.PlannedIndependentRequirement[ id=" + id + " ]";
+        return "entityManagerBean.PurchaseOrder[ id=" + id + " ]";
     }
     
 }

@@ -17,13 +17,13 @@ import javax.persistence.Id;
  * @author Administrator
  */
 @Entity
-public class RetailProduct implements Serializable {
+public class RestaurantMenuItemEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    public RetailProduct() {}
+    
+    public RestaurantMenuItemEntity(){}
     
     public Long getId() {
         return id;
@@ -43,10 +43,10 @@ public class RetailProduct implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RetailProduct)) {
+        if (!(object instanceof RestaurantMenuItemEntity)) {
             return false;
         }
-        RetailProduct other = (RetailProduct) object;
+        RestaurantMenuItemEntity other = (RestaurantMenuItemEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -55,7 +55,7 @@ public class RetailProduct implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.RetailProduct[ id=" + id + " ]";
+        return "entityManagerBean.RestaurantMenuItem[ id=" + id + " ]";
     }
     
 }
