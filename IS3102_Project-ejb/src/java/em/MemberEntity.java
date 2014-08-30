@@ -35,7 +35,7 @@ public class MemberEntity implements Serializable {
     private String email;
     private Integer phone;
     @ManyToOne
-    private CountryEntity country;
+    private String country;
     private String city;
     private Integer zipCode;
     private String username;
@@ -44,7 +44,7 @@ public class MemberEntity implements Serializable {
     @OneToOne
     private LoyaltyTierEntity loyaltyTier;
 
-    public void create(String name, String address, Date DOB, String email, Integer phone, CountryEntity country, String city, Integer zipCode, String username, String hashedPassword){
+    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String hashedPassword){
         this.setName(name);
         this.setAddress(address);
         this.setDOB(DOB);
@@ -181,14 +181,14 @@ public class MemberEntity implements Serializable {
     /**
      * @return the country
      */
-    public CountryEntity getCountry() {
+    public String getCountry() {
         return country;
     }
 
     /**
      * @param country the country to set
      */
-    public void setCountry(CountryEntity country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 

@@ -76,7 +76,7 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         }*/
     }
     
-    public void registerMember(String name, String address, Date DOB, String email, Integer phone, CountryEntity country, String city, Integer zipCode, String username, String password){
+    public void registerMember(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String password){
         System.out.println("registerMember() called with:" + name);
         long memberID;
         String msg;
