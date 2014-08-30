@@ -23,7 +23,7 @@ public class CountryEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String currency; //TODO: why isit double in class?
+    private String currency;
     @OneToMany(cascade={CascadeType.ALL})
     private Collection<ItemCountryEntity> itemCountry = new ArrayList<ItemCountryEntity>();
 
