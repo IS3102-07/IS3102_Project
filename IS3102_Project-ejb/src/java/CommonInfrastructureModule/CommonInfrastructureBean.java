@@ -1,5 +1,6 @@
 package CommonInfrastructureModule;
 
+import HelperClass.MemberData;
 import HelperClass.RoleData;
 import HelperClass.StaffData;
 import em.MemberEntity;
@@ -124,6 +125,26 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
             return false;
         }
     }
+    
+    public MemberData loginMember(String username, String password){
+         System.out.println("loginMember() called with username:" + username);
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity where t.username=:username AND t.password=:password");
+            q.setParameter("username", username);
+            q.setParameter("password", password);
+            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+            MemberData memberData = new MemberData();
+            memberData.create(memberEntity.getId(), memberEntity.getName(), memberEntity.getAddress(), memberEntity.getDOB(), memberEntity.getEmail(), memberEntity.getPhone(), memberEntity.getCountry(), memberEntity.getCity(), memberEntity.getZipCode(), memberEntity.getUsername(), memberEntity.getLoyaltyPoints());
+            System.out.println("Member with username:" + username + " logged in successfully.");
+            return memberData;
+        } catch (NoResultException ex) {
+            System.out.println("Login credentials provided were incorrect.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to login member:\n" + ex);
+            return null;
+        }
+    }
 
     public boolean checkStaffUsernameExists(String username) {
         System.out.println("checkStaffUsernameExists() called with:" + username);
@@ -161,10 +182,30 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
             em.persist(staffEntity);
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
-            staffData.create(identificationNo, name, phone, email, address, username, null);
+            staffData.create(staffID, identificationNo, name, phone, email, address, username, null);
             return staffData;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register staff:\n" + ex);
+            return null;
+        }
+    }
+    
+    public StaffData loginStaff(String username, String password){
+        System.out.println("loginStaff() called with username:" + username);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity where t.username=:username AND t.password=:password");
+            q.setParameter("username", username);
+            q.setParameter("password", password);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            StaffData staffData = new StaffData();
+            staffData.create(staffEntity.getId(), staffEntity.getIdentificationNo(), staffEntity.getName(),staffEntity.getPhone(),staffEntity.getEmail(),staffEntity.getAddress(),staffEntity.getUsername(),staffEntity.getRoles());
+            System.out.println("Staff with username:" + username + " logged in successfully.");
+            return staffData;
+        } catch (NoResultException ex) {
+            System.out.println("Login credentials provided were incorrect.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to login staff:\n" + ex);
             return null;
         }
     }
