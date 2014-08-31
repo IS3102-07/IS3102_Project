@@ -19,7 +19,7 @@ public class MemberData implements Serializable {
     private LoyaltyTierEntity loyaltyTier;
 
     /* Creates a new instance  */
-    public void create(Long id, String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, Integer points, LoyaltyTierEntity loyaltyTierEntity) {
+    public void create(Long id, String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, Integer points, LoyaltyTierEntity loyaltyTier) {
         this.setId(id);
         this.setName(name);
         this.setAddress(address);

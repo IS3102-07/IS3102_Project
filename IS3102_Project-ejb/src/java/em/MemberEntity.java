@@ -6,8 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 @Entity
 public class MemberEntity implements Serializable {
@@ -31,20 +30,30 @@ public class MemberEntity implements Serializable {
     private Long id;
     private String name;
     private String address;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date DOB;
     private String email;
     private Integer phone;
-    @ManyToOne
     private String country;
     private String city;
     private Integer zipCode;
     private String username;
-    private String hashedPassword;
-    private Integer points;
-    @OneToOne
-    private LoyaltyTierEntity loyaltyTier;
-
-    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String hashedPassword){
+    private String passwordSalt;
+    private String passwordHash;
+    private Integer loyaltyPoints;
+    
+    //@OneToMany(cascade = CascadeType.ALL)
+    //private FeedbackEntity feedback;
+    //@OneToMany(cascade = CascadeType.ALL)
+    //private WishListEntity wishlist;
+    //@OneToMany
+    //private RedemptionOrderEntity redemptionOrder;
+    //@OneToMany
+    //private SalesRecordEntity salesRecord;
+    //TODO Subscription
+    
+    
+    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String passwordHash){
         this.setName(name);
         this.setAddress(address);
         this.setDOB(DOB);
@@ -54,13 +63,11 @@ public class MemberEntity implements Serializable {
         this.setCity(city);
         this.setZipCode(zipCode);
         this.setUsername(username);
-        this.setHashedPassword(hashedPassword);
-        this.setPoints(0);
+        this.setPasswordSalt(passwordSalt);
+        this.setPasswordHash(passwordHash);
+        this.setLoyaltyPoints(0);
     }
     
-    public void setLoyalty(LoyaltyTierEntity loyaltyTier) {
-        this.setLoyaltyTier(loyaltyTier);
-    }
     public Long getMemberID() {
         return getId();
     }
@@ -87,11 +94,6 @@ public class MemberEntity implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entityManagerBean.Customer[ id=" + getId() + " ]";
     }
 
     /**
@@ -235,45 +237,47 @@ public class MemberEntity implements Serializable {
     }
 
     /**
-     * @return the hashedPassword
-     */
-    public String getHashedPassword() {
-        return hashedPassword;
-    }
-
-    /**
-     * @param hashedPassword the hashedPassword to set
-     */
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
-    }
-
-    /**
      * @return the points
      */
-    public Integer getPoints() {
-        return points;
+    public Integer getLoyaltyPoints() {
+        return loyaltyPoints;
     }
 
     /**
      * @param points the points to set
      */
-    public void setPoints(Integer points) {
-        this.points = points;
+    public void setLoyaltyPoints(Integer points) {
+        this.loyaltyPoints = points;
     }
 
     /**
-     * @return the loyaltyTier
+     * @return the passwordSalt
      */
-    public LoyaltyTierEntity getLoyaltyTier() {
-        return loyaltyTier;
+    public String getPasswordSalt() {
+        return passwordSalt;
     }
 
     /**
-     * @param loyaltyTier the loyaltyTier to set
+     * @param passwordSalt the passwordSalt to set
      */
-    public void setLoyaltyTier(LoyaltyTierEntity loyaltyTier) {
-        this.loyaltyTier = loyaltyTier;
+    public void setPasswordSalt(String passwordSalt) {
+        this.passwordSalt = passwordSalt;
     }
+
+    /**
+     * @return the passwordHash
+     */
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    /**
+     * @param passwordHash the passwordHash to set
+     */
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+
     
 }
