@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,19 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RegistrationServlet extends HttpServlet {
 
+    @EJB
+    private String result;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        PrintWriter out = response.getWriter();
+        try {
 
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RegistrationServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RegistrationServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+//            int result = shsmbr.CreateMember(passportNumber, name, password);
+//            if (result == -1) {
+//                result = "Account already exist.";
+//                response.sendRedirect("register.jsp?errMsg=" + message);
+//            } else {
+//                shsmbr.CreateContact(address, phoneNumber, email, passportNumber);
+//                result = "Account successfully created!";
+//                response.sendRedirect("index.jsp?errMsg=" + result);
+//            }
+        } finally {
+            out.close();
         }
     }
 

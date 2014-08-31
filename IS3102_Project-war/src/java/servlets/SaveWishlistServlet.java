@@ -2,26 +2,32 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ProductServlet extends HttpServlet {
+//this class is like checkout, need to write to database cust wishlist
+public class SaveWishlistServlet extends HttpServlet {
 
+    @EJB
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            HttpSession session = request.getSession();
+            // Retrieve member session
+            // Retrieve wishlist session
+
+            //  Loop through the wishlist session and write to database 
+            //  remove the session
+            session.removeAttribute("wishlist");
+            //response.sendRedirect("yourURL");
+
+        } catch (Exception ex) {
+            out.println("\n\nError Message " + ex.getMessage());
         } finally {
             out.close();
         }
