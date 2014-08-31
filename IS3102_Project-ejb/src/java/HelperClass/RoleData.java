@@ -1,31 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package HelperClass;
 
-package em;
-
+import em.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
-@Entity
-public class RoleEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class RoleData implements Serializable {
+
     private Long id;
     private String name;
     private String accessLevel;
-    @ManyToMany(mappedBy="roles")
     private Collection<MemberEntity> members = new ArrayList<MemberEntity>();
 
+    public void create(Long id, String name, String accessLevel, Collection<MemberEntity> members) {
+        this.setId(id);
+        this.setName(name);
+        this.setAccessLevel(accessLevel);
+        this.setMembers(members);
+    }
     public Long getId() {
         return id;
     }
@@ -44,10 +36,10 @@ public class RoleEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RoleEntity)) {
+        if (!(object instanceof RoleData)) {
             return false;
         }
-        RoleEntity other = (RoleEntity) object;
+        RoleData other = (RoleData) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -100,5 +92,5 @@ public class RoleEntity implements Serializable {
     public void setMembers(Collection<MemberEntity> members) {
         this.members = members;
     }
-    
+
 }

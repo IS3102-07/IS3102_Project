@@ -1,11 +1,16 @@
 package CommonInfrastructureModule;
 
+import HelperClass.RoleData;
+import HelperClass.StaffData;
 import em.MemberEntity;
+import em.RoleEntity;
 import em.StaffEntity;
+import static entityManager.Member_.name;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.ejb.Stateful;
@@ -103,7 +108,7 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
     }
 
     public boolean registerMember(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String password) {
-        System.out.println("registerMember() called with:" + name);
+        System.out.println("registerMember() called with name:" + name);
         Long memberID;
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
@@ -144,9 +149,10 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         return true;
     }
 
-    public boolean registerStaff(String identificationNo, String name, String gender, Integer phone, String email, String address, String username, String password) {
-        System.out.println("registerStaff() called with:" + name);
+    public StaffData registerStaff(String identificationNo, String name, Integer phone, String email, String address, String username, String password) {
+        System.out.println("registerStaff() called with name:" + name);
         Long staffID;
+        StaffData staffData = new StaffData();
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
@@ -155,9 +161,98 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
             em.persist(staffEntity);
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
-            return true;
+            staffData.create(identificationNo, name, phone, email, address, username, null);
+            return staffData;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register staff:\n" + ex);
+            return null;
+        }
+    }
+
+    public RoleData searchRole(String name, String accessLevel) {
+        System.out.println("searchRole() called with name:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM RoleEntity where t.name=:name AND t.accessLevel=:accessLevel");
+            q.setParameter("name", name);
+            q.setParameter("accessLevel", name);
+            RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
+            RoleData roleData = new RoleData();
+            roleData.create(roleEntity.getId(), roleEntity.getName(), roleEntity.getAccessLevel(), roleEntity.getMembers());
+            System.out.println("Role:" + name + " ,Access level:" + accessLevel + " found.");
+            return roleData;
+        } catch (NoResultException ex) {
+            System.out.println("Role:" + name + " ,Access level:" + accessLevel + " not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to search for role:\n" + ex);
+            return null;
+        }
+    }
+
+    public boolean addStaffRole(Long staffID, RoleEntity role) {
+        System.out.println("addStaffRole() called with staffID:" + staffID);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
+            q.setParameter("id", staffID);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            Collection<RoleEntity> roles = staffEntity.getRoles();
+            RoleEntity existingRole = new RoleEntity();
+            for (RoleEntity currentRole : roles) {
+                if (currentRole == role) {
+                    existingRole = currentRole;
+                    return false; //Role already configured, shouldn't add
+                }
+            } // if cannot find the role inside the current list of roles for the member, then add it
+            roles.add(role);
+            staffEntity.setRoles(roles);
+            em.persist(staffEntity);
+            System.out.println("Role:" + existingRole.getName()
+                    + " .Access level:" + existingRole.getAccessLevel() + " added successfully to staff id:" + staffID);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove role for staff:\n" + ex);
+            return false;
+        }
+    }
+
+    public boolean removeStaffRole(Long staffID, RoleEntity role) {
+        System.out.println("removeStaffRole() called with staffID:" + staffID);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
+            q.setParameter("id", staffID);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            Collection<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity currentRole : roles) {
+                if (currentRole == role) {
+                    roles.remove(currentRole);
+                    staffEntity.setRoles(roles);
+                    em.persist(staffEntity);
+                    System.out.println("Role:" + currentRole.getName()
+                            + " .Access level:" + currentRole.getAccessLevel() + " removed successfully from staff id:" + staffID);
+                    return true; //Found the role & removed it
+                }
+            }
+            return false; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove role for staff:\n" + ex);
+            return false;
+        }
+    }
+
+    //This will overwrite ALL the current exisiting roles for the staff
+    public boolean assignStaffRoles(Long staffID, Collection<RoleEntity> roles) {
+        System.out.println("assignStaffRoles() called with staffID:" + staffID);
+        StaffEntity staffEntity = new StaffEntity();
+        Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
+        try {
+            q.setParameter("id", staffID);
+            staffEntity = (StaffEntity) q.getSingleResult();
+            staffEntity.setRoles(roles);
+            em.persist(staffEntity);
+            System.out.println("Roles sucessfully added for staff id:" + staffID);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to assign roles for staff:\n" + ex);
             return false;
         }
     }

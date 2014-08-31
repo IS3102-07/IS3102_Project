@@ -16,7 +16,7 @@ public class StaffData implements Serializable {
     private Collection<RoleEntity> roles;
     
 
-    public void create(String name, Integer phone, String email, String address, String username, Collection<RoleEntity> roles) {
+    public void create(String identificationNo, String name, Integer phone, String email, String address, String username, Collection<RoleEntity> roles) {
         this.setName(name);
         this.setPhone(phone);
         this.setEmail(email);
