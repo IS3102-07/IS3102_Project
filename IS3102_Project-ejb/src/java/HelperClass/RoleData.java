@@ -1,6 +1,6 @@
 package HelperClass;
 
-import em.*;
+import EntityManager.MemberEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;

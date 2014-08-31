@@ -3,7 +3,7 @@ package CommonInfrastructureModule;
 import HelperClass.MemberData;
 import HelperClass.RoleData;
 import HelperClass.StaffData;
-import em.RoleEntity;
+import EntityManager.RoleEntity;
 import java.util.Collection;
 import java.util.Date;
 import javax.ejb.Local;

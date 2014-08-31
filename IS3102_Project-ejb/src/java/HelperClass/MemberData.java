@@ -1,6 +1,6 @@
 package HelperClass;
 
-import em.LoyaltyTierEntity;
+import EntityManager.LoyaltyTierEntity;
 import java.io.Serializable;
 import java.util.Date;
 
