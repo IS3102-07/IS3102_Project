@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -27,7 +28,7 @@ public class ItemCountryEntity implements Serializable {
     private Integer retailPrice;
     @ManyToOne(cascade={CascadeType.ALL})
     private ItemEntity item;
-    @ManyToOne(cascade={CascadeType.ALL})
+    @OneToOne(cascade={CascadeType.ALL})
     private CountryEntity country;
 
     public void create(CountryEntity country, Integer retailPrice){
