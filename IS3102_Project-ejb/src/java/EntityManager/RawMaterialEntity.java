@@ -17,7 +17,7 @@ import javax.persistence.Id;
  * @author Administrator
  */
 @Entity
-public class RawMaterialEntity implements Serializable {
+public class RawMaterialEntity extends ItemEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
