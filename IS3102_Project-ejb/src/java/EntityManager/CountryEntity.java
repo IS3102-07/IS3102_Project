@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class CountryEntity implements Serializable {
@@ -20,8 +20,6 @@ public class CountryEntity implements Serializable {
     private String name;
     private String currency;
     private Double exchangeRate;
-    @OneToMany(cascade={CascadeType.ALL})
-    private Collection<ItemCountryEntity> itemCountry = new ArrayList<>();
 
     public Long getId() {
         return id;
