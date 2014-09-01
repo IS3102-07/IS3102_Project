@@ -19,6 +19,7 @@ public class CountryEntity implements Serializable {
     private Long id;
     private String name;
     private String currency;
+    private Double exchangeRate;
     @OneToMany(cascade={CascadeType.ALL})
     private Collection<ItemCountryEntity> itemCountry = new ArrayList<>();
 
@@ -86,6 +87,20 @@ public class CountryEntity implements Serializable {
      */
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    /**
+     * @return the exchangeRate
+     */
+    public Double getExchangeRate() {
+        return exchangeRate;
+    }
+
+    /**
+     * @param exchangeRate the exchangeRate to set
+     */
+    public void setExchangeRate(Double exchangeRate) {
+        this.exchangeRate = exchangeRate;
     }
     
 }
