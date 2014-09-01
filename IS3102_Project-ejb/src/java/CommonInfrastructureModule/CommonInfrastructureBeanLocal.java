@@ -4,8 +4,10 @@ import HelperClass.MemberData;
 import HelperClass.RoleData;
 import HelperClass.StaffData;
 import EntityManager.RoleEntity;
+import HelperClass.CountryData;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Local;
 
 @Local
@@ -21,10 +23,10 @@ public interface CommonInfrastructureBeanLocal {
     public StaffData registerStaff(String identificationNo, String name, Integer phone, String email, String address, String username, String password);
     public StaffData loginStaff(String username, String password);
     
+    public List<RoleData> listAllRoles();
     public RoleData searchRole(String name, String accessLevel);
-    public boolean assignStaffRoles(Long staffID, Collection<RoleEntity> roles);
-    public boolean addStaffRole(Long staffID, RoleEntity role);
-    public boolean removeStaffRole(Long staffID, RoleEntity role);
+    public boolean addStaffRole(Long staffID, Long roleID);
+    public boolean removeStaffRole(Long staffID, Long roleID);
     
-    //public CountryEntity getCountry(String countryName);
+    public CountryData getCountry(String countryName);
 }
