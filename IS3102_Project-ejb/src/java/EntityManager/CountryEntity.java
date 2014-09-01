@@ -29,9 +29,11 @@ public class CountryEntity implements Serializable {
         this.id = id;
     }
     
-    public void create(String name, String currency){
-        this.name = name;
+    public void create(Long id, String name, String currency, Double exchangeRate){
+        this.setId(id);
+        this.setName(name);
         this.setCurrency(currency);
+        this.setExchangeRate(exchangeRate);
     }
 
     @Override
