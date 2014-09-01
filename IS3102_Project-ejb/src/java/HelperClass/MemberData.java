@@ -16,10 +16,9 @@ public class MemberData implements Serializable {
     private Integer zipCode;
     private String username;
     private Integer points;
-    private LoyaltyTierEntity loyaltyTier;
 
     /* Creates a new instance  */
-    public void create(Long id, String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, Integer points, LoyaltyTierEntity loyaltyTier) {
+    public void create(Long id, String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, Integer points) {
         this.setId(id);
         this.setName(name);
         this.setAddress(address);
@@ -31,7 +30,6 @@ public class MemberData implements Serializable {
         this.setZipCode(zipCode);
         this.setUsername(username);
         this.setPoints(points);
-        this.setLoyaltyTier(loyaltyTier);
     }
 
     public String getName() { return name; }
@@ -154,20 +152,6 @@ public class MemberData implements Serializable {
      */
     public void setPoints(Integer points) {
         this.points = points;
-    }
-
-    /**
-     * @return the loyaltyTier
-     */
-    public LoyaltyTierEntity getLoyaltyTier() {
-        return loyaltyTier;
-    }
-
-    /**
-     * @param loyaltyTier the loyaltyTier to set
-     */
-    public void setLoyaltyTier(LoyaltyTierEntity loyaltyTier) {
-        this.loyaltyTier = loyaltyTier;
     }
 
     /**

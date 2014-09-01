@@ -294,5 +294,4 @@ public class MemberEntity implements Serializable {
     public static void setSerialVersionUID(long aSerialVersionUID) {
         serialVersionUID = aSerialVersionUID;
     }
-
 }

@@ -198,4 +198,18 @@ public class StaffEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    /**
+     * @return the roles
+     */
+    public Collection<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    /**
+     * @param roles the roles to set
+     */
+    public void setRoles(Collection<RoleEntity> roles) {
+        this.roles = roles;
+    }
 }
