@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package em;
+package EntityManager;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -17,13 +17,13 @@ import javax.persistence.Id;
  * @author Administrator
  */
 @Entity
-public class PlannedIndependentRequirementEntity implements Serializable {
+public class RawMaterialEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    public PlannedIndependentRequirementEntity(){}
+    public RawMaterialEntity() {}
     
     public Long getId() {
         return id;
@@ -43,10 +43,10 @@ public class PlannedIndependentRequirementEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PlannedIndependentRequirementEntity)) {
+        if (!(object instanceof RawMaterialEntity)) {
             return false;
         }
-        PlannedIndependentRequirementEntity other = (PlannedIndependentRequirementEntity) object;
+        RawMaterialEntity other = (RawMaterialEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -55,7 +55,7 @@ public class PlannedIndependentRequirementEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.PlannedIndependentRequirement[ id=" + id + " ]";
+        return "entityManagerBean.RawMaterial[ id=" + id + " ]";
     }
     
 }

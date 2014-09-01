@@ -1,4 +1,4 @@
-package em;
+package EntityManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,32 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-package em;
-//testing123
+package EntityManager;
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//added 2
-/**
- *
- * @author Administrator awdawdawd
- */
-// added 1
-/////
+
 @Entity
-public class BillOfMaterialEntity implements Serializable {
+public class CustomerIndependentRequirementEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    public BillOfMaterialEntity() {}
-    
+
     public Long getId() {
         return id;
     }
@@ -45,10 +32,10 @@ public class BillOfMaterialEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof BillOfMaterialEntity)) {
+        if (!(object instanceof CustomerIndependentRequirementEntity)) {
             return false;
         }
-        BillOfMaterialEntity other = (BillOfMaterialEntity) object;
+        CustomerIndependentRequirementEntity other = (CustomerIndependentRequirementEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -57,7 +44,7 @@ public class BillOfMaterialEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.BillOfMaterial[ id=" + id + " ]";
+        return "entityManagerBean.CustomerIndependentRequirement[ id=" + id + " ]";
     }
     
 }

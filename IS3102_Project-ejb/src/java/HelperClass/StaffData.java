@@ -1,6 +1,6 @@
 package HelperClass;
 
-import em.RoleEntity;
+import EntityManager.RoleEntity;
 import java.io.Serializable;
 import java.util.Collection;
 

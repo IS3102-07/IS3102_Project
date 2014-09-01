@@ -1,13 +1,13 @@
 package CommonInfrastructureModule;
 
-import em.MemberEntity;
-import em.StaffEntity;
+
+import EntityManager.MemberEntity;
+import EntityManager.StaffEntity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Date;
-
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

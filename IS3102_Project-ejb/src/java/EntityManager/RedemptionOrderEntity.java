@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package em;
+package EntityManager;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class FeedbackEntity implements Serializable {
+public class RedemptionOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,10 +37,10 @@ public class FeedbackEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FeedbackEntity)) {
+        if (!(object instanceof RedemptionOrderEntity)) {
             return false;
         }
-        FeedbackEntity other = (FeedbackEntity) object;
+        RedemptionOrderEntity other = (RedemptionOrderEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -49,7 +49,7 @@ public class FeedbackEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "em.FeedbackEntity[ id=" + id + " ]";
+        return "em.RedemptionOrderEntity[ id=" + id + " ]";
     }
     
 }

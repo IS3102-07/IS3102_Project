@@ -4,20 +4,27 @@
  * and open the template in the editor.
  */
 
-package em;
+package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class RedemptionOrderEntity implements Serializable {
+public class RoleEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    private String accessLevel;
+    @ManyToMany(mappedBy="roles")
+    private Collection<MemberEntity> members = new ArrayList<MemberEntity>();
 
     public Long getId() {
         return id;
@@ -37,10 +44,10 @@ public class RedemptionOrderEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RedemptionOrderEntity)) {
+        if (!(object instanceof RoleEntity)) {
             return false;
         }
-        RedemptionOrderEntity other = (RedemptionOrderEntity) object;
+        RoleEntity other = (RoleEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -49,7 +56,35 @@ public class RedemptionOrderEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "em.RedemptionOrderEntity[ id=" + id + " ]";
+        return "em.RoleEntity[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the accessLevel
+     */
+    public String getAccessLevel() {
+        return accessLevel;
+    }
+
+    /**
+     * @param accessLevel the accessLevel to set
+     */
+    public void setAccessLevel(String accessLevel) {
+        this.accessLevel = accessLevel;
     }
     
 }

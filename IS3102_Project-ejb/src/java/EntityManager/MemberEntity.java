@@ -1,30 +1,21 @@
-package em;
+package EntityManager;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
 public class MemberEntity implements Serializable {
+
     private static long serialVersionUID = 1L;
 
-    /**
-     * @return the serialVersionUID
-     */
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
-    /**
-     * @param aSerialVersionUID the serialVersionUID to set
-     */
-    public static void setSerialVersionUID(long aSerialVersionUID) {
-        serialVersionUID = aSerialVersionUID;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -41,8 +32,8 @@ public class MemberEntity implements Serializable {
     private String passwordSalt;
     private String passwordHash;
     private Integer loyaltyPoints;
-    
-    //@OneToMany(cascade = CascadeType.ALL)
+
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     //private FeedbackEntity feedback;
     //@OneToMany(cascade = CascadeType.ALL)
     //private WishListEntity wishlist;
@@ -51,9 +42,7 @@ public class MemberEntity implements Serializable {
     //@OneToMany
     //private SalesRecordEntity salesRecord;
     //TODO Subscription
-    
-    
-    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String passwordHash){
+    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String passwordHash) {
         this.setName(name);
         this.setAddress(address);
         this.setDOB(DOB);
@@ -67,7 +56,7 @@ public class MemberEntity implements Serializable {
         this.setPasswordHash(passwordHash);
         this.setLoyaltyPoints(0);
     }
-    
+
     public Long getMemberID() {
         return getId();
     }
@@ -277,7 +266,33 @@ public class MemberEntity implements Serializable {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-
-
     
+    /**
+     * @return the feedback
+     */
+//    public Collection<FeedbackEntity> getFeedback() {
+//        return feedback;
+//    }
+//
+//    /**
+//     * @param feedback the feedback to set
+//     */
+//    public void setFeedback(Collection<FeedbackEntity> feedback) {
+//        this.feedback = feedback;
+//    }
+
+    /**
+     * @return the serialVersionUID
+     */
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    /**
+     * @param aSerialVersionUID the serialVersionUID to set
+     */
+    public static void setSerialVersionUID(long aSerialVersionUID) {
+        serialVersionUID = aSerialVersionUID;
+    }
+
 }
