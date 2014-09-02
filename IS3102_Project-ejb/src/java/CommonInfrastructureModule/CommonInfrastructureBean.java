@@ -1,20 +1,18 @@
 package CommonInfrastructureModule;
 
+import EntityManager.CountryEntity;
 
-import EntityManager.MemberEntity;
-
-import HelperClass.MemberData;
-import HelperClass.RoleData;
-import HelperClass.StaffData;
 import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -126,18 +124,16 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
             return false;
         }
     }
-    
-    public MemberData loginMember(String username, String password){
-         System.out.println("loginMember() called with username:" + username);
+
+    public MemberEntity loginMember(String username, String password) {
+        System.out.println("loginMember() called with username:" + username);
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity where t.username=:username AND t.password=:password");
             q.setParameter("username", username);
             q.setParameter("password", password);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-            MemberData memberData = new MemberData();
-            memberData.create(memberEntity.getId(), memberEntity.getName(), memberEntity.getAddress(), memberEntity.getDOB(), memberEntity.getEmail(), memberEntity.getPhone(), memberEntity.getCountry(), memberEntity.getCity(), memberEntity.getZipCode(), memberEntity.getUsername(), memberEntity.getLoyaltyPoints());
-            System.out.println("Member with username:" + username + " logged in successfully.");
-            return memberData;
+            System.out.println("Member with username:" + username + " matches the given password.");
+            return memberEntity;
         } catch (NoResultException ex) {
             System.out.println("Login credentials provided were incorrect.");
             return null;
@@ -171,10 +167,9 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         return true;
     }
 
-    public StaffData registerStaff(String identificationNo, String name, Integer phone, String email, String address, String username, String password) {
+    public StaffEntity registerStaff(String identificationNo, String name, Integer phone, String email, String address, String username, String password) {
         System.out.println("registerStaff() called with name:" + name);
         Long staffID;
-        StaffData staffData = new StaffData();
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
@@ -183,25 +178,22 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
             em.persist(staffEntity);
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
-            staffData.create(staffID, identificationNo, name, phone, email, address, username, null);
-            return staffData;
+            return staffEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register staff:\n" + ex);
             return null;
         }
     }
-    
-    public StaffData loginStaff(String username, String password){
+
+    public StaffEntity loginStaff(String username, String password) {
         System.out.println("loginStaff() called with username:" + username);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity where t.username=:username AND t.password=:password");
             q.setParameter("username", username);
             q.setParameter("password", password);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            StaffData staffData = new StaffData();
-            staffData.create(staffEntity.getId(), staffEntity.getIdentificationNo(), staffEntity.getName(),staffEntity.getPhone(),staffEntity.getEmail(),staffEntity.getAddress(),staffEntity.getUsername(),staffEntity.getRoles());
             System.out.println("Staff with username:" + username + " logged in successfully.");
-            return staffData;
+            return staffEntity;
         } catch (NoResultException ex) {
             System.out.println("Login credentials provided were incorrect.");
             return null;
@@ -211,17 +203,37 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         }
     }
 
-    public RoleData searchRole(String name, String accessLevel) {
+    public List<RoleEntity> listAllRoles() {
+        System.out.println("listAllRoles() called.");
+        List<RoleEntity> roleEntities = new ArrayList();
+        int result = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM RoleEntity t");
+            roleEntities = q.getResultList();
+            for (RoleEntity roleEntity : roleEntities) {
+                result++;
+            }
+            System.out.println("Returned " + result + " roles.");
+            return roleEntities;
+        } catch (NoResultException ex) {
+            System.out.println("No roles found to be returned.");
+            roleEntities.clear();
+            return roleEntities;
+        } catch (Exception ex) {
+            System.out.println("\nServer error while listing all roles.\n" + ex);
+            return null;
+        }
+    }
+
+    public RoleEntity searchRole(String name, String accessLevel) {
         System.out.println("searchRole() called with name:" + name);
         try {
             Query q = em.createQuery("SELECT t FROM RoleEntity where t.name=:name AND t.accessLevel=:accessLevel");
             q.setParameter("name", name);
             q.setParameter("accessLevel", name);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
-            RoleData roleData = new RoleData();
-            roleData.create(roleEntity.getId(), roleEntity.getName(), roleEntity.getAccessLevel(), roleEntity.getMembers());
             System.out.println("Role:" + name + " ,Access level:" + accessLevel + " found.");
-            return roleData;
+            return roleEntity;
         } catch (NoResultException ex) {
             System.out.println("Role:" + name + " ,Access level:" + accessLevel + " not found.");
             return null;
@@ -231,21 +243,24 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         }
     }
 
-    public boolean addStaffRole(Long staffID, RoleEntity role) {
-        System.out.println("addStaffRole() called with staffID:" + staffID);
+    public boolean addStaffRole(Long staffID, Long roleID) {
+        System.out.println("addStaffRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
+            q.setParameter("id", roleID);
+            RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
             Collection<RoleEntity> roles = staffEntity.getRoles();
             RoleEntity existingRole = new RoleEntity();
             for (RoleEntity currentRole : roles) {
-                if (currentRole == role) {
-                    existingRole = currentRole;
+                if (currentRole == roleEntity) {
+                    System.out.println("Staff already has the role. Nothing is changed.");
                     return false; //Role already configured, shouldn't add
                 }
             } // if cannot find the role inside the current list of roles for the member, then add it
-            roles.add(role);
+            roles.add(roleEntity);
             staffEntity.setRoles(roles);
             em.persist(staffEntity);
             System.out.println("Role:" + existingRole.getName()
@@ -257,15 +272,18 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         }
     }
 
-    public boolean removeStaffRole(Long staffID, RoleEntity role) {
+    public boolean removeStaffRole(Long staffID, Long roleID) {
         System.out.println("removeStaffRole() called with staffID:" + staffID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
+            q.setParameter("id", roleID);
+            RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
             Collection<RoleEntity> roles = staffEntity.getRoles();
             for (RoleEntity currentRole : roles) {
-                if (currentRole == role) {
+                if (currentRole == roleEntity) {
                     roles.remove(currentRole);
                     staffEntity.setRoles(roles);
                     em.persist(staffEntity);
@@ -282,7 +300,7 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
     }
 
     //This will overwrite ALL the current exisiting roles for the staff
-    public boolean assignStaffRoles(Long staffID, Collection<RoleEntity> roles) {
+    private boolean assignStaffRoles(Long staffID, Collection<RoleEntity> roles) {
         System.out.println("assignStaffRoles() called with staffID:" + staffID);
         StaffEntity staffEntity = new StaffEntity();
         Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
@@ -296,6 +314,20 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to assign roles for staff:\n" + ex);
             return false;
+        }
+    }
+
+    public CountryEntity getCountry(String countryName) {
+        System.out.println("getCountry() called with:" + countryName);
+        Query q = em.createQuery("SELECT t FROM CountryEntity t WHERE t.name=:name");
+        q.setParameter("name", countryName);
+        try {
+            CountryEntity countryEntity = (CountryEntity) q.getSingleResult();
+            System.out.println("Match found with countryID:" + countryEntity.getId());
+            return countryEntity;
+        } catch (NoResultException ex) {
+            System.out.println("No matching country found.");
+            return null;
         }
     }
 

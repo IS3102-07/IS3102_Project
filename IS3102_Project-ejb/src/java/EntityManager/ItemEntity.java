@@ -20,7 +20,7 @@ public class ItemEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String materialID;
+    private String internalItemCode;
     private String description;
     private String imageURL;
     @OneToMany(cascade={CascadeType.ALL})
@@ -36,7 +36,7 @@ public class ItemEntity implements Serializable {
     
     public void create(String name, String materialID, String description, String imageURL) {
         this.name = name; //TODO: not inside class diagram yet
-        this.materialID = materialID;
+        this.setInternalItemCode(materialID);
         this.description = description;
         this.imageURL = imageURL;        
     }
@@ -74,14 +74,6 @@ public class ItemEntity implements Serializable {
         this.description = description;
     }
 
-    public String getMaterialID() {
-        return materialID;
-    }
-
-    public void setMaterialID(String materialID) {
-        this.materialID = materialID;
-    }
-
     public String getImageURL() {
         return imageURL;
     }
@@ -104,5 +96,19 @@ public class ItemEntity implements Serializable {
 
     public void setItemCountryList(Collection<ItemCountryEntity> itemCountry) {
         this.itemCountryList = itemCountry;
+    }
+
+    /**
+     * @return the internalItemCode
+     */
+    public String getInternalItemCode() {
+        return internalItemCode;
+    }
+
+    /**
+     * @param internalItemCode the internalItemCode to set
+     */
+    public void setInternalItemCode(String internalItemCode) {
+        this.internalItemCode = internalItemCode;
     }
 }
