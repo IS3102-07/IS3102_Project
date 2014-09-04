@@ -1,16 +1,23 @@
 package servlets;
 
+import CommonInfrastructureModule.CommonInfrastructureBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 public class LoginServlet extends HttpServlet {
+    CommonInfrastructureBeanLocal commonInfrastructureBean = lookupCommonInfrastructureBeanLocal();
 
+    
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,7 +39,6 @@ public class LoginServlet extends HttpServlet {
 //                session.setAttribute("member", memberDetails);
 //                response.sendRedirect("index.jsp");
 //            }
-
         } catch (Exception ex) {
             out.println("3");
             result = "Login fail. Please try again.";
@@ -80,5 +86,15 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private CommonInfrastructureBeanLocal lookupCommonInfrastructureBeanLocal() {
+        try {
+            Context c = new InitialContext();
+            return (CommonInfrastructureBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/CommonInfrastructureBean!CommonInfrastructureModule.CommonInfrastructureBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 
 }
