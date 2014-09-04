@@ -28,7 +28,6 @@ public class MemberEntity implements Serializable {
     private String country;
     private String city;
     private Integer zipCode;
-    private String username;
     private String passwordSalt;
     private String passwordHash;
     private Integer loyaltyPoints;
@@ -44,7 +43,7 @@ public class MemberEntity implements Serializable {
     //@OneToMany
     //private SalesRecordEntity salesRecord;
     //TODO Subscription
-    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String passwordHash) {
+    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String passwordHash) {
         this.setName(name);
         this.setAddress(address);
         this.setDOB(DOB);
@@ -53,7 +52,6 @@ public class MemberEntity implements Serializable {
         this.setCountry(country);
         this.setCity(city);
         this.setZipCode(zipCode);
-        this.setUsername(username);
         this.setPasswordSalt(passwordSalt);
         this.setPasswordHash(passwordHash);
         this.setLoyaltyPoints(0);
@@ -211,20 +209,6 @@ public class MemberEntity implements Serializable {
      */
     public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
-    }
-
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     /**

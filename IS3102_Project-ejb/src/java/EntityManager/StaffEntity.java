@@ -35,7 +35,6 @@ public class StaffEntity implements Serializable {
     private Integer phone;
     private String email;
     private String address;
-    private String username;
     private String passwordSalt;
     private String passwordHash;
     @ManyToMany
@@ -43,12 +42,11 @@ public class StaffEntity implements Serializable {
     public StaffEntity() {
     }
 
-    public void create(String name, Integer phone, String email, String address, String username, String passwordSalt, String passwordHash) {
+    public void create(String name, Integer phone, String email, String address, String passwordSalt, String passwordHash) {
         this.setName(name);
         this.setPhone(phone);
         this.setEmail(email);
         this.setAddress(address);
-        this.setUsername(username);
         this.setPasswordSalt(passwordSalt);
         this.setPasswordHash(passwordHash);
     }
@@ -121,20 +119,6 @@ public class StaffEntity implements Serializable {
      */
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     /**

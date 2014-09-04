@@ -83,7 +83,7 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
          }*/
     }
 
-    public boolean checkMemberUsernameExists(String username) {
+    /*public boolean checkMemberUsernameExists(String username) {
         System.out.println("checkMemberUsernameExists() called with:" + username);
         Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.username=:username");
         q.setParameter("username", username);
@@ -93,7 +93,7 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
             return false;
         }
         return true;
-    }
+    }*/
 
     public boolean checkMemberEmailExists(String email) {
         System.out.println("checkMemberEmailExists() called with:" + email);
@@ -107,14 +107,14 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         return true;
     }
 
-    public boolean registerMember(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String username, String password) {
+    public boolean registerMember(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String password) {
         System.out.println("registerMember() called with name:" + name);
         Long memberID;
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
             MemberEntity memberEntity = new MemberEntity();
-            memberEntity.create(name, address, DOB, email, phone, country, city, zipCode, username, passwordHash);
+            memberEntity.create(name, address, DOB, email, phone, country, city, zipCode, passwordHash);
             em.persist(memberEntity);
             memberID = memberEntity.getMemberID();
             System.out.println("Member \"" + name + "\" registered successfully as id:" + memberID);
@@ -125,14 +125,14 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         }
     }
 
-    public MemberEntity loginMember(String username, String password) {
-        System.out.println("loginMember() called with username:" + username);
+    public MemberEntity loginMember(String email, String password) {
+        System.out.println("loginMember() called with email:" + email);
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity where t.username=:username AND t.password=:password");
-            q.setParameter("username", username);
+            Query q = em.createQuery("SELECT t FROM MemberEntity where t.email=:email AND t.password=:password");
+            q.setParameter("email", email);
             q.setParameter("password", password);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-            System.out.println("Member with username:" + username + " matches the given password.");
+            System.out.println("Member with email:" + email + " matches the given password.");
             return memberEntity;
         } catch (NoResultException ex) {
             System.out.println("Login credentials provided were incorrect.");
@@ -143,7 +143,7 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         }
     }
 
-    public boolean checkStaffUsernameExists(String username) {
+    /*public boolean checkStaffUsernameExists(String username) {
         System.out.println("checkStaffUsernameExists() called with:" + username);
         Query q = em.createQuery("SELECT t FROM StaffEntity t WHERE t.username=:username");
         q.setParameter("username", username);
@@ -153,7 +153,7 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
             return false;
         }
         return true;
-    }
+    }*/
 
     public boolean checkStaffEmailExists(String email) {
         System.out.println("checkStaffEmailExists() called with:" + email);
@@ -167,14 +167,14 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         return true;
     }
 
-    public StaffEntity registerStaff(String identificationNo, String name, Integer phone, String email, String address, String username, String password) {
+    public StaffEntity registerStaff(String identificationNo, String name, Integer phone, String email, String address, String password) {
         System.out.println("registerStaff() called with name:" + name);
         Long staffID;
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
             StaffEntity staffEntity = new StaffEntity();
-            staffEntity.create(name, phone, email, address, username, passwordSalt, passwordHash);
+            staffEntity.create(name, phone, email, address, passwordSalt, passwordHash);
             em.persist(staffEntity);
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
@@ -185,14 +185,14 @@ public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
         }
     }
 
-    public StaffEntity loginStaff(String username, String password) {
-        System.out.println("loginStaff() called with username:" + username);
+    public StaffEntity loginStaff(String email, String password) {
+        System.out.println("loginStaff() called with email:" + email);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity where t.username=:username AND t.password=:password");
-            q.setParameter("username", username);
+            Query q = em.createQuery("SELECT t FROM StaffEntity where t.email=:email AND t.password=:password");
+            q.setParameter("email", email);
             q.setParameter("password", password);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            System.out.println("Staff with username:" + username + " logged in successfully.");
+            System.out.println("Staff with email:" + email + " logged in successfully.");
             return staffEntity;
         } catch (NoResultException ex) {
             System.out.println("Login credentials provided were incorrect.");
