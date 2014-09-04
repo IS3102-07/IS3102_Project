@@ -1,8 +1,8 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +32,8 @@ public class MemberEntity implements Serializable {
     private String passwordSalt;
     private String passwordHash;
     private Integer loyaltyPoints;
+    @OneToMany
+    List<RoleEntity> roles;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     //private FeedbackEntity feedback;
