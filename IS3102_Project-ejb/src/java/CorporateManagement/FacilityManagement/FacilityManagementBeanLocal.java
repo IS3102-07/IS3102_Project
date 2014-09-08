@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package CorporateManagement.FacilityManagement;
 
 import javax.ejb.Local;
+import EntityManager.RegionalOfficeEntity;
+import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.StoreEntity;
+import java.util.List;
 
 /**
  *
@@ -14,14 +17,29 @@ import javax.ejb.Local;
  */
 @Local
 public interface FacilityManagementBeanLocal {
-    public boolean addRegionalOffice(String regionalOfficeName);
-    public boolean removeRegionalOffice(String regionalOfficeName);
-    public MemberEntity createManufacturingFacility(String email, String password);
 
-    public boolean removeManufacturingFacility(String email);
-    public StaffEntity createStore(String identificationNo, String name, Integer phone, String email, String address, String password);
-    public StaffEntity removeStore(String username, String password);
-    
-    public List<RoleEntity> viewFacilityInfo();
-    public RoleEntity searchFacility(String name, String accessLevel);
+    public boolean addRegionalOffice(String regionalOfficeName);
+
+    public boolean removeRegionalOffice(String regionalOfficeName);
+
+    public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeName);
+
+    public List<RegionalOfficeEntity> viewListOfRegionalOffice();
+
+    public boolean createManufacturingFacility(String manufacturingFacilityName);
+
+    public boolean removeManufacturingFacility(String manufacturingFacilityName);
+
+    public ManufacturingFacilityEntity viewManufacturingFacility(String manufacturingFacilityEntity);
+
+    public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();
+
+    public boolean createStore(String storeName);
+
+    public boolean removeStore(String storeName);
+
+    public StoreEntity viewStoreEntity(String storeEntity);
+
+    public List<StoreEntity> viewListOfStorey();
+
 }

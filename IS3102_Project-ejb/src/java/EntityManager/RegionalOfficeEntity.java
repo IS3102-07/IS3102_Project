@@ -17,12 +17,23 @@ import javax.persistence.Id;
  * @author yang
  */
 @Entity
-public class RegionalOffice implements Serializable {
+public class RegionalOfficeEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+private String name;
+    
+    public void create(String name) {
+        this.setName(name);
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
+    }
     public Long getId() {
         return id;
     }
@@ -41,10 +52,10 @@ public class RegionalOffice implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RegionalOffice)) {
+        if (!(object instanceof RegionalOfficeEntity)) {
             return false;
         }
-        RegionalOffice other = (RegionalOffice) object;
+        RegionalOfficeEntity other = (RegionalOfficeEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -53,7 +64,7 @@ public class RegionalOffice implements Serializable {
 
     @Override
     public String toString() {
-        return "EntityManager.RegionalOffice[ id=" + id + " ]";
+        return "EntityManager.RegionalOfficeEntity[ id=" + id + " ]";
     }
     
 }
