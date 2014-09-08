@@ -24,7 +24,7 @@ public class ItemEntity implements Serializable {
     private String description;
     private String imageURL;
     @OneToMany(cascade={CascadeType.ALL})
-    private Collection<ItemCountryEntity> itemCountryList = new ArrayList<ItemCountryEntity>();
+    private Collection<Item_CountryEntity> itemCountryList = new ArrayList<Item_CountryEntity>();
 
     public Long getId() {
         return id;
@@ -90,11 +90,11 @@ public class ItemEntity implements Serializable {
         this.name = name;
     }
 
-    public Collection<ItemCountryEntity> getItemCountryList() {
+    public Collection<Item_CountryEntity> getItemCountryList() {
         return itemCountryList;
     }
 
-    public void setItemCountryList(Collection<ItemCountryEntity> itemCountry) {
+    public void setItemCountryList(Collection<Item_CountryEntity> itemCountry) {
         this.itemCountryList = itemCountry;
     }
 
