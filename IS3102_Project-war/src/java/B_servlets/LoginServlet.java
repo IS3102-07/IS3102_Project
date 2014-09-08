@@ -1,4 +1,4 @@
-package servlets;
+package B_servlets;
 
 import CommonInfrastructureModule.CommonInfrastructureBeanLocal;
 import java.io.IOException;

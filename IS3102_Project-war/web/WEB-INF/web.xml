@@ -2,27 +2,27 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>servlets.LoginServlet</servlet-class>
+        <servlet-class>B_servlets.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>servlets.LogoutServlet</servlet-class>
+        <servlet-class>B_servlets.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
-        <servlet-class>servlets.RegistrationServlet</servlet-class>
+        <servlet-class>B_servlets.RegistrationServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>WishlistServlet</servlet-name>
-        <servlet-class>servlets.WishlistServlet</servlet-class>
+        <servlet-class>B_servlets.WishlistServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FurnitureServlet</servlet-name>
-        <servlet-class>servlets.FurnitureServlet</servlet-class>
+        <servlet-class>B_servlets.FurnitureServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SaveWishlistServlet</servlet-name>
-        <servlet-class>servlets.SaveWishlistServlet</servlet-class>
+        <servlet-class>B_servlets.SaveWishlistServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
