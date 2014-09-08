@@ -7,6 +7,7 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,7 @@ import javax.persistence.Id;
 
 /**
  *
- * @author Administrator
+ * @author Loi Liang Yang
  */
 @Entity
 public class ManufacturingFacilityEntity implements Serializable {
@@ -22,7 +23,18 @@ public class ManufacturingFacilityEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
     
+    public void create(String name) {
+        this.setName(name);
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return name;
+    }
     public ManufacturingFacilityEntity() {}
     
     public Long getId() {

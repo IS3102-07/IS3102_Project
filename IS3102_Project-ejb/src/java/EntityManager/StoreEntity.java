@@ -15,6 +15,9 @@ public class StoreEntity implements Serializable {
     private Long id;
     private String name;
 
+    public void create(String name) {
+        this.setName(name);
+    }
     public StoreEntity() {
     }
 
