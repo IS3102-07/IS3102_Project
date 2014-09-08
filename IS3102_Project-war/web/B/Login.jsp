@@ -89,7 +89,7 @@
                                                 <div class="row">
                                                     <div class="form-group">
                                                         <div class="col-md-12">
-                                                            <label>Username</label>
+                                                            <label>E-mail Address</label>
                                                             <input type="text" name="txtUsername" id="txtUsername" class="form-control input-lg">
                                                         </div>
                                                     </div>
@@ -116,7 +116,7 @@
                                     <div class="featured-box featured-box-secundary default info-content">
                                         <div class="box-content">
                                             <h4>Register An Account</h4>
-                                            <form action="" id="" type="post">
+                                            <form name="RegisterForm">
                                                 <div class="row">
                                                     <div class="form-group">
                                                         <div class="col-md-12">
