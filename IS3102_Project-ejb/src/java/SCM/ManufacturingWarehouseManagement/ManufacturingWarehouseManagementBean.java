@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package CorporateManagement;
+package SCM.ManufacturingWarehouseManagement;
 
 import javax.ejb.Stateless;
 
@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
  * @author Jason
  */
 @Stateless
-public class CorporateManagementBean implements CorporateManagementBeanLocal {
+public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

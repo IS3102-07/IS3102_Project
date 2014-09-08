@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package MRPSubSystem;
+package MRP.SalesAndOperationPlanning;
 
 import javax.ejb.Local;
 
@@ -13,6 +13,6 @@ import javax.ejb.Local;
  * @author Jason
  */
 @Local
-public interface MRPSubSystemBeanLocal {
+public interface SalesAndOperationPlanningBeanLocal {
     
 }

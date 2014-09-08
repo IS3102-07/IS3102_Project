@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package OperationalCRMSubSystem;
+package MRP.ProductionPlanDistribution;
 
 import javax.ejb.Stateless;
 
@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
  * @author Jason
  */
 @Stateless
-public class OperationalCRMSubSystemBean implements OperationalCRMSubSystemBeanLocal {
+public class ProductionPlanDistributionBean implements ProductionPlanDistributionBeanLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package SCMSubSystem;
+package MRP.MaterialRequirementFulfilment;
 
 import javax.ejb.Local;
 
@@ -13,6 +13,6 @@ import javax.ejb.Local;
  * @author Jason
  */
 @Local
-public interface SCMSubSystemBeanLocal {
+public interface MaterialRequirementFulfilmentBeanLocal {
     
 }

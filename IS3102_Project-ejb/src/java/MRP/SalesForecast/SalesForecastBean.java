@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package MRPSubSystem;
+package MRP.SalesForecast;
 
 import javax.ejb.Stateless;
 
@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
  * @author Jason
  */
 @Stateless
-public class MRPSubSystemBean implements MRPSubSystemBeanLocal {
+public class SalesForecastBean implements SalesForecastBeanLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

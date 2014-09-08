@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package AnalyticalCRMSubSystem;
+package SCM.ManufacturingInventoryControl;
 
 import javax.ejb.Stateless;
 
@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
  * @author Jason
  */
 @Stateless
-public class AnalyticalCRMSubSystemBean implements AnalyticalCRMSubSystemBeanLocal {
+public class ManufacturingInventoryControlBean implements ManufacturingInventoryControlBeanLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
