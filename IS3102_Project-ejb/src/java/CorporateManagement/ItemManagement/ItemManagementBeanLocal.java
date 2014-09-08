@@ -10,9 +10,10 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Jason
+ * @author Loi Liang Yang
  */
 @Local
 public interface ItemManagementBeanLocal {
-    
+    public boolean addItem(String name, String materialID, String description, String imageURL);
+    public boolean editItem(String name, String materialID, String description, String imageURL);
 }
