@@ -10,9 +10,18 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Jason
+ * @author Loi Liang Yang
  */
 @Local
 public interface FacilityManagementBeanLocal {
+    public boolean addRegionalOffice(String regionalOfficeName);
+    public boolean removeRegionalOffice(String regionalOfficeName);
+    public MemberEntity createManufacturingFacility(String email, String password);
+
+    public boolean removeManufacturingFacility(String email);
+    public StaffEntity createStore(String identificationNo, String name, Integer phone, String email, String address, String password);
+    public StaffEntity removeStore(String username, String password);
     
+    public List<RoleEntity> viewFacilityInfo();
+    public RoleEntity searchFacility(String name, String accessLevel);
 }
