@@ -6,7 +6,6 @@
 <!--[if gt IE 9]><!-->	
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
-    <body>
 
     <body class="dark">
         <jsp:include page="menu.html" />
@@ -95,5 +94,9 @@
         <script src="vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
         <script src="vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
         <script src="js/views/view.home.js"></script>   
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
+
     </body>
 </html>
