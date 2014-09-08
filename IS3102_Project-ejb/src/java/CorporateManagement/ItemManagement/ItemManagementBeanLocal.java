@@ -6,6 +6,7 @@
 
 package CorporateManagement.ItemManagement;
 
+import EntityManager.ItemEntity;
 import javax.ejb.Local;
 
 /**
@@ -16,4 +17,6 @@ import javax.ejb.Local;
 public interface ItemManagementBeanLocal {
     public boolean addItem(String name, String materialID, String description, String imageURL);
     public boolean editItem(String name, String materialID, String description, String imageURL);
+    public boolean removeItem(String itemName);
+    public ItemEntity viewItem(String itemName);
 }
