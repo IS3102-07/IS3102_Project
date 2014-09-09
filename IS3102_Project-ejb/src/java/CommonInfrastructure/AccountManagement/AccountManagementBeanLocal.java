@@ -1,4 +1,4 @@
-package CommonInfrastructureModule;
+package CommonInfrastructure.AccountManagement;
 
 import EntityManager.CountryEntity;
 import EntityManager.MemberEntity;
@@ -9,7 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface CommonInfrastructureBeanLocal {
+public interface AccountManagementBeanLocal {
 
     public boolean checkMemberEmailExists(String email);
     public boolean registerMember(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String password);

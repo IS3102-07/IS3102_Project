@@ -1,4 +1,4 @@
-package CommonInfrastructureModule;
+package CommonInfrastructure.AccountManagement;
 
 import EntityManager.CountryEntity;
 
@@ -20,12 +20,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateful
-public class CommonInfrastructureBean implements CommonInfrastructureBeanLocal {
+public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
 
-    public CommonInfrastructureBean() {
+    public AccountManagementBean() {
         System.out.println("\nCommonInfrastructure Server (EJB) created.");
 
         /*
