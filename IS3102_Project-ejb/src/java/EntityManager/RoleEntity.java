@@ -19,8 +19,12 @@ public class RoleEntity implements Serializable {
     private String name;
     private String accessLevel;
     @ManyToMany(mappedBy="roles")
-    private Collection<MemberEntity> members = new ArrayList<MemberEntity>();
+    private Collection<StaffEntity> staffs = new ArrayList<StaffEntity>();
 
+    public void create(String name, String accessLevel) {
+        this.setName(name);
+        this.setAccessLevel(accessLevel);
+    }
     public Long getId() {
         return id;
     }
@@ -82,18 +86,12 @@ public class RoleEntity implements Serializable {
         this.accessLevel = accessLevel;
     }
 
-    /**
-     * @return the members
-     */
-    public Collection<MemberEntity> getMembers() {
-        return members;
+    public Collection<StaffEntity> getStaffs() {
+        return staffs;
     }
 
-    /**
-     * @param members the members to set
-     */
-    public void setMembers(Collection<MemberEntity> members) {
-        this.members = members;
+    public void setMembers(Collection<StaffEntity> staffs) {
+        this.staffs = staffs;
     }
     
 }

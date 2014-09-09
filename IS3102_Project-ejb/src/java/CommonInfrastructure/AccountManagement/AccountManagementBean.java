@@ -84,17 +84,16 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     /*public boolean checkMemberUsernameExists(String username) {
-        System.out.println("checkMemberUsernameExists() called with:" + username);
-        Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.username=:username");
-        q.setParameter("username", username);
-        try {
-            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-        } catch (NoResultException ex) {
-            return false;
-        }
-        return true;
-    }*/
-
+     System.out.println("checkMemberUsernameExists() called with:" + username);
+     Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.username=:username");
+     q.setParameter("username", username);
+     try {
+     MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+     } catch (NoResultException ex) {
+     return false;
+     }
+     return true;
+     }*/
     public boolean checkMemberEmailExists(String email) {
         System.out.println("checkMemberEmailExists() called with:" + email);
         Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.email=:email");
@@ -144,17 +143,16 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     /*public boolean checkStaffUsernameExists(String username) {
-        System.out.println("checkStaffUsernameExists() called with:" + username);
-        Query q = em.createQuery("SELECT t FROM StaffEntity t WHERE t.username=:username");
-        q.setParameter("username", username);
-        try {
-            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-        } catch (NoResultException ex) {
-            return false;
-        }
-        return true;
-    }*/
-
+     System.out.println("checkStaffUsernameExists() called with:" + username);
+     Query q = em.createQuery("SELECT t FROM StaffEntity t WHERE t.username=:username");
+     q.setParameter("username", username);
+     try {
+     StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+     } catch (NoResultException ex) {
+     return false;
+     }
+     return true;
+     }*/
     public boolean checkStaffEmailExists(String email) {
         System.out.println("checkStaffEmailExists() called with:" + email);
         Query q = em.createQuery("SELECT t FROM StaffEntity t WHERE t.email=:email");
@@ -203,6 +201,54 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    public RoleEntity createRole(String name, String accessLevel) {
+        System.out.println("createRole() called with name: " + name);
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.create(name, accessLevel);
+        em.persist(roleEntity);
+        System.out.println("Role created.");
+        return roleEntity;
+    }
+
+    public boolean deleteRole(Long roleID) {
+        System.out.println("deleteRole() called with roleID:" + roleID);
+        RoleEntity roleEntity;
+        try {
+            Query q = em.createQuery("SELECT t FROM RoleEntity t where t.id=:id");
+            roleEntity = (RoleEntity) q.getSingleResult();
+            em.remove(roleEntity);
+        } catch (NoResultException ex) {
+            System.out.println("No roles found to be deleted.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer error while deleting a role.\n" + ex);
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean roleHasMembersAssigned(Long roleID) {
+        System.out.println("roleHasMembersAssigned() called with roleID:" + roleID);
+        RoleEntity roleEntity;
+        try {
+            Query q = em.createQuery("SELECT t FROM RoleEntity t where t.id=:id");
+            roleEntity = (RoleEntity) q.getSingleResult();
+            if (roleEntity.getStaffs()==null || roleEntity.getStaffs().isEmpty()) {
+                System.out.println("Role is unused.");
+                return false;
+                }else {
+                        System.out.println("Role still contain members.");
+                return true;
+                        }
+        } catch (NoResultException ex) {
+            System.out.println("No such roles found.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer error while checking if role has members.\n" + ex);
+            return false;
+        }
+    }
+    
     public List<RoleEntity> listAllRoles() {
         System.out.println("listAllRoles() called.");
         List<RoleEntity> roleEntities = new ArrayList();
@@ -243,6 +289,30 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    public boolean checkIfStaffHasRole(Long staffID, Long roleID){
+        System.out.println("checkIfStaffHasRole() called with staffID:" + staffID + ", roleID:" + roleID);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:staffID");
+            q.setParameter("staffID", staffID);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            Collection<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity currentRole : roles) {
+                if (currentRole.getId().equals(staffID)) {
+                    System.out.println("Staff has the role.");
+                    return true;
+                }
+            }
+            System.out.println("Staff do not have the role.");
+            return false;
+        } catch (NoResultException ex) {
+            System.out.println("Staff not found.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to check if staff has a role:\n" + ex);
+            return false;
+        }
+    }
+    
     public boolean addStaffRole(Long staffID, Long roleID) {
         System.out.println("addStaffRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
@@ -253,18 +323,11 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             q.setParameter("id", roleID);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
             Collection<RoleEntity> roles = staffEntity.getRoles();
-            RoleEntity existingRole = new RoleEntity();
-            for (RoleEntity currentRole : roles) {
-                if (currentRole == roleEntity) {
-                    System.out.println("Staff already has the role. Nothing is changed.");
-                    return false; //Role already configured, shouldn't add
-                }
-            } // if cannot find the role inside the current list of roles for the member, then add it
             roles.add(roleEntity);
             staffEntity.setRoles(roles);
             em.persist(staffEntity);
-            System.out.println("Role:" + existingRole.getName()
-                    + " .Access level:" + existingRole.getAccessLevel() + " added successfully to staff id:" + staffID);
+            System.out.println("Role:" + roleEntity.getName()
+                    + " .Access level:" + roleEntity.getAccessLevel() + " added successfully to staff id:" + staffID);
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove role for staff:\n" + ex);

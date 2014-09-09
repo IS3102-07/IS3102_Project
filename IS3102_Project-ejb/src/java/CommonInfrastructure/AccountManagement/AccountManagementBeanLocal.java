@@ -19,8 +19,16 @@ public interface AccountManagementBeanLocal {
     public StaffEntity registerStaff(String identificationNo, String name, Integer phone, String email, String address, String password);
     public StaffEntity loginStaff(String username, String password);
     
+    //Creating the types of roles
+    public RoleEntity createRole(String name, String accessLevel);
+    //Returns true if role deleted successfully
+    public boolean deleteRole(Long roleID);
+    public boolean roleHasMembersAssigned(Long roleID);
+    
     public List<RoleEntity> listAllRoles();
     public RoleEntity searchRole(String name, String accessLevel);
+    public boolean checkIfStaffHasRole(Long staffID, Long roleID);
+    //Assign role to staffs. Returns true if operation is successful, false means either member have that role or role does not exist.
     public boolean addStaffRole(Long staffID, Long roleID);
     public boolean removeStaffRole(Long staffID, Long roleID);
     
