@@ -6,15 +6,48 @@
 
 package SCM.InboundAndOutboundLogistics;
 
+import EntityManager.ItemEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.ShippingOrderEntity;
+import EntityManager.WarehouseEntity;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Jason
- */
 @Stateless
 public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogisticsBeanLocal {
+    
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
+    private EntityManager em;        
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public Long createShippingOrder(List<LineItemEntity> lineItemList, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
+        //shippingOrder.setShippedDate(shippedDate);
+        //shippingOrder.setExpectedReceivedDate(expectedReceivedDate);        
+    }
+
+    @Override
+    public List<ItemEntity> getShippingOrderList(ItemEntity item, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ItemEntity getShippingOrderById(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean updateShippingOrder(Long id, String status) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
+    }
+
+    
 }

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,6 +24,10 @@ public class WarehouseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String location;
+    @OneToOne(mappedBy="origin")
+    private ShippingOrderEntity shippingOrderOnDelivered;    
+    @OneToOne(mappedBy="destination")
+    private ShippingOrderEntity shippingOrderOnReceived;
     
     public WarehouseEntity(){
     }
@@ -42,6 +47,22 @@ public class WarehouseEntity implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }   
+
+    public ShippingOrderEntity getShippingOrderOnDelivered() {
+        return shippingOrderOnDelivered;
+    }
+
+    public void setShippingOrderOnDelivered(ShippingOrderEntity shippingOrderOnDelivered) {
+        this.shippingOrderOnDelivered = shippingOrderOnDelivered;
+    }
+
+    public ShippingOrderEntity getShippingOrderOnReceived() {
+        return shippingOrderOnReceived;
+    }
+
+    public void setShippingOrderOnReceived(ShippingOrderEntity shippingOrderOnReceived) {
+        this.shippingOrderOnReceived = shippingOrderOnReceived;
+    }        
     
     @Override
     public int hashCode() {

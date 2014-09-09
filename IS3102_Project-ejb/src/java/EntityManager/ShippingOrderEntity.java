@@ -15,12 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
-/**
- *
- * @author Administrator
- */
 @Entity
 public class ShippingOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -37,12 +34,16 @@ public class ShippingOrderEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date receivedDate;
     @OneToMany(mappedBy="shippingOrder")
-    private List<LineItemEntity> lineItems;                
+    private List<LineItemEntity> lineItems; 
+    @OneToOne
+    private WarehouseEntity origin;
+    @OneToOne
+    private WarehouseEntity destination;
     
     public ShippingOrderEntity(){
         this.lineItems = new ArrayList<>();
     }
-    
+            
     public Long getId() {
         return id;
     }
@@ -51,6 +52,56 @@ public class ShippingOrderEntity implements Serializable {
         this.id = id;
     }
 
+    public String getShippingType() {
+        return ShippingType;
+    }
+
+    public void setShippingType(String ShippingType) {
+        this.ShippingType = ShippingType;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getShippedDate() {
+        return shippedDate;
+    }
+
+    public void setShippedDate(Date shippedDate) {
+        this.shippedDate = shippedDate;
+    }
+
+    public Date getExpectedReceivedDate() {
+        return expectedReceivedDate;
+    }
+
+    public void setExpectedReceivedDate(Date expectedReceivedDate) {
+        this.expectedReceivedDate = expectedReceivedDate;
+    }
+
+    public Date getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(Date receivedDate) {
+        this.receivedDate = receivedDate;
+    }
+
+    public List<LineItemEntity> getLineItems() {
+        return lineItems;
+    }
+
+    public void setLineItems(List<LineItemEntity> lineItems) {
+        this.lineItems = lineItems;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
