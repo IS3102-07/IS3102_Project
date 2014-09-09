@@ -6,13 +6,18 @@
 
 package SCM.InboundAndOutboundLogistics;
 
+import EntityManager.ItemEntity;
+import EntityManager.WarehouseEntity;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author Jason
- */
 @Local
 public interface InboundAndOutboundLogisticsBeanLocal {
-    
+    public Long createShippingOrder(ItemEntity item, Integer quantity, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, 
+            WarehouseEntity destination);    
+    public List<ItemEntity> getShippingOrderList(ItemEntity item, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, 
+            WarehouseEntity destination);
+    public ItemEntity getShippingOrderById(Long id);
+    public Boolean updateShippingOrder(Long id, String status);     
 }
