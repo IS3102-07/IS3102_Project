@@ -9,8 +9,8 @@
     <body class="dark">
         <div role="main" class="main">
             <div class="row">
-                <div class="col-md-3 col-md-offset-4">
-                    <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 90px;">
+                <div class="col-md-2 col-md-offset-5">
+                    <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
                         <div class="panel-heading">
                             <i class="icon-4x icon icon-unlock-alt"></i><h6 class="panel-title">Sign In</h6>
                         </div>
@@ -42,11 +42,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-
-
-
     </body>
 </html>

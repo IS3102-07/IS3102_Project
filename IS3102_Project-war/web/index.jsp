@@ -95,8 +95,6 @@
         <script src="vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
         <script src="js/views/view.home.js"></script>   
 
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
     </body>
 </html>
