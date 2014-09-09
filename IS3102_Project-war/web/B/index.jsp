@@ -368,6 +368,6 @@
             <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
             <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
             <script src="../js/views/view.home.js"></script>   
-
+        </div>
     </body>
 </html>

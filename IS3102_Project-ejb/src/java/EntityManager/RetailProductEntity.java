@@ -1,30 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-/**
- *
- * @author Administrator
- */
 @Entity
 public class RetailProductEntity extends ItemEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToMany
+    private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
 
-    public RetailProductEntity() {}
-    
+    public List<Supplier_RetailProductEntity> getListOfSupplier_RetailProductInfo() {
+        return listOfSupplier_RetailProductInfo;
+    }
+
+    public void setListOfSupplier_RetailProductInfo(List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo) {
+        this.listOfSupplier_RetailProductInfo = listOfSupplier_RetailProductInfo;
+    }
+
+    public RetailProductEntity() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -57,5 +61,5 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     public String toString() {
         return "entityManagerBean.RetailProduct[ id=" + id + " ]";
     }
-    
+
 }

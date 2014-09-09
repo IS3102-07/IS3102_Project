@@ -2,14 +2,12 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import javax.persistence.CascadeType;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class CountryEntity implements Serializable {
@@ -20,6 +18,25 @@ public class CountryEntity implements Serializable {
     private String name;
     private String currency;
     private Double exchangeRate;
+    private Integer countryCode;
+    @OneToMany
+    private List<SupplierEntity> suppliers;
+
+    public List<SupplierEntity> getSupplier() {
+        return suppliers;
+    }
+
+    public void setSupplier(List<SupplierEntity> supplier) {
+        this.suppliers = supplier;
+    }
+
+    public Integer getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(Integer countryCode) {
+        this.countryCode = countryCode;
+    }
 
     public Long getId() {
         return id;
