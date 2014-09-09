@@ -1,9 +1,8 @@
 package B_servlets;
 
-import CommonInfrastructureModule.CommonInfrastructureBeanLocal;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 public class LoginServlet extends HttpServlet {
-    CommonInfrastructureBeanLocal commonInfrastructureBean = lookupCommonInfrastructureBeanLocal();
+    AccountManagementBeanLocal accountManagementBeanLocal = lookupCommonInfrastructureBeanLocal();
 
     
     private String result;
@@ -87,10 +86,11 @@ public class LoginServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private CommonInfrastructureBeanLocal lookupCommonInfrastructureBeanLocal() {
+    private AccountManagementBeanLocal lookupCommonInfrastructureBeanLocal() {
         try {
             Context c = new InitialContext();
-            return (CommonInfrastructureBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/CommonInfrastructureBean!CommonInfrastructureModule.CommonInfrastructureBeanLocal");
+            //return (CommonInfrastructureBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/CommonInfrastructureBean!CommonInfrastructureModule.CommonInfrastructureBeanLocal");
+            return (AccountManagementBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean!CommonInfrastructure.AccountManagement.AccountManagementBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
