@@ -86,7 +86,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
     
-    public ItemEntity viewRawMaterial(String name) {
+    public RawMaterialEntity viewRawMaterial(String name) {
         System.out.println("viewRawMaterial() called with itemName:" + name);
         try {
             Query q = em.createQuery("SELECT t FROM RawMaterialEntity t");
@@ -166,7 +166,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
     
-    public ItemEntity viewFurniture(String name) {
+    public FurnitureEntity viewFurniture(String name) {
         System.out.println("viewFurniture() called with name:" + name);
         try {
             Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
@@ -246,7 +246,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
     
-    public ItemEntity viewRetailProduct(String name) {
+    public RetailProductEntity viewRetailProduct(String name) {
         System.out.println("viewRetailProduct() called with name:" + name);
         try {
             Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
