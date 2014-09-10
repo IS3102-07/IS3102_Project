@@ -9,7 +9,7 @@ package SCM.InboundAndOutboundLogistics;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.ShippingOrderEntity;
-import EntityManager.WarehouseEntity;
+import EntityManager.ManufacturingFacilityEntity;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -23,7 +23,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     private EntityManager em;        
 
     @Override
-    public Long createShippingOrder(List<LineItemEntity> lineItemList, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
+    public Long createShippingOrder(List<LineItemEntity> lineItemList, Date shippedDate, Date expectedReceivedDate, ManufacturingFacilityEntity origin, ManufacturingFacilityEntity destination) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         //ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
         //shippingOrder.setShippedDate(shippedDate);
@@ -31,7 +31,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     }
 
     @Override
-    public List<ItemEntity> getShippingOrderList(ItemEntity item, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
+    public List<ItemEntity> getShippingOrderList(ItemEntity item, Date shippedDate, Date expectedReceivedDate, ManufacturingFacilityEntity origin, ManufacturingFacilityEntity destination) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
