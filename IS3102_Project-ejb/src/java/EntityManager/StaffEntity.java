@@ -1,13 +1,14 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class StaffEntity implements Serializable {
@@ -38,7 +39,12 @@ public class StaffEntity implements Serializable {
     private String passwordSalt;
     private String passwordHash;
     @ManyToMany
-    private Collection<RoleEntity> roles = new ArrayList<RoleEntity>();
+    private Collection<RoleEntity> roles;
+    @OneToMany
+    private List<MessageEntity> inboxMessages;
+    @OneToMany
+    private List<MessageEntity> sentMessages;
+
     public StaffEntity() {
     }
 
@@ -195,5 +201,33 @@ public class StaffEntity implements Serializable {
      */
     public void setRoles(Collection<RoleEntity> roles) {
         this.roles = roles;
+    }
+
+    /**
+     * @return the inboxMessages
+     */
+    public List<MessageEntity> getInboxMessages() {
+        return inboxMessages;
+    }
+
+    /**
+     * @param inboxMessages the inboxMessages to set
+     */
+    public void setInboxMessages(List<MessageEntity> inboxMessages) {
+        this.inboxMessages = inboxMessages;
+    }
+
+    /**
+     * @return the sentMessages
+     */
+    public List<MessageEntity> getSentMessages() {
+        return sentMessages;
+    }
+
+    /**
+     * @param sentMessages the sentMessages to set
+     */
+    public void setSentMessages(List<MessageEntity> sentMessages) {
+        this.sentMessages = sentMessages;
     }
 }
