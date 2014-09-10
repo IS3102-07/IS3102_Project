@@ -1,7 +1,9 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,13 +16,36 @@ public class MessageEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private StaffEntity sender;
+    private List<StaffEntity> receiver;
     private String message;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sentDate;
     private Boolean messageRead;
+    private Boolean isAnnouncement;
+    private String announcer;
 
-    public void create (String message){
+    //1-1 message
+    public void create(StaffEntity sender, StaffEntity receiver, String message){
+        this.setSender(sender);
+        List<StaffEntity> receivers = new ArrayList();
+        receivers.add(receiver);
+        this.setReceiver(receivers);
         this.setMessage(message);
+        this.setIsAnnouncement(false);
+    }
+    //1-m message
+    public void create(StaffEntity sender, List<StaffEntity> receivers, String message){
+        this.setSender(sender);
+        this.setReceiver(receivers);
+        this.setMessage(message);
+        this.setIsAnnouncement(false);
+    }
+    //annoucement
+    public void create(String announcer, String message){
+        this.setAnnouncer(announcer);
+        this.setMessage(message);
+        this.setIsAnnouncement(true);
     }
     public Long getId() {
         return id;
@@ -96,5 +121,54 @@ public class MessageEntity implements Serializable {
     public void setMessageRead(Boolean messageRead) {
         this.messageRead = messageRead;
     }
-    
+
+    /**
+     * @return the isAnnouncement
+     */
+    public Boolean getIsAnnouncement() {
+        return isAnnouncement;
+    }
+
+    /**
+     * @param isAnnouncement the isAnnouncement to set
+     */
+    public void setIsAnnouncement(Boolean isAnnouncement) {
+        this.isAnnouncement = isAnnouncement;
+    }
+
+    /**
+     * @return the sender
+     */
+    public StaffEntity getSender() {
+        return sender;
+    }
+
+    /**
+     * @param sender the sender to set
+     */
+    public void setSender(StaffEntity sender) {
+        this.sender = sender;
+    }
+
+    /**
+     * @return the receiver
+     */
+    public List<StaffEntity> getReceiver() {
+        return receiver;
+    }
+
+    /**
+     * @param receiver the receiver to set
+     */
+    public void setReceiver(List<StaffEntity> receiver) {
+        this.receiver = receiver;
+    }
+    public String getAnnouncer() {
+        return announcer;
+    }
+
+    public void setAnnouncer(String announcer) {
+        this.announcer = announcer;
+    }
+
 }

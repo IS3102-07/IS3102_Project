@@ -9,6 +9,7 @@ public interface WorkspaceBeanLocal {
     //Check staff exists via AccountManagementBean first before doing anything in this bean
     
     public boolean sendMessage(Long senderStaffID, Long receiverStaffID, String message);
+    public boolean sendMessageToMultipleReceiver(Long senderStaffID, List<Long> staffIDs, String message);
     public List<MessageEntity> listAllInboxMessages(Long staffID);
     public List<MessageEntity> listAllSentMessages(Long staffID);
     
@@ -16,4 +17,6 @@ public interface WorkspaceBeanLocal {
     //Following returns true if operation suceeds
     public boolean deleteInboxMessage(Long staffID, Long messageID);
     public boolean deleteSentMessage(Long staffID, Long messageID);
+    
+    public boolean makeAnnoucement(String sender, String message); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
 }
