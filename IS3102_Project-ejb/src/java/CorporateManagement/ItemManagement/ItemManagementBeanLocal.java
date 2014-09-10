@@ -15,8 +15,12 @@ import javax.ejb.Local;
  */
 @Local
 public interface ItemManagementBeanLocal {
+    
+    /*
     public boolean addItem(String name, String materialID, String description, String imageURL);
     public boolean editItem(String name, String materialID, String description, String imageURL);
     public boolean removeItem(String itemName);
     public ItemEntity viewItem(String itemName);
+    
+    */
 }

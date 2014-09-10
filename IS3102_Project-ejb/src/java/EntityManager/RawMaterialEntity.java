@@ -21,6 +21,11 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     private Long id;
     @OneToMany
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
+    private String name;
+    
+    public void create(String name) {
+        setName(name);
+    }
 
     public List<Supplier_RawMaterialEntity> getListOfSupplier_RawMaterialInfo() {
         return listOfSupplier_RawMaterialInfo;
@@ -38,6 +43,14 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
