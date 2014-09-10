@@ -8,18 +8,32 @@
     <jsp:include page="header.html" />
 
     <body class="dark">
-        <jsp:include page="menu.html" />
-        <%
-            List<ArrayList> memberDetails = (List<ArrayList>) session.getAttribute("member");
-            boolean isMember = false;
-            if (memberDetails != null) {
-                isMember = true;
-            }
-            String errMsg = request.getParameter("errMsg");
-            if (errMsg == null || errMsg.equals("")) {
-                errMsg = "";
-            }
-        %>
+        <header id="header">
+            <div class="container">
+                <h1 class="logo">
+                    <a href="index.jsp">
+                        <img alt="Island Furniture" style="margin-top: 50px;"  width="180" height="80" data-sticky-width="82" data-sticky-height="40" src="img/logo.png">
+                    </a>
+                </h1>
+            </div>
+            <div class="navbar-collapse nav-main-collapse collapse">
+                <div class="container">
+                    <nav>
+                        <ul class="nav nav-pills nav-top">
+                            <li>
+                                <h3>Island Furniture - Staff Portal</h3>
+                            </li> 
+                        </ul>
+                        <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
+                            <i class="icon icon-bars"></i>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+
+
         <div role="main" class="main">
 
             <div class="container">
