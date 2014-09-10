@@ -8,6 +8,7 @@ package CorporateManagement.ItemManagement;
 import javax.ejb.Stateless;
 import EntityManager.ItemEntity;
 import EntityManager.RawMaterialEntity;
+import EntityManager.ProductionGroupEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
@@ -100,7 +101,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             }
             return null; //Could not find the role to remove
         } catch (Exception ex) {
-            System.out.println("\nServer failed to remove raw material:\n" + ex);
+            System.out.println("\nServer failed to view raw material:\n" + ex);
             return null;
         }
     }
@@ -180,7 +181,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             }
             return null; //Could not find the role to remove
         } catch (Exception ex) {
-            System.out.println("\nServer failed to remove furniture:\n" + ex);
+            System.out.println("\nServer failed to view furniture:\n" + ex);
             return null;
         }
     }
@@ -260,7 +261,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             }
             return null; //Could not find the role to remove
         } catch (Exception ex) {
-            System.out.println("\nServer failed to remove retail product:\n" + ex);
+            System.out.println("\nServer failed to view retail product:\n" + ex);
             return null;
         }
     }
@@ -407,6 +408,105 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove bill of material:\n" + ex);
             return false;
+        }
+    }
+    
+    public BillOfMaterialEntity viewBillOfMaterial(String name) {
+        System.out.println("viewBillOfMaterial() called with name:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
+
+            for (Object o : q.getResultList()) {
+                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
+                if (i.getName().equalsIgnoreCase(name)) {
+                    System.out.println("\nServer returns bill of material:\n" + name);
+                    return i;
+                }
+            }
+            return null; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to view bill of material:\n" + ex);
+            return null;
+        }
+    }
+    
+    public boolean createProductionGroup(String name) {
+        System.out.println("createProductionGroup() called with name:" + name);
+
+        Long id;
+        try {
+            ProductionGroupEntity productionGroupEntity = new ProductionGroupEntity();
+            productionGroupEntity.create(name);
+            em.persist(productionGroupEntity);
+            id = productionGroupEntity.getId();
+            System.out.println("Production Group Name \"" + name + "\" registered successfully as id:" + id);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to register production group:\n" + ex);
+            return false;
+        }
+    }
+    
+    public boolean editProductionGroup(String name) {
+        System.out.println("editProductionGroup() called with production group name:" + name);
+
+        Long id;
+        try {
+            Query q = em.createQuery("SELECT t FROM ProductionGroupEntity t");
+
+            for (Object o : q.getResultList()) {
+                ProductionGroupEntity i = (ProductionGroupEntity) o;
+                if (i.getName().equalsIgnoreCase(name)) {
+                    i.setName(name);
+                    em.flush();
+                    System.out.println("\nServer updated production group:\n" + name);
+                    return true;
+                }
+            }
+            return false; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to update production group:\n" + ex);
+            return false;
+        }
+    }
+    
+    public boolean deleteProductionGroup(String name) {
+        System.out.println("deleteProductionGroup() called with bomName:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM ProductionGroupEntity t");
+
+            for (Object o : q.getResultList()) {
+                ProductionGroupEntity i = (ProductionGroupEntity) o;
+                if (i.getName().equalsIgnoreCase(name)) {
+                    em.remove(i);
+                    em.flush();
+                    System.out.println("\nServer removed production group:\n" + name);
+                    return true;
+                }
+            }
+            return false; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove production group:\n" + ex);
+            return false;
+        }
+    }
+    
+    public ProductionGroupEntity viewProductionGroup(String name) {
+        System.out.println("viewProductionGroup() called with name:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM ProductionGroupEntity t");
+
+            for (Object o : q.getResultList()) {
+                ProductionGroupEntity i = (ProductionGroupEntity) o;
+                if (i.getName().equalsIgnoreCase(name)) {
+                    System.out.println("\nServer returns production group:\n" + name);
+                    return i;
+                }
+            }
+            return null; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to view production group:\n" + ex);
+            return null;
         }
     }
 }
