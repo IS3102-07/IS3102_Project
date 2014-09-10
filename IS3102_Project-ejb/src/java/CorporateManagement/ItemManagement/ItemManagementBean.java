@@ -8,6 +8,7 @@ package CorporateManagement.ItemManagement;
 import javax.ejb.Stateless;
 import EntityManager.ItemEntity;
 import EntityManager.RawMaterialEntity;
+import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
 import javax.persistence.EntityManager;
@@ -180,6 +181,86 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null; //Could not find the role to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove furniture:\n" + ex);
+            return null;
+        }
+    }
+    
+    public boolean addRetailProduct(String name) {
+        System.out.println("addRetailProduct() called with name:" + name);
+
+        Long id;
+        try {
+            RetailProductEntity retailProductEntity = new RetailProductEntity();
+            retailProductEntity.create(name);
+            em.persist(retailProductEntity);
+            id = retailProductEntity.getId();
+            System.out.println("Retail Product Name \"" + name + "\" registered successfully as id:" + id);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to register retail product name:\n" + ex);
+            return false;
+        }
+    }
+
+    public boolean editRetailProduct(String name) {
+        System.out.println("editRetailProduct() called with name:" + name);
+
+        Long id;
+        try {
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+
+            for (Object o : q.getResultList()) {
+                RetailProductEntity i = (RetailProductEntity) o;
+                if (i.getName().equalsIgnoreCase(name)) {
+                    i.setName(name);
+                    em.flush();
+                    System.out.println("\nServer updated retail product:\n" + name);
+                    return true;
+                }
+            }
+            return false; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to update retail product:\n" + ex);
+            return false;
+        }
+    }
+    
+    public boolean removeRetailProduct(String name) {
+        System.out.println("removeRetailProduct() called with name:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+
+            for (Object o : q.getResultList()) {
+                RetailProductEntity i = (RetailProductEntity) o;
+                if (i.getName().equalsIgnoreCase(name)) {
+                    em.remove(i);
+                    em.flush();
+                    System.out.println("\nServer removed retail product:\n" + name);
+                    return true;
+                }
+            }
+            return false; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove retail product:\n" + ex);
+            return false;
+        }
+    }
+    
+    public ItemEntity viewRetailProduct(String name) {
+        System.out.println("viewRetailProduct() called with name:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+
+            for (Object o : q.getResultList()) {
+                RetailProductEntity i = (RetailProductEntity) o;
+                if (i.getName().equalsIgnoreCase(name)) {
+                    System.out.println("\nServer returns retail product:\n" + name);
+                    return i;
+                }
+            }
+            return null; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove retail product:\n" + ex);
             return null;
         }
     }
