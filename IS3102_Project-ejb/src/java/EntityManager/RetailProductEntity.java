@@ -17,7 +17,11 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     private Long id;
     @OneToMany
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
+    private String name;
 
+    public void create(String name) {
+        setName(name);
+    }
     public List<Supplier_RetailProductEntity> getListOfSupplier_RetailProductInfo() {
         return listOfSupplier_RetailProductInfo;
     }
@@ -35,6 +39,13 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
