@@ -36,9 +36,9 @@ public class ShippingOrderEntity implements Serializable {
     @OneToMany(mappedBy="shippingOrder")
     private List<LineItemEntity> lineItems; 
     @OneToOne
-    private WarehouseEntity origin;
+    private ManufacturingFacilityEntity origin;
     @OneToOne
-    private WarehouseEntity destination;
+    private ManufacturingFacilityEntity destination;
     
     public ShippingOrderEntity(){
         this.lineItems = new ArrayList<>();

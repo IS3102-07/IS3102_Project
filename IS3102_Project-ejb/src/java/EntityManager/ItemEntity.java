@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy= InheritanceType.JOINED)
-public class ItemEntity implements Serializable {
+public abstract class ItemEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
