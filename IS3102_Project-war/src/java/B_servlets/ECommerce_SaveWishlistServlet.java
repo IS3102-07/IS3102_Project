@@ -7,26 +7,27 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class RegistrationServlet extends HttpServlet {
+//this class is like checkout, need to write to database cust wishlist
+public class ECommerce_SaveWishlistServlet extends HttpServlet {
 
     @EJB
-    private String result;
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession();
+            // Retrieve member session
+            // Retrieve wishlist session
 
-//            int result = shsmbr.CreateMember(passportNumber, name, password);
-//            if (result == -1) {
-//                result = "Account already exist.";
-//                response.sendRedirect("register.jsp?errMsg=" + message);
-//            } else {
-//                shsmbr.CreateContact(address, phoneNumber, email, passportNumber);
-//                result = "Account successfully created!";
-//                response.sendRedirect("index.jsp?errMsg=" + result);
-//            }
+            //  Loop through the wishlist session and write to database 
+            //  remove the session
+            session.removeAttribute("wishlist");
+            //response.sendRedirect("yourURL");
+
+        } catch (Exception ex) {
+            out.println("\n\nError Message " + ex.getMessage());
         } finally {
             out.close();
         }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 //this class is like shopping cart
-public class WishlistServlet extends HttpServlet {
+public class ECommerce_WishlistServlet extends HttpServlet {
     
     @EJB
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

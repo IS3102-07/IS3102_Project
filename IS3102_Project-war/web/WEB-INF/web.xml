@@ -1,52 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>B_servlets.LoginServlet</servlet-class>
+        <servlet-name>ECommerce_LoginServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>B_servlets.LogoutServlet</servlet-class>
+        <servlet-name>ECommerce_LogoutServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_LogoutServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RegistrationServlet</servlet-name>
-        <servlet-class>B_servlets.RegistrationServlet</servlet-class>
+        <servlet-name>ECommerce_RegistrationServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_RegistrationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>WishlistServlet</servlet-name>
-        <servlet-class>B_servlets.WishlistServlet</servlet-class>
+        <servlet-name>ECommerce_WishlistServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_WishlistServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FurnitureServlet</servlet-name>
-        <servlet-class>B_servlets.FurnitureServlet</servlet-class>
+        <servlet-name>ECommerce_FurnitureServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_FurnitureServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SaveWishlistServlet</servlet-name>
-        <servlet-class>B_servlets.SaveWishlistServlet</servlet-class>
+        <servlet-name>ECommerce_SaveWishlistServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_SaveWishlistServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_AccountManagement_LoginServlet</servlet-name>
+        <servlet-class>A1_servlets.AccountManagement_LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/LoginServlet</url-pattern>
+        <servlet-name>ECommerce_LoginServlet</servlet-name>
+        <url-pattern>/ECommerce_LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/LogoutServlet</url-pattern>
+        <servlet-name>ECommerce_LogoutServlet</servlet-name>
+        <url-pattern>/ECommerce_LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RegistrationServlet</servlet-name>
-        <url-pattern>/RegistrationServlet</url-pattern>
+        <servlet-name>ECommerce_RegistrationServlet</servlet-name>
+        <url-pattern>/ECommerce_RegistrationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>WishlistServlet</servlet-name>
-        <url-pattern>/WishlistServlet</url-pattern>
+        <servlet-name>ECommerce_WishlistServlet</servlet-name>
+        <url-pattern>/ECommerce_WishlistServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>FurnitureServlet</servlet-name>
-        <url-pattern>/FurnitureServlet</url-pattern>
+        <servlet-name>ECommerce_FurnitureServlet</servlet-name>
+        <url-pattern>/ECommerce_FurnitureServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SaveWishlistServlet</servlet-name>
-        <url-pattern>/SaveWishlistServlet</url-pattern>
+        <servlet-name>ECommerce_SaveWishlistServlet</servlet-name>
+        <url-pattern>/ECommerce_SaveWishlistServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagement_LoginServlet</servlet-name>
+        <url-pattern>/AccountManagement_LoginServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
