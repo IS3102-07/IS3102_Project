@@ -20,6 +20,7 @@ public class SupplierEntity implements Serializable {
     private Integer contactNo;
     private String email;
     private String address;
+    private boolean isActive;
     @ManyToOne
     private CountryEntity country;
     @OneToMany
@@ -27,12 +28,40 @@ public class SupplierEntity implements Serializable {
     @OneToMany
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
 
+    public SupplierEntity() {
+
+    }
+
+    public SupplierEntity(String supplierName, Integer contactNo, String email, String address) {
+        this.supplierName = supplierName;
+        this.contactNo = contactNo;
+        this.email = email;
+        this.address = address;
+        this.isActive = true;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getSupplierName() {
         return supplierName;
     }
 
     public void setSupplierName(String supplierName) {
         this.supplierName = supplierName;
+    }
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public Integer getContactNo() {
@@ -83,14 +112,7 @@ public class SupplierEntity implements Serializable {
         this.listOfSupplier_RetailProductInfo = listOfSupplier_RetailProductInfo;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
