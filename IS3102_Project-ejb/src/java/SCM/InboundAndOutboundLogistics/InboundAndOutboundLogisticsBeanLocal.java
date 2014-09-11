@@ -8,17 +8,30 @@ package SCM.InboundAndOutboundLogistics;
 
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
-import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.ShippingOrderEntity;
+import EntityManager.WarehouseEntity;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
 @Local
 public interface InboundAndOutboundLogisticsBeanLocal {
-    public Long createShippingOrder(List<LineItemEntity> lineItemList, Date shippedDate, Date expectedReceivedDate, ManufacturingFacilityEntity origin, 
-            ManufacturingFacilityEntity destination);    
-    public List<ItemEntity> getShippingOrderList(ItemEntity item, Date shippedDate, Date expectedReceivedDate, ManufacturingFacilityEntity origin, 
-            ManufacturingFacilityEntity destination);
-    public ItemEntity getShippingOrderById(Long id);
+    // shipping tye can be by ship, by truck, by train etc
+    public Long createShippingOrderBasicInfo(String ShippingType, Date shippedDate, Date expectedReceivedDate, 
+            WarehouseEntity origin, WarehouseEntity destination);    
+    
+    public Boolean addLineItemToShippingOrder(Long id, List<LineItemEntity> lineItems);
+    
+    public List<ShippingOrderEntity> getShippingOrderList(WarehouseEntity origin, Date shippedDate);
+    
+    public List<ShippingOrderEntity> getShippingOrderList(Date expectedReceivedDate, WarehouseEntity destination);        
+    
+    // return empty list when is no result or error
+    public List<ShippingOrderEntity> getShippingOrderList(ItemEntity item, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, 
+            WarehouseEntity destination);
+    
+    public ShippingOrderEntity getShippingOrderById(Long id);
+    
     public Boolean updateShippingOrder(Long id, String status);     
+        
 }

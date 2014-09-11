@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,8 @@ public class ShippingOrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String ShippingType;    
+    private String shippingType;    
+    private String status;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date createdDate;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -33,17 +35,27 @@ public class ShippingOrderEntity implements Serializable {
     private Date expectedReceivedDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date receivedDate;
-    @OneToMany(mappedBy="shippingOrder")
+    @OneToMany(mappedBy="shippingOrder",cascade={CascadeType.ALL})
     private List<LineItemEntity> lineItems; 
     @OneToOne
-    private ManufacturingFacilityEntity origin;
+    private WarehouseEntity origin;
     @OneToOne
-    private ManufacturingFacilityEntity destination;
+    private WarehouseEntity destination;
     
     public ShippingOrderEntity(){
         this.lineItems = new ArrayList<>();
     }
-            
+
+    public ShippingOrderEntity(String ShippingType, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
+        this.shippingType = ShippingType;
+        this.createdDate = new Date();
+        this.shippedDate = shippedDate;
+        this.expectedReceivedDate = expectedReceivedDate;
+        this.lineItems = new ArrayList<>();
+        this.origin = origin;
+        this.destination = destination;
+    }        
+    
     public Long getId() {
         return id;
     }
@@ -53,11 +65,11 @@ public class ShippingOrderEntity implements Serializable {
     }
 
     public String getShippingType() {
-        return ShippingType;
+        return shippingType;
     }
 
     public void setShippingType(String ShippingType) {
-        this.ShippingType = ShippingType;
+        this.shippingType = ShippingType;
     }
 
     public Date getCreatedDate() {
@@ -100,7 +112,29 @@ public class ShippingOrderEntity implements Serializable {
         this.lineItems = lineItems;
     }
 
-    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public WarehouseEntity getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(WarehouseEntity origin) {
+        this.origin = origin;
+    }
+
+    public WarehouseEntity getDestination() {
+        return destination;
+    }
+
+    public void setDestination(WarehouseEntity destination) {
+        this.destination = destination;
+    }        
     
     @Override
     public int hashCode() {

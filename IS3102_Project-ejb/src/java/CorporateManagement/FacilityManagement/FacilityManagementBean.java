@@ -8,6 +8,7 @@ package CorporateManagement.FacilityManagement;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
+import EntityManager.WarehouseEntity;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -248,4 +249,25 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
+
+    @Override
+    public Long createWarehouse() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean editWarehouse(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean deleteWarehouse(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<WarehouseEntity> getWarehouseList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }        
+    
 }
