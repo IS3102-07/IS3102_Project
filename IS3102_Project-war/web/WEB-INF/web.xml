@@ -28,6 +28,10 @@
         <servlet-name>AccountManagement_LoginServlet</servlet-name>
         <servlet-class>A1_servlets.AccountManagement_LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Inbound_OutboundServlet</servlet-name>
+        <servlet-class>A3_servlets.Inbound_OutboundServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>AccountManagement_LoginServlet</servlet-name>
         <url-pattern>/AccountManagement_LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Inbound_OutboundServlet</servlet-name>
+        <url-pattern>/Inbound_OutboundServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
