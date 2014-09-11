@@ -19,7 +19,7 @@ public class CountryEntity implements Serializable {
     private String currency;
     private Double exchangeRate;
     private Integer countryCode;
-    @OneToMany
+    @OneToMany(mappedBy="country")
     private List<SupplierEntity> suppliers;
 
     public List<SupplierEntity> getSupplier() {

@@ -19,7 +19,7 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany
+    @OneToMany(mappedBy="rawMaterial")
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
     private String name;
     

@@ -15,7 +15,7 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany
+    @OneToMany(mappedBy="retailProduct")
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
     private String name;
 

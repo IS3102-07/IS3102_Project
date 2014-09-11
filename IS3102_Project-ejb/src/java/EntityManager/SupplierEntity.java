@@ -23,9 +23,9 @@ public class SupplierEntity implements Serializable {
     private boolean isActive;
     @ManyToOne
     private CountryEntity country;
-    @OneToMany
+    @OneToMany(mappedBy="supplier")
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
-    @OneToMany
+    @OneToMany(mappedBy="supplier")
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
 
     public SupplierEntity() {
