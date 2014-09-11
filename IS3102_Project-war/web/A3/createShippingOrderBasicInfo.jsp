@@ -18,12 +18,14 @@
                 
                 <h3><b>Shipping Order</b></h3>
                 
-                <form id="form" role="form" class="container">
+                <form id="form" role="form">
 
                     <br>
 
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active"><a href="#"><b>Basic Information</b></a></li>                             
+                        <li><a href="#"><b>Line Items</b></a></li>
+                        <li><a href="#"><b>Overview</b></a></li>
                     </ul>                              
 
                     <div class="container well">
@@ -69,31 +71,16 @@
                                 </tr>
                             </tbody>
                         </table>
-
-                    </div>
-
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#"><b>Line Items</b></a></li>                                      
-                    </ul>
-                    
-                    <div class="container well" style="min-height: 200px">
                         
-                        <table class="table-bordered" style="width:90%">
-                            
-                            <thead>
-                                <tr>
-                                    <th>Line</th><th>Item Name</th><th>Quantity</th><th>Pack</th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody>
-                                
-                            </tbody>                                
-                            
-                        </table>
+                        <br>
                         
-                    </div>
-                    
+                        <div>
+                            <button type="submit" class="btn btn-default">Save</button>
+                        </div>
+                        
+                    </div>                    
+                                                            
+                    <br>
                 </form>
 
             </div>
