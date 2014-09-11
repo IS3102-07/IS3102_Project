@@ -89,4 +89,12 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
         return list;
     }
 
+    @Override
+    public SupplierEntity getSupplier(Long id) {
+        if (checkSupplierExists(id)) {
+            return findASupplier(id);
+        }
+        return null;
+    }
+
 }
