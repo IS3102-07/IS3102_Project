@@ -28,6 +28,10 @@ public class TransferOrderEntity implements Serializable {
     private StorageBinEntity origin;
     private StorageBinEntity target;
 
+    public TransferOrderEntity() {
+
+    }
+
     public TransferOrderEntity(List<LineItemEntity> lineItems, StorageBinEntity origin, StorageBinEntity target) {
         this.lineItems = lineItems;
         this.origin = origin;
