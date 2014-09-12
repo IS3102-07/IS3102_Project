@@ -162,7 +162,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         } catch (NoResultException ex) {
             return false;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to check staff email.\n"+ex);
+            return false;
         }
         return true;
     }
@@ -188,7 +188,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public StaffEntity loginStaff(String email, String password) {
         System.out.println("loginStaff() called with email:" + email);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity where t.email=:email");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
             q.setParameter("email", email);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             String passwordSalt = staffEntity.getPasswordSalt();
