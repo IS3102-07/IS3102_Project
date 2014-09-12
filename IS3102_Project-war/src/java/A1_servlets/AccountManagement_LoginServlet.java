@@ -1,8 +1,10 @@
 package A1_servlets;
 
+import EntityManager.StaffEntity;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpSession;
 
 public class AccountManagement_LoginServlet extends HttpServlet {
 
-    AccountManagementBeanLocal accountManagementBean;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -24,9 +28,16 @@ public class AccountManagement_LoginServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
 
-            accountManagementBean.loginStaff(email, password);
+            StaffEntity staffEntity = accountManagementBean.loginStaff(email, password);
 
-            response.sendRedirect("index.jsp");
+            if (staffEntity == null) {
+                result = "Login fail. Please try again.";
+                response.sendRedirect("Staff/staffLogin.jsp?errMsg=" + result);
+            } else {
+                session.setAttribute("staffEntity", staffEntity);
+                response.sendRedirect("Staff/staffLandingPage.jsp");
+            }
+
         } finally {
             out.close();
         }
