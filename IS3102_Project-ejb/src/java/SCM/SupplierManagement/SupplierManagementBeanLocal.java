@@ -8,7 +8,7 @@ import javax.ejb.Local;
 
 @Local
 public interface SupplierManagementBeanLocal {
-    public Long addSupplier(String supplierName, Integer contactNo, String email, String address);
+    public void addSupplier(String supplierName, Integer contactNo, String email, String address, Long countryId);
     public boolean deleteSupplier(Long id);//if supplier exists call em.remove(supplier) else returns false
     public boolean editSupplier(SupplierEntity supplier);//merge the SupplierEntity if exists else returns false
     public SupplierEntity getSupplier(Long id);//returns a SupplierEntity else returns null
