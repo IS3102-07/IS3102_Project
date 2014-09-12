@@ -127,14 +127,20 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public MemberEntity loginMember(String email, String password) {
         System.out.println("loginMember() called with email:" + email);
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity where t.email=:email AND t.password=:password");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.email=:email");
             q.setParameter("email", email);
-            q.setParameter("password", password);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-            System.out.println("Member with email:" + email + " matches the given password.");
-            return memberEntity;
-        } catch (NoResultException ex) {
-            System.out.println("Login credentials provided were incorrect.");
+            String passwordSalt = memberEntity.getPasswordSalt();
+            String passwordHash = generatePasswordHash(passwordSalt, password);
+            if (passwordHash.equals(memberEntity.getPasswordHash())) {
+                System.out.println("Member with email:" + email + " logged in successfully.");
+                return memberEntity;
+            } else {
+                System.out.println("Login credentials provided were incorrect, password wrong.");
+                return null;
+            }
+        } catch (NoResultException ex) {//cannot find staff with that email
+            System.out.println("Login credentials provided were incorrect, no such email found.");
             return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to login member:\n" + ex);
