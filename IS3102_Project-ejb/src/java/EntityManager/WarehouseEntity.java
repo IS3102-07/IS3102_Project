@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class WarehouseEntity implements Serializable {
@@ -17,6 +18,8 @@ public class WarehouseEntity implements Serializable {
     private Long id;
     @OneToMany(mappedBy = "warehouse")
     private List<StorageBinEntity> storageBin;
+    @OneToOne (mappedBy = "destination")
+    private PurchaseOrderEntity purchaseOrder;
 
     public Long getId() {
         return id;
@@ -57,6 +60,20 @@ public class WarehouseEntity implements Serializable {
     @Override
     public String toString() {
         return "EntityManager.WarehouseEntity[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the purchaseOrder
+     */
+    public PurchaseOrderEntity getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    /**
+     * @param purchaseOrder the purchaseOrder to set
+     */
+    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
     }
 
 }
