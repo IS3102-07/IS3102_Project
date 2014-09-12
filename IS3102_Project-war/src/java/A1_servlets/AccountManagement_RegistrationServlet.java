@@ -1,8 +1,10 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AccountManagement_RegistrationServlet extends HttpServlet {
 
-    AccountManagementBeanLocal accountManagementBean;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String IdentificationNo = request.getParameter("IdentificationNo");
+            String identificationNo = request.getParameter("identificationNo");
             String name = request.getParameter("name");
             String password = request.getParameter("password");
             String address = request.getParameter("address");
@@ -25,11 +29,27 @@ public class AccountManagement_RegistrationServlet extends HttpServlet {
 
             out.println("huat1?<br/>");
 
-            accountManagementBean.registerStaff(IdentificationNo, name, Integer.parseInt(phone), email, address, password);
+            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
+            if (ifExist) {
+                result = "Registration fail. Staff email already registered.";
+                response.sendRedirect("Staff/staffRegister.jsp?errMsg=" + result);
+            } else {
 
-            out.println("huat2?");
+                StaffEntity staffEntity = accountManagementBean.registerStaff(identificationNo, name, Integer.parseInt(phone), email, address, password);
 
+                out.println("huata?<br/>");
+
+                if (staffEntity == null) {
+                    result = "Registration fail. Please try again";
+                    response.sendRedirect("Staff/staffRegister.jsp?errMsg=" + result);
+                } else {
+                    response.sendRedirect("Staff/staffLogin.jsp");
+                }
+
+                out.println("huat2?");
+            }
         } catch (Exception ex) {
+            out.println(ex);
         } finally {
             out.close();
         }
