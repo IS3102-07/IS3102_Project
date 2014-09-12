@@ -18,6 +18,7 @@ public interface AccountManagementBeanLocal {
     public boolean checkStaffEmailExists(String email);
     public StaffEntity registerStaff(String identificationNo, String name, Integer phone, String email, String address, String password);
     public StaffEntity loginStaff(String email, String password);
+    public List<StaffEntity> listAllStaff();
     
     //Creating the types of roles
     public RoleEntity createRole(String name, String accessLevel);
