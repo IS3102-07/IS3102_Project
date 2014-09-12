@@ -172,7 +172,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
             StaffEntity staffEntity = new StaffEntity();
-            staffEntity.create(name, phone, email, address, passwordSalt, passwordHash);
+            staffEntity.create(identificationNo, name, phone, email, address, passwordSalt, passwordHash);
             em.persist(staffEntity);
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
