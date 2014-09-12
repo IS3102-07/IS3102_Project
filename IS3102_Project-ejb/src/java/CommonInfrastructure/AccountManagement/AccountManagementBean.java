@@ -208,6 +208,18 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return null;
         }
     }
+    
+    public  List<StaffEntity> listAllStaff() {
+        System.out.println("listAllStaff() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+            List<StaffEntity> staffEntities = q.getResultList();
+            return staffEntities;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all staff:\n" + ex);
+            return null;
+        }
+    }
 
     public RoleEntity createRole(String name, String accessLevel) {
         System.out.println("createRole() called with name: " + name);

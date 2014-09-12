@@ -91,7 +91,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         System.out.println("viewListOfRegionalOffice() called.");
         List<RegionalOfficeEntity> listOfRegionalOffice = new ArrayList<RegionalOfficeEntity>();
         try {
-            Query q = em.createQuery("SELECT t FROM regionalOfficeEntity t");
+            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
             for (Object o : q.getResultList()) {
                 RegionalOfficeEntity i = (RegionalOfficeEntity) o;
                 listOfRegionalOffice.add(i);
