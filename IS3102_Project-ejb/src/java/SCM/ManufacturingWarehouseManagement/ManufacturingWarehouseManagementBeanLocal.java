@@ -1,18 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package SCM.ManufacturingWarehouseManagement;
 
+import EntityManager.ItemEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.StorageBinEntity;
+import EntityManager.TransferOrderEntity;
+import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author Jason
- */
 @Local
 public interface ManufacturingWarehouseManagementBeanLocal {
-    
+
+    public void createStorageBin(String type);
+
+    public boolean updateStorageBin(StorageBinEntity storageBin);
+
+    public boolean deleteStorageBin(Long id);
+
+    public StorageBinEntity viewStorageBin(Long id);
+
+    public List<StorageBinEntity> viewAllStorageBin();
+
+    public LineItemEntity createLineItem(ItemEntity item, Integer quantity, String packType);
+
+    public void createTransferOrder(List<LineItemEntity> lineItems, StorageBinEntity origin, StorageBinEntity target);
+
+    public boolean updateTransferOrder(TransferOrderEntity transferOrder);
+
+    public TransferOrderEntity viewTransferOrder(Long id);
+
+    public boolean deleteTransferOrder(Long id);
+
 }
