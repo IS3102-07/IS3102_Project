@@ -1,5 +1,6 @@
 package SCM.SupplierManagement;
 
+import EntityManager.CountryEntity;
 import EntityManager.SupplierEntity;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -13,6 +14,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     private SupplierEntity supplier;
+    private CountryEntity country;
 
     public SupplierEntity findASupplier(Long id) {
         return em.find(SupplierEntity.class, id);
@@ -23,11 +25,11 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     }
 
     @Override
-    public Long addSupplier(String supplierName, Integer contactNo, String email, String address) {
+    public void addSupplier(String supplierName, Integer contactNo, String email, String address, Long countryId) {
         supplier = new SupplierEntity(supplierName, contactNo, email, address);
+        country = em.find(CountryEntity.class, countryId);
+        supplier.setCountry(country);
         em.persist(supplier);
-        em.refresh(supplier);
-        return supplier.getId();
     }
 
     @Override
