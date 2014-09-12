@@ -25,12 +25,11 @@ public class AccountManagement_StaffServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            List staffs = accountManagementBean.listAllStaff();
-
-
+            List<StaffEntity> staffs = accountManagementBean.listAllStaff();
 
             session.setAttribute("staffs", staffs);
-            response.sendRedirect("Staff/staffManagement.jsp?errMsg=" + result);
+            response.sendRedirect("A1/staffManagement.jsp");
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }
