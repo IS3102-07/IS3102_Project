@@ -25,10 +25,14 @@ public class TransferOrderEntity implements Serializable {
     private List<LineItemEntity> lineItems;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateTransferred;
-    private Object origin;
-    private Object target;
+    private StorageBinEntity origin;
+    private StorageBinEntity target;
 
-    public TransferOrderEntity(List<LineItemEntity> lineItems, Object origin, Object target) {
+    public TransferOrderEntity() {
+
+    }
+
+    public TransferOrderEntity(List<LineItemEntity> lineItems, StorageBinEntity origin, StorageBinEntity target) {
         this.lineItems = lineItems;
         this.origin = origin;
         this.target = target;
@@ -62,19 +66,19 @@ public class TransferOrderEntity implements Serializable {
         this.dateTransferred = dateTransferred;
     }
 
-    public Object getOrigin() {
+    public StorageBinEntity getOrigin() {
         return origin;
     }
 
-    public void setOrigin(Object origin) {
+    public void setOrigin(StorageBinEntity origin) {
         this.origin = origin;
     }
 
-    public Object getTarget() {
+    public StorageBinEntity getTarget() {
         return target;
     }
 
-    public void setTarget(Object target) {
+    public void setTarget(StorageBinEntity target) {
         this.target = target;
     }
 
