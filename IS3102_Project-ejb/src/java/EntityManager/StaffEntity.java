@@ -48,7 +48,8 @@ public class StaffEntity implements Serializable {
     public StaffEntity() {
     }
 
-    public void create(String name, Integer phone, String email, String address, String passwordSalt, String passwordHash) {
+    public void create(String identificationNo, String name, Integer phone, String email, String address, String passwordSalt, String passwordHash) {
+        this.setIdentificationNo(identificationNo);
         this.setName(name);
         this.setPhone(phone);
         this.setEmail(email);

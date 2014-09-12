@@ -1,27 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-/**
- *
- * @author Administrator
- */
 @Entity
 public class WarehouseEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToMany(mappedBy = "warehouse")
+    private List<StorageBinEntity> storageBin;
 
     public Long getId() {
         return id;
@@ -29,6 +24,14 @@ public class WarehouseEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<StorageBinEntity> getStorageBin() {
+        return storageBin;
+    }
+
+    public void setStorageBin(List<StorageBinEntity> storageBin) {
+        this.storageBin = storageBin;
     }
 
     @Override
@@ -55,5 +58,5 @@ public class WarehouseEntity implements Serializable {
     public String toString() {
         return "EntityManager.WarehouseEntity[ id=" + id + " ]";
     }
-    
+
 }
