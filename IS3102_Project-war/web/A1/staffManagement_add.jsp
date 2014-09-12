@@ -1,0 +1,97 @@
+<html lang="en">
+
+    <jsp:include page="../header2.html" />
+
+    <body>
+
+        <div id="wrapper">
+
+            <jsp:include page="../menu2.html" />
+
+            <div id="page-wrapper">
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                Register Staff
+                            </h1>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-user"></i><a href="staffManagement.jsp"> Staff Management</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-edit"></i> Register Staff
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <form role="form" action="../AccountManagement_RegistrationServlet">
+
+                                <div class="form-group">
+                                    <label>Identification No</label>
+                                    <input class="form-control" type="text" required="true">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input class="form-control" type="text" required="true">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>E-mail Address</label>
+                                    <input class="form-control" required="true" type="email">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input class="form-control" required="true" type="number">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input class="form-control" type="password">
+                                </div>
+                                <div class="form-group">
+                                    <label>Re-enter Password</label>
+                                    <input class="form-control" type="password">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input class="form-control" type="text" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+                                </div>
+
+                            </form>
+                        </div>
+                        <!-- /.row -->
+
+
+                    </div>
+
+                </div>
+                <!-- /#page-wrapper -->
+            </div>
+            <!-- /#wrapper -->
+
+
+            <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+            <script>
+                $(document).ready(function () {
+                    $('#dataTables-example').dataTable();
+                });
+            </script>
+
+    </body>
+
+</html>
