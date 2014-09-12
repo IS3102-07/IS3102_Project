@@ -161,6 +161,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
         } catch (NoResultException ex) {
             return false;
+        } catch (Exception ex) {
+            return false;
         }
         return true;
     }
@@ -186,7 +188,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public StaffEntity loginStaff(String email, String password) {
         System.out.println("loginStaff() called with email:" + email);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity where t.email=:email");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
             q.setParameter("email", email);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             String passwordSalt = staffEntity.getPasswordSalt();
@@ -203,6 +205,18 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to login staff:\n" + ex);
+            return null;
+        }
+    }
+    
+    public  List<StaffEntity> listAllStaff() {
+        System.out.println("listAllStaff() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+            List<StaffEntity> staffEntities = q.getResultList();
+            return staffEntities;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all staff:\n" + ex);
             return null;
         }
     }

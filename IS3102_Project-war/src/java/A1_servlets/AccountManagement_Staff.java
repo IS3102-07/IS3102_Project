@@ -4,13 +4,15 @@ import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class AccountManagement_RegistrationServlet extends HttpServlet {
+public class AccountManagement_Staff extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
@@ -19,39 +21,18 @@ public class AccountManagement_RegistrationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
-            String identificationNo = request.getParameter("identificationNo");
-            String name = request.getParameter("name");
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
+            HttpSession session;
+            session = request.getSession();
+            List staffs = accountManagementBean.listAllStaff();
 
-            out.println("huat1?<br/>");
 
-            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
-            if (ifExist) {
-                result = "Registration fail. Staff email already registered.";
-                response.sendRedirect("Staff/staffRegister.jsp?errMsg=" + result);
-            } else {
 
-                StaffEntity staffEntity = accountManagementBean.registerStaff(identificationNo, name, Integer.parseInt(phone), email, address, password);
-
-                out.println("huata?<br/>");
-
-                if (staffEntity == null) {
-                    result = "Registration fail. Please try again";
-                    response.sendRedirect("Staff/staffRegister.jsp?errMsg=" + result);
-                } else {
-                    response.sendRedirect("Staff/staffLogin.jsp");
-                }
-
-                out.println("huat2?");
-            }
+            session.setAttribute("staffs", staffs);
+            response.sendRedirect("Staff/staffManagement.jsp?errMsg=" + result);
         } catch (Exception ex) {
-            out.println(ex);
-        } finally {
-            out.close();
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

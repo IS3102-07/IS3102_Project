@@ -14,7 +14,7 @@
 
             <jsp:include page="../menu2.html" />
 
-            <div class="container" style="background-color: white; height: 80%">
+            <div class="container-fluid" style="background-color: white; height: 80%">
                 
                 <h3><b>Shipping Order</b></h3>
                 
