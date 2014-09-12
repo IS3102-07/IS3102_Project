@@ -24,8 +24,9 @@
                                 <div class="featured-box featured-box-secundary">
 
                                     <div class="box-content">
-                                        <a href="../A1/staffManagement.jsp"><i class="icon-featured icon icon-user"> </i></a>
-                                        <h4>Staff Management</h4>
+                                        <a href="../A1/staffManagement.jsp"><i class="icon-featured icon icon-user"> </i>
+                                            <h4>Staff Management</h4>
+                                        </a>
                                     </div>
 
                                 </div>

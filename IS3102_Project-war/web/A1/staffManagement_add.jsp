@@ -39,39 +39,39 @@
 
                                 <div class="form-group">
                                     <label>Identification No</label>
-                                    <input class="form-control" type="text" required="true">
+                                    <input class="form-control" name="identificationNo" id="identificationNo" type="text" required="true">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" type="text" required="true">
+                                    <input class="form-control" name="name" id="name" type="text" required="true">
                                 </div>
 
                                 <div class="form-group">
                                     <label>E-mail Address</label>
-                                    <input class="form-control" required="true" type="email">
+                                    <input class="form-control" required="true" type="email" name="email" id="email">
                                 </div>
                                 <div class="form-group">
                                     <label>Phone</label>
-                                    <input class="form-control" required="true" type="number">
+                                    <input class="form-control" required="true" type="number" name="phone" id="phone" >
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input class="form-control" type="password">
+                                    <input class="form-control" type="password" name="password" id="password">
                                 </div>
                                 <div class="form-group">
                                     <label>Re-enter Password</label>
-                                    <input class="form-control" type="password">
+                                    <input class="form-control" type="password"  name="repassword" id="repassword">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <input class="form-control" type="text" required="true">
+                                    <input class="form-control" type="text" required="true" name="address" id="address">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
                                 </div>
-
+                                <input type="hidden" value="A1/staffManagement.jsp" name="source">
                             </form>
                         </div>
                         <!-- /.row -->
