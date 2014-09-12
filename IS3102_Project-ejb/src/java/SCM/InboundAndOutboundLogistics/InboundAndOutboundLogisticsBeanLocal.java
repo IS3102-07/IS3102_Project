@@ -13,6 +13,7 @@ import EntityManager.WarehouseEntity;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remove;
 
 @Local
 public interface InboundAndOutboundLogisticsBeanLocal {
@@ -20,7 +21,7 @@ public interface InboundAndOutboundLogisticsBeanLocal {
     public Long createShippingOrderBasicInfo(String ShippingType, Date shippedDate, Date expectedReceivedDate, 
             WarehouseEntity origin, WarehouseEntity destination);    
     
-    public Boolean addLineItemToShippingOrder(Long id, List<LineItemEntity> lineItems);
+    public Boolean addLineItemToShippingOrder(Long id, LineItemEntity lineItems);        
     
     public List<ShippingOrderEntity> getShippingOrderList(WarehouseEntity origin, Date shippedDate);
     
@@ -33,5 +34,7 @@ public interface InboundAndOutboundLogisticsBeanLocal {
     public ShippingOrderEntity getShippingOrderById(Long id);
     
     public Boolean updateShippingOrder(Long id, String status);     
-        
+    
+    @Remove
+    public void remove();
 }

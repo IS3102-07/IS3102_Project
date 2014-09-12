@@ -13,6 +13,7 @@ import EntityManager.RawMaterialEntity;
 import EntityManager.ProductionGroupEntity;
 import EntityManager.RetailProductEntity;
 import javax.ejb.Local;
+import javax.ejb.Remove;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.ejb.Local;
  */
 @Local
 public interface ItemManagementBeanLocal {
+    
+    public ItemEntity getItemByItemCode(String internalItemCode);
     
     public boolean addRawMaterial(String name);
     public boolean editRawMaterial(String name);
@@ -51,4 +54,6 @@ public interface ItemManagementBeanLocal {
     public boolean removeItem(String itemName);
     public ItemEntity viewItem(String itemName);
     */
+    @Remove
+    public void remove();
 }

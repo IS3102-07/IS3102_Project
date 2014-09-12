@@ -1,11 +1,13 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class StorageBinEntity implements Serializable {
@@ -22,6 +24,22 @@ public class StorageBinEntity implements Serializable {
     private Integer freeVolume;
     @ManyToOne
     private WarehouseEntity warehouse;
+    @OneToMany
+    private List<ItemEntity> items;
+
+    public StorageBinEntity() {
+
+    }
+
+    public StorageBinEntity(String type, Integer _length, Integer width, Integer height) {
+        this.type = type;
+        this._length = _length;
+        this.width = width;
+        this.height = height;
+        this.volume = _length * width * height;
+        this.freeVolume = volume;
+        
+    }
 
     public String getType() {
         return type;
@@ -59,10 +77,6 @@ public class StorageBinEntity implements Serializable {
         return volume;
     }
 
-    public void setVolume(Integer volume) {
-        this.volume = volume;
-    }
-
     public Integer getFreeVolume() {
         return freeVolume;
     }
@@ -85,6 +99,14 @@ public class StorageBinEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
     }
 
     @Override

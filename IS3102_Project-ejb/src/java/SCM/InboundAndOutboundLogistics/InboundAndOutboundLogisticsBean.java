@@ -13,6 +13,7 @@ import EntityManager.WarehouseEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -43,8 +44,18 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     }   
 
     @Override
-    public Boolean addLineItemToShippingOrder(Long id, List<LineItemEntity> lineItems) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Boolean addLineItemToShippingOrder(Long id, LineItemEntity lineItem) {
+        try{
+            Query query = em.createQuery("select s from ShippingOrderEntity s where s.id = ?1").setParameter(1, id);
+            ShippingOrderEntity shippingOrder = (ShippingOrderEntity) query.getSingleResult();
+            shippingOrder.getLineItems().add(lineItem);
+            em.merge(shippingOrder);
+            em.flush();
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
     
     @Override
@@ -115,4 +126,11 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
         }
     }
 
+    @Override
+    @Remove
+    public void remove() {
+        System.out.println("Inbound and outbound logistics bean has bean removed.");
+    }
+
+    
 }

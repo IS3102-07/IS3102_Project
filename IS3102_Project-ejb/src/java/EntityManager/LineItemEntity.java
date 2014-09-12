@@ -30,6 +30,12 @@ public class LineItemEntity implements Serializable {
     
     public LineItemEntity(){
     }
+
+    public LineItemEntity(ItemEntity item, Integer quantity, String packType) {
+        this.item = item;
+        this.quantity = quantity;
+        this.packType = packType;
+    }        
     
     public Long getId() {
         return id;

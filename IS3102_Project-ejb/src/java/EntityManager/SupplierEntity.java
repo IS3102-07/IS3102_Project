@@ -2,6 +2,7 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,9 +24,9 @@ public class SupplierEntity implements Serializable {
     private boolean isActive;
     @ManyToOne
     private CountryEntity country;
-    @OneToMany(mappedBy="supplier")
+    @OneToMany(mappedBy="supplier", cascade={CascadeType.ALL})
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
-    @OneToMany(mappedBy="supplier")
+    @OneToMany(mappedBy="supplier", cascade={CascadeType.ALL})
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
 
     public SupplierEntity() {
