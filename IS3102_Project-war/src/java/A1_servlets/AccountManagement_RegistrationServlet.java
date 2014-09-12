@@ -7,9 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class AccountManagement_LoginServlet extends HttpServlet {
+public class AccountManagement_RegistrationServlet extends HttpServlet {
 
     AccountManagementBeanLocal accountManagementBean;
 
@@ -17,16 +16,20 @@ public class AccountManagement_LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session;
-            session = request.getSession();
-            session.invalidate();
-
-            String email = request.getParameter("email");
+            String IdentificationNo = request.getParameter("IdentificationNo");
+            String name = request.getParameter("name");
             String password = request.getParameter("password");
+            String address = request.getParameter("address");
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
 
-            accountManagementBean.loginStaff(email, password);
+            out.println("huat1?<br/>");
 
-            response.sendRedirect("index.jsp");
+            accountManagementBean.registerStaff(IdentificationNo, name, Integer.parseInt(phone), email, address, password);
+
+            out.println("huat2?");
+
+        } catch (Exception ex) {
         } finally {
             out.close();
         }

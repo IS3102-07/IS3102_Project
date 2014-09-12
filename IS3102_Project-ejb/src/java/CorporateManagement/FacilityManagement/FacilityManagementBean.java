@@ -9,12 +9,13 @@ import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -269,5 +270,18 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public List<WarehouseEntity> getWarehouseList() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }        
+
+    @Override
+    public WarehouseEntity getWarehouseByName(String warehouseName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    @Remove
+    public void remove() {
+        System.out.println("Facility Management is removed");
+    }
+    
+    
     
 }

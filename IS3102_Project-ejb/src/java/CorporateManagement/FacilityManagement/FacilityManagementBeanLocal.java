@@ -5,13 +5,14 @@
  */
 package CorporateManagement.FacilityManagement;
 
-import javax.ejb.Local;
-import EntityManager.RegionalOfficeEntity;
 import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
 import static java.util.Collections.list;
 import java.util.List;
+import javax.ejb.Local;
+import javax.ejb.Remove;
 
 /**
  *
@@ -50,5 +51,10 @@ public interface FacilityManagementBeanLocal {
     
     public Boolean deleteWarehouse(Long id);
     
+    public WarehouseEntity getWarehouseByName(String warehouseName);
+    
     public List<WarehouseEntity> getWarehouseList();
+    
+    @Remove
+    public void remove();
 }

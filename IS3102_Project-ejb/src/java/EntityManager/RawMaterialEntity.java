@@ -2,7 +2,9 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -22,6 +25,12 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     @OneToMany(mappedBy="rawMaterial")
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
     private String name;
+    @OneToOne(cascade={CascadeType.ALL},mappedBy="rawMaterial")
+    private ItemEntity item;
+    
+    public RawMaterialEntity() {
+        this.listOfSupplier_RawMaterialInfo = new ArrayList<>();
+    }
     
     public void create(String name) {
         setName(name);
@@ -33,9 +42,15 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
 
     public void setListOfSupplier_RawMaterialInfo(List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo) {
         this.listOfSupplier_RawMaterialInfo = listOfSupplier_RawMaterialInfo;
+    }        
+
+    public ItemEntity getItem() {
+        return item;
     }
-    
-    public RawMaterialEntity() {}
+
+    public void setItem(ItemEntity item) {
+        this.item = item;
+    }        
     
     public Long getId() {
         return id;

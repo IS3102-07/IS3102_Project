@@ -186,13 +186,19 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public StaffEntity loginStaff(String email, String password) {
         System.out.println("loginStaff() called with email:" + email);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity where t.email=:email AND t.password=:password");
+            Query q = em.createQuery("SELECT t FROM StaffEntity where t.email=:email");
             q.setParameter("email", email);
-            q.setParameter("password", password);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            System.out.println("Staff with email:" + email + " logged in successfully.");
-            return staffEntity;
-        } catch (NoResultException ex) {
+            String passwordSalt = staffEntity.getPasswordSalt();
+            String passwordHash = generatePasswordHash(passwordSalt, password);
+            if (password.equals(passwordHash)) {
+                System.out.println("Staff with email:" + email + " logged in successfully.");
+                return staffEntity;
+            } else {
+                System.out.println("Login credentials provided were incorrect.");
+                return null;
+            }
+        } catch (NoResultException ex) {//cannot find staff with that email
             System.out.println("Login credentials provided were incorrect.");
             return null;
         } catch (Exception ex) {
@@ -226,20 +232,20 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return true;
     }
-    
+
     public boolean roleHasMembersAssigned(Long roleID) {
         System.out.println("roleHasMembersAssigned() called with roleID:" + roleID);
         RoleEntity roleEntity;
         try {
             Query q = em.createQuery("SELECT t FROM RoleEntity t where t.id=:id");
             roleEntity = (RoleEntity) q.getSingleResult();
-            if (roleEntity.getStaffs()==null || roleEntity.getStaffs().isEmpty()) {
+            if (roleEntity.getStaffs() == null || roleEntity.getStaffs().isEmpty()) {
                 System.out.println("Role is unused.");
                 return false;
-                }else {
-                        System.out.println("Role still contain members.");
+            } else {
+                System.out.println("Role still contain members.");
                 return true;
-                        }
+            }
         } catch (NoResultException ex) {
             System.out.println("No such roles found.");
             return false;
@@ -248,7 +254,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return false;
         }
     }
-    
+
     public List<RoleEntity> listAllRoles() {
         System.out.println("listAllRoles() called.");
         List<RoleEntity> roleEntities = new ArrayList();
@@ -289,7 +295,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
-    public boolean checkIfStaffHasRole(Long staffID, Long roleID){
+    public boolean checkIfStaffHasRole(Long staffID, Long roleID) {
         System.out.println("checkIfStaffHasRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:staffID");
@@ -312,7 +318,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean addStaffRole(Long staffID, Long roleID) {
         System.out.println("addStaffRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
