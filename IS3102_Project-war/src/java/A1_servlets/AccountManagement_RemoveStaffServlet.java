@@ -1,38 +1,28 @@
 package A1_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class AccountManagement_Staff extends HttpServlet {
+public class AccountManagement_RemoveStaffServlet extends HttpServlet {
 
-    @EJB
-    private AccountManagementBeanLocal accountManagementBean;
-    private String result;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        try {
-            HttpSession session;
-            session = request.getSession();
-            List staffs = accountManagementBean.listAllStaff();
-
-
-
-            session.setAttribute("staffs", staffs);
-            response.sendRedirect("Staff/staffManagement.jsp?errMsg=" + result);
-        } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AccountManagement_RemoveStaff</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AccountManagement_RemoveStaff at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
