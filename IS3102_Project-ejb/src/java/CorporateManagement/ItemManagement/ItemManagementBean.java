@@ -504,4 +504,16 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
+
+    @Override
+    public ItemEntity getItemByItemCode(String internalItemCode) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public void remove(){
+        System.out.println("Item Management Bean is removed.");
+    }
+    
+    
 }
