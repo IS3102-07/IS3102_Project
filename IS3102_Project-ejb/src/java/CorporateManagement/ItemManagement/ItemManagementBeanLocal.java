@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package CorporateManagement.ItemManagement;
 
 import EntityManager.FurnitureEntity;
@@ -13,31 +7,24 @@ import EntityManager.RawMaterialEntity;
 import EntityManager.ProductionGroupEntity;
 import EntityManager.RetailProductEntity;
 import javax.ejb.Local;
-import javax.ejb.Remove;
 
-/**
- *
- * @author Loi Liang Yang
- */
 @Local
 public interface ItemManagementBeanLocal {
     
-    public ItemEntity getItemByItemCode(String internalItemCode);
+    public boolean addRawMaterial(String SKU, String name, String category, String description);
+    public boolean editRawMaterial(String SKU, String name, String category, String description);
+    public boolean removeRawMaterial(String SKU);
+    public RawMaterialEntity viewRawMaterial(String SKU);
     
-    public boolean addRawMaterial(String name);
-    public boolean editRawMaterial(String name);
-    public boolean removeRawMaterial(String name);
-    public RawMaterialEntity viewRawMaterial(String name);
+    public boolean addFurniture(String SKU, String name, String category, String description, String imageURL);
+    public boolean editFurniture(String SKU, String name, String category, String description, String imageURL);
+    public boolean removeFurniture(String SKU);
+    public FurnitureEntity viewFurniture(String SKU);
     
-    public boolean addFurniture(String name, String category, String description, String imageURL, String internalItemCode);
-    public boolean editFurniture(String internalItemCode, String name, String category, String description, String imageURL);
-    public boolean removeFurniture(String internalItemCode);
-    public FurnitureEntity viewFurniture(String name);
-    
-    public boolean addRetailProduct(String name, String description, String imageURL, String internalItemCode);
-    public boolean editRetailProduct(String internalItemCode, String name, String description, String imageURL);
-    public boolean removeRetailProduct(String internalItemCode);
-    public RetailProductEntity viewRetailProduct(String name);   
+    public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL);
+    public boolean editRetailProduct(String internalItemCode, String name, String category, String description, String imageURL);
+    public boolean removeRetailProduct(String SKU);
+    public RetailProductEntity viewRetailProduct(String SKU);   
     
     public boolean createBillOfMaterial(String name);
     public boolean editBillOfMaterial(String name);
@@ -54,6 +41,4 @@ public interface ItemManagementBeanLocal {
     public boolean removeItem(String itemName);
     public ItemEntity viewItem(String itemName);
     */
-    @Remove
-    public void remove();
 }
