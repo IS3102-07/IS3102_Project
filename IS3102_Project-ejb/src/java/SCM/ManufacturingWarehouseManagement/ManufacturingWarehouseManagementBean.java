@@ -8,13 +8,17 @@ import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Stateless
 public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal {
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
+    private EntityManager em;
 
     @Override
     public void createStorageBin(String type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
@@ -64,5 +68,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     @Override
     public void createTransferOrder(List<LineItemEntity> lineItems, StorageBinEntity origin, StorageBinEntity target) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
 }
