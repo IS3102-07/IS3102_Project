@@ -11,36 +11,69 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-@Inheritance(strategy= InheritanceType.JOINED)
-public abstract class ItemEntity implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class ItemEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
     private String internalItemCode;
-    private String description;
-    private String imageURL;
-    @OneToMany(cascade={CascadeType.ALL})
-    private Collection<Item_CountryEntity> itemCountryList = new ArrayList<Item_CountryEntity>();
+    @OneToMany(cascade = {CascadeType.ALL})
+    private Collection<Item_CountryEntity> itemCountryList;
+    @OneToOne
+    private FurnitureEntity furniture;
+    @OneToOne
+    private RawMaterialEntity rawMaterial;
+    @OneToOne
+    private RawMaterialEntity retailProduct;
+    
 
+    public ItemEntity(){
+        this.itemCountryList = new ArrayList<>();
+    }
+
+    public ItemEntity(String internalItemCode) {
+        this.internalItemCode = internalItemCode;
+        this.itemCountryList = new ArrayList<>();
+    }
+            
+    public int getEntity(){
+        if(furniture != null)
+            return 1;
+        else if(rawMaterial != null)
+            return 2;        
+        else
+            return -1;
+    }
+    
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-    
-    public void create(String name, String materialID, String description, String imageURL) {
-        this.name = name; //TODO: not inside class diagram yet
-        this.setInternalItemCode(materialID);
-        this.description = description;
-        this.imageURL = imageURL;        
+    }    
+
+    public FurnitureEntity getFurniture() {
+        return furniture;
     }
 
+    public void setFurniture(FurnitureEntity furniture) {
+        this.furniture = furniture;
+    }
+
+    public RawMaterialEntity getRawMaterial() {
+        return rawMaterial;
+    }
+
+    public void setRawMaterial(RawMaterialEntity rawMaterial) {
+        this.rawMaterial = rawMaterial;
+    }        
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -64,31 +97,7 @@ public abstract class ItemEntity implements Serializable {
     @Override
     public String toString() {
         return "em.ItemEntity[ id=" + id + " ]";
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    }   
 
     public Collection<Item_CountryEntity> getItemCountryList() {
         return itemCountryList;

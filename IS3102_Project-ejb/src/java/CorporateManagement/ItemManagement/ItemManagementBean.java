@@ -18,14 +18,14 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Loi Liang Yang
+ * @author Loi Liang Yang, Lin Baoyu
  */
 @Stateless
 public class ItemManagementBean implements ItemManagementBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     public boolean addRawMaterial(String name) {
         System.out.println("addRawMaterial() called with raw material:" + name);
 
@@ -65,7 +65,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean removeRawMaterial(String name) {
         System.out.println("removeRawMaterial() called with name:" + name);
         try {
@@ -86,7 +86,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public RawMaterialEntity viewRawMaterial(String name) {
         System.out.println("viewRawMaterial() called with itemName:" + name);
         try {
@@ -105,14 +105,14 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
-    public boolean addFurniture(String name) {
+
+    public boolean addFurniture(String name, String category, String description, String imageURL, String internalItemCode) {
         System.out.println("addFurniture() called with furniture:" + name);
 
         Long id;
         try {
-            FurnitureEntity furnitureEntity = new FurnitureEntity();
-            furnitureEntity.create(name);
+            ItemEntity item = new ItemEntity(internalItemCode);
+            FurnitureEntity furnitureEntity = new FurnitureEntity(name, category, description, imageURL, item);
             em.persist(furnitureEntity);
             id = furnitureEntity.getId();
             System.out.println("Furniture Name \"" + name + "\" registered successfully as id:" + id);
@@ -123,50 +123,41 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editFurniture(String name) {
-        System.out.println("editFurniture() called with name:" + name);
+    public boolean editFurniture(String internalItemCode, String name, String category, String description, String imageURL) {
+        System.out.println("editFurniture() called with internalItemCode:" + internalItemCode);
 
-        Long id;
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.id = ?1").setParameter(1, internalItemCode);
 
-            for (Object o : q.getResultList()) {
-                FurnitureEntity i = (FurnitureEntity) o;
-                if (i.getName().equalsIgnoreCase(name)) {
-                    i.setName(name);
-                    em.flush();
-                    System.out.println("\nServer updated furniture:\n" + name);
-                    return true;
-                }
-            }
-            return false; //Could not find the role to remove
+            FurnitureEntity furniture = (FurnitureEntity) q.getSingleResult();
+
+            furniture.setName(name);
+            furniture.setCategory(category);
+            furniture.setDescription(description);
+            furniture.setImageURL(imageURL);
+            em.merge(furniture);
+            em.flush();
+            return true;
+            
         } catch (Exception ex) {
             System.out.println("\nServer failed to update furniture:\n" + ex);
             return false;
         }
     }
-    
-    public boolean removeFurniture(String name) {
-        System.out.println("removeFurniture() called with name:" + name);
-        try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
 
-            for (Object o : q.getResultList()) {
-                FurnitureEntity i = (FurnitureEntity) o;
-                if (i.getName().equalsIgnoreCase(name)) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed furniture:\n" + name);
-                    return true;
-                }
-            }
-            return false; //Could not find the role to remove
+    public boolean removeFurniture(String internalItemCode) {
+        System.out.println("removeFurniture() called with internalItemCode:" + internalItemCode);
+        try {
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.internalItemCode = ?1").setParameter(1, internalItemCode);
+            
+            FurnitureEntity furniture = (FurnitureEntity) q.getSingleResult();
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove furniture:\n" + ex);
             return false;
         }
     }
-    
+
     public FurnitureEntity viewFurniture(String name) {
         System.out.println("viewFurniture() called with name:" + name);
         try {
@@ -185,14 +176,14 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
-    public boolean addRetailProduct(String name) {
+
+    public boolean addRetailProduct(String name, String description, String imageURL, String internalItemCode) {
         System.out.println("addRetailProduct() called with name:" + name);
 
         Long id;
-        try {
-            RetailProductEntity retailProductEntity = new RetailProductEntity();
-            retailProductEntity.create(name);
+        try {            
+            ItemEntity item = new ItemEntity(internalItemCode);
+            RetailProductEntity retailProductEntity = new RetailProductEntity(name, description, imageURL, item);
             em.persist(retailProductEntity);
             id = retailProductEntity.getId();
             System.out.println("Retail Product Name \"" + name + "\" registered successfully as id:" + id);
@@ -203,7 +194,10 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editRetailProduct(String name) {
+    public boolean editRetailProduct(String internalItemCode, String name, String description, String imageURL) {
+        
+        // TO DO
+        
         System.out.println("editRetailProduct() called with name:" + name);
 
         Long id;
@@ -225,7 +219,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean removeRetailProduct(String name) {
         System.out.println("removeRetailProduct() called with name:" + name);
         try {
@@ -246,7 +240,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public RetailProductEntity viewRetailProduct(String name) {
         System.out.println("viewRetailProduct() called with name:" + name);
         try {
@@ -268,88 +262,89 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     /*
-    public boolean addItem(String name, String materialID, String description, String imageURL) {
-        System.out.println("addItem() called with item:" + name + materialID + description + imageURL);
+     public boolean addItem(String name, String materialID, String description, String imageURL) {
+     System.out.println("addItem() called with item:" + name + materialID + description + imageURL);
 
-        Long id;
-        try {
-            ItemEntity itemEntity = new ItemEntity();
-            itemEntity.create(name, materialID, description, imageURL);
-            em.persist(itemEntity);
-            id = itemEntity.getId();
-            System.out.println("Item Name \"" + name + "\" registered successfully as id:" + id);
-            return true;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to register item:\n" + ex);
-            return false;
-        }
-    }
+     Long id;
+     try {
+     ItemEntity itemEntity = new ItemEntity();
+     itemEntity.create(name, materialID, description, imageURL);
+     em.persist(itemEntity);
+     id = itemEntity.getId();
+     System.out.println("Item Name \"" + name + "\" registered successfully as id:" + id);
+     return true;
+     } catch (Exception ex) {
+     System.out.println("\nServer failed to register item:\n" + ex);
+     return false;
+     }
+     }
 
-    public boolean editItem(String name, String materialID, String description, String imageURL) {
-        System.out.println("editItem() called with item:" + name);
+     public boolean editItem(String name, String materialID, String description, String imageURL) {
+     System.out.println("editItem() called with item:" + name);
 
-        Long id;
-        try {
-            Query q = em.createQuery("SELECT t FROM ItemEntity t");
+     Long id;
+     try {
+     Query q = em.createQuery("SELECT t FROM ItemEntity t");
 
-            for (Object o : q.getResultList()) {
-                ItemEntity i = (ItemEntity) o;
-                if (i.getName().equalsIgnoreCase(name)) {
-                    i.setDescription(description);
-                    i.setName(name);
-                    i.setImageURL(imageURL);
-                    em.flush();
-                    System.out.println("\nServer updated item:\n" + name);
-                    return true;
-                }
-            }
-            return false; //Could not find the role to remove
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to update item:\n" + ex);
-            return false;
-        }
-    }
+     for (Object o : q.getResultList()) {
+     ItemEntity i = (ItemEntity) o;
+     if (i.getName().equalsIgnoreCase(name)) {
+     i.setDescription(description);
+     i.setName(name);
+     i.setImageURL(imageURL);
+     em.flush();
+     System.out.println("\nServer updated item:\n" + name);
+     return true;
+     }
+     }
+     return false; //Could not find the role to remove
+     } catch (Exception ex) {
+     System.out.println("\nServer failed to update item:\n" + ex);
+     return false;
+     }
+     }
     
-    public boolean removeItem(String itemName) {
-        System.out.println("removeItem() called with itemName:" + itemName);
-        try {
-            Query q = em.createQuery("SELECT t FROM ItemEntity t");
+     public boolean removeItem(String itemName) {
+     System.out.println("removeItem() called with itemName:" + itemName);
+     try {
+     Query q = em.createQuery("SELECT t FROM ItemEntity t");
 
-            for (Object o : q.getResultList()) {
-                ItemEntity i = (ItemEntity) o;
-                if (i.getName().equalsIgnoreCase(itemName)) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed item:\n" + itemName);
-                    return true;
-                }
-            }
-            return false; //Could not find the role to remove
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to remove item:\n" + ex);
-            return false;
-        }
-    }
+     for (Object o : q.getResultList()) {
+     ItemEntity i = (ItemEntity) o;
+     if (i.getName().equalsIgnoreCase(itemName)) {
+     em.remove(i);
+     em.flush();
+     System.out.println("\nServer removed item:\n" + itemName);
+     return true;
+     }
+     }
+     return false; //Could not find the role to remove
+     } catch (Exception ex) {
+     System.out.println("\nServer failed to remove item:\n" + ex);
+     return false;
+     }
+     }
     
-    public ItemEntity viewItem(String itemName) {
-        System.out.println("viewItem() called with itemName:" + itemName);
-        try {
-            Query q = em.createQuery("SELECT t FROM ItemEntity t");
+     public ItemEntity viewItem(String itemName) {
+     System.out.println("viewItem() called with itemName:" + itemName);
+     try {
+     Query q = em.createQuery("SELECT t FROM ItemEntity t");
 
-            for (Object o : q.getResultList()) {
-                ItemEntity i = (ItemEntity) o;
-                if (i.getName().equalsIgnoreCase(itemName)) {
-                    System.out.println("\nServer returns item:\n" + itemName);
-                    return i;
-                }
-            }
-            return null; //Could not find the role to remove
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to remove item:\n" + ex);
-            return null;
-        }
-    }
-    */
+     for (Object o : q.getResultList()) {
+     ItemEntity i = (ItemEntity) o;
+     if (i.getName().equalsIgnoreCase(itemName)) {
+     System.out.println("\nServer returns item:\n" + itemName);
+     return i;
+     }
+     }
+     return null; //Could not find the role to remove
+     } catch (Exception ex) {
+     System.out.println("\nServer failed to remove item:\n" + ex);
+     return null;
+     }
+     }
+     */
+
     public boolean createBillOfMaterial(String name) {
         System.out.println("createBillOfMaterial() called with name:" + name);
 
@@ -366,7 +361,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean editBillOfMaterial(String name) {
         System.out.println("editBillOfMaterial() called with bill of material name:" + name);
 
@@ -389,7 +384,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean deleteBillOfMaterial(String bomName) {
         System.out.println("deleteBillOfMaterial() called with bomName:" + bomName);
         try {
@@ -410,7 +405,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public BillOfMaterialEntity viewBillOfMaterial(String name) {
         System.out.println("viewBillOfMaterial() called with name:" + name);
         try {
@@ -429,7 +424,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public boolean createProductionGroup(String name) {
         System.out.println("createProductionGroup() called with name:" + name);
 
@@ -446,7 +441,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean editProductionGroup(String name) {
         System.out.println("editProductionGroup() called with production group name:" + name);
 
@@ -469,7 +464,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean deleteProductionGroup(String name) {
         System.out.println("deleteProductionGroup() called with bomName:" + name);
         try {
@@ -490,7 +485,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public ProductionGroupEntity viewProductionGroup(String name) {
         System.out.println("viewProductionGroup() called with name:" + name);
         try {

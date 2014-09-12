@@ -26,14 +26,14 @@ public interface ItemManagementBeanLocal {
     public boolean removeRawMaterial(String name);
     public RawMaterialEntity viewRawMaterial(String name);
     
-    public boolean addFurniture(String name);
-    public boolean editFurniture(String name);
-    public boolean removeFurniture(String name);
+    public boolean addFurniture(String name, String category, String description, String imageURL, String internalItemCode);
+    public boolean editFurniture(String internalItemCode, String name, String category, String description, String imageURL);
+    public boolean removeFurniture(String internalItemCode);
     public FurnitureEntity viewFurniture(String name);
     
-    public boolean addRetailProduct(String name);
-    public boolean editRetailProduct(String name);
-    public boolean removeRetailProduct(String name);
+    public boolean addRetailProduct(String name, String description, String imageURL, String internalItemCode);
+    public boolean editRetailProduct(String internalItemCode, String name, String description, String imageURL);
+    public boolean removeRetailProduct(String internalItemCode);
     public RetailProductEntity viewRetailProduct(String name);   
     
     public boolean createBillOfMaterial(String name);
