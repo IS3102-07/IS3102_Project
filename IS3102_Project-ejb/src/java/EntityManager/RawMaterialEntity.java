@@ -23,7 +23,6 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     @OneToMany(mappedBy = "rawMaterial")
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
     private String name;
-    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "rawMaterial")
     private String category;
     private String description;
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "rawMaterial")
