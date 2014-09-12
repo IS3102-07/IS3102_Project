@@ -161,6 +161,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
         } catch (NoResultException ex) {
             return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to check staff email.\n"+ex);
         }
         return true;
     }
