@@ -1,5 +1,6 @@
 package CommonInfrastructure.SystemSecurity;
 
+import EntityManager.StaffEntity;
 import javax.ejb.Stateless;
 import javax.mail.*;
 import java.text.DateFormat;
@@ -12,14 +13,17 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 public class SystemSecurityBean implements SystemSecurityBeanLocal {
 
+    @PersistenceContext
+    private EntityManager em;
     String emailServerName = "mailauth.comp.nus.edu.sg";
-// Replace with your real name and unix email address
     String emailFromAddress = "a0097735@comp.nus.edu.sg";
-// Replace with your real name and NUSNET email address
     String toEmailAddress = "a0097735@comp.nus.edu.sg";
     String mailer = "JavaMailer";
 
@@ -31,8 +35,22 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
         return true;
     }
 
-    public void sendEmail() {
-        String eventText = "testing 123";
+    public void sendEmail(String username) {
+        String eventText = "";
+        try {
+            Query q = em.createQuery("SELECT t FROM RawMaterialEntity t");
+
+            for (Object o : q.getResultList()) {
+                StaffEntity i = (StaffEntity) o;
+                if (i.getName().equalsIgnoreCase(username)) {
+                    
+                    eventText += i.getActivationCode();
+                    System.out.println("\nServer returns activation code of staff:\n" + eventText);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to update raw material:\n" + ex);
+        }
         System.out.println("Server called sendEmail():");
         
         try {
@@ -52,7 +70,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmailAddress, false));
                 msg.setSubject("Your Events");
-                String messageText = "Greetings from Event Booking System... Here are your events:\n\n" + eventText;
+                String messageText = "Greetings from Island Furniture... \n\nHere is your activation code to be keyed in in order to activate your staff account :\n\n" + eventText;
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
