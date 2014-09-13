@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -130,28 +131,32 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
-
-            for (Object o : q.getResultList()) {
-                MemberEntity i = (MemberEntity) o;
-                if (i.getId() == memberID) {
-                    i.setDOB(DOB);
-                    i.setName(name);
-                    i.setAddress(address);
-                    i.setPhone(phone);
-                    i.setCountry(country);
-                    i.setCity(city);
-                    i.setZipCode(zipCode);
-                    i.setPasswordSalt(passwordSalt);
-                    i.setPasswordHash(passwordHash);
-                    em.merge(i);
-                    System.out.println("\nServer returns activation code of staff:\n" + i.getId());
-                }
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.id=:id");
+            q.setParameter("id", memberID);
+            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+            if (memberEntity.getId() == memberID) {
+                memberEntity.setDOB(DOB);
+                memberEntity.setName(name);
+                memberEntity.setAddress(address);
+                memberEntity.setPhone(phone);
+                memberEntity.setCountry(country);
+                memberEntity.setCity(city);
+                memberEntity.setZipCode(zipCode);
+                memberEntity.setPasswordSalt(passwordSalt);
+                memberEntity.setPasswordHash(passwordHash);
+                em.merge(memberEntity);
+                System.out.println("Server edited member details successfully.");
+                    return true;
             }
+
+        } catch (NoResultException ex) {
+            System.out.println("Failed to find member to edit.");
+            return false;
         } catch (Exception ex) {
             System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
             return false;
         }
+
         return true;
     }
 
@@ -278,10 +283,11 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
         try {
             em.remove(em.getReference(StaffEntity.class, staffID));
-            System.out.println(
-                    "hello!!!!!! false");
-
-            return false; //Could not find to remove
+            System.out.println("Staff removed succesfully");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed to remove staff, staff not found.");
+            return false;
         } catch (Exception ex) {
             System.out.println("\nServer failed to staff:\n" + ex);
             return false;
@@ -291,18 +297,15 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public boolean removeMember(Long memberID) {
         System.out.println("removeMember() called with memberID:" + memberID);
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
-
-            for (Object o : q.getResultList()) {
-                MemberEntity i = (MemberEntity) o;
-                if (i.getId() == memberID) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed memberID:\n" + memberID);
-                    return true;
-                }
-            }
-            return false; //Could not find to remove
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.id=:id");
+            q.setParameter("id", memberID);
+            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+            em.remove(memberEntity);
+            System.out.println("\nServer removed memberID:\n" + memberID);
+            return true;
+        } catch (NoResultException ex) {
+            System.out.println("Member not found.");
+            return false;
         } catch (Exception ex) {
             System.out.println("\nServer failed to member:\n" + ex);
             return false;
@@ -352,6 +355,26 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         em.persist(roleEntity);
         System.out.println("Role created.");
         return roleEntity;
+    }
+
+    public boolean updateRole(Long roleID, String name, String accessLevel) {
+        System.out.println("updateRole() called with roleID:" + roleID);
+        RoleEntity roleEntity;
+        try {
+            Query q = em.createQuery("SELECT t FROM RoleEntity t where t.id=:id");
+            roleEntity = (RoleEntity) q.getSingleResult();
+            roleEntity.setName(name);
+            roleEntity.setAccessLevel(accessLevel);
+            em.merge(roleEntity);
+            System.out.println("Roles updated successfully.");
+        } catch (NoResultException ex) {
+            System.out.println("No roles found to be updated.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer error while updating a role.\n" + ex);
+            return false;
+        }
+        return true;
     }
 
     public boolean deleteRole(Long roleID) {
