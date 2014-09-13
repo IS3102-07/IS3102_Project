@@ -1,9 +1,6 @@
 package EntityManager;
 
-import static com.sun.javafx.accessible.utils.ControlTypeIds.CALENDAR;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
@@ -22,21 +20,29 @@ public class TransferOrderEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToMany
-    private List<LineItemEntity> lineItems;
+    private LineItemEntity lineItem;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateCreated;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateTransferred;
+    @OneToOne
     private StorageBinEntity origin;
+    @OneToOne
     private StorageBinEntity target;
+    private String status;
     
+
     public TransferOrderEntity() {
 
     }
 
-    public TransferOrderEntity(List<LineItemEntity> lineItems, StorageBinEntity origin, StorageBinEntity target) {
-        this.lineItems = lineItems;
+    public TransferOrderEntity(LineItemEntity lineItem, StorageBinEntity origin, StorageBinEntity target) {
+        this.lineItem = lineItem;
         this.origin = origin;
         this.target = target;
-        this.dateTransferred = Calendar.getInstance().getTime();
+        this.dateCreated = Calendar.getInstance().getTime();
+        this.dateTransferred = null;
+        this.status = "Pending";
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //        Calendar cal = Calendar.getInstance();
 //        dateFormat.format(cal.getTime());
@@ -50,12 +56,20 @@ public class TransferOrderEntity implements Serializable {
         this.id = id;
     }
 
-    public List<LineItemEntity> getItems() {
-        return lineItems;
+    public LineItemEntity getLineItem() {
+        return lineItem;
     }
 
-    public void setItems(List<LineItemEntity> items) {
-        this.lineItems = items;
+    public void setLineItem(LineItemEntity lineItem) {
+        this.lineItem = lineItem;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public Date getDateTransferred() {
@@ -80,6 +94,14 @@ public class TransferOrderEntity implements Serializable {
 
     public void setTarget(StorageBinEntity target) {
         this.target = target;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

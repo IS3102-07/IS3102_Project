@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,13 +21,11 @@ public class StorageBinEntity implements Serializable {
     private Integer height;
     private Integer volume;
     private Integer freeVolume;
-    @ManyToOne
-    private WarehouseEntity warehouse;
     @OneToMany
     private List<ItemEntity> items;
 
     public StorageBinEntity() {
-
+        
     }
 
     public StorageBinEntity(String type, Integer _length, Integer width, Integer height) {
@@ -38,7 +35,7 @@ public class StorageBinEntity implements Serializable {
         this.height = height;
         this.volume = _length * width * height;
         this.freeVolume = volume;
-        
+
     }
 
     public String getType() {
@@ -83,14 +80,6 @@ public class StorageBinEntity implements Serializable {
 
     public void setFreeVolume(Integer freeVolume) {
         this.freeVolume = freeVolume;
-    }
-
-    public WarehouseEntity getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(WarehouseEntity warehouse) {
-        this.warehouse = warehouse;
     }
 
     public Long getId() {

@@ -10,7 +10,7 @@ import javax.ejb.Local;
 @Local
 public interface ManufacturingWarehouseManagementBeanLocal {
 
-    public void createStorageBin(String type, Integer _length, Integer width, Integer height, Long warehouseId);
+    public void createStorageBin(String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
 
     public boolean updateStorageBin(StorageBinEntity storageBin);
 
@@ -20,14 +20,25 @@ public interface ManufacturingWarehouseManagementBeanLocal {
 
     public List<StorageBinEntity> viewAllStorageBin();
 
+    public StorageBinEntity getInboundStorageBin(); //look for the inbound storagebin
+    
+    public StorageBinEntity getOutboundStorageBin(); //look for the inbound storagebin
+    
+    public List<TransferOrderEntity>  createTransferOrder(StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems);
+    
     public LineItemEntity createLineItem(ItemEntity item, Integer quantity, String packType);
 
-    public void createTransferOrder(List<LineItemEntity> lineItems, StorageBinEntity origin, StorageBinEntity target);
+    public void addLineItemToTransferOrder(Long transferOrderId, Long lineItemId);
 
-    public boolean updateTransferOrder(TransferOrderEntity transferOrder);
+    public boolean markTransferOrderAsCompleted(Long transferOrderId);
+    
+    public boolean cancelTransferOrder(Long transferOrderId);
 
-    public TransferOrderEntity viewTransferOrder(Long id);
+    public TransferOrderEntity viewTransferOrder(Long transferOrderId);
+    
+    public List<TransferOrderEntity> viewListOfAllTransferOrder();
 
     public boolean deleteTransferOrder(Long id);
-
+   
+    public boolean markTransferOrderAsUnfulfilled(Long transferOrderId);
 }
