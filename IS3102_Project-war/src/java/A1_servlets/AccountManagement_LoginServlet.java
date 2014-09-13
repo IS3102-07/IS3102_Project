@@ -34,7 +34,7 @@ public class AccountManagement_LoginServlet extends HttpServlet {
                 response.sendRedirect("Staff/staffLogin.jsp?errMsg=" + result);
             } else {
                 session.setAttribute("staffEntity", staffEntity);
-                response.sendRedirect("Staff/staffLandingPage.jsp");
+                response.sendRedirect("A1/workspace.jsp");
             }
 
         } finally {

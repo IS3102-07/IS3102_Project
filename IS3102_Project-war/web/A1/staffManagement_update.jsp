@@ -6,7 +6,7 @@
     <body>
 
         <div id="wrapper">
-            <jsp:include page="../menu2.html" />
+            <jsp:include page="../menu1.jsp" />
 
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Roles</label>
-                                   
+
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">

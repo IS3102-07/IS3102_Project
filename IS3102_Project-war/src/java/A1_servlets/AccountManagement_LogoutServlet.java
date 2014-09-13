@@ -1,37 +1,25 @@
 package A1_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class AccountManagement_RemoveStaffServlet extends HttpServlet {
-
-    @EJB
-    private AccountManagementBeanLocal accountManagementBean;
+public class AccountManagement_LogoutServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         try {
-            out.println("<h1>im in</h1>");
-
-            String[] deleteArr = request.getParameterValues("delete");
-            if (deleteArr != null) {
-
-                for (int i = 0; i < deleteArr.length; i++) {
-                    out.println(deleteArr[i] + "<br>");
-                    //accountManagementBean.re
-                }
-                //response.sendRedirect("AccountManagement_StaffServlet");
-            }
-
-        } catch (Exception ex) {
-            out.println(ex);
+            HttpSession session;
+            session = request.getSession();
+            session.invalidate();
+            response.sendRedirect("Staff/staffLogin.jsp?errMsg=Logout Succesful");
+        } finally {
+            out.close();
         }
     }
 

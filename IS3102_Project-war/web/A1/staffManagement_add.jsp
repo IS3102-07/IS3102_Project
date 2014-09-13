@@ -2,7 +2,7 @@
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
-            <jsp:include page="../menu2.html" />
+            <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
                 <div class="container-fluid">
 

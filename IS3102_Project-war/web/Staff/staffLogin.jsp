@@ -22,7 +22,7 @@
                         <div class="panel-heading"> 
                             <i class="icon-4x icon icon-unlock-alt"  style="margin-top: 10px;"></i><h6 class="panel-title">Sign In</h6>
                         </div>
-                        <label id="lblMessage"><%=errMsg%></label>
+                        <h10 class="text-info"><%=errMsg%></h10>
                         <div class="panel-body">
                             <form role="form" name="LoginForm" action="../AccountManagement_LoginServlet">
 

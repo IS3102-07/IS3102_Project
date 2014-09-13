@@ -48,6 +48,10 @@
         <servlet-name>AccountManagement_RemoveStaffServlet</servlet-name>
         <servlet-class>A1_servlets.AccountManagement_RemoveStaffServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountManagement_LogoutServlet</servlet-name>
+        <servlet-class>A1_servlets.AccountManagement_LogoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>AccountManagement_RemoveStaffServlet</servlet-name>
         <url-pattern>/AccountManagement_RemoveStaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagement_LogoutServlet</servlet-name>
+        <url-pattern>/AccountManagement_LogoutServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -6,7 +6,7 @@
 
         <div id="wrapper">
 
-            <jsp:include page="../menu2.html" />
+            <jsp:include page="../menu1.jsp" />
 
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -167,7 +167,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
