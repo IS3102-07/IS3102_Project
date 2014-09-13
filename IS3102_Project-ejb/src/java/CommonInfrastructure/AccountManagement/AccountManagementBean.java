@@ -223,71 +223,64 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     //For administrator to edit staff account.
-
     public boolean editStaff(Long staffID, String identificationNo, String name, Integer phone, String password, String address, String email) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t WHERE t.id=:staffID");
+            q.setParameter("staffID", staffID);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
 
-            for (Object o : q.getResultList()) {
-                StaffEntity i = (StaffEntity) o;
-                if (i.getId() == staffID) {
-                    i.setIdentificationNo(identificationNo);
-                    i.setName(name);
-                    i.setAddress(address);
-                    i.setPhone(phone);
-                    i.setPasswordSalt(passwordSalt);
-                    i.setPasswordHash(passwordHash);
-                    i.setEmail(email);
-                    em.merge(i);
-                    System.out.println("\nServer returns activation code of staff:\n" + i.getId());
-                    return true;
-                }
-            }
+            staffEntity.setIdentificationNo(identificationNo);
+            staffEntity.setName(name);
+            staffEntity.setAddress(address);
+            staffEntity.setPhone(phone);
+            staffEntity.setPasswordSalt(passwordSalt);
+            staffEntity.setPasswordHash(passwordHash);
+            staffEntity.setEmail(email);
+            em.merge(staffEntity);
+            System.out.println("\nServer edited staff succeessfully");
+            return true;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
+            System.out.println("\nServer failed to edit staff:\n" + ex);
             return false;
         }
-        return true;
     }
 
     //For staff to edit their own staff account.
-
     public boolean editStaff(Long staffID, Integer phone, String password, String address) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t WHERE t.id=:staffID");
+            q.setParameter("staffID", staffID);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
 
-            for (Object o : q.getResultList()) {
-                StaffEntity i = (StaffEntity) o;
-                if (i.getId() == staffID) {
-                    i.setAddress(address);
-                    i.setPhone(phone);
-                    i.setPasswordSalt(passwordSalt);
-                    i.setPasswordHash(passwordHash);
-                    em.merge(i);
-                    System.out.println("\nServer returns activation code of staff:\n" + i.getId());
-                    return true;
-                }
-            }
+            staffEntity.setAddress(address);
+            staffEntity.setPhone(phone);
+            staffEntity.setPasswordSalt(passwordSalt);
+            staffEntity.setPasswordHash(passwordHash);
+            em.merge(staffEntity);
+            System.out.println("\nServer edited staff succeessfully");
+            return true;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
+            System.out.println("\nServer failed to edit staff:\n" + ex);
             return false;
         }
-        return true;
     }
 
     public boolean removeStaff(Long staffID) {
         System.out.println("removeStaff() called with staffID:" + staffID);
+
         try {
             em.remove(em.getReference(StaffEntity.class, staffID));
-            System.out.println("hello!!!!!! false");
+            System.out.println(
+                    "hello!!!!!! false");
+
             return false; //Could not find to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to staff:\n" + ex);
