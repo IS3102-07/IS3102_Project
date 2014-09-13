@@ -46,7 +46,7 @@ public class StaffEntity implements Serializable {
     private String passwordReset;
     
     @ManyToMany
-    private Collection<RoleEntity> roles;
+    private List<RoleEntity> roles;
     @OneToMany
     private List<MessageEntity> inboxMessages;
     @OneToMany
@@ -240,14 +240,14 @@ public class StaffEntity implements Serializable {
     /**
      * @return the roles
      */
-    public Collection<RoleEntity> getRoles() {
+    public List<RoleEntity> getRoles() {
         return roles;
     }
 
     /**
      * @param roles the roles to set
      */
-    public void setRoles(Collection<RoleEntity> roles) {
+    public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
     }
 

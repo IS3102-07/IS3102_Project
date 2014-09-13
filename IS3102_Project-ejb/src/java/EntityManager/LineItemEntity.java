@@ -23,6 +23,8 @@ public class LineItemEntity implements Serializable {
     private Long id;
     @ManyToOne
     private ShippingOrderEntity shippingOrder;
+    @ManyToOne
+    private PurchaseOrderEntity purchaseOrder;
     @OneToOne
     private ItemEntity item;
     private Integer quantity;
@@ -52,7 +54,14 @@ public class LineItemEntity implements Serializable {
     public void setShippingOrder(ShippingOrderEntity shippingOrder) {
         this.shippingOrder = shippingOrder;
     }
+    public PurchaseOrderEntity getPurchaseOrder() {
+        return purchaseOrder;
+    }
 
+    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
+    }
+    
     public ItemEntity getItem() {
         return item;
     }

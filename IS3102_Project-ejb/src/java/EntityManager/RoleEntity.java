@@ -3,7 +3,7 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +19,7 @@ public class RoleEntity implements Serializable {
     private String name;
     private String accessLevel;
     @ManyToMany(mappedBy="roles")
-    private Collection<StaffEntity> staffs = new ArrayList<StaffEntity>();
+    private List<StaffEntity> staffs = new ArrayList<StaffEntity>();
 
     public void create(String name, String accessLevel) {
         this.setName(name);
@@ -86,11 +86,11 @@ public class RoleEntity implements Serializable {
         this.accessLevel = accessLevel;
     }
 
-    public Collection<StaffEntity> getStaffs() {
+    public List<StaffEntity> getStaffs() {
         return staffs;
     }
 
-    public void setMembers(Collection<StaffEntity> staffs) {
+    public void setMembers(List<StaffEntity> staffs) {
         this.staffs = staffs;
     }
     
