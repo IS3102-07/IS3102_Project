@@ -52,6 +52,18 @@
         <servlet-name>AccountManagement_LogoutServlet</servlet-name>
         <servlet-class>A1_servlets.AccountManagement_LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>itemManagement_UpdateItemServlet</servlet-name>
+        <servlet-class>A6_servlets.itemManagement_UpdateItemServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>itemManagement_AddItemServlet</servlet-name>
+        <servlet-class>A6_servlets.itemManagement_AddItemServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>itemManagement_RemoveItemServlet</servlet-name>
+        <servlet-class>A6_servlets.itemManagement_RemoveItemServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -103,6 +115,18 @@
     <servlet-mapping>
         <servlet-name>AccountManagement_LogoutServlet</servlet-name>
         <url-pattern>/AccountManagement_LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>itemManagement_UpdateItemServlet</servlet-name>
+        <url-pattern>/itemManagement_UpdateItemServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>itemManagement_AddItemServlet</servlet-name>
+        <url-pattern>/itemManagement_AddItemServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>itemManagement_RemoveItemServlet</servlet-name>
+        <url-pattern>/itemManagement_RemoveItemServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
