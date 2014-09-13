@@ -113,7 +113,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         String passwordHash = generatePasswordHash(passwordSalt, password);
         try {
             MemberEntity memberEntity = new MemberEntity();
-            memberEntity.create(name, address, DOB, email, phone, country, city, zipCode, passwordHash);
+            memberEntity.create(name, address, DOB, email, phone, country, city, zipCode, passwordHash, passwordSalt);
             em.persist(memberEntity);
             memberID = memberEntity.getMemberID();
             System.out.println("Member \"" + name + "\" registered successfully as id:" + memberID);
@@ -122,6 +122,37 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             System.out.println("\nServer failed to register member:\n" + ex);
             return false;
         }
+    }
+
+    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, Integer phone, String country, String city, Integer zipCode, String password) {
+        System.out.println("editMember() called with memberID:" + memberID);
+
+        String passwordSalt = generatePasswordSalt();
+        String passwordHash = generatePasswordHash(passwordSalt, password);
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+
+            for (Object o : q.getResultList()) {
+                MemberEntity i = (MemberEntity) o;
+                if (i.getId() == memberID) {
+                    i.setDOB(DOB);
+                    i.setName(name);
+                    i.setAddress(address);
+                    i.setPhone(phone);
+                    i.setCountry(country);
+                    i.setCity(city);
+                    i.setZipCode(zipCode);
+                    i.setPasswordSalt(passwordSalt);
+                    i.setPasswordHash(passwordHash);
+                    em.merge(i);
+                    System.out.println("\nServer returns activation code of staff:\n" + i.getId());
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
+            return false;
+        }
+        return true;
     }
 
     public MemberEntity loginMember(String email, String password) {
@@ -190,6 +221,84 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return null;
         }
     }
+    //For administrator to edit staff account.
+    public boolean editStaff(Long staffID, String identificationNo, String name, Integer phone, String password, String address, String email) {
+        System.out.println("editStaff() called with staffID:" + staffID);
+
+        String passwordSalt = generatePasswordSalt();
+        String passwordHash = generatePasswordHash(passwordSalt, password);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+
+            for (Object o : q.getResultList()) {
+                StaffEntity i = (StaffEntity) o;
+                if (i.getId() == staffID) {
+                    i.setIdentificationNo(identificationNo);
+                    i.setName(name);
+                    i.setAddress(address);
+                    i.setPhone(phone);
+                    i.setPasswordSalt(passwordSalt);
+                    i.setPasswordHash(passwordHash);
+                    i.setEmail(email);
+                    em.merge(i);
+                    System.out.println("\nServer returns activation code of staff:\n" + i.getId());
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
+            return false;
+        }
+        return true;
+    }
+    //For staff to edit their own staff account.
+    public boolean editStaff(Long staffID, Integer phone, String password, String address) {
+        System.out.println("editStaff() called with staffID:" + staffID);
+
+        String passwordSalt = generatePasswordSalt();
+        String passwordHash = generatePasswordHash(passwordSalt, password);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+
+            for (Object o : q.getResultList()) {
+                StaffEntity i = (StaffEntity) o;
+                if (i.getId() == staffID) {
+                    i.setAddress(address);
+                    i.setPhone(phone);
+                    i.setPasswordSalt(passwordSalt);
+                    i.setPasswordHash(passwordHash);
+                    em.merge(i);
+                    System.out.println("\nServer returns activation code of staff:\n" + i.getId());
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean removeStaff(Long staffID) {
+        System.out.println("removeStaff() called with staffID:" + staffID);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+
+            for (Object o : q.getResultList()) {
+                StaffEntity i = (StaffEntity) o;
+                if (i.getId() == staffID) {
+                    em.remove(i);
+                    em.flush();
+                    System.out.println("\nServer removed staffID:\n" + staffID);
+                    return true;
+                }
+            }
+            return false; //Could not find to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to staff:\n" + ex);
+            return false;
+        }
+    }
 
     public StaffEntity loginStaff(String email, String password) {
         System.out.println("loginStaff() called with email:" + email);
@@ -214,8 +323,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return null;
         }
     }
-    
-    public  List<StaffEntity> listAllStaff() {
+
+    public List<StaffEntity> listAllStaff() {
         System.out.println("listAllStaff() called.");
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t");

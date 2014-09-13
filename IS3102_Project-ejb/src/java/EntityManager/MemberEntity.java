@@ -51,7 +51,7 @@ public class MemberEntity implements Serializable {
     //@OneToMany
     //private SalesRecordEntity salesRecord;
     //TODO Subscription
-    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String passwordHash) {
+    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String passwordHash, String passwordSalt) {
         this.setName(name);
         this.setAddress(address);
         this.setDOB(DOB);
