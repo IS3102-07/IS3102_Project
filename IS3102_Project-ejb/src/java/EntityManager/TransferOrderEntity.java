@@ -27,7 +27,7 @@ public class TransferOrderEntity implements Serializable {
     private Date dateTransferred;
     private StorageBinEntity origin;
     private StorageBinEntity target;
-
+    
     public TransferOrderEntity() {
 
     }
