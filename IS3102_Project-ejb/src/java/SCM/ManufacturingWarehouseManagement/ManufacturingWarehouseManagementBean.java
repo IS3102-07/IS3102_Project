@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -29,149 +30,223 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
     @Override
     public void createStorageBin(String type, Integer _length, Integer width, Integer height) {
-        storageBin = new StorageBinEntity(type, _length, width, height);
-        em.persist(storageBin);
+        try {
+            storageBin = new StorageBinEntity(type, _length, width, height);
+            em.persist(storageBin);
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to createStorageBin:\n" + ex);
+        }
     }
 
     @Override
     public boolean updateStorageBin(StorageBinEntity storageBin) {
-        if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
+        try {
+            if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
+                return false;
+            }
+            em.merge(storageBin);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to updateStorageBin:\n" + ex);
             return false;
         }
-        em.merge(storageBin);
-        return true;
     }
 
     @Override
     public boolean deleteStorageBin(Long id) {
-        if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
+
+        try {
+            if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
+                return false;
+            }
+            em.remove(storageBin);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to deleteStorageBin:\n" + ex);
             return false;
         }
-        em.remove(storageBin);
-        return true;
     }
 
     @Override
     public StorageBinEntity viewStorageBin(Long id) {
-        if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
+        try {
+            if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
+                return null;
+            }
+            return em.getReference(StorageBinEntity.class, storageBin.getId());
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to viewStorageBin:\n" + ex);
             return null;
         }
-
-        return em.getReference(StorageBinEntity.class, storageBin.getId());
     }
 
     @Override
     public List<StorageBinEntity> viewAllStorageBin() {
-        Query q = em.createQuery("Select sb from StorageBinEntity sb");
-        List<StorageBinEntity> storageBins = q.getResultList();
-        return storageBins;
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb");
+            List<StorageBinEntity> storageBins = q.getResultList();
+            return storageBins;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to viewAllStorageBin:\n" + ex);
+            return null;
+        }
     }
 
     @Override
     public TransferOrderEntity viewTransferOrder(Long id) {
-        if (em.getReference(TransferOrderEntity.class, id) == null) {
+        try {
+            if (em.getReference(TransferOrderEntity.class, id) == null) {
+                return null;
+            }
+            return em.getReference(TransferOrderEntity.class, id);
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to viewTransferOrder:\n" + ex);
             return null;
         }
-        return em.getReference(TransferOrderEntity.class, id);
     }
 
     @Override
     public boolean deleteTransferOrder(Long id) {
-        if (em.getReference(TransferOrderEntity.class, id) == null) {
+        try {
+            if (em.getReference(TransferOrderEntity.class, id) == null) {
+                return false;
+            }
+            em.remove(em.getReference(TransferOrderEntity.class, id));
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to deleteTransferOrder:\n" + ex);
             return false;
         }
-        em.remove(em.getReference(TransferOrderEntity.class, id));
-        return true;
     }
 
     @Override
     public StorageBinEntity getInboundStorageBin() {
-        Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Inbound'");
-        storageBin = (StorageBinEntity) q.getSingleResult();
-        return storageBin;
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Inbound'");
+            storageBin = (StorageBinEntity) q.getSingleResult();
+            return storageBin;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getInboundStorageBin:\n" + ex);
+            return null;
+        }
     }
 
     @Override
     public StorageBinEntity getOutboundStorageBin() {
-        Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Outbound'");
-        storageBin = (StorageBinEntity) q.getSingleResult();
-        return storageBin;
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Outbound'");
+            storageBin = (StorageBinEntity) q.getSingleResult();
+            return storageBin;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getOutboundStorageBin:\n" + ex);
+            return null;
+        }
     }
 
     @Override
     public boolean markTransferOrderAsCompleted(Long transferOrderId) {
-        transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
-        return manufacturingInventoryControlBean.moveItemBetweenStorageBins(transferOrder.getLineItem().getItem().getSKU(), transferOrder.getOrigin(), transferOrder.getTarget());
+        try {
+            transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
+            return manufacturingInventoryControlBean.moveItemBetweenStorageBins(transferOrder.getLineItem().getItem().getSKU(), transferOrder.getOrigin(), transferOrder.getTarget());
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to markTransferOrderAsCompleted:\n" + ex);
+            return false;
+        }
     }
 
     @Override
     public boolean cancelTransferOrder(Long transferOrderId) {
-        transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
-        transferOrder.setStatus("Cancelled");
-        return true;
+        try {
+            transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
+            transferOrder.setStatus("Cancelled");
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to cancelTransferOrder:\n" + ex);
+            return false;
+        }
     }
 
     @Override
     public List<TransferOrderEntity> viewListOfAllTransferOrder() {
-        Query q = em.createQuery("Select t from TransferOrderEntity t");
-        return q.getResultList();
+        try {
+            Query q = em.createQuery("Select t from TransferOrderEntity t");
+            return q.getResultList();
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to viewListOfAllTransferOrder:\n" + ex);
+            return null;
+        }
     }
 
     @Override
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId) {
-        transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
-        transferOrder.setStatus("Unfulfillable");
-        return true;
+        try {
+            transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
+            transferOrder.setStatus("Unfulfillable");
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to markTransferOrderAsUnfulfilled:\n" + ex);
+            return false;
+        }
     }
 
     @Override
     public List<TransferOrderEntity> createTransferOrder(StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems) {
-        List<TransferOrderEntity> listOfTransferOrdersCreated = new ArrayList<TransferOrderEntity>();
-        for (int i = 0; i < lineItems.size(); i++) {
-            transferOrder = new TransferOrderEntity(lineItems.get(i), origin, targets.get(i));
-            em.persist(transferOrder);
-            listOfTransferOrdersCreated.add(transferOrder);
+        try {
+            List<TransferOrderEntity> listOfTransferOrdersCreated = new ArrayList<TransferOrderEntity>();
+            for (int i = 0; i < lineItems.size(); i++) {
+                transferOrder = new TransferOrderEntity(lineItems.get(i), origin, targets.get(i));
+                em.persist(transferOrder);
+                listOfTransferOrdersCreated.add(transferOrder);
+            }
+            return listOfTransferOrdersCreated;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to createStorageBin:\n" + ex);
+            return null;
         }
-        return listOfTransferOrdersCreated;
     }
-
 
     //TODO NEED TO TEST
     @Override
     public List<TransferOrderEntity> createOutboundTransferOrder(List<LineItemEntity> lineItems) {
-        int qtyOfItemsToTransfer = 0;
-        int qtyOfItemsInCurrentBinAvailableToTransfer = 0;
+        int qtyNeededToTransfer = 0;
+        int qtyToTransferOutFromBin = 0;
+        String SKUtoFind = "";
         ItemEntity currentItem = new ItemEntity();
         StorageBinEntity outboundStorageBin = getOutboundStorageBin();
         List<TransferOrderEntity> transferOrdersCreated = new ArrayList<>();
-        for (int i = 0; i < lineItems.size(); i++) {
-            qtyOfItemsToTransfer = lineItems.get(i).getQuantity();
-
-            List<StorageBinEntity> storageBinEntities = manufacturingInventoryControlBean.findStorageBinsThatContainsItem(outboundStorageBin.getWarehouse().getId(), lineItems.get(i).getItem().getSKU());
-
-            for (int j = 0; j < storageBinEntities.size(); j++) {
-                qtyOfItemsInCurrentBinAvailableToTransfer = 0;
-                List<ItemEntity> itemsInCurrentBin = storageBinEntities.get(j).getItems();
-                for (int k = 0; k < itemsInCurrentBin.size(); k++) {
-                    currentItem = itemsInCurrentBin.get(k);
-                    if (currentItem.getSKU().equals(lineItems.get(i).getItem().getSKU())) {
-                        qtyOfItemsToTransfer--;
-                        qtyOfItemsInCurrentBinAvailableToTransfer++;
+        try {
+            for (LineItemEntity lineItem1 : lineItems) {
+                qtyNeededToTransfer = lineItem1.getQuantity();
+                List<StorageBinEntity> binsThatMatchesSKU = manufacturingInventoryControlBean.findStorageBinsThatContainsItem(outboundStorageBin.getWarehouse().getId(), lineItem1.getItem().getSKU());
+                for (StorageBinEntity eachBinThatMatchesSKU : binsThatMatchesSKU) {
+                    qtyToTransferOutFromBin = 0;
+                    SKUtoFind = lineItem1.getItem().getSKU();
+                    List<ItemEntity> itemsInEachBinThatMatchesSKU = eachBinThatMatchesSKU.getItems();
+                    for (ItemEntity eachItem : itemsInEachBinThatMatchesSKU) {
+                        currentItem = eachItem;
+                        if (currentItem.getSKU().equals(SKUtoFind)) {
+                            qtyNeededToTransfer--;
+                            qtyToTransferOutFromBin++;
+                        }
+                        if (qtyNeededToTransfer <= 0) {
+                            break;
+                        }
                     }
-                    if (qtyOfItemsToTransfer <= 0) {
+                    LineItemEntity lineItem = new LineItemEntity(currentItem, qtyToTransferOutFromBin, "");
+                    transferOrder = new TransferOrderEntity(lineItem, eachBinThatMatchesSKU, outboundStorageBin);
+                    em.persist(transferOrder);
+                    transferOrdersCreated.add(transferOrder);
+                    if (qtyNeededToTransfer <= 0) {
                         break;
                     }
                 }
-                LineItemEntity lineItem = new LineItemEntity(currentItem, qtyOfItemsInCurrentBinAvailableToTransfer, "");
-                transferOrder = new TransferOrderEntity(lineItem, storageBinEntities.get(j), outboundStorageBin);
-                em.persist(transferOrder);
-                transferOrdersCreated.add(transferOrder);
-                if (qtyOfItemsToTransfer <= 0) {
-                    break;
-                }
             }
+            return transferOrdersCreated;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to createOutboundTransferOrder:\n" + ex);
+            return null;
         }
-        return transferOrdersCreated;
+
     }
 
 }
