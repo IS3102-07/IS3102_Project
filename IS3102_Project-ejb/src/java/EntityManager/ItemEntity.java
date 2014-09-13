@@ -29,7 +29,7 @@ public class ItemEntity implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
     @ManyToOne
-    private List<WarehouseEntity> warehouses;
+    private WarehouseEntity warehouses;
     
     @OneToOne
     private FurnitureEntity furniture;
@@ -137,14 +137,14 @@ public class ItemEntity implements Serializable {
     /**
      * @return the warehouses
      */
-    public List<WarehouseEntity> getWarehouses() {
+    public WarehouseEntity getWarehouses() {
         return warehouses;
     }
 
     /**
      * @param warehouses the warehouses to set
      */
-    public void setWarehouses(List<WarehouseEntity> warehouses) {
+    public void setWarehouses(WarehouseEntity warehouses) {
         this.warehouses = warehouses;
     }
 
