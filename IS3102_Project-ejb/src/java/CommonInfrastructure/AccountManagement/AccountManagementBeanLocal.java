@@ -27,6 +27,7 @@ public interface AccountManagementBeanLocal {
     
     //Creating the types of roles
     public RoleEntity createRole(String name, String accessLevel);
+    public boolean updateRole(Long roleID, String name, String accessLevel);
     public boolean deleteRole(Long roleID); //Returns true if role deleted successfully
     public boolean roleHasMembersAssigned(Long roleID);
     
