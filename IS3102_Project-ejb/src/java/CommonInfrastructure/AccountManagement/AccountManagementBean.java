@@ -348,7 +348,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
             q.setParameter("id", roleID);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
-            Collection<RoleEntity> roles = staffEntity.getRoles();
+            List<RoleEntity> roles = staffEntity.getRoles();
             roles.add(roleEntity);
             staffEntity.setRoles(roles);
             em.persist(staffEntity);
@@ -370,7 +370,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
             q.setParameter("id", roleID);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
-            Collection<RoleEntity> roles = staffEntity.getRoles();
+            List<RoleEntity> roles = staffEntity.getRoles();
             for (RoleEntity currentRole : roles) {
                 if (currentRole == roleEntity) {
                     roles.remove(currentRole);
@@ -389,7 +389,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     //This will overwrite ALL the current exisiting roles for the staff
-    private boolean assignStaffRoles(Long staffID, Collection<RoleEntity> roles) {
+    private boolean assignStaffRoles(Long staffID, List<RoleEntity> roles) {
         System.out.println("assignStaffRoles() called with staffID:" + staffID);
         StaffEntity staffEntity = new StaffEntity();
         Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
