@@ -147,7 +147,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         for (int i = 0; i < lineItems.size(); i++) {
             qtyOfItemsToTransfer = lineItems.get(i).getQuantity();
 
-            List<StorageBinEntity> storageBinEntities = manufacturingInventoryControlBean.findStorageBinThatContainsItem(outboundStorageBin.getWarehouse().getId(), lineItems.get(i).getItem().getSKU());
+            List<StorageBinEntity> storageBinEntities = manufacturingInventoryControlBean.findStorageBinsThatContainsItem(outboundStorageBin.getWarehouse().getId(), lineItems.get(i).getItem().getSKU());
 
             for (int j = 0; j < storageBinEntities.size(); j++) {
                 qtyOfItemsInCurrentBinAvailableToTransfer = 0;
