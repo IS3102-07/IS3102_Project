@@ -43,6 +43,7 @@ public class StaffEntity implements Serializable {
     private String activationCode;
     private Boolean accountLockStatus;
     private String unlockCode;
+    private String passwordReset;
     
     @ManyToMany
     private Collection<RoleEntity> roles;
@@ -62,8 +63,20 @@ public class StaffEntity implements Serializable {
         this.setAddress(address);
         this.setPasswordSalt(passwordSalt);
         this.setPasswordHash(passwordHash);
+        setAccountActivationStatus(false);
+        setActivationCode();
+        setAccountLockStatus(false);
+        setUnlockCode();
+        setPasswordReset();
     }
     
+    public String getPasswordReset() {
+        return passwordReset;
+    }
+    public void setPasswordReset() {
+        SecureRandom random = new SecureRandom();
+        passwordReset = new BigInteger(130, random).toString();
+    }
     public Boolean getAccountActivationStatus() {
         return accountActivationStatus;
     }

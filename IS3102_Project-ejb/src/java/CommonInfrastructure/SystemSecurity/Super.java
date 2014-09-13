@@ -13,6 +13,6 @@ package CommonInfrastructure.SystemSecurity;
 public class Super {
     public static void main(String args[]) {
         SystemSecurityBean a = new SystemSecurityBean();
-        a.sendEmail("asd");
+        a.sendActivationEmailForStaff("asd");
     }
 }
