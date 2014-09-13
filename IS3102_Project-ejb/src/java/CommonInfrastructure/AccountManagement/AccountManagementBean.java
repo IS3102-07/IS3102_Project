@@ -299,6 +299,27 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return false;
         }
     }
+    
+    public boolean removeMember(Long memberID) {
+        System.out.println("removeMember() called with memberID:" + memberID);
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+
+            for (Object o : q.getResultList()) {
+                MemberEntity i = (MemberEntity) o;
+                if (i.getId() == memberID) {
+                    em.remove(i);
+                    em.flush();
+                    System.out.println("\nServer removed memberID:\n" + memberID);
+                    return true;
+                }
+            }
+            return false; //Could not find to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to member:\n" + ex);
+            return false;
+        }
+    }
 
     public StaffEntity loginStaff(String email, String password) {
         System.out.println("loginStaff() called with email:" + email);

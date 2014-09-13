@@ -21,6 +21,7 @@ public interface AccountManagementBeanLocal {
     public boolean editStaff(Long staffID, String identificationNo, String name, Integer phone, String password, String address, String email);
     public boolean editStaff(Long staffID, Integer phone, String password, String address);
     public boolean removeStaff(Long staffID);
+    public boolean removeMember(Long memberID);
     public StaffEntity loginStaff(String email, String password);
     public List<StaffEntity> listAllStaff();
     
