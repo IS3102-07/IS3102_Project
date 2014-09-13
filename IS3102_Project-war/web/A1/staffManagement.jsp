@@ -1,3 +1,4 @@
+<%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.StaffEntity"%>
 <html lang="en">
@@ -15,7 +16,7 @@
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.staffManagement.action = "../AccountManagement_RemoveStaff";
+                    document.staffManagement.action = "../AccountManagement_RemoveStaffServlet";
                     document.staffManagement.submit();
                 } else {
                     window.event.returnValue = false;
@@ -65,6 +66,7 @@
                                                             <th>Name</th>
                                                             <th>Email</th>
                                                             <th>Phone</th>
+                                                            <th>Roles</th>
                                                             <th>Update</th>
                                                         </tr>
                                                     </thead>
@@ -87,6 +89,18 @@
                                                             </td>
                                                             <td>
                                                                 <%=staffs.get(i).getPhone()%>
+                                                            </td>
+                                                            <td>
+                                                                <%
+                                                                    List<RoleEntity> roles = (List<RoleEntity>) (staffs.get(i).getRoles());
+                                                                    if (roles.isEmpty()) {
+                                                                        out.println("-");
+                                                                    } else {
+                                                                        for (int k = 0; k < roles.size(); k++) {
+                                                                            out.println(roles.get(i).getName());
+                                                                        }
+                                                                    }
+                                                                %>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=staffs.get(i).getId()%>" value="update" onclick="javascript:updateStaff('<%=staffs.get(i).getId()%>')"/>

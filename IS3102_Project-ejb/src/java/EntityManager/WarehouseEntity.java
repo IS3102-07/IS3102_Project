@@ -2,6 +2,7 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,8 @@ public class WarehouseEntity implements Serializable {
     private List<StorageBinEntity> storageBin;
     @OneToOne (mappedBy = "destination")
     private PurchaseOrderEntity purchaseOrder;
+    @OneToMany
+    private List<ItemEntity> items;
 
     public Long getId() {
         return id;
@@ -74,6 +77,20 @@ public class WarehouseEntity implements Serializable {
      */
     public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
         this.purchaseOrder = purchaseOrder;
+    }
+
+    /**
+     * @return the items
+     */
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
     }
 
 }

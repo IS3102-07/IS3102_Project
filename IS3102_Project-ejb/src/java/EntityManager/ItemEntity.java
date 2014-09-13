@@ -3,6 +3,7 @@ package EntityManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -25,6 +27,9 @@ public class ItemEntity implements Serializable {
     private String SKU;
     @OneToMany(cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
+    @ManyToOne
+    private List<WarehouseEntity> warehouses;
+    
     @OneToOne
     private FurnitureEntity furniture;
     @OneToOne
@@ -126,5 +131,19 @@ public class ItemEntity implements Serializable {
      */
     public void setRetailProduct(RawMaterialEntity retailProduct) {
         this.retailProduct = retailProduct;
+    }
+
+    /**
+     * @return the warehouses
+     */
+    public List<WarehouseEntity> getWarehouses() {
+        return warehouses;
+    }
+
+    /**
+     * @param warehouses the warehouses to set
+     */
+    public void setWarehouses(List<WarehouseEntity> warehouses) {
+        this.warehouses = warehouses;
     }
 }
