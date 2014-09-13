@@ -25,6 +25,7 @@ public class ItemEntity implements Serializable {
     private Long id;
     
     private String SKU;
+    private String batch;
     @OneToMany(cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
     @ManyToOne
@@ -145,5 +146,19 @@ public class ItemEntity implements Serializable {
      */
     public void setWarehouses(List<WarehouseEntity> warehouses) {
         this.warehouses = warehouses;
+    }
+
+    /**
+     * @return the batch
+     */
+    public String getBatch() {
+        return batch;
+    }
+
+    /**
+     * @param batch the batch to set
+     */
+    public void setBatch(String batch) {
+        this.batch = batch;
     }
 }
