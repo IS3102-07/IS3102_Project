@@ -35,4 +35,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     public int checkItemQty(String SKU){
         return 0;
     }
+    public StorageBinEntity findStorageBinThatContainsItem(String SKU){
+        return null;
+    }
 }

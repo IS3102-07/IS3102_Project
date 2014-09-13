@@ -20,4 +20,5 @@ public interface ManufacturingInventoryControlBeanLocal {
     public boolean moveItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination);
     public boolean addItemsToShippingBin(String SKU);
     public int checkItemQty(String SKU);
+    public StorageBinEntity findStorageBinThatContainsItem(String SKU);
 }
