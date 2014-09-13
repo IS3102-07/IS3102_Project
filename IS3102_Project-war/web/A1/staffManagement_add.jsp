@@ -61,7 +61,7 @@
                                 <div class="form-group">
                                     <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
                                 </div>
-                                <input type="hidden" value="A1/staffManagement.jsp" name="source">
+                                <input type="hidden" value="A1/staffManagement_add.jsp" name="source">
                             </form>
                         </div>
                         <!-- /.row -->

@@ -18,16 +18,15 @@ public class AccountManagement_RemoveStaffServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         try {
-            out.println("<h1>im in</h1>");
 
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
-
                 for (int i = 0; i < deleteArr.length; i++) {
+                    out.println("<h1>im in</h1>");
+                    accountManagementBean.removeStaff(Long.parseLong(deleteArr[i]));
                     out.println(deleteArr[i] + "<br>");
-                    //accountManagementBean.re
                 }
-                //response.sendRedirect("AccountManagement_StaffServlet");
+                response.sendRedirect("AccountManagement_StaffServlet");
             }
 
         } catch (Exception ex) {

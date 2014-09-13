@@ -221,7 +221,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return null;
         }
     }
+
     //For administrator to edit staff account.
+
     public boolean editStaff(Long staffID, String identificationNo, String name, Integer phone, String password, String address, String email) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
@@ -251,7 +253,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return true;
     }
+
     //For staff to edit their own staff account.
+
     public boolean editStaff(Long staffID, Integer phone, String password, String address) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
@@ -278,28 +282,19 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return true;
     }
-    
+
     public boolean removeStaff(Long staffID) {
         System.out.println("removeStaff() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t");
-
-            for (Object o : q.getResultList()) {
-                StaffEntity i = (StaffEntity) o;
-                if (i.getId() == staffID) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed staffID:\n" + staffID);
-                    return true;
-                }
-            }
+            em.remove(em.getReference(StaffEntity.class, staffID));
+            System.out.println("hello!!!!!! false");
             return false; //Could not find to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to staff:\n" + ex);
             return false;
         }
     }
-    
+
     public boolean removeMember(Long memberID) {
         System.out.println("removeMember() called with memberID:" + memberID);
         try {

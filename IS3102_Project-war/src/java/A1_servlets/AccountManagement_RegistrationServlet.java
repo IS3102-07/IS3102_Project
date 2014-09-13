@@ -39,6 +39,9 @@ public class AccountManagement_RegistrationServlet extends HttpServlet {
                     result = "?errMsg='Registration fail. Staff email already registered.'";
                     response.sendRedirect(source + result);
                 } else {
+                    if (source.equals("A1/staffManagement_add.jsp")) {
+                        response.sendRedirect("AccountManagement_StaffServlet");
+                    }
                     response.sendRedirect(source);
                 }
             }

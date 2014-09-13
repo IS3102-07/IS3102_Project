@@ -41,9 +41,10 @@
                     <!-- /.row -->
 
                     <%
+                        StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
                         List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
                         if (staffs == null || staffs.isEmpty()) {
-                            out.println("No staff yet");
+                            out.println("No data available in table");
                         } else {
                     %>
 
@@ -73,6 +74,8 @@
                                                     <tbody>
                                                         <%
                                                             for (int i = 0; i < staffs.size(); i++) {
+                                                                if (!staffs.get(i).getEmail().equals(staffEntity.getEmail())) {
+                                                                    out.println(staffs.get(i).getId() + " vs " + staffEntity.getId() + "<br>");
                                                         %>
                                                         <tr>
                                                             <td>
@@ -107,6 +110,7 @@
                                                             </td>
                                                         </tr>
                                                         <%
+                                                                }
                                                             }
                                                         %>
                                                 </table>
