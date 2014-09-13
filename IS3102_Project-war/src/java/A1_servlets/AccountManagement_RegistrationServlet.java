@@ -26,27 +26,21 @@ public class AccountManagement_RegistrationServlet extends HttpServlet {
             String address = request.getParameter("address");
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
-
-            out.println("huat1?<br/>");
+            String source = request.getParameter("source");
 
             boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
             if (ifExist) {
-                result = "Registration fail. Staff email already registered.";
-                response.sendRedirect("Staff/staffRegister.jsp?errMsg=" + result);
+                result = "?errMsg=Registration fail. Staff email already registered.";
+                response.sendRedirect(source + result);
             } else {
-
                 StaffEntity staffEntity = accountManagementBean.registerStaff(identificationNo, name, Integer.parseInt(phone), email, address, password);
 
-                out.println("huata?<br/>");
-
                 if (staffEntity == null) {
-                    result = "Registration fail. Please try again";
-                    response.sendRedirect("Staff/staffRegister.jsp?errMsg=" + result);
+                    result = "?errMsg='Registration fail. Staff email already registered.'";
+                    response.sendRedirect(source + result);
                 } else {
-                    response.sendRedirect("Staff/staffLogin.jsp");
+                    response.sendRedirect(source);
                 }
-
-                out.println("huat2?");
             }
         } catch (Exception ex) {
             out.println(ex);

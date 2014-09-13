@@ -68,6 +68,7 @@
                                             <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
                                         </div>
                                     </div>
+                                    <input type="hidden" value="Staff/staffLogin.jsp" name="source">
                                 </div>
                             </form>
                         </div>
