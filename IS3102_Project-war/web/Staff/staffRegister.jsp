@@ -20,7 +20,7 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
                         <div class="panel-body">
-                            <form role="form" name="registrationForm" action="../AccountManagement_RegistrationServlet">
+                            <form role="form" name="registrationForm" action="../StaffManagement_AddStaffServlet">
                                 <div class="box-content">
                                     <h3>Register An Account</h3>
                                     <div class="row">

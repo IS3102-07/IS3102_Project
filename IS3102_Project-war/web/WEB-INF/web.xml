@@ -29,24 +29,20 @@
         <servlet-class>A1_servlets.AccountManagement_LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AccountManagement_RegistrationServlet</servlet-name>
-        <servlet-class>A1_servlets.AccountManagement_RegistrationServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Inbound_OutboundServlet</servlet-name>
         <servlet-class>A3_servlets.Inbound_OutboundServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AccountManagement_StaffServlet</servlet-name>
-        <servlet-class>A1_servlets.AccountManagement_StaffServlet</servlet-class>
+        <servlet-name>StaffManagement_StaffServlet</servlet-name>
+        <servlet-class>A1_servlets.StaffManagement_StaffServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AccountManagement_UpdateStaffServlet</servlet-name>
-        <servlet-class>A1_servlets.AccountManagement_UpdateStaffServlet</servlet-class>
+        <servlet-name>StaffManagement_UpdateStaffServlet</servlet-name>
+        <servlet-class>A1_servlets.StaffManagement_UpdateStaffServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AccountManagement_RemoveStaffServlet</servlet-name>
-        <servlet-class>A1_servlets.AccountManagement_RemoveStaffServlet</servlet-class>
+        <servlet-name>StaffManagement_RemoveStaffServlet</servlet-name>
+        <servlet-class>A1_servlets.StaffManagement_RemoveStaffServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AccountManagement_LogoutServlet</servlet-name>
@@ -63,6 +59,78 @@
     <servlet>
         <servlet-name>RoleManagement_UpdateRoleServlet</servlet-name>
         <servlet-class>A1_servlets.RoleManagement_UpdateRoleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BomManagement_BomServlet</servlet-name>
+        <servlet-class>A6_servlets.BomManagement_BomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductionGroupManagement_ProductionGroupServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductionGroupManagement_ProductionGroupServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RawMaterialManagement_RawMaterialServlet</servlet-name>
+        <servlet-class>A6_servlets.RawMaterialManagement_RawMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetailProductManagement_RetailProductServlet</servlet-name>
+        <servlet-class>A6_servlets.RetailProductManagement_RetailProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FurnitureManagement_FurnitureServlet</servlet-name>
+        <servlet-class>A6_servlets.FurnitureManagement_FurnitureServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffManagement_AddStaffServlet</servlet-name>
+        <servlet-class>A1_servlets.StaffManagement_AddStaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BomManagement_AddBomServlet</servlet-name>
+        <servlet-class>A6_servlets.BomManagement_AddBomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BomManagement_RemoveBomServlet</servlet-name>
+        <servlet-class>A6_servlets.BomManagement_RemoveBomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BomManagement_UpdateBomServlet</servlet-name>
+        <servlet-class>A6_servlets.BomManagement_UpdateBomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FurnitureManagement_AddFurnitureServlet</servlet-name>
+        <servlet-class>A6_servlets.FurnitureManagement_AddFurnitureServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FurnitureManagement_RemoveFurnitureServlet</servlet-name>
+        <servlet-class>A6_servlets.FurnitureManagement_RemoveFurnitureServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FurnitureManagement_UpdateFurnitureServlet</servlet-name>
+        <servlet-class>A6_servlets.FurnitureManagement_UpdateFurnitureServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductionGroupManagement_AddProductionGroupServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductionGroupManagement_AddProductionGroupServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductionGroupManagement_UpdateProductionGroupServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductionGroupManagement_UpdateProductionGroupServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductionGroupManagement_RemoveProductionGroupServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductionGroupManagement_RemoveProductionGroupServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetailProductManagement_AddRetailProductServlet</servlet-name>
+        <servlet-class>A6_servlets.RetailProductManagement_AddRetailProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetailProductManagement_RemoveRetailProductServlet</servlet-name>
+        <servlet-class>A6_servlets.RetailProductManagement_RemoveRetailProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetailProductManagement_UpdateRetailProductServlet</servlet-name>
+        <servlet-class>A6_servlets.RetailProductManagement_UpdateRetailProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -93,24 +161,20 @@
         <url-pattern>/AccountManagement_LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AccountManagement_RegistrationServlet</servlet-name>
-        <url-pattern>/AccountManagement_RegistrationServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Inbound_OutboundServlet</servlet-name>
         <url-pattern>/Inbound_OutboundServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AccountManagement_StaffServlet</servlet-name>
-        <url-pattern>/AccountManagement_StaffServlet</url-pattern>
+        <servlet-name>StaffManagement_StaffServlet</servlet-name>
+        <url-pattern>/StaffManagement_StaffServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AccountManagement_UpdateStaffServlet</servlet-name>
-        <url-pattern>/AccountManagement_UpdateStaffServlet</url-pattern>
+        <servlet-name>StaffManagement_UpdateStaffServlet</servlet-name>
+        <url-pattern>/StaffManagement_UpdateStaffServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AccountManagement_RemoveStaffServlet</servlet-name>
-        <url-pattern>/AccountManagement_RemoveStaffServlet</url-pattern>
+        <servlet-name>StaffManagement_RemoveStaffServlet</servlet-name>
+        <url-pattern>/StaffManagement_RemoveStaffServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AccountManagement_LogoutServlet</servlet-name>
@@ -127,6 +191,78 @@
     <servlet-mapping>
         <servlet-name>RoleManagement_UpdateRoleServlet</servlet-name>
         <url-pattern>/RoleManagement_UpdateRoleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BomManagement_BomServlet</servlet-name>
+        <url-pattern>/BomManagement_BomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductionGroupManagement_ProductionGroupServlet</servlet-name>
+        <url-pattern>/ProductionGroupManagement_ProductionGroupServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RawMaterialManagement_RawMaterialServlet</servlet-name>
+        <url-pattern>/RawMaterialManagement_RawMaterialServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetailProductManagement_RetailProductServlet</servlet-name>
+        <url-pattern>/RetailProductManagement_RetailProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FurnitureManagement_FurnitureServlet</servlet-name>
+        <url-pattern>/FurnitureManagement_FurnitureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffManagement_AddStaffServlet</servlet-name>
+        <url-pattern>/StaffManagement_AddStaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BomManagement_AddBomServlet</servlet-name>
+        <url-pattern>/BomManagement_AddBomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BomManagement_RemoveBomServlet</servlet-name>
+        <url-pattern>/BomManagement_RemoveBomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BomManagement_UpdateBomServlet</servlet-name>
+        <url-pattern>/BomManagement_UpdateBomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FurnitureManagement_AddFurnitureServlet</servlet-name>
+        <url-pattern>/FurnitureManagement_AddFurnitureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FurnitureManagement_RemoveFurnitureServlet</servlet-name>
+        <url-pattern>/FurnitureManagement_RemoveFurnitureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FurnitureManagement_UpdateFurnitureServlet</servlet-name>
+        <url-pattern>/FurnitureManagement_UpdateFurnitureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductionGroupManagement_AddProductionGroupServlet</servlet-name>
+        <url-pattern>/ProductionGroupManagement_AddProductionGroupServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductionGroupManagement_UpdateProductionGroupServlet</servlet-name>
+        <url-pattern>/ProductionGroupManagement_UpdateProductionGroupServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductionGroupManagement_RemoveProductionGroupServlet</servlet-name>
+        <url-pattern>/ProductionGroupManagement_RemoveProductionGroupServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetailProductManagement_AddRetailProductServlet</servlet-name>
+        <url-pattern>/RetailProductManagement_AddRetailProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetailProductManagement_RemoveRetailProductServlet</servlet-name>
+        <url-pattern>/RetailProductManagement_RemoveRetailProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetailProductManagement_UpdateRetailProductServlet</servlet-name>
+        <url-pattern>/RetailProductManagement_UpdateRetailProductServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

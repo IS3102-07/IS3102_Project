@@ -4,45 +4,33 @@ import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class AccountManagement_RegistrationServlet extends HttpServlet {
+public class StaffManagement_StaffServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            String identificationNo = request.getParameter("identificationNo");
-            String name = request.getParameter("name");
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
-            String source = request.getParameter("source");
 
-            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
-            if (ifExist) {
-                result = "?errMsg=Registration fail. Staff email already registered.";
-                response.sendRedirect(source + result);
-            } else {
-                accountManagementBean.registerStaff(identificationNo, name, Integer.parseInt(phone), email, address, password);
-                if (source.equals("A1/staffManagement_add.jsp")) {
-                    response.sendRedirect("AccountManagement_StaffServlet");
-                }
-                response.sendRedirect(source);
-            }
+        try {
+            HttpSession session;
+            session = request.getSession();
+            List<StaffEntity> staffs = accountManagementBean.listAllStaff();
+
+            session.setAttribute("staffs", staffs);
+            response.sendRedirect("A1/staffManagement.jsp");
+
         } catch (Exception ex) {
-            out.println(ex);
-        } finally {
-            out.close();
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

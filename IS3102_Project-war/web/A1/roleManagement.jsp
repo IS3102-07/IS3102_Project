@@ -80,12 +80,12 @@
                                                             <th>Name</th>
                                                             <th>Access Level</th>
                                                             <th>Staff</th>
+                                                            <th>Update</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
                                                             for (int i = 0; i < roles.size(); i++) {
-                                                                if (!roles.get(i).getId().equals(roleEntity.getId())) {
                                                         %>
                                                         <tr>
                                                             <td>
@@ -114,7 +114,6 @@
                                                             </td>
                                                         </tr>
                                                         <%
-                                                                }
                                                             }
                                                         %>
                                                 </table>

@@ -43,7 +43,7 @@
                         List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
 
                         if (staffs == null || staffs.isEmpty()) {
-                            response.sendRedirect("../AccountManagement_StaffServlet");
+                            response.sendRedirect("../StaffManagement_StaffServlet");
                         } else {
 
                             StaffEntity staff = new StaffEntity();
@@ -57,7 +57,7 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../AccountManagement_UpdateStaffServlet">
+                            <form role="form" action="../StaffManagement_UpdateStaffServlet">
                                 <div class="form-group">
                                     <label>Identification No</label>
                                     <input class="form-control" name="identificationNo" type="text" value="<%=staff.getIdentificationNo()%>">

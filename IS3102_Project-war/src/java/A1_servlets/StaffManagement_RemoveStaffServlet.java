@@ -9,51 +9,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AccountManagement_UpdateStaffServlet extends HttpServlet {
+public class StaffManagement_RemoveStaffServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            String staffId = request.getParameter("id");
-            String staffEmail = request.getParameter("staffEmail");
-            String identificationNo = request.getParameter("identificationNo");
-            String name = request.getParameter("name");
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
-            String source = request.getParameter("source");
 
-            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
-            if (ifExist) {
-                if (!email.equals(staffEmail)) {
-                    result = "?errMsg=Update failed. Staff email already registered.";
-                    response.sendRedirect(source + result);
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    out.println("<h1>im in</h1>");
+                    accountManagementBean.removeStaff(Long.parseLong(deleteArr[i]));
+                    out.println(deleteArr[i] + "<br>");
                 }
-                accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
-                response.sendRedirect("AccountManagement_StaffServlet");
-            } else {
-                boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
-
-                if (!canUpdate) {
-                    result = "?errMsg=Please try again.";
-                    response.sendRedirect(source + result);
-                } else {
-                    if (source.equals("A1/staffManagement_add.jsp") || source.equals("A1/staffManagement_update.jsp")) {
-                        response.sendRedirect("AccountManagement_StaffServlet");
-                    }
-                    response.sendRedirect(source);
-                }
+                response.sendRedirect("StaffManagement_StaffServlet");
             }
 
         } catch (Exception ex) {
             out.println(ex);
-
         }
     }
 

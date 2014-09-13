@@ -16,7 +16,7 @@
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.staffManagement.action = "../AccountManagement_RemoveStaffServlet";
+                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
                     document.staffManagement.submit();
                 } else {
                     window.event.returnValue = false;
