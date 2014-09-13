@@ -36,8 +36,8 @@ public class AccountManagement_UpdateStaffServlet extends HttpServlet {
                     result = "?errMsg=Update failed. Staff email already registered.";
                     response.sendRedirect(source + result);
                 }
-                boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
-
+                accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
+                response.sendRedirect("AccountManagement_StaffServlet");
             } else {
                 boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
 

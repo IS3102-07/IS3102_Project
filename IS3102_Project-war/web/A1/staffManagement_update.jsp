@@ -57,14 +57,14 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../AccountManagement_RegistrationServlet">
+                            <form role="form" action="../AccountManagement_UpdateStaffServlet">
                                 <div class="form-group">
                                     <label>Identification No</label>
-                                    <input class="form-control" name="identificationNo" type="text" placeholder="<%=staff.getIdentificationNo()%>">
+                                    <input class="form-control"  id="identificationNo" name="identificationNo" type="text" value="<%=staff.getIdentificationNo()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" name="name" type="text" placeholder="<%=staff.getName()%>">
+                                    <input class="form-control" name="name" type="text" value="<%=staff.getName()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>E-mail Address</label>
