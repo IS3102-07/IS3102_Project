@@ -1,33 +1,28 @@
-package A6_servlets;
+package A1_servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class itemManagement_UpdateItemServlet extends HttpServlet {
+public class RoleManagement_UpdateRoleServlet extends HttpServlet {
 
-    @EJB
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        PrintWriter out = response.getWriter();
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet itemManagement_RemoveItemServlet</title>");
+            out.println("<title>Servlet RoleManagement_UpdateRoleServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet itemManagement_RemoveItemServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RoleManagement_UpdateRoleServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } catch (Exception ex) {
-            out.println(ex);
         }
     }
 

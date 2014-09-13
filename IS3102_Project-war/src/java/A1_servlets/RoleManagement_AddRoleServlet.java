@@ -1,5 +1,7 @@
-package A6_servlets;
+package A1_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.RoleEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -8,23 +10,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class itemManagement_RemoveItemServlet extends HttpServlet {
+public class RoleManagement_AddRoleServlet extends HttpServlet {
 
     @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+    private String result;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet itemManagement_RemoveItemServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet itemManagement_RemoveItemServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            String name = request.getParameter("name");
+            String accessLevel = request.getParameter("accessLevel");
+            String source = request.getParameter("source");
+
+            boolean ifExist = accountManagementBean.checkIfRoleExists(name);
+            if (ifExist) {
+                result = "?errMsg=Role already registered.";
+                response.sendRedirect(source + result);
+            } else {
+                accountManagementBean.createRole(name, accessLevel);
+                if (source.equals("A1/roleManagement_add.jsp")) {
+                    response.sendRedirect("RoleManagement_RoleServlet");
+                }
+            }
+
         } catch (Exception ex) {
             out.println(ex);
         }

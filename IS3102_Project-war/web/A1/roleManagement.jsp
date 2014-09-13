@@ -1,35 +1,35 @@
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
-<%@page import="EntityManager.StaffEntity"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
 
     <body>
         <script>
-            function updateStaff(id) {
-                staffManagement.id.value = id;
-                document.staffManagement.action = "staffManagement_update.jsp";
-                document.staffManagement.submit();
+            function updateRole(id) {
+                rolesManagement.id.value = id;
+                document.rolesManagement.action = "roleManagement_update.jsp";
+                document.rolesManagement.submit();
             }
-            function removeStaff() {
+            function removeRole() {
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.staffManagement.action = "../AccountManagement_RemoveStaffServlet";
-                    document.staffManagement.submit();
+                    document.rolesManagement.action = "../RoleManagement_RemoveRoleServlet";
+                    document.rolesManagement.submit();
                 } else {
                     window.event.returnValue = false;
                 }
             }
-            function addStaff() {
+            function addRole() {
                 window.event.returnValue = true;
-                document.staffManagement.action = "staffManagement_add.jsp";
-                document.staffManagement.submit();
+                document.rolesManagement.action = "roleManagement_add.jsp";
+                document.rolesManagement.submit();
             }
             function checkAll() {
                 alert("Check all the checkboxes...");
-                var allRows = document.staffManagement.getElementsByTagName("delete");
+                var allRows = document.rolesManagement.getElementsByTagName("delete");
                 for (var i = 0; i < allRows.length; i++) {
                     if (allRows[i].type == 'checkbox') {
                         allRows[i].checked = true;
@@ -43,24 +43,19 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Staff  Management</h1>
+                            <h1 class="page-header">Roles Management</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i>  Staff Management
+                                    <i class="icon icon-edit"></i>  Role Management
                                 </li>
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-
-                    <%
-                        StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
-                        List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
-                    %>
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -69,57 +64,53 @@
                                     insert some wordings
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="staffManagement">
+                                <form name="rolesManagement">
                                     <div class="panel-body">
+
+                                        <%
+                                            RoleEntity roleEntity = (RoleEntity) (session.getAttribute("roleEntity"));
+                                            List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
+                                        %>
                                         <div class="table-responsive">
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll()" /></th>
-                                                            <th>Identification No</th>
                                                             <th>Name</th>
-                                                            <th>Email</th>
-                                                            <th>Phone</th>
-                                                            <th>Roles</th>
-                                                            <th>Update</th>
+                                                            <th>Access Level</th>
+                                                            <th>Staff</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            for (int i = 0; i < staffs.size(); i++) {
-                                                                if (!staffs.get(i).getEmail().equals(staffEntity.getEmail())) {
+                                                            for (int i = 0; i < roles.size(); i++) {
+                                                                if (!roles.get(i).getId().equals(roleEntity.getId())) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <input type="checkbox" name="delete" value="<%=staffs.get(i).getId()%>" />
+                                                                <input type="checkbox" name="delete" value="<%=roles.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=staffs.get(i).getIdentificationNo()%>
+                                                                <%=roles.get(i).getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=staffs.get(i).getName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=staffs.get(i).getEmail()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=staffs.get(i).getPhone()%>
+                                                                <%=roles.get(i).getAccessLevel()%>
                                                             </td>
                                                             <td>
                                                                 <%
-                                                                    List<RoleEntity> roles = (List<RoleEntity>) (staffs.get(i).getRoles());
-                                                                    if (roles.isEmpty()) {
+                                                                    List<StaffEntity> staffs = (List<StaffEntity>) (roles.get(i).getStaffs());
+                                                                    if (staffs.isEmpty()) {
                                                                         out.println("-");
                                                                     } else {
-                                                                        for (int k = 0; k < roles.size(); k++) {
-                                                                            out.println(roles.get(i).getName());
+                                                                        for (int k = 0; k < staffs.size(); k++) {
+                                                                            out.println(staffs.get(i).getName());
                                                                         }
                                                                     }
                                                                 %>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=staffs.get(i).getId()%>" value="update" onclick="javascript:updateStaff('<%=staffs.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=roles.get(i).getId()%>" value="update" onclick="javascript:updateRole('<%=roles.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -129,10 +120,11 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
+
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Register Staff" onclick="addStaff()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Staff" onclick="removeStaff()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Role" onclick="removeRole()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
@@ -148,12 +140,12 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
+
+
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- /#page-wrapper -->
-
         </div>
         <!-- /#wrapper -->
 
@@ -164,7 +156,5 @@
                 $('#dataTables-example').dataTable();
             });
         </script>
-
     </body>
-
 </html>

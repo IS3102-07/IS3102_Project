@@ -16,7 +16,6 @@ public class AccountManagement_StaffServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");

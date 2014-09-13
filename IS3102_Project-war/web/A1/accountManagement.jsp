@@ -22,17 +22,23 @@
                         <div class="col-md-12">
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
-
                                     <div class="box-content">
                                         <a href="../AccountManagement_StaffServlet"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Staff Management</h4>
                                         </a>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-4">
-
+                                <div class="featured-box featured-box-secundary">
+                                    <div class="box-content">
+                                        <a href="../RoleManagement_RoleServlet"><i class="icon-featured icon icon-user"> </i>
+                                            <h4>Roles Management</h4>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
                                         <i class="icon-featured icon icon-user"></i>

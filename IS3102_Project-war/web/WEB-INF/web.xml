@@ -53,16 +53,16 @@
         <servlet-class>A1_servlets.AccountManagement_LogoutServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>itemManagement_UpdateItemServlet</servlet-name>
-        <servlet-class>A6_servlets.itemManagement_UpdateItemServlet</servlet-class>
+        <servlet-name>RoleManagement_RoleServlet</servlet-name>
+        <servlet-class>A1_servlets.RoleManagement_RoleServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>itemManagement_AddItemServlet</servlet-name>
-        <servlet-class>A6_servlets.itemManagement_AddItemServlet</servlet-class>
+        <servlet-name>RoleManagement_AddRoleServlet</servlet-name>
+        <servlet-class>A1_servlets.RoleManagement_AddRoleServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>itemManagement_RemoveItemServlet</servlet-name>
-        <servlet-class>A6_servlets.itemManagement_RemoveItemServlet</servlet-class>
+        <servlet-name>RoleManagement_UpdateRoleServlet</servlet-name>
+        <servlet-class>A1_servlets.RoleManagement_UpdateRoleServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -117,16 +117,16 @@
         <url-pattern>/AccountManagement_LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>itemManagement_UpdateItemServlet</servlet-name>
-        <url-pattern>/itemManagement_UpdateItemServlet</url-pattern>
+        <servlet-name>RoleManagement_RoleServlet</servlet-name>
+        <url-pattern>/RoleManagement_RoleServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>itemManagement_AddItemServlet</servlet-name>
-        <url-pattern>/itemManagement_AddItemServlet</url-pattern>
+        <servlet-name>RoleManagement_AddRoleServlet</servlet-name>
+        <url-pattern>/RoleManagement_AddRoleServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>itemManagement_RemoveItemServlet</servlet-name>
-        <url-pattern>/itemManagement_RemoveItemServlet</url-pattern>
+        <servlet-name>RoleManagement_UpdateRoleServlet</servlet-name>
+        <url-pattern>/RoleManagement_UpdateRoleServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

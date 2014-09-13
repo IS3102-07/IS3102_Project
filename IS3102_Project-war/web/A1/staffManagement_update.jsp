@@ -60,7 +60,7 @@
                             <form role="form" action="../AccountManagement_UpdateStaffServlet">
                                 <div class="form-group">
                                     <label>Identification No</label>
-                                    <input class="form-control"  id="identificationNo" name="identificationNo" type="text" value="<%=staff.getIdentificationNo()%>">
+                                    <input class="form-control" name="identificationNo" type="text" value="<%=staff.getIdentificationNo()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>

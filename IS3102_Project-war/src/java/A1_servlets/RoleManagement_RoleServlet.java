@@ -1,33 +1,36 @@
-package A6_servlets;
+package A1_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.RoleEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class itemManagement_AddItemServlet extends HttpServlet {
+public class RoleManagement_RoleServlet extends HttpServlet {
 
     @EJB
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private AccountManagementBeanLocal accountManagementBean;
 
-        PrintWriter out = response.getWriter();
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet itemManagement_RemoveItemServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet itemManagement_RemoveItemServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            HttpSession session;
+            session = request.getSession();
+            List<RoleEntity> roles = accountManagementBean.listAllRoles();
+
+            session.setAttribute("roles", roles);
+            response.sendRedirect("A1/roleManagement.jsp");
+
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 
