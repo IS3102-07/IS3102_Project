@@ -36,7 +36,7 @@ public class AccountManagement_RegistrationServlet extends HttpServlet {
                 StaffEntity staffEntity = accountManagementBean.registerStaff(identificationNo, name, Integer.parseInt(phone), email, address, password);
 
                 if (staffEntity == null) {
-                    result = "?errMsg='Registration fail. Staff email already registered.'";
+                    result = "?errMsg=Registration fail. Staff email already registered.";
                     response.sendRedirect(source + result);
                 } else {
                     if (source.equals("A1/staffManagement_add.jsp")) {

@@ -1,7 +1,10 @@
 package A1_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,19 +12,49 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AccountManagement_UpdateStaffServlet extends HttpServlet {
 
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+    private String result;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AccountManagement_UpdateStaffServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AccountManagement_UpdateStaffServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String staffId = request.getParameter("id");
+            String staffEmail = request.getParameter("staffEmail");
+            String identificationNo = request.getParameter("identificationNo");
+            String name = request.getParameter("name");
+            String password = request.getParameter("password");
+            String address = request.getParameter("address");
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
+            String source = request.getParameter("source");
+
+            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
+            if (ifExist) {
+                if (!email.equals(staffEmail)) {
+                    result = "?errMsg=Update failed. Staff email already registered.";
+                    response.sendRedirect(source + result);
+                }
+                boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
+
+            } else {
+                boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
+
+                if (!canUpdate) {
+                    result = "?errMsg=Please try again.";
+                    response.sendRedirect(source + result);
+                } else {
+                    if (source.equals("A1/staffManagement_add.jsp") || source.equals("A1/staffManagement_update.jsp")) {
+                        response.sendRedirect("AccountManagement_StaffServlet");
+                    }
+                    response.sendRedirect(source);
+                }
+            }
+
+        } catch (Exception ex) {
+            out.println(ex);
+
         }
     }
 
