@@ -27,6 +27,15 @@
                 document.staffManagement.action = "staffManagement_add.jsp";
                 document.staffManagement.submit();
             }
+            function checkAll() {
+                alert("Check all the checkboxes...");
+                var allRows = document.staffManagement.getElementsByTagName("delete");
+                for (var i = 0; i < allRows.length; i++) {
+                    if (allRows[i].type == 'checkbox') {
+                        allRows[i].checked = true;
+                    }
+                }
+            }
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -62,7 +71,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
+                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
                                                             <th>Identification No</th>
                                                             <th>Name</th>
                                                             <th>Email</th>
@@ -75,7 +84,6 @@
                                                         <%
                                                             for (int i = 0; i < staffs.size(); i++) {
                                                                 if (!staffs.get(i).getEmail().equals(staffEntity.getEmail())) {
-                                                                    out.println(staffs.get(i).getId() + " vs " + staffEntity.getId() + "<br>");
                                                         %>
                                                         <tr>
                                                             <td>

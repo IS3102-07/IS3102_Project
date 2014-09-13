@@ -57,34 +57,34 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../AccountManagement_RegistrationServlet">
+                            <form role="form" action="../AccountManagement_UpdateStaffServlet">
                                 <div class="form-group">
                                     <label>Identification No</label>
-                                    <input class="form-control" name="identificationNo" id="identificationNo" type="text" placeholder="<%=staff.getIdentificationNo()%>" disabled>
+                                    <input class="form-control"  id="identificationNo" name="identificationNo" type="text" value="<%=staff.getIdentificationNo()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" name="name" id="name" type="text" placeholder="<%=staff.getName()%>" disabled>
+                                    <input class="form-control" name="name" type="text" value="<%=staff.getName()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>E-mail Address</label>
-                                    <input class="form-control" required="true" type="email" name="email" id="email" value="<%=staff.getEmail()%>">
+                                    <input class="form-control" required="true" type="email" name="email" value="<%=staff.getEmail()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Phone</label>
-                                    <input class="form-control" required="true" type="number" name="phone" id="phone" value="<%=staff.getPhone()%>">
+                                    <input class="form-control" required="true" type="number" name="phone" value="<%=staff.getPhone()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="form-control" type="password" name="password" id="password">
+                                    <label>New Password</label>
+                                    <input class="form-control" type="password" name="password" required="true" >
                                 </div>
                                 <div class="form-group">
                                     <label>Re-enter Password</label>
-                                    <input class="form-control" type="password"  name="repassword" id="repassword">
+                                    <input class="form-control" type="password"  name="repassword"required="true" >
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <input class="form-control" type="text" required="true" name="address" id="address" value="<%=staff.getAddress()%>">
+                                    <input class="form-control" type="text" required="true" name="address" value="<%=staff.getAddress()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Roles</label>
@@ -93,7 +93,9 @@
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
-                                <input type="hidden" value="A1/staffManagement.jsp" name="source">
+                                <input type="hidden" value="<%=staff.getId()%>" name="id">
+                                <input type="hidden" value="<%=staff.getEmail()%>" name="staffEmail">
+                                <input type="hidden" value="A1/staffManagement_update.jsp" name="source">
                             </form>
                         </div>
                         <!-- /.row -->
