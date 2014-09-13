@@ -20,6 +20,7 @@ public interface AccountManagementBeanLocal {
     public StaffEntity registerStaff(String identificationNo, String name, Integer phone, String email, String address, String password);
     //public boolean editStaff(Long staffID, String identificationNo, String name, String email, Integer phone, String password, String address);
     //public boolean editStaff(Long staffID, String email, Integer phone, String password, String address);
+    //public boolean removeStaff(Long staffID);
     public StaffEntity loginStaff(String email, String password);
     public List<StaffEntity> listAllStaff();
     
