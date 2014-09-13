@@ -7,9 +7,12 @@ import EntityManager.RawMaterialEntity;
 import EntityManager.ProductionGroupEntity;
 import EntityManager.RetailProductEntity;
 import javax.ejb.Local;
+import javax.ejb.Remove;
 
 @Local
 public interface ItemManagementBeanLocal {
+    
+    public ItemEntity getItemBySKU(String SKU);
     
     public boolean addRawMaterial(String SKU, String name, String category, String description);
     public boolean editRawMaterial(String SKU, String name, String category, String description);
@@ -41,4 +44,8 @@ public interface ItemManagementBeanLocal {
     public boolean removeItem(String itemName);
     public ItemEntity viewItem(String itemName);
     */
+    @Remove
+    public void remove();
+    
+    
 }
