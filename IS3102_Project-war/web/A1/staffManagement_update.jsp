@@ -87,7 +87,11 @@
                                     <input class="form-control" type="text" required="true" name="address" id="address" value="<%=staff.getAddress()%>">
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+                                    <label>Roles</label>
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="A1/staffManagement.jsp" name="source">
                             </form>
