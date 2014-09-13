@@ -142,8 +142,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 memberEntity.setCountry(country);
                 memberEntity.setCity(city);
                 memberEntity.setZipCode(zipCode);
-                memberEntity.setPasswordSalt(passwordSalt);
-                memberEntity.setPasswordHash(passwordHash);
+                if(!password.isEmpty()) memberEntity.setPasswordSalt(passwordSalt);
+                if(!password.isEmpty()) memberEntity.setPasswordHash(passwordHash);
                 em.merge(memberEntity);
                 System.out.println("Server edited member details successfully.");
                     return true;
@@ -242,8 +242,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             staffEntity.setName(name);
             staffEntity.setAddress(address);
             staffEntity.setPhone(phone);
-            staffEntity.setPasswordSalt(passwordSalt);
-            staffEntity.setPasswordHash(passwordHash);
+            if(!password.isEmpty()) staffEntity.setPasswordSalt(passwordSalt);
+            if(!password.isEmpty()) staffEntity.setPasswordHash(passwordHash);
             staffEntity.setEmail(email);
             em.merge(staffEntity);
             System.out.println("\nServer edited staff succeessfully");
@@ -267,8 +267,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
             staffEntity.setAddress(address);
             staffEntity.setPhone(phone);
-            staffEntity.setPasswordSalt(passwordSalt);
-            staffEntity.setPasswordHash(passwordHash);
+            if(!password.isEmpty()) staffEntity.setPasswordSalt(passwordSalt);
+            if(!password.isEmpty()) staffEntity.setPasswordHash(passwordHash);
             em.merge(staffEntity);
             System.out.println("\nServer edited staff succeessfully");
             return true;
