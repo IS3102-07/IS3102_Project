@@ -393,6 +393,20 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return true;
     }
+    
+    public boolean checkIfRoleExists(String name) {
+        System.out.println("checkRoleExists() called with:" + name);
+        Query q = em.createQuery("SELECT t FROM RoleEntity t WHERE t.name=:name");
+        q.setParameter("name", name);
+        try {
+            RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
+        } catch (NoResultException ex) {
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
 
     public boolean roleHasMembersAssigned(Long roleID) {
         System.out.println("roleHasMembersAssigned() called with roleID:" + roleID);
