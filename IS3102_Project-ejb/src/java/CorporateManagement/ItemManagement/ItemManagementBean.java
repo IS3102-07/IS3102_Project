@@ -7,6 +7,7 @@ import EntityManager.ProductionGroupEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
+import javax.ejb.Remove;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -418,4 +419,16 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
+
+    @Override
+    public ItemEntity getItemBySKU(String SKU) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    @Remove
+    public void remove(){
+        System.out.println("Item Management Bean is removed.");
+    }
+    
 }
