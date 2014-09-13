@@ -19,7 +19,7 @@ public class TransferOrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany
+    @OneToOne
     private LineItemEntity lineItem;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateCreated;
