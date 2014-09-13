@@ -21,7 +21,7 @@ public class WarehouseEntity implements Serializable {
     private List<StorageBinEntity> storageBin;
     @OneToOne (mappedBy = "destination")
     private PurchaseOrderEntity purchaseOrder;
-    @OneToMany
+    @OneToMany(mappedBy = "warehouses")
     private List<ItemEntity> items;
 
     public Long getId() {
