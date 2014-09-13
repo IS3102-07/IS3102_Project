@@ -21,24 +21,22 @@ public interface ManufacturingWarehouseManagementBeanLocal {
     public List<StorageBinEntity> viewAllStorageBin();
 
     public StorageBinEntity getInboundStorageBin(); //look for the inbound storagebin
-    
-    public StorageBinEntity getOutboundStorageBin(); //look for the inbound storagebin
-    
-    public List<TransferOrderEntity>  createTransferOrder(StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems);
-    
-    public LineItemEntity createLineItem(ItemEntity item, Integer quantity, String packType);
 
-    public void addLineItemToTransferOrder(Long transferOrderId, Long lineItemId);
+    public StorageBinEntity getOutboundStorageBin(); //look for the inbound storagebin
+
+    public List<TransferOrderEntity> createTransferOrder(StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems);
 
     public boolean markTransferOrderAsCompleted(Long transferOrderId);
-    
+
     public boolean cancelTransferOrder(Long transferOrderId);
 
     public TransferOrderEntity viewTransferOrder(Long transferOrderId);
-    
+
     public List<TransferOrderEntity> viewListOfAllTransferOrder();
 
     public boolean deleteTransferOrder(Long id);
-   
+
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId);
+
+    public List<TransferOrderEntity> createOutboundTransferOrder(List<LineItemEntity> lineItems);
 }

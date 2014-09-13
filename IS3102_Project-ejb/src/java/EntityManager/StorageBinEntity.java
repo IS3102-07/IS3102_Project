@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -23,6 +24,8 @@ public class StorageBinEntity implements Serializable {
     private Integer freeVolume;
     @OneToMany
     private List<ItemEntity> items;
+    @ManyToOne
+    private WarehouseEntity warehouse;
 
     public StorageBinEntity() {
         
@@ -96,6 +99,14 @@ public class StorageBinEntity implements Serializable {
 
     public void setItems(List<ItemEntity> items) {
         this.items = items;
+    }
+
+    public WarehouseEntity getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(WarehouseEntity warehouse) {
+        this.warehouse = warehouse;
     }
 
     @Override

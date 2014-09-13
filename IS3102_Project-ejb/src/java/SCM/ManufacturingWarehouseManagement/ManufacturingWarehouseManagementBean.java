@@ -5,8 +5,10 @@ import EntityManager.LineItemEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
+import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +16,9 @@ import javax.persistence.Query;
 
 @Stateless
 public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal {
+
+    @EJB
+    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
@@ -62,14 +67,6 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         return storageBins;
     }
 
-//    @Override
-//    public boolean updateTransferOrder(TransferOrderEntity transferOrder) {
-//        if (em.getReference(TransferOrderEntity.class, transferOrder.getId()) == null) {
-//            return false;
-//        }
-//        em.merge(transferOrder);
-//        return true;
-//    }
     @Override
     public TransferOrderEntity viewTransferOrder(Long id) {
         if (em.getReference(TransferOrderEntity.class, id) == null) {
@@ -87,47 +84,44 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         return true;
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    @Override
-    public LineItemEntity createLineItem(ItemEntity item, Integer quantity, String packType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void persist(Object object) {
-        em.persist(object);
-    }
-
-    @Override
-    public void addLineItemToTransferOrder(Long transferOrderId, Long lineItemId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public StorageBinEntity getInboundStorageBin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Inbound'");
+        storageBin = (StorageBinEntity) q.getSingleResult();
+        return storageBin;
     }
 
     @Override
     public StorageBinEntity getOutboundStorageBin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Outbound'");
+        storageBin = (StorageBinEntity) q.getSingleResult();
+        return storageBin;
     }
 
     @Override
     public boolean markTransferOrderAsCompleted(Long transferOrderId) {
         transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
-         // return moveItemBetweenStorageBin(transferOrder.getLineItem().getItem().getSKU(), transferOrder.getOrigin(), transferOrder.getTarget());
-        return true;
+        return manufacturingInventoryControlBean.moveItemBetweenStorageBins(transferOrder.getLineItem().getItem().getSKU(), transferOrder.getOrigin(), transferOrder.getTarget());
     }
 
     @Override
     public boolean cancelTransferOrder(Long transferOrderId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
+        transferOrder.setStatus("Cancelled");
+        return true;
     }
 
     @Override
     public List<TransferOrderEntity> viewListOfAllTransferOrder() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createQuery("Select t from TransferOrderEntity t");
+        return q.getResultList();
+    }
+
+    @Override
+    public boolean markTransferOrderAsUnfulfilled(Long transferOrderId) {
+        transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
+        transferOrder.setStatus("Unfulfillable");
+        return true;
     }
 
     @Override
@@ -135,14 +129,49 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         List<TransferOrderEntity> listOfTransferOrdersCreated = new ArrayList<TransferOrderEntity>();
         for (int i = 0; i < lineItems.size(); i++) {
             transferOrder = new TransferOrderEntity(lineItems.get(i), origin, targets.get(i));
+            em.persist(transferOrder);
             listOfTransferOrdersCreated.add(transferOrder);
         }
         return listOfTransferOrdersCreated;
     }
 
+
+    //TODO NEED TO TEST
     @Override
-    public boolean markTransferOrderAsUnfulfilled(Long transferOrderId) {
-        return false;
+    public List<TransferOrderEntity> createOutboundTransferOrder(List<LineItemEntity> lineItems) {
+        int qtyOfItemsToTransfer = 0;
+        int qtyOfItemsInCurrentBinAvailableToTransfer = 0;
+        ItemEntity currentItem = new ItemEntity();
+        StorageBinEntity outboundStorageBin = getOutboundStorageBin();
+        List<TransferOrderEntity> transferOrdersCreated = new ArrayList<>();
+        for (int i = 0; i < lineItems.size(); i++) {
+            qtyOfItemsToTransfer = lineItems.get(i).getQuantity();
+
+            List<StorageBinEntity> storageBinEntities = manufacturingInventoryControlBean.findStorageBinThatContainsItem(outboundStorageBin.getWarehouse().getId(), lineItems.get(i).getItem().getSKU());
+
+            for (int j = 0; j < storageBinEntities.size(); j++) {
+                qtyOfItemsInCurrentBinAvailableToTransfer = 0;
+                List<ItemEntity> itemsInCurrentBin = storageBinEntities.get(j).getItems();
+                for (int k = 0; k < itemsInCurrentBin.size(); k++) {
+                    currentItem = itemsInCurrentBin.get(k);
+                    if (currentItem.getSKU().equals(lineItems.get(i).getItem().getSKU())) {
+                        qtyOfItemsToTransfer--;
+                        qtyOfItemsInCurrentBinAvailableToTransfer++;
+                    }
+                    if (qtyOfItemsToTransfer <= 0) {
+                        break;
+                    }
+                }
+                LineItemEntity lineItem = new LineItemEntity(currentItem, qtyOfItemsInCurrentBinAvailableToTransfer, "");
+                transferOrder = new TransferOrderEntity(lineItem, storageBinEntities.get(j), outboundStorageBin);
+                em.persist(transferOrder);
+                transferOrdersCreated.add(transferOrder);
+                if (qtyOfItemsToTransfer <= 0) {
+                    break;
+                }
+            }
+        }
+        return transferOrdersCreated;
     }
 
 }
