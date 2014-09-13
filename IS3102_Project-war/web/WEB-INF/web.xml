@@ -37,8 +37,16 @@
         <servlet-class>A3_servlets.Inbound_OutboundServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AccountManagement_Staff</servlet-name>
-        <servlet-class>A1_servlets.AccountManagement_Staff</servlet-class>
+        <servlet-name>AccountManagement_StaffServlet</servlet-name>
+        <servlet-class>A1_servlets.AccountManagement_StaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountManagement_UpdateStaffServlet</servlet-name>
+        <servlet-class>A1_servlets.AccountManagement_UpdateStaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountManagement_RemoveStaffServlet</servlet-name>
+        <servlet-class>A1_servlets.AccountManagement_RemoveStaffServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -77,8 +85,16 @@
         <url-pattern>/Inbound_OutboundServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AccountManagement_Staff</servlet-name>
-        <url-pattern>/AccountManagement_Staff</url-pattern>
+        <servlet-name>AccountManagement_StaffServlet</servlet-name>
+        <url-pattern>/AccountManagement_StaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagement_UpdateStaffServlet</servlet-name>
+        <url-pattern>/AccountManagement_UpdateStaffServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagement_RemoveStaffServlet</servlet-name>
+        <url-pattern>/AccountManagement_RemoveStaffServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

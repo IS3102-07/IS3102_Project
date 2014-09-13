@@ -1,7 +1,6 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -10,42 +9,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AccountManagement_RegistrationServlet extends HttpServlet {
+public class AccountManagement_RemoveStaffServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            String identificationNo = request.getParameter("identificationNo");
-            String name = request.getParameter("name");
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
-            String source = request.getParameter("source");
 
-            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
-            if (ifExist) {
-                result = "?errMsg=Registration fail. Staff email already registered.";
-                response.sendRedirect(source + result);
-            } else {
-                StaffEntity staffEntity = accountManagementBean.registerStaff(identificationNo, name, Integer.parseInt(phone), email, address, password);
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
 
-                if (staffEntity == null) {
-                    result = "?errMsg='Registration fail. Staff email already registered.'";
-                    response.sendRedirect(source + result);
-                } else {
-                    response.sendRedirect(source);
+                for (int i = 0; i < deleteArr.length; i++) {
+                    out.println(deleteArr[i] + "<br>");
+                    //accountManagementBean.re
                 }
+                response.sendRedirect("AccountManagement_StaffServlet");
             }
+
         } catch (Exception ex) {
             out.println(ex);
-        } finally {
-            out.close();
         }
     }
 

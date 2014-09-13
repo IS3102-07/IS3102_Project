@@ -127,14 +127,20 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public MemberEntity loginMember(String email, String password) {
         System.out.println("loginMember() called with email:" + email);
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity where t.email=:email AND t.password=:password");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.email=:email");
             q.setParameter("email", email);
-            q.setParameter("password", password);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-            System.out.println("Member with email:" + email + " matches the given password.");
-            return memberEntity;
-        } catch (NoResultException ex) {
-            System.out.println("Login credentials provided were incorrect.");
+            String passwordSalt = memberEntity.getPasswordSalt();
+            String passwordHash = generatePasswordHash(passwordSalt, password);
+            if (passwordHash.equals(memberEntity.getPasswordHash())) {
+                System.out.println("Member with email:" + email + " logged in successfully.");
+                return memberEntity;
+            } else {
+                System.out.println("Login credentials provided were incorrect, password wrong.");
+                return null;
+            }
+        } catch (NoResultException ex) {//cannot find staff with that email
+            System.out.println("Login credentials provided were incorrect, no such email found.");
             return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to login member:\n" + ex);
@@ -193,15 +199,15 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             String passwordSalt = staffEntity.getPasswordSalt();
             String passwordHash = generatePasswordHash(passwordSalt, password);
-            if (password.equals(passwordHash)) {
+            if (passwordHash.equals(staffEntity.getPasswordHash())) {
                 System.out.println("Staff with email:" + email + " logged in successfully.");
                 return staffEntity;
             } else {
-                System.out.println("Login credentials provided were incorrect.");
+                System.out.println("Login credentials provided were incorrect, password wrong.");
                 return null;
             }
         } catch (NoResultException ex) {//cannot find staff with that email
-            System.out.println("Login credentials provided were incorrect.");
+            System.out.println("Login credentials provided were incorrect, no such email found.");
             return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to login staff:\n" + ex);
@@ -342,7 +348,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
             q.setParameter("id", roleID);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
-            Collection<RoleEntity> roles = staffEntity.getRoles();
+            List<RoleEntity> roles = staffEntity.getRoles();
             roles.add(roleEntity);
             staffEntity.setRoles(roles);
             em.persist(staffEntity);
@@ -364,7 +370,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
             q.setParameter("id", roleID);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
-            Collection<RoleEntity> roles = staffEntity.getRoles();
+            List<RoleEntity> roles = staffEntity.getRoles();
             for (RoleEntity currentRole : roles) {
                 if (currentRole == roleEntity) {
                     roles.remove(currentRole);
@@ -383,7 +389,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     //This will overwrite ALL the current exisiting roles for the staff
-    private boolean assignStaffRoles(Long staffID, Collection<RoleEntity> roles) {
+    private boolean assignStaffRoles(Long staffID, List<RoleEntity> roles) {
         System.out.println("assignStaffRoles() called with staffID:" + staffID);
         StaffEntity staffEntity = new StaffEntity();
         Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
@@ -396,6 +402,22 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to assign roles for staff:\n" + ex);
+            return false;
+        }
+    }
+
+    public boolean editStaffRole(Long staffID, List<RoleEntity> roles) {
+        System.out.println("editStaffRole() called with staffID:" + staffID);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
+            q.setParameter("id", staffID);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            staffEntity.setRoles(roles);
+            em.merge(staffEntity);
+            System.out.println("Roles successfully updated for staff id:" + staffID);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to update roles for staff:\n" + ex);
             return false;
         }
     }

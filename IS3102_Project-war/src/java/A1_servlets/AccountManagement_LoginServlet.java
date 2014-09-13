@@ -23,7 +23,6 @@ public class AccountManagement_LoginServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            session.invalidate();
 
             String email = request.getParameter("email");
             String password = request.getParameter("password");

@@ -1,6 +1,8 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -31,6 +33,12 @@ public class MemberEntity implements Serializable {
     private String passwordSalt;
     private String passwordHash;
     private Integer loyaltyPoints;
+    private Boolean accountActivationStatus;
+    private String activationCode;
+    private Boolean accountLockStatus;
+    private String unlockCode;
+        private String passwordReset;
+    
     @OneToMany
     List<RoleEntity> roles;
 
@@ -55,6 +63,11 @@ public class MemberEntity implements Serializable {
         this.setPasswordSalt(passwordSalt);
         this.setPasswordHash(passwordHash);
         this.setLoyaltyPoints(0);
+        setAccountActivationStatus(false);
+        setActivationCode();
+        setAccountLockStatus(false);
+        setUnlockCode();
+        setPasswordReset();
     }
 
     public Long getMemberID() {
@@ -71,7 +84,41 @@ public class MemberEntity implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-
+    public String getPasswordReset() {
+        return passwordReset;
+    }
+    public void setPasswordReset() {
+        SecureRandom random = new SecureRandom();
+        passwordReset = new BigInteger(130, random).toString();
+    }
+    public Boolean getAccountActivationStatus() {
+        return accountActivationStatus;
+    }
+    
+    public void setAccountActivationStatus(Boolean status) {
+        this.accountActivationStatus = status;
+    }
+    public String getActivationCode() {
+        return activationCode;
+    }
+    public void setActivationCode() {
+        SecureRandom random = new SecureRandom();
+        activationCode = new BigInteger(130, random).toString();
+    }
+    public Boolean getAccountLockStatus() {
+        return accountLockStatus;
+    }
+    
+    public void setAccountLockStatus(Boolean status) {
+        this.accountLockStatus = status;
+    }
+    public String getUnlockCode() {
+        return unlockCode;
+    }
+    public void setUnlockCode() {
+        SecureRandom random = new SecureRandom();
+        unlockCode = new BigInteger(130, random).toString();
+    }
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

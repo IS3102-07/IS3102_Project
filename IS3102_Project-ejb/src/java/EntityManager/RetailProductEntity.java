@@ -20,14 +20,16 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     @OneToMany(mappedBy="retailProduct")
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
     private String name;
+    private String category;
     private String description;
     private String imageURL;
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "retailProduct")
     private ItemEntity item;
 
     public RetailProductEntity(){}
-    public RetailProductEntity(String name, String description, String imageURL, ItemEntity item){
+    public RetailProductEntity(String name, String category, String description, String imageURL, ItemEntity item){
         this.name = name;
+        this.category = category;
         this.description = description;
         this.imageURL = imageURL;
         this.item = item;
@@ -79,6 +81,62 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     @Override
     public String toString() {
         return "entityManagerBean.RetailProduct[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the imageURL
+     */
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    /**
+     * @param imageURL the imageURL to set
+     */
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    /**
+     * @return the item
+     */
+    public ItemEntity getItem() {
+        return item;
+    }
+
+    /**
+     * @param item the item to set
+     */
+    public void setItem(ItemEntity item) {
+        this.item = item;
+    }
+
+    /**
+     * @return the category
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(String category) {
+        this.category = category;
     }
 
 }

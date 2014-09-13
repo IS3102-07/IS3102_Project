@@ -3,6 +3,7 @@ package EntityManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -21,9 +23,13 @@ public class ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String internalItemCode;
+    
+    private String SKU;
     @OneToMany(cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
+    @ManyToOne
+    private List<WarehouseEntity> warehouses;
+    
     @OneToOne
     private FurnitureEntity furniture;
     @OneToOne
@@ -36,8 +42,8 @@ public class ItemEntity implements Serializable {
         this.itemCountryList = new ArrayList<>();
     }
 
-    public ItemEntity(String internalItemCode) {
-        this.internalItemCode = internalItemCode;
+    public ItemEntity(String SKU) {
+        this.SKU = SKU;
         this.itemCountryList = new ArrayList<>();
     }
             
@@ -49,14 +55,6 @@ public class ItemEntity implements Serializable {
         else
             return -1;
     }
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }    
 
     public FurnitureEntity getFurniture() {
         return furniture;
@@ -77,7 +75,7 @@ public class ItemEntity implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (SKU != null ? SKU.hashCode() : 0);
         return hash;
     }
 
@@ -88,7 +86,7 @@ public class ItemEntity implements Serializable {
             return false;
         }
         ItemEntity other = (ItemEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.SKU == null && other.SKU != null) || (this.SKU != null && !this.SKU.equals(other.SKU))) {
             return false;
         }
         return true;
@@ -110,14 +108,42 @@ public class ItemEntity implements Serializable {
     /**
      * @return the internalItemCode
      */
-    public String getInternalItemCode() {
-        return internalItemCode;
+    public String getSKU() {
+        return SKU;
     }
 
     /**
-     * @param internalItemCode the internalItemCode to set
+     * @param SKU the internalItemCode to set
      */
-    public void setInternalItemCode(String internalItemCode) {
-        this.internalItemCode = internalItemCode;
+    public void setSKU(String SKU) {
+        this.SKU = SKU;
+    }
+
+    /**
+     * @return the retailProduct
+     */
+    public RawMaterialEntity getRetailProduct() {
+        return retailProduct;
+    }
+
+    /**
+     * @param retailProduct the retailProduct to set
+     */
+    public void setRetailProduct(RawMaterialEntity retailProduct) {
+        this.retailProduct = retailProduct;
+    }
+
+    /**
+     * @return the warehouses
+     */
+    public List<WarehouseEntity> getWarehouses() {
+        return warehouses;
+    }
+
+    /**
+     * @param warehouses the warehouses to set
+     */
+    public void setWarehouses(List<WarehouseEntity> warehouses) {
+        this.warehouses = warehouses;
     }
 }

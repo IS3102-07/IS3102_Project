@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class SupplierEntity implements Serializable {
@@ -28,7 +29,9 @@ public class SupplierEntity implements Serializable {
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
     @OneToMany(mappedBy="supplier", cascade={CascadeType.ALL})
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
-
+    @OneToOne
+    private PurchaseOrderEntity purchaseOrder;
+            
     public SupplierEntity() {
 
     }
@@ -47,6 +50,14 @@ public class SupplierEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public PurchaseOrderEntity getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
     }
 
     public String getSupplierName() {

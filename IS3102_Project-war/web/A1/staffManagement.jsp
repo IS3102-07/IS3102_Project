@@ -1,13 +1,35 @@
+<%@page import="EntityManager.RoleEntity"%>
+<%@page import="java.util.List"%>
+<%@page import="EntityManager.StaffEntity"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
 
     <body>
-
+        <script>
+            function updateStaff(id) {
+                staffManagement.id.value = id;
+                document.staffManagement.action = "staffManagement_update.jsp";
+                document.staffManagement.submit();
+            }
+            function removeStaff() {
+                var yes = confirm("Are you sure?!");
+                if (yes == true) {
+                    window.event.returnValue = true;
+                    document.staffManagement.action = "../AccountManagement_RemoveStaffServlet";
+                    document.staffManagement.submit();
+                } else {
+                    window.event.returnValue = false;
+                }
+            }
+            function addStaff() {
+                window.event.returnValue = true;
+                document.staffManagement.action = "staffManagement_add.jsp";
+                document.staffManagement.submit();
+            }
+        </script>
         <div id="wrapper">
-
             <jsp:include page="../menu2.html" />
-
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -17,6 +39,14 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
+
+                    <%
+                        List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
+                        if (staffs == null || staffs.isEmpty()) {
+                            out.println("No staff yet");
+                        } else {
+                    %>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -24,52 +54,77 @@
                                     insert some wordings
                                 </div>
                                 <!-- /.panel-heading -->
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Email</th>
-                                                        <th>Gender</th>
-                                                        <th>Role</th>
-                                                        <th>Update</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        <td>Trident</td>
-                                                        <td>Internet Explorer 4.0</td>
-                                                        <td>Win 95+</td>
-                                                        <td class="center">4</td>
-                                                        <td><input type="button" class="btn btn-primary btn-block" name="btnDetails" id="1" value="Vew" onclick=""/></td>
-                                                    </tr>
-                                            </table>
+                                <form name="staffManagement">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Identification No</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>Phone</th>
+                                                            <th>Roles</th>
+                                                            <th>Update</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            for (int i = 0; i < staffs.size(); i++) {
+                                                        %>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="checkbox" name="delete" value="<%=staffs.get(i).getId()%>" />
+                                                            </td>
+                                                            <td>
+                                                                <%=staffs.get(i).getIdentificationNo()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=staffs.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=staffs.get(i).getEmail()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=staffs.get(i).getPhone()%>
+                                                            </td>
+                                                            <td>
+                                                                <%
+                                                                    List<RoleEntity> roles = (List<RoleEntity>) (staffs.get(i).getRoles());
+                                                                    if (roles.isEmpty()) {
+                                                                        out.println("-");
+                                                                    } else {
+                                                                        for (int k = 0; k < roles.size(); k++) {
+                                                                            out.println(roles.get(i).getName());
+                                                                        }
+                                                                    }
+                                                                %>
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=staffs.get(i).getId()%>" value="update" onclick="javascript:updateStaff('<%=staffs.get(i).getId()%>')"/>
+                                                            </td>
+                                                        </tr>
+                                                        <%
+                                                            }
+                                                        %>
+                                                </table>
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="submit" onclick="" value="Delete" class="btn btn-primary" data-loading-text="Loading...">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input class="btn btn-primary" name="btnAdd" type="submit" value="Register Staff" onclick="addStaff()"  />
+                                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Staff" onclick="removeStaff()"  />
+                                                    </div>
                                                 </div>
+                                                <input type="hidden" name="id" value="">    
                                             </div>
                                         </div>
+                                        <!-- /.table-responsive -->
                                     </div>
-                                    <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.panel-body -->
+                                    <!-- /.panel-body -->
+                                </form>
+
                             </div>
                             <!-- /.panel -->
                         </div>
@@ -77,6 +132,7 @@
                     </div>
                     <!-- /.row -->
 
+                    <%}%>
                 </div>
                 <!-- /.container-fluid -->
 

@@ -1,5 +1,6 @@
 package EntityManager;
 
+import java.math.BigInteger;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-
+import java.security.SecureRandom;
 @Entity
 public class StaffEntity implements Serializable {
 
@@ -38,8 +39,14 @@ public class StaffEntity implements Serializable {
     private String address;
     private String passwordSalt;
     private String passwordHash;
+    private Boolean accountActivationStatus;
+    private String activationCode;
+    private Boolean accountLockStatus;
+    private String unlockCode;
+    private String passwordReset;
+    
     @ManyToMany
-    private Collection<RoleEntity> roles;
+    private List<RoleEntity> roles;
     @OneToMany
     private List<MessageEntity> inboxMessages;
     @OneToMany
@@ -56,8 +63,48 @@ public class StaffEntity implements Serializable {
         this.setAddress(address);
         this.setPasswordSalt(passwordSalt);
         this.setPasswordHash(passwordHash);
+        setAccountActivationStatus(false);
+        setActivationCode();
+        setAccountLockStatus(false);
+        setUnlockCode();
+        setPasswordReset();
     }
-
+    
+    public String getPasswordReset() {
+        return passwordReset;
+    }
+    public void setPasswordReset() {
+        SecureRandom random = new SecureRandom();
+        passwordReset = new BigInteger(130, random).toString();
+    }
+    public Boolean getAccountActivationStatus() {
+        return accountActivationStatus;
+    }
+    
+    public void setAccountActivationStatus(Boolean status) {
+        this.accountActivationStatus = status;
+    }
+    public String getActivationCode() {
+        return activationCode;
+    }
+    public void setActivationCode() {
+        SecureRandom random = new SecureRandom();
+        activationCode = new BigInteger(130, random).toString();
+    }
+    public Boolean getAccountLockStatus() {
+        return accountLockStatus;
+    }
+    
+    public void setAccountLockStatus(Boolean status) {
+        this.accountLockStatus = status;
+    }
+    public String getUnlockCode() {
+        return unlockCode;
+    }
+    public void setUnlockCode() {
+        SecureRandom random = new SecureRandom();
+        unlockCode = new BigInteger(130, random).toString();
+    }
     /**
      * @return the identificationNo
      */
@@ -193,14 +240,14 @@ public class StaffEntity implements Serializable {
     /**
      * @return the roles
      */
-    public Collection<RoleEntity> getRoles() {
+    public List<RoleEntity> getRoles() {
         return roles;
     }
 
     /**
      * @param roles the roles to set
      */
-    public void setRoles(Collection<RoleEntity> roles) {
+    public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
     }
 
