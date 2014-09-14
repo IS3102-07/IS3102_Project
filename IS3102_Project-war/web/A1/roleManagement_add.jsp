@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Staff</label>
-                                    <input class="form-control" required="true" type="email" name="email" disabled/>
+                                    <input class="form-control" required="true" type="text" name="email" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">

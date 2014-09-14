@@ -27,15 +27,15 @@
                                         <div class="form-group">
                                             <div class="col-md-4">
                                                 <label>Identification No</label>
-                                                <input type="text" name="identificationNo" id="identificationNo" class="form-control input-lg" required="true">
+                                                <input type="text" name="identificationNo" class="form-control input-lg" required="true">
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Name</label>
-                                                <input type="text" value="" name="name" id="name" class="form-control input-lg" required="true">
+                                                <input type="text" value="" name="name" class="form-control input-lg" required="true">
                                             </div>
                                             <div class="col-md-4">
                                                 <label>E-mail Address</label>
-                                                <input type="email" value="" name="email" id="email" class="form-control input-lg" required="true">
+                                                <input type="email" value="" name="email" class="form-control input-lg" required="true">
                                             </div>
                                         </div>
                                     </div>
@@ -43,15 +43,15 @@
                                         <div class="form-group">
                                             <div class="col-md-4">
                                                 <label>Phone</label>
-                                                <input type="number" name="phone" id="phone" class="form-control input-lg">
+                                                <input type="text" name="phone class="form-control input-lg">
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Password</label>
-                                                <input type="password" name="password" id="password" class="form-control input-lg" required="true">
+                                                <input type="password" name="password" class="form-control input-lg" required="true">
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Re-enter Password</label>
-                                                <input type="password" name="repassword" id="repassword" class="form-control input-lg" required="true">
+                                                <input type="password" name="repassword" class="form-control input-lg" required="true">
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +59,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <label>Address</label>
-                                                <input type="text" name="address" id="address" class="form-control input-lg" required="true">
+                                                <input type="text" name="address" class="form-control input-lg" required="true">
                                             </div>
                                         </div>
                                     </div>

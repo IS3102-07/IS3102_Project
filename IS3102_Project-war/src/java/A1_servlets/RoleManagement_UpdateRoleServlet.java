@@ -1,7 +1,9 @@
 package A1_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,20 +11,37 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RoleManagement_UpdateRoleServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RoleManagement_UpdateRoleServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RoleManagement_UpdateRoleServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String roleId = request.getParameter("id");
+            String name = request.getParameter("name");
+            String accessLevel = request.getParameter("accessLevel");
+            String source = request.getParameter("source");
+//            out.println("<h1>" + roleId + "</h1>");
+//            out.println("<h1>" + name + "</h1>");
+//            out.println("<h1>" + accessLevel + "</h1>");
+//            out.println("<h1>" + source + "</h1>");
+            boolean ifExist = accountManagementBean.checkIfRoleExists(name);
+            if (ifExist) {
+                result = "?errMsg=Role already exist.";
+                response.sendRedirect(source + result);
+            } else {
+                boolean canUpdate = accountManagementBean.updateRole(Long.parseLong(roleId), name, accessLevel);
+                if (!canUpdate) {
+                    result = "?errMsg=Please try again.";
+                    response.sendRedirect(source + result);
+                } else {
+                    response.sendRedirect("RoleManagement_RoleServlet");
+                }
+            }
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 

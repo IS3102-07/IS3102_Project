@@ -44,10 +44,7 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     result = "?errMsg=Please try again.";
                     response.sendRedirect(source + result);
                 } else {
-                    if (source.equals("A1/staffManagement_add.jsp") || source.equals("A1/staffManagement_update.jsp")) {
-                        response.sendRedirect("StaffManagement_StaffServlet");
-                    }
-                    response.sendRedirect(source);
+                    response.sendRedirect("StaffManagement_StaffServlet");
                 }
             }
 
