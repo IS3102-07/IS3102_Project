@@ -38,7 +38,6 @@ public class StorageBinEntity implements Serializable {
         this.height = height;
         this.volume = _length * width * height;
         this.freeVolume = volume;
-
     }
 
     public String getType() {
@@ -55,6 +54,7 @@ public class StorageBinEntity implements Serializable {
 
     public void setLength(Integer length) {
         this._length = length;
+        this.volume = _length * width * height;
     }
 
     public Integer getWidth() {
@@ -63,6 +63,7 @@ public class StorageBinEntity implements Serializable {
 
     public void setWidth(Integer width) {
         this.width = width;
+        this.volume = _length * width * height;
     }
 
     public Integer getHeight() {
@@ -71,6 +72,7 @@ public class StorageBinEntity implements Serializable {
 
     public void setHeight(Integer height) {
         this.height = height;
+        this.volume = _length * width * height;
     }
 
     public Integer getVolume() {

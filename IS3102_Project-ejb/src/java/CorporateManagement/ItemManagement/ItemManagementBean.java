@@ -18,12 +18,12 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     @PersistenceContext
     private EntityManager em;
 
-    public boolean addRawMaterial(String SKU, String name, String category, String description) {
+    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
         System.out.println("addRawMaterial() called with SKU:" + SKU);
 
         Long id;
         try {
-            ItemEntity item = new ItemEntity(SKU);
+            ItemEntity item = new ItemEntity(SKU, _length, width, height);
             RawMaterialEntity rawMaterialEntity = new RawMaterialEntity(name, category, description, item);
             em.persist(rawMaterialEntity);
             System.out.println("Raw Material name \"" + name + "\" added successfully.");
@@ -43,9 +43,15 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             for (Object o : q.getResultList()) {
                 RawMaterialEntity i = (RawMaterialEntity) o;
                 if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    if (name!=null) i.setName(name);
-                    if (category!=null) i.setCategory(category);
-                    if (description!=null) i.setDescription(description);
+                    if (name != null) {
+                        i.setName(name);
+                    }
+                    if (category != null) {
+                        i.setCategory(category);
+                    }
+                    if (description != null) {
+                        i.setDescription(description);
+                    }
                     em.persist(i);
                     System.out.println("\nServer updated raw material:\n" + name);
                     return true;
@@ -98,12 +104,12 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-   public boolean addFurniture(String SKU, String name, String category, String description, String imageURL) {
+    public boolean addFurniture(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addFurniture() called with SKU:" + SKU);
 
         Long id;
         try {
-            ItemEntity item = new ItemEntity(SKU);
+            ItemEntity item = new ItemEntity(SKU, _length, width, height);
             FurnitureEntity furnitureEntity = new FurnitureEntity(name, category, description, imageURL, item);
             em.persist(furnitureEntity);
             System.out.println("Furniture name \"" + name + "\" added successfully.");
@@ -123,10 +129,18 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             for (Object o : q.getResultList()) {
                 FurnitureEntity i = (FurnitureEntity) o;
                 if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    if (name!=null) i.setName(name);
-                    if (category!=null) i.setCategory(category);
-                    if (description!=null) i.setDescription(description);
-                    if (imageURL!=null) i.setImageURL(imageURL);
+                    if (name != null) {
+                        i.setName(name);
+                    }
+                    if (category != null) {
+                        i.setCategory(category);
+                    }
+                    if (description != null) {
+                        i.setDescription(description);
+                    }
+                    if (imageURL != null) {
+                        i.setImageURL(imageURL);
+                    }
                     em.persist(i);
                     System.out.println("\nServer updated furniture:\n" + name);
                     return true;
@@ -179,12 +193,12 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-      public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL) {
+    public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addRetailProduct() called with SKU:" + SKU);
 
         Long id;
         try {
-            ItemEntity item = new ItemEntity(SKU);
+            ItemEntity item = new ItemEntity(SKU, _length, width, height);
             RetailProductEntity retailProductEntity = new RetailProductEntity(name, category, description, imageURL, item);
             em.persist(retailProductEntity);
             System.out.println("Retail product name \"" + name + "\" added successfully.");
@@ -204,10 +218,18 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             for (Object o : q.getResultList()) {
                 RetailProductEntity i = (RetailProductEntity) o;
                 if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    if (name!=null) i.setName(name);
-                    if (category!=null) i.setCategory(category);
-                    if (description!=null) i.setDescription(description);
-                    if (imageURL!=null) i.setImageURL(imageURL);
+                    if (name != null) {
+                        i.setName(name);
+                    }
+                    if (category != null) {
+                        i.setCategory(category);
+                    }
+                    if (description != null) {
+                        i.setDescription(description);
+                    }
+                    if (imageURL != null) {
+                        i.setImageURL(imageURL);
+                    }
                     em.persist(i);
                     System.out.println("\nServer updated retail product:\n" + name);
                     return true;
@@ -427,8 +449,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     @Override
     @Remove
-    public void remove(){
+    public void remove() {
         System.out.println("Item Management Bean is removed.");
     }
-    
+
 }

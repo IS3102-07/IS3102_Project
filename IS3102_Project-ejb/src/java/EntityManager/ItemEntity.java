@@ -23,38 +23,74 @@ public class ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
     private String SKU;
     private String batch;
     @OneToMany(cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
     @ManyToOne
     private WarehouseEntity warehouses;
-    
     @OneToOne
     private FurnitureEntity furniture;
     @OneToOne
     private RawMaterialEntity rawMaterial;
     @OneToOne
     private RawMaterialEntity retailProduct;
-    
+    private Integer _length;
+    private Integer width;
+    private Integer height;
+    private Integer volume;
 
-    public ItemEntity(){
+    public ItemEntity() {
         this.itemCountryList = new ArrayList<>();
     }
 
-    public ItemEntity(String SKU) {
+    public ItemEntity(String SKU, Integer _length, Integer width, Integer height) {
         this.SKU = SKU;
-        this.itemCountryList = new ArrayList<>();
+        this._length = _length;
+        this.width = width;
+        this.height = height;
+        this.volume = _length * width * height;
     }
-            
-    public int getEntity(){
-        if(furniture != null)
+
+    public Integer getLength() {
+        return _length;
+    }
+
+    public void setLength(Integer _length) {
+        this._length = _length;
+        this.volume = _length * width * height;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+        this.volume = _length * width * height;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+        this.volume = _length * width * height;
+    }
+
+    public Integer getVolume() {
+        return volume;
+    }
+
+    public int getEntity() {
+        if (furniture != null) {
             return 1;
-        else if(rawMaterial != null)
-            return 2;        
-        else
+        } else if (rawMaterial != null) {
+            return 2;
+        } else {
             return -1;
+        }
     }
 
     public FurnitureEntity getFurniture() {
@@ -71,8 +107,8 @@ public class ItemEntity implements Serializable {
 
     public void setRawMaterial(RawMaterialEntity rawMaterial) {
         this.rawMaterial = rawMaterial;
-    }        
-    
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -96,7 +132,7 @@ public class ItemEntity implements Serializable {
     @Override
     public String toString() {
         return "em.ItemEntity[ id=" + id + " ]";
-    }   
+    }
 
     public Collection<Item_CountryEntity> getItemCountryList() {
         return itemCountryList;

@@ -5,6 +5,7 @@
  */
 package SCM.ManufacturingInventoryControl;
 
+import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
@@ -89,29 +90,29 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     }
 
     @Override
-    public boolean moveItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination) {
+    public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination) {
         System.out.println("moveItemBetweenStorageBins() called with SKU:" + SKU);
         List<ItemEntity> itemsInSourceBin = source.getItems();
         List<ItemEntity> itemsInDestinationBin = destination.getItems();
         try {
-            Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
-            q.setParameter("SKU", SKU);
-            ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
             for (int i = 0; i < itemsInSourceBin.size(); i++) {
                 if (itemsInSourceBin.get(i).getSKU().equals(SKU)) {
-                    itemsInSourceBin.remove(i);
-                    itemsInDestinationBin.add(itemEntity);
+                    ItemEntity itemRemovedFromSource = itemsInSourceBin.remove(i);
+                    itemsInDestinationBin.add(itemRemovedFromSource);
+                    source.setFreeVolume(source.getFreeVolume() + itemRemovedFromSource.getVolume());
+                    destination.setFreeVolume(destination.getFreeVolume() - itemRemovedFromSource.getVolume());
+                    break;
                 }
             }
             em.merge(itemsInSourceBin);
             em.merge(itemsInDestinationBin);
-            System.out.println("Items moved successfully between bins.");
+            System.out.println("The item is moved successfully between bins.");
             return true;
         } catch (EntityNotFoundException ex) {
-            System.out.println("Failed to move item between bins, item not found.");
+            System.out.println("Failed to move the item between bins, item not found.");
             return false;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to move items between bins:\n" + ex);
+            System.out.println("\nServer failed to move the item between bins:\n" + ex);
             return false;
         }
     }
@@ -131,7 +132,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     }
                 }
             }
-            System.out.println("Returned qty:"+qty);
+            System.out.println("Returned qty:" + qty);
             return qty;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed checkItemQty, warehouse or item not found.");

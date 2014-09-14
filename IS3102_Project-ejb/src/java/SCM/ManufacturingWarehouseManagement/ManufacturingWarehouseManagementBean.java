@@ -6,21 +6,27 @@ import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
+import static com.sun.faces.facelets.util.Path.context;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.UserTransaction;
 
 @Stateless
 public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal {
 
     @EJB
     private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
-
+    @Resource
+    private EJBContext context;
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     StorageBinEntity storageBin;
@@ -144,10 +150,20 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean markTransferOrderAsCompleted(Long transferOrderId) {
         try {
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
-            return manufacturingInventoryControlBean.moveItemBetweenStorageBins(transferOrder.getLineItem().getItem().getSKU(), transferOrder.getOrigin(), transferOrder.getTarget());
+            Integer numberOfQuantityToMove = transferOrder.getLineItem().getQuantity();
+            for (int i = 0; i < numberOfQuantityToMove; i++) {
+                boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(transferOrder.getLineItem().getItem().getSKU(), transferOrder.getOrigin(), transferOrder.getTarget());
+                if (!isPass) {
+                    UserTransaction ut = context.getUserTransaction();
+                    ut.rollback();
+                    throw new Exception();
+                }
+            }
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to markTransferOrderAsCompleted:\n" + ex);
             return false;
