@@ -31,7 +31,7 @@
                                             <div class="thumbnail">
                                                 <a href=""><img src="../img/regionalOffice.jpg" alt="Regional Office"></a>
                                                 <div class="caption">                                                    
-                                                    <center><h4>Regional Office Management</h4></center>
+                                                    <center><h4 style="color: blueviolet">Regional Office Management</h4></center>
                                                 </div>
                                             </div>
                                         </div>
@@ -40,7 +40,7 @@
                                                 <a href=""><img src="../img/store.jpg" alt="Store"></a>
                                                 <div class="caption">
                                                     <br />
-                                                    <center><h4>Store Management</h4></center>
+                                                    <center><h4 style="color: blueviolet">Store Management</h4></center>
                                                 </div>
                                             </div>
                                         </div>
@@ -48,7 +48,7 @@
                                             <div class="thumbnail">
                                                 <a href=""><img src="../img/factory.jpg" alt="Manufacturing Facility"></a>
                                                 <div class="caption">                                                    
-                                                    <center><h4>Manufacturing Facility Management</h4></center>
+                                                    <center><h4 style="color: blueviolet">Manufacturing Facility Management</h4></center>
                                                 </div>
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                             <div class="thumbnail">
                                                 <a href=""><img src="../img/warehouse.jpg" alt="Warehouse"></a>
                                                 <div class="caption">
-                                                    <center><h4>Warehouse Management</h4></center>
+                                                    <center><h4 style="color: blueviolet">Warehouse Management</h4></center>
                                                 </div>
                                             </div>
                                         </div>

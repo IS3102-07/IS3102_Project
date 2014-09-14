@@ -153,12 +153,16 @@
         <servlet-class>A3_servlets.SupplierManagement_RemoveSupplierServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InboundOutboundLogistic_CreateShippingOrderBasicInfo</servlet-name>
-        <servlet-class>A3_servlets.InboundOutboundLogistic_CreateShippingOrderBasicInfo</servlet-class>
+        <servlet-name>createShippingOrderBasicInfo</servlet-name>
+        <jsp-file>/A3/createShippingOrderBasicInfo.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>InboundOutboundLogistic_CreateShippingOrderLineItems</servlet-name>
-        <servlet-class>A3_servlets.InboundOutboundLogistic_CreateShippingOrderLineItems</servlet-class>
+        <servlet-name>createShippingOrder_LineItems</servlet-name>
+        <jsp-file>/A3/createShippingOrder_LineItems.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>FacilityManagement_Servlet</servlet-name>
+        <servlet-class>A6_servlets.FacilityManagement_Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -187,10 +191,6 @@
     <servlet-mapping>
         <servlet-name>AccountManagement_LoginServlet</servlet-name>
         <url-pattern>/AccountManagement_LoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Inbound_OutboundServlet</servlet-name>
-        <url-pattern>/Inbound_OutboundServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StaffManagement_StaffServlet</servlet-name>
@@ -313,16 +313,22 @@
         <url-pattern>/SupplierManagement_RemoveSupplierServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>InboundOutboundLogistic_CreateShippingOrderBasicInfo</servlet-name>
-        <url-pattern>/InboundOutboundLogistic_CreateShippingOrderBasicInfo</url-pattern>
+        <servlet-name>createShippingOrderBasicInfo</servlet-name>
+        <url-pattern>/A3/createShippingOrderBasicInfo</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>InboundOutboundLogistic_CreateShippingOrderLineItems</servlet-name>
-        <url-pattern>/InboundOutboundLogistic_CreateShippingOrderLineItems</url-pattern>
+        <servlet-name>createShippingOrder_LineItems</servlet-name>
+        <url-pattern>/A3/createShippingOrder_LineItems</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Inbound_OutboundServlet</servlet-name>
+        <url-pattern>/Inbound_OutboundServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FacilityManagement_Servlet</servlet-name>
+        <url-pattern>/FacilityManagement_Servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
-    </web-app>
+</web-app>
