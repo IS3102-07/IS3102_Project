@@ -33,7 +33,7 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
                 result = "?errMsg=Registration fail. Staff email already registered.";
                 response.sendRedirect(source + result);
             } else {
-                accountManagementBean.registerStaff(identificationNo, name, Integer.parseInt(phone), email, address, password);
+                accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
                 if (source.equals("A1/staffManagement_add.jsp")) {
                     response.sendRedirect("StaffManagement_StaffServlet");
                 }

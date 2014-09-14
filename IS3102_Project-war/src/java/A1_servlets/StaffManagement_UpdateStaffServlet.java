@@ -35,10 +35,10 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     result = "?errMsg=Update failed. Staff email already registered.";
                     response.sendRedirect(source + result);
                 }
-                accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
+                accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address, email);
                 response.sendRedirect("StaffManagement_StaffServlet");
             } else {
-                boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, Integer.parseInt(phone), password, address, email);
+                boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address, email);
 
                 if (!canUpdate) {
                     result = "?errMsg=Please try again.";
