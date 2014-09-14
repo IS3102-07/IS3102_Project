@@ -95,6 +95,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
      }
      return true;
      }*/
+    @Override
     public boolean checkMemberEmailExists(String email) {
         System.out.println("checkMemberEmailExists() called with:" + email);
         Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.email=:email");
@@ -107,7 +108,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         return true;
     }
 
-    public boolean registerMember(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String password) {
+    @Override
+    public boolean registerMember(String name, String address, Date DOB, String email, String phone, String country, String city, String zipCode, String password) {
         System.out.println("registerMember() called with name:" + name);
         Long memberID;
         String passwordSalt = generatePasswordSalt();
@@ -125,7 +127,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
-    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, Integer phone, String country, String city, Integer zipCode, String password) {
+    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, String country, String city, String zipCode, String password) {
         System.out.println("editMember() called with memberID:" + memberID);
 
         String passwordSalt = generatePasswordSalt();
@@ -160,6 +162,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         return true;
     }
 
+    @Override
     public MemberEntity loginMember(String email, String password) {
         System.out.println("loginMember() called with email:" + email);
         try {
@@ -195,6 +198,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
      }
      return true;
      }*/
+    @Override
     public boolean checkStaffEmailExists(String email) {
         System.out.println("checkStaffEmailExists() called with:" + email);
         Query q = em.createQuery("SELECT t FROM StaffEntity t WHERE t.email=:email");
@@ -209,7 +213,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         return true;
     }
 
-    public StaffEntity registerStaff(String identificationNo, String name, Integer phone, String email, String address, String password) {
+    @Override
+    public StaffEntity registerStaff(String identificationNo, String name, String phone, String email, String address, String password) {
         System.out.println("registerStaff() called with name:" + name);
         Long staffID;
         String passwordSalt = generatePasswordSalt();
@@ -228,7 +233,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     //For administrator to edit staff account.
-    public boolean editStaff(Long staffID, String identificationNo, String name, Integer phone, String password, String address, String email) {
+    @Override
+    public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address, String email) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
         String passwordSalt = generatePasswordSalt();
@@ -255,7 +261,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     //For staff to edit their own staff account.
-    public boolean editStaff(Long staffID, Integer phone, String password, String address) {
+    @Override
+    public boolean editStaff(Long staffID, String phone, String password, String address) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
         String passwordSalt = generatePasswordSalt();
@@ -278,6 +285,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean removeStaff(Long staffID) {
         System.out.println("removeStaff() called with staffID:" + staffID);
 
@@ -294,6 +302,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean removeMember(Long memberID) {
         System.out.println("removeMember() called with memberID:" + memberID);
         try {
@@ -312,6 +321,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public StaffEntity loginStaff(String email, String password) {
         System.out.println("loginStaff() called with email:" + email);
         try {
@@ -336,6 +346,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public List<StaffEntity> listAllStaff() {
         System.out.println("listAllStaff() called.");
         try {
@@ -348,6 +359,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public RoleEntity createRole(String name, String accessLevel) {
         System.out.println("createRole() called with name: " + name);
         RoleEntity roleEntity = new RoleEntity();
@@ -357,6 +369,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         return roleEntity;
     }
 
+    @Override
     public boolean updateRole(Long roleID, String name, String accessLevel) {
         System.out.println("updateRole() called with roleID:" + roleID);
         RoleEntity roleEntity;
@@ -377,6 +390,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         return true;
     }
 
+    @Override
     public boolean deleteRole(Long roleID) {
         System.out.println("deleteRole() called with roleID:" + roleID);
         RoleEntity roleEntity;
@@ -394,6 +408,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         return true;
     }
     
+    @Override
     public boolean checkIfRoleExists(String name) {
         System.out.println("checkRoleExists() called with:" + name);
         Query q = em.createQuery("SELECT t FROM RoleEntity t WHERE t.name=:name");
@@ -408,6 +423,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         return true;
     }
 
+    @Override
     public boolean roleHasMembersAssigned(Long roleID) {
         System.out.println("roleHasMembersAssigned() called with roleID:" + roleID);
         RoleEntity roleEntity;
@@ -430,6 +446,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public List<RoleEntity> listAllRoles() {
         System.out.println("listAllRoles() called.");
         List<RoleEntity> roleEntities = new ArrayList();
@@ -452,6 +469,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public RoleEntity searchRole(String name, String accessLevel) {
         System.out.println("searchRole() called with name:" + name);
         try {
@@ -470,6 +488,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean checkIfStaffHasRole(Long staffID, Long roleID) {
         System.out.println("checkIfStaffHasRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
@@ -494,6 +513,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean addStaffRole(Long staffID, Long roleID) {
         System.out.println("addStaffRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
@@ -516,6 +536,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean removeStaffRole(Long staffID, Long roleID) {
         System.out.println("removeStaffRole() called with staffID:" + staffID);
         try {
@@ -561,6 +582,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean editStaffRole(Long staffID, List<RoleEntity> roles) {
         System.out.println("editStaffRole() called with staffID:" + staffID);
         try {
@@ -577,6 +599,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
     public CountryEntity getCountry(String countryName) {
         System.out.println("getCountry() called with:" + countryName);
         Query q = em.createQuery("SELECT t FROM CountryEntity t WHERE t.name=:name");

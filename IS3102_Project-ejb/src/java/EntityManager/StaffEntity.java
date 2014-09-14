@@ -2,7 +2,6 @@ package EntityManager;
 
 import java.math.BigInteger;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import javax.persistence.OneToOne;
+
 @Entity
 public class StaffEntity implements Serializable {
 
@@ -34,7 +36,7 @@ public class StaffEntity implements Serializable {
     private Long id;
     private String identificationNo;
     private String name;
-    private Integer phone;
+    private String phone;
     private String email;
     private String address;
     private String passwordSalt;
@@ -44,18 +46,23 @@ public class StaffEntity implements Serializable {
     private Boolean accountLockStatus;
     private String unlockCode;
     private String passwordReset;
-    
+
+    @OneToOne
+    private CountryEntity country;
+
     @ManyToMany
     private List<RoleEntity> roles;
     @OneToMany
     private List<MessageEntity> inboxMessages;
     @OneToMany
     private List<MessageEntity> sentMessages;
+    private ArrayList<String> toDoListItemString;
+    private ArrayList<Boolean> toDoListItemStatus;
 
     public StaffEntity() {
     }
 
-    public void create(String identificationNo, String name, Integer phone, String email, String address, String passwordSalt, String passwordHash) {
+    public void create(String identificationNo, String name, String phone, String email, String address, String passwordSalt, String passwordHash) {
         this.setIdentificationNo(identificationNo);
         this.setName(name);
         this.setPhone(phone);
@@ -69,42 +76,50 @@ public class StaffEntity implements Serializable {
         setUnlockCode();
         setPasswordReset();
     }
-    
+
     public String getPasswordReset() {
         return passwordReset;
     }
+
     public void setPasswordReset() {
         SecureRandom random = new SecureRandom();
         passwordReset = new BigInteger(130, random).toString();
     }
+
     public Boolean getAccountActivationStatus() {
         return accountActivationStatus;
     }
-    
+
     public void setAccountActivationStatus(Boolean status) {
         this.accountActivationStatus = status;
     }
+
     public String getActivationCode() {
         return activationCode;
     }
+
     public void setActivationCode() {
         SecureRandom random = new SecureRandom();
         activationCode = new BigInteger(130, random).toString();
     }
+
     public Boolean getAccountLockStatus() {
         return accountLockStatus;
     }
-    
+
     public void setAccountLockStatus(Boolean status) {
         this.accountLockStatus = status;
     }
+
     public String getUnlockCode() {
         return unlockCode;
     }
+
     public void setUnlockCode() {
         SecureRandom random = new SecureRandom();
         unlockCode = new BigInteger(130, random).toString();
     }
+
     /**
      * @return the identificationNo
      */
@@ -136,14 +151,14 @@ public class StaffEntity implements Serializable {
     /**
      * @return the phone
      */
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
     /**
      * @param phone the phone to set
      */
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -278,4 +293,29 @@ public class StaffEntity implements Serializable {
     public void setSentMessages(List<MessageEntity> sentMessages) {
         this.sentMessages = sentMessages;
     }
+
+    public CountryEntity getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryEntity country) {
+        this.country = country;
+    }
+
+    public ArrayList<String> getToDoListItemString() {
+        return toDoListItemString;
+    }
+
+    public void setToDoListItemString(ArrayList<String> toDoListItemString) {
+        this.toDoListItemString = toDoListItemString;
+    }
+
+    public ArrayList<Boolean> getToDoListItemStatus() {
+        return toDoListItemStatus;
+    }
+
+    public void setToDoListItemStatus(ArrayList<Boolean> toDoListItemStatus) {
+        this.toDoListItemStatus = toDoListItemStatus;
+    }
+
 }

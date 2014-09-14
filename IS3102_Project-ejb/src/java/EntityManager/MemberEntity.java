@@ -17,7 +17,6 @@ public class MemberEntity implements Serializable {
 
     private static long serialVersionUID = 1L;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,10 +25,10 @@ public class MemberEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date DOB;
     private String email;
-    private Integer phone;
+    private String phone;
     private String country;
     private String city;
-    private Integer zipCode;
+    private String zipCode;
     private String passwordSalt;
     private String passwordHash;
     private Integer loyaltyPoints;
@@ -37,8 +36,8 @@ public class MemberEntity implements Serializable {
     private String activationCode;
     private Boolean accountLockStatus;
     private String unlockCode;
-        private String passwordReset;
-    
+    private String passwordReset;
+
     @OneToMany
     List<RoleEntity> roles;
 
@@ -51,7 +50,7 @@ public class MemberEntity implements Serializable {
     //@OneToMany
     //private SalesRecordEntity salesRecord;
     //TODO Subscription
-    public void create(String name, String address, Date DOB, String email, Integer phone, String country, String city, Integer zipCode, String passwordHash, String passwordSalt) {
+    public void create(String name, String address, Date DOB, String email, String phone, String country, String city, String zipCode, String passwordHash, String passwordSalt) {
         this.setName(name);
         this.setAddress(address);
         this.setDOB(DOB);
@@ -84,41 +83,50 @@ public class MemberEntity implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
+
     public String getPasswordReset() {
         return passwordReset;
     }
+
     public void setPasswordReset() {
         SecureRandom random = new SecureRandom();
         passwordReset = new BigInteger(130, random).toString();
     }
+
     public Boolean getAccountActivationStatus() {
         return accountActivationStatus;
     }
-    
+
     public void setAccountActivationStatus(Boolean status) {
         this.accountActivationStatus = status;
     }
+
     public String getActivationCode() {
         return activationCode;
     }
+
     public void setActivationCode() {
         SecureRandom random = new SecureRandom();
         activationCode = new BigInteger(130, random).toString();
     }
+
     public Boolean getAccountLockStatus() {
         return accountLockStatus;
     }
-    
+
     public void setAccountLockStatus(Boolean status) {
         this.accountLockStatus = status;
     }
+
     public String getUnlockCode() {
         return unlockCode;
     }
+
     public void setUnlockCode() {
         SecureRandom random = new SecureRandom();
         unlockCode = new BigInteger(130, random).toString();
     }
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -205,14 +213,14 @@ public class MemberEntity implements Serializable {
     /**
      * @return the phone
      */
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
     /**
      * @param phone the phone to set
      */
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -247,14 +255,14 @@ public class MemberEntity implements Serializable {
     /**
      * @return the zipCode
      */
-    public Integer getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
     /**
      * @param zipCode the zipCode to set
      */
-    public void setZipCode(Integer zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
@@ -299,7 +307,7 @@ public class MemberEntity implements Serializable {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-    
+
     /**
      * @return the feedback
      */
@@ -313,7 +321,6 @@ public class MemberEntity implements Serializable {
 //    public void setFeedback(Collection<FeedbackEntity> feedback) {
 //        this.feedback = feedback;
 //    }
-
     /**
      * @return the serialVersionUID
      */
