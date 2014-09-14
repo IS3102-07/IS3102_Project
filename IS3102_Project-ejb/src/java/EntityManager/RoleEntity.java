@@ -90,7 +90,7 @@ public class RoleEntity implements Serializable {
         return staffs;
     }
 
-    public void setMembers(List<StaffEntity> staffs) {
+    public void setStaffs(List<StaffEntity> staffs) {
         this.staffs = staffs;
     }
     
