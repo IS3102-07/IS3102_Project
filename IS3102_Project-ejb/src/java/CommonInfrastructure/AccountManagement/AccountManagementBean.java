@@ -238,7 +238,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     //For administrator to edit staff account.
     @Override
-    public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address, String email) {
+    public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
         String passwordSalt = generatePasswordSalt();
@@ -258,7 +258,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             if (!password.isEmpty()) {
                 staffEntity.setPasswordHash(passwordHash);
             }
-            staffEntity.setEmail(email);
+            //staffEntity.setEmail(email);
             em.merge(staffEntity);
             System.out.println("\nServer edited staff succeessfully");
             return true;
@@ -382,14 +382,14 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean updateRole(Long roleID, String name, String accessLevel) {
+    public boolean updateRole(Long roleID, String accessLevel) {
         System.out.println("updateRole() called with roleID:" + roleID);
         RoleEntity roleEntity;
         try {
             Query q = em.createQuery("SELECT t FROM RoleEntity t where t.id=:id");
             q.setParameter("id", roleID);
             roleEntity = (RoleEntity) q.getSingleResult();
-            roleEntity.setName(name);
+            //roleEntity.setName(name);
             roleEntity.setAccessLevel(accessLevel);
             em.merge(roleEntity);
             System.out.println("Roles updated successfully.");

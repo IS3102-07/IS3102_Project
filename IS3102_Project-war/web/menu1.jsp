@@ -120,7 +120,7 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <%
-                approvedRolesID = new Long[]{1L,2L};
+                approvedRolesID = new Long[]{1L, 2L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -152,7 +152,7 @@
                 </ul>
             </li>
             <%}
-                approvedRolesID = new Long[]{1L,2L,3L,4L,5L,7L};
+                approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 5L, 7L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -193,7 +193,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L,2L,3L,4L,7L};
+                approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 7L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -231,7 +231,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L,6L};
+                approvedRolesID = new Long[]{1L, 6L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -269,7 +269,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L,2L,6L};
+                approvedRolesID = new Long[]{1L, 2L, 6L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {

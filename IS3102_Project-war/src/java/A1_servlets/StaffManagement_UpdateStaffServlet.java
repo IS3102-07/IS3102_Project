@@ -20,36 +20,19 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             String staffId = request.getParameter("id");
-            String staffEmail = request.getParameter("staffEmail");
             String identificationNo = request.getParameter("identificationNo");
             String name = request.getParameter("name");
             String password = request.getParameter("password");
             String address = request.getParameter("address");
             String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
 
-            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
-            if (ifExist) {
-                if (!email.equals(staffEmail)) {
-                    result = "?errMsg=Update failed. Staff email already registered.";
-                    out.println("<h1>1</h1>");
-                    //response.sendRedirect("staffManagement_update.jsp" + result);
-                }
-                accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address, email);
-                result = "?errMsg=Staff updated successfully.";
-                out.println("<h1>2</h1>");
-                //response.sendRedirect("StaffManagement_StaffServlet" + result);
+            boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address);
+            if (!canUpdate) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("staffManagement_update.jsp" + result);
             } else {
-                boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address, email);
-                if (!canUpdate) {
-                    result = "?errMsg=Please try again.";
-                    out.println("<h1>3</h1>");
-                    //response.sendRedirect("staffManagement_update.jsp" + result);
-                } else {
-                    result = "?errMsg=Staff updated successfully.";
-                    out.println("<h1>4</h1>");
-                    //response.sendRedirect("StaffManagement_StaffServlet" + result);
-                }
+                result = "?errMsg=Staff updated successfully.";
+                response.sendRedirect("StaffManagement_StaffServlet" + result);
             }
 
         } catch (Exception ex) {

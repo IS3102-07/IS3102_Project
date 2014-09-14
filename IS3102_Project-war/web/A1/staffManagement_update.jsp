@@ -63,11 +63,12 @@
                         } else {
 
                             StaffEntity staff = new StaffEntity();
-                            for (int i = 0; i < staffs.size(); i++) {
-                                if (staffs.get(i).getId() == id) {
-                                    staff = staffs.get(i);
+                            if (staff != null) {
+                                for (int i = 0; i < staffs.size(); i++) {
+                                    if (staffs.get(i).getId() == id) {
+                                        staff = staffs.get(i);
+                                    }
                                 }
-                            }
                     %>
 
                     <div class="row">
@@ -84,7 +85,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>E-mail Address</label>
-                                    <input class="form-control" required="true" type="email" name="email" value="<%=staff.getEmail()%>">
+                                    <input class="form-control" required="true" type="email" name="email" value="<%=staff.getEmail()%>" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label>Phone</label>
@@ -114,7 +115,8 @@
                         </div>
                         <!-- /.row -->
                     </div>
-                    <%}%>
+                    <%}
+                        }%>
                 </div>
 
             </div>

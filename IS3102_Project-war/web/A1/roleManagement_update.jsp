@@ -1,13 +1,10 @@
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
-
     <jsp:include page="../header2.html" />
     <body>
-
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
-
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -25,7 +22,7 @@
                                     <i class="icon icon-user"></i><a href="roleManagement.jsp"> Role Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i>  Role Update
+                                    <i class="icon icon-edit"></i> Role Update
                                 </li>
                             </ol>
                         </div>
@@ -34,19 +31,12 @@
 
                     <%
                         int id = 0;
-                        if (request.getParameter("id") == null) {
-                            response.sendRedirect("roleManagement.jsp");
-                        } else {
-                            id = Integer.parseInt(request.getParameter("id"));
-                        }
-
                         List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
-
-                        if (roles == null || roles.isEmpty()) {
+                        RoleEntity role = new RoleEntity();
+                        if (roles == null || roles.isEmpty() || request.getParameter("id") == null) {
                             response.sendRedirect("../RoleManagement_RoleServlet");
                         } else {
-
-                            RoleEntity role = new RoleEntity();
+                            id = Integer.parseInt(request.getParameter("id"));
                             for (int i = 0; i < roles.size(); i++) {
                                 if (roles.get(i).getId() == id) {
                                     role = roles.get(i);
@@ -60,7 +50,7 @@
                             <form role="form" action="../RoleManagement_UpdateRoleServlet">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" name="name" type="text" value="<%=role.getName()%>" required="true" >
+                                    <input class="form-control" name="name" type="text" value="<%=role.getName()%>" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label>Access Level</label>
@@ -75,12 +65,12 @@
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="<%=role.getId()%>" name="id">
-                                <input type="hidden" value="<%=role.getName()%>" name="roleName">
                             </form>
                         </div>
                         <!-- /.row -->
                     </div>
                     <%}%>
+
                 </div>
 
             </div>
