@@ -12,13 +12,13 @@
     <body>
         <div id="wrapper" class="wapper">
 
-            <jsp:include page="../menu2.html" />
+            <jsp:include page="../menu1.jsp" />
 
             <div class="container-fluid" style="background-color: white; height: 80%">
                 
                 <h3><b>Shipping Order</b></h3>
                 
-                <form id="form" role="form">
+                <form id="form" role="form" action="../Inbound_OutboundServlet/createShippingOrderBasicInfo_POST">
 
                     <br>
 
@@ -32,7 +32,7 @@
                         
                         <table style="width:100%">
                             <thead>
-
+                                
                             </thead>
                             <tbody>
                                 <tr>

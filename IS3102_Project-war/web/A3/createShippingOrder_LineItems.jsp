@@ -4,6 +4,8 @@
     Author     : Administrator
 --%>
 
+<%@page import="EntityManager.LineItemEntity"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -35,12 +37,25 @@
                             <thead>
                                 <tr>
                                     <th><input type="checkbox" name="" onclick="" title="check all"></th>
-                                    <th>Line</th><th>Item Name</th><th>Quantity</th><th>Pack Type</th>
+                                    <th>Line</th><th>SKU</th><th>Item Name</th><th>Quantity</th><th>Pack Type</th>
                                 </tr>
                             </thead>
-
+                                
                             <tbody>
-
+                                <%  
+                                    List<LineItemEntity> lineItemList = (List<LineItemEntity>) request.getAttribute("lineItemList");
+                                    Integer lineNo = 1;
+                                    for (LineItemEntity lineItem : lineItemList) {
+                                        %>                                       
+                                        <tr>
+                                            <td><% lineNo.intValue(); %></td>  
+                                            <td><% lineItem.getItem().getSKU(); %></td> 
+                                            <td><% lineItem.getQuantity(); %></td>
+                                            <td><% lineItem.getPackType(); %></td>
+                                        </tr>                                       
+                                <%
+                                    }
+                                %>
                             </tbody>                                
 
                         </table>                        

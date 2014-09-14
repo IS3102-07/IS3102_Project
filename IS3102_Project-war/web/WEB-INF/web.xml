@@ -133,24 +133,12 @@
         <servlet-class>A6_servlets.RetailProductManagement_UpdateRetailProductServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RoleManagement_RemoveRoleServlet</servlet-name>
-        <servlet-class>A1_servlets.RoleManagement_RemoveRoleServlet</servlet-class>
+        <servlet-name>createShippingOrderBasicInfo</servlet-name>
+        <jsp-file>/A3/createShippingOrderBasicInfo.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>SupplierManagement_SupplierServlet</servlet-name>
-        <servlet-class>A3_servlets.SupplierManagement_SupplierServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SupplierManagement_AddSupplierServlet</servlet-name>
-        <servlet-class>A3_servlets.SupplierManagement_AddSupplierServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SupplierManagement_UpdateSupplierServlet</servlet-name>
-        <servlet-class>A3_servlets.SupplierManagement_UpdateSupplierServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SupplierManagement_RemoveSupplierServlet</servlet-name>
-        <servlet-class>A3_servlets.SupplierManagement_RemoveSupplierServlet</servlet-class>
+        <servlet-name>createShippingOrder_LineItems</servlet-name>
+        <jsp-file>/A3/createShippingOrder_LineItems.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -179,10 +167,6 @@
     <servlet-mapping>
         <servlet-name>AccountManagement_LoginServlet</servlet-name>
         <url-pattern>/AccountManagement_LoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Inbound_OutboundServlet</servlet-name>
-        <url-pattern>/Inbound_OutboundServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StaffManagement_StaffServlet</servlet-name>
@@ -285,24 +269,16 @@
         <url-pattern>/RetailProductManagement_UpdateRetailProductServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RoleManagement_RemoveRoleServlet</servlet-name>
-        <url-pattern>/RoleManagement_RemoveRoleServlet</url-pattern>
+        <servlet-name>Inbound_OutboundServlet</servlet-name>
+        <url-pattern>/Inbound_OutboundServlet/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SupplierManagement_SupplierServlet</servlet-name>
-        <url-pattern>/SupplierManagement_SupplierServlet</url-pattern>
+        <servlet-name>createShippingOrderBasicInfo</servlet-name>
+        <url-pattern>/createShippingOrderBasicInfo</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SupplierManagement_AddSupplierServlet</servlet-name>
-        <url-pattern>/SupplierManagement_AddSupplierServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SupplierManagement_UpdateSupplierServlet</servlet-name>
-        <url-pattern>/SupplierManagement_UpdateSupplierServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SupplierManagement_RemoveSupplierServlet</servlet-name>
-        <url-pattern>/SupplierManagement_RemoveSupplierServlet</url-pattern>
+        <servlet-name>createShippingOrder_LineItems</servlet-name>
+        <url-pattern>/createShippingOrder_LineItems</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

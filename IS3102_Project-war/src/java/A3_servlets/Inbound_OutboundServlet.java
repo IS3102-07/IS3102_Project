@@ -12,8 +12,10 @@ import EntityManager.LineItemEntity;
 import EntityManager.ShippingOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
+import SCM.InboundAndOutboundLogistics.LineItemModel;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -91,6 +93,14 @@ public class Inbound_OutboundServlet extends HttpServlet {
                 
                 ShippingOrderEntity shippingOrder = ioBean.getShippingOrderById(currentShippingOrderId);
                 List<LineItemEntity> lineItemList = shippingOrder.getLineItems();
+                
+//                List<LineItemModel> modelList = new ArrayList<>();
+//                
+//                for(LineItemEntity lineItem: lineItemList){
+//                    LineItemModel model = new LineItemModel();
+//                    model.lineItem = lineItem;
+//                    model.item = lineItem.getItem();
+//                }                
                 
                 request.setAttribute("lineItemList", lineItemList);
                 
