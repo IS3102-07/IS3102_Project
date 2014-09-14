@@ -14,6 +14,7 @@ import javax.ejb.Remove;
 public interface ItemManagementBeanLocal {
 
     public ItemEntity getItemBySKU(String SKU);
+    public boolean checkSKUExists(String SKU);
     public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height);
     public boolean editRawMaterial(String SKU, String name, String category, String description);
     public boolean removeRawMaterial(String SKU);
