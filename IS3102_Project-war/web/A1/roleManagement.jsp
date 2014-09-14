@@ -49,7 +49,7 @@
                                     <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i>  Role Management
+                                    <i class="icon icon-edit"></i> Role Management
                                 </li>
                             </ol>
                         </div>
@@ -61,7 +61,13 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    insert some wordings
+                                    <%
+                                        String errMsg = request.getParameter("errMsg");
+                                        if (errMsg == null || errMsg.equals("")) {
+                                            errMsg = "Insert some text";
+                                        }
+                                        out.println(errMsg);
+                                    %>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="rolesManagement">
@@ -81,7 +87,8 @@
                                                     <tbody>
                                                         <%
                                                             List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
-                                                            for (int i = 0; i < roles.size(); i++) {
+                                                            if (roles != null) {
+                                                                for (int i = 0; i < roles.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
@@ -110,6 +117,7 @@
                                                             </td>
                                                         </tr>
                                                         <%
+                                                                }
                                                             }
                                                         %>
                                                     </tbody>

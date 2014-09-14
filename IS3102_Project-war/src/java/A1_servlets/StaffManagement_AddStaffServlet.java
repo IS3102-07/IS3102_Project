@@ -1,7 +1,6 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -34,8 +33,9 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
                 response.sendRedirect(source + result);
             } else {
                 accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
+                result = "?errMsg=Staff added successfully.";
                 if (source.equals("A1/staffManagement_add.jsp")) {
-                    response.sendRedirect("StaffManagement_StaffServlet");
+                    response.sendRedirect("StaffManagement_StaffServlet" + result);
                 }
                 response.sendRedirect(source);
             }

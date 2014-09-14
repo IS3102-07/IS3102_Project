@@ -27,18 +27,20 @@ public class RoleManagement_UpdateRoleServlet extends HttpServlet {
             boolean ifExist = accountManagementBean.checkIfRoleExists(name);
             if (ifExist) {
                 if (!name.equals(roleName)) {
-                    result = "?errMsg=Role already exist.";
+                    result = "?errMsg=Update Failed. Role already exist.";
                     response.sendRedirect(source + result);
                 }
                 accountManagementBean.updateRole(Long.parseLong(roleId), name, accessLevel);
-                response.sendRedirect("RoleManagement_RoleServlet");
+                result = "?errMsg=Role updated successfully.";
+                response.sendRedirect("RoleManagement_RoleServlet" + result);
             } else {
                 boolean canUpdate = accountManagementBean.updateRole(Long.parseLong(roleId), name, accessLevel);
                 if (!canUpdate) {
                     result = "?errMsg=Please try again.";
                     response.sendRedirect(source + result);
                 } else {
-                    response.sendRedirect("RoleManagement_RoleServlet");
+                    result = "?errMsg=Role updated successfully.";
+                    response.sendRedirect("RoleManagement_RoleServlet" + result);
                 }
             }
         } catch (Exception ex) {

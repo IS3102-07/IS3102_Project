@@ -36,15 +36,16 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     response.sendRedirect(source + result);
                 }
                 accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address, email);
-                response.sendRedirect("StaffManagement_StaffServlet");
+                result = "?errMsg=Staff updated successfully.";
+                response.sendRedirect("StaffManagement_StaffServlet" + result);
             } else {
                 boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address, email);
-
                 if (!canUpdate) {
                     result = "?errMsg=Please try again.";
                     response.sendRedirect(source + result);
                 } else {
-                    response.sendRedirect("StaffManagement_StaffServlet");
+                    result = "?errMsg=Staff updated successfully.";
+                    response.sendRedirect("StaffManagement_StaffServlet" + result);
                 }
             }
 

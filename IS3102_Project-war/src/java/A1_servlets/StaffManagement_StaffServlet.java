@@ -24,11 +24,16 @@ public class StaffManagement_StaffServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+
             List<StaffEntity> staffs = accountManagementBean.listAllStaff();
-
             session.setAttribute("staffs", staffs);
-            response.sendRedirect("A1/staffManagement.jsp");
 
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A1/staffManagement.jsp");
+            } else {
+                response.sendRedirect("A1/staffManagement.jsp?errMsg=" + errMsg);
+            }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

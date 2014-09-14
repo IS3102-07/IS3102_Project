@@ -46,10 +46,10 @@
                             <h1 class="page-header">Staff  Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
+                                    <i class="icon icon-user"></i><a href="accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i>  Staff Management
+                                    <i class="icon icon-edit"></i> Staff Management
                                 </li>
                             </ol>
                         </div>
@@ -60,7 +60,13 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    insert some wordings
+                                    <%
+                                        String errMsg = request.getParameter("errMsg");
+                                        if (errMsg == null || errMsg.equals("")) {
+                                            errMsg = "Insert some text";
+                                        }
+                                        out.println(errMsg);
+                                    %>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="staffManagement">
@@ -83,8 +89,9 @@
                                                         <%
                                                             StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
                                                             List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
-                                                            for (int i = 0; i < staffs.size(); i++) {
-                                                                if (!staffs.get(i).getEmail().equals(staffEntity.getEmail())) {
+                                                            if (staffs != null) {
+                                                                for (int i = 0; i < staffs.size(); i++) {
+                                                                    if (!staffs.get(i).getEmail().equals(staffEntity.getEmail())) {
                                                         %>
                                                         <tr>
                                                             <td>
@@ -119,6 +126,7 @@
                                                             </td>
                                                         </tr>
                                                         <%
+                                                                    }
                                                                 }
                                                             }
                                                         %>

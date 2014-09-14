@@ -24,10 +24,16 @@ public class RoleManagement_RoleServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            List<RoleEntity> roles = accountManagementBean.listAllRoles();
+            String errMsg = request.getParameter("errMsg");
 
+            List<RoleEntity> roles = accountManagementBean.listAllRoles();
             session.setAttribute("roles", roles);
-            response.sendRedirect("A1/roleManagement.jsp");
+
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A1/roleManagement.jsp");
+            } else {
+                response.sendRedirect("A1/roleManagement.jsp?errMsg=" + errMsg);
+            }
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

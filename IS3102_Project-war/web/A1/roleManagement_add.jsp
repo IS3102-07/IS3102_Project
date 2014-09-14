@@ -43,7 +43,7 @@
                                     <input class="form-control" required="true" type="text" name="email" disabled/>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+                                    <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="A1/roleManagement_add.jsp" name="source">
                             </form>

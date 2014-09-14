@@ -30,10 +30,10 @@ public class RoleManagement_AddRoleServlet extends HttpServlet {
             } else {
                 accountManagementBean.createRole(name, accessLevel);
                 if (source.equals("A1/roleManagement_add.jsp")) {
-                    response.sendRedirect("RoleManagement_RoleServlet");
+                    result = "?errMsg=Role already registered.";
+                    response.sendRedirect("RoleManagement_RoleServlet" + result);
                 }
             }
-
         } catch (Exception ex) {
             out.println(ex);
         }

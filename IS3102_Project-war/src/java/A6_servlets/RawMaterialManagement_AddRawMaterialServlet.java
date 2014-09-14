@@ -15,8 +15,7 @@ public class RawMaterialManagement_AddRawMaterialServlet extends HttpServlet {
     private ItemManagementBeanLocal itemManagementBean;
     String result;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
@@ -28,11 +27,11 @@ public class RawMaterialManagement_AddRawMaterialServlet extends HttpServlet {
             Integer width = Integer.parseInt(request.getParameter("width"));
             Integer height = Integer.parseInt(request.getParameter("height"));
             String source = request.getParameter("source");
-            
+
             if (!itemManagementBean.checkSKUExists(SKU)) {
                 itemManagementBean.addRawMaterial(SKU, name, category, description, _length, width, height);
                 result = "?errMsg=Raw material with SKU: " + SKU + " has been created successfully.";
-                response.sendRedirect("RawMaterialManagement_RawMaterialServlet");
+                response.sendRedirect("RawMaterialManagement_RawMaterialServlet" + result);
             } else {
                 result = "?errMsg=Failed to add raw material, SKU: " + SKU + " already exist.";
                 response.sendRedirect(source + result);
