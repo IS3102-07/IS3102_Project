@@ -19,7 +19,7 @@ public class SupplierEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String supplierName;
-    private Integer contactNo;
+    private String contactNo;
     private String email;
     private String address;
     private boolean isActive;
@@ -36,7 +36,7 @@ public class SupplierEntity implements Serializable {
 
     }
 
-    public SupplierEntity(String supplierName, Integer contactNo, String email, String address) {
+    public SupplierEntity(String supplierName, String contactNo, String email, String address) {
         this.supplierName = supplierName;
         this.contactNo = contactNo;
         this.email = email;
@@ -76,11 +76,11 @@ public class SupplierEntity implements Serializable {
         this.isActive = isActive;
     }
 
-    public Integer getContactNo() {
+    public String getContactNo() {
         return contactNo;
     }
 
-    public void setContactNo(Integer contactNo) {
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 

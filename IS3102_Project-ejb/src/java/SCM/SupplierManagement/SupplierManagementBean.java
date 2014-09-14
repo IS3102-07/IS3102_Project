@@ -5,6 +5,7 @@ import EntityManager.SupplierEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -25,7 +26,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     }
 
     @Override
-    public void addSupplier(String supplierName, Integer contactNo, String email, String address, Long countryId) {
+    public void addSupplier(String supplierName, String contactNo, String email, String address, Long countryId) {
         try {
             supplier = new SupplierEntity(supplierName, contactNo, email, address);
             country = em.find(CountryEntity.class, countryId);
@@ -134,6 +135,33 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
             return null;
         } catch (Exception ex) {
             System.out.println("Failed to viewInactiveSupplierList: " + ex);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean checkSupplierExists(String supplierName) {
+        try {
+            Query q = em.createQuery("Select s from SupplierEntity s where s.supplierName:supplierName");
+            q.setParameter("supplierName", supplierName);
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException n) {
+            System.out.println("\nServer return no result:\n" + n);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to perform checkSupplierExists:\n" + ex);
+            return false;
+        }
+    }
+
+    @Override
+    public List<CountryEntity> getListOfCountries() {
+        try {
+            Query q = em.createQuery("Select c from CountryEntity c");
+            return q.getResultList();
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getListOfCountries:\n" + ex);
             return null;
         }
     }
