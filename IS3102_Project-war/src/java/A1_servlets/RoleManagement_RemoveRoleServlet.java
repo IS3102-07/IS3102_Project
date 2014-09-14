@@ -9,38 +9,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RoleManagement_UpdateRoleServlet extends HttpServlet {
+public class RoleManagement_RemoveRoleServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            String roleId = request.getParameter("id");
-            String roleName = request.getParameter("roleName");
-            String name = request.getParameter("name");
-            String accessLevel = request.getParameter("accessLevel");
-            String source = request.getParameter("source");
-            boolean ifExist = accountManagementBean.checkIfRoleExists(name);
-            if (ifExist) {
-                if (!name.equals(roleName)) {
-                    result = "?errMsg=Role already exist.";
-                    response.sendRedirect(source + result);
+
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+
+                    //accountManagementBean.removeStaff(Long.parseLong(deleteArr[i]));
                 }
-                accountManagementBean.updateRole(Long.parseLong(roleId), name, accessLevel);
                 response.sendRedirect("RoleManagement_RoleServlet");
-            } else {
-                boolean canUpdate = accountManagementBean.updateRole(Long.parseLong(roleId), name, accessLevel);
-                if (!canUpdate) {
-                    result = "?errMsg=Please try again.";
-                    response.sendRedirect(source + result);
-                } else {
-                    response.sendRedirect("RoleManagement_RoleServlet");
-                }
             }
+
         } catch (Exception ex) {
             out.println(ex);
         }

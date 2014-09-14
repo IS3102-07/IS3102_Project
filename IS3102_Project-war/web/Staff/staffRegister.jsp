@@ -43,7 +43,7 @@
                                         <div class="form-group">
                                             <div class="col-md-4">
                                                 <label>Phone</label>
-                                                <input type="text" name="phone class="form-control input-lg">
+                                                <input type="text" name="phone" class="form-control input-lg" required="true">
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Password</label>

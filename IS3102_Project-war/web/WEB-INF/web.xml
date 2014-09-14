@@ -132,6 +132,10 @@
         <servlet-name>RetailProductManagement_UpdateRetailProductServlet</servlet-name>
         <servlet-class>A6_servlets.RetailProductManagement_UpdateRetailProductServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RoleManagement_RemoveRoleServlet</servlet-name>
+        <servlet-class>A1_servlets.RoleManagement_RemoveRoleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -263,6 +267,10 @@
     <servlet-mapping>
         <servlet-name>RetailProductManagement_UpdateRetailProductServlet</servlet-name>
         <url-pattern>/RetailProductManagement_UpdateRetailProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoleManagement_RemoveRoleServlet</servlet-name>
+        <url-pattern>/RoleManagement_RemoveRoleServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

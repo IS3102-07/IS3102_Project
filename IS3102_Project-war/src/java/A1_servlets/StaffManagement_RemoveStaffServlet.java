@@ -22,9 +22,7 @@ public class StaffManagement_RemoveStaffServlet extends HttpServlet {
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    out.println("<h1>im in</h1>");
                     accountManagementBean.removeStaff(Long.parseLong(deleteArr[i]));
-                    out.println(deleteArr[i] + "<br>");
                 }
                 response.sendRedirect("StaffManagement_StaffServlet");
             }
