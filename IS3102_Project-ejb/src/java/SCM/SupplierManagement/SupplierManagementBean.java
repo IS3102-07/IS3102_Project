@@ -27,6 +27,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public void addSupplier(String supplierName, String contactNo, String email, String address, Long countryId) {
+        System.out.println("addSupplier() called.");
         try {
             supplier = new SupplierEntity(supplierName, contactNo, email, address);
             country = em.find(CountryEntity.class, countryId);
@@ -39,6 +40,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public boolean deleteSupplier(Long id) {
+        System.out.println("deleteSupplier() called.");
         try {
             if (checkSupplierExists(id)) {
                 supplier = em.merge(em.getReference(SupplierEntity.class, id));
@@ -54,6 +56,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public List<SupplierEntity> viewAllSupplierList() {
+        System.out.println("viewAllSupplierList() called.");
         try {
             Query q = em.createQuery("Select s from SupplierEntity s");
             List<SupplierEntity> list = q.getResultList();
@@ -66,6 +69,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public boolean markSupplierAsActive(Long id) {
+        System.out.println("markSupplierAsActive() called.");
         try {
             if (checkSupplierExists(id)) {
                 supplier = em.getReference(SupplierEntity.class, id);
@@ -81,6 +85,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public boolean markSupplierAsInactive(Long id) {
+        System.out.println("markSupplierAsInactive() called.");
         try {
             if (checkSupplierExists(id)) {
                 supplier = em.getReference(SupplierEntity.class, id);
@@ -96,6 +101,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public List<SupplierEntity> viewActiveSupplierList() {
+        System.out.println("viewActiveSupplierList() called.");
         try {
             Query q = em.createQuery("Select s from SupplierEntity s where s.isActive='true'");
             List<SupplierEntity> list = q.getResultList();
@@ -108,6 +114,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public List<SupplierEntity> viewInactiveSupplierList() {
+        System.out.println("viewInactiveSupplierList() called.");
         try {
             Query q = em.createQuery("Select s from SupplierEntity s where s.isActive='false'");
             List<SupplierEntity> list = q.getResultList();
@@ -120,6 +127,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public SupplierEntity getSupplier(Long id) {
+        System.out.println("getSupplier() called.");
         try {
             if (checkSupplierExists(id)) {
                 return findASupplier(id);
@@ -133,6 +141,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public boolean checkSupplierExists(String supplierName) {
+        System.out.println("checkSupplierExists() called.");
         try {
             Query q = em.createQuery("Select s from SupplierEntity s where s.supplierName=:supplierName");
             q.setParameter("supplierName", supplierName);
@@ -149,6 +158,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public List<CountryEntity> getListOfCountries() {
+        System.out.println("getListOfCountries() called.");
         try {
             Query q = em.createQuery("Select c from CountryEntity c");
             return q.getResultList();
@@ -160,6 +170,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
 
     @Override
     public boolean editSupplier(Long supplierId, String name, String phone, String email, String address, Long countryId) {
+        System.out.println("editSupplier() called.");
         try {
             if (checkSupplierExists(supplierId)) {
                 supplier = em.getReference(SupplierEntity.class, supplierId);
