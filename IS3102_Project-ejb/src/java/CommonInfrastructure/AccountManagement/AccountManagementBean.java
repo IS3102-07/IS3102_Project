@@ -375,6 +375,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         RoleEntity roleEntity;
         try {
             Query q = em.createQuery("SELECT t FROM RoleEntity t where t.id=:id");
+            q.setParameter("id", roleID);
             roleEntity = (RoleEntity) q.getSingleResult();
             roleEntity.setName(name);
             roleEntity.setAccessLevel(accessLevel);
@@ -615,7 +616,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     // Generate a random salt for use in hashing the password;
-    private String generatePasswordSalt() {
+    public String generatePasswordSalt() {
         byte[] salt = new byte[16];
         try {
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
@@ -627,7 +628,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     // Uses supplied salt and password to generate a hashed password
-    private String generatePasswordHash(String salt, String password) {
+    public String generatePasswordHash(String salt, String password) {
         String passwordHash = null;
         try {
             password = salt + password;

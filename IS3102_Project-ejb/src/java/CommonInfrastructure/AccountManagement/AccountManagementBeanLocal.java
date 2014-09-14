@@ -41,4 +41,8 @@ public interface AccountManagementBeanLocal {
     public boolean editStaffRole(Long staffID, List<RoleEntity> roles);
     
     public CountryEntity getCountry(String countryName);
+    
+    public String generatePasswordSalt();
+    public String generatePasswordHash(String salt, String password);
+    
 }
