@@ -1,10 +1,14 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -17,13 +21,26 @@ public class StoreEntity implements Serializable {
     private String name;
     @OneToOne
     private WarehouseEntity warehouse;
+    @ManyToMany(mappedBy="storeList")
+    @JoinTable(name="store_manufacturingFacility")
+    private List<ManufacturingFacilityEntity> manufacturingFacilityList;
     
-    public StoreEntity(){}
+    public StoreEntity(){
+        this.manufacturingFacilityList = new ArrayList<>();
+    }
     
     public void create(String name) {
         this.setName(name);
     }    
 
+    public List<ManufacturingFacilityEntity> getManufacturingFacilityList() {
+        return manufacturingFacilityList;
+    }
+
+    public void setManufacturingFacilityList(List<ManufacturingFacilityEntity> manufacturingFacilityList) {
+        this.manufacturingFacilityList = manufacturingFacilityList;
+    }        
+    
     public Long getId() {
         return id;
     }

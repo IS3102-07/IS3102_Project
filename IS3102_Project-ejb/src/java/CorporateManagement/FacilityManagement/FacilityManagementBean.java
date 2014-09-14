@@ -176,6 +176,18 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
+    
+    public Boolean addStoreConnectionToManufacturingFacility(Long id, StoreEntity store){
+        try{
+            ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
+            
+            return true;
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
     public StoreEntity createStore(String storeName) {
         System.out.println("createStore() called with name:" + storeName);
