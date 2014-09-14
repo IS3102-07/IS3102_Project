@@ -7,6 +7,7 @@ import EntityManager.ProductionGroupEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
+import java.util.List;
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -442,6 +443,65 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
+    public List<RawMaterialEntity> listAllRawMaterials() {
+        System.out.println("listAllRawMaterials() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM RawMaterialEntity t");
+            List<RawMaterialEntity> rawMaterialEntity = q.getResultList();
+            return rawMaterialEntity;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all raw materials:\n" + ex);
+            return null;
+        }
+    }
+    
+    public List<FurnitureEntity> listAllFurniture() {
+        System.out.println("listAllFurniture() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            List<FurnitureEntity> furnitureEntity = q.getResultList();
+            return furnitureEntity;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all furniture:\n" + ex);
+            return null;
+        }
+    }
+    
+    public List<RetailProductEntity> listAllRetailProduct() {
+        System.out.println("listAllRetailProduct() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+            List<RetailProductEntity> retailProductEntity = q.getResultList();
+            return retailProductEntity;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all retail product:\n" + ex);
+            return null;
+        }
+    }
+    
+    public List<BillOfMaterialEntity> listAllBOM() {
+        System.out.println("listAllBOM() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
+            List<BillOfMaterialEntity> billOfMaterialEntity = q.getResultList();
+            return billOfMaterialEntity;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all BOM:\n" + ex);
+            return null;
+        }
+    }
+    
+    public List<ProductionGroupEntity> listAllProductionGroup() {
+        System.out.println("listAllProductionGroup() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM ProductionGroupEntity t");
+            List<ProductionGroupEntity> productionGroupEntity = q.getResultList();
+            return productionGroupEntity;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all production groups:\n" + ex);
+            return null;
+        }
+    }
     @Override
     public ItemEntity getItemBySKU(String SKU) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
