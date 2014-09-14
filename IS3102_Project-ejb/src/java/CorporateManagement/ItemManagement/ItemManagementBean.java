@@ -10,6 +10,7 @@ import EntityManager.BillOfMaterialEntity;
 import java.util.List;
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -454,7 +455,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public List<FurnitureEntity> listAllFurniture() {
         System.out.println("listAllFurniture() called.");
         try {
@@ -466,7 +467,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public List<RetailProductEntity> listAllRetailProduct() {
         System.out.println("listAllRetailProduct() called.");
         try {
@@ -478,7 +479,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public List<BillOfMaterialEntity> listAllBOM() {
         System.out.println("listAllBOM() called.");
         try {
@@ -490,7 +491,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public List<ProductionGroupEntity> listAllProductionGroup() {
         System.out.println("listAllProductionGroup() called.");
         try {
@@ -502,9 +503,31 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
+
     @Override
     public ItemEntity getItemBySKU(String SKU) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+//        q.setParameter("SKU", SKU);
+//        if(q.getSingleResult() instanceof ItemEntity){
+//            
+//        }
+        return null;
+    }
+
+    @Override
+    public boolean checkSKUExists(String SKU) {
+        try {
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException n) {
+            System.out.println("\nServer return no result:\n" + n);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to perform checkSKUExists:\n" + ex);
+            return false;
+        }
     }
 
     @Override
