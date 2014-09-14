@@ -41,6 +41,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     public boolean deleteSupplier(Long id) {
         try {
             if (checkSupplierExists(id)) {
+                em.merge(supplier);
                 em.remove(supplier);
                 return true;
             }
