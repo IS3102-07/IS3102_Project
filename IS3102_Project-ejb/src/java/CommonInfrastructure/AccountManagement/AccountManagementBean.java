@@ -144,11 +144,15 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 memberEntity.setCountry(country);
                 memberEntity.setCity(city);
                 memberEntity.setZipCode(zipCode);
-                if(!password.isEmpty()) memberEntity.setPasswordSalt(passwordSalt);
-                if(!password.isEmpty()) memberEntity.setPasswordHash(passwordHash);
+                if (!password.isEmpty()) {
+                    memberEntity.setPasswordSalt(passwordSalt);
+                }
+                if (!password.isEmpty()) {
+                    memberEntity.setPasswordHash(passwordHash);
+                }
                 em.merge(memberEntity);
                 System.out.println("Server edited member details successfully.");
-                    return true;
+                return true;
             }
 
         } catch (NoResultException ex) {
@@ -248,8 +252,12 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             staffEntity.setName(name);
             staffEntity.setAddress(address);
             staffEntity.setPhone(phone);
-            if(!password.isEmpty()) staffEntity.setPasswordSalt(passwordSalt);
-            if(!password.isEmpty()) staffEntity.setPasswordHash(passwordHash);
+            if (!password.isEmpty()) {
+                staffEntity.setPasswordSalt(passwordSalt);
+            }
+            if (!password.isEmpty()) {
+                staffEntity.setPasswordHash(passwordHash);
+            }
             staffEntity.setEmail(email);
             em.merge(staffEntity);
             System.out.println("\nServer edited staff succeessfully");
@@ -274,8 +282,12 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
             staffEntity.setAddress(address);
             staffEntity.setPhone(phone);
-            if(!password.isEmpty()) staffEntity.setPasswordSalt(passwordSalt);
-            if(!password.isEmpty()) staffEntity.setPasswordHash(passwordHash);
+            if (!password.isEmpty()) {
+                staffEntity.setPasswordSalt(passwordSalt);
+            }
+            if (!password.isEmpty()) {
+                staffEntity.setPasswordHash(passwordHash);
+            }
             em.merge(staffEntity);
             System.out.println("\nServer edited staff succeessfully");
             return true;
@@ -397,6 +409,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         RoleEntity roleEntity;
         try {
             Query q = em.createQuery("SELECT t FROM RoleEntity t where t.id=:id");
+            q.setParameter("id", roleID);
             roleEntity = (RoleEntity) q.getSingleResult();
             em.remove(roleEntity);
         } catch (NoResultException ex) {
@@ -408,7 +421,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return true;
     }
-    
+
     @Override
     public boolean checkIfRoleExists(String name) {
         System.out.println("checkRoleExists() called with:" + name);
