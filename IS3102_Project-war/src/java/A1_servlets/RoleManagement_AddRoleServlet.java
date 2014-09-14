@@ -1,7 +1,6 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.RoleEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;

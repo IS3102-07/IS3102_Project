@@ -60,11 +60,11 @@
                             <form role="form" action="../StaffManagement_UpdateStaffServlet">
                                 <div class="form-group">
                                     <label>Identification No</label>
-                                    <input class="form-control" name="identificationNo" type="text" value="<%=staff.getIdentificationNo()%>">
+                                    <input class="form-control" required="true" name="identificationNo" type="text" value="<%=staff.getIdentificationNo()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" name="name" type="text" value="<%=staff.getName()%>">
+                                    <input class="form-control" required="true" name="name" type="text" value="<%=staff.getName()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>E-mail Address</label>
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Phone</label>
-                                    <input class="form-control" required="true" type="number" name="phone" value="<%=staff.getPhone()%>">
+                                    <input class="form-control" required="true" type="text" name="phone" value="<%=staff.getPhone()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>New Password</label>
