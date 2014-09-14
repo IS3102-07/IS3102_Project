@@ -52,24 +52,15 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     }
 
     @Override
-    public boolean editSupplier(SupplierEntity supplier) {
-        try {
-            if (checkSupplierExists(supplier.getId())) {
-                em.merge(supplier);
-                return true;
-            }
-            return false;
-        } catch (Exception ex) {
-            System.out.println("Failed to edit supplier: " + ex);
-            return false;
-        }
-    }
-
-    @Override
     public List<SupplierEntity> viewAllSupplierList() {
-        Query q = em.createQuery("Select s from SupplierEntity s");
-        List<SupplierEntity> list = q.getResultList();
-        return list;
+        try {
+            Query q = em.createQuery("Select s from SupplierEntity s");
+            List<SupplierEntity> list = q.getResultList();
+            return list;
+        } catch (Exception ex) {
+            System.out.println("Failed to viewAllSupplierList: " + ex);
+            return null;
+        }
     }
 
     @Override
@@ -163,6 +154,26 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to getListOfCountries:\n" + ex);
             return null;
+        }
+    }
+
+    @Override
+    public boolean editSupplier(Long supplierId, String name, String phone, String email, String address, Long countryId) {
+        try {
+            if (checkSupplierExists(supplierId)) {
+                supplier = em.getReference(SupplierEntity.class, supplierId);
+                supplier.setSupplierName(name);
+                supplier.setContactNo(phone);
+                supplier.setEmail(email);
+                supplier.setAddress(address);
+                supplier.setCountry(em.getReference(CountryEntity.class, countryId));
+                em.merge(supplier);
+                return true;
+            }
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Failed to edit supplier: " + ex);
+            return false;
         }
     }
 }

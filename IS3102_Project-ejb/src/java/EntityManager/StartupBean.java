@@ -33,7 +33,7 @@ public class StartupBean {
             Query q = em.createQuery("SELECT t FROM RoleEntity t");
             List<RoleEntity> roleEntities = q.getResultList();
             // Don't insert anything if database appears to be initiated.
-            if (roleEntities!=null && roleEntities.size()>0) {
+            if (roleEntities != null && roleEntities.size() > 0) {
                 System.out.println("Skipping init of database, already initated.");
                 return;
             }
@@ -83,8 +83,39 @@ public class StartupBean {
                 System.out.println("Skipping creating of administrator account:\n" + ex);
                 ex.printStackTrace();
             }
+            try {
+                //Create countries
+                CountryEntity country = new CountryEntity();
+                country.setCountryCode(65);
+                country.setCurrency("SGD");
+                country.setExchangeRate(0.75);
+                country.setName("Singapore");
+                em.persist(country);
+                country = new CountryEntity();
+                country.setCountryCode(60);
+                country.setCurrency("RM");
+                country.setExchangeRate(3.0);
+                country.setName("Malaysia");
+                em.persist(country);
+                country = new CountryEntity();
+                country.setCountryCode(62);
+                country.setCurrency("RUPIAH");
+                country.setExchangeRate(100.0);
+                country.setName("Indonesia");
+                em.persist(country);
+                country = new CountryEntity();
+                country.setCountryCode(1);
+                country.setCurrency("USD");
+                country.setExchangeRate(1.0);
+                country.setName("United States");
+                em.persist(country);
+                System.out.println("Created country entities.");
+            } catch (Exception ex) {
+                System.out.println("Skipping creating of country entities:\n" + ex);
+                ex.printStackTrace();
+            }
         } catch (Exception ex) {
-            System.out.println("Skipped init of database:\n"+ex);
+            System.out.println("Skipped init of database:\n" + ex);
             ex.printStackTrace();
         }
     }
