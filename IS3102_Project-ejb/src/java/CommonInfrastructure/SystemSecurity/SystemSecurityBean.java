@@ -290,11 +290,11 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             for (Object o : q.getResultList()) {
                 StaffEntity i = (StaffEntity) o;
                 if (i.getEmail().equalsIgnoreCase(email)) {
-                    if (i.getActivationCode().equals(code)) {
-                        System.out.println("\nServer activation code valid of member:\n" + email);
+                    if (i.getPasswordReset().equals(code)) {
+                        System.out.println("\nReset Password valid of staff:\n" + email);
                         return true;
                     } else {
-                        System.out.println("\nServer activation code invalid of member:\n" + email);
+                        System.out.println("\nReset Password invalid of staff:\n" + email);
                         return false;
                     }
                 }
@@ -313,7 +313,7 @@ public Boolean validatePasswordResetForMember(String email, String code) {
             for (Object o : q.getResultList()) {
                 MemberEntity i = (MemberEntity) o;
                 if (i.getEmail().equalsIgnoreCase(email)) {
-                    if (i.getActivationCode().equals(code)) {
+                    if (i.getPasswordReset().equals(code)) {
                         System.out.println("\nServer activation code valid of member:\n" + email);
                         return true;
                     } else {
