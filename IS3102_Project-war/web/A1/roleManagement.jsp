@@ -68,7 +68,6 @@
                                     <div class="panel-body">
 
                                         <%
-                                            RoleEntity roleEntity = (RoleEntity) (session.getAttribute("roleEntity"));
                                             List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
                                         %>
                                         <div class="table-responsive">
