@@ -18,7 +18,7 @@ import javax.ejb.Remove;
 @Local
 public interface InboundAndOutboundLogisticsBeanLocal {
     // shipping tye can be by ship, by truck, by train etc
-    public Long createShippingOrderBasicInfo(String ShippingType, Date shippedDate, Date expectedReceivedDate, 
+    public ShippingOrderEntity createShippingOrderBasicInfo(String ShippingType, Date shippedDate, Date expectedReceivedDate, 
             WarehouseEntity origin, WarehouseEntity destination);    
     
     public Boolean addLineItemToShippingOrder(Long id, LineItemEntity lineItems);        

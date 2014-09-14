@@ -4,7 +4,6 @@ import EntityManager.LineItemEntity;
 import EntityManager.PurchaseOrderEntity;
 import EntityManager.SupplierEntity;
 import EntityManager.WarehouseEntity;
-import java.sql.Time;
 import java.util.Date;
 import javax.ejb.Local;
 

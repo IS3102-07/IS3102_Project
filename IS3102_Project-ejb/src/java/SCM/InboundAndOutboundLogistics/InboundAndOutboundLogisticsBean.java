@@ -30,16 +30,16 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     
     
     @Override
-    public Long createShippingOrderBasicInfo(String ShippingType, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
+    public ShippingOrderEntity createShippingOrderBasicInfo(String ShippingType, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
         ShippingOrderEntity shippingOrder = new ShippingOrderEntity(ShippingType, shippedDate, expectedReceivedDate, origin, destination);
         try{
             em.persist(shippingOrder);
             System.out.println("ShippingOrder with id: " + shippingOrder.getId() + " is created successfully");
-            return shippingOrder.getId();
+            return shippingOrder;
         }
         catch(EntityExistsException ex){
             ex.printStackTrace();
-            return (long) -1;
+            return null;
         }        
     }   
 
