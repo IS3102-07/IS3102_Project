@@ -133,7 +133,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     @Override
     public boolean checkSupplierExists(String supplierName) {
         try {
-            Query q = em.createQuery("Select s from SupplierEntity s where s.supplierName:supplierName");
+            Query q = em.createQuery("Select s from SupplierEntity s where s.supplierName=:supplierName");
             q.setParameter("supplierName", supplierName);
             q.getSingleResult();
             return true;
