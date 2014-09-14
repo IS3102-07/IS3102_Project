@@ -33,6 +33,22 @@
                     <!-- /.row -->
 
                     <%
+                        String errMsg = request.getParameter("errMsg");
+                        if (errMsg == null || errMsg.equals("")) {
+                            errMsg = "";
+                        } else {
+                    %>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="alert alert-danger">
+                                <%=errMsg%>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
+                    <!-- /.warning -->
+
+                    <%
                         int id = 0;
                         if (request.getParameter("id") == null) {
                             response.sendRedirect("staffManagement.jsp");
@@ -94,8 +110,6 @@
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="<%=staff.getId()%>" name="id">
-                                <input type="hidden" value="<%=staff.getEmail()%>" name="staffEmail">
-                                <input type="hidden" value="A1/staffManagement_update.jsp" name="source">
                             </form>
                         </div>
                         <!-- /.row -->

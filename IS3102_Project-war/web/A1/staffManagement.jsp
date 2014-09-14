@@ -46,7 +46,7 @@
                             <h1 class="page-header">Staff  Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i><a href="accountManagement.jsp">Account Management</a>
+                                    <i class="icon icon-user"></i><a href="accountManagement.jsp"> Account Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Staff Management

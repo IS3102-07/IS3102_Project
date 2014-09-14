@@ -27,25 +27,28 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
             String address = request.getParameter("address");
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
-            String source = request.getParameter("source");
 
             boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
             if (ifExist) {
                 if (!email.equals(staffEmail)) {
                     result = "?errMsg=Update failed. Staff email already registered.";
-                    response.sendRedirect(source + result);
+                    out.println("<h1>1</h1>");
+                    //response.sendRedirect("staffManagement_update.jsp" + result);
                 }
                 accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address, email);
                 result = "?errMsg=Staff updated successfully.";
-                response.sendRedirect("StaffManagement_StaffServlet" + result);
+                out.println("<h1>2</h1>");
+                //response.sendRedirect("StaffManagement_StaffServlet" + result);
             } else {
                 boolean canUpdate = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address, email);
                 if (!canUpdate) {
                     result = "?errMsg=Please try again.";
-                    response.sendRedirect(source + result);
+                    out.println("<h1>3</h1>");
+                    //response.sendRedirect("staffManagement_update.jsp" + result);
                 } else {
                     result = "?errMsg=Staff updated successfully.";
-                    response.sendRedirect("StaffManagement_StaffServlet" + result);
+                    out.println("<h1>4</h1>");
+                    //response.sendRedirect("StaffManagement_StaffServlet" + result);
                 }
             }
 

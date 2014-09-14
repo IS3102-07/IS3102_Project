@@ -21,18 +21,15 @@ public class RoleManagement_AddRoleServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             String accessLevel = request.getParameter("accessLevel");
-            String source = request.getParameter("source");
 
             boolean ifExist = accountManagementBean.checkIfRoleExists(name);
             if (ifExist) {
                 result = "?errMsg=Role already registered.";
-                response.sendRedirect(source + result);
+                response.sendRedirect("roleManagement_add.jsp" + result);
             } else {
                 accountManagementBean.createRole(name, accessLevel);
-                if (source.equals("A1/roleManagement_add.jsp")) {
-                    result = "?errMsg=Role already registered.";
-                    response.sendRedirect("RoleManagement_RoleServlet" + result);
-                }
+                result = "?errMsg=Role added successfully.";
+                response.sendRedirect("RoleManagement_RoleServlet" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

@@ -76,7 +76,6 @@
                                 </div>
                                 <input type="hidden" value="<%=role.getId()%>" name="id">
                                 <input type="hidden" value="<%=role.getName()%>" name="roleName">
-                                <input type="hidden" value="A1/roleManagement_update.jsp" name="source">
                             </form>
                         </div>
                         <!-- /.row -->

@@ -23,12 +23,12 @@ public class RoleManagement_UpdateRoleServlet extends HttpServlet {
             String roleName = request.getParameter("roleName");
             String name = request.getParameter("name");
             String accessLevel = request.getParameter("accessLevel");
-            String source = request.getParameter("source");
+
             boolean ifExist = accountManagementBean.checkIfRoleExists(name);
             if (ifExist) {
                 if (!name.equals(roleName)) {
                     result = "?errMsg=Update Failed. Role already exist.";
-                    response.sendRedirect(source + result);
+                    response.sendRedirect("roleManagement_update.jsp" + result);
                 }
                 accountManagementBean.updateRole(Long.parseLong(roleId), name, accessLevel);
                 result = "?errMsg=Role updated successfully.";
@@ -37,7 +37,7 @@ public class RoleManagement_UpdateRoleServlet extends HttpServlet {
                 boolean canUpdate = accountManagementBean.updateRole(Long.parseLong(roleId), name, accessLevel);
                 if (!canUpdate) {
                     result = "?errMsg=Please try again.";
-                    response.sendRedirect(source + result);
+                    response.sendRedirect("roleManagement_update.jsp" + result);
                 } else {
                     result = "?errMsg=Role updated successfully.";
                     response.sendRedirect("RoleManagement_RoleServlet" + result);

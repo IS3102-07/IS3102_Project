@@ -48,7 +48,7 @@
                                     <i class="icon icon-user"></i>  <a href="supplierManagement.jsp">Supplier Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i>  Supplier Management
+                                    <i class="icon icon-edit"></i> Supplier Management
                                 </li>
                             </ol>
                         </div>
@@ -74,15 +74,15 @@
                                                             <th>Name</th>
                                                             <th>Phone</th>
                                                             <th>Email</th>
+                                                            <th>Country</th>
                                                             <th>Address</th>
                                                             <th>Update</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            SupplierEntity supplierEntity = (SupplierEntity) (session.getAttribute("supplierEntity"));
-                                                            if (supplierEntity != null) {
-                                                                List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
+                                                            List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
+                                                            if (suppliers != null) {
                                                                 for (int i = 0; i < suppliers.size(); i++) {
                                                         %>
                                                         <tr>
@@ -97,6 +97,12 @@
                                                             </td>
                                                             <td>
                                                                 <%=suppliers.get(i).getEmail()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=suppliers.get(i).getCountry().getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=suppliers.get(i).getAddress()%>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=suppliers.get(i).getId()%>" value="update" onclick="javascript:updateSupplier('<%=suppliers.get(i).getId()%>')"/>
