@@ -12,8 +12,8 @@ import javax.ejb.Local;
 public interface AccountManagementBeanLocal {
 
     public boolean checkMemberEmailExists(String email);
-    public boolean registerMember(String name, String address, Date DOB, String email, String phone, String country, String city, String zipCode, String password);
-    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, String country, String city, String zipCode, String password);
+    public boolean registerMember(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String password);
+    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password);
     public MemberEntity loginMember(String email, String password);
 
     public boolean checkStaffEmailExists(String email);
