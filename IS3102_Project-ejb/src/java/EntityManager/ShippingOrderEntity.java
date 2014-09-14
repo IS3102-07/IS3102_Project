@@ -54,6 +54,7 @@ public class ShippingOrderEntity implements Serializable {
         this.lineItems = new ArrayList<>();
         this.origin = origin;
         this.destination = destination;
+        this.status = "Pending";
     }        
     
     public Long getId() {

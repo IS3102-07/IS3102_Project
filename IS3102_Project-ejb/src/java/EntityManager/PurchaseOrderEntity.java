@@ -25,34 +25,27 @@ public class PurchaseOrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     @OneToOne(mappedBy = "purchaseOrder")
-    private SupplierEntity origin;
+    private SupplierEntity supplier;    
     @OneToMany(mappedBy="purchaseOrder",cascade={CascadeType.ALL})
-    private List<LineItemEntity> lineItems;
+    private List<LineItemEntity> lineItems;                
+    @ManyToOne
+    private WarehouseEntity receivedWarehouse;
     
     @Temporal(value = TemporalType.DATE)
-    private Date shippedDate;
-    @Temporal(value = TemporalType.DATE)
     private Date expectedReceivedDate;
-    private Time deliveryTime;
-    @ManyToOne
-    private WarehouseEntity destination;
-    private String contactName;
-    private Integer contactNumber;
+    
     private String status;
     
     public PurchaseOrderEntity() {}
-    
-    public PurchaseOrderEntity(Date shippedDate, Date expectedReceivedDate, Time deliveryTime, SupplierEntity origin, WarehouseEntity destination, String contactName, Integer contactNumber, String status){
-        this.shippedDate = shippedDate;
+
+    public PurchaseOrderEntity(SupplierEntity supplier, WarehouseEntity destination, Date expectedReceivedDate) {
+        this.supplier = supplier;
+        this.receivedWarehouse = destination;
         this.expectedReceivedDate = expectedReceivedDate;
-        this.deliveryTime = deliveryTime;
-        this.origin = origin;
-        this.destination = destination;
-        this.contactName = contactName;
-        this.contactNumber = contactNumber;
-        this.status = status;
-    }
+        this.setStatus("Pending");
+    }        
     
     public Long getId() {
         return id;
@@ -60,31 +53,7 @@ public class PurchaseOrderEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-   
-    public Integer getContactNumber() {
-        return contactNumber;
-    }
-    
-    public void setContactNumber(Integer contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
-    public Time getDeliveryTime() {
-        return deliveryTime;
-    }
-
-    public void setDeliveryTime(Time deliveryTime) {
-        this.deliveryTime = deliveryTime;
-    }
+    }   
 
     public String getStatus() {
         return status;
@@ -95,25 +64,17 @@ public class PurchaseOrderEntity implements Serializable {
     }
     
     public SupplierEntity getSupplier(){
-        return origin;
+        return supplier;
     }
     public void setSupplier(SupplierEntity origin){
-        this.origin = origin;
+        this.supplier = origin;
     }
     public List<LineItemEntity> getLineItems(){
         return lineItems;
     }
     public void setLineItems(List<LineItemEntity> lineItems){
         this.lineItems = lineItems;
-    }
-
-    public Date getShippedDate() {
-        return shippedDate;
-    }
-
-    public void setShippedDate(Date shippedDate) {
-        this.shippedDate = shippedDate;
-    }
+    }    
 
     public Date getExpectedReceivedDate() {
         return expectedReceivedDate;
@@ -123,21 +84,14 @@ public class PurchaseOrderEntity implements Serializable {
         this.expectedReceivedDate = expectedReceivedDate;
     }
 
-    public WarehouseEntity getDestination() {
-        return destination;
+    public WarehouseEntity getReceivedWarehouse() {
+        return receivedWarehouse;
     }
 
-    public void setDestination(WarehouseEntity destination) {
-        this.destination = destination;
+    public void setReceivedWarehouse(WarehouseEntity destination) {
+        this.receivedWarehouse = destination;
     }
-
-    public SupplierEntity getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(SupplierEntity origin) {
-        this.origin = origin;
-    }
+    
 }
 
     
