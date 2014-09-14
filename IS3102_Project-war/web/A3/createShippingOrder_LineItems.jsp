@@ -14,7 +14,7 @@
     <body>
         <div id="wrapper" class="wapper">
 
-            <jsp:include page="../menu2.html" />
+            <jsp:include page="../menu1.jsp" />
 
             <div class="container" style="background-color: white; height: 80%">
 

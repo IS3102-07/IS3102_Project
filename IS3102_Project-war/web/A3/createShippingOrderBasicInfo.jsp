@@ -39,13 +39,13 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div class="form-group">
+                                        <div class="form-group" style="width: 60%">
                                             <label for="input_shippedDate">Shipped Date</label>
                                             <input type="date" class="form-control" id="input_shippedDate" name="shippedDate">
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="form-group">
+                                        <div class="form-group" style="width: 60%">
                                             <label for="input_expectedReceivedDate">Expected Received Date</label>
                                             <input type="date" class="form-control" id="input_expectedReceivedDate" name="expectedReceivedDate">
                                         </div>
@@ -53,7 +53,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="form-group">
+                                        <div class="form-group" style="width: 60%">
                                             <label for="input_origin">Origin</label>
                                             <select class="form-control" id="input_origin" name="origin">
                                                 <% 
@@ -68,7 +68,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="form-group">
+                                        <div class="form-group" style="width: 60%">
                                             <label for="input_destination">Destination</label>
                                             <select class="form-control" id="input_destination" name="destination">
                                                 <%                                                     
@@ -77,8 +77,7 @@
                                                         <option value="<% w.getWarehouseName(); %>" > <% w.getWarehouseName(); %> </option>
                                                         <%
                                                     }
-                                                %>
-                                                                                                
+                                                %>                                                                                                
                                             </select>                        
                                         </div>
                                     </td>
