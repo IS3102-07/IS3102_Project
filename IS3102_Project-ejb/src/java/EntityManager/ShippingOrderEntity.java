@@ -15,8 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
@@ -37,9 +37,9 @@ public class ShippingOrderEntity implements Serializable {
     private Date receivedDate;
     @OneToMany(mappedBy="shippingOrder",cascade={CascadeType.ALL})
     private List<LineItemEntity> lineItems; 
-    @OneToOne
+    @ManyToOne
     private WarehouseEntity origin;
-    @OneToOne
+    @ManyToOne
     private WarehouseEntity destination;
     
     public ShippingOrderEntity(){

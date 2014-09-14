@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class StoreEntity implements Serializable {
@@ -14,12 +15,14 @@ public class StoreEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-
+    @OneToOne
+    private WarehouseEntity warehouse;
+    
+    public StoreEntity(){}
+    
     public void create(String name) {
         this.setName(name);
-    }
-    public StoreEntity() {
-    }
+    }    
 
     public Long getId() {
         return id;
@@ -37,4 +40,13 @@ public class StoreEntity implements Serializable {
         this.name = name;
     }
 
+    public WarehouseEntity getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(WarehouseEntity warehouse) {
+        this.warehouse = warehouse;
+    }
+    
+    
 }

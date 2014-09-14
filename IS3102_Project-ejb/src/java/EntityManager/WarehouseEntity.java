@@ -2,13 +2,13 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 
 @Entity
 public class WarehouseEntity implements Serializable {
@@ -18,11 +18,16 @@ public class WarehouseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToMany(mappedBy = "warehouse")
-    private List<StorageBinEntity> storageBin;
-    @OneToOne (mappedBy = "destination")
-    private PurchaseOrderEntity purchaseOrder;
+    private List<StorageBinEntity> storageBin;    
     @OneToMany(mappedBy = "warehouses")
     private List<ItemEntity> items;
+    @OneToOne(mappedBy="warehouse")
+    private StoreEntity store;
+    @OneToOne(mappedBy="warehouse")
+    private ManufacturingFacilityEntity manufaturingFacility;
+    
+    public WarehouseEntity(){
+    }
 
     public Long getId() {
         return id;
@@ -40,6 +45,22 @@ public class WarehouseEntity implements Serializable {
         this.storageBin = storageBin;
     }
 
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
+    }
+
+    public ManufacturingFacilityEntity getManufaturingFacility() {
+        return manufaturingFacility;
+    }
+
+    public void setManufaturingFacility(ManufacturingFacilityEntity manufaturingFacility) {
+        this.manufaturingFacility = manufaturingFacility;
+    }        
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -65,19 +86,7 @@ public class WarehouseEntity implements Serializable {
         return "EntityManager.WarehouseEntity[ id=" + id + " ]";
     }
 
-    /**
-     * @return the purchaseOrder
-     */
-    public PurchaseOrderEntity getPurchaseOrder() {
-        return purchaseOrder;
-    }
-
-    /**
-     * @param purchaseOrder the purchaseOrder to set
-     */
-    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
-        this.purchaseOrder = purchaseOrder;
-    }
+    
 
     /**
      * @return the items

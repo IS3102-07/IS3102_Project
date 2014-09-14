@@ -7,11 +7,11 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -24,18 +24,29 @@ public class ManufacturingFacilityEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @OneToOne
+    private WarehouseEntity warehouse;
+    
+    public ManufacturingFacilityEntity() {}
     
     public void create(String name) {
         this.setName(name);
     }
+
+    public WarehouseEntity getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(WarehouseEntity warehouse) {
+        this.warehouse = warehouse;
+    }        
     
     public void setName(String name) {
         this.name = name;
     }
     public String getName() {
         return name;
-    }
-    public ManufacturingFacilityEntity() {}
+    }    
     
     public Long getId() {
         return id;
