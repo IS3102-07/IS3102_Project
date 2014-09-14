@@ -109,7 +109,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean registerMember(String name, String address, Date DOB, String email, String phone, String country, String city, String zipCode, String password) {
+    public boolean registerMember(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String password) {
         System.out.println("registerMember() called with name:" + name);
         Long memberID;
         String passwordSalt = generatePasswordSalt();
@@ -127,7 +127,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
-    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, String country, String city, String zipCode, String password) {
+    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password) {
         System.out.println("editMember() called with memberID:" + memberID);
 
         String passwordSalt = generatePasswordSalt();
