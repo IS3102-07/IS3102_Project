@@ -4,6 +4,8 @@
     Author     : Administrator
 --%>
 
+<%@page import="EntityManager.WarehouseEntity"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -53,18 +55,30 @@
                                     <td>
                                         <div class="form-group">
                                             <label for="input_origin">Origin</label>
-                                            <select class="form-control" id="input_origin">
-                                                <option>warehouse A701</option>
-                                                <option>warehouse A702</option>
+                                            <select class="form-control" id="input_origin" name="origin">
+                                                <% 
+                                                    List<WarehouseEntity> warehouseList = (List<WarehouseEntity>) request.getAttribute("warehouseList");
+                                                    for(WarehouseEntity w: warehouseList){
+                                                        %>
+                                                        <option value="<% w.getWarehouseName(); %>" > <% w.getWarehouseName(); %> </option>
+                                                        <%
+                                                    }
+                                                %>
                                             </select>                        
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
                                             <label for="input_destination">Destination</label>
-                                            <select class="form-control" id="input_destination">
-                                                <option>warehouse A701</option>
-                                                <option>warehouse A702</option>
+                                            <select class="form-control" id="input_destination" name="destination">
+                                                <%                                                     
+                                                    for(WarehouseEntity w: warehouseList){
+                                                        %>
+                                                        <option value="<% w.getWarehouseName(); %>" > <% w.getWarehouseName(); %> </option>
+                                                        <%
+                                                    }
+                                                %>
+                                                                                                
                                             </select>                        
                                         </div>
                                     </td>

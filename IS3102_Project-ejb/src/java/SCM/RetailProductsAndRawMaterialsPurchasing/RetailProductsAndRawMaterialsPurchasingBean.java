@@ -4,16 +4,17 @@ import EntityManager.LineItemEntity;
 import EntityManager.PurchaseOrderEntity;
 import EntityManager.SupplierEntity;
 import EntityManager.WarehouseEntity;
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.ejb.Stateful;
+import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 
-@Stateful
+@Stateless
 public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProductsAndRawMaterialsPurchasingBeanLocal {
 @PersistenceContext
 private EntityManager em;
@@ -22,16 +23,17 @@ public RetailProductsAndRawMaterialsPurchasingBean() {
 }
   
 @Override
-public Long createPurchaseOrder(Date shippedDate, Date expectedReceivedDate,Time deliveryTime,SupplierEntity origin, WarehouseEntity destination, String contactName, Integer contactNumber, String status){
-     PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity(shippedDate,expectedReceivedDate,deliveryTime,origin, destination,contactName,contactNumber,status);
+public PurchaseOrderEntity createPurchaseOrder(SupplierEntity supplier, WarehouseEntity receivedWarehouse, Date expectedReceivedDate) {     
      try {
+         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity(supplier, receivedWarehouse, expectedReceivedDate);
          em.persist(purchaseOrder);
+         
          System.out.println("PurchaseOrder with id: "+ purchaseOrder.getId() + " is created successfully");
-         return purchaseOrder.getId();
+         return purchaseOrder;
      }
      catch(EntityExistsException ex){
          ex.printStackTrace();
-         return (long) -1;
+         return null;
      }
 }
 
@@ -49,6 +51,7 @@ public Long createPurchaseOrder(Date shippedDate, Date expectedReceivedDate,Time
             return false;
         }
     }
+    
     @Override
     public PurchaseOrderEntity getPurchaseOrderById(Long id) {
         try{
@@ -72,6 +75,18 @@ public Long createPurchaseOrder(Date shippedDate, Date expectedReceivedDate,Time
             return false;
         }                
     } 
+
+    @Override
+    public List<PurchaseOrderEntity> getPurchaseOrderListByStatus(String status) {
+        try{
+            Query q = em.createQuery("select p from PurchaseOrderEntity p where p.status = ?1").setParameter(1, status);
+            return q.getResultList();
+        }catch(Exception ex){
+            return new ArrayList<>();
+        }        
+    }
+    
+    
 }
 
          
