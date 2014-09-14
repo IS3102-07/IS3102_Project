@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="EntityManager.RoleEntity"%>
+<%@page import="java.util.List"%>
 <%@page import="EntityManager.StaffEntity"%>
 <%
     StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
@@ -6,6 +9,9 @@
 <jsp:forward page="Staff/staffLogin.jsp?errMsg=Session Expired." />
 <%
 } else {
+    List<RoleEntity> roles = staffEntity.getRoles();
+    Long[] approvedRolesID;
+    boolean roleCanView;
 %>
 
 
@@ -113,6 +119,22 @@
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
+            <%
+                approvedRolesID = new Long[]{1L,2L};
+                roleCanView = false;
+                for (RoleEntity roleEntity : roles) {
+                    for (Long ID : approvedRolesID) {
+                        if (roleEntity.getId().equals(ID)) {
+                            roleCanView = true;
+                            break;
+                        }
+                    }
+                    if (roleCanView) {
+                        break;
+                    }
+                }
+                if (roleCanView) {
+            %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#commonInfrastructure">
                     <i class="icon icon-user"></i> Common Infrastructure <i class="icon icon-caret-down"></i>
@@ -129,6 +151,22 @@
                     </li>
                 </ul>
             </li>
+            <%}
+                approvedRolesID = new Long[]{1L,2L,3L,4L,5L,7L};
+                roleCanView = false;
+                for (RoleEntity roleEntity : roles) {
+                    for (Long ID : approvedRolesID) {
+                        if (roleEntity.getId().equals(ID)) {
+                            roleCanView = true;
+                            break;
+                        }
+                    }
+                    if (roleCanView) {
+                        break;
+                    }
+                }
+                if (roleCanView) {
+            %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#MRP">
                     <i class="icon icon-book"></i> MRP <i class="icon icon-caret-down"></i>
@@ -154,6 +192,22 @@
                     </li>
                 </ul>
             </li>
+            <% }
+                approvedRolesID = new Long[]{1L,2L,3L,4L,7L};
+                roleCanView = false;
+                for (RoleEntity roleEntity : roles) {
+                    for (Long ID : approvedRolesID) {
+                        if (roleEntity.getId().equals(ID)) {
+                            roleCanView = true;
+                            break;
+                        }
+                    }
+                    if (roleCanView) {
+                        break;
+                    }
+                }
+                if (roleCanView) {
+            %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#SCM">
                     <i class="icon icon-home"></i> SCM <i class="icon icon-caret-down"></i>
@@ -176,6 +230,22 @@
                     </li>
                 </ul>
             </li>
+            <% }
+                approvedRolesID = new Long[]{1L,6L};
+                roleCanView = false;
+                for (RoleEntity roleEntity : roles) {
+                    for (Long ID : approvedRolesID) {
+                        if (roleEntity.getId().equals(ID)) {
+                            roleCanView = true;
+                            break;
+                        }
+                    }
+                    if (roleCanView) {
+                        break;
+                    }
+                }
+                if (roleCanView) {
+            %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#pperationalCRM">
                     <i class="icon icon-cogs"></i> Operational CRM <i class="icon icon-caret-down"></i>
@@ -198,6 +268,22 @@
                     </li>
                 </ul>
             </li>
+            <% }
+                approvedRolesID = new Long[]{1L,2L,6L};
+                roleCanView = false;
+                for (RoleEntity roleEntity : roles) {
+                    for (Long ID : approvedRolesID) {
+                        if (roleEntity.getId().equals(ID)) {
+                            roleCanView = true;
+                            break;
+                        }
+                    }
+                    if (roleCanView) {
+                        break;
+                    }
+                }
+                if (roleCanView) {
+            %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#analyticalCRM">
                     <i class="icon icon-bar-chart-o"></i> Analytical CRM <i class="icon icon-caret-down"></i>
@@ -214,6 +300,22 @@
                     </li>
                 </ul>
             </li>
+            <% }
+                approvedRolesID = new Long[]{1L};
+                roleCanView = false;
+                for (RoleEntity roleEntity : roles) {
+                    for (Long ID : approvedRolesID) {
+                        if (roleEntity.getId().equals(ID)) {
+                            roleCanView = true;
+                            break;
+                        }
+                    }
+                    if (roleCanView) {
+                        break;
+                    }
+                }
+                if (roleCanView) {
+            %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#corporateCRM">
                     <i class="icon icon-briefcase"></i> Corporate CRM <i class="icon icon-caret-down"></i>
@@ -227,6 +329,8 @@
                     </li>
                 </ul>
             </li>
+            <% }
+            %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo">
                     <i class="icon icon-arrows-v"></i> Sample <i class="icon icon-caret-down"></i>
