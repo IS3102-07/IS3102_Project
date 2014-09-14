@@ -20,7 +20,7 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
                         <div class="panel-body">
-                            <form role="form" name="registrationForm" action="../StaffManagement_AddStaffServlet">
+                            <form role="form" name="registrationForm" action="../StaffManagement_AddStaffServlet" onsubmit="return validatePassword()">
                                 <div class="box-content">
                                     <h3>Register An Account</h3>
                                     <div class="row">
@@ -47,11 +47,11 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Password</label>
-                                                <input type="password" name="password" class="form-control input-lg" required="true">
+                                                <input id="password" type="password" name="password" class="form-control input-lg" required="true">
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Re-enter Password</label>
-                                                <input type="password" name="repassword" class="form-control input-lg" required="true">
+                                                <input id="repassword" type="password" name="repassword" class="form-control input-lg" required="true">
                                             </div>
                                         </div>
                                     </div>
@@ -76,5 +76,22 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function validatePassword() {
+                var password = document.getElementById("password").value;
+                var repassword = document.getElementById("repassword").value;
+                var ok = true;
+                if (password != repassword) {
+                    //alert("Passwords Do not match");
+                    document.getElementById("password").style.borderColor = "#E34234";
+                    document.getElementById("repassword").style.borderColor = "#E34234";
+                    alert("Passwords do not match. Please key again.");
+                    ok = false;
+                }
+                return ok;
+            }
+        </script>
+
     </body>
 </html>
