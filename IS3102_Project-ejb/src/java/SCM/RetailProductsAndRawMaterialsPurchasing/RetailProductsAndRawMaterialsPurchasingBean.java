@@ -4,7 +4,9 @@ import EntityManager.LineItemEntity;
 import EntityManager.PurchaseOrderEntity;
 import EntityManager.SupplierEntity;
 import EntityManager.WarehouseEntity;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -73,6 +75,18 @@ public PurchaseOrderEntity createPurchaseOrder(SupplierEntity supplier, Warehous
             return false;
         }                
     } 
+
+    @Override
+    public List<PurchaseOrderEntity> getPurchaseOrderListByStatus(String status) {
+        try{
+            Query q = em.createQuery("select p from PurchaseOrderEntity p where p.status = ?1").setParameter(1, status);
+            return q.getResultList();
+        }catch(Exception ex){
+            return new ArrayList<>();
+        }        
+    }
+    
+    
 }
 
          
