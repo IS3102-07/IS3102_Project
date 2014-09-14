@@ -10,27 +10,85 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h2 class="page-header">Holla! <%=staffEntity.getName()%></h2>
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="icon icon-dashboard"></i> Workspace
+                                </li>
+                            </ol>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Workspace
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div class="panel-body">
 
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="icon icon-bell icon-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">26</div>
+                                            <div>New Announcement!</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- /.panel-body -->
+                                <a href="#">
+                                    <div class="panel-footer" style="padding-bottom: 30px;">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="icon icon-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
                             </div>
-                            <!-- /.panel -->
                         </div>
-                        <!-- /.col-lg-12 -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-green">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="icon icon-comments icon-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">26</div>
+                                            <div>New Private Message!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer" style="padding-bottom: 30px;">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="icon icon-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-yellow">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <i class="icon icon-tasks icon-5x"></i>
+                                        </div>
+                                        <div class="col-xs-9 text-right">
+                                            <div class="huge">26</div>
+                                            <div>Todo List!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#">
+                                    <div class="panel-footer" style="padding-bottom: 30px;">
+                                        <span class="pull-left">View Details</span>
+                                        <span class="pull-right"><i class="icon icon-arrow-circle-right"></i></span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.row -->
 
                 </div>
                 <!-- /.container-fluid -->

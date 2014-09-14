@@ -214,7 +214,7 @@
                 </a>
                 <ul id="SCM" class="collapse">
                     <li>
-                        <a href="#">Manufacturing's Inventory Control</a>
+                        <a href="../ManufacturingInventoryControl_MICServlet">Manufacturing's Inventory Control</a>
                     </li>
                     <li>
                         <a href="#">Retail Products and Raw Materials Purchasing</a>
