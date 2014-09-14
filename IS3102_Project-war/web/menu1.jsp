@@ -220,7 +220,7 @@
                         <a href="#">Retail Products and Raw Materials Purchasing</a>
                     </li>
                     <li>
-                        <a href="../A3/supplierManagement.jsp">Supplier Management</a>
+                        <a href="../SupplierManagement_SupplierServlet">Supplier Management</a>
                     </li>
                     <li>
                         <a href="#">Inbound and Outbound Logistics</a>

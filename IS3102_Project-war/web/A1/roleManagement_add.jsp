@@ -12,7 +12,7 @@
                             <h1 class="page-header">
                                 Add Role
                             </h1>
-                            <ol class="breadcrumb">
+                            <ol class="breadcrumb">^
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
                                 </li>
@@ -26,6 +26,22 @@
                         </div>
                     </div>
                     <!-- /.row -->
+
+                    <%
+                        String errMsg = request.getParameter("errMsg");
+                        if (errMsg == null || errMsg.equals("")) {
+                            errMsg = "";
+                        } else {
+                    %>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="alert alert-danger">
+                                <%=errMsg%>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
+                    <!-- /.warning -->
 
                     <div class="row">
                         <div class="col-lg-6">
@@ -45,7 +61,6 @@
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>
-                                <input type="hidden" value="A1/roleManagement_add.jsp" name="source">
                             </form>
                         </div>
                         <!-- /.row -->

@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="EntityManager.CountryEntity"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -13,9 +15,6 @@
                                 Add Supplier
                             </h1>
                             <ol class="breadcrumb">
-                                <li>
-                                    <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
-                                </li>
                                 <li class="active">
                                     <i class="icon icon-user"></i><a href="supplierManagement.jsp"> Supplier Management</a>
                                 </li>
@@ -26,40 +25,56 @@
                         </div>
                     </div>
                     <!-- /.row -->
-
+                    <%
+                        String errMsg = request.getParameter("errMsg");
+                        if (errMsg == null || errMsg.equals("")) {
+                            errMsg = "";
+                        } else {
+                    %>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="alert alert-danger">
+                                <%=errMsg%>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
+                    <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
                             <form role="form" action="../SupplierManagement_AddSupplierServlet">
                                 <div class="form-group">
-                                    <label>Identification No</label>
-                                    <input class="form-control" name="identificationNo" type="text" required="true">
-                                </div>
-                                <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" name="name"  type="text" required="true">
-                                </div>
-                                <div class="form-group">
-                                    <label>E-mail Address</label>
-                                    <input class="form-control" required="true" type="email" name="email" >
                                 </div>
                                 <div class="form-group">
                                     <label>Phone</label>
                                     <input class="form-control" required="true" type="text" name="phone" >
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="form-control" type="password" name="password">
-                                </div>
-                                <div class="form-group">
-                                    <label>Re-enter Password</label>
-                                    <input class="form-control" type="password" name="repassword">
+                                    <label>Email</label>
+                                    <input class="form-control" required="true" type="email" name="email">
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>
                                     <input class="form-control" type="text" required="true" name="address" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+                                    <label>Country</label>
+                                    <select required="" name="country" class="form-control">
+                                        <option></option>
+                                        <%
+                                            List<CountryEntity> countries = (List<CountryEntity>) (session.getAttribute("countries"));
+                                            if (countries != null) {
+                                                for (int i = 0; i < countries.size(); i++) {
+                                                    out.println("<option value='" + countries.get(i).getId() + "'>" + countries.get(i).getName() + "</option>");
+                                                }
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="A1/supplierManagement_add.jsp" name="source">
                             </form>
