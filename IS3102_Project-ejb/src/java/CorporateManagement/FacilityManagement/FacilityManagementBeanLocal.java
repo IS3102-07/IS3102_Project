@@ -29,7 +29,7 @@ public interface FacilityManagementBeanLocal {
 
     public List<RegionalOfficeEntity> viewListOfRegionalOffice();
 
-    public boolean createManufacturingFacility(String manufacturingFacilityName);
+    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacilityName);
 
     public boolean removeManufacturingFacility(String manufacturingFacilityName);
 
@@ -37,7 +37,7 @@ public interface FacilityManagementBeanLocal {
 
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();
 
-    public boolean createStore(String storeName);
+    public StoreEntity createStore(String storeName);
 
     public boolean removeStore(String storeName);
 
@@ -45,9 +45,7 @@ public interface FacilityManagementBeanLocal {
 
     public List<StoreEntity> viewListOfStorey();
 
-    public Long createWarehouse();
-    
-    public Boolean editWarehouse(Long id);
+    public WarehouseEntity createWarehouse(String warehouseName);        
     
     public Boolean deleteWarehouse(Long id);
     

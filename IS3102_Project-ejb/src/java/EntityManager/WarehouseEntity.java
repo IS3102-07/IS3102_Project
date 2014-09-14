@@ -1,6 +1,7 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +18,9 @@ public class WarehouseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String warehouseName;
     @OneToMany(mappedBy = "warehouse")
-    private List<StorageBinEntity> storageBin;    
+    private List<StorageBinEntity> storageBins;    
     @OneToMany(mappedBy = "warehouses")
     private List<ItemEntity> items;
     @OneToOne(mappedBy="warehouse")
@@ -27,8 +29,25 @@ public class WarehouseEntity implements Serializable {
     private ManufacturingFacilityEntity manufaturingFacility;
     
     public WarehouseEntity(){
+        this.storageBins = new ArrayList<>();
+        this.items = new ArrayList<>();
     }
 
+    public WarehouseEntity(String warehouseName) {
+        this.warehouseName = warehouseName;
+        this.storageBins = new ArrayList<>();
+        this.items = new ArrayList<>();
+    }
+        
+
+    public String getWarehouseName() {
+        return warehouseName;
+    }
+
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
+    }        
+    
     public Long getId() {
         return id;
     }
@@ -38,11 +57,11 @@ public class WarehouseEntity implements Serializable {
     }
 
     public List<StorageBinEntity> getStorageBin() {
-        return storageBin;
+        return storageBins;
     }
 
     public void setStorageBin(List<StorageBinEntity> storageBin) {
-        this.storageBin = storageBin;
+        this.storageBins = storageBin;
     }
 
     public StoreEntity getStore() {

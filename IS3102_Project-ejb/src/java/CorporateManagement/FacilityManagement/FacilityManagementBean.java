@@ -103,7 +103,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    public boolean createManufacturingFacility(String manufacturingFacility) {
+    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacility) {
         System.out.println("createManufacturingFacility() called with name:" + manufacturingFacility);
         String name;
         Long id;
@@ -114,10 +114,10 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             name = manufacturingFacilityEntity.getName();
             id = manufacturingFacilityEntity.getId();
             System.out.println("Manufacturing Facility Name \"" + name + "\" registered successfully as id:" + id);
-            return true;
+            return manufacturingFacilityEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register manufacturing facility:\n" + ex);
-            return false;
+            return null;
         }
     }
 
@@ -177,7 +177,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    public boolean createStore(String storeName) {
+    public StoreEntity createStore(String storeName) {
         System.out.println("createStore() called with name:" + storeName);
         String name;
         Long id;
@@ -188,10 +188,10 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             name = storeEntity.getName();
             id = storeEntity.getId();
             System.out.println("Store Name \"" + name + "\" registered successfully as id:" + id);
-            return true;
+            return storeEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register manufacturing facility:\n" + ex);
-            return false;
+            return null;
         }
     }
 
@@ -252,28 +252,50 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public Long createWarehouse() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Boolean editWarehouse(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public WarehouseEntity createWarehouse(String warehouseName) {
+        try{
+            WarehouseEntity warehouse = new WarehouseEntity(warehouseName);
+            em.persist(warehouse);
+            return warehouse;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }    
 
     @Override
     public Boolean deleteWarehouse(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            WarehouseEntity warehouse = em.find(WarehouseEntity.class, id);
+            em.remove(warehouse);
+            em.flush();
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public List<WarehouseEntity> getWarehouseList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            Query q = em.createQuery("select w from WarehouseEntity w");
+            return q.getResultList();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return new ArrayList<WarehouseEntity>();
+        }
     }        
 
     @Override
     public WarehouseEntity getWarehouseByName(String warehouseName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            Query q = em.createQuery("select w from WarehouseEntity w where w.warehouseName = ?1").setParameter(1, warehouseName);
+            return (WarehouseEntity)q.getSingleResult();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override
