@@ -16,5 +16,5 @@ public interface SupplierManagementBeanLocal {
     public List<SupplierEntity> viewActiveSupplierList();
     public List<SupplierEntity> viewInactiveSupplierList();
     public boolean markSupplierAsActive(Long id);//returns false if supplier not found
-    public boolean markSupplierAsInActive(Long id);//returns false if supplier not found
+    public boolean markSupplierAsInactive(Long id);//returns false if supplier not found
 }

@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
@@ -26,7 +25,6 @@ public class MemberEntity implements Serializable {
     private Date DOB;
     private String email;
     private String phone;
-    private String country;
     private String city;
     private String zipCode;
     private String passwordSalt;
@@ -38,8 +36,8 @@ public class MemberEntity implements Serializable {
     private String unlockCode;
     private String passwordReset;
 
-    @OneToMany
-    List<RoleEntity> roles;
+    @OneToOne
+    CountryEntity country;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     //private FeedbackEntity feedback;
@@ -50,7 +48,7 @@ public class MemberEntity implements Serializable {
     //@OneToMany
     //private SalesRecordEntity salesRecord;
     //TODO Subscription
-    public void create(String name, String address, Date DOB, String email, String phone, String country, String city, String zipCode, String passwordHash, String passwordSalt) {
+    public void create(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String passwordHash, String passwordSalt) {
         this.setName(name);
         this.setAddress(address);
         this.setDOB(DOB);
@@ -225,20 +223,6 @@ public class MemberEntity implements Serializable {
     }
 
     /**
-     * @return the country
-     */
-    public String getCountry() {
-        return country;
-    }
-
-    /**
-     * @param country the country to set
-     */
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    /**
      * @return the city
      */
     public String getCity() {
@@ -334,4 +318,13 @@ public class MemberEntity implements Serializable {
     public static void setSerialVersionUID(long aSerialVersionUID) {
         serialVersionUID = aSerialVersionUID;
     }
+
+    public CountryEntity getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryEntity country) {
+        this.country = country;
+    }
+
 }
