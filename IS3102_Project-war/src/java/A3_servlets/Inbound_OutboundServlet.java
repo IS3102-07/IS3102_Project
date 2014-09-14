@@ -51,10 +51,14 @@ public class Inbound_OutboundServlet extends HttpServlet {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
         String target = request.getPathInfo();
-
+        
+        System.out.println("!!!!!!! target: " + target);
+        
         switch (target) {
             
-            case "createShippingOrderBasicInfo_GET":                
+            case "/createShippingOrderBasicInfo_GET":                
+                List<WarehouseEntity> warehouseList = fmBean.getWarehouseList();
+                request.setAttribute("warehouseList", warehouseList);
                 nextPage = "createShippingOrderBasicInfo";
                 break;
             
@@ -73,10 +77,10 @@ public class Inbound_OutboundServlet extends HttpServlet {
                 try {
                     Date shippedDate = dateFormatter.parse(shippedDateString);
                     Date expectedReceivedDate = dateFormatter.parse(expectedReceivedDateString);
-                    Long currentShippingOrderId = ioBean.createShippingOrderBasicInfo(shippedType, shippedDate, expectedReceivedDate, null, null);
-                    if (currentShippingOrderId != -1) {
+                    ShippingOrderEntity shippingOrder = ioBean.createShippingOrderBasicInfo(shippedType, shippedDate, expectedReceivedDate, originWarehouse, destinationWarehouse);
+                    if (shippingOrder != null) {
                         HttpSession httpSession = request.getSession();
-                        httpSession.setAttribute("currentShippingOrderId", currentShippingOrderId);
+                        httpSession.setAttribute("currentShippingOrderId", shippingOrder.getId());
                         request.setAttribute("alterMessage", "The baisc information has been saved.");
                         nextPage = "createShippingOrderBasicInfo";
                     } else {
