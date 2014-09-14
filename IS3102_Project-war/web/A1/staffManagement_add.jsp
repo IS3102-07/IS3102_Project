@@ -29,7 +29,7 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" action="../StaffManagement_AddStaffServlet">
+                            <form role="form" action="../StaffManagement_AddStaffServlet" onsubmit="return validatePassword()">
                                 <div class="form-group">
                                     <label>Identification No</label>
                                     <input class="form-control" name="identificationNo" type="text" required="true">
