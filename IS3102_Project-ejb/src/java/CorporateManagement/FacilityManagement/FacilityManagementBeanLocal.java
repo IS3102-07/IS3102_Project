@@ -53,6 +53,8 @@ public interface FacilityManagementBeanLocal {
     
     public List<WarehouseEntity> getWarehouseList();
     
+    public Boolean addStoreConnectionToManufacturingFacility(Long id, StoreEntity store);
+    
     @Remove
     public void remove();
 }

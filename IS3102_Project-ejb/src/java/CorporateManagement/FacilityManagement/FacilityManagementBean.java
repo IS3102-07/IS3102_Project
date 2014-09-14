@@ -29,6 +29,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
     public boolean addRegionalOffice(String regionalOfficeName) {
         System.out.println("addRegionalOffice() called with name:" + regionalOfficeName);
         String name;
@@ -47,6 +48,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean removeRegionalOffice(String regionalOfficeName) {
         System.out.println("removeRegionalOffice() called with staffID:" + regionalOfficeName);
         try {
@@ -68,6 +70,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeName) {
         System.out.println("viewRegionalOffice() called with regionalOfficeName:" + regionalOfficeName);
         try {
@@ -87,6 +90,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public List<RegionalOfficeEntity> viewListOfRegionalOffice() {
         System.out.println("viewListOfRegionalOffice() called.");
         List<RegionalOfficeEntity> listOfRegionalOffice = new ArrayList<RegionalOfficeEntity>();
@@ -103,6 +107,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacility) {
         System.out.println("createManufacturingFacility() called with name:" + manufacturingFacility);
         String name;
@@ -121,6 +126,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean removeManufacturingFacility(String manufacturingFacility) {
         System.out.println("removeManufacturingFacility() called with staffID:" + manufacturingFacility);
         try {
@@ -142,6 +148,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public ManufacturingFacilityEntity viewManufacturingFacility(String manufacturingFacility) {
         System.out.println("viewManufacturingFacility() called with manufacturingFacility:" + manufacturingFacility);
         try {
@@ -161,6 +168,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility() {
         System.out.println("viewListOfRegionalOffice() called.");
         List<ManufacturingFacilityEntity> listOfManufacturingFacility = new ArrayList<ManufacturingFacilityEntity>();
@@ -177,10 +185,13 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
     
+    
+    @Override
     public Boolean addStoreConnectionToManufacturingFacility(Long id, StoreEntity store){
         try{
             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
-            
+            manufacturingFacility.getStoreList().add(store);
+            em.merge(manufacturingFacility);
             return true;
         }
         catch(Exception ex){
