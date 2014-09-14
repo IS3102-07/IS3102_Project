@@ -50,21 +50,18 @@ public class Inbound_OutboundServlet extends HttpServlet {
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        String target = request.getPathInfo();
-        
-        System.out.println("!!!!!!! target: " + target);
+        String target = request.getPathInfo();                
         
         switch (target) {
             
-            case "/createShippingOrderBasicInfo_GET":                
+            case "/createShippingOrderBasicInfo_GET":                                
                 List<WarehouseEntity> warehouseList = fmBean.getWarehouseList();
                 request.setAttribute("warehouseList", warehouseList);
-                nextPage = "createShippingOrderBasicInfo";
+                nextPage = "/A3/createShippingOrderBasicInfo";
                 break;
             
             case "/createShippingOrderBasicInfo_POST":
                 String shippedType = request.getParameter("shippedType");
-
                 String origin = request.getParameter("origin");
                 String destination = request.getParameter("destination");
                 String shippedDateString = request.getParameter("shippedDate");
@@ -82,7 +79,7 @@ public class Inbound_OutboundServlet extends HttpServlet {
                         HttpSession httpSession = request.getSession();
                         httpSession.setAttribute("currentShippingOrderId", shippingOrder.getId());
                         request.setAttribute("alterMessage", "The baisc information has been saved.");
-                        nextPage = "createShippingOrderBasicInfo";
+                        nextPage = "/A3/createShippingOrder_LineItems";
                     } else {
                         System.out.println("Fail to create shipping order basic info.");
                     }
@@ -108,7 +105,7 @@ public class Inbound_OutboundServlet extends HttpServlet {
                 
                 request.setAttribute("lineItemList", lineItemList);
                 
-                nextPage = "createShippingOrder_LineItems";
+                nextPage = "/A3/createShippingOrder_LineItems";
                 break;
             
             case "/addLineItemToShippingOrder_POST":
@@ -127,22 +124,21 @@ public class Inbound_OutboundServlet extends HttpServlet {
                 
                 ioBean.addLineItemToShippingOrder(currentShippingOrderId, lineItem);
                 
-                nextPage = "createShippingOrder_LineItems";
+                nextPage = "/A3/createShippingOrder_LineItems";
                 break;
                 
             case "/removeLineItemToShippingOrder_POST":
                 
-                nextPage = "createShippingOrder_LineItems";
+                nextPage = "/A3/createShippingOrder_LineItems";
                 break;
                 
             case "/createShippingOrder_LineItems_POST":
                 
-                nextPage = "createShippingOrder_LineItems";
+                nextPage = "/A3/createShippingOrder_LineItems";
                 break;
-        }
-        dispatcher = servletContext.getNamedDispatcher(nextPage);
-        dispatcher.forward(request, response);
-
+        }        
+        dispatcher = servletContext.getRequestDispatcher(nextPage);        
+        dispatcher.forward(request, response);        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
