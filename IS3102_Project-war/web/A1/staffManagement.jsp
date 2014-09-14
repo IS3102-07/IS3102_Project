@@ -56,12 +56,6 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-
-                    <%
-                        StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
-                        List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
-                    %>
-
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -87,6 +81,8 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
+                                                            StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+                                                            List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
                                                             for (int i = 0; i < staffs.size(); i++) {
                                                                 if (!staffs.get(i).getEmail().equals(staffEntity.getEmail())) {
                                                         %>
@@ -126,6 +122,7 @@
                                                                 }
                                                             }
                                                         %>
+                                                    </tbody>
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->

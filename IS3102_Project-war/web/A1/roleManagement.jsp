@@ -66,11 +66,6 @@
                                 <!-- /.panel-heading -->
                                 <form name="rolesManagement">
                                     <div class="panel-body">
-
-                                        <%
-                                            RoleEntity roleEntity = (RoleEntity) (session.getAttribute("roleEntity"));
-                                            List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
-                                        %>
                                         <div class="table-responsive">
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -85,6 +80,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
+                                                            List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
                                                             for (int i = 0; i < roles.size(); i++) {
                                                         %>
                                                         <tr>
@@ -116,6 +112,7 @@
                                                         <%
                                                             }
                                                         %>
+                                                    </tbody>
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
