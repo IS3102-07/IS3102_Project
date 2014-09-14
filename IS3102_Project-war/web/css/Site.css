@@ -15,10 +15,12 @@ and open the template in the editor.
     position:relative;    
 }
 
-input,
-select,
-textarea {
-    max-width: 280px;
+.inputMax{
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
 }
 
 .createShippingOrderTable {
@@ -27,7 +29,8 @@ textarea {
     }
 }
 
-
-label {    
-    font-size: 18px;
+.labelSize18 {    
+    label{
+        font-size: 18px;
+    }    
 }
