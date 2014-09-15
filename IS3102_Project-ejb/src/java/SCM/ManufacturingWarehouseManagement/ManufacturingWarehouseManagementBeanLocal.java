@@ -10,7 +10,7 @@ import javax.ejb.Local;
 @Local
 public interface ManufacturingWarehouseManagementBeanLocal {
 
-    public void createStorageBin(String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
+    public boolean createStorageBin(Long warehouseID, String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
 
     public boolean updateStorageBin(StorageBinEntity storageBin);
 
