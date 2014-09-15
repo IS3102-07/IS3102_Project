@@ -27,13 +27,12 @@
                 document.rolesManagement.action = "roleManagement_add.jsp";
                 document.rolesManagement.submit();
             }
-            function checkAll() {
+            function checkAll(source) {
                 alert("Check all the checkboxes...");
-                var allRows = document.rolesManagement.getElementsByTagName("delete");
-                for (var i = 0; i < allRows.length; i++) {
-                    if (allRows[i].type == 'checkbox') {
-                        allRows[i].checked = true;
-                    }
+                
+                checkboxes = document.getElementByName('delete');
+                for each(var checkbox in checkboxes) {
+                    checkbox.checked = source.checked;
                 }
             }
         </script>
@@ -77,7 +76,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Name</th>
                                                             <th>Access Level</th>
                                                             <th>Staff</th>
