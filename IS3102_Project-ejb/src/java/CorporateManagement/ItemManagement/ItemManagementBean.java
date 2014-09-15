@@ -38,28 +38,25 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     public boolean editRawMaterial(String SKU, String name, String category, String description) {
         System.out.println("editRawMaterial() called with SKU:" + SKU);
-
         try {
-            Query q = em.createQuery("SELECT t FROM RawMaterialEntity t");
-
-            for (Object o : q.getResultList()) {
-                RawMaterialEntity i = (RawMaterialEntity) o;
-                if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    if (name != null) {
-                        i.setName(name);
-                    }
-                    if (category != null) {
-                        i.setCategory(category);
-                    }
-                    if (description != null) {
-                        i.setDescription(description);
-                    }
-                    em.persist(i);
-                    System.out.println("\nServer updated raw material:\n" + name);
-                    return true;
-                }
+            Query q = em.createQuery("SELECT r FROM RawMaterialEntity r where r.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            RawMaterialEntity i = (RawMaterialEntity) q.getSingleResult();
+            if (SKU != null || SKU.equals("")) {
+                i.setSKU(SKU);
             }
-            return false; //Could not find the item
+            if (name != null || name.equals("")) {
+                i.setName(name);
+            }
+            if (category != null || category.equals("")) {
+                i.setCategory(category);
+            }
+            if (description != null || description.equals("")) {
+                i.setDescription(description);
+            }
+            em.persist(i);
+            System.out.println("\nServer updated raw material:\n" + name);
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to update raw material:\n" + ex);
             return false;
@@ -210,31 +207,28 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     public boolean editRetailProduct(String SKU, String name, String category, String description, String imageURL) {
         System.out.println("editRetailProduct() called with SKU:" + SKU);
-
         try {
-            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
-
-            for (Object o : q.getResultList()) {
-                RetailProductEntity i = (RetailProductEntity) o;
-                if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    if (name != null) {
-                        i.setName(name);
-                    }
-                    if (category != null) {
-                        i.setCategory(category);
-                    }
-                    if (description != null) {
-                        i.setDescription(description);
-                    }
-                    if (imageURL != null) {
-                        i.setImageURL(imageURL);
-                    }
-                    em.persist(i);
-                    System.out.println("\nServer updated retail product:\n" + name);
-                    return true;
-                }
+            Query q = em.createQuery("SELECT r FROM RetailProductEntity r where r.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            RetailProductEntity i = (RetailProductEntity) q.getSingleResult();
+            if (SKU != null || SKU.equals("")) {
+                i.setSKU(SKU);
             }
-            return false; //Could not find the item
+            if (name != null || name.equals("")) {
+                i.setName(name);
+            }
+            if (category != null || category.equals("")) {
+                i.setCategory(category);
+            }
+            if (description != null || description.equals("")) {
+                i.setDescription(description);
+            }
+            if (imageURL != null || imageURL.equals("")) {
+                i.setImageURL(imageURL);
+            }
+            em.persist(i);
+            System.out.println("\nServer updated retail product:\n" + name);
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to update retail product:\n" + ex);
             return false;
