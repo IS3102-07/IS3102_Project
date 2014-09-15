@@ -181,22 +181,6 @@
         <jsp-file>/A6/regionalOfficeManagement.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingWarehouseManagement_Servlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ManufacturingWarehouseManagement_AddServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingWarehouseManagement_AddServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ManufacturingWarehouseManagement_UpdateServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingWarehouseManagement_UpdateServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ManufacturingWarehouseManagement_RemoveServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingWarehouseManagement_RemoveServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>WorkspaceAnnouncement_Servlet</servlet-name>
         <servlet-class>A1_servlets.WorkspaceAnnouncement_Servlet</servlet-class>
     </servlet>
@@ -211,6 +195,38 @@
     <servlet>
         <servlet-name>WorkspaceMessage_AddServlet</servlet-name>
         <servlet-class>A1_servlets.WorkspaceMessage_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StorageBinManagement_AddServlet</servlet-name>
+        <servlet-class>A3_servlets.StorageBinManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StorageBinManagement_UpdateServlet</servlet-name>
+        <servlet-class>A3_servlets.StorageBinManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StorageBinManagement_RemoveServlet</servlet-name>
+        <servlet-class>A3_servlets.StorageBinManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StorageBinManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.StorageBinManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TransferOrderManagement_AddServlet</servlet-name>
+        <servlet-class>A3_servlets.TransferOrderManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TransferOrderManagement_UpdateServlet</servlet-name>
+        <servlet-class>A3_servlets.TransferOrderManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TransferOrderManagement_RemoveServlet</servlet-name>
+        <servlet-class>A3_servlets.TransferOrderManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TransferOrderManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.TransferOrderManagement_Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -393,22 +409,6 @@
         <url-pattern>/A6/regionalOfficeManagement</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
-        <url-pattern>/ManufacturingWarehouseManagement_Servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManufacturingWarehouseManagement_AddServlet</servlet-name>
-        <url-pattern>/ManufacturingWarehouseManagement_AddServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManufacturingWarehouseManagement_UpdateServlet</servlet-name>
-        <url-pattern>/ManufacturingWarehouseManagement_UpdateServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManufacturingWarehouseManagement_RemoveServlet</servlet-name>
-        <url-pattern>/ManufacturingWarehouseManagement_RemoveServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>WorkspaceAnnouncement_Servlet</servlet-name>
         <url-pattern>/WorkspaceAnnouncement_Servlet</url-pattern>
     </servlet-mapping>
@@ -423,6 +423,38 @@
     <servlet-mapping>
         <servlet-name>WorkspaceMessage_AddServlet</servlet-name>
         <url-pattern>/WorkspaceMessage_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StorageBinManagement_AddServlet</servlet-name>
+        <url-pattern>/StorageBinManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StorageBinManagement_UpdateServlet</servlet-name>
+        <url-pattern>/StorageBinManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StorageBinManagement_RemoveServlet</servlet-name>
+        <url-pattern>/StorageBinManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StorageBinManagement_Servlet</servlet-name>
+        <url-pattern>/StorageBinManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransferOrderManagement_AddServlet</servlet-name>
+        <url-pattern>/TransferOrderManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransferOrderManagement_UpdateServlet</servlet-name>
+        <url-pattern>/TransferOrderManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransferOrderManagement_RemoveServlet</servlet-name>
+        <url-pattern>/TransferOrderManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransferOrderManagement_Servlet</servlet-name>
+        <url-pattern>/TransferOrderManagement_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
