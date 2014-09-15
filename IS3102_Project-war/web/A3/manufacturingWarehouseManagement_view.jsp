@@ -8,7 +8,7 @@
         <script>
             function updateManufacturingWarehouse(id) {
                 manufacturingWarehouseManagement.id.value = id;
-                document.manufacturingWarehouseManagement.action = ".jsp";
+                document.manufacturingWarehouseManagement.action = "manufacturingWarehouseManagement.jsp?errMsg=id";
                 document.manufacturingWarehouseManagement.submit();
             }
         </script>
@@ -38,12 +38,11 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
                                                             <th>Name</th>
-                                                            <th>Length</th>
-                                                            <th>Width</th>
-                                                            <th>Height</th>
-                                                            <th>Free Volume</th>
+                                                            <th>Country</th>
+                                                            <th>Address</th>
+                                                            <th>Email</th>
+                                                            <th>Phone</th>
                                                             <th>Select</th>
                                                         </tr>
                                                     </thead>
@@ -54,7 +53,24 @@
                                                                 for (int i = 0; i < warehouses.size(); i++) {
                                                         %>
                                                         <tr>
-
+                                                            <td>
+                                                                <%=warehouses.get(i).getWarehouseName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=warehouses.get(i).getAddress()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=warehouses.get(i).getAddress()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=warehouses.get(i).getEmail()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=warehouses.get(i).getTelephone()%>
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=warehouses.get(i).getId()%>" onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>')"/>
+                                                            </td>
                                                         </tr>
                                                         <%
                                                                 }
