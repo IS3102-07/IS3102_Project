@@ -1,46 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package A6_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.FurnitureEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Neo
- */
+
 public class FurnitureManagement_FurnitureServlet extends HttpServlet {
+    @EJB
+    private ItemManagementBeanLocal itemManagementBean;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FurnitureManagement_FurnitureServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FurnitureManagement_FurnitureServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+            List<FurnitureEntity> furnitureList = itemManagementBean.listAllFurniture();
+            session.setAttribute("furnitureList", furnitureList);
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A6/furnitureManagement.jsp");
+            } else {
+                response.sendRedirect("A6/furnitureManagement.jsp?errMsg=" + errMsg);
+            }
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

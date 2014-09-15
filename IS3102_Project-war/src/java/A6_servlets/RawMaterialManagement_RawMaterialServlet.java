@@ -1,28 +1,39 @@
 package A6_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.RawMaterialEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RawMaterialManagement_RawMaterialServlet extends HttpServlet {
+
+    @EJB
+    private ItemManagementBeanLocal itemManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RawMaterialManagement_RawMaterialServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RawMaterialManagement_RawMaterialServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+            List<RawMaterialEntity> rawMaterialList = itemManagementBean.listAllRawMaterials();
+            session.setAttribute("rawMaterialList", rawMaterialList);
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A6/rawMaterialManagement.jsp");
+            } else {
+                response.sendRedirect("A6/rawMaterialManagement.jsp?errMsg=" + errMsg);
+            }
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
         }
     }
 
