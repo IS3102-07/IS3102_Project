@@ -165,20 +165,20 @@
         <servlet-class>A6_servlets.FacilityManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ManufacturingInventoryControl_AddMICServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingInventoryControl_AddMICServlet</servlet-class>
+        <servlet-name>manufacturingFacilityManagement</servlet-name>
+        <jsp-file>/A6/manufacturingFacilityManagement.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>ManufacturingInventoryControl_UpdateMICServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingInventoryControl_UpdateMICServlet</servlet-class>
+        <servlet-name>warehouseManagement</servlet-name>
+        <jsp-file>/A6/warehouseManagement.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>ManufacturingInventoryControl_RemoveMICServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingInventoryControl_RemoveMICServlet</servlet-class>
+        <servlet-name>storeManagement</servlet-name>
+        <jsp-file>/A6/storeManagement.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>ManufacturingInventoryControl_MICServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingInventoryControl_MICServlet</servlet-class>
+        <servlet-name>regionalOfficeManagement</servlet-name>
+        <jsp-file>/A6/regionalOfficeManagement.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -345,20 +345,20 @@
         <url-pattern>/FacilityManagement_Servlet/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManufacturingInventoryControl_AddMICServlet</servlet-name>
-        <url-pattern>/ManufacturingInventoryControl_AddMICServlet</url-pattern>
+        <servlet-name>manufacturingFacilityManagement</servlet-name>
+        <url-pattern>/A6/manufacturingFacilityManagement</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManufacturingInventoryControl_UpdateMICServlet</servlet-name>
-        <url-pattern>/ManufacturingInventoryControl_UpdateMICServlet</url-pattern>
+        <servlet-name>warehouseManagement</servlet-name>
+        <url-pattern>/A6/warehouseManagement</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManufacturingInventoryControl_RemoveMICServlet</servlet-name>
-        <url-pattern>/ManufacturingInventoryControl_RemoveMICServlet</url-pattern>
+        <servlet-name>storeManagement</servlet-name>
+        <url-pattern>/A6/storeManagement</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ManufacturingInventoryControl_MICServlet</servlet-name>
-        <url-pattern>/ManufacturingInventoryControl_MICServlet</url-pattern>
+        <servlet-name>regionalOfficeManagement</servlet-name>
+        <url-pattern>/A6/regionalOfficeManagement</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

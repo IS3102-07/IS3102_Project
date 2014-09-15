@@ -45,7 +45,7 @@ public class Inbound_OutboundServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String nextPage = "shippingOrderBasicInfo";
+        String nextPage = "/A3/createShippingOrderBasicInfo";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");

@@ -31,44 +31,23 @@
                         </div>
                     </div>
                     <!-- /.row -->
+                    
+                    <jsp:include page="../displayMessage.jsp" />
 
-                    <%
-                        String errMsg = request.getParameter("errMsg");
-                        if (errMsg == null || errMsg.equals("")) {
-                            errMsg = "";
-                        } else {
-                    %>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="alert alert-danger">
-                                <%=errMsg%>
-                            </div>
-                        </div>
-                    </div>
-                    <%}%>
-                    <!-- /.warning -->
 
                     <%
                         int id = 0;
-                        if (request.getParameter("id") == null) {
-                            response.sendRedirect("staffManagement.jsp");
-                        } else {
-                            id = Integer.parseInt(request.getParameter("id"));
-                        }
 
                         List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
 
-                        if (staffs == null || staffs.isEmpty()) {
-                            response.sendRedirect("../StaffManagement_StaffServlet");
-                        } else {
-
+                        if (request.getParameter("id") != null && staffs != null) {
+                            id = Integer.parseInt(request.getParameter("id"));
                             StaffEntity staff = new StaffEntity();
-                            if (staff != null) {
-                                for (int i = 0; i < staffs.size(); i++) {
-                                    if (staffs.get(i).getId() == id) {
-                                        staff = staffs.get(i);
-                                    }
+                            for (int i = 0; i < staffs.size(); i++) {
+                                if (staffs.get(i).getId() == id) {
+                                    staff = staffs.get(i);
                                 }
+                            }
                     %>
 
                     <div class="row">
@@ -115,8 +94,8 @@
                         </div>
                         <!-- /.row -->
                     </div>
-                    <%}
-                        }%>
+                    <%}%>
+
                 </div>
 
             </div>
