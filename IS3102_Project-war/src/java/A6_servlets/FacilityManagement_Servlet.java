@@ -27,7 +27,7 @@ public class FacilityManagement_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String nextPage = "/A3/createShippingOrderBasicInfo";
+        String nextPage = "";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -36,9 +36,16 @@ public class FacilityManagement_Servlet extends HttpServlet {
         
         switch (target) {
             
-            case "":
+            case "/warehouseManagement_index":
                 
+                
+                nextPage = "/A6/warehouseManagement";
                 break;
+            
+            case "/createWarehouse_GET":                
+                nextPage = "";
+                break;
+            
             
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);        

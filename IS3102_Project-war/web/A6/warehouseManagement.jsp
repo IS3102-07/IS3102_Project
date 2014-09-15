@@ -12,7 +12,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Sample Management</h1>
+                            <h1 class="page-header">Warehouse Management</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -21,7 +21,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    insert some wordings
+                                    <a href="../"><button class="btn btn-primary">Add Warehouse</button></a>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -30,12 +30,12 @@
                                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                 <thead>
                                                     <tr>
-                                                        <th>Rendering engine</th>
-                                                        <th>Browser</th>
-                                                        <th>Platform(s)</th>
-                                                        <th>Engine version</th>
-                                                        <th>CSS grade</th>
-                                                        <th>Update</th>
+                                                        <th>#</th>
+                                                        <th>Warehouse Name</th>
+                                                        <th>Address</th>
+                                                        <th>Telephone</th>
+                                                        <th>Email Address</th>
+                                                        <th>???</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
