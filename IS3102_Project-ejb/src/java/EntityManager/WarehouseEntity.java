@@ -31,7 +31,9 @@ public class WarehouseEntity implements Serializable {
     @OneToOne(mappedBy="warehouse")
     private ManufacturingFacilityEntity manufaturingFacility;
     @OneToMany(mappedBy="receivedWarehouse")
-    List<PurchaseOrderEntity> purchaseOrderEntityList;    
+    List<PurchaseOrderEntity> purchaseOrderEntityList;
+    @OneToMany(mappedBy="warehouse")
+    private List<TransferOrderEntity> transferOrders;
     
     public WarehouseEntity(){
         this.storageBins = new ArrayList<>();
@@ -162,4 +164,22 @@ public class WarehouseEntity implements Serializable {
         this.items = items;
     }
 
+    public List<PurchaseOrderEntity> getPurchaseOrderEntityList() {
+        return purchaseOrderEntityList;
+    }
+
+    public void setPurchaseOrderEntityList(List<PurchaseOrderEntity> purchaseOrderEntityList) {
+        this.purchaseOrderEntityList = purchaseOrderEntityList;
+    }
+
+    public List<TransferOrderEntity> getTransferOrders() {
+        return transferOrders;
+    }
+
+    public void setTransferOrders(List<TransferOrderEntity> transferOrders) {
+        this.transferOrders = transferOrders;
+    }
+
+
+    
 }

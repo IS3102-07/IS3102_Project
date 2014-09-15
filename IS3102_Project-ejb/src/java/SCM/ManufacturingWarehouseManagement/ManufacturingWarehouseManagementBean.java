@@ -147,9 +147,12 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public StorageBinEntity getInboundStorageBin() {
+    public StorageBinEntity getInboundStorageBin(Long warehouseID) {
         try {
-            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Inbound'");
+            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+            String id = warehouseEntity.getId() + "";
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Inbound' AND sb.warehouse.id=:id");
+            q.setParameter("id", id);
             storageBin = (StorageBinEntity) q.getSingleResult();
             return storageBin;
         } catch (Exception ex) {
@@ -159,9 +162,12 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public StorageBinEntity getOutboundStorageBin() {
+    public StorageBinEntity getOutboundStorageBin(Long warehouseID) {
         try {
-            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Outbound'");
+            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+            String id = warehouseEntity.getId() + "";
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Outbound' AND sb.warehouse.id=:id");
+            q.setParameter("id", id);
             storageBin = (StorageBinEntity) q.getSingleResult();
             return storageBin;
         } catch (Exception ex) {
@@ -237,11 +243,12 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public List<TransferOrderEntity> createTransferOrder(StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems) {
+    public List<TransferOrderEntity> createTransferOrder(Long warehouseID, StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems) {
         try {
+            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             List<TransferOrderEntity> listOfTransferOrdersCreated = new ArrayList<TransferOrderEntity>();
             for (int i = 0; i < lineItems.size(); i++) {
-                transferOrder = new TransferOrderEntity(lineItems.get(i), origin, targets.get(i));
+                transferOrder = new TransferOrderEntity(warehouseEntity, lineItems.get(i), origin, targets.get(i));
                 em.persist(transferOrder);
                 listOfTransferOrdersCreated.add(transferOrder);
             }
@@ -254,12 +261,12 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
     //TODO NEED TO TEST
     @Override
-    public List<TransferOrderEntity> createOutboundTransferOrder(List<LineItemEntity> lineItems) {
+    public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems) {
         int qtyNeededToTransfer = 0;
         int qtyToTransferOutFromBin = 0;
         String SKUtoFind = "";
         ItemEntity currentItem = new ItemEntity();
-        StorageBinEntity outboundStorageBin = getOutboundStorageBin();
+        StorageBinEntity outboundStorageBin = getOutboundStorageBin(warehouseID);
         List<TransferOrderEntity> transferOrdersCreated = new ArrayList<>();
         try {
             for (LineItemEntity lineItem1 : lineItems) {
@@ -280,7 +287,8 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                         }
                     }
                     LineItemEntity lineItem = new LineItemEntity(currentItem, qtyToTransferOutFromBin, "");
-                    transferOrder = new TransferOrderEntity(lineItem, eachBinThatMatchesSKU, outboundStorageBin);
+                    WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+                    transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, eachBinThatMatchesSKU, outboundStorageBin);
                     em.persist(transferOrder);
                     transferOrdersCreated.add(transferOrder);
                     if (qtyNeededToTransfer <= 0) {
