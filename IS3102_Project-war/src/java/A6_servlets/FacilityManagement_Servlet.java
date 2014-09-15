@@ -6,8 +6,10 @@
 package A6_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.WarehouseEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -39,7 +41,8 @@ public class FacilityManagement_Servlet extends HttpServlet {
         switch (target) {
 
             case "/warehouseManagement_index":
-
+                List<WarehouseEntity> warehouseList = fmBean.getWarehouseList();
+                request.setAttribute("warehouseList", warehouseList);
                 nextPage = "/A6/warehouseManagement";
                 break;
 

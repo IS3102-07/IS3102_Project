@@ -1,3 +1,5 @@
+<%@page import="EntityManager.WarehouseEntity"%>
+<%@page import="java.util.List"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -21,7 +23,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <a href="../FacilityManagement_Servlet/createWarehouse_GET"><button class="btn btn-primary">Add Warehouse</button></a>
+                                    
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -39,13 +41,28 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
+                                                    <%
+                                                        List<WarehouseEntity> warehouseList = (List<WarehouseEntity>) request.getAttribute("warehouseList");
+                                                        for(WarehouseEntity warehouse: warehouseList){
+                                                            %>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td><%= warehouse.getWarehouseName() %></td>
+                                                                <td><%= warehouse.getAddress() %></td>
+                                                                <td><%= warehouse.getTelephone() %></td>
+                                                                <td><%= warehouse.getEmail() %></td>
+                                                                <td><button class="btn btn-primary">View</button></td>
+                                                            </tr>
+                                                            <%
+                                                        }
+                                                    %>
                                                 </tbody>
                                             </table>
 
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="submit" onclick="" value="Delete" class="btn btn-primary" data-loading-text="Loading...">
+                                                    <a style="margin-left: 10px" href="../FacilityManagement_Servlet/createWarehouse_GET"><button class="btn btn-primary">Add Warehouse</button></a>
                                                 </div>
                                             </div>
                                         </div>
