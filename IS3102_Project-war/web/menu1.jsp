@@ -226,7 +226,7 @@
                         <a href="#">Inbound and Outbound Logistics</a>
                     </li>
                     <li>
-                        <a href="#">Manufacturing's Warehouse Management</a>
+                        <a href="../manufacturingWarehouseManagement.jsp">Manufacturing's Warehouse Management</a>
                     </li>
                 </ul>
             </li>
