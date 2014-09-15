@@ -30,7 +30,7 @@ public class RawMaterialManagement_AddRawMaterialServlet extends HttpServlet {
 
             if (!itemManagementBean.checkSKUExists(SKU)) {
                 itemManagementBean.addRawMaterial(SKU, name, category, description, _length, width, height);
-                result = "?errMsg=Raw material with SKU: " + SKU + " has been created successfully.";
+                result = "?errMsg=Raw Material with SKU: " + SKU + " has been created successfully.";
                 response.sendRedirect("RawMaterialManagement_RawMaterialServlet" + result);
             } else {
                 result = "?errMsg=Failed to add raw material, SKU: " + SKU + " already exist.";
