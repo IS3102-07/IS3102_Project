@@ -1,11 +1,101 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+<%@page import="EntityManager.WarehouseEntity"%>
+<%@page import="java.util.List"%>
+<html lang="en">
+
+    <jsp:include page="../header2.html" />
+
     <body>
-        <h1>Hello World!</h1>
+        <script>
+            function updateManufacturingWarehouse(id) {
+                manufacturingWarehouseManagement.id.value = id;
+                document.manufacturingWarehouseManagement.action = ".jsp";
+                document.manufacturingWarehouseManagement.submit();
+            }
+        </script>
+        <div id="wrapper">
+            <jsp:include page="../menu1.jsp" />
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Warehouse Manufacturing Management</h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Select a warehouse
+                                </div>
+                                <!-- /.panel-heading -->
+                                <form name="manufacturingWarehouseManagement">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
+                                                            <th>Name</th>
+                                                            <th>Length</th>
+                                                            <th>Width</th>
+                                                            <th>Height</th>
+                                                            <th>Free Volume</th>
+                                                            <th>Select</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
+                                                            if (warehouses != null) {
+                                                                for (int i = 0; i < warehouses.size(); i++) {
+                                                        %>
+                                                        <tr>
+
+                                                        </tr>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.table-responsive -->
+                                            <input type="hidden" name="id" value="">    
+                                        </div>
+
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </form>
+
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+
     </body>
+
 </html>

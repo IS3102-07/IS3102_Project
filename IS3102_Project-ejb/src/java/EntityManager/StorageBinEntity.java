@@ -28,10 +28,11 @@ public class StorageBinEntity implements Serializable {
     private WarehouseEntity warehouse;
 
     public StorageBinEntity() {
-        
+
     }
 
-    public StorageBinEntity(String type, Integer _length, Integer width, Integer height) {
+    public StorageBinEntity(WarehouseEntity warehouseEntity, String type, Integer _length, Integer width, Integer height) {
+        this.warehouse = warehouseEntity;
         this.type = type;
         this._length = _length;
         this.width = width;
