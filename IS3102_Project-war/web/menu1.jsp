@@ -25,7 +25,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Island Furniture - Staff Portal</a>
+        <a class="navbar-brand" href="../A1/workspace.jsp">Island Furniture - Staff Portal</a>
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
@@ -147,7 +147,7 @@
                         <a href="#">System Security</a>
                     </li>
                     <li>
-                        <a href="../A1/workspace.jsp">Workspace</a>
+                        <a href="../A1/workspace_BroadcastAnnouncement.jsp">Workspace</a>
                     </li>
                 </ul>
             </li>
@@ -226,7 +226,7 @@
                         <a href="#">Inbound and Outbound Logistics</a>
                     </li>
                     <li>
-                        <a href="#">Manufacturing's Warehouse Management</a>
+                        <a href="../manufacturingWarehouseManagement.jsp">Manufacturing's Warehouse Management</a>
                     </li>
                 </ul>
             </li>

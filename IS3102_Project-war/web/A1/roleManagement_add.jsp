@@ -12,7 +12,7 @@
                             <h1 class="page-header">
                                 Add Role
                             </h1>
-                            <ol class="breadcrumb">^
+                            <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
                                 </li>

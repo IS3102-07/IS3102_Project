@@ -27,13 +27,10 @@
                 document.staffManagement.action = "staffManagement_add.jsp";
                 document.staffManagement.submit();
             }
-            function checkAll() {
-                alert("Check all the checkboxes...");
-                var allRows = document.staffManagement.getElementsByTagName("delete");
-                for (var i = 0; i < allRows.length; i++) {
-                    if (allRows[i].type == 'checkbox') {
-                        allRows[i].checked = true;
-                    }
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
                 }
             }
         </script>
@@ -76,7 +73,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Identification No</th>
                                                             <th>Name</th>
                                                             <th>Email</th>
