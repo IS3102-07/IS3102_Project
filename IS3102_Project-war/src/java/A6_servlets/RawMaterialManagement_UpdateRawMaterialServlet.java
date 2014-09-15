@@ -1,7 +1,9 @@
 package A6_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,24 +11,36 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RawMaterialManagement_UpdateRawMaterialServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private ItemManagementBeanLocal itemManagementBean;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RawMaterialManagement_RawMaterialServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RawMaterialManagement_RawMaterialServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String SKU = request.getParameter("SKU");
+            String name = request.getParameter("name");
+            String category = request.getParameter("category");
+            String description = request.getParameter("description");
+            String source = request.getParameter("source");
+
+            boolean canUpdate = itemManagementBean.editRawMaterial(SKU, name, category, description);
+            if (!canUpdate) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("rawMaterialManagement_update.jsp" + result);
+            } else {
+                result = "?errMsg=Raw Material updated successfully.";
+                response.sendRedirect(source + result);
+            }
+        } catch (Exception ex) {
+            out.println(ex);
+
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
