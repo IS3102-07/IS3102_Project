@@ -64,9 +64,9 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     }
 
     @Override
-    public boolean addItemToReceivingBin(String SKU) {
+    public boolean addItemToReceivingBin(Long warehouseID, String SKU) {
         System.out.println("addItemToStorageBin() called with SKU:" + SKU);
-        StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin();
+        StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
         if (inboundBin == null) {
             System.out.println("Failed to add item to receiving bin, receiving bin not found.");
             return false;

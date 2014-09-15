@@ -184,17 +184,15 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
-    
-    
+
     @Override
-    public Boolean addStoreConnectionToManufacturingFacility(Long id, StoreEntity store){
-        try{
+    public Boolean addStoreConnectionToManufacturingFacility(Long id, StoreEntity store) {
+        try {
             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
             manufacturingFacility.getStoreList().add(store);
             em.merge(manufacturingFacility);
             return true;
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
@@ -275,25 +273,31 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public WarehouseEntity createWarehouse(String warehouseName) {
-        try{
-            WarehouseEntity warehouse = new WarehouseEntity(warehouseName);
-            em.persist(warehouse);
-            return warehouse;
-        }catch(Exception ex){
+    public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email) {
+        try {
+            Query q = em.createQuery("select w from WarehouseEntity w where w.warehouseName = ?1").setParameter(1, warehouseName);
+            if (q.getResultList().isEmpty()) {
+                WarehouseEntity warehouse = new WarehouseEntity(warehouseName, address, telephone, email);
+                em.persist(warehouse);
+                return warehouse;
+            } else {
+                System.out.println("warehouse name dupicated");
+                return null;
+            }
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
-    }    
+    }
 
     @Override
     public Boolean deleteWarehouse(Long id) {
-        try{
+        try {
             WarehouseEntity warehouse = em.find(WarehouseEntity.class, id);
             em.remove(warehouse);
             em.flush();
             return true;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
@@ -301,21 +305,21 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
 
     @Override
     public List<WarehouseEntity> getWarehouseList() {
-        try{
+        try {
             Query q = em.createQuery("select w from WarehouseEntity w");
             return q.getResultList();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return new ArrayList<WarehouseEntity>();
         }
-    }        
+    }
 
     @Override
     public WarehouseEntity getWarehouseByName(String warehouseName) {
-        try{
+        try {
             Query q = em.createQuery("select w from WarehouseEntity w where w.warehouseName = ?1").setParameter(1, warehouseName);
-            return (WarehouseEntity)q.getSingleResult();
-        }catch(Exception ex){
+            return (WarehouseEntity) q.getSingleResult();
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
@@ -326,7 +330,5 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public void remove() {
         System.out.println("Facility Management is removed");
     }
-    
-    
-    
+
 }

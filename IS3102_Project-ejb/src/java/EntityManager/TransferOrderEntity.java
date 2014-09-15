@@ -30,13 +30,16 @@ public class TransferOrderEntity implements Serializable {
     @OneToOne
     private StorageBinEntity target;
     private String status;
+    @OneToOne
+    private WarehouseEntity warehouse;
     
 
     public TransferOrderEntity() {
 
     }
 
-    public TransferOrderEntity(LineItemEntity lineItem, StorageBinEntity origin, StorageBinEntity target) {
+    public TransferOrderEntity(WarehouseEntity warehouse, LineItemEntity lineItem, StorageBinEntity origin, StorageBinEntity target) {
+        this.warehouse = warehouse;
         this.lineItem = lineItem;
         this.origin = origin;
         this.target = target;
@@ -129,4 +132,13 @@ public class TransferOrderEntity implements Serializable {
         return "EntityManager.TransferOrderEntity[ id=" + id + " ]";
     }
 
+    public WarehouseEntity getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(WarehouseEntity warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    
 }

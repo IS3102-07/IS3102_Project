@@ -10,7 +10,7 @@ import javax.ejb.Local;
 @Local
 public interface ManufacturingWarehouseManagementBeanLocal {
 
-    public void createStorageBin(String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
+    public boolean createStorageBin(Long warehouseID, String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
 
     public boolean updateStorageBin(StorageBinEntity storageBin);
 
@@ -20,11 +20,11 @@ public interface ManufacturingWarehouseManagementBeanLocal {
 
     public List<StorageBinEntity> viewAllStorageBin();
 
-    public StorageBinEntity getInboundStorageBin(); //look for the inbound storagebin
+    public StorageBinEntity getInboundStorageBin(Long warehouseID); //look for the inbound storagebin
 
-    public StorageBinEntity getOutboundStorageBin(); //look for the inbound storagebin
+    public StorageBinEntity getOutboundStorageBin(Long warehouseID); //look for the inbound storagebin
 
-    public List<TransferOrderEntity> createTransferOrder(StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems);
+    public List<TransferOrderEntity> createTransferOrder(Long warehouseID, StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems);
 
     public boolean markTransferOrderAsCompleted(Long transferOrderId);
 
@@ -38,5 +38,5 @@ public interface ManufacturingWarehouseManagementBeanLocal {
 
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId);
 
-    public List<TransferOrderEntity> createOutboundTransferOrder(List<LineItemEntity> lineItems);
+    public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems);
 }
