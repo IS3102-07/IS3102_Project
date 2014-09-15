@@ -124,31 +124,28 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     public boolean editFurniture(String SKU, String name, String category, String description, String imageURL) {
         System.out.println("editFurniture() called with SKU:" + SKU);
-
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
-
-            for (Object o : q.getResultList()) {
-                FurnitureEntity i = (FurnitureEntity) o;
-                if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    if (name != null) {
-                        i.setName(name);
-                    }
-                    if (category != null) {
-                        i.setCategory(category);
-                    }
-                    if (description != null) {
-                        i.setDescription(description);
-                    }
-                    if (imageURL != null) {
-                        i.setImageURL(imageURL);
-                    }
-                    em.persist(i);
-                    System.out.println("\nServer updated furniture:\n" + name);
-                    return true;
-                }
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            FurnitureEntity i = (FurnitureEntity) q.getSingleResult();
+            if (SKU != null || SKU.equals("")) {
+                i.setSKU(SKU);
             }
-            return false; //Could not find the item
+            if (name != null || name.equals("")) {
+                i.setName(name);
+            }
+            if (category != null || category.equals("")) {
+                i.setCategory(category);
+            }
+            if (description != null || description.equals("")) {
+                i.setDescription(description);
+            }
+            if (imageURL != null || imageURL.equals("")) {
+                i.setImageURL(imageURL);
+            }
+            em.persist(i);
+            System.out.println("\nServer updated furniture:\n" + name);
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to update furniture:\n" + ex);
             return false;

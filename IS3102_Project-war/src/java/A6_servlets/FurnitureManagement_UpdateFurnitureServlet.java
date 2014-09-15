@@ -18,8 +18,26 @@ public class FurnitureManagement_UpdateFurnitureServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-   
+        try {
+            String SKU  = request.getParameter("SKU");
+            String name = request.getParameter("name");
+            String category = request.getParameter("category");
+            String description = request.getParameter("description");
+            String imageURL = request.getParameter("imageURL");
+            String source = request.getParameter("source");
 
+            boolean canUpdate = itemManagementBean.editFurniture(SKU, name, category, description, imageURL);
+            if (!canUpdate) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("furnitureManagement_update.jsp" + result);
+            } else {
+                result = "?errMsg=Furniture updated successfully.";
+                response.sendRedirect(source + result);
+            }
+        } catch (Exception ex) {
+            out.println(ex);
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
