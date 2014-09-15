@@ -32,18 +32,10 @@
 
                     <%
                         int id = 0;
-                        if (request.getParameter("id") == null) {
-                            response.sendRedirect("supplierManagement.jsp");
-                        } else {
-                            id = Integer.parseInt(request.getParameter("id"));
-                        }
-
                         List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
-
-                        if (suppliers == null || suppliers.isEmpty()) {
-                            response.sendRedirect("../SupplierManagement_SupplierServlet");
-                        } else {
+                        if (suppliers != null) {
                             SupplierEntity supplier = new SupplierEntity();
+                            id = Integer.parseInt(request.getParameter("id"));
                             for (int i = 0; i < suppliers.size(); i++) {
                                 if (suppliers.get(i).getId() == id) {
                                     supplier = suppliers.get(i);

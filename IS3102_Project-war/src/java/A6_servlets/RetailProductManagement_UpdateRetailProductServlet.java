@@ -1,46 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A6_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Neo
- */
 public class RetailProductManagement_UpdateRetailProductServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private ItemManagementBeanLocal itemManagementBean;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RetailProductManagement_UpdateRetailProductServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RetailProductManagement_UpdateRetailProductServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String SKU = request.getParameter("SKU");
+            String name = request.getParameter("name");
+            String category = request.getParameter("category");
+            String description = request.getParameter("description");
+            String imageURL = request.getParameter("imageURL");
+            String source = request.getParameter("source");
+
+            boolean canUpdate = itemManagementBean.editRetailProduct(SKU, name, category, description, imageURL);
+            if (!canUpdate) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("retailProductManagement_update.jsp" + result);
+            } else {
+                result = "?errMsg=Retail Product updated successfully.";
+                response.sendRedirect(source + result);
+            }
+        } catch (Exception ex) {
+            out.println(ex);
+
         }
     }
 
