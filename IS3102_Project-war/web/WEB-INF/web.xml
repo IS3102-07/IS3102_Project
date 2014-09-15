@@ -228,6 +228,10 @@
         <servlet-name>TransferOrderManagement_Servlet</servlet-name>
         <servlet-class>A3_servlets.TransferOrderManagement_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>createWarehouse</servlet-name>
+        <jsp-file>/A6/createWarehouse.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -455,6 +459,10 @@
     <servlet-mapping>
         <servlet-name>TransferOrderManagement_Servlet</servlet-name>
         <url-pattern>/TransferOrderManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createWarehouse</servlet-name>
+        <url-pattern>/A6/createWarehouse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
