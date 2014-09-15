@@ -180,6 +180,22 @@
         <servlet-name>regionalOfficeManagement</servlet-name>
         <jsp-file>/A6/regionalOfficeManagement.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.ManufacturingWarehouseManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManufacturingWarehouseManagement_AddServlet</servlet-name>
+        <servlet-class>A3_servlets.ManufacturingWarehouseManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManufacturingWarehouseManagement_UpdateServlet</servlet-name>
+        <servlet-class>A3_servlets.ManufacturingWarehouseManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManufacturingWarehouseManagement_RemoveServlet</servlet-name>
+        <servlet-class>A3_servlets.ManufacturingWarehouseManagement_RemoveServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -359,6 +375,22 @@
     <servlet-mapping>
         <servlet-name>regionalOfficeManagement</servlet-name>
         <url-pattern>/A6/regionalOfficeManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
+        <url-pattern>/ManufacturingWarehouseManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManufacturingWarehouseManagement_AddServlet</servlet-name>
+        <url-pattern>/ManufacturingWarehouseManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManufacturingWarehouseManagement_UpdateServlet</servlet-name>
+        <url-pattern>/ManufacturingWarehouseManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManufacturingWarehouseManagement_RemoveServlet</servlet-name>
+        <url-pattern>/ManufacturingWarehouseManagement_RemoveServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
