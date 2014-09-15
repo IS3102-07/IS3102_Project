@@ -7,6 +7,8 @@
 
     <body>
         <script>
+
+            var checkFlag = 'false';
             function updateRole(id) {
                 rolesManagement.id.value = id;
                 document.rolesManagement.action = "roleManagement_update.jsp";
@@ -28,13 +30,12 @@
                 document.rolesManagement.submit();
             }
             function checkAll(source) {
-                alert("Check all the checkboxes...");
-                
-                checkboxes = document.getElementByName('delete');
-                for each(var checkbox in checkboxes) {
-                    checkbox.checked = source.checked;
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
                 }
             }
+
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -76,7 +77,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th><input type="checkbox" onclick="checkAll(this)" /></th>
                                                             <th>Name</th>
                                                             <th>Access Level</th>
                                                             <th>Staff</th>
@@ -155,7 +156,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>
