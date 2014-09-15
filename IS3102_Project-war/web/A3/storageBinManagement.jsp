@@ -1,4 +1,4 @@
-<%@page import="EntityManager.SupplierEntity"%>
+<%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 
@@ -6,29 +6,29 @@
 
     <body>
         <script>
-            function updateSupplier(id) {
-                supplierManagement.id.value = id;
-                document.supplierManagement.action = "supplierManagement_update.jsp";
-                document.supplierManagement.submit();
+            function updateStorageBin(id) {
+                storagebinManagement.id.value = id;
+                document.storagebinManagement.action = "storageBinManagement_Update.jsp";
+                document.storagebinManagement.submit();
             }
-            function removeSupplier() {
+            function removeStorageBin() {
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.supplierManagement.action = "../SupplierManagement_RemoveSupplierServlet";
-                    document.supplierManagement.submit();
+                    document.storagebinManagement.action = "../StorageBinManagement_RemoveServlet";
+                    document.storagebinManagement.submit();
                 } else {
                     window.event.returnValue = false;
                 }
             }
-            function addSupplier() {
+            function addStorageBin() {
                 window.event.returnValue = true;
-                document.supplierManagement.action = "supplierManagement_add.jsp";
-                document.supplierManagement.submit();
+                document.storagebinManagement.action = "storageBinManagement_Add.jsp";
+                document.storagebinManagement.submit();
             }
             function checkAll() {
                 alert("Check all the checkboxes...");
-                var allRows = document.supplierManagement.getElementsByTagName("delete");
+                var allRows = document.storagebinManagement.getElementsByTagName("delete");
                 for (var i = 0; i < allRows.length; i++) {
                     if (allRows[i].type == 'checkbox') {
                         allRows[i].checked = true;
@@ -42,13 +42,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Supplier Management</h1>
+                            <h1 class="page-header">Storage Bin Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="supplierManagement.jsp">Supplier Management</a>
+                                    <i class="icon icon-user"></i>  <a href="storagebinManagement.jsp">Storage Bin Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Supplier Management
+                                    <i class="icon icon-edit"></i> Storage Bin Management
                                 </li>
                             </ol>
                         </div>
@@ -63,7 +63,7 @@
                                     insert some wordings
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="supplierManagement">
+                                <form name="storagebinManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
@@ -71,41 +71,44 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll()" /></th>
-                                                            <th>Name</th>
-                                                            <th>Phone</th>
-                                                            <th>Email</th>
-                                                            <th>Country</th>
-                                                            <th>Address</th>
+                                                            <th>Type</th>
+                                                            <th>Length</th>
+                                                            <th>Width</th>
+                                                            <th>Height</th>
+                                                            <th>Free Volume</th>
                                                             <th>Update</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
-                                                            if (suppliers != null) {
-                                                                for (int i = 0; i < suppliers.size(); i++) {
+                                                            List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
+                                                            if (storageBins != null) {
+                                                                for (int i = 0; i < storageBins.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <input type="checkbox" name="delete" value="<%=suppliers.get(i).getId()%>" />
+                                                                <input type="checkbox" name="delete" value="<%=storageBins.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getSupplierName()%>
+                                                                <%=storageBins.get(i).getType()%>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getContactNo()%>
+                                                                <%=storageBins.get(i).getLength()%>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getEmail()%>
+                                                                <%=storageBins.get(i).getWidth()%>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getCountry().getName()%>
+                                                                <%=storageBins.get(i).getHeight()%>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getAddress()%>
+                                                                <%=storageBins.get(i).getVolume()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=suppliers.get(i).getId()%>" value="update" onclick="javascript:updateSupplier('<%=suppliers.get(i).getId()%>')"/>
+                                                                <%=storageBins.get(i).getFreeVolume()%>
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=storageBins.get(i).getId()%>" value="update" onclick="javascript:updateStorageBin('<%=storageBins.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -118,8 +121,8 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Supplier" onclick="addSupplier()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Supplier" onclick="removeSupplier()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Storage Bin" onclick="addStorageBin()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Storage Bin" onclick="removeStorageBin()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    

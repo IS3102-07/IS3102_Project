@@ -23,6 +23,17 @@ and open the template in the editor.
     }
 }
 
+.myForm {
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
+    label{
+        font-size: 18px;
+    }    
+}
+
 .createShippingOrderTable {
     td{
         padding: 10px

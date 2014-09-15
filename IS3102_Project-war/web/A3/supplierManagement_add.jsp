@@ -45,7 +45,7 @@
                             <form role="form" action="../SupplierManagement_AddSupplierServlet">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" name="name"  type="text" required="true">
+                                    <input class="form-control" required="true" name="name"  type="text">
                                 </div>
                                 <div class="form-group">
                                     <label>Phone</label>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <select required="" name="country" class="form-control">
+                                    <select required="true" name="country" class="form-control">
                                         <option></option>
                                         <%
                                             List<CountryEntity> countries = (List<CountryEntity>) (session.getAttribute("countries"));

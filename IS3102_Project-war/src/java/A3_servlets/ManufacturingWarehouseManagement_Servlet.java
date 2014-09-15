@@ -1,55 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package A6_servlets;
+package A3_servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Administrator
- */
-public class FacilityManagement_Servlet extends HttpServlet {
+public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
 
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
-        
-        String nextPage = "";
-        ServletContext servletContext = getServletContext();
-        RequestDispatcher dispatcher;
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
-        String target = request.getPathInfo();                
-        
-        switch (target) {
-            
-            case "/warehouseManagement_index":
-                
-                
-                nextPage = "/A6/warehouseManagement";
-                break;
-            
-            case "/createWarehouse_GET":                
-                nextPage = "";
-                break;
-            
-            
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ManufacturingWarehouseManagement_Servlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ManufacturingWarehouseManagement_Servlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        dispatcher = servletContext.getRequestDispatcher(nextPage);        
-        dispatcher.forward(request, response);                
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
