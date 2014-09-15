@@ -17,7 +17,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
-                                        <a href="../StaffManagement_StaffServlet"><i class="icon-featured icon icon-user"> </i>
+                                        <a href="../StorageBinManagement_Servlet"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Storage Bin Management</h4>
                                         </a>
                                     </div>
@@ -26,7 +26,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../RoleManagement_RoleServlet"><i class="icon-featured icon icon-user"> </i>
+                                        <a href="../TransferOrderManagement_Servlet"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Transfer Order Management</h4>
                                         </a>
                                     </div>

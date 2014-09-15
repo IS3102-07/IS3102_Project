@@ -1,7 +1,7 @@
 package A3_servlets;
 
-import EntityManager.StorageBinEntity;
-import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.WarehouseEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StorageBinManagement_Servlet extends HttpServlet {
+public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
 
     @EJB
-    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private FacilityManagementBeanLocal facilityManagementBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -26,12 +26,12 @@ public class StorageBinManagement_Servlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
 
-            List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin();
-            session.setAttribute("storageBins", storageBins);
+            List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
+            session.setAttribute("warehouses", warehouses);
             if (errMsg == null || errMsg.equals("")) {
-                response.sendRedirect("A3/storageBinManagement.jsp");
+                response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
             } else {
-                response.sendRedirect("A3/storageBinManagement.jsp?errMsg=" + errMsg);
+                response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp?errMsg=" + errMsg);
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

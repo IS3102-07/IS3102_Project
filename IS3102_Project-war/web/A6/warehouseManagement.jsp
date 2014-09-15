@@ -21,7 +21,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <a href="../"><button class="btn btn-primary">Add Warehouse</button></a>
+                                    <a href="../FacilityManagement_Servlet/createWarehouse_GET"><button class="btn btn-primary">Add Warehouse</button></a>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -39,7 +39,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                             </table>
 
@@ -69,6 +69,15 @@
         </div>
         <!-- /#wrapper -->
 
+        <%
+            if (request.getAttribute("alertMessage") != null) {
+                %>
+                <script>
+                    alert("<%= request.getAttribute("alertMessage") %>");
+                </script>
+        <%
+            }
+        %>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>

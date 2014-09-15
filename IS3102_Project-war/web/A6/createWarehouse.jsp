@@ -31,7 +31,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
 
-                                    <form class="myForm" action="">
+                                    <form class="myForm" action="../FacilityManagement_Servlet/createWarehouse_POST">
                                         <div class="form-group">
                                             <label for="input_warehouseName">Warehouse Name</label>
                                             <input type="text" class="form-control" id="input_warehouseName" name="warehouseName" required="true">

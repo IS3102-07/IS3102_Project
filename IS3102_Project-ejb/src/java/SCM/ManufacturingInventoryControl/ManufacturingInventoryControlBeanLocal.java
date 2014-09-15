@@ -18,7 +18,7 @@ public interface ManufacturingInventoryControlBeanLocal {
 //    
 //    
 //    
-    public boolean addItemToReceivingBin(String SKU);
+    public boolean addItemToReceivingBin(Long warehouseID, String SKU);
     //if you want to move multiple items, please call this method many times
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination);
     

@@ -31,8 +31,7 @@ public class PurchaseOrderEntity implements Serializable {
     @OneToMany(mappedBy="purchaseOrder",cascade={CascadeType.ALL})
     private List<LineItemEntity> lineItems;                
     @ManyToOne
-    private WarehouseEntity receivedWarehouse;
-    
+    private WarehouseEntity receivedWarehouse;  
     @Temporal(value = TemporalType.DATE)
     private Date expectedReceivedDate;
     

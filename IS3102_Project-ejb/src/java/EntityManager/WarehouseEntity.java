@@ -19,27 +19,38 @@ public class WarehouseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String warehouseName;
+    private String address;
+    private String email;
+    private String telephone;
     @OneToMany(mappedBy = "warehouse")
-    private List<StorageBinEntity> storageBins;    
+    private List<StorageBinEntity> storageBins; 
     @OneToMany(mappedBy = "warehouses")
     private List<ItemEntity> items;
     @OneToOne(mappedBy="warehouse")
     private StoreEntity store;
     @OneToOne(mappedBy="warehouse")
     private ManufacturingFacilityEntity manufaturingFacility;
+    @OneToMany(mappedBy="receivedWarehouse")
+    List<PurchaseOrderEntity> purchaseOrderEntityList;
+    @OneToMany(mappedBy="warehouse")
+    private List<TransferOrderEntity> transferOrders;
     
     public WarehouseEntity(){
         this.storageBins = new ArrayList<>();
         this.items = new ArrayList<>();
-    }
+        this.purchaseOrderEntityList = new ArrayList<>();
+    }    
 
-    public WarehouseEntity(String warehouseName) {
+    public WarehouseEntity(String warehouseName, String address, String telephone, String email) {
         this.warehouseName = warehouseName;
+        this.address = address;
+        this.email = email;
+        this.telephone = telephone;
         this.storageBins = new ArrayList<>();
         this.items = new ArrayList<>();
-    }
-        
-
+        this.purchaseOrderEntityList = new ArrayList<>();
+    }                
+    
     public String getWarehouseName() {
         return warehouseName;
     }
@@ -47,6 +58,38 @@ public class WarehouseEntity implements Serializable {
     public void setWarehouseName(String warehouseName) {
         this.warehouseName = warehouseName;
     }        
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public List<StorageBinEntity> getStorageBins() {
+        return storageBins;
+    }
+
+    public void setStorageBins(List<StorageBinEntity> storageBins) {
+        this.storageBins = storageBins;
+    }            
     
     public Long getId() {
         return id;
@@ -121,4 +164,22 @@ public class WarehouseEntity implements Serializable {
         this.items = items;
     }
 
+    public List<PurchaseOrderEntity> getPurchaseOrderEntityList() {
+        return purchaseOrderEntityList;
+    }
+
+    public void setPurchaseOrderEntityList(List<PurchaseOrderEntity> purchaseOrderEntityList) {
+        this.purchaseOrderEntityList = purchaseOrderEntityList;
+    }
+
+    public List<TransferOrderEntity> getTransferOrders() {
+        return transferOrders;
+    }
+
+    public void setTransferOrders(List<TransferOrderEntity> transferOrders) {
+        this.transferOrders = transferOrders;
+    }
+
+
+    
 }
