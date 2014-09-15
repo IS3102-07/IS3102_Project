@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Neo
  */
-public class ManufacturingWarehouseManagement_AddServlet extends HttpServlet {
+public class StorageBinManagement_UpdateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class ManufacturingWarehouseManagement_AddServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManufacturingWarehouseManagement_AddServlet</title>");            
+            out.println("<title>Servlet StorageBinManagement_UpdateServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManufacturingWarehouseManagement_AddServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet StorageBinManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
