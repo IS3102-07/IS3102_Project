@@ -2,9 +2,13 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
-        <%    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));%>
+
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+                if (staffEntity != null) {
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -98,7 +102,7 @@
 
         </div>
         <!-- /#wrapper -->
-
+        <%}%>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>

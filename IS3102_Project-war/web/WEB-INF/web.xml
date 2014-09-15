@@ -164,22 +164,6 @@
         <servlet-name>FacilityManagement_Servlet</servlet-name>
         <servlet-class>A6_servlets.FacilityManagement_Servlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>ManufacturingInventoryControl_AddMICServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingInventoryControl_AddMICServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ManufacturingInventoryControl_UpdateMICServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingInventoryControl_UpdateMICServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ManufacturingInventoryControl_RemoveMICServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingInventoryControl_RemoveMICServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ManufacturingInventoryControl_MICServlet</servlet-name>
-        <servlet-class>A3_servlets.ManufacturingInventoryControl_MICServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -343,22 +327,6 @@
     <servlet-mapping>
         <servlet-name>FacilityManagement_Servlet</servlet-name>
         <url-pattern>/FacilityManagement_Servlet/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManufacturingInventoryControl_AddMICServlet</servlet-name>
-        <url-pattern>/ManufacturingInventoryControl_AddMICServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManufacturingInventoryControl_UpdateMICServlet</servlet-name>
-        <url-pattern>/ManufacturingInventoryControl_UpdateMICServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManufacturingInventoryControl_RemoveMICServlet</servlet-name>
-        <url-pattern>/ManufacturingInventoryControl_RemoveMICServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManufacturingInventoryControl_MICServlet</servlet-name>
-        <url-pattern>/ManufacturingInventoryControl_MICServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

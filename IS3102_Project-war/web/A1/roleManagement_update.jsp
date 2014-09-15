@@ -32,9 +32,7 @@
                     <%
                         int id = 0;
                         List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
-                        if (roles == null || roles.isEmpty() || request.getParameter("id") == null) {
-                            response.sendRedirect("../RoleManagement_RoleServlet");
-                        } else {
+                        if (roles != null) {
                             RoleEntity role = new RoleEntity();
                             id = Integer.parseInt(request.getParameter("id"));
                             for (int i = 0; i < roles.size(); i++) {
