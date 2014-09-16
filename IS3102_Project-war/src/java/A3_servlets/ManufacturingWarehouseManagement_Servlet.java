@@ -25,13 +25,23 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String destination = request.getParameter("destination");
+            String warehouseId = request.getParameter("id");
 
-            List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
-            session.setAttribute("warehouses", warehouses);
-            if (errMsg == null || errMsg.equals("")) {
-                response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
+            if (destination != null && warehouseId != null) {
+                if (destination.equals("manufacturingWarehouseManagement.jsp")) {
+                    WarehouseEntity warehouseEntity = facilityManagementBeanLocal.getWarehouseById(Long.parseLong(warehouseId));
+                    session.setAttribute("warehouseEntity", warehouseEntity);
+                    response.sendRedirect("A3/manufacturingWarehouseManagement.jsp");
+                }
             } else {
-                response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp?errMsg=" + errMsg);
+                List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
+                session.setAttribute("warehouses", warehouses);
+                if (errMsg == null || errMsg.equals("")) {
+                    response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
+                } else {
+                    response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp?errMsg=" + errMsg);
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
