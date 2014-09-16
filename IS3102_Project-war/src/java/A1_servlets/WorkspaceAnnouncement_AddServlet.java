@@ -3,6 +3,10 @@ package A1_servlets;
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +25,13 @@ public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
         String result;
         try {
             String sender = request.getParameter("sender");
+            String title = request.getParameter("title");
             String message = request.getParameter("message");
-
-            if (workspaceBeanLocal.makeAnnouncement(sender, message)) {
+            Long expiryDateLong = Date.parse(request.getParameter("expiryDate"));
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(expiryDateLong);
+            Date expiryDate = cal.getTime();
+            if (workspaceBeanLocal.makeAnnouncement(sender, title, message, expiryDate)) {
                 result = "?errMsg=Announcement broadcasted.";
                 response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
             } else {
