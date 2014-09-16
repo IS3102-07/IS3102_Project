@@ -40,7 +40,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Staff  Management</h1>
+                            <h1 class="page-header">Staff Management</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-user"></i><a href="accountManagement.jsp"> Account Management</a>
