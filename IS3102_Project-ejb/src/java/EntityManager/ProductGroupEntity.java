@@ -9,6 +9,7 @@ package EntityManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,20 +23,48 @@ public class ProductGroupEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String productGroupName;   
-    @OneToMany
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy="productGroup")
     List<ProductGroupLineItemEntity> lineItemList;
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
+    List<SaleForcastEntity> saleForcastEntityList;
     
     public ProductGroupEntity(){
         this.lineItemList = new ArrayList<>();
+        this.saleForcastEntityList = new ArrayList<>();
     } 
 
     public ProductGroupEntity(String productGroupName) {
         this.productGroupName = productGroupName;
         this.lineItemList = new ArrayList<>();
+        this.saleForcastEntityList = new ArrayList<>();
     }        
     
     public void create(String name) {
         setName(name);
+    }
+
+    public String getProductGroupName() {
+        return productGroupName;
+    }
+
+    public void setProductGroupName(String productGroupName) {
+        this.productGroupName = productGroupName;
+    }
+
+    public List<ProductGroupLineItemEntity> getLineItemList() {
+        return lineItemList;
+    }
+
+    public void setLineItemList(List<ProductGroupLineItemEntity> lineItemList) {
+        this.lineItemList = lineItemList;
+    }
+
+    public List<SaleForcastEntity> getSaleForcastEntityList() {
+        return saleForcastEntityList;
+    }
+
+    public void setSaleForcastEntityList(List<SaleForcastEntity> saleForcastEntityList) {
+        this.saleForcastEntityList = saleForcastEntityList;
     }
     
     public boolean checkLineItemParameter(){

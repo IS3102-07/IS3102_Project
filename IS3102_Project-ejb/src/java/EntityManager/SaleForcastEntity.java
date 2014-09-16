@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -26,10 +27,53 @@ public class SaleForcastEntity implements Serializable {
     private Long id;    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date month;
+    private Integer quantity;
     @ManyToOne
     private StoreEntity store;
+    @ManyToOne
+    private ProductGroupEntity productGroup;
     
+    public SaleForcastEntity(){}
+
+    public SaleForcastEntity(Date month, Integer quantity, StoreEntity store, ProductGroupEntity productGroup) {
+        this.month = month;
+        this.quantity = quantity;
+        this.store = store;
+        this.productGroup = productGroup;
+    }        
     
+    public Date getMonth() {
+        return month;
+    }
+
+    public void setMonth(Date month) {
+        this.month = month;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
+    }
+
+    public ProductGroupEntity getProductGroup() {
+        return productGroup;
+    }
+
+    public void setProductGroup(ProductGroupEntity productGroup) {
+        this.productGroup = productGroup;
+    }
+        
     public Long getId() {
         return id;
     }
