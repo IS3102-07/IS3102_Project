@@ -23,6 +23,7 @@ public class FurnitureManagement_RemoveFurnitureServlet extends HttpServlet {
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (String deleteArr1 : deleteArr) {
+                    System.out.println(deleteArr1);
                     itemManagementBean.removeFurniture(deleteArr1);
                 }
                 response.sendRedirect("FurnitureManagement_FurnitureServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
