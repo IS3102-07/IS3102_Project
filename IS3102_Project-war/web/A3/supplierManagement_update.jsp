@@ -23,7 +23,7 @@
                                     <i class="icon icon-user"></i><a href="supplierManagement.jsp"> Supplier Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i>  Supplier Details Update
+                                    <i class="icon icon-edit"></i> Supplier Details Update
                                 </li>
                             </ol>
                         </div>
@@ -31,13 +31,12 @@
                     <!-- /.row -->
 
                     <%
-                        int id = 0;
                         List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
-                        if (suppliers != null) {
+                        try {
+                            String id = request.getParameter("id");
                             SupplierEntity supplier = new SupplierEntity();
-                            id = Integer.parseInt(request.getParameter("id"));
                             for (int i = 0; i < suppliers.size(); i++) {
-                                if (suppliers.get(i).getId() == id) {
+                                if (suppliers.get(i).getId() == Integer.parseInt(id)) {
                                     supplier = suppliers.get(i);
                                 }
                             }
@@ -86,7 +85,10 @@
                         </div>
                         <!-- /.row -->
                     </div>
-                    <%}%>
+                    <%
+                        } catch (Exception ex) {
+                            response.sendRedirect("../SupplierManagement_SupplierServlet");
+                        }%>
                 </div>
 
             </div>

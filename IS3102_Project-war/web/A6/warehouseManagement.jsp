@@ -1,13 +1,9 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
-
     <jsp:include page="../header2.html" />
-
     <body>
-
         <div id="wrapper">
-
             <jsp:include page="../menu1.jsp" />
 
             <div id="page-wrapper">
@@ -21,7 +17,7 @@
                     <!-- /.row -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="panel panel-default">
+                            <div class="panel   panel-default">
                                 <div class="panel-heading">
 
                                 </div>
@@ -43,7 +39,8 @@
                                                 <tbody>
                                                     <%
                                                         List<WarehouseEntity> warehouseList = (List<WarehouseEntity>) request.getAttribute("warehouseList");
-                                                        for (WarehouseEntity warehouse : warehouseList) {
+                                                        if (warehouseList != null) {
+                                                            for (WarehouseEntity warehouse : warehouseList) {
                                                     %>
                                                     <tr>
                                                         <td></td>
@@ -54,6 +51,7 @@
                                                         <td><button class="btn btn-primary">View</button></td>
                                                     </tr>
                                                     <%
+                                                            }
                                                         }
                                                     %>
                                                 </tbody>

@@ -3,6 +3,17 @@
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+
+            <%
+                try {
+                    String id = request.getParameter("id");
+                } catch (Exception ex) {
+                    response.sendRedirect("manufacturingWarehouseManagement.jsp");
+                }
+            %>
+
+
+
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">

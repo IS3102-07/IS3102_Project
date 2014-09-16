@@ -31,20 +31,17 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    
+
                     <jsp:include page="../displayMessage.jsp" />
 
 
                     <%
-                        int id = 0;
-
                         List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
-
-                        if (request.getParameter("id") != null && staffs != null) {
-                            id = Integer.parseInt(request.getParameter("id"));
+                        try {
+                            String id = request.getParameter("id");
                             StaffEntity staff = new StaffEntity();
                             for (int i = 0; i < staffs.size(); i++) {
-                                if (staffs.get(i).getId() == id) {
+                                if (staffs.get(i).getId() == Integer.parseInt(id)) {
                                     staff = staffs.get(i);
                                 }
                             }
@@ -94,7 +91,10 @@
                         </div>
                         <!-- /.row -->
                     </div>
-                    <%}%>
+                    <%
+                        } catch (Exception ex) {
+                            response.sendRedirect("../StaffManagement_StaffServlet");
+                            }%>
 
                 </div>
 

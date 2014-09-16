@@ -25,6 +25,8 @@ public class StaffManagement_RemoveStaffServlet extends HttpServlet {
                     accountManagementBean.removeStaff(Long.parseLong(deleteArr[i]));
                 }
                 response.sendRedirect("StaffManagement_StaffServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            } else {
+                response.sendRedirect("A1/staffManagement.jsp?errMsg=Nothing is selected.");
             }
 
         } catch (Exception ex) {

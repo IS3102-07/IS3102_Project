@@ -8,7 +8,7 @@
         <script>
             function updateManufacturingWarehouse(id) {
                 manufacturingWarehouseManagement.id.value = id;
-                document.manufacturingWarehouseManagement.action = "manufacturingWarehouseManagement.jsp?errMsg=id";
+                document.manufacturingWarehouseManagement.action = "manufacturingWarehouseManagement.jsp";
                 document.manufacturingWarehouseManagement.submit();
             }
         </script>
