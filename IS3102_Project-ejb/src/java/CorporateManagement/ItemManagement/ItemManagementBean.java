@@ -127,6 +127,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             if (imageURL != null && imageURL.equals("")==false) {
                 i.setImageURL(imageURL);
             }
+            em.merge(i);
             em.flush();
             System.out.println("\nServer updated furniture:\n" + name);
             return true;
