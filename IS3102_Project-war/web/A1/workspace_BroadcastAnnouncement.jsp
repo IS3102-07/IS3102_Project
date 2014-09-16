@@ -31,8 +31,8 @@
                         <div class="col-lg-6">
                             <form role="form" action="../WorkspaceAnnouncement_AddServlet" onsubmit="">
                                 <div class="form-group">
-                                    <label>Sender Title</label>
-                                    <input class="form-control" name="sender" type="text" required="true">
+                                    <label>Sender</label>
+                                    <input class="form-control" name="sender" type="text" required="true" value="Announcement Messenger">
                                 </div>
                                 <div class="form-group">
                                     <label>Message</label>
@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <input type="submit" value="Broadcast Message" class="btn btn-lg btn-primary btn-block">
                                 </div>
-                                <input type="hidden" value="A1/workspace_BroadcastAnnoucement.jsp" name="source">
+                                <input type="hidden" value="A1/workspace_BroadcastAnnouncement.jsp" name="source">
                             </form>
                         </div>
                         <!-- /.row -->

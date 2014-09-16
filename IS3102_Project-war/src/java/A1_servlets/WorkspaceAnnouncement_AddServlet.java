@@ -23,11 +23,11 @@ public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
             String sender = request.getParameter("sender");
             String message = request.getParameter("message");
 
-            if (workspaceBeanLocal.makeAnnoucement(sender, message)) {
+            if (workspaceBeanLocal.makeAnnouncement(sender, message)) {
                 result = "?errMsg=Announcement broadcasted.";
                 response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
             } else {
-                result = "?errMsg=Failed to broadcast annoucement.";
+                result = "?errMsg=Failed to broadcast announcement.";
                 response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
             }
         } catch (Exception ex) {
