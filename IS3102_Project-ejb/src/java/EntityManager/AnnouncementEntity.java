@@ -1,13 +1,16 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 @Entity
 public class AnnouncementEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,13 +18,22 @@ public class AnnouncementEntity implements Serializable {
     private String sender;
     private String title;
     private String message;
-    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date broadcastedDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date expiryDate;
 
-    public AnnouncementEntity(String sender, String title, String message) {
+    public AnnouncementEntity() {
+    }
+
+    public AnnouncementEntity(String sender, String title, String message, Date expiryDate) {
         this.sender = sender;
         this.title = title;
         this.message = message;
+        this.broadcastedDate = new Date();
+        this.expiryDate = expiryDate;
     }
+
     public Long getId() {
         return id;
     }
@@ -78,5 +90,5 @@ public class AnnouncementEntity implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
-    
+
 }
