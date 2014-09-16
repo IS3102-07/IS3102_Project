@@ -3,6 +3,7 @@ package CommonInfrastructure.Workspace;
 import EntityManager.AnnouncementEntity;
 import EntityManager.MessageEntity;
 import EntityManager.StaffEntity;
+import EntityManager.ToDoEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -222,5 +223,35 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             System.out.println("\nServer failed to broadcast annoucement:\n" + ex);
             return false;
         }
+    }
+
+    @Override
+    public boolean addToDoList(String description, boolean isDone) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean removeToDoList(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean editToDoList(String description) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ToDoEntity> getAllToDoList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean markToDoListAsDone(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean markToDoListAsUndone(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
