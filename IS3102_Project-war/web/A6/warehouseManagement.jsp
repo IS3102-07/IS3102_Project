@@ -3,6 +3,16 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
+        
+        <script>
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+        </script>
+        
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
@@ -37,12 +47,12 @@
                                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                 <thead>
                                                     <tr>
-                                                        <th></th>
+                                                        <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                         <th>Warehouse Name</th>
                                                         <th>Address</th>
                                                         <th>Telephone</th>
                                                         <th>Email Address</th>
-                                                        <th>Update</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -52,7 +62,7 @@
                                                             for (WarehouseEntity warehouse : warehouseList) {
                                                     %>
                                                     <tr>
-                                                        <td></td>
+                                                        <td><input type="checkbox" name="delete" value="<%= warehouse.getId() %>" /></td>
                                                         <td><%= warehouse.getWarehouseName()%></td>
                                                         <td><%= warehouse.getAddress()%></td>
                                                         <td><%= warehouse.getTelephone()%></td>
