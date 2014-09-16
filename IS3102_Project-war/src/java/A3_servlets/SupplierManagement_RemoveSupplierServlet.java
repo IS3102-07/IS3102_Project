@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SupplierManagement_RemoveSupplierServlet extends HttpServlet {
 
     @EJB
-    private SupplierManagementBeanLocal SupplierManagementBean;
+    private SupplierManagementBeanLocal supplierManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
@@ -22,9 +22,11 @@ public class SupplierManagement_RemoveSupplierServlet extends HttpServlet {
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    SupplierManagementBean.deleteSupplier(Long.parseLong(deleteArr[i]));
+                    supplierManagementBean.deleteSupplier(Long.parseLong(deleteArr[i]));
                 }
                 response.sendRedirect("SupplierManagement_SupplierServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            } else {
+                response.sendRedirect("A3/supplierManagement.jsp?errMsg=Nothing is selected.");
             }
 
         } catch (Exception ex) {

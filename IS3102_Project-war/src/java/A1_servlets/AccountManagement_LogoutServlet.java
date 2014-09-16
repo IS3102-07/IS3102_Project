@@ -17,7 +17,7 @@ public class AccountManagement_LogoutServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             session.invalidate();
-            response.sendRedirect("Staff/staffLogin.jsp?errMsg=Logout Succesful");
+            response.sendRedirect("A1/staffLogin.jsp?errMsg=Logout Succesful");
         } finally {
             out.close();
         }

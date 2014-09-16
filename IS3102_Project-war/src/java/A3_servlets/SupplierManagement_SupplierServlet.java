@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class SupplierManagement_SupplierServlet extends HttpServlet {
 
     @EJB
-    private SupplierManagementBeanLocal SupplierManagementBean;
+    private SupplierManagementBeanLocal supplierManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -27,9 +27,8 @@ public class SupplierManagement_SupplierServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
 
-            List<CountryEntity> countries = SupplierManagementBean.getListOfCountries();
-            session.setAttribute("countries", countries);
-            List<SupplierEntity> suppliers = SupplierManagementBean.viewAllSupplierList();
+
+            List<SupplierEntity> suppliers = supplierManagementBean.viewAllSupplierList();
             session.setAttribute("suppliers", suppliers);
             if (errMsg == null || errMsg.equals("")) {
                 response.sendRedirect("A3/supplierManagement.jsp");

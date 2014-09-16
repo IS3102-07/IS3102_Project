@@ -30,13 +30,12 @@
                     <!-- /.row -->
 
                     <%
-                        int id = 0;
                         List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
-                        if (roles != null) {
+                        try {
                             RoleEntity role = new RoleEntity();
-                            id = Integer.parseInt(request.getParameter("id"));
+                            String id = request.getParameter("id");
                             for (int i = 0; i < roles.size(); i++) {
-                                if (roles.get(i).getId() == id) {
+                                if (roles.get(i).getId() == Integer.parseInt(id)) {
                                     role = roles.get(i);
                                 }
                             }
@@ -67,7 +66,10 @@
                         </div>
                         <!-- /.row -->
                     </div>
-                    <%}%>
+                    <%
+                        } catch (Exception ex) {
+                            response.sendRedirect("../RoleManagement_RoleServlet");
+                        }%>
 
                 </div>
 

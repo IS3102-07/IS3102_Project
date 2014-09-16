@@ -2,8 +2,11 @@ package A1_servlets;
 
 import EntityManager.StaffEntity;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.CountryEntity;
+import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +18,8 @@ public class AccountManagement_LoginServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
+    @EJB
+    private SupplierManagementBeanLocal supplierManagementBean;
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,21 +33,25 @@ public class AccountManagement_LoginServlet extends HttpServlet {
             String password = request.getParameter("password");
 
             StaffEntity staffEntity = accountManagementBean.loginStaff(email, password);
+            List<CountryEntity> countries = supplierManagementBean.getListOfCountries();
+
+            session.setAttribute("countries", countries);
 
             if (staffEntity == null) {
                 result = "Login fail. Please try again.";
-                response.sendRedirect("Staff/staffLogin.jsp?errMsg=" + result);
+                response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
             } else {
                 session.setAttribute("staffEntity", staffEntity);
                 response.sendRedirect("A1/workspace.jsp");
             }
-
-        } finally {
-            out.close();
+        } catch (Exception ex) {
+            out.println(ex);
+            ex.printStackTrace();
         }
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

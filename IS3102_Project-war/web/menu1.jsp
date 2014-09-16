@@ -6,7 +6,7 @@
     StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
     if (staffEntity == null) {
 %>
-<jsp:forward page="Staff/staffLogin.jsp?errMsg=Session Expired." />
+<jsp:forward page="A1/staffLogin.jsp?errMsg=Session Expired." />
 <%
 } else {
     List<RoleEntity> roles = staffEntity.getRoles();
