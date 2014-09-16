@@ -25,6 +25,8 @@ public class StoreEntity implements Serializable {
     private WarehouseEntity warehouse;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
     private List<SaleForcastEntity> saleForcastList;
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
+    private List<StoreEntity> storeList;
     @ManyToMany(mappedBy="storeList")
     @JoinTable(name="store_manufacturingFacility")
     private List<ManufacturingFacilityEntity> manufacturingFacilityList;
