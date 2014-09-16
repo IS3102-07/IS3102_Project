@@ -47,7 +47,11 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 break;
 
             case "/createWarehouse_GET":
-                nextPage = "/A6/createWarehouse";
+                String submit_btn = request.getParameter("submit-btn");
+                if(submit_btn.equals("Add Warehouse"))
+                    nextPage = "/A6/createWarehouse";
+                else if(submit_btn.equals("Delete Warehouse"))
+                    nextPage = "/FacilityManagement_Servlet/deleteWarehouse";
                 break;
 
             case "/createWarehouse_POST":
@@ -64,7 +68,7 @@ public class FacilityManagement_Servlet extends HttpServlet {
                         request.setAttribute("alertMessage", "Fail to create warehouse due to duplicated warehouse name.");
                     }
                     request.setAttribute("warehouse", warehouse);
-                    nextPage = "/A6/editWarehouse";
+                    nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -85,11 +89,21 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 Long id = Long.parseLong(request.getParameter("warehouseId"));
 
                 if (fmBean.editWarehouse(id, warehouseName, address, telephone, email)) {
-                    request.setAttribute("alterMessage", "The warehouse has been saved.");
+                    request.setAttribute("alertMessage", "The warehouse has been saved.");
                 } else {
-                    request.setAttribute("alterMessage", "Fail to edit warehouse.");
+                    request.setAttribute("alertMessage", "Fail to edit warehouse.");
                 }
-                nextPage = "/A6/editWarehouse";
+                nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
+                break;
+            case "/deleteWarehouse":
+                String[] deletes = request.getParameterValues("delete");
+                if(deletes != null){
+                    for(String warehouseString: deletes){
+                        Long warehouse_Id = Long.parseLong(warehouseString);
+                        fmBean.deleteWarehouse(warehouse_Id);                        
+                    }
+                }
+                nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
                 break;
 
         }

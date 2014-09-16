@@ -3,7 +3,7 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
-        
+
         <script>
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -12,7 +12,7 @@
                 }
             }
         </script>
-        
+
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
@@ -36,57 +36,61 @@
                     <!-- /.row -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="panel   panel-default">
+                            <div class="panel panel-default">
                                 <div class="panel-heading">
 
                                 </div>
                                 <!-- /.panel-heading -->
+
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                                <thead>
-                                                    <tr>
-                                                        <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                        <th>Warehouse Name</th>
-                                                        <th>Address</th>
-                                                        <th>Telephone</th>
-                                                        <th>Email Address</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <%
-                                                        List<WarehouseEntity> warehouseList = (List<WarehouseEntity>) request.getAttribute("warehouseList");
-                                                        if (warehouseList != null) {
-                                                            for (WarehouseEntity warehouse : warehouseList) {
-                                                    %>
-                                                    <tr>
-                                                        <td><input type="checkbox" name="delete" value="<%= warehouse.getId() %>" /></td>
-                                                        <td><%= warehouse.getWarehouseName()%></td>
-                                                        <td><%= warehouse.getAddress()%></td>
-                                                        <td><%= warehouse.getTelephone()%></td>
-                                                        <td><%= warehouse.getEmail()%></td>
-                                                        <td><a href="../FacilityManagement_Servlet/editWarehouse_GET?warehouseId=<%= warehouse.getId() %>"><button class="btn btn-primary">View</button></a></td>
-                                                    </tr>
-                                                    <%
+                                            <form action="../FacilityManagement_Servlet/createWarehouse_GET">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th>Warehouse Name</th>
+                                                            <th>Address</th>
+                                                            <th>Telephone</th>
+                                                            <th>Email Address</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            List<WarehouseEntity> warehouseList = (List<WarehouseEntity>) request.getAttribute("warehouseList");
+                                                            if (warehouseList != null) {
+                                                                for (WarehouseEntity warehouse : warehouseList) {
+                                                        %>
+                                                        <tr>
+                                                            <td><input type="checkbox" name="delete" value="<%= warehouse.getId()%>" /></td>
+                                                            <td><%= warehouse.getWarehouseName()%></td>
+                                                            <td><%= warehouse.getAddress()%></td>
+                                                            <td><%= warehouse.getTelephone()%></td>
+                                                            <td><%= warehouse.getEmail()%></td>
+                                                            <td><a href="../FacilityManagement_Servlet/editWarehouse_GET?warehouseId=<%= warehouse.getId()%>"><button class="btn btn-primary">View</button></a></td>
+                                                        </tr>
+                                                        <%
+                                                                }
                                                             }
-                                                        }
-                                                    %>
-                                                </tbody>
-                                            </table>
+                                                        %>
+                                                    </tbody>
+                                                </table>
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <a style="margin-left: 10px" href="../FacilityManagement_Servlet/createWarehouse_GET"><button class="btn btn-primary">Add Warehouse</button></a>
-                                                    <input type="submit" onclick="" value="Delete Warehouse" class="btn btn-primary" data-loading-text="Loading...">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="submit" name="submit-btn" value="Add Warehouse" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <input type="submit" name="submit-btn" value="Delete Warehouse" class="btn btn-primary" data-loading-text="Loading...">
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>    
                                         </div>
                                     </div>
                                     <!-- /.table-responsive -->
                                 </div>
                                 <!-- /.panel-body -->
+
                             </div>
                             <!-- /.panel -->
                         </div>
