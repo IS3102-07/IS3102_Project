@@ -25,8 +25,9 @@ public class StorageBinManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String warehouseId = request.getParameter("warehouseId");
 
-            List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin();
+            List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin(Long.parseLong(warehouseId));
             session.setAttribute("storageBins", storageBins);
             if (errMsg == null || errMsg.equals("")) {
                 response.sendRedirect("A3/storageBinManagement.jsp");
