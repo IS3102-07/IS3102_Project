@@ -1,3 +1,4 @@
+<%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -39,7 +40,8 @@
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <%
-
+                WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -47,8 +49,8 @@
                         <div class="col-lg-12">
                             <h1 class="page-header">Storage Bin Management</h1>
                             <ol class="breadcrumb">
-                                <li>
-                                    <i class="icon icon-user"></i>  <a href="storagebinManagement.jsp">Storage Bin Management</a>
+                                <li class="active">
+                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement_view.jsp"><%=warehouseEntity.getWarehouseName()%>t</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Storage Bin Management
@@ -78,12 +80,14 @@
                                                             <th>Length</th>
                                                             <th>Width</th>
                                                             <th>Height</th>
-                                                            <th>Free Volume</th>
+                                                            <th>Total Volume</th>
+                                                            <th>Avaliable Volume</th>
                                                             <th>Update</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%                                                            List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
+                                                        <%
+                                                            List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
                                                             if (storageBins != null) {
                                                                 for (int i = 0; i < storageBins.size(); i++) {
                                                         %>
@@ -114,7 +118,10 @@
                                                             </td>
                                                         </tr>
                                                         <%
+                                                                    }
                                                                 }
+                                                            } catch (Exception ex) {
+                                                                response.sendRedirect("manufacturingWarehouseManagement.jsp");
                                                             }
                                                         %>
                                                     </tbody>

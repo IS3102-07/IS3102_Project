@@ -7,8 +7,6 @@
 
     <body>
         <script>
-
-            var checkFlag = 'false';
             function updateRole(id) {
                 rolesManagement.id.value = id;
                 document.rolesManagement.action = "roleManagement_update.jsp";

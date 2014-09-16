@@ -6,8 +6,8 @@
 
     <body>
         <script>
-            function updateManufacturingWarehouse(id, name) {
-                window.location.href = "manufacturingWarehouseManagement.jsp?id=" + id + "&name=" + name;
+            function updateManufacturingWarehouse(id, destination) {
+                window.location.href = "../ManufacturingWarehouseManagement_Servlet?id=" + id + "&destination=" + destination;
             }
         </script>
         <div id="wrapper">
@@ -71,7 +71,7 @@
                                                                 <%=warehouses.get(i).getTelephone()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', '<%=warehouses.get(i).getWarehouseName()%>')"/>
+                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', 'manufacturingWarehouseManagement.jsp')"/>
                                                             </td>
                                                         </tr>
                                                         <%

@@ -1,6 +1,7 @@
 package A3_servlets;
 
 import EntityManager.StorageBinEntity;
+import EntityManager.WarehouseEntity;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,9 +26,9 @@ public class StorageBinManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
-            String warehouseId = request.getParameter("warehouseId");
+            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
 
-            List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin(Long.parseLong(warehouseId));
+            List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseEntity.getId());
             session.setAttribute("storageBins", storageBins);
             if (errMsg == null || errMsg.equals("")) {
                 response.sendRedirect("A3/storageBinManagement.jsp");

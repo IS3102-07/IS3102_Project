@@ -1,3 +1,4 @@
+<%@page import="EntityManager.WarehouseEntity"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -6,8 +7,7 @@
 
             <%
                 try {
-                    String warehouseId = request.getParameter("id");
-                    String warehouseName = request.getParameter("name");
+                    WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -19,7 +19,7 @@
                                     <i class="icon icon-user"></i><a href="manufacturingWarehouseManagement_view.jsp"> Manufacturing Warehouse Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> <%=warehouseName%>
+                                    <i class="icon icon-edit"></i> <%=warehouseEntity.getWarehouseName()%>
                                 </li>
                             </ol>
                         </div>
@@ -31,7 +31,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
-                                        <a href="../StorageBinManagement_Servlet?warehouseId=<%=Integer.parseInt(warehouseId)%>"><i class="icon-featured icon icon-user"> </i>
+                                        <a href="../StorageBinManagement_Servlet"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Storage Bin Management</h4>
                                         </a>
                                     </div>
@@ -40,7 +40,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../TransferOrderManagement_Servlet?warehouseId=<%=Integer.parseInt(warehouseId)%>"><i class="icon-featured icon icon-user"> </i>
+                                        <a href="../TransferOrderManagement_Servlet'"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Transfer Order Management</h4>
                                         </a>
                                     </div>

@@ -34,7 +34,7 @@
                             <form role="form" action="../StorageBinManagement_AddServlet">
                                 <div class="form-group">
                                     <label>Type</label>
-                                    <select  class="form-control" name="country" required="true">
+                                    <select  class="form-control" name="type" required="true">
                                         <option>Pallet</option>
                                         <option>Inbound</option>
                                         <option>Outbound</option>
@@ -46,20 +46,12 @@
                                     <input class="form-control" name="length" type="number" required="true">
                                 </div>
                                 <div class="form-group">
-                                    <label>width</label>
+                                    <label>Width</label>
                                     <input class="form-control" name="width" type="text" required="true"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
                                     <input class="form-control" name="height" type="text" required="true"/>
-                                </div>
-                                <div class="form-group">
-                                    <label>Volume</label>
-                                    <input class="form-control" name="volume" type="text" required="true"/>
-                                </div>
-                                <div class="form-group">
-                                    <label>Free Volume</label>
-                                    <input class="form-control" name="freeVolume" type="text" required="true"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
