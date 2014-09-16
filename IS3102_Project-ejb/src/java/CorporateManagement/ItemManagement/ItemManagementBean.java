@@ -111,27 +111,28 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     public boolean editFurniture(String id, String SKU, String name, String category, String description, String imageURL) {
-        System.out.println("editFurniture() called with SKU:" + SKU);
+        System.out.println("editFurniture() called with SKU:" + SKU + " id : " + id);
         try {
-            
             FurnitureEntity i = em.find(FurnitureEntity.class, Long.valueOf(id));
-            if (name != null || name.equals("")) {
+            System.out.println("i name is " + i.getName());
+            if (name != null && name.equals("")==false) {
                 i.setName(name);
             }
-            if (category != null || category.equals("")) {
+            if (category != null && category.equals("")==false) {
                 i.setCategory(category);
             }
-            if (description != null || description.equals("")) {
+            if (description != null && description.equals("")==false) {
                 i.setDescription(description);
             }
-            if (imageURL != null || imageURL.equals("")) {
+            if (imageURL != null && imageURL.equals("")==false) {
                 i.setImageURL(imageURL);
             }
-            em.persist(i);
+            em.flush();
             System.out.println("\nServer updated furniture:\n" + name);
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to update furniture:\n" + ex);
+            ex.printStackTrace();
             return false;
         }
     }
