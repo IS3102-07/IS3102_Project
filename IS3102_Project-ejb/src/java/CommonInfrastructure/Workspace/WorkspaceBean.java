@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -39,13 +40,13 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             List<MessageEntity> senderSentMessages = senderStaffEntity.getSentMessages();
             senderSentMessages.add(messageEntity);
             senderStaffEntity.setSentMessages(senderSentMessages);
-            em.persist(senderStaffEntity);
+            em.merge(senderStaffEntity);
 
             messageEntity.setMessageRead(false);// receiver inbox
             List<MessageEntity> receiverInboxMessages = receiverStaffEntity.getInboxMessages();
             receiverInboxMessages.add(messageEntity);
             receiverStaffEntity.setInboxMessages(receiverInboxMessages);
-            em.persist(receiverStaffEntity);
+            em.merge(receiverStaffEntity);
 
             System.out.println("Message sent.");
             return true;
@@ -94,7 +95,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             List<MessageEntity> senderSentMessages = senderStaffEntity.getSentMessages();
             senderSentMessages.add(messageEntity);
             senderStaffEntity.setSentMessages(senderSentMessages);
-            em.persist(senderStaffEntity);
+            em.merge(senderStaffEntity);
 
             System.out.println("Message sent.");
             return true;
@@ -115,6 +116,27 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             return inboxMessages;
         } catch (Exception ex) {
             System.out.println("\nServer error in listing all inbox messages:\n" + ex);
+            return null;
+        }
+    }
+
+    public List<MessageEntity> listAllUnreadInboxMessages(Long staffID) {
+        System.out.println("listAllUnreadInboxMessages() called with staffID:" + staffID);
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
+            q.setParameter("staffID", staffID);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
+            List<MessageEntity> unreadInboxMessages = new ArrayList<>();
+            for (MessageEntity currentMessage : inboxMessages) {
+                if (!currentMessage.getMessageRead()) {
+                    unreadInboxMessages.add(currentMessage);
+                }
+            }
+            System.out.println("Unread message list returned.");
+            return inboxMessages;
+        } catch (Exception ex) {
+            System.out.println("\nServer error in listing all unread inbox messages:\n" + ex);
             return null;
         }
     }
@@ -150,7 +172,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
                 }
             }
             staffEntity.setInboxMessages(inboxMessages);
-            em.persist(staffEntity);
+            em.merge(staffEntity);
             System.out.println("Message returned.");
             return message;
         } catch (Exception ex) {
@@ -176,7 +198,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
                 }
             }
             staffEntity.setInboxMessages(inboxMessages);
-            em.persist(staffEntity);
+            em.merge(staffEntity);
             System.out.println("Message deleted.");
             return true;
         } catch (Exception ex) {
@@ -202,7 +224,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
                 }
             }
             staffEntity.setSentMessages(sentMessages);
-            em.persist(staffEntity);
+            em.merge(staffEntity);
             System.out.println("Message deleted.");
             return true;
         } catch (Exception ex) {
@@ -222,6 +244,38 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to broadcast annoucement:\n" + ex);
             return false;
+        }
+    }
+
+    @Override
+    public String getStaffEmail(Long staffID) {
+        System.out.println("getStaffEmail() called with staffID:" + staffID);
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffID);
+            System.out.println("Staff email returned succesfully");
+            return staffEntity.getEmail();
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed to get staff, staff not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getStaffEmail:\n" + ex);
+            return null;
+        }
+    }
+
+    @Override
+    public String getStaffName(Long staffID) {
+        System.out.println("getStaffEmail() called with staffID:" + staffID);
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffID);
+            System.out.println("Staff email returned succesfully");
+            return staffEntity.getName();
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed to get staff, staff not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getStaffEmail:\n" + ex);
+            return null;
         }
     }
 

@@ -53,7 +53,6 @@ public interface AccountManagementBeanLocal {
     public boolean checkIfStaffHasRole(Long staffID, Long roleID);
 
     //Assign role to staffs. Returns true if operation is successful, false means either member have that role or role does not exist.
-
     public boolean addStaffRole(Long staffID, Long roleID);
 
     public boolean removeStaffRole(Long staffID, Long roleID);

@@ -16,6 +16,8 @@ public interface WorkspaceBeanLocal {
 
     public List<MessageEntity> listAllInboxMessages(Long staffID);
 
+    public List<MessageEntity> listAllUnreadInboxMessages(Long staffID);
+
     public List<MessageEntity> listAllSentMessages(Long staffID);
 
     public MessageEntity readInboxMessage(Long staffID, Long messageID); // returns null if staff or message not found
@@ -38,4 +40,8 @@ public interface WorkspaceBeanLocal {
     public boolean markToDoListAsDone(Long id);
 
     public boolean markToDoListAsUndone(Long id);
+
+    public String getStaffEmail(Long staffID);
+
+    public String getStaffName(Long staffID);
 }

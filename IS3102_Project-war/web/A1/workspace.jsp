@@ -1,3 +1,6 @@
+<%@page import="EntityManager.MessageEntity"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <%@page import="EntityManager.StaffEntity"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
@@ -8,6 +11,8 @@
             <%
                 StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
                 if (staffEntity != null) {
+                    List<MessageEntity> unreadMessages = (List<MessageEntity>) (session.getAttribute("unreadMessages"));
+                    List<MessageEntity> inbox = (List<MessageEntity>) (session.getAttribute("inbox"));
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -56,12 +61,17 @@
                                             <i class="icon icon-comments icon-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">26</div>
-                                            <div>New Private Message!</div>
+                                            <% if(unreadMessages.size()>0) { %>
+                                            <div class="huge"><%=unreadMessages.size()%></div>
+                                            <div>New Message!</div>
+                                            <%} else { %>
+                                            <div class="huge"><%=inbox.size()%></div>
+                                            <div>Messages in Inbox</div>
+                                            <%}%>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#">
+                                <a href="../WorkspaceMessage_Servlet">
                                     <div class="panel-footer" style="padding-bottom: 30px;">
                                         <span class="pull-left">View Details</span>
                                         <span class="pull-right"><i class="icon icon-arrow-circle-right"></i></span>
@@ -106,7 +116,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

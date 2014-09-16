@@ -22,7 +22,6 @@ public class RoleManagement_RemoveRoleServlet extends HttpServlet {
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    out.println("<h1>" + deleteArr[i] + "</h1>");
                     accountManagementBean.deleteRole(Long.parseLong(deleteArr[i]));
                 }
                 response.sendRedirect("RoleManagement_RoleServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");

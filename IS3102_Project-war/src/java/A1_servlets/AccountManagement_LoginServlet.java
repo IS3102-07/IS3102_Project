@@ -2,6 +2,7 @@ package A1_servlets;
 
 import EntityManager.StaffEntity;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import EntityManager.CountryEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class AccountManagement_LoginServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
     @EJB
     private SupplierManagementBeanLocal supplierManagementBean;
+    @EJB
+    private WorkspaceBeanLocal workspaceBean;
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,12 +32,13 @@ public class AccountManagement_LoginServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
 
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-
-            StaffEntity staffEntity = accountManagementBean.loginStaff(email, password);
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("StaffEntity");
+            if (staffEntity == null) {
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                staffEntity = accountManagementBean.loginStaff(email, password);
+            }
             List<CountryEntity> countries = supplierManagementBean.getListOfCountries();
-
             session.setAttribute("countries", countries);
 
             if (staffEntity == null) {
@@ -42,6 +46,9 @@ public class AccountManagement_LoginServlet extends HttpServlet {
                 response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
             } else {
                 session.setAttribute("staffEntity", staffEntity);
+                session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
+                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
                 response.sendRedirect("A1/workspace.jsp");
             }
         } catch (Exception ex) {
