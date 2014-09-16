@@ -114,6 +114,18 @@ public class StartupBean {
                 System.out.println("Skipping creating of country entities:\n" + ex);
                 ex.printStackTrace();
             }
+            try {
+                //Create warehouse
+                WarehouseEntity warehouseEntity;
+                warehouseEntity = new WarehouseEntity("Warehouse SG1", "3 Jurong Industrial Park", "67183645", "MFSG1@islandfurniture.com");
+                em.persist(warehouseEntity);
+                warehouseEntity = new WarehouseEntity("Warehouse SG2", "26 Toh Guan Road", "67183664", "MFSG2@islandfurniture.com");
+                em.persist(warehouseEntity);
+                System.out.println("Created warehouse entities.");
+            } catch (Exception ex) {
+                System.out.println("Skipping creating of warehouse entities:\n" + ex);
+                ex.printStackTrace();
+            }
         } catch (Exception ex) {
             System.out.println("Skipped init of database:\n" + ex);
             ex.printStackTrace();
