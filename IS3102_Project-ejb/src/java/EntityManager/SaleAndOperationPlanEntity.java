@@ -6,10 +6,15 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -20,8 +25,36 @@ public class SaleAndOperationPlanEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id;    
+    @OneToOne
+    private SaleForcastEntity saleForcast;
+    @ManyToOne
+    private StoreEntity store;
     
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar month;
+    private Integer productionPlan;
+    private Integer currentInventoryLevel;
+    private Integer targetInventoryLevel;
+    
+    public SaleAndOperationPlanEntity(){}
+
+    public SaleAndOperationPlanEntity(SaleForcastEntity saleForcast, StoreEntity store, Calendar month, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel) {
+        this.saleForcast = saleForcast;
+        this.store = store;
+        this.month = month;
+        this.productionPlan = productionPlan;
+        this.currentInventoryLevel = currentInventoryLevel;
+        this.targetInventoryLevel = targetInventoryLevel;
+    }        
+
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
+    }        
     
     public Long getId() {
         return id;
@@ -31,6 +64,48 @@ public class SaleAndOperationPlanEntity implements Serializable {
         this.id = id;
     }
 
+    public Calendar getMonth() {
+        return month;
+    }
+
+    public void setMonth(Calendar month) {
+        this.month = month;
+    }
+
+    public SaleForcastEntity getSaleForcast() {
+        return saleForcast;
+    }
+
+    public void setSaleForcast(SaleForcastEntity saleForcast) {
+        this.saleForcast = saleForcast;
+    }
+
+    public Integer getProductionPlan() {
+        return productionPlan;
+    }
+
+    public void setProductionPlan(Integer productionPlan) {
+        this.productionPlan = productionPlan;
+    }
+
+    public Integer getCurrentInventoryLevel() {
+        return currentInventoryLevel;
+    }
+
+    public void setCurrentInventoryLevel(Integer currentInventoryLevel) {
+        this.currentInventoryLevel = currentInventoryLevel;
+    }
+
+    public Integer getTargetInventoryLevel() {
+        return targetInventoryLevel;
+    }
+
+    public void setTargetInventoryLevel(Integer targetInventoryLevel) {
+        this.targetInventoryLevel = targetInventoryLevel;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

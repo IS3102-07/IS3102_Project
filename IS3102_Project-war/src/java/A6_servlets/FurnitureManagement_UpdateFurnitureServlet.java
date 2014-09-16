@@ -32,7 +32,7 @@ public class FurnitureManagement_UpdateFurnitureServlet extends HttpServlet {
                 response.sendRedirect("furnitureManagement_update.jsp" + result);
             } else {
                 result = "?errMsg=Furniture updated successfully.";
-                response.sendRedirect(source + result);
+                response.sendRedirect("FurnitureManagement_FurnitureServlet" + result);
             }
         } catch (Exception ex) {
             out.println(ex);
