@@ -110,12 +110,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editFurniture(String SKU, String name, String category, String description, String imageURL) {
+    public boolean editFurniture(String id, String SKU, String name, String category, String description, String imageURL) {
         System.out.println("editFurniture() called with SKU:" + SKU);
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.SKU=:SKU");
-            q.setParameter("SKU", SKU);
-            FurnitureEntity i = (FurnitureEntity) q.getSingleResult();
+            
+            FurnitureEntity i = em.find(FurnitureEntity.class, Long.valueOf(id));
             if (name != null || name.equals("")) {
                 i.setName(name);
             }
