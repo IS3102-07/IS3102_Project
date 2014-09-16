@@ -52,11 +52,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <input class="form-control" required="true" type="text" name="phone" value="<%=furniture.getCategory()%>">
+                                    <input class="form-control" required="true" type="text" name="category" value="<%=furniture.getCategory()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input class="form-control" type="text"  name="email"required="true" value="<%=furniture.getDescription()%>" >
+                                    <input class="form-control" type="text"  name="description"required="true" value="<%=furniture.getDescription()%>" >
                                 </div>
                                 <div class="form-group">
                                     <label>Image URL</label>
@@ -64,7 +64,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
-                                    <input class="form-control" type="text" required="true" name="address" value="<%=furniture.getItem().getSKU()%>">
+                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getItem().getSKU()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Length</label>
+                                    <input class="form-control" type="text" required="true" name="length" value="<%=furniture.getItem().getHeight()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Width</label>
+                                    <input class="form-control" type="text" required="true" name="width" value="<%=furniture.getItem().getWidth()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Height</label>
+                                    <input class="form-control" type="text" required="true" name="height" value="<%=furniture.getItem().getWidth()%>">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
