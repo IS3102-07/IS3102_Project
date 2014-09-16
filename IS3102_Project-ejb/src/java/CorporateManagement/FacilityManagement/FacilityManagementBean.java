@@ -289,7 +289,23 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
-
+    
+    @Override
+    public Boolean editWarehouse(Long Id, String warehouseName, String address, String telephone, String email){
+        try{
+            WarehouseEntity warehouse = em.find(WarehouseEntity.class, Id);
+            warehouse.setWarehouseName(warehouseName);
+            warehouse.setAddress(address);
+            warehouse.setTelephone(telephone);
+            warehouse.setEmail(email);
+            em.merge(warehouse);
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }        
+    }
+    
     @Override
     public Boolean deleteWarehouse(Long id) {
         try {
@@ -323,6 +339,16 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             ex.printStackTrace();
             return null;
         }
+    }
+    
+    @Override
+    public WarehouseEntity getWarehouseById(Long Id){
+        try{
+            return em.find(WarehouseEntity.class, Id);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }        
     }
 
     @Override

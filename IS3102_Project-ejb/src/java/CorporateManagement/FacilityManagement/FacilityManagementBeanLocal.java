@@ -9,7 +9,6 @@ import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
-import static java.util.Collections.list;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Remove;
@@ -45,11 +44,15 @@ public interface FacilityManagementBeanLocal {
 
     public List<StoreEntity> viewListOfStorey();
 
-    public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email);        
+    public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email);
+    
+    public Boolean editWarehouse(Long id, String warehouseName, String address, String telephone, String email);
     
     public Boolean deleteWarehouse(Long id);
     
     public WarehouseEntity getWarehouseByName(String warehouseName);
+    
+    public WarehouseEntity getWarehouseById(Long Id);
     
     public List<WarehouseEntity> getWarehouseList();
     
