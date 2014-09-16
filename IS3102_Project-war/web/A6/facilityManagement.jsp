@@ -18,16 +18,17 @@
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
                                         <a href="../StaffManagement_StaffServlet"><i class="icon-featured icon icon-globe"> </i>
-                                            <h4>Regional Office <br>Management</h4>
+                                            <h4>Regional <br>Office</h4>
                                         </a>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
                                         <a href="../RoleManagement_RoleServlet"><i class="icon-featured icon icon-home"> </i>
-                                            <h4>Store <br>Management</h4>
+                                            <h4>Store <br>Facility</h4>
                                         </a>
                                     </div>
                                 </div>
@@ -36,7 +37,7 @@
                                 <div class="featured-box featured-box-tertiary">
                                     <div class="box-content">
                                         <a href="../RoleManagement_RoleServlet"><i class="icon-featured icon icon-cogs"> </i>
-                                            <h4>Manufacturing Facility Management</h4>
+                                            <h4>Manufacturing <br>Facility</h4>    
                                         </a>
                                     </div>
                                 </div>
@@ -45,7 +46,7 @@
                                 <div class="featured-box featured-box-sixenary">
                                     <div class="box-content">
                                         <a href="../FacilityManagement_Servlet/warehouseManagement_index"><i class="icon-featured icon icon-archive"> </i>
-                                            <h4>Warehouse <br>Management</h4>
+                                            <h4>Warehouse <br>Facility</h4>
                                         </a>
                                     </div>
                                 </div>
@@ -60,7 +61,7 @@
         <!-- /#wrapper -->
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>
