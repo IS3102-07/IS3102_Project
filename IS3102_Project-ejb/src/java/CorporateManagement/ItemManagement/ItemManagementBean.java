@@ -3,7 +3,7 @@ package CorporateManagement.ItemManagement;
 import javax.ejb.Stateless;
 import EntityManager.ItemEntity;
 import EntityManager.RawMaterialEntity;
-import EntityManager.ProductionGroupEntity;
+import EntityManager.ProductGroupEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
@@ -342,7 +342,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
         Long id;
         try {
-            ProductionGroupEntity productionGroupEntity = new ProductionGroupEntity();
+            ProductGroupEntity productionGroupEntity = new ProductGroupEntity();
             productionGroupEntity.create(name);
             em.persist(productionGroupEntity);
             id = productionGroupEntity.getId();
@@ -362,7 +362,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM ProductionGroupEntity t");
 
             for (Object o : q.getResultList()) {
-                ProductionGroupEntity i = (ProductionGroupEntity) o;
+                ProductGroupEntity i = (ProductGroupEntity) o;
                 if (i.getName().equalsIgnoreCase(name)) {
                     i.setName(name);
                     em.flush();
@@ -383,7 +383,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM ProductionGroupEntity t");
 
             for (Object o : q.getResultList()) {
-                ProductionGroupEntity i = (ProductionGroupEntity) o;
+                ProductGroupEntity i = (ProductGroupEntity) o;
                 if (i.getName().equalsIgnoreCase(name)) {
                     em.remove(i);
                     em.flush();
@@ -398,13 +398,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public ProductionGroupEntity viewProductionGroup(String name) {
+    public ProductGroupEntity viewProductionGroup(String name) {
         System.out.println("viewProductionGroup() called with name:" + name);
         try {
             Query q = em.createQuery("SELECT t FROM ProductionGroupEntity t");
 
             for (Object o : q.getResultList()) {
-                ProductionGroupEntity i = (ProductionGroupEntity) o;
+                ProductGroupEntity i = (ProductGroupEntity) o;
                 if (i.getName().equalsIgnoreCase(name)) {
                     System.out.println("\nServer returns production group:\n" + name);
                     return i;
@@ -465,11 +465,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public List<ProductionGroupEntity> listAllProductionGroup() {
+    public List<ProductGroupEntity> listAllProductionGroup() {
         System.out.println("listAllProductionGroup() called.");
         try {
             Query q = em.createQuery("SELECT t FROM ProductionGroupEntity t");
-            List<ProductionGroupEntity> productionGroupEntity = q.getResultList();
+            List<ProductGroupEntity> productionGroupEntity = q.getResultList();
             return productionGroupEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to list all production groups:\n" + ex);

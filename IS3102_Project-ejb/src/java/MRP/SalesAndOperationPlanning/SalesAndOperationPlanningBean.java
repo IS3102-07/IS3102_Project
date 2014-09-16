@@ -14,7 +14,5 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningBeanLocal {
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
 }
