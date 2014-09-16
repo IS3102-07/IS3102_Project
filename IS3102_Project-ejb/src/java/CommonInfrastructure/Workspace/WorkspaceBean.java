@@ -210,20 +210,23 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public boolean makeAnnoucement(String announcer, String message) {
-        System.out.println("makeAnnoucement() called with sender:" + announcer);
+    public boolean makeAnnouncement(String announcer, String message) {
+        System.out.println("makeAnnouncement() called with sender:" + announcer);
         try {
-            MessageEntity annoucement = new MessageEntity();
-            annoucement.create(announcer, message);
+
             Query q = em.createQuery("SELECT t FROM StaffEntity t");
             List<StaffEntity> staffEntities = q.getResultList();
+
             for (StaffEntity currentStaff : staffEntities) {
+                MessageEntity announcement = new MessageEntity();
+                announcement.create(announcer, message);
+                em.persist(announcement);
                 List<MessageEntity> inbox = currentStaff.getInboxMessages();
-                inbox.add(annoucement);
+                inbox.add(announcement);
                 currentStaff.setInboxMessages(inbox);
-                em.persist(currentStaff);
+                em.merge(currentStaff);
             }
-            System.out.println("Annoucement sent to all staff.");
+            System.out.println("Announcement sent to all staff.");
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to broadcast annoucement:\n" + ex);

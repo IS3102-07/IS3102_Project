@@ -19,7 +19,7 @@ public interface WorkspaceBeanLocal {
     public boolean deleteInboxMessage(Long staffID, Long messageID);
     public boolean deleteSentMessage(Long staffID, Long messageID);
     
-    public boolean makeAnnoucement(String sender, String message); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
+    public boolean makeAnnouncement(String sender, String message); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
     
     public boolean addItemToToDoList(Long staffID, String name);
     public boolean removeItemFromToDoList(Long staffID, Integer index);

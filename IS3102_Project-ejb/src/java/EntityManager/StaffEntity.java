@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -52,10 +54,13 @@ public class StaffEntity implements Serializable {
 
     @ManyToMany
     private List<RoleEntity> roles;
-    @OneToMany
+
+    @OneToMany(cascade = {CascadeType.REMOVE})
     private List<MessageEntity> inboxMessages;
-    @OneToMany
+
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "sender")
     private List<MessageEntity> sentMessages;
+
     private ArrayList<String> toDoListItemString;
     private ArrayList<Boolean> toDoListItemStatus;
 
@@ -70,11 +75,17 @@ public class StaffEntity implements Serializable {
         this.setAddress(address);
         this.setPasswordSalt(passwordSalt);
         this.setPasswordHash(passwordHash);
-        setAccountActivationStatus(false);
-        setActivationCode();
-        setAccountLockStatus(false);
-        setUnlockCode();
-        setPasswordReset();
+        this.setAccountActivationStatus(false);
+        this.setActivationCode();
+        this.setAccountLockStatus(false);
+        this.setUnlockCode();
+        this.setPasswordReset();
+        this.setCountry(null);
+        this.setRoles(new ArrayList<>());
+        this.inboxMessages = new ArrayList<>();
+        this.sentMessages = new ArrayList<>();
+        this.toDoListItemString = new ArrayList<>();
+        this.toDoListItemStatus = new ArrayList<>();
     }
 
     public String getPasswordReset() {

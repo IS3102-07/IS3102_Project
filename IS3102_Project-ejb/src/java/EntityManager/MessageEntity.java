@@ -17,7 +17,7 @@ public class MessageEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private StaffEntity sender;
-    private List<StaffEntity> receiver;
+    private List<StaffEntity> receivers;
     private String message;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sentDate;
@@ -30,14 +30,14 @@ public class MessageEntity implements Serializable {
         this.setSender(sender);
         List<StaffEntity> receivers = new ArrayList();
         receivers.add(receiver);
-        this.setReceiver(receivers);
+        this.setReceivers(receivers);
         this.setMessage(message);
         this.setIsAnnouncement(false);
     }
     //1-m message
     public void create(StaffEntity sender, List<StaffEntity> receivers, String message){
         this.setSender(sender);
-        this.setReceiver(receivers);
+        this.setReceivers(receivers);
         this.setMessage(message);
         this.setIsAnnouncement(false);
     }
@@ -153,15 +153,15 @@ public class MessageEntity implements Serializable {
     /**
      * @return the receiver
      */
-    public List<StaffEntity> getReceiver() {
-        return receiver;
+    public List<StaffEntity> getReceivers() {
+        return receivers;
     }
 
     /**
      * @param receiver the receiver to set
      */
-    public void setReceiver(List<StaffEntity> receiver) {
-        this.receiver = receiver;
+    public void setReceivers(List<StaffEntity> receiver) {
+        this.receivers = receiver;
     }
     public String getAnnouncer() {
         return announcer;
