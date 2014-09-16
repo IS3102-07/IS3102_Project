@@ -6,37 +6,64 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author Administrator
  */
 @Entity
-public class ProductGroupLineItemEntity implements Serializable {
+public class SaleForcastEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private double percent;
-    @OneToOne
-    FurnitureEntity furniture;
+    private Long id;    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date month;
+    private Integer quantity;
+    @ManyToOne
+    private StoreEntity store;
     @ManyToOne
     private ProductGroupEntity productGroup;
     
-    public ProductGroupLineItemEntity(){}
+    public SaleForcastEntity(){}
+
+    public SaleForcastEntity(Date month, Integer quantity, StoreEntity store, ProductGroupEntity productGroup) {
+        this.month = month;
+        this.quantity = quantity;
+        this.store = store;
+        this.productGroup = productGroup;
+    }        
     
-    public Long getId() {
-        return id;
+    public Date getMonth() {
+        return month;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMonth(Date month) {
+        this.month = month;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
     }
 
     public ProductGroupEntity getProductGroup() {
@@ -45,24 +72,16 @@ public class ProductGroupLineItemEntity implements Serializable {
 
     public void setProductGroup(ProductGroupEntity productGroup) {
         this.productGroup = productGroup;
-    }        
-    
-    public double getPercent() {
-        return percent;
+    }
+        
+    public Long getId() {
+        return id;
     }
 
-    public void setPercent(double percent) {
-        this.percent = percent;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public FurnitureEntity getFurniture() {
-        return furniture;
-    }
-
-    public void setFurniture(FurnitureEntity furniture) {
-        this.furniture = furniture;
-    }        
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -73,10 +92,10 @@ public class ProductGroupLineItemEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductGroupLineItemEntity)) {
+        if (!(object instanceof SaleForcastEntity)) {
             return false;
         }
-        ProductGroupLineItemEntity other = (ProductGroupLineItemEntity) object;
+        SaleForcastEntity other = (SaleForcastEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -85,7 +104,7 @@ public class ProductGroupLineItemEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "EntityManager.ProductGroupLineItemEntity[ id=" + id + " ]";
+        return "EntityManager.SaleForcastEntity[ id=" + id + " ]";
     }
     
 }

@@ -10,26 +10,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  *
  * @author Administrator
  */
 @Entity
-public class ProductGroupLineItemEntity implements Serializable {
+public class SaleAndOperationPlanEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private double percent;
-    @OneToOne
-    FurnitureEntity furniture;
-    @ManyToOne
-    private ProductGroupEntity productGroup;
     
-    public ProductGroupLineItemEntity(){}
     
     public Long getId() {
         return id;
@@ -39,30 +31,6 @@ public class ProductGroupLineItemEntity implements Serializable {
         this.id = id;
     }
 
-    public ProductGroupEntity getProductGroup() {
-        return productGroup;
-    }
-
-    public void setProductGroup(ProductGroupEntity productGroup) {
-        this.productGroup = productGroup;
-    }        
-    
-    public double getPercent() {
-        return percent;
-    }
-
-    public void setPercent(double percent) {
-        this.percent = percent;
-    }
-
-    public FurnitureEntity getFurniture() {
-        return furniture;
-    }
-
-    public void setFurniture(FurnitureEntity furniture) {
-        this.furniture = furniture;
-    }        
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -73,10 +41,10 @@ public class ProductGroupLineItemEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductGroupLineItemEntity)) {
+        if (!(object instanceof SaleAndOperationPlanEntity)) {
             return false;
         }
-        ProductGroupLineItemEntity other = (ProductGroupLineItemEntity) object;
+        SaleAndOperationPlanEntity other = (SaleAndOperationPlanEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -85,7 +53,7 @@ public class ProductGroupLineItemEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "EntityManager.ProductGroupLineItemEntity[ id=" + id + " ]";
+        return "EntityManager.SaleAndOperationPlanEntity[ id=" + id + " ]";
     }
     
 }

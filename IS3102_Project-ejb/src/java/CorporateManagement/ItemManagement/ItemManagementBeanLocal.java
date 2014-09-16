@@ -22,7 +22,7 @@ public interface ItemManagementBeanLocal {
     public List<RawMaterialEntity> listAllRawMaterials();
 
     public boolean addFurniture(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height);
-    public boolean editFurniture(String SKU, String name, String category, String description, String imageURL);
+    public boolean editFurniture(String id, String SKU, String name, String category, String description, String imageURL);
     public boolean removeFurniture(String SKU);
     public FurnitureEntity viewFurniture(String SKU);
     public List<FurnitureEntity> listAllFurniture();

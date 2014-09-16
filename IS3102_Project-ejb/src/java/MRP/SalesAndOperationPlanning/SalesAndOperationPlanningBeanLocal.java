@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Jason
+ * @author Lin Baoyu
  */
 @Local
 public interface SalesAndOperationPlanningBeanLocal {

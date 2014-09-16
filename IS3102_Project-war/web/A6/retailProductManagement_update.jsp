@@ -1,5 +1,4 @@
-<%@page import="EntityManager.CountryEntity"%>
-<%@page import="EntityManager.FurnitureEntity"%>
+<%@page import="EntityManager.RetailProductEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 
@@ -16,14 +15,14 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Furniture Details Update
+                                Retail Product Details Update
                             </h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-user"></i><a href="furnitureManagement.jsp"> Furniture Management</a>
+                                    <i class="icon icon-user"></i><a href="retailProductManagement.jsp"> Retail Product Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i>  Furniture Details Update
+                                    <i class="icon icon-edit"></i>  Retail Product Details Update
                                 </li>
                             </ol>
                         </div>
@@ -33,11 +32,11 @@
                     <%
                         try {
                             String id = request.getParameter("id");
-                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitureList"));
-                            FurnitureEntity furniture = new FurnitureEntity();
-                            for (int i = 0; i < furnitures.size(); i++) {
-                                if (furnitures.get(i).getId() == Integer.parseInt(id)) {
-                                    furniture = furnitures.get(i);
+                            List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProductList"));
+                            RetailProductEntity retailProduct = new RetailProductEntity();
+                            for (int i = 0; i < retailProducts.size(); i++) {
+                                if (retailProducts.get(i).getId() == Integer.parseInt(id)) {
+                                    retailProduct = retailProducts.get(i);
                                 }
                             }
                     %>
@@ -45,51 +44,51 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../FurnitureManagement_UpdateFurnitureServlet">
+                            <form role="form" action="../RetailProductManagement_UpdateRetailProductServlet">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" required="true" name="name" type="text" value="<%=furniture.getName()%>">
+                                    <input class="form-control" required="true" name="name" type="text" value="<%=retailProduct.getName()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <input class="form-control" required="true" type="text" name="category" value="<%=furniture.getCategory()%>">
+                                    <input class="form-control" required="true" type="text" name="category" value="<%=retailProduct.getCategory()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input class="form-control" type="text"  name="description"required="true" value="<%=furniture.getDescription()%>" >
+                                    <input class="form-control" type="text"  name="description"required="true" value="<%=retailProduct.getDescription()%>" >
                                 </div>
                                 <div class="form-group">
                                     <label>Image URL</label>
-                                    <input class="form-control" type="text" required="true" name="address" value="<%=furniture.getImageURL()%>">
+                                    <input class="form-control" type="text" required="true" name="address" value="<%=retailProduct.getImageURL()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
-                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getSKU()%>">
+                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=retailProduct.getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
-                                    <input class="form-control" type="text" required="true" name="length" value="<%=furniture.getHeight()%>">
+                                    <input class="form-control" type="text" required="true" name="length" value="<%=retailProduct.getHeight()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Width</label>
-                                    <input class="form-control" type="text" required="true" name="width" value="<%=furniture.getWidth()%>">
+                                    <input class="form-control" type="text" required="true" name="width" value="<%=retailProduct.getWidth()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
-                                    <input class="form-control" type="text" required="true" name="height" value="<%=furniture.getWidth()%>">
+                                    <input class="form-control" type="text" required="true" name="height" value="<%=retailProduct.getWidth()%>">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
-                                <input type="hidden" value="<%=furniture.getId()%>" name="id">
-                                <input type="hidden" value="<%=furniture.getName()%>" name="furnitureName">
+                                <input type="hidden" value="<%=retailProduct.getId()%>" name="id">
+                                <input type="hidden" value="<%=retailProduct.getName()%>" name="retailProductName">
                             </form>
                         </div>
                         <!-- /.row -->
                     </div>
                     <%} catch (Exception ex) {
                         
-                            //response.sendRedirect("../FurnitureManagement_FurnitureServlet");
+                            //response.sendRedirect("../RetailProductManagement_RetailProductServlet");
                         }%>
                 </div>
 
