@@ -83,10 +83,10 @@
                                                     <tbody>
                                                         <%
                                                             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitureList"));
-                                                            
+
                                                             try {
-                                                            if (furnitures != null) {
-                                                                for (int i = 0; i < furnitures.size(); i++) {
+                                                                if (furnitures != null) {
+                                                                    for (int i = 0; i < furnitures.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
@@ -121,8 +121,8 @@
                                                             </td>
                                                         </tr>
                                                         <%
+                                                                    }
                                                                 }
-                                                            }
                                                             } catch (Exception ex) {
                                                                 System.out.println(ex);
                                                             }
@@ -164,7 +164,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

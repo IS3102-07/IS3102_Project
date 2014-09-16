@@ -25,8 +25,8 @@ public class FurnitureManagement_UpdateFurnitureServlet extends HttpServlet {
             String description = request.getParameter("description");
             String imageURL = request.getParameter("imageURL");
             String source = request.getParameter("source");
-
-            boolean canUpdate = itemManagementBean.editFurniture(SKU, name, category, description, imageURL);
+            String id = request.getParameter("id");
+            boolean canUpdate = itemManagementBean.editFurniture(id, SKU, name, category, description, imageURL);
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("furnitureManagement_update.jsp" + result);
