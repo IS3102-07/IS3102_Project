@@ -236,6 +236,10 @@
         <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
         <servlet-class>A3_servlets.ManufacturingWarehouseManagement_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>editWarehouse</servlet-name>
+        <jsp-file>/A6/editWarehouse.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -471,6 +475,10 @@
     <servlet-mapping>
         <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
         <url-pattern>/ManufacturingWarehouseManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editWarehouse</servlet-name>
+        <url-pattern>/A6/editWarehouse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
