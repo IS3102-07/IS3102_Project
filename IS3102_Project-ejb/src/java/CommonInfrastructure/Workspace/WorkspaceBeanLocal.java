@@ -2,6 +2,7 @@ package CommonInfrastructure.Workspace;
 
 import EntityManager.MessageEntity;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -19,7 +20,7 @@ public interface WorkspaceBeanLocal {
     public boolean deleteInboxMessage(Long staffID, Long messageID);
     public boolean deleteSentMessage(Long staffID, Long messageID);
     
-    public boolean makeAnnouncement(String sender, String message); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
+    public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
     
     public boolean addItemToToDoList(Long staffID, String name);
     public boolean removeItemFromToDoList(Long staffID, Integer index);

@@ -101,9 +101,11 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public List<StorageBinEntity> viewAllStorageBin() {
+    public List<StorageBinEntity> viewAllStorageBin(Long warehouseID) {
         try {
-            Query q = em.createQuery("Select sb from StorageBinEntity sb");
+            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where AND sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
             List<StorageBinEntity> storageBins = q.getResultList();
             return storageBins;
         } catch (Exception ex) {

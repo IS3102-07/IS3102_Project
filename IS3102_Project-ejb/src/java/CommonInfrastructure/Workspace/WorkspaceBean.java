@@ -1,5 +1,6 @@
 package CommonInfrastructure.Workspace;
 
+import EntityManager.AnnouncementEntity;
 import EntityManager.MessageEntity;
 import EntityManager.StaffEntity;
 import java.util.ArrayList;
@@ -77,10 +78,11 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
                 messageEntity.create(senderStaffEntity, receivers, message);
                 messageEntity.setSentDate(new Date());
                 messageEntity.setMessageRead(false); //receiver inbox
+                em.persist(messageEntity);
                 List<MessageEntity> receiverInboxMessages = currentStaff.getInboxMessages();
                 receiverInboxMessages.add(messageEntity);
                 currentStaff.setInboxMessages(receiverInboxMessages);
-                em.persist(currentStaff);
+                em.merge(currentStaff);
             }
 
             //Add message to sender sent items
@@ -210,23 +212,12 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public boolean makeAnnouncement(String announcer, String message) {
-        System.out.println("makeAnnouncement() called with sender:" + announcer);
+    public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate) {
+        System.out.println("makeAnnouncement() called with sender:" + sender);
         try {
-
-            Query q = em.createQuery("SELECT t FROM StaffEntity t");
-            List<StaffEntity> staffEntities = q.getResultList();
-
-            for (StaffEntity currentStaff : staffEntities) {
-                MessageEntity announcement = new MessageEntity();
-                announcement.create(announcer, message);
-                em.persist(announcement);
-                List<MessageEntity> inbox = currentStaff.getInboxMessages();
-                inbox.add(announcement);
-                currentStaff.setInboxMessages(inbox);
-                em.merge(currentStaff);
-            }
-            System.out.println("Announcement sent to all staff.");
+            AnnouncementEntity announcement = new AnnouncementEntity(sender, title, message, expiryDate);
+            em.persist(announcement);
+            System.out.println("Announcement broadcasted.");
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to broadcast annoucement:\n" + ex);
