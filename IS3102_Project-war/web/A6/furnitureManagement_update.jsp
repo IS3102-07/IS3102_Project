@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
-                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getSKU()%>" disabled>
+                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getSKU()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
