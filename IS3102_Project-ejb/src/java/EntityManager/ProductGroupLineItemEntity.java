@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -25,6 +26,8 @@ public class ProductGroupLineItemEntity implements Serializable {
     private double percent;
     @OneToOne
     FurnitureEntity furniture;
+    @ManyToOne
+    private ProductGroupEntity productGroup;
     
     public ProductGroupLineItemEntity(){}
     
@@ -36,6 +39,14 @@ public class ProductGroupLineItemEntity implements Serializable {
         this.id = id;
     }
 
+    public ProductGroupEntity getProductGroup() {
+        return productGroup;
+    }
+
+    public void setProductGroup(ProductGroupEntity productGroup) {
+        this.productGroup = productGroup;
+    }        
+    
     public double getPercent() {
         return percent;
     }
