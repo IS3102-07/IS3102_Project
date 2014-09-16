@@ -25,14 +25,14 @@ public class StoreEntity implements Serializable {
     private WarehouseEntity warehouse;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
     private List<SaleForcastEntity> saleForcastList;
-    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
-    private List<StoreEntity> storeList;
-    @ManyToMany(mappedBy="storeList")
-    @JoinTable(name="store_manufacturingFacility")
-    private List<ManufacturingFacilityEntity> manufacturingFacilityList;
+    //@OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
+    //private List<StoreEntity> storeList;
+    //@ManyToMany(mappedBy="storeList")
+    //@JoinTable(name="store_manufacturingFacility")
+    //private List<ManufacturingFacilityEntity> manufacturingFacilityList;
     
     public StoreEntity(){
-        this.manufacturingFacilityList = new ArrayList<>();
+        //this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();
     }
     
@@ -48,13 +48,13 @@ public class StoreEntity implements Serializable {
         this.saleForcastList = saleForcastList;
     }        
     
-    public List<ManufacturingFacilityEntity> getManufacturingFacilityList() {
-        return manufacturingFacilityList;
-    }
-
-    public void setManufacturingFacilityList(List<ManufacturingFacilityEntity> manufacturingFacilityList) {
-        this.manufacturingFacilityList = manufacturingFacilityList;
-    }        
+//    public List<ManufacturingFacilityEntity> getManufacturingFacilityList() {
+//        return manufacturingFacilityList;
+//    }
+//
+//    public void setManufacturingFacilityList(List<ManufacturingFacilityEntity> manufacturingFacilityList) {
+//        this.manufacturingFacilityList = manufacturingFacilityList;
+//    }        
     
     public Long getId() {
         return id;
