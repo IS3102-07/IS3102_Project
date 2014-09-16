@@ -38,6 +38,9 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -80,8 +83,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%
-                                                            List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
+                                                        <%                                                            List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
                                                             if (storageBins != null) {
                                                                 for (int i = 0; i < storageBins.size(); i++) {
                                                         %>

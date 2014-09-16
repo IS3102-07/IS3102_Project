@@ -6,14 +6,22 @@
 
             <%
                 try {
-                    String warehouseId = request.getParameter("warehouseId");
-                    out.println("<h1>" + warehouseId + "</h1>");
+                    String warehouseId = request.getParameter("id");
+                    String warehouseName = request.getParameter("name");
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">Manufacturing Warehouse Management</h1>
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="icon icon-user"></i><a href="manufacturingWarehouseManagement_view.jsp"> Manufacturing Warehouse Management</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-edit"></i> <%=warehouseName%>
+                                </li>
+                            </ol>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -47,7 +55,7 @@
 
             <%
                 } catch (Exception ex) {
-                    response.sendRedirect("manufacturingWarehouseManagement_view.jsp");
+                    response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
                 }%>
         </div>
 
