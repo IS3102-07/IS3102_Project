@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -222,114 +221,6 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to broadcast annoucement:\n" + ex);
             return false;
-        }
-    }
-
-    public boolean addItemToToDoList(Long staffID, String item) {
-        System.out.println("addItemToToDoList() called with staffID:" + staffID);
-        try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
-            q.setParameter("id", staffID);
-            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            ArrayList<String> toDoListString = staffEntity.getToDoListItemString();
-            ArrayList<Boolean> toDoListStatus = staffEntity.getToDoListItemStatus();
-            toDoListString.add(item);
-            toDoListStatus.add(false);
-            staffEntity.setToDoListItemString(toDoListString);
-            staffEntity.setToDoListItemStatus(toDoListStatus);
-            em.persist(staffEntity);
-            System.out.println("ToDO item added.");
-            return true;
-        } catch (NoResultException ex) {
-            System.out.println("Staff not found.");
-            return false;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to addItemToToDoList:\n" + ex);
-            return false;
-        }
-    }
-
-    public boolean removeItemFromToDoList(Long staffID, Integer index) {
-        System.out.println("removeItemFromToDoList() called with staffID:" + staffID);
-        try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
-            q.setParameter("id", staffID);
-            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            ArrayList<String> toDoListString = staffEntity.getToDoListItemString();
-            ArrayList<Boolean> toDoListStatus = staffEntity.getToDoListItemStatus();
-            toDoListString.remove(index);
-            toDoListStatus.remove(index);
-            staffEntity.setToDoListItemString(toDoListString);
-            staffEntity.setToDoListItemStatus(toDoListStatus);
-            em.merge(staffEntity);
-            System.out.println("ToDO item removed.");
-            return true;
-        } catch (NoResultException ex) {
-            System.out.println("Staff not found.");
-            return false;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to removeItemFromToDoList:\n" + ex);
-            return false;
-        }
-    }
-
-    public boolean markItemInToDoList(Long staffID, Integer index, Boolean status) {
-        System.out.println("removeItemFromToDoList() called with staffID:" + staffID);
-        try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
-            q.setParameter("id", staffID);
-            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            ArrayList<Boolean> toDoListStatus = staffEntity.getToDoListItemStatus();
-            toDoListStatus.set(index, status);
-            staffEntity.setToDoListItemStatus(toDoListStatus);
-            em.merge(staffEntity);
-            System.out.println("ToDO item status updated.");
-            return true;
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            System.out.println("Index not found");
-            return false;
-        } catch (NoResultException ex) {
-            System.out.println("Staff not found.");
-            return false;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to markItemInToDoList:\n" + ex);
-            return false;
-        }
-    }
-
-    public ArrayList<String> getToDOListString(Long staffID) {
-        System.out.println("getToDOListString() called with staffID:" + staffID);
-        try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
-            q.setParameter("id", staffID);
-            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            ArrayList<String> toDoListItemString = staffEntity.getToDoListItemString();
-            System.out.println("ToDO item string returned.");
-            return toDoListItemString;
-        } catch (NoResultException ex) {
-            System.out.println("Staff not found.");
-            return null;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to getToDOListString:\n" + ex);
-            return null;
-        }
-    }
-
-    public ArrayList<Boolean> getToDOListStatus(Long staffID) {
-        System.out.println("getToDOListStatus() called with staffID:" + staffID);
-        try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
-            q.setParameter("id", staffID);
-            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            ArrayList<Boolean> toDoListItemStatus = staffEntity.getToDoListItemStatus();
-            System.out.println("ToDO item status returned.");
-            return toDoListItemStatus;
-        } catch (NoResultException ex) {
-            System.out.println("Staff not found.");
-            return null;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to getToDOListStatus:\n" + ex);
-            return null;
         }
     }
 }

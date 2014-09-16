@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import javax.persistence.CascadeType;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -61,8 +60,8 @@ public class StaffEntity implements Serializable {
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "sender")
     private List<MessageEntity> sentMessages;
 
-    private ArrayList<String> toDoListItemString;
-    private ArrayList<Boolean> toDoListItemStatus;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<ToDoEntity> toDoList;
 
     public StaffEntity() {
     }
@@ -84,8 +83,6 @@ public class StaffEntity implements Serializable {
         this.setRoles(new ArrayList<>());
         this.inboxMessages = new ArrayList<>();
         this.sentMessages = new ArrayList<>();
-        this.toDoListItemString = new ArrayList<>();
-        this.toDoListItemStatus = new ArrayList<>();
     }
 
     public String getPasswordReset() {
@@ -313,20 +310,12 @@ public class StaffEntity implements Serializable {
         this.country = country;
     }
 
-    public ArrayList<String> getToDoListItemString() {
-        return toDoListItemString;
+    public List<ToDoEntity> getToDoList() {
+        return toDoList;
     }
 
-    public void setToDoListItemString(ArrayList<String> toDoListItemString) {
-        this.toDoListItemString = toDoListItemString;
-    }
-
-    public ArrayList<Boolean> getToDoListItemStatus() {
-        return toDoListItemStatus;
-    }
-
-    public void setToDoListItemStatus(ArrayList<Boolean> toDoListItemStatus) {
-        this.toDoListItemStatus = toDoListItemStatus;
+    public void setToDoList(List<ToDoEntity> toDoList) {
+        this.toDoList = toDoList;
     }
 
 }
