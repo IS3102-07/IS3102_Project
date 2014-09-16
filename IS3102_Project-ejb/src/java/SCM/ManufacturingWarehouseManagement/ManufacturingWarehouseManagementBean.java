@@ -266,8 +266,8 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems) {
         int qtyNeededToTransfer = 0;
         int qtyToTransferOutFromBin = 0;
-        String SKUtoFind = "";
-        ItemEntity currentItem = new ItemEntity();
+        String SKUtoFind;
+        ItemEntity currentItem = null;
         StorageBinEntity outboundStorageBin = getOutboundStorageBin(warehouseID);
         List<TransferOrderEntity> transferOrdersCreated = new ArrayList<>();
         try {
@@ -288,11 +288,13 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                             break;
                         }
                     }
-                    LineItemEntity lineItem = new LineItemEntity(currentItem, qtyToTransferOutFromBin, "");
-                    WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-                    transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, eachBinThatMatchesSKU, outboundStorageBin);
-                    em.persist(transferOrder);
-                    transferOrdersCreated.add(transferOrder);
+                    if (qtyNeededToTransfer > 0) {
+                        LineItemEntity lineItem = new LineItemEntity(currentItem, qtyToTransferOutFromBin, "");
+                        WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+                        transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, eachBinThatMatchesSKU, outboundStorageBin);
+                        em.persist(transferOrder);
+                        transferOrdersCreated.add(transferOrder);
+                    }
                     if (qtyNeededToTransfer <= 0) {
                         break;
                     }

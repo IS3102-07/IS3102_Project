@@ -16,9 +16,9 @@ public interface ManufacturingWarehouseManagementBeanLocal {
 
     public boolean deleteStorageBin(Long id);
 
-    public StorageBinEntity viewStorageBin(Long id);
+    public StorageBinEntity viewStorageBin(Long storageBinID);
 
-    public List<StorageBinEntity> viewAllStorageBin();
+    public List<StorageBinEntity> viewAllStorageBin(Long warehouseID);
 
     public StorageBinEntity getInboundStorageBin(Long warehouseID); //look for the inbound storagebin
 
