@@ -23,10 +23,10 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public boolean sendMessage(Long senderStaffID, Long receiverStaffID, String message) {
         System.out.println("sendMessage() called with senderStaffID:" + senderStaffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:senderStaffID");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:senderStaffID");
             q.setParameter("senderStaffID", senderStaffID);
             StaffEntity senderStaffEntity = (StaffEntity) q.getSingleResult();
-            q = em.createQuery("SELECT t FROM staffEntity where t.id=:receiverStaffID");
+            q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:receiverStaffID");
             q.setParameter("receiverStaffID", receiverStaffID);
             StaffEntity receiverStaffEntity = (StaffEntity) q.getSingleResult();
 
@@ -58,14 +58,14 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public boolean sendMessageToMultipleReceiver(Long senderStaffID, List<Long> receiverStaffID, String message) {
         System.out.println("sendMessageToMultipleReceiver() called with senderStaffID:" + senderStaffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:senderStaffID");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:senderStaffID");
             q.setParameter("senderStaffID", senderStaffID);
             StaffEntity senderStaffEntity = (StaffEntity) q.getSingleResult();
 
             //Get all the entity of the receiver
             List<StaffEntity> receivers = new ArrayList();
             for (Long currentStaffID : receiverStaffID) {
-                q = em.createQuery("SELECT t FROM staffEntity where t.id=:receiverStaffID");
+                q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:receiverStaffID");
                 q.setParameter("receiverStaffID", currentStaffID);
                 StaffEntity currentStaff = (StaffEntity) q.getSingleResult();
                 receivers.add(currentStaff);
@@ -105,7 +105,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public List<MessageEntity> listAllInboxMessages(Long staffID) {
         System.out.println("listAllInboxMessages() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:staffID");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
@@ -120,7 +120,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public List<MessageEntity> listAllSentMessages(Long staffID) {
         System.out.println("listAllSentMessages() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:staffID");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageEntity> sentMessages = staffEntity.getSentMessages();
@@ -136,7 +136,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         System.out.println("readMessage() called with staffID:" + staffID + " & messageID: " + messageID);
         MessageEntity message = null;
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:staffID");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
@@ -162,7 +162,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         MessageEntity message = null;
         int index = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:staffID");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
@@ -188,7 +188,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         MessageEntity message = null;
         int index = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:staffID");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageEntity> sentMessages = staffEntity.getSentMessages();
@@ -215,8 +215,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         try {
             MessageEntity annoucement = new MessageEntity();
             annoucement.create(announcer, message);
-
-            Query q = em.createQuery("SELECT t FROM staffEntity");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t");
             List<StaffEntity> staffEntities = q.getResultList();
             for (StaffEntity currentStaff : staffEntities) {
                 List<MessageEntity> inbox = currentStaff.getInboxMessages();
@@ -235,7 +234,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public boolean addItemToToDoList(Long staffID, String item) {
         System.out.println("addItemToToDoList() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:id");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             ArrayList<String> toDoListString = staffEntity.getToDoListItemString();
@@ -259,7 +258,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public boolean removeItemFromToDoList(Long staffID, Integer index) {
         System.out.println("removeItemFromToDoList() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:id");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             ArrayList<String> toDoListString = staffEntity.getToDoListItemString();
@@ -283,7 +282,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public boolean markItemInToDoList(Long staffID, Integer index, Boolean status) {
         System.out.println("removeItemFromToDoList() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:id");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             ArrayList<Boolean> toDoListStatus = staffEntity.getToDoListItemStatus();
@@ -307,7 +306,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public ArrayList<String> getToDOListString(Long staffID) {
         System.out.println("getToDOListString() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:id");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             ArrayList<String> toDoListItemString = staffEntity.getToDoListItemString();
@@ -325,7 +324,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     public ArrayList<Boolean> getToDOListStatus(Long staffID) {
         System.out.println("getToDOListStatus() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM staffEntity where t.id=:id");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             ArrayList<Boolean> toDoListItemStatus = staffEntity.getToDoListItemStatus();
