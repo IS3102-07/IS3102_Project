@@ -67,7 +67,7 @@
                                                         <td><%= warehouse.getAddress()%></td>
                                                         <td><%= warehouse.getTelephone()%></td>
                                                         <td><%= warehouse.getEmail()%></td>
-                                                        <td><button class="btn btn-primary">View</button></td>
+                                                        <td><a href="../FacilityManagement_Servlet/editWarehouse_GET?warehouseId=<%= warehouse.getId() %>"><button class="btn btn-primary">View</button></a></td>
                                                     </tr>
                                                     <%
                                                             }

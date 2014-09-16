@@ -56,16 +56,40 @@ public class FacilityManagement_Servlet extends HttpServlet {
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
-
-                    if (fmBean.createWarehouse(warehouseName, address, telephone, email) != null) {
+                    
+                    WarehouseEntity warehouse = fmBean.createWarehouse(warehouseName, address, telephone, email);
+                    if (warehouse != null) {
                         request.setAttribute("alertMessage", "A new warehouse record has been saved.");
                     } else {
                         request.setAttribute("alertMessage", "Fail to create warehouse due to duplicated warehouse name.");
                     }
-                    nextPage = "/A6/warehouseManagement";
+                    request.setAttribute("warehouse", warehouse);
+                    nextPage = "/A6/editWarehouse";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                break;
+
+            case "/editWarehouse_GET":
+                Long warehouseId = Long.parseLong(request.getParameter("warehouseId"));
+                WarehouseEntity warehouse = fmBean.getWarehouseById(warehouseId);
+                request.setAttribute("warehouse", warehouse);
+                nextPage = "/A6/editWarehouse";
+                break;
+
+            case "/editWarehouse_POST":
+                String warehouseName = request.getParameter("warehouseName");
+                String address = request.getParameter("address");
+                String telephone = request.getParameter("telephone");
+                String email = request.getParameter("email");
+                Long id = Long.parseLong(request.getParameter("warehouseId"));
+
+                if (fmBean.editWarehouse(id, warehouseName, address, telephone, email)) {
+                    request.setAttribute("alterMessage", "The warehouse has been saved.");
+                } else {
+                    request.setAttribute("alterMessage", "Fail to edit warehouse.");
+                }
+                nextPage = "/A6/editWarehouse";
                 break;
 
         }
