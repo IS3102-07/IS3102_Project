@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package SCM.ManufacturingInventoryControl;
 
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
+import EntityManager.RawMaterialEntity;
+import EntityManager.RetailProductEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
@@ -36,13 +34,13 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
 
         List<StorageBinEntity> listOfAppropriateEmptyStorageBins = new ArrayList<>();
         String storageBinType = "";
-        if (itemEntity.getFurniture() != null) {
+        if (itemEntity instanceof FurnitureEntity) {
             storageBinType = "Pallet";
         }
-        if (itemEntity.getRawMaterial() != null) {
+        if (itemEntity instanceof RawMaterialEntity) {
             storageBinType = "Pallet";
         }
-        if (itemEntity.getRetailProduct() != null) {
+        if (itemEntity instanceof RetailProductEntity) {
             storageBinType = "Shelf";
         }
         try {

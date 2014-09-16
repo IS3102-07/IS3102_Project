@@ -22,11 +22,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
         System.out.println("addRawMaterial() called with SKU:" + SKU);
-
-        Long id;
         try {
-            ItemEntity item = new ItemEntity(SKU, _length, width, height);
-            RawMaterialEntity rawMaterialEntity = new RawMaterialEntity(name, category, description, item);
+            RawMaterialEntity rawMaterialEntity = new RawMaterialEntity(SKU, name, category, description, _length, width, height);
             em.persist(rawMaterialEntity);
             System.out.println("Raw Material name \"" + name + "\" added successfully.");
             return true;
@@ -42,9 +39,6 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("SELECT r FROM RawMaterialEntity r where r.SKU=:SKU");
             q.setParameter("SKU", SKU);
             RawMaterialEntity i = (RawMaterialEntity) q.getSingleResult();
-            if (SKU != null || SKU.equals("")) {
-                i.setSKU(SKU);
-            }
             if (name != null || name.equals("")) {
                 i.setName(name);
             }
@@ -105,11 +99,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     public boolean addFurniture(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addFurniture() called with SKU:" + SKU);
-
-        Long id;
         try {
-            ItemEntity item = new ItemEntity(SKU, _length, width, height);
-            FurnitureEntity furnitureEntity = new FurnitureEntity(name, category, description, imageURL, item);
+            FurnitureEntity furnitureEntity = new FurnitureEntity(SKU, name, category, description, imageURL, _length, width, height);
             em.persist(furnitureEntity);
             System.out.println("Furniture name \"" + name + "\" added successfully.");
             return true;
@@ -125,9 +116,6 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.SKU=:SKU");
             q.setParameter("SKU", SKU);
             FurnitureEntity i = (FurnitureEntity) q.getSingleResult();
-            if (SKU != null || SKU.equals("")) {
-                i.setSKU(SKU);
-            }
             if (name != null || name.equals("")) {
                 i.setName(name);
             }
@@ -191,11 +179,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addRetailProduct() called with SKU:" + SKU);
-
-        Long id;
         try {
-            ItemEntity item = new ItemEntity(SKU, _length, width, height);
-            RetailProductEntity retailProductEntity = new RetailProductEntity(name, category, description, imageURL, item);
+            RetailProductEntity retailProductEntity = new RetailProductEntity(SKU, name, category, description, imageURL, _length, width, height);
             em.persist(retailProductEntity);
             System.out.println("Retail product name \"" + name + "\" added successfully.");
             return true;
@@ -211,9 +196,6 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("SELECT r FROM RetailProductEntity r where r.SKU=:SKU");
             q.setParameter("SKU", SKU);
             RetailProductEntity i = (RetailProductEntity) q.getSingleResult();
-            if (SKU != null || SKU.equals("")) {
-                i.setSKU(SKU);
-            }
             if (name != null || name.equals("")) {
                 i.setName(name);
             }

@@ -2,7 +2,6 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -25,17 +23,16 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     private String name;
     private String category;
     private String description;
-    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "rawMaterial")
-    private ItemEntity item;
 
     public RawMaterialEntity() {
     }
 
-    public RawMaterialEntity(String name, String category, String description, ItemEntity item) {
+    public RawMaterialEntity(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
+        super(SKU, _length, width, height);
         this.name = name;
         this.category = category;
         this.description = description;
-        this.item = item;
+
     }
 
     public void create(String name) {
@@ -48,14 +45,6 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
 
     public void setListOfSupplier_RawMaterialInfo(List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo) {
         this.listOfSupplier_RawMaterialInfo = listOfSupplier_RawMaterialInfo;
-    }
-
-    public ItemEntity getItem() {
-        return item;
-    }
-
-    public void setItem(ItemEntity item) {
-        this.item = item;
     }
 
     public Long getId() {

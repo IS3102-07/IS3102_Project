@@ -2,13 +2,11 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class RetailProductEntity extends ItemEntity implements Serializable {
@@ -23,16 +21,14 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     private String category;
     private String description;
     private String imageURL;
-    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "retailProduct")
-    private ItemEntity item;
 
     public RetailProductEntity(){}
-    public RetailProductEntity(String name, String category, String description, String imageURL, ItemEntity item){
+    public RetailProductEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height){
+        super(SKU, _length, width, height);
         this.name = name;
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
-        this.item = item;
     }
     
     public List<Supplier_RetailProductEntity> getListOfSupplier_RetailProductInfo() {
@@ -109,20 +105,6 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
      */
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
-    }
-
-    /**
-     * @return the item
-     */
-    public ItemEntity getItem() {
-        return item;
-    }
-
-    /**
-     * @param item the item to set
-     */
-    public void setItem(ItemEntity item) {
-        this.item = item;
     }
 
     /**
