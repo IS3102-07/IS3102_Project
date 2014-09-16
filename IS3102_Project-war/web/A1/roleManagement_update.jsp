@@ -30,10 +30,11 @@
                     <!-- /.row -->
 
                     <%
-                        List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
+
                         try {
-                            RoleEntity role = new RoleEntity();
                             String id = request.getParameter("id");
+                            List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
+                            RoleEntity role = new RoleEntity();
                             for (int i = 0; i < roles.size(); i++) {
                                 if (roles.get(i).getId() == Integer.parseInt(id)) {
                                     role = roles.get(i);
@@ -81,7 +82,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

@@ -7,6 +7,7 @@
     <body>
         <script>
             function updateFurniture(id) {
+                alert(id);
                 furnitureManagement.id.value = id;
                 document.furnitureManagement.action = "furnitureManagement_update.jsp";
                 document.furnitureManagement.submit();
@@ -15,7 +16,7 @@
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.furnitureManagement.action = "../furnitureManagement_RemoveFurnitureServlet";
+                    document.furnitureManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
                     document.furnitureManagement.submit();
                 } else {
                     window.event.returnValue = false;
@@ -81,7 +82,9 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                                                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitureList"));
+                                                            
+                                                            try {
                                                             if (furnitures != null) {
                                                                 for (int i = 0; i < furnitures.size(); i++) {
                                                         %>
@@ -102,16 +105,16 @@
                                                                 <%=furnitures.get(i).getImageURL()%>
                                                             </td>
                                                             <td>
-                                                                <%=furnitures.get(i).getItem().getSKU()%>
+                                                                <%=furnitures.get(i).getSKU()%>
                                                             </td>
                                                             <td>
-                                                                <%=furnitures.get(i).getItem().getLength()%>
+                                                                <%=furnitures.get(i).getLength()%>
                                                             </td>
                                                             <td>
-                                                                <%=furnitures.get(i).getItem().getWidth()%>
+                                                                <%=furnitures.get(i).getWidth()%>
                                                             </td>
                                                             <td>
-                                                                <%=furnitures.get(i).getItem().getHeight()%>
+                                                                <%=furnitures.get(i).getHeight()%>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getId()%>" value="update" onclick="javascript:updateFurniture('<%=furnitures.get(i).getId()%>')"/>
@@ -119,6 +122,9 @@
                                                         </tr>
                                                         <%
                                                                 }
+                                                            }
+                                                            } catch (Exception ex) {
+                                                                System.out.println(ex);
                                                             }
                                                         %>
                                                     </tbody>

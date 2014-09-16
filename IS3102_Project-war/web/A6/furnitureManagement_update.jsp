@@ -33,7 +33,7 @@
                     <%
                         try {
                             String id = request.getParameter("id");
-                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitureList"));
                             FurnitureEntity furniture = new FurnitureEntity();
                             for (int i = 0; i < furnitures.size(); i++) {
                                 if (furnitures.get(i).getId() == Integer.parseInt(id)) {
@@ -64,19 +64,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
-                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getItem().getSKU()%>">
+                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
-                                    <input class="form-control" type="text" required="true" name="length" value="<%=furniture.getItem().getHeight()%>">
+                                    <input class="form-control" type="text" required="true" name="length" value="<%=furniture.getHeight()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Width</label>
-                                    <input class="form-control" type="text" required="true" name="width" value="<%=furniture.getItem().getWidth()%>">
+                                    <input class="form-control" type="text" required="true" name="width" value="<%=furniture.getWidth()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
-                                    <input class="form-control" type="text" required="true" name="height" value="<%=furniture.getItem().getWidth()%>">
+                                    <input class="form-control" type="text" required="true" name="height" value="<%=furniture.getWidth()%>">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
@@ -88,7 +88,8 @@
                         <!-- /.row -->
                     </div>
                     <%} catch (Exception ex) {
-                            response.sendRedirect("../FurnitureManagement_FurnitureServlet");
+                        
+                            //response.sendRedirect("../FurnitureManagement_FurnitureServlet");
                         }%>
                 </div>
 
