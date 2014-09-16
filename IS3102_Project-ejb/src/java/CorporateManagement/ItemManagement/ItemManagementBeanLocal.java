@@ -4,7 +4,7 @@ import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.BillOfMaterialEntity;
 import EntityManager.RawMaterialEntity;
-import EntityManager.ProductionGroupEntity;
+import EntityManager.ProductGroupEntity;
 import EntityManager.RetailProductEntity;
 import java.util.List;
 import javax.ejb.Local;
@@ -42,7 +42,7 @@ public interface ItemManagementBeanLocal {
     public boolean createProductionGroup(String name);
     public boolean editProductionGroup(String name);
     public boolean deleteProductionGroup(String bomName);
-    public ProductionGroupEntity viewProductionGroup(String name);
+    public ProductGroupEntity viewProductionGroup(String name);
     /*
      public boolean addItem(String name, String materialID, String description, String imageURL);
      public boolean editItem(String name, String materialID, String description, String imageURL);

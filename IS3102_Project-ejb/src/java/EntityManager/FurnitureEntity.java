@@ -1,10 +1,12 @@
 package EntityManager;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class FurnitureEntity extends ItemEntity implements Serializable {
@@ -17,6 +19,8 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     private String category;
     private String description;
     private String imageURL;
+    @OneToOne(cascade = {CascadeType.REMOVE}, mappedBy = "furniture")
+    private ProductGroupLineItemEntity productGroupLineItemEntity;
 
     public FurnitureEntity() {
     }
@@ -27,6 +31,14 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
+    }
+
+    public ProductGroupLineItemEntity getProductGroupLineItemEntity() {
+        return productGroupLineItemEntity;
+    }
+
+    public void setProductGroupLineItemEntity(ProductGroupLineItemEntity productGroupLineItemEntity) {
+        this.productGroupLineItemEntity = productGroupLineItemEntity;
     }
 
     public Long getId() {

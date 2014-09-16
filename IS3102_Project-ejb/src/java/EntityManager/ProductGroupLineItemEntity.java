@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package EntityManager;
 
 import java.io.Serializable;
@@ -11,22 +10,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
- * @author yang
+ * @author Administrator
  */
 @Entity
-public class ProductionGroupEntity implements Serializable {
+public class ProductGroupLineItemEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private double percent;
+    @OneToOne
+    FurnitureEntity furniture;
     
-    public void create(String name) {
-        setName(name);
-    }
+    public ProductGroupLineItemEntity(){}
+    
     public Long getId() {
         return id;
     }
@@ -35,13 +36,22 @@ public class ProductionGroupEntity implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public double getPercent() {
+        return percent;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPercent(double percent) {
+        this.percent = percent;
     }
+
+    public FurnitureEntity getFurniture() {
+        return furniture;
+    }
+
+    public void setFurniture(FurnitureEntity furniture) {
+        this.furniture = furniture;
+    }        
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -52,10 +62,10 @@ public class ProductionGroupEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductionGroupEntity)) {
+        if (!(object instanceof ProductGroupLineItemEntity)) {
             return false;
         }
-        ProductionGroupEntity other = (ProductionGroupEntity) object;
+        ProductGroupLineItemEntity other = (ProductGroupLineItemEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -64,7 +74,7 @@ public class ProductionGroupEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "EntityManager.ProductionGroupEntity[ id=" + id + " ]";
+        return "EntityManager.ProductGroupLineItemEntity[ id=" + id + " ]";
     }
     
 }
