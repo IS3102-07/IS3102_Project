@@ -10,7 +10,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author Jason
+ * @author Lin Baoyu
  */
 @Stateless
 public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningBeanLocal {
