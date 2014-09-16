@@ -91,4 +91,20 @@ public class AnnouncementEntity implements Serializable {
         this.message = message;
     }
 
+    public Date getBroadcastedDate() {
+        return broadcastedDate;
+    }
+
+    public void setBroadcastedDate(Date broadcastedDate) {
+        this.broadcastedDate = broadcastedDate;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+    
 }
