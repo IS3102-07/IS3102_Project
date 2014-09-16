@@ -28,7 +28,7 @@ public interface ItemManagementBeanLocal {
     public List<FurnitureEntity> listAllFurniture();
     
     public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height);
-    public boolean editRetailProduct(String internalItemCode, String name, String category, String description, String imageURL);
+    public boolean editRetailProduct(String SKU, String name, String category, String description, String imageURL);
     public boolean removeRetailProduct(String SKU);
     public RetailProductEntity viewRetailProduct(String SKU);
    public List<RetailProductEntity> listAllRetailProduct();

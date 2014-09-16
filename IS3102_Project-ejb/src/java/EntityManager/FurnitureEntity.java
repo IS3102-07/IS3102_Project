@@ -1,13 +1,10 @@
 package EntityManager;
 
 import java.io.Serializable;
-import static java.lang.reflect.Array.set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class FurnitureEntity extends ItemEntity implements Serializable {
@@ -20,18 +17,16 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     private String category;
     private String description;
     private String imageURL;
-    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "furniture")
-    private ItemEntity item;
 
     public FurnitureEntity() {
     }
 
-    public FurnitureEntity(String name, String category, String description, String imageURL, ItemEntity item) {
+    public FurnitureEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
+        super(SKU, _length, width, height);
         this.name = name;
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
-        this.item = item;
     }
 
     public Long getId() {
@@ -50,14 +45,6 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
         this.name = name;
     }
 
-    public ItemEntity getItem() {
-        return item;
-    }
-
-    public void setItem(ItemEntity item) {
-        this.item = item;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -72,7 +59,7 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
-    }        
+    }
 
     @Override
     public int hashCode() {

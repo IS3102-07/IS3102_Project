@@ -6,14 +6,9 @@
 
             <%
                 try {
-                    String id = request.getParameter("id");
-                } catch (Exception ex) {
-                    response.sendRedirect("manufacturingWarehouseManagement.jsp");
-                }
+                    String warehouseId = request.getParameter("warehouseId");
+                    out.println("<h1>" + warehouseId + "</h1>");
             %>
-
-
-
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -28,7 +23,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
-                                        <a href="../StorageBinManagement_Servlet"><i class="icon-featured icon icon-user"> </i>
+                                        <a href="../StorageBinManagement_Servlet?warehouseId=<%=Integer.parseInt(warehouseId)%>"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Storage Bin Management</h4>
                                         </a>
                                     </div>
@@ -37,7 +32,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../TransferOrderManagement_Servlet"><i class="icon-featured icon icon-user"> </i>
+                                        <a href="../TransferOrderManagement_Servlet?warehouseId=<%=Integer.parseInt(warehouseId)%>"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Transfer Order Management</h4>
                                         </a>
                                     </div>
@@ -49,13 +44,20 @@
                 <!-- /.container-fluid -->
             </div>
             <!-- /#page-wrapper -->
+
+            <%
+                } catch (Exception ex) {
+                    response.sendRedirect("manufacturingWarehouseManagement_view.jsp");
+                }%>
         </div>
-        <!-- /#wrapper -->
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-        </script>
-    </body>
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+</body>
 </html>

@@ -240,6 +240,10 @@
         <servlet-name>editWarehouse</servlet-name>
         <jsp-file>/A6/editWarehouse.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceMessage_RemoveServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -479,6 +483,10 @@
     <servlet-mapping>
         <servlet-name>editWarehouse</servlet-name>
         <url-pattern>/A6/editWarehouse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
+        <url-pattern>/WorkspaceMessage_RemoveServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
