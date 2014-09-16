@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -34,6 +35,8 @@ public class WarehouseEntity implements Serializable {
     List<PurchaseOrderEntity> purchaseOrderEntityList;
     @OneToMany(mappedBy="warehouse")
     private List<TransferOrderEntity> transferOrders;
+    @ManyToOne
+    private CountryEntity country;
     
     public WarehouseEntity(){
         this.storageBins = new ArrayList<>();
@@ -146,6 +149,14 @@ public class WarehouseEntity implements Serializable {
     @Override
     public String toString() {
         return "EntityManager.WarehouseEntity[ id=" + id + " ]";
+    }
+
+    public CountryEntity getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryEntity country) {
+        this.country = country;
     }
 
     

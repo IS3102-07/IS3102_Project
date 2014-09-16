@@ -21,6 +21,8 @@ public class CountryEntity implements Serializable {
     private Integer countryCode;
     @OneToMany(mappedBy="country")
     private List<SupplierEntity> suppliers;
+    @OneToMany(mappedBy="country")
+    private List<WarehouseEntity> warehouses;
 
     public List<SupplierEntity> getSupplier() {
         return suppliers;
@@ -118,6 +120,22 @@ public class CountryEntity implements Serializable {
      */
     public void setExchangeRate(Double exchangeRate) {
         this.exchangeRate = exchangeRate;
+    }
+
+    public List<SupplierEntity> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(List<SupplierEntity> suppliers) {
+        this.suppliers = suppliers;
+    }
+
+    public List<WarehouseEntity> getWarehouses() {
+        return warehouses;
+    }
+
+    public void setWarehouses(List<WarehouseEntity> warehouses) {
+        this.warehouses = warehouses;
     }
     
 }
