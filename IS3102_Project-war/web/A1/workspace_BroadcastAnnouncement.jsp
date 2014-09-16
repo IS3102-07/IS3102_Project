@@ -39,6 +39,10 @@
                                     <input class="form-control" required="true" type="text" name="message" >
                                 </div>
                                 <div class="form-group">
+                                    <label>Expiry Date</label>
+                                    <input class="form-control" required="true" type="date" name="expiryDate" >
+                                </div>
+                                <div class="form-group">
                                     <input type="submit" value="Broadcast Message" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="A1/workspace_BroadcastAnnouncement.jsp" name="source">
