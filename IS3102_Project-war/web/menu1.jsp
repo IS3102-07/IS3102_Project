@@ -1,3 +1,5 @@
+<%@page import="CommonInfrastructure.AccountManagement.AccountManagementBeanLocal"%>
+<%@page import="javax.ejb.EJB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
@@ -54,7 +56,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="message-preview">
+                <li class="message-preview" onLoad="refreshMsg()">
                     <a href="#">
                         <div class="media">
                             <div class="media-body">
@@ -104,7 +106,7 @@
                     <a href="#"><i class="icon icon-user"></i> Profile</a>
                 </li>
                 <li>
-                    <a href="#"><i class="icon icon-envelope"></i> Inbox</a>
+                    <a href="../WorkspaceMessage_Servlet"><i class="icon icon-envelope"></i> Inbox</a>
                 </li>
                 <li>
                     <a href="#"><i class="icon icon-gear"></i> Settings</a>
