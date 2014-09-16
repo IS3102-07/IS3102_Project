@@ -17,7 +17,7 @@
 
         <div role="main" class="main">
             <div class="row">
-                <div class="col-md-2 col-md-offset-5">  
+                <div class="col-md-4 col-md-offset-4">  
                     <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
                         <div class="panel-heading"> 
                             <i class="icon-4x icon icon-unlock-alt"  style="margin-top: 10px;"></i><h6 class="panel-title">Sign In</h6>
