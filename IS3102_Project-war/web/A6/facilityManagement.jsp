@@ -7,11 +7,16 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Facility Management</h1>
+                            <h1 class="page-header">
+                                Warehouse Management
+                            </h1>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-home"></i>  <a href="#">Facility Management</a>
+                                </li>                                                             
+                            </ol>
                         </div>
-                        <!-- /.col-lg-12 -->
                     </div>
-                    <!-- /.row -->
                     <div class="row featured-boxes">
                         <div class="col-md-12">
                             <div class="col-md-3">
