@@ -140,17 +140,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public boolean removeFurniture(String SKU) {
         System.out.println("removeFurniture() called with SKU:" + SKU);
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
-
-            for (Object o : q.getResultList()) {
-                FurnitureEntity i = (FurnitureEntity) o;
-                if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed furniture:\n" + SKU);
-                    return true;
-                }
-            }
+            em.remove(em.getReference(FurnitureEntity.class, Long.valueOf(SKU)));
+            System.out.println("Furniture removed succesfully");
             return false; //Could not find to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove furniture:\n" + ex);
@@ -220,17 +211,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public boolean removeRetailProduct(String SKU) {
         System.out.println("removeRetailProduct() called with SKU:" + SKU);
         try {
-            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
-
-            for (Object o : q.getResultList()) {
-                RetailProductEntity i = (RetailProductEntity) o;
-                if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed retail product:\n" + SKU);
-                    return true;
-                }
-            }
+            em.remove(em.getReference(RetailProductEntity.class, Long.valueOf(SKU)));
+            System.out.println("Retail product removed succesfully");
             return false; //Could not find to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove retail product:\n" + ex);
