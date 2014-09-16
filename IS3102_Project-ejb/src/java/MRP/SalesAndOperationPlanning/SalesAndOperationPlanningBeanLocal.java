@@ -6,6 +6,12 @@
 
 package MRP.SalesAndOperationPlanning;
 
+import EntityManager.SaleAndOperationPlanEntity;
+import EntityManager.SaleForcastEntity;
+import EntityManager.StoreEntity;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +20,17 @@ import javax.ejb.Local;
  */
 @Local
 public interface SalesAndOperationPlanningBeanLocal {
+
+    public SaleAndOperationPlanEntity createSOP(SaleForcastEntity saleForcast, StoreEntity store, Calendar month, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
+    
+    public Boolean editSOP(Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
+    
+    public Boolean deleteSOP(Long Id);
+    
+    public List<SaleAndOperationPlanEntity> getSOPList();
+    
+    public List<SaleAndOperationPlanEntity> getSOPlistByYear(Calendar year);
+    
+    public SaleAndOperationPlanEntity getSOPbyId(Long id);
     
 }
