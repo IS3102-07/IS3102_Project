@@ -244,6 +244,10 @@
         <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
         <servlet-class>A1_servlets.WorkspaceMessage_RemoveServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WorkspaceMessage_SearchUsersServlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceMessage_SearchUsersServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -487,6 +491,10 @@
     <servlet-mapping>
         <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
         <url-pattern>/WorkspaceMessage_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceMessage_SearchUsersServlet</servlet-name>
+        <url-pattern>/WorkspaceMessage_SearchUsersServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

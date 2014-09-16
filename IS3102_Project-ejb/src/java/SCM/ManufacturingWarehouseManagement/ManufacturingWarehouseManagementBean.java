@@ -72,12 +72,15 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             boolean deleteStorageBin(Long id) {
 
         try {
-            if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
-
+            storageBin = em.find(StorageBinEntity.class, id);
+            if (storageBin == null) {
+                System.out.println("StorageBin is null cannot delete");
                 return false;
+            } else {
+                em.merge(storageBin);
+                em.remove(storageBin);
+                return true;
             }
-            em.remove(storageBin);
-            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to deleteStorageBin:\n" + ex);
             return false;
@@ -88,12 +91,12 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     public StorageBinEntity
             viewStorageBin(Long id) {
         try {
-            if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
+            if (em.getReference(StorageBinEntity.class, id) == null) {
 
                 return null;
             }
 
-            return em.getReference(StorageBinEntity.class, storageBin.getId());
+            return em.getReference(StorageBinEntity.class, id);
         } catch (Exception ex) {
             System.out.println("\nServer failed to viewStorageBin:\n" + ex);
             return null;
@@ -104,7 +107,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     public List<StorageBinEntity> viewAllStorageBin(Long warehouseID) {
         try {
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-            Query q = em.createQuery("Select sb from StorageBinEntity sb where AND sb.warehouse.id=:id");
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
             List<StorageBinEntity> storageBins = q.getResultList();
             return storageBins;
