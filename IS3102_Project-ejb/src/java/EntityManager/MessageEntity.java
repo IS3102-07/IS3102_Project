@@ -22,8 +22,6 @@ public class MessageEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sentDate;
     private Boolean messageRead;
-    private Boolean isAnnouncement;
-    private String announcer;
 
     //1-1 message
     public void create(StaffEntity sender, StaffEntity receiver, String message){
@@ -32,20 +30,14 @@ public class MessageEntity implements Serializable {
         receivers.add(receiver);
         this.setReceivers(receivers);
         this.setMessage(message);
-        this.setIsAnnouncement(false);
+        this.sentDate = new Date();
     }
     //1-m message
     public void create(StaffEntity sender, List<StaffEntity> receivers, String message){
         this.setSender(sender);
         this.setReceivers(receivers);
         this.setMessage(message);
-        this.setIsAnnouncement(false);
-    }
-    //annoucement
-    public void create(String announcer, String message){
-        this.setAnnouncer(announcer);
-        this.setMessage(message);
-        this.setIsAnnouncement(true);
+        this.sentDate = new Date();
     }
     public Long getId() {
         return id;
@@ -121,21 +113,6 @@ public class MessageEntity implements Serializable {
     public void setMessageRead(Boolean messageRead) {
         this.messageRead = messageRead;
     }
-
-    /**
-     * @return the isAnnouncement
-     */
-    public Boolean getIsAnnouncement() {
-        return isAnnouncement;
-    }
-
-    /**
-     * @param isAnnouncement the isAnnouncement to set
-     */
-    public void setIsAnnouncement(Boolean isAnnouncement) {
-        this.isAnnouncement = isAnnouncement;
-    }
-
     /**
      * @return the sender
      */
@@ -163,12 +140,4 @@ public class MessageEntity implements Serializable {
     public void setReceivers(List<StaffEntity> receiver) {
         this.receivers = receiver;
     }
-    public String getAnnouncer() {
-        return announcer;
-    }
-
-    public void setAnnouncer(String announcer) {
-        this.announcer = announcer;
-    }
-
 }
