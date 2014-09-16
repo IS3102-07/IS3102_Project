@@ -6,8 +6,8 @@
 
     <body>
         <script>
-            function updateManufacturingWarehouse(id) {
-                manufacturingWarehouseManagement.id.value = id;
+            function updateManufacturingWarehouse(warehouseId) {
+                manufacturingWarehouseManagement.warehouseId.value = warehouseId;
                 document.manufacturingWarehouseManagement.action = "manufacturingWarehouseManagement.jsp";
                 document.manufacturingWarehouseManagement.submit();
             }
