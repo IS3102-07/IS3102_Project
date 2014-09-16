@@ -1,11 +1,23 @@
-<%@page import="EntityManager.CountryEntity"%>
+a<%@page import="EntityManager.CountryEntity"%>
 <%@page import="EntityManager.FurnitureEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
     <body>
-
+<script>
+            function goBackPage() {
+                var yes = confirm("Are you sure?!");
+                if (yes == true) {
+                    window.event.returnValue = true;
+                    document.furnitureManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
+                    document.furnitureManagement.submit();
+                } else {
+                    window.event.returnValue = false;
+                }
+            }
+            
+        </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
