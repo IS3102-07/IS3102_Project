@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Image URL</label>
-                                    <input class="form-control" type="text" required="true" name="address" value="<%=retailProduct.getImageURL()%>">
+                                    <input class="form-control" type="text" required="true" name="imageURL" value="<%=retailProduct.getImageURL()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
@@ -67,15 +67,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
-                                    <input class="form-control" type="text" required="true" name="length" value="<%=retailProduct.getHeight()%>">
+                                    <input class="form-control" type="text" required="true" name="length" value="<%=retailProduct.getHeight()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Width</label>
-                                    <input class="form-control" type="text" required="true" name="width" value="<%=retailProduct.getWidth()%>">
+                                    <input class="form-control" type="text" required="true" name="width" value="<%=retailProduct.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
-                                    <input class="form-control" type="text" required="true" name="height" value="<%=retailProduct.getWidth()%>">
+                                    <input class="form-control" type="text" required="true" name="height" value="<%=retailProduct.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">

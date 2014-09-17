@@ -7,7 +7,6 @@
     <body>
         <script>
             function updateRetailProduct(id) {
-                alert(id);
                 retailProductManagement.id.value = id;
                 document.retailProductManagement.action = "retailProductManagement_update.jsp";
                 document.retailProductManagement.submit();

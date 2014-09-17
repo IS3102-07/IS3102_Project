@@ -25,8 +25,8 @@ public class RetailProductManagement_UpdateRetailProductServlet extends HttpServ
             String description = request.getParameter("description");
             String imageURL = request.getParameter("imageURL");
             String source = request.getParameter("source");
-
-            boolean canUpdate = itemManagementBean.editRetailProduct(SKU, name, category, description, imageURL);
+            String id = request.getParameter("id");
+            boolean canUpdate = itemManagementBean.editRetailProduct(id, SKU, name, category, description, imageURL);
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("retailProductManagement_update.jsp" + result);
