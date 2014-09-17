@@ -73,6 +73,18 @@
         <servlet-class>A6_servlets.RawMaterialManagement_RawMaterialServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RawMaterialManagement_AddRawMaterialServlet</servlet-name>
+        <servlet-class>A6_servlets.RawMaterialManagement_AddRawMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RawMaterialManagement_RemoveRawMaterialServlet</servlet-name>
+        <servlet-class>A6_servlets.RawMaterialManagement_RemoveRawMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RawMaterialManagement_UpdateRawMaterialServlet</servlet-name>
+        <servlet-class>A6_servlets.RawMaterialManagement_UpdateRawMaterialServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>RetailProductManagement_RetailProductServlet</servlet-name>
         <servlet-class>A6_servlets.RetailProductManagement_RetailProductServlet</servlet-class>
     </servlet>
@@ -317,6 +329,14 @@
         <url-pattern>/RawMaterialManagement_RawMaterialServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>RawMaterialManagement_RemoveRawMaterialServlet</servlet-name>
+        <url-pattern>/RawMaterialManagement_RemoveRawMaterialServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RawMaterialManagement_UpdateRawMaterialServlet</servlet-name>
+        <url-pattern>/RawMaterialManagement_UpdateRawMaterialServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>RetailProductManagement_RetailProductServlet</servlet-name>
         <url-pattern>/RetailProductManagement_RetailProductServlet</url-pattern>
     </servlet-mapping>
@@ -343,6 +363,10 @@
     <servlet-mapping>
         <servlet-name>FurnitureManagement_AddFurnitureServlet</servlet-name>
         <url-pattern>/FurnitureManagement_AddFurnitureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RawMaterialManagement_AddRawMaterialServlet</servlet-name>
+        <url-pattern>/RawMaterialManagement_AddRawMaterialServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FurnitureManagement_RemoveFurnitureServlet</servlet-name>
