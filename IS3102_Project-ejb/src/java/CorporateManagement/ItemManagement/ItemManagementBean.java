@@ -33,22 +33,15 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editRawMaterial(String SKU, String name, String category, String description) {
+    public boolean editRawMaterial(String id, String SKU, String name, String category, String description) {
         System.out.println("editRawMaterial() called with SKU:" + SKU);
         try {
-            Query q = em.createQuery("SELECT r FROM RawMaterialEntity r where r.SKU=:SKU");
-            q.setParameter("SKU", SKU);
-            RawMaterialEntity i = (RawMaterialEntity) q.getSingleResult();
-            if (name != null || name.equals("")) {
+            RawMaterialEntity i = em.find(RawMaterialEntity.class, Long.valueOf(id));
                 i.setName(name);
-            }
-            if (category != null || category.equals("")) {
                 i.setCategory(category);
-            }
-            if (description != null || description.equals("")) {
                 i.setDescription(description);
-            }
-            em.persist(i);
+            em.merge(i);
+            em.flush();
             System.out.println("\nServer updated raw material:\n" + name);
             return true;
         } catch (Exception ex) {
