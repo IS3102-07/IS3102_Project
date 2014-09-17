@@ -21,7 +21,7 @@
                     window.event.returnValue = false;
                 }
             }
-            function addrawMaterial() {
+            function addRawMaterial() {
                 window.event.returnValue = true;
                 document.rawMaterialManagement.action = "rawMaterialManagement_add.jsp";
                 document.rawMaterialManagement.submit();
@@ -71,7 +71,6 @@
                                                             <th>Name</th>
                                                             <th>Category</th>
                                                             <th>Description</th>
-                                                            <th>Image URL</th>
                                                             <th>SKU</th>
                                                             <th>Length</th>
                                                             <th>Width</th>
@@ -100,7 +99,18 @@
                                                             <td>
                                                                 <%=rawMaterials.get(i).getDescription()%>
                                                             </td>
-                                                        
+                                                            <td>
+                                                                <%=rawMaterials.get(i).getSKU()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=rawMaterials.get(i).getLength()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=rawMaterials.get(i).getWidth()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=rawMaterials.get(i).getHeight()%>
+                                                            </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=rawMaterials.get(i).getId()%>" value="update" onclick="javascript:updateRawMaterial('<%=rawMaterials.get(i).getId()%>')"/>
                                                             </td>

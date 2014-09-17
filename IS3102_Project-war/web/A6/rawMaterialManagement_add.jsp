@@ -55,7 +55,22 @@
                                     <label>Description</label>
                                     <input class="form-control" required="true" type="text" name="description">
                                 </div>
-                              
+                                <div class="form-group">
+                                    <label>SKU</label>
+                                    <input class="form-control" required="true" type="text" name="SKU">
+                                </div>
+                                <div class="form-group">
+                                    <label>Length</label>
+                                    <input class="form-control" required="true" type="text" name="length">
+                                </div>
+                                <div class="form-group">
+                                    <label>Width</label>
+                                    <input class="form-control" required="true" type="text" name="width">
+                                </div>
+                                <div class="form-group">
+                                    <label>Height</label>
+                                    <input class="form-control" required="true" type="text" name="height">
+                                </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>

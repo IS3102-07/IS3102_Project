@@ -67,9 +67,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input class="form-control" type="text"  name="description"required="true" value="<%=rawMaterial.getDescription()%>" >
+                                    <input class="form-control" type="text"  name="description" required="true" value="<%=rawMaterial.getDescription()%>" >
                                 </div>
-                               
+                               <div class="form-group">
+                                    <label>SKU</label>
+                                    <input class="form-control" type="text"  name="SKU" required="true" value="<%=rawMaterial.getDescription()%>" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Length</label>
+                                    <input class="form-control" type="text"  name="length" required="true" value="<%=rawMaterial.getLength()%>" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Width</label>
+                                    <input class="form-control" type="text"  name="width" required="true" value="<%=rawMaterial.getWidth()%>" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Height</label>
+                                    <input class="form-control" type="text"  name="height" required="true" value="<%=rawMaterial.getHeight()%>" >
+                                </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>

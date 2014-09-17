@@ -28,6 +28,7 @@ public class RawMaterialManagement_AddRawMaterialServlet extends HttpServlet {
             Integer height = Integer.parseInt(request.getParameter("height"));
             String source = request.getParameter("source");
 
+            System.out.println("source is " + source);
             if (!itemManagementBean.checkSKUExists(SKU)) {
                 itemManagementBean.addRawMaterial(SKU, name, category, description, _length, width, height);
                 result = "?errMsg=Raw Material with SKU: " + SKU + " has been created successfully.";
