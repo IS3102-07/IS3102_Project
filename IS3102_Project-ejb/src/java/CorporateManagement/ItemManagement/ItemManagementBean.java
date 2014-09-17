@@ -53,17 +53,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public boolean removeRawMaterial(String SKU) {
         System.out.println("removeRawMaterial() called with SKU:" + SKU);
         try {
-            Query q = em.createQuery("SELECT t FROM RawMaterialEntity t");
-
-            for (Object o : q.getResultList()) {
-                RawMaterialEntity i = (RawMaterialEntity) o;
-                if (i.getSKU().equalsIgnoreCase(SKU)) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed raw material:\n" + SKU);
-                    return true;
-                }
-            }
+            em.remove(em.getReference(RawMaterialEntity.class, Long.valueOf(SKU)));
+            System.out.println("Furniture removed succesfully");
             return false; //Could not find to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove raw material:\n" + ex);
