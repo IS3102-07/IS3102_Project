@@ -72,23 +72,23 @@ a<%@page import="EntityManager.CountryEntity"%>
                                 </div>
                                 <div class="form-group">
                                     <label>Image URL</label>
-                                    <input class="form-control" type="text" required="true" name="address" value="<%=furniture.getImageURL()%>">
+                                    <input class="form-control" type="text" required="true" name="imageURL" value="<%=furniture.getImageURL()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
-                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getSKU()%>">
+                                    <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
-                                    <input class="form-control" type="text" required="true" name="length" value="<%=furniture.getHeight()%>">
+                                    <input class="form-control" type="text" required="true" name="length" value="<%=furniture.getLength()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Width</label>
-                                    <input class="form-control" type="text" required="true" name="width" value="<%=furniture.getWidth()%>">
+                                    <input class="form-control" type="text" required="true" name="width" value="<%=furniture.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
-                                    <input class="form-control" type="text" required="true" name="height" value="<%=furniture.getWidth()%>">
+                                    <input class="form-control" type="text" required="true" name="height" value="<%=furniture.getHeight()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">

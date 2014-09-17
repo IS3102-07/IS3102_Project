@@ -7,7 +7,6 @@
     <body>
         <script>
             function updateFurniture(id) {
-                alert(id);
                 furnitureManagement.id.value = id;
                 document.furnitureManagement.action = "furnitureManagement_update.jsp";
                 document.furnitureManagement.submit();

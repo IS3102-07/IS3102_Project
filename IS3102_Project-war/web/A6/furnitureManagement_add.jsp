@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
-                                    <input class="form-control" type="text" required="true" name="SKU" disabled>
+                                    <input class="form-control" type="text" required="true" name="SKU">
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
