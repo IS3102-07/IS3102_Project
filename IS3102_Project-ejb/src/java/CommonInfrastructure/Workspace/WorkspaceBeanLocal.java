@@ -29,11 +29,11 @@ public interface WorkspaceBeanLocal {
 
     public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
 
-    public boolean addToDoList(String description, boolean isDone);
+    public boolean addToDoList(String description);
 
     public boolean removeToDoList(Long id);
 
-    public boolean editToDoList(String description);
+    public boolean editToDoList(Long id, String description);
 
     public List<ToDoEntity> getAllToDoList();
 

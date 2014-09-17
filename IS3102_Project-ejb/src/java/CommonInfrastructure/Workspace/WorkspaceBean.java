@@ -255,7 +255,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             System.out.println("Staff email returned succesfully");
             return staffEntity.getEmail();
         } catch (EntityNotFoundException ex) {
-            System.out.println("Failed to get staff, staff not found.");
+            System.out.println("Failed to get staff, staff not found.\n" + ex);
             return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getStaffEmail:\n" + ex);
@@ -280,32 +280,98 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public boolean addToDoList(String description, boolean isDone) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean addToDoList(String description) {
+        System.out.println("addToDoList() called.");
+        try {
+            ToDoEntity toDo = new ToDoEntity(description, false);
+            em.persist(toDo);
+            System.out.println("addToDoList() successful.");
+            return true;
+        } catch (Exception ex) {
+            System.out.println("failed to addToDoList():\n" + ex);
+            return false;
+        }
     }
 
     @Override
     public boolean removeToDoList(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("removeToDoList() called.");
+        try {
+            ToDoEntity toDo = em.find(ToDoEntity.class, id);
+            em.remove(toDo);
+            System.out.println("removeToDoList() is successful.");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("failed to perform removeToDoList():\n" + ex);
+            return false;
+        }
     }
 
     @Override
-    public boolean editToDoList(String description) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean editToDoList(Long id, String description) {
+        System.out.println("editToDoList() is called.");
+        try {
+            ToDoEntity toDo = em.find(ToDoEntity.class, id);
+            toDo.setDescription(description);
+            em.merge(toDo);
+            System.out.println("editToDoList() is successful.");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("editToDoList() EntityNotFoundException:\n" + ex);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("failed to perform editToDoList():\n" + ex);
+            return false;
+        }
     }
 
     @Override
     public List<ToDoEntity> getAllToDoList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("getAllToDoList() is called.");
+        try {
+            Query q = em.createQuery("Select td from ToDoEntity td");
+            List<ToDoEntity> toDoList = q.getResultList();
+            System.out.println("getAllToDoList() is successful.");
+            return toDoList;
+        } catch (Exception ex) {
+            System.out.println("failed to getAllToDoList().\n" + ex);
+            return null;
+        }
     }
 
     @Override
     public boolean markToDoListAsDone(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("markToDoListAsDone() is called.");
+        try {
+            ToDoEntity toDo = em.find(ToDoEntity.class, id);
+            toDo.setIsDone(true);
+            em.merge(toDo);
+            System.out.println("markToDoListAsDone() is successful.");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("markToDoListAsDone() EntityNotFoundException:\n" + ex);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("failed to perform markToDoListAsDone():\n" + ex);
+            return false;
+        }
     }
 
     @Override
     public boolean markToDoListAsUndone(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("markToDoListAsUndone() is called.");
+        try {
+            ToDoEntity toDo = em.find(ToDoEntity.class, id);
+            toDo.setIsDone(false);
+            em.merge(toDo);
+            System.out.println("markToDoListAsUndone() is successful.");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("markToDoListAsUndone() EntityNotFoundException:\n" + ex);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("failed to perform markToDoListAsUndone():\n" + ex);
+            return false;
+        }
     }
 }
