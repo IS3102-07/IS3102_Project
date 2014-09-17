@@ -25,11 +25,17 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session;
-            session = request.getSession();
+            HttpSession session = request.getSession();
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            if (staffEntity == null) {
+                response.sendRedirect("A1/staffLogin.jsp");
+            } else {
+                session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
+                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
+            }
             String errMsg = request.getParameter("errMsg");
 
-            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
             List<MessageEntity> inboxMessageEntities = workspaceBean.listAllInboxMessages(staffEntity.getId());
             List<MessageHelper> inboxMessageHelpers = new ArrayList<>();
             for (MessageEntity currentMessage : inboxMessageEntities) {
@@ -39,7 +45,7 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 messageHelper.setSenderEmail(currentMessage.getSender().getEmail());
                 List<String> receiversName = new ArrayList<>();
                 List<String> receiversEmail = new ArrayList<>();
-                for(int i=0;i<currentMessage.getReceivers().size();i++){
+                for (int i = 0; i < currentMessage.getReceivers().size(); i++) {
                     receiversName.add(currentMessage.getReceivers().get(i).getName());
                     receiversEmail.add(currentMessage.getReceivers().get(i).getEmail());
                 }
@@ -60,7 +66,7 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 messageHelper.setSenderEmail(currentMessage.getSender().getEmail());
                 List<String> receiversName = new ArrayList<>();
                 List<String> receiversEmail = new ArrayList<>();
-                for(int i=0;i<currentMessage.getReceivers().size();i++){
+                for (int i = 0; i < currentMessage.getReceivers().size(); i++) {
                     receiversName.add(currentMessage.getReceivers().get(i).getName());
                     receiversEmail.add(currentMessage.getReceivers().get(i).getEmail());
                 }

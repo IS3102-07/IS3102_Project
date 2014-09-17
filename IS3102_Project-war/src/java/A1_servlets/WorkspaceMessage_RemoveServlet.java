@@ -1,46 +1,58 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A1_servlets;
 
+import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Neo
- */
 public class WorkspaceMessage_RemoveServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private WorkspaceBeanLocal workspaceBean;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet WorkspaceMessage_RemoveServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet WorkspaceMessage_RemoveServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        try {
+            HttpSession session;
+            session = request.getSession();
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            if (staffEntity == null) {
+                response.sendRedirect("A1/staffLogin.jsp");
+            } else {
+                session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
+                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
+            }
+
+            String[] deleteArr = request.getParameterValues("delete");
+            String deleteMessageType = request.getParameter("deleteMessageType");
+
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    if (deleteMessageType.equals("inbox")) {
+                        workspaceBean.deleteInboxMessage(staffEntity.getId(), Long.parseLong(deleteArr[i]));
+                    } else {
+                        workspaceBean.deleteSentMessage(staffEntity.getId(), Long.parseLong(deleteArr[i]));
+                    }
+                }
+                if (deleteMessageType.equals("inbox")) {
+                    response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
+                } else {
+                    response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
+                }
+            } else {
+                response.sendRedirect("WorkspaceMessage_Servlet?errMsg=No messages selected for deletion.");
+            }
+
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 

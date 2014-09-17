@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 public class WorkspaceMessage_AddServlet extends HttpServlet {
 
     @EJB
-    private WorkspaceBeanLocal workspaceBeanLocal;
+    private WorkspaceBeanLocal workspaceBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,6 +26,14 @@ public class WorkspaceMessage_AddServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            if (staffEntity == null) {
+                response.sendRedirect("A1/staffLogin.jsp");
+            } else {
+                session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
+                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
+            }
             String message = request.getParameter("message");
             if (message == null) {
                 String[] selectArr = request.getParameterValues("select");
@@ -34,13 +42,13 @@ public class WorkspaceMessage_AddServlet extends HttpServlet {
                 String receiverDisplayString = "";
                 if (selectArr != null) {
                     for (int i = 0; i < selectArr.length; i++) {
-                        receiverDisplayString += workspaceBeanLocal.getStaffName(Long.parseLong(selectArr[i]));
-                        receiverDisplayString += " <" + workspaceBeanLocal.getStaffEmail(Long.parseLong(selectArr[i])) + ">;";
+                        receiverDisplayString += workspaceBean.getStaffName(Long.parseLong(selectArr[i]));
+                        receiverDisplayString += " <" + workspaceBean.getStaffEmail(Long.parseLong(selectArr[i])) + ">;";
                         receiversID.add(Long.parseLong(selectArr[i]));
                     }
                 } else {
-                    receiverDisplayString += workspaceBeanLocal.getStaffName(Long.parseLong(staffId));
-                    receiverDisplayString += " <" + workspaceBeanLocal.getStaffEmail(Long.parseLong(staffId)) + ">;";
+                    receiverDisplayString += workspaceBean.getStaffName(Long.parseLong(staffId));
+                    receiverDisplayString += " <" + workspaceBean.getStaffEmail(Long.parseLong(staffId)) + ">;";
                     receiversID.add(Long.parseLong(staffId));
                 }
                 session.setAttribute("receiversString", receiverDisplayString);
@@ -48,9 +56,12 @@ public class WorkspaceMessage_AddServlet extends HttpServlet {
                 response.sendRedirect("A1/workspace_messageAdd.jsp");
             } else {
                 List<Long> receiversStaffID = (List<Long>) session.getAttribute("receiversMemberID");
-                StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
                 Long senderStaffID = staffEntity.getId();
-                workspaceBeanLocal.sendMessageToMultipleReceiver(senderStaffID, receiversStaffID, message);
+                workspaceBean.sendMessageToMultipleReceiver(senderStaffID, receiversStaffID, message);
+                session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
+                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
+                response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Message sent.");
             }
         } catch (Exception ex) {
             out.println(ex);

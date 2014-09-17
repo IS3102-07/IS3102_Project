@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 @Entity
@@ -16,6 +17,8 @@ public class MessageEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne
+    private StaffEntity messageOwner;
     private StaffEntity sender;
     private List<StaffEntity> receivers;
     private String message;
@@ -139,5 +142,5 @@ public class MessageEntity implements Serializable {
      */
     public void setReceivers(List<StaffEntity> receiver) {
         this.receivers = receiver;
-    }
+    }   
 }

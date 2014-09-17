@@ -54,10 +54,10 @@ public class StaffEntity implements Serializable {
     @ManyToMany
     private List<RoleEntity> roles;
 
-    @OneToMany(cascade = {CascadeType.REMOVE})
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "messageOwner")
     private List<MessageEntity> inboxMessages;
 
-    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "sender")
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "messageOwner")
     private List<MessageEntity> sentMessages;
 
     @OneToMany(cascade = {CascadeType.ALL})

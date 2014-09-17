@@ -12,24 +12,24 @@
 
             var checkFlag = 'false';
             function readMessage(id) {
-                rolesManagement.id.value = id;
-                document.rolesManagement.action = "workspace_messageRead.jsp";
-                document.rolesManagement.submit();
+                messageManagement.id.value = id;
+                document.messageManagement.action = "workspace_messageRead.jsp";
+                document.messageManagement.submit();
             }
             function deleteMessage() {
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.rolesManagement.action = "../WorkspaceMessage_RemoveMessageServlet";
-                    document.rolesManagement.submit();
+                    document.messageManagement.action = "../WorkspaceMessage_RemoveServlet";
+                    document.messageManagement.submit();
                 } else {
                     window.event.returnValue = false;
                 }
             }
             function sendMessage() {
                 window.event.returnValue = true;
-                document.rolesManagement.action = "workspace_messageAdd.jsp";
-                document.rolesManagement.submit();
+                document.messageManagement.action = "workspace_messageAdd.jsp";
+                document.messageManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -50,7 +50,7 @@
                                     <i class="icon icon-user"></i>  <a href="workspace.jsp">Workspace</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i> <a href="workspace_messageInbox.jsp">Messages</a>
+                                    <i class="icon icon-user"></i> <a href="../WorkspaceMessage_Servlet">Messages</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Inbox
@@ -74,7 +74,7 @@
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="rolesManagement">
+                                <form name="messageManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
@@ -96,6 +96,7 @@
                                                         %>
                                                         <tr>
                                                             <td>
+                                                                <input type="hidden" name="deleteMessageType" value="inbox" />
                                                                 <input type="checkbox" name="delete" value="<%=inbox.get(i).getMessageId()%>" />
                                                             </td>
                                                             <td>
@@ -115,7 +116,7 @@
                                                                         out.println("-");
                                                                     } else {
                                                                         for (int k = 0; k < receviers.size(); k++) {
-                                                                            out.println(receviers.get(i));
+                                                                            out.println(receviers.get(k));
                                                                         }
                                                                     }
                                                                 %>
