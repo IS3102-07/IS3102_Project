@@ -182,7 +182,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
                 i.setCategory(category);    
                 i.setDescription(description);
                 i.setImageURL(imageURL);
-            em.persist(i);
+                em.merge(i);
+            em.flush();
             System.out.println("\nServer updated retail product:\n" + name);
             return true;
         } catch (Exception ex) {
