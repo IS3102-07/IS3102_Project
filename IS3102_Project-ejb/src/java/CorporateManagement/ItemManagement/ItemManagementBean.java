@@ -114,19 +114,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         System.out.println("editFurniture() called with SKU:" + SKU + " id : " + id);
         try {
             FurnitureEntity i = em.find(FurnitureEntity.class, Long.valueOf(id));
-            System.out.println("i name is " + i.getName());
-            if (name != null && name.equals("")==false) {
+            System.out.println("i name is " + i.getName() + " image url is : " + imageURL);
                 i.setName(name);
-            }
-            if (category != null && category.equals("")==false) {
                 i.setCategory(category);
-            }
-            if (description != null && description.equals("")==false) {
                 i.setDescription(description);
-            }
-            if (imageURL != null && imageURL.equals("")==false) {
                 i.setImageURL(imageURL);
-            }
             em.merge(i);
             em.flush();
             System.out.println("\nServer updated furniture:\n" + name);
@@ -182,24 +174,14 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editRetailProduct(String SKU, String name, String category, String description, String imageURL) {
+    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL) {
         System.out.println("editRetailProduct() called with SKU:" + SKU);
         try {
-            Query q = em.createQuery("SELECT r FROM RetailProductEntity r where r.SKU=:SKU");
-            q.setParameter("SKU", SKU);
-            RetailProductEntity i = (RetailProductEntity) q.getSingleResult();
-            if (name != null || name.equals("")) {
+            RetailProductEntity i = em.find(RetailProductEntity.class, Long.valueOf(id));
                 i.setName(name);
-            }
-            if (category != null || category.equals("")) {
-                i.setCategory(category);
-            }
-            if (description != null || description.equals("")) {
+                i.setCategory(category);    
                 i.setDescription(description);
-            }
-            if (imageURL != null || imageURL.equals("")) {
                 i.setImageURL(imageURL);
-            }
             em.persist(i);
             System.out.println("\nServer updated retail product:\n" + name);
             return true;
