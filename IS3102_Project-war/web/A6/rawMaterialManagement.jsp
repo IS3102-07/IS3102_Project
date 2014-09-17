@@ -11,7 +11,7 @@
                 document.rawMaterialManagement.action = "rawMaterialManagement_update.jsp";
                 document.rawMaterialManagement.submit();
             }
-            function removerawMaterial() {
+            function removeRawMaterial() {
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
