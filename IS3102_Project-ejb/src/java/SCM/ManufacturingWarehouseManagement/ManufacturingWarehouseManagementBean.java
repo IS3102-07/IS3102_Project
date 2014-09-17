@@ -37,6 +37,20 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     @Override
     public boolean createStorageBin(Long warehouseID, String type, Integer _length, Integer width, Integer height) {
         try {
+            switch (type.toLowerCase()) {
+                case "inbound":
+                    StorageBinEntity inbound = getInboundStorageBin(warehouseID);
+                    if (inbound != null) {
+                        return false;
+                    }
+                    break;
+                case "outbound":
+                    StorageBinEntity outbound = getOutboundStorageBin(warehouseID);
+                    if (outbound != null) {
+                        return false;
+                    }
+                    break;
+            }
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             storageBin = new StorageBinEntity(warehouseEntity, type, _length, width, height);
             em.persist(storageBin);
@@ -53,10 +67,11 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
     @Override
     public
-            boolean updateStorageBin(StorageBinEntity storageBin) {
+            boolean updateStorageBin(Long storageBinId, Integer length, Integer width, Integer height) {
         try {
-            if (em.getReference(StorageBinEntity.class, storageBin.getId()) == null) {
-
+            storageBin = em.getReference(StorageBinEntity.class, storageBinId);
+            if (storageBin == null || !storageBin.getItems().isEmpty()) {
+                System.out.println("Cannot find storage bin or storage bin contains items");
                 return false;
             }
             em.merge(storageBin);
@@ -73,8 +88,8 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
         try {
             storageBin = em.find(StorageBinEntity.class, id);
-            if (storageBin == null) {
-                System.out.println("StorageBin is null cannot delete");
+            if (storageBin == null || !storageBin.getItems().isEmpty()) {
+                System.out.println("Unable to delete. Storage bin either not found or not empty.");
                 return false;
             } else {
                 em.merge(storageBin);
@@ -106,7 +121,6 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     @Override
     public List<StorageBinEntity> viewAllStorageBin(Long warehouseID) {
         try {
-            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
             List<StorageBinEntity> storageBins = q.getResultList();

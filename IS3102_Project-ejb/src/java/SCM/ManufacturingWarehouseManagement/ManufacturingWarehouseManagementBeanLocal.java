@@ -12,7 +12,7 @@ public interface ManufacturingWarehouseManagementBeanLocal {
 
     public boolean createStorageBin(Long warehouseID, String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
 
-    public boolean updateStorageBin(StorageBinEntity storageBin);
+    public boolean updateStorageBin(Long storageBinId, Integer length, Integer width, Integer height);
 
     public boolean deleteStorageBin(Long id);
 
