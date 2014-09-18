@@ -68,6 +68,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     @Override
     public
             boolean updateStorageBin(Long storageBinId, Integer length, Integer width, Integer height) {
+        System.out.println("updateStorageBin() called.");
         try {
             storageBin = em.getReference(StorageBinEntity.class, storageBinId);
             if (storageBin == null || !storageBin.getItems().isEmpty()) {
