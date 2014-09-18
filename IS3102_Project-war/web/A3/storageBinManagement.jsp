@@ -1,6 +1,11 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
+<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+    if (warehouseEntity == null) {
+        pageContext.forward("../A1/workspace.jsp");
+    } else {
+%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -28,7 +33,7 @@
                 document.storagebinManagement.submit();
             }
             function checkAll(source) {
-               checkboxes = document.getElementsByName('delete');
+                checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
                 }
@@ -37,7 +42,6 @@
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <%
-                WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
                 try {
             %>
             <div id="page-wrapper">
@@ -112,9 +116,9 @@
                                                             </td>
                                                             <td>
                                                                 <%
-                                                                    int volume = storageBins.get(i).getVolume(); 
+                                                                    int volume = storageBins.get(i).getVolume();
                                                                     int freeVolume = storageBins.get(i).getFreeVolume();
-                                                                    if (volume== freeVolume) {
+                                                                    if (volume == freeVolume) {
                                                                 %>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=storageBins.get(i).getId()%>" value="update" onclick="javascript:updateStorageBin('<%=storageBins.get(i).getId()%>')"/>
                                                                 <%} else {%>
@@ -166,7 +170,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>
@@ -174,3 +178,4 @@
     </body>
 
 </html>
+<%}%>
