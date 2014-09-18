@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Neo
  */
-public class WorkspaceToDoList_UpdateServlet extends HttpServlet {
+public class WorkspaceMessage_ViewServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class WorkspaceToDoList_UpdateServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet WorkspaceToDoList_UpdateServlet</title>");            
+            out.println("<title>Servlet WorkspaceMessage_ViewServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet WorkspaceToDoList_UpdateServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet WorkspaceMessage_ViewServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

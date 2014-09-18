@@ -248,7 +248,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             System.out.println("Announcement broadcasted.");
             return true;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to broadcast annoucement:\n" + ex);
+            System.out.println("\nServer failed to broadcast announcement:\n" + ex);
             return false;
         }
     }
@@ -314,12 +314,14 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public boolean addToDoList(String description) {
+    public boolean addToDoList(Long staffId, String description) {
         System.out.println("addToDoList() called.");
         try {
             ToDoEntity toDo = new ToDoEntity(description, false);
-            em.persist(toDo);
-            System.out.println("addToDoList() successful.");
+            StaffEntity staffEntity = em.getReference(StaffEntity.class, staffId);
+            staffEntity.getToDoList().add(toDo);
+            em.merge(staffEntity);
+            System.out.println("addToDoList() successful. Current size of ToDoList: " + staffEntity.getToDoList().size());
             return true;
         } catch (Exception ex) {
             System.out.println("failed to addToDoList():\n" + ex);
@@ -328,10 +330,10 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public boolean removeToDoList(Long id) {
+    public boolean removeToDoList(Long toDoId) {
         System.out.println("removeToDoList() called.");
         try {
-            ToDoEntity toDo = em.find(ToDoEntity.class, id);
+            ToDoEntity toDo = em.find(ToDoEntity.class, toDoId);
             em.remove(toDo);
             System.out.println("removeToDoList() is successful.");
             return true;
@@ -360,11 +362,13 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public List<ToDoEntity> getAllToDoList() {
+    public List<ToDoEntity> getAllToDoListOfAStaff(Long staffId) {
         System.out.println("getAllToDoList() is called.");
         try {
-            Query q = em.createQuery("Select td from ToDoEntity td");
-            List<ToDoEntity> toDoList = q.getResultList();
+            Query q = em.createQuery("Select s from StaffEntity s where s.id=:staffId");
+            q.setParameter("staffId", staffId);
+            StaffEntity staff = (StaffEntity) q.getSingleResult();
+            List<ToDoEntity> toDoList = staff.getToDoList();
             System.out.println("getAllToDoList() is successful.");
             return toDoList;
         } catch (Exception ex) {
