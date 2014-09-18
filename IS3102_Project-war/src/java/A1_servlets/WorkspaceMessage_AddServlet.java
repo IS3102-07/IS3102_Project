@@ -4,7 +4,6 @@ import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -32,7 +31,7 @@ public class WorkspaceMessage_AddServlet extends HttpServlet {
             } else {
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
                 session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
-                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
             String message = request.getParameter("message");
             if (message == null) {
@@ -60,7 +59,7 @@ public class WorkspaceMessage_AddServlet extends HttpServlet {
                 workspaceBean.sendMessageToMultipleReceiver(senderStaffID, receiversStaffID, message);
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
                 session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
-                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
                 response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Message sent.");
             }
         } catch (Exception ex) {

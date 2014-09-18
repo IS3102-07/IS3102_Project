@@ -28,7 +28,7 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
             } else {
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
                 session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
-                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
 
             String[] deleteArr = request.getParameterValues("delete");
@@ -37,9 +37,9 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
                     if (deleteMessageType.equals("inbox")) {
-                        workspaceBean.deleteInboxMessage(staffEntity.getId(), Long.parseLong(deleteArr[i]));
+                        workspaceBean.deleteSingleInboxMessage(staffEntity.getId(), Long.parseLong(deleteArr[i]));
                     } else {
-                        workspaceBean.deleteSentMessage(staffEntity.getId(), Long.parseLong(deleteArr[i]));
+                        workspaceBean.deleteSingleOutboxMessage(staffEntity.getId(), Long.parseLong(deleteArr[i]));
                     }
                 }
                 if (deleteMessageType.equals("inbox")) {
