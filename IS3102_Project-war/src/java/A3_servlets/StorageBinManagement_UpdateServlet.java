@@ -12,31 +12,33 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class StorageBinManagement_UpdateServlet extends HttpServlet {
-    
+
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
     private String result;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             HttpSession session;
             session = request.getSession();
-            
+
             String storageBinId = request.getParameter("id");
             String length = request.getParameter("length");
             String width = request.getParameter("width");
             String height = request.getParameter("height");
+
             boolean canUpdate = manufacturingWarehouseManagementBean.updateStorageBin(Long.parseLong(storageBinId), Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
+            //out.println("<h1>" + canUpdate + "</h1>");
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
-                response.sendRedirect("storageBinManagement_Update.jsp" + result);
+                response.sendRedirect("A3/storageBinManagement_Update.jsp" + result);
             } else {
                 result = "?errMsg=Staff updated successfully.";
                 response.sendRedirect("StorageBinManagement_Servlet" + result);
             }
-            
+
         } catch (Exception ex) {
             out.println(ex);
         }

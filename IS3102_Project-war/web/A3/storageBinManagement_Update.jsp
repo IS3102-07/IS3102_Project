@@ -39,7 +39,6 @@
                                     storageBin = storageBins.get(i);
                                 }
                             }
-                            if (storageBin.getFreeVolume() == storageBin.getVolume()) {
                     %>
 
                     <div class="row">
@@ -48,7 +47,7 @@
                             <form role="form" action="../StorageBinManagement_UpdateServlet">
                                 <div class="form-group">
                                     <label>Type</label>
-                                    <input class="form-control" name="type" type="number" value="<%=storageBin.getType()%>" disabled >
+                                    <input class="form-control" name="type" type="text" value="<%=storageBin.getType()%>" disabled >
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
@@ -71,7 +70,6 @@
                         <!-- /.row -->
                     </div>
                     <%
-                            }
                         } catch (Exception ex) {
                             response.sendRedirect("../StorageBinManagement_UpdateServlet");
                         }%>

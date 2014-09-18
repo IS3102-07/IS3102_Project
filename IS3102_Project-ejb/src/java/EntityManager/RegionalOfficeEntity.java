@@ -7,10 +7,14 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -22,11 +26,48 @@ public class RegionalOfficeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-private String name;
+    private String name;
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
+    List<WarehouseEntity> warehouseList;
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
+    List<StoreEntity> storeList;
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
+    List<ManufacturingFacilityEntity> manufacturingFacilityEntityList;
+    
+    public RegionalOfficeEntity(){
+        this.storeList = new ArrayList<>();        
+        this.manufacturingFacilityEntityList = new ArrayList<>();
+        this.warehouseList = new ArrayList<>();
+    }        
     
     public void create(String name) {
         this.setName(name);
+    }        
+
+    public List<WarehouseEntity> getWarehouseList() {
+        return warehouseList;
     }
+
+    public void setWarehouseList(List<WarehouseEntity> warehouseList) {
+        this.warehouseList = warehouseList;
+    }
+
+    public List<StoreEntity> getStoreList() {
+        return storeList;
+    }
+
+    public void setStoreList(List<StoreEntity> storeList) {
+        this.storeList = storeList;
+    }
+
+    public List<ManufacturingFacilityEntity> getManufacturingFacilityEntityList() {
+        return manufacturingFacilityEntityList;
+    }
+
+    public void setManufacturingFacilityEntityList(List<ManufacturingFacilityEntity> manufacturingFacilityEntityList) {
+        this.manufacturingFacilityEntityList = manufacturingFacilityEntityList;
+    }        
+    
     public void setName(String name) {
         this.name = name;
     }

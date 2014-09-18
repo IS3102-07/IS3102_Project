@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
-
+                    <jsp:include page="../displayMessage.jsp" />
                     <%
                         List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
                         try {

@@ -69,13 +69,22 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     public
             boolean updateStorageBin(Long storageBinId, Integer length, Integer width, Integer height) {
         System.out.println("updateStorageBin() called.");
+        System.out.println("length: " + length);
+        System.out.println("width: " + width);
+        System.out.println("height: " + height);
+
         try {
             storageBin = em.getReference(StorageBinEntity.class, storageBinId);
             if (storageBin == null || !storageBin.getItems().isEmpty()) {
                 System.out.println("Cannot find storage bin or storage bin contains items");
                 return false;
             }
+            storageBin.setHeight(height);
+            storageBin.setLength(length);
+            storageBin.setWidth(width);
+            storageBin.setFreeVolume(storageBin.getVolume());
             em.merge(storageBin);
+            System.out.println("updateStorageBin() updated successfully.");
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to updateStorageBin:\n" + ex);
