@@ -100,7 +100,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             messageEntity.setSentDate(new Date());
             messageEntity.setMessageRead(true); //sender sent items
             em.persist(messageEntity);
-            
+
             List<MessageEntity> senderSentMessages = senderStaffEntity.getSentMessages();
             senderSentMessages.add(messageEntity);
             senderStaffEntity.setSentMessages(senderSentMessages);
@@ -197,7 +197,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
-            for (int i = 0;i<inboxMessages.size();i++) {
+            for (int i = 0; i < inboxMessages.size(); i++) {
                 if (inboxMessages.get(i).getId().equals(messageID)) {
                     inboxMessages.remove(i);
                     em.remove(inboxMessages.get(i));
@@ -239,6 +239,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @Override
     public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate) {
         System.out.println("makeAnnouncement() called with sender:" + sender);
         try {
@@ -248,6 +249,34 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to broadcast annoucement:\n" + ex);
+            return false;
+        }
+    }
+
+    @Override
+    public List<AnnouncementEntity> getListOfAllAnnouncement() {
+        System.out.println("getListOfAllAnnouncement() called.");
+        try {
+            Query q = em.createQuery("select a from AnnouncementEntity a");
+            List<AnnouncementEntity> listOfAnnouncement = q.getResultList();
+            System.out.println("getListOfAllAnnouncement() is successful");
+            return listOfAnnouncement;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to perform getListOfAllAnnouncement():\n" + ex);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean deleteAnnouncement(Long announcementId) {
+        System.out.println("deleteAnnouncement() called.");
+        try {
+            AnnouncementEntity toDo = em.find(AnnouncementEntity.class, announcementId);
+            em.remove(toDo);
+            System.out.println("deleteAnnouncement() is successful.");
+            return true;
+        } catch (Exception ex) {
+            System.out.println("failed to perform deleteAnnouncement():\n" + ex);
             return false;
         }
     }
@@ -306,7 +335,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             em.remove(toDo);
             System.out.println("removeToDoList() is successful.");
             return true;
-        } catch (EntityNotFoundException ex) {
+        } catch (Exception ex) {
             System.out.println("failed to perform removeToDoList():\n" + ex);
             return false;
         }
@@ -380,13 +409,4 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    @Override
-    public List<AnnouncementEntity> getListOfAllAnnouncement() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteAnnouncement(Long announcementId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

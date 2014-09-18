@@ -114,10 +114,14 @@
                                                                 <%=storageBins.get(i).getFreeVolume()%>
                                                             </td>
                                                             <td>
-                                                                <%if (storageBins.get(i).getVolume() == storageBins.get(i).getFreeVolume()) {%>
+                                                                <%
+                                                                    int volume = storageBins.get(i).getVolume(); 
+                                                                    int freeVolume = storageBins.get(i).getFreeVolume();
+                                                                    if (volume== freeVolume) {
+                                                                %>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=storageBins.get(i).getId()%>" value="update" onclick="javascript:updateStorageBin('<%=storageBins.get(i).getId()%>')"/>
                                                                 <%} else {%>
-                                                                <input type="button"  class="btn btn-primary btn-block"  value="update" disabled/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="update" disabled/>
                                                                 <%}%>
                                                             </td>
                                                         </tr>

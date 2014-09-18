@@ -29,10 +29,14 @@ public class StorageBinManagement_AddServlet extends HttpServlet {
             String width = request.getParameter("width");
             String height = request.getParameter("height");
 
-            manufacturingWarehouseManagementBean.createStorageBin(warehouseEntity.getId(), type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
-
-            result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
-            response.sendRedirect("StorageBinManagement_Servlet" + result);
+            boolean canUpdate = manufacturingWarehouseManagementBean.createStorageBin(warehouseEntity.getId(), type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
+            if (!canUpdate) {
+                result = "?errMsg=Type already exist. Please try again.";
+                response.sendRedirect("A3/storageBinManagement_Add.jsp" + result);
+            } else {
+                result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
+                response.sendRedirect("StorageBinManagement_Servlet" + result);
+            }
 
         } catch (Exception ex) {
             out.println(ex);
