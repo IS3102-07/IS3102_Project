@@ -15,6 +15,7 @@ public class ToDoEntity implements Serializable {
     private Long id;
     private String description;
     private boolean isDone;
+    
 
     public ToDoEntity() {
 
