@@ -7,6 +7,7 @@ import EntityManager.MessageOutboxEntity;
 import EntityManager.StaffEntity;
 import EntityManager.ToDoEntity;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 @Stateless
 public class WorkspaceBean implements WorkspaceBeanLocal {
@@ -281,15 +283,17 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public List<AnnouncementEntity> getListOfAllAnnouncement() {
-        System.out.println("getListOfAllAnnouncement() called.");
+    public List<AnnouncementEntity> getListOfAllNotExpiredAnnouncement() {
+        System.out.println("getListOfAllNotExpiredAnnouncement() called.");
         try {
-            Query q = em.createQuery("select a from AnnouncementEntity a");
+            Query q = em.createQuery("select a from AnnouncementEntity a where a.expiryDate>=:today");
+            q.setParameter("today", new Date(Calendar.getInstance().getTimeInMillis()), TemporalType.DATE);
+
             List<AnnouncementEntity> listOfAnnouncement = q.getResultList();
-            System.out.println("getListOfAllAnnouncement() is successful");
+            System.out.println("getListOfAllNotExpiredAnnouncement() is successful");
             return listOfAnnouncement;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to perform getListOfAllAnnouncement():\n" + ex);
+            System.out.println("\nServer failed to perform getListOfAllNotExpiredAnnouncement():\n" + ex);
             return null;
         }
     }
@@ -438,6 +442,11 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             System.out.println("failed to perform markToDoListAsUndone():\n" + ex);
             return false;
         }
+    }
+
+    @Override
+    public boolean updateAnnouncement(Long announcementId, String message, Date expiryDate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
