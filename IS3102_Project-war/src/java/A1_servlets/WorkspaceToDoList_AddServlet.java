@@ -1,45 +1,52 @@
-package A3_servlets;
+package A1_servlets;
 
-import EntityManager.StorageBinEntity;
-import EntityManager.WarehouseEntity;
-import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
+import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StorageBinManagement_Servlet extends HttpServlet {
+@WebServlet(name = "WorkspaceToDoList_AddServlet", urlPatterns = {"/WorkspaceToDoList_AddServlet"})
+public class WorkspaceToDoList_AddServlet extends HttpServlet {
 
     @EJB
-    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private WorkspaceBeanLocal workspaceBean;
+    private String result;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
-            HttpSession session;
-            session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            if (warehouseEntity == null) {
-                response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
+            HttpSession session = request.getSession();
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            Long staffId = staffEntity.getId();
+            String description = request.getParameter("description");
+            boolean canCreate = workspaceBean.addToDoList(description);
+            if (!canCreate) {
+                result = "?errMsg=Error creating ToDo record. Please try again.";
+                response.sendRedirect("A1/WorkspaceToDoList_AddServlet.jsp" + result);
             } else {
-                List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseEntity.getId());
-                session.setAttribute("storageBins", storageBins);
-                if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A3/storageBinManagement.jsp");
-                } else {
-                    response.sendRedirect("A3/storageBinManagement.jsp?errMsg=" + errMsg);
-                }
+                result = "?errMsg=ToDo record added successfully.";
+                response.sendRedirect("A1/WorkspaceToDoList_Servlet" + result);
             }
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            out.println(ex);
         }
     }
 

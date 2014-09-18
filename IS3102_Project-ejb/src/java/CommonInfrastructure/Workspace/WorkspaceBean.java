@@ -2,6 +2,8 @@ package CommonInfrastructure.Workspace;
 
 import EntityManager.AnnouncementEntity;
 import EntityManager.MessageEntity;
+import EntityManager.MessageInboxEntity;
+import EntityManager.MessageOutboxEntity;
 import EntityManager.StaffEntity;
 import EntityManager.ToDoEntity;
 import java.util.ArrayList;
@@ -33,26 +35,26 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             StaffEntity receiverStaffEntity = (StaffEntity) q.getSingleResult();
 
             //sender side
-            MessageEntity messageEntity = new MessageEntity();
-            messageEntity.create(senderStaffEntity, receiverStaffEntity, message);
-            messageEntity.setSentDate(new Date());
-            messageEntity.setMessageRead(true);
-            em.persist(messageEntity);
+            MessageOutboxEntity messageOutboxEntity = new MessageOutboxEntity();
+            messageOutboxEntity.createOneToOneMessage(senderStaffEntity, receiverStaffEntity, message);
+            messageOutboxEntity.setSentDate(new Date());
+            messageOutboxEntity.setMessageRead(true);
+            em.persist(messageOutboxEntity);
 
-            List<MessageEntity> senderSentMessages = senderStaffEntity.getSentMessages();
-            senderSentMessages.add(messageEntity);
+            List<MessageOutboxEntity> senderSentMessages = senderStaffEntity.getSentMessages();
+            senderSentMessages.add(messageOutboxEntity);
             senderStaffEntity.setSentMessages(senderSentMessages);
             em.merge(senderStaffEntity);
 
             //receiver side
-            messageEntity = new MessageEntity();
-            messageEntity.create(senderStaffEntity, receiverStaffEntity, message);
-            messageEntity.setSentDate(new Date());
-            messageEntity.setMessageRead(false);
-            em.persist(messageEntity);
+            MessageInboxEntity messageInboxEntity = new MessageInboxEntity();
+            messageInboxEntity.createOneToOneMessage(senderStaffEntity, receiverStaffEntity, message);
+            messageInboxEntity.setSentDate(new Date());
+            messageInboxEntity.setMessageRead(false);
+            em.persist(messageInboxEntity);
 
-            List<MessageEntity> receiverInboxMessages = receiverStaffEntity.getInboxMessages();
-            receiverInboxMessages.add(messageEntity);
+            List<MessageInboxEntity> receiverInboxMessages = receiverStaffEntity.getInboxMessages();
+            receiverInboxMessages.add(messageInboxEntity);
             receiverStaffEntity.setInboxMessages(receiverInboxMessages);
             em.merge(receiverStaffEntity);
 
@@ -83,26 +85,26 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
 
             //Add the message to all the receiver
             for (StaffEntity currentStaff : receivers) {
-                MessageEntity messageEntity = new MessageEntity();
-                messageEntity.create(senderStaffEntity, receivers, message);
-                messageEntity.setSentDate(new Date());
-                messageEntity.setMessageRead(false); //receiver inbox
-                em.persist(messageEntity);
-                List<MessageEntity> receiverInboxMessages = currentStaff.getInboxMessages();
-                receiverInboxMessages.add(messageEntity);
+                MessageInboxEntity messageInboxEntity = new MessageInboxEntity();
+                messageInboxEntity.createOneToManyMessage(senderStaffEntity, receivers, message);
+                messageInboxEntity.setSentDate(new Date());
+                messageInboxEntity.setMessageRead(false); //receiver inbox
+                em.persist(messageInboxEntity);
+                List<MessageInboxEntity> receiverInboxMessages = currentStaff.getInboxMessages();
+                receiverInboxMessages.add(messageInboxEntity);
                 currentStaff.setInboxMessages(receiverInboxMessages);
                 em.merge(currentStaff);
             }
 
             //Add message to sender sent items
-            MessageEntity messageEntity = new MessageEntity();
-            messageEntity.create(senderStaffEntity, receivers, message);
-            messageEntity.setSentDate(new Date());
-            messageEntity.setMessageRead(true); //sender sent items
-            em.persist(messageEntity);
+            MessageOutboxEntity messageOutboxEntity = new MessageOutboxEntity();
+            messageOutboxEntity.createOneToManyMessage(senderStaffEntity, receivers, message);
+            messageOutboxEntity.setSentDate(new Date());
+            messageOutboxEntity.setMessageRead(true); //sender sent items
+            em.persist(messageOutboxEntity);
 
-            List<MessageEntity> senderSentMessages = senderStaffEntity.getSentMessages();
-            senderSentMessages.add(messageEntity);
+            List<MessageOutboxEntity> senderSentMessages = senderStaffEntity.getSentMessages();
+            senderSentMessages.add(messageOutboxEntity);
             senderStaffEntity.setSentMessages(senderSentMessages);
             em.merge(senderStaffEntity);
 
@@ -114,13 +116,13 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public List<MessageEntity> listAllInboxMessages(Long staffID) {
+    public List<MessageInboxEntity> listAllInboxMessages(Long staffID) {
         System.out.println("listAllInboxMessages() called with staffID:" + staffID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
+            List<MessageInboxEntity> inboxMessages = staffEntity.getInboxMessages();
             System.out.println("Message list returned.");
             return inboxMessages;
         } catch (Exception ex) {
@@ -129,15 +131,15 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public List<MessageEntity> listAllUnreadInboxMessages(Long staffID) {
+    public List<MessageInboxEntity> listAllUnreadInboxMessages(Long staffID) {
         System.out.println("listAllUnreadInboxMessages() called with staffID:" + staffID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
-            List<MessageEntity> unreadInboxMessages = new ArrayList<>();
-            for (MessageEntity currentMessage : inboxMessages) {
+            List<MessageInboxEntity> inboxMessages = staffEntity.getInboxMessages();
+            List<MessageInboxEntity> unreadInboxMessages = new ArrayList<>();
+            for (MessageInboxEntity currentMessage : inboxMessages) {
                 if (!currentMessage.getMessageRead()) {
                     unreadInboxMessages.add(currentMessage);
                 }
@@ -150,13 +152,13 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public List<MessageEntity> listAllSentMessages(Long staffID) {
+    public List<MessageOutboxEntity> listAllOutboxMessages(Long staffID) {
         System.out.println("listAllSentMessages() called with staffID:" + staffID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            List<MessageEntity> sentMessages = staffEntity.getSentMessages();
+            List<MessageOutboxEntity> sentMessages = staffEntity.getSentMessages();
             System.out.println("Message list returned.");
             return sentMessages;
         } catch (Exception ex) {
@@ -172,8 +174,8 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
-            for (MessageEntity currentMessage : inboxMessages) {
+            List<MessageInboxEntity> inboxMessages = staffEntity.getInboxMessages();
+            for (MessageInboxEntity currentMessage : inboxMessages) {
                 if (currentMessage.getId().equals(messageID)) {
                     currentMessage.setMessageRead(true);
                     message = currentMessage;
@@ -190,23 +192,21 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public boolean deleteInboxMessage(Long staffID, Long messageID) {
+    public boolean deleteSingleInboxMessage(Long staffID, Long messageID) {
         System.out.println("deleteInboxMessage() called with staffID:" + staffID + " & messageID: " + messageID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            List<MessageEntity> inboxMessages = staffEntity.getInboxMessages();
-            for (int i = 0; i < inboxMessages.size(); i++) {
-                if (inboxMessages.get(i).getId().equals(messageID)) {
-                    inboxMessages.remove(i);
-                    em.remove(inboxMessages.get(i));
-                    em.flush();
+            List<MessageInboxEntity> inboxMessages = staffEntity.getInboxMessages();
+
+            for (MessageInboxEntity inboxMsg : inboxMessages) {
+                if (inboxMsg.getId().equals(messageID)) {
+                    inboxMessages.remove(inboxMsg);
                     break;
                 }
             }
             staffEntity.setInboxMessages(inboxMessages);
-            em.merge(staffEntity);
             System.out.println("Message deleted.");
             return true;
         } catch (Exception ex) {
@@ -215,14 +215,14 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public boolean deleteSentMessage(Long staffID, Long messageID) {
+    public boolean deleteSingleOutboxMessage(Long staffID, Long messageID) {
         System.out.println("deleteSentMessage() called with staffID:" + staffID + " & messageID: " + messageID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            List<MessageEntity> sentMessages = staffEntity.getSentMessages();
-            for (MessageEntity currentMessage : sentMessages) {
+            List<MessageOutboxEntity> sentMessages = staffEntity.getSentMessages();
+            for (MessageOutboxEntity currentMessage : sentMessages) {
                 if (currentMessage.getId().equals(messageID)) {
                     sentMessages.remove(currentMessage);
                     break;

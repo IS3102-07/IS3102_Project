@@ -2,6 +2,8 @@ package CommonInfrastructure.Workspace;
 
 import EntityManager.AnnouncementEntity;
 import EntityManager.MessageEntity;
+import EntityManager.MessageInboxEntity;
+import EntityManager.MessageOutboxEntity;
 import EntityManager.ToDoEntity;
 import java.util.Date;
 import java.util.List;
@@ -15,18 +17,18 @@ public interface WorkspaceBeanLocal {
 
     public boolean sendMessageToMultipleReceiver(Long senderStaffID, List<Long> staffIDs, String message);
 
-    public List<MessageEntity> listAllInboxMessages(Long staffID);
+    public List<MessageInboxEntity> listAllInboxMessages(Long staffID);
 
-    public List<MessageEntity> listAllUnreadInboxMessages(Long staffID);
+    public List<MessageInboxEntity> listAllUnreadInboxMessages(Long staffID);
 
-    public List<MessageEntity> listAllSentMessages(Long staffID);
+    public List<MessageOutboxEntity> listAllOutboxMessages(Long staffID);
 
     public MessageEntity readInboxMessage(Long staffID, Long messageID); // returns null if staff or message not found
     //Following returns true if operation suceeds
 
-    public boolean deleteInboxMessage(Long staffID, Long messageID);
+    public boolean deleteSingleInboxMessage(Long staffID, Long messageID);
 
-    public boolean deleteSentMessage(Long staffID, Long messageID);
+    public boolean deleteSingleOutboxMessage(Long staffID, Long messageID);
 
     public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
 

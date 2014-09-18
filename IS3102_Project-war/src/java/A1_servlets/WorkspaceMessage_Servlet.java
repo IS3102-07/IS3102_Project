@@ -2,6 +2,8 @@ package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import EntityManager.MessageEntity;
+import EntityManager.MessageInboxEntity;
+import EntityManager.MessageOutboxEntity;
 import EntityManager.StaffEntity;
 import HelperClasses.MessageHelper;
 import java.io.IOException;
@@ -32,13 +34,13 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
             } else {
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
                 session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
-                session.setAttribute("sentMessages", workspaceBean.listAllSentMessages(staffEntity.getId()));
+                session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
             String errMsg = request.getParameter("errMsg");
 
-            List<MessageEntity> inboxMessageEntities = workspaceBean.listAllInboxMessages(staffEntity.getId());
+            List<MessageInboxEntity> inboxMessageEntities = workspaceBean.listAllInboxMessages(staffEntity.getId());
             List<MessageHelper> inboxMessageHelpers = new ArrayList<>();
-            for (MessageEntity currentMessage : inboxMessageEntities) {
+            for (MessageInboxEntity currentMessage : inboxMessageEntities) {
                 MessageHelper messageHelper = new MessageHelper();
                 messageHelper.setMessageId(currentMessage.getId());
                 messageHelper.setSenderName(currentMessage.getSender().getName());
@@ -57,9 +59,9 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 inboxMessageHelpers.add(messageHelper);
             }
             session.setAttribute("inboxMessages", inboxMessageHelpers);
-            List<MessageEntity> sentMessageEntities = workspaceBean.listAllSentMessages(staffEntity.getId());
+            List<MessageOutboxEntity> sentMessageEntities = workspaceBean.listAllOutboxMessages(staffEntity.getId());
             List<MessageHelper> sentMessageHelpers = new ArrayList<>();
-            for (MessageEntity currentMessage : sentMessageEntities) {
+            for (MessageOutboxEntity currentMessage : sentMessageEntities) {
                 MessageHelper messageHelper = new MessageHelper();
                 messageHelper.setMessageId(currentMessage.getId());
                 messageHelper.setSenderName(currentMessage.getSender().getName());
@@ -77,7 +79,6 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 messageHelper.setMessageRead(currentMessage.getMessageRead());
                 sentMessageHelpers.add(messageHelper);
             }
-            session.setAttribute("inboxMessages", sentMessageHelpers);
             session.setAttribute("sentMessages", sentMessageHelpers);
 
             if (errMsg == null || errMsg.equals("")) {

@@ -54,11 +54,11 @@ public class StaffEntity implements Serializable {
     @ManyToMany
     private List<RoleEntity> roles;
 
-    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "messageOwner")
-    private List<MessageEntity> inboxMessages;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<MessageInboxEntity> inboxMessages;
 
-    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "messageOwner")
-    private List<MessageEntity> sentMessages;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<MessageOutboxEntity> sentMessages;
 
     @OneToMany(cascade = {CascadeType.ALL})
     private List<ToDoEntity> toDoList;
@@ -277,28 +277,28 @@ public class StaffEntity implements Serializable {
     /**
      * @return the inboxMessages
      */
-    public List<MessageEntity> getInboxMessages() {
+    public List<MessageInboxEntity> getInboxMessages() {
         return inboxMessages;
     }
 
     /**
      * @param inboxMessages the inboxMessages to set
      */
-    public void setInboxMessages(List<MessageEntity> inboxMessages) {
+    public void setInboxMessages(List<MessageInboxEntity> inboxMessages) {
         this.inboxMessages = inboxMessages;
     }
 
     /**
      * @return the sentMessages
      */
-    public List<MessageEntity> getSentMessages() {
+    public List<MessageOutboxEntity> getSentMessages() {
         return sentMessages;
     }
 
     /**
      * @param sentMessages the sentMessages to set
      */
-    public void setSentMessages(List<MessageEntity> sentMessages) {
+    public void setSentMessages(List<MessageOutboxEntity> sentMessages) {
         this.sentMessages = sentMessages;
     }
 
