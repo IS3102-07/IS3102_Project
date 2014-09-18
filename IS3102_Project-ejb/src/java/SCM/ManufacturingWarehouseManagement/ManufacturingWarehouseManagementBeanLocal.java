@@ -23,7 +23,10 @@ public interface ManufacturingWarehouseManagementBeanLocal {
 
     public StorageBinEntity getOutboundStorageBin(Long warehouseID); //look for the inbound storagebin
 
-    public List<TransferOrderEntity> createTransferOrder(Long warehouseID, Long originStorageBinId, List<Long> targetsStorageBinID, List<LineItemEntity> lineItems);
+    public TransferOrderEntity createTransferOrder(Long warehouseID, Long originStorageBinId, Long targetStorageBinID, LineItemEntity lineItem);
+    
+    public TransferOrderEntity addLineItemToTransferOrder(Long transferOrderID, LineItemEntity lineItem);
+    public TransferOrderEntity removeLineItemFromTransferOrder(Long transferOrderID, LineItemEntity lineItem);
 
     public boolean markTransferOrderAsCompleted(Long transferOrderId);
 

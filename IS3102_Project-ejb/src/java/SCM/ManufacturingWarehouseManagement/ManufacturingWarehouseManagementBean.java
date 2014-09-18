@@ -260,8 +260,8 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public
-            boolean markTransferOrderAsUnfulfilled(Long transferOrderId) {
+    public boolean markTransferOrderAsUnfulfilled(Long transferOrderId) {
+        System.out.println("markTransferOrderAsUnfulfilled() called.");
         try {
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
             transferOrder.setStatus(
@@ -275,26 +275,54 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public List<TransferOrderEntity> createTransferOrder(Long warehouseID, Long originStorageBinID, List<Long> targetStorageBinsIDs, List<LineItemEntity> lineItems) {
+    public TransferOrderEntity createTransferOrder(Long warehouseID, Long originStorageBinID, Long targetStorageBinID, LineItemEntity lineItem) {
+        System.out.println("createTransferOrder() called.");
         try {
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-            List<TransferOrderEntity> listOfTransferOrdersCreated = new ArrayList<TransferOrderEntity>();
             StorageBinEntity originStorageBin = em.getReference(StorageBinEntity.class, originStorageBinID);
 
-            for (int i = 0; i < lineItems.size(); i++) {
-                StorageBinEntity target = em.getReference(StorageBinEntity.class, targetStorageBinsIDs);
-                transferOrder = new TransferOrderEntity(warehouseEntity, lineItems.get(i), originStorageBin, target);
-                em.persist(transferOrder);
-                listOfTransferOrdersCreated.add(transferOrder);
-            }
-            return listOfTransferOrdersCreated;
+            StorageBinEntity target = em.getReference(StorageBinEntity.class, targetStorageBinID);
+            transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, originStorageBin, target);
+            em.persist(transferOrder);
+            return transferOrder;
         } catch (Exception ex) {
             System.out.println("\nServer failed to createStorageBin:\n" + ex);
             return null;
         }
     }
 
-    //TODO NEED TO TEST
+    @Override
+    public TransferOrderEntity addLineItemToTransferOrder(Long transferOrderID, LineItemEntity lineItem) {
+        System.out.println("addLineItemToTransferOrder() called.");
+        try {
+            TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
+            transferOrderEntity.setLineItem(lineItem);
+            em.persist(transferOrder);
+            System.out.println("Item added to transfer order.");
+            return transferOrder;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to addLineItemToTransferOrder:\n" + ex);
+            return null;
+        }
+
+    }
+
+    @Override
+    public TransferOrderEntity removeLineItemFromTransferOrder(Long transferOrderID, LineItemEntity lineItem) {
+        System.out.println("removeLineItemFromTransferOrder() called.");
+        try {
+            TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
+            transferOrderEntity.setLineItem(null);
+            em.persist(transferOrder);
+            System.out.println("Item remove from transfer order.");
+            return transferOrder;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to removeLineItemFromTransferOrder:\n" + ex);
+            return null;
+        }
+    }
+//TODO NEED TO TEST
+
     @Override
     public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems) {
         int qtyNeededToTransfer = 0;
@@ -325,7 +353,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                         LineItemEntity lineItem = new LineItemEntity(currentItem, qtyToTransferOutFromBin, "");
                         WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
                         transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, eachBinThatMatchesSKU, outboundStorageBin);
+
                         em.persist(transferOrder);
+
                         transferOrdersCreated.add(transferOrder);
                     }
                     if (qtyNeededToTransfer <= 0) {
