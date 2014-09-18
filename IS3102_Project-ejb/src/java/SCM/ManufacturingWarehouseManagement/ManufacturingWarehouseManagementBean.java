@@ -236,12 +236,15 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public List<TransferOrderEntity> viewListOfAllTransferOrder() {
+    public List<TransferOrderEntity> viewAllTransferOrderByWarehouseId(Long warehouseId) {
+        System.out.println("viewAllTransferOrderByWarehouseId() called.");
         try {
-            Query q = em.createQuery("Select t from TransferOrderEntity t");
+            Query q = em.createQuery("Select t from TransferOrderEntity t where t.warehouse.id=:id");
+            q.setParameter("id", warehouseId);
+            System.out.println("viewAllTransferOrderByWarehouseId() is successful.");
             return q.getResultList();
         } catch (Exception ex) {
-            System.out.println("\nServer failed to viewListOfAllTransferOrder:\n" + ex);
+            System.out.println("\nServer failed to viewAllTransferOrderByWarehouseId():\n" + ex);
             return null;
         }
     }

@@ -1,6 +1,5 @@
 package SCM.ManufacturingWarehouseManagement;
 
-import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
@@ -32,8 +31,8 @@ public interface ManufacturingWarehouseManagementBeanLocal {
 
     public TransferOrderEntity viewTransferOrder(Long transferOrderId);
 
-    public List<TransferOrderEntity> viewListOfAllTransferOrder();
-
+    public List<TransferOrderEntity> viewAllTransferOrderByWarehouseId(Long warehouseId);
+    
     public boolean deleteTransferOrder(Long id);
 
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId);
