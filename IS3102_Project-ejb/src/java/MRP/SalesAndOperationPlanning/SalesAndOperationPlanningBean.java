@@ -61,18 +61,39 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     }
 
     @Override
-    public Boolean editSOP(Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Boolean editSOP(Long Id, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel) {
+        try{
+            SaleAndOperationPlanEntity sop = em.find(SaleAndOperationPlanEntity.class, Id);
+            sop.setProductionPlan(productionPlan);
+            sop.setCurrentInventoryLevel(currentInventoryLevel);
+            sop.setTargetInventoryLevel(targetInventoryLevel);
+            em.merge(sop);
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public SaleAndOperationPlanEntity getSOPbyId(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            return em.find(SaleAndOperationPlanEntity.class, id);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public List<SaleAndOperationPlanEntity> getSOPlistByYear(Calendar year) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.        
+        try{
+            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.year = ?1").setParameter(1, year.get(Calendar.YEAR));
+            return q.getResultList();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
     }
     
     

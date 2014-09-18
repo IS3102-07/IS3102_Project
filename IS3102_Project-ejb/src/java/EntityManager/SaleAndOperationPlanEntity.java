@@ -33,6 +33,7 @@ public class SaleAndOperationPlanEntity implements Serializable {
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar month;
+    private int year;
     private Integer productionPlan;
     private Integer currentInventoryLevel;
     private Integer targetInventoryLevel;
@@ -43,6 +44,7 @@ public class SaleAndOperationPlanEntity implements Serializable {
         this.saleForcast = saleForcast;
         this.store = store;
         this.month = month;
+        this.year = month.get(Calendar.YEAR);
         this.productionPlan = productionPlan;
         this.currentInventoryLevel = currentInventoryLevel;
         this.targetInventoryLevel = targetInventoryLevel;
@@ -70,6 +72,11 @@ public class SaleAndOperationPlanEntity implements Serializable {
 
     public void setMonth(Calendar month) {
         this.month = month;
+        this.year = month.get(Calendar.YEAR);
+    }        
+    
+    public int getYear(){
+        return this.year;
     }
 
     public SaleForcastEntity getSaleForcast() {
