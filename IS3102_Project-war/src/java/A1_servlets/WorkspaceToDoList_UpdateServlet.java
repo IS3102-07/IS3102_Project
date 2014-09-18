@@ -1,46 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package A1_servlets;
 
+import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Neo
- */
 public class WorkspaceToDoList_UpdateServlet extends HttpServlet {
+    @EJB
+    private WorkspaceBeanLocal workspaceBean;
+    private String result;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet WorkspaceToDoList_UpdateServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet WorkspaceToDoList_UpdateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String toDoId = request.getParameter("toDoId");
+            String description = request.getParameter("description");
+
+            boolean canUpdate = workspaceBean.editToDoList(Long.parseLong(toDoId), description);
+            if (!canUpdate) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("workspace_toDoListUpdate.jsp" + result);
+            } else {
+                result = "?errMsg=ToDoList updated successfully.";
+                response.sendRedirect("WorkspaceToDoList_Servlet" + result);
+            }
+
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 

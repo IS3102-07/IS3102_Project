@@ -41,7 +41,7 @@ public class WorkspaceToDoList_AddServlet extends HttpServlet {
                 response.sendRedirect("A1/workspace_toDoListAdd.jsp" + result);
             } else {
                 result = "?errMsg=ToDo record added successfully.";
-                response.sendRedirect("A1/WorkspaceToDoList_Servlet" + result);
+                response.sendRedirect("WorkspaceToDoList_Servlet" + result);
             }
         } catch (Exception ex) {
             out.println(ex);
