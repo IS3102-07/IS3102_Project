@@ -86,7 +86,7 @@
                                                             <th>Target</th>
                                                             <th>Status</th>
                                                             <th>Warehouse</th>
-                                                            <th>?? </th>
+                                                            <th>Details </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
