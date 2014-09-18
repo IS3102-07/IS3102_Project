@@ -29,6 +29,11 @@ public class SaleAndOperationPlanEntity implements Serializable {
     private SaleForcastEntity saleForcast;
     @ManyToOne
     private StoreEntity store;
+    @ManyToOne
+    private ManufacturingFacilityEntity manufacturingFacility;
+    @ManyToOne
+    private ProductGroupEntity productGroup;
+    
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar month;
@@ -49,6 +54,22 @@ public class SaleAndOperationPlanEntity implements Serializable {
         this.targetInventoryLevel = targetInventoryLevel;
     }        
 
+    public ProductGroupEntity getProductGroup() {
+        return productGroup;
+    }
+
+    public void setProductGroup(ProductGroupEntity productGroup) {
+        this.productGroup = productGroup;
+    }        
+    
+    public ManufacturingFacilityEntity getManufacturingFacility() {
+        return manufacturingFacility;
+    }
+
+    public void setManufacturingFacility(ManufacturingFacilityEntity manufacturingFacility) {
+        this.manufacturingFacility = manufacturingFacility;
+    }        
+    
     public StoreEntity getStore() {
         return store;
     }

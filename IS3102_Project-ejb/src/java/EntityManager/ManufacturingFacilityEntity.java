@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -37,15 +38,26 @@ public class ManufacturingFacilityEntity implements Serializable {
     private List<StoreEntity> storeList;
     @ManyToOne
     private RegionalOfficeEntity regionalOffice;
+    @OneToMany(mappedBy="manufacturingFacility")
+    List<SaleAndOperationPlanEntity> SaleAndOperationPlanList;
     
     public ManufacturingFacilityEntity() {
         this.storeList = new ArrayList<>();
+        this.SaleAndOperationPlanList = new ArrayList<>();
     }
     
     public void create(String name) {
         this.setName(name);
     }
 
+    public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {
+        return SaleAndOperationPlanList;
+    }
+
+    public void setSaleAndOperationPlanList(List<SaleAndOperationPlanEntity> SaleAndOperationPlanList) {
+        this.SaleAndOperationPlanList = SaleAndOperationPlanList;
+    }        
+    
     public Integer getCapacity() {
         return capacity;
     }
