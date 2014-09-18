@@ -23,6 +23,7 @@ public class ProductGroupEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String productGroupName;   
+    private Integer workHours;
     @OneToMany(cascade={CascadeType.ALL}, mappedBy="productGroup")
     List<ProductGroupLineItemEntity> lineItemList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
@@ -33,7 +34,8 @@ public class ProductGroupEntity implements Serializable {
         this.saleForcastEntityList = new ArrayList<>();
     } 
 
-    public ProductGroupEntity(String productGroupName) {
+    public ProductGroupEntity(String productGroupName, Integer workHours) {
+        this.workHours = workHours;
         this.productGroupName = productGroupName;
         this.lineItemList = new ArrayList<>();
         this.saleForcastEntityList = new ArrayList<>();
@@ -43,6 +45,14 @@ public class ProductGroupEntity implements Serializable {
         setName(name);
     }
 
+    public Integer getWorkHours() {
+        return workHours;
+    }
+
+    public void setWorkHours(Integer workHours) {
+        this.workHours = workHours;
+    }
+    
     public String getProductGroupName() {
         return productGroupName;
     }
