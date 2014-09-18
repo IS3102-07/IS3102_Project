@@ -47,11 +47,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Width</label>
-                                    <input class="form-control" name="width" type="text" required="true"/>
+                                    <input class="form-control" name="width" type="number" required="true"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
-                                    <input class="form-control" name="height" type="text" required="true"/>
+                                    <input class="form-control" name="height" type="number" required="true"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">

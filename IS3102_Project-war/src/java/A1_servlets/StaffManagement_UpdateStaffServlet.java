@@ -37,7 +37,6 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
 
         } catch (Exception ex) {
             out.println(ex);
-
         }
     }
 
