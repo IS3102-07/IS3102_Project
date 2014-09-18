@@ -8,6 +8,7 @@ package MRP.ProductionPlanDistribution;
 
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.StoreEntity;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Remove;
@@ -25,6 +26,7 @@ public interface ProductionPlanDistributionBeanLocal {
     
     public Boolean addStoreToManufacturingFacilityAllocationList(Long storeId, Long manufacturingFacilityId);
         
+    public Boolean distributeProductionPlan(Long regionalOfficeId, Calendar month);
     
     @Remove
     public void remove();

@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package MRP.ProductionPlanDistribution;
 
 import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.StoreEntity;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,15 +24,16 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ProductionPlanDistributionBean implements ProductionPlanDistributionBeanLocal {
+
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
-    
+
     @Override
     public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId) {
-        try{
+        try {
             Query q = em.createQuery("select s from StoreEntity s where s.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
             return q.getResultList();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return new ArrayList<>();
@@ -37,37 +41,83 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
 
     @Override
     public List<ManufacturingFacilityEntity> getManufacturingFacilityListByRegionalOffice(Long regionalOfficeId) {
-        try{
+        try {
             Query q = em.createQuery("select mf from ManufacturingFacilityEntity mf where mf.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
             return q.getResultList();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return new ArrayList<>();
     }
-    
+
     @Override
     public Boolean addStoreToManufacturingFacilityAllocationList(Long storeId, Long manufacturingFacilityId) {
-        try{
+        try {
             StoreEntity store = em.find(StoreEntity.class, storeId);
             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, manufacturingFacilityId);
             store.getManufacturingFacilityList().add(manufacturingFacility);
             em.merge(store);
             em.merge(manufacturingFacility);
             em.flush();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return false;
     }
-    
-    
-    
+
     @Override
     public void remove() {
         System.out.println("Production Plan Distribution Plan has been removed.");
     }
-    
-    
-    
+
+    @Override
+    public Boolean distributeProductionPlan(Long regionalOfficeId, Calendar month) {
+        try {
+            List<ManufacturingFacilityEntity> manufacturingFacilityList = this.getManufacturingFacilityListByRegionalOffice(regionalOfficeId);
+            Collections.sort(manufacturingFacilityList, new CustomeComparator_MF());
+            for (ManufacturingFacilityEntity mf : manufacturingFacilityList) {
+                Integer residueCapacity = mf.getCapacity();
+                List<StoreEntity> storeList = mf.getStoreList();
+                Collections.sort(storeList, new CustomeComparator_Store());
+                for (StoreEntity store : storeList) {
+                    List<SaleAndOperationPlanEntity> sopList = store.getSaleAndOperationPlanList();
+                    for (SaleAndOperationPlanEntity sop : sopList) {
+                        
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    private class CustomeComparator_MF implements Comparator<ManufacturingFacilityEntity> {
+
+        @Override
+        public int compare(ManufacturingFacilityEntity mf1, ManufacturingFacilityEntity mf2) {
+            if (mf1.getStoreList().size() > mf2.getStoreList().size()) {
+                return 1;
+            } else if (mf1.getStoreList().size() == mf2.getStoreList().size()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    private class CustomeComparator_Store implements Comparator<StoreEntity> {
+
+        @Override
+        public int compare(StoreEntity s1, StoreEntity s2) {
+            if (s1.getManufacturingFacilityList().size() > s2.getManufacturingFacilityList().size()) {
+                return 1;
+            } else if (s1.getManufacturingFacilityList().size() == s2.getManufacturingFacilityList().size()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+    }
+
 }

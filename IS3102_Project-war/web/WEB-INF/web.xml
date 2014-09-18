@@ -264,6 +264,26 @@
         <servlet-name>storageBinManagement</servlet-name>
         <jsp-file>/A3/storageBinManagement.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>WorkspaceToDoList_UpdateServlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceToDoList_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WorkspaceToDoList_Servlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceToDoList_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WorkspaceToDoList_RemoveServlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceToDoList_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WorkspaceMessage_ViewServlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceMessage_ViewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WorkspaceToDoList_AddServlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceToDoList_AddServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -527,6 +547,26 @@
     <servlet-mapping>
         <servlet-name>storageBinManagement</servlet-name>
         <url-pattern>/A3/storageBinManagement.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceToDoList_UpdateServlet</servlet-name>
+        <url-pattern>/WorkspaceToDoList_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceToDoList_Servlet</servlet-name>
+        <url-pattern>/WorkspaceToDoList_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceToDoList_RemoveServlet</servlet-name>
+        <url-pattern>/WorkspaceToDoList_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceMessage_ViewServlet</servlet-name>
+        <url-pattern>/WorkspaceMessage_ViewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceToDoList_AddServlet</servlet-name>
+        <url-pattern>/WorkspaceToDoList_AddServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

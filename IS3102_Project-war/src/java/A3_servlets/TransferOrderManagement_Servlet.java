@@ -1,5 +1,6 @@
 package A3_servlets;
 
+import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
@@ -28,20 +29,27 @@ public class TransferOrderManagement_Servlet extends HttpServlet {
             String errMsg = request.getParameter("errMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
 
-            //List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewListOfAllTransferOrder()warehouseEntity.getId());
-//            session.setAttribute("transferOrders", transferOrders);
-//            if (errMsg == null || errMsg.equals("")) {
-//                response.sendRedirect("A3/transferOrderManagement.jsp");
-//            } else {
-//                response.sendRedirect("A3/transferOrderManagement.jsp?errMsg=" + errMsg);
-//            }
+            if (warehouseEntity == null) {
+                response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
+            } else {
+                List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseEntity.getId());
+                session.setAttribute("storageBins", storageBins);
+
+                List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                session.setAttribute("transferOrders", transferOrders);
+
+                if (errMsg == null || errMsg.equals("")) {
+                    response.sendRedirect("A3/transferOrderManagement.jsp");
+                } else {
+                    response.sendRedirect("A3/transferOrderManagement.jsp?errMsg=" + errMsg);
+                }
+            }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
