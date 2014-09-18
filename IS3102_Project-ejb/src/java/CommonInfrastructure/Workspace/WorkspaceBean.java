@@ -199,16 +199,14 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageInboxEntity> inboxMessages = staffEntity.getInboxMessages();
-            for (int i = 0; i < inboxMessages.size(); i++) {
-                if (inboxMessages.get(i).getId().equals(messageID)) {
-                    inboxMessages.remove(i);
-                    em.remove(inboxMessages.get(i));
-                    em.flush();
+
+            for (MessageInboxEntity inboxMsg : inboxMessages) {
+                if (inboxMsg.getId().equals(messageID)) {
+                    inboxMessages.remove(inboxMsg);
                     break;
                 }
             }
             staffEntity.setInboxMessages(inboxMessages);
-            em.merge(staffEntity);
             System.out.println("Message deleted.");
             return true;
         } catch (Exception ex) {

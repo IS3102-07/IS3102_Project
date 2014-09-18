@@ -79,7 +79,6 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 messageHelper.setMessageRead(currentMessage.getMessageRead());
                 sentMessageHelpers.add(messageHelper);
             }
-            session.setAttribute("inboxMessages", sentMessageHelpers);
             session.setAttribute("sentMessages", sentMessageHelpers);
 
             if (errMsg == null || errMsg.equals("")) {
