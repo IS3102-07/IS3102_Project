@@ -13,11 +13,11 @@
             var checkFlag = 'false';
             function readMessage(id) {
                 messageManagement.id.value = id;
-                document.messageManagement.action = "workspace_messageRead.jsp";
+                document.messageManagement.action = "../WorkspaceMessage_ViewServlet";
                 document.messageManagement.submit();
             }
             function deleteMessage() {
-                var yes = confirm("Are you sure?!");
+                var yes = confirm("Are you sure you want to delete the selected messages?/nThis action can not be undone!");
                 if (yes == true) {
                     window.event.returnValue = true;
                     document.messageManagement.action = "../WorkspaceMessage_RemoveServlet";
@@ -36,6 +36,9 @@
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
                 }
+            }
+            function viewSentMsg() {
+                document.messageManagement.action = "workspace_messageOutbox.jsp";
             }
         </script>
         <div id="wrapper">
@@ -122,7 +125,7 @@
                                                                 %>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=inbox.get(i).getMessageId()%>" value="read" onclick="readMessage()" />
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=inbox.get(i).getMessageId()%>" value="Read" onclick="readMessage()" />
                                                             </td>
                                                         </tr>
                                                         <%
@@ -138,6 +141,8 @@
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Message" onclick="deleteMessage()"  />
+                                                    <input type="hidden" name="view" value="inbox"/>
+                                                    <button class="btn btn-primary" onclick="javascript:viewSentMsg()">View Sent Messages</button>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
