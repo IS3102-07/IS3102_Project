@@ -1,3 +1,4 @@
+<%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="EntityManager.TransferOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
@@ -102,13 +103,18 @@
                                                                 <%=transferOrders.get(i).getDateCreated()%>
                                                             </td>
                                                             <td>
-                                                                <%=transferOrders.get(i).getDateTransferred()%>
+                                                                <%
+                                                                    if (transferOrders.get(i).getDateTransferred() == null) {
+                                                                        out.println("-");
+                                                                    } else {
+                                                                        out.println(transferOrders.get(i).getDateTransferred());
+                                                                    }%>
                                                             </td>
                                                             <td>
-                                                                <%=transferOrders.get(i).getOrigin()%>
+                                                                Bin <%=((StorageBinEntity) transferOrders.get(i).getOrigin()).getId()%>
                                                             </td>
                                                             <td>
-                                                                <%=transferOrders.get(i).getTarget()%>
+                                                                Bin <%=((StorageBinEntity) transferOrders.get(i).getTarget()).getId()%>
                                                             </td>
                                                             <td>
                                                                 <%=transferOrders.get(i).getStatus()%>

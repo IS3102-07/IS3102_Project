@@ -26,21 +26,20 @@ public class TransferOrderManagement_AddServlet extends HttpServlet {
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
             String origin = request.getParameter("origin");
             String target = request.getParameter("target");
-            String status = request.getParameter("status");
 
-            out.println("<h1>" + warehouseEntity.getId() + "</h1>");
-            out.println("<h1>" + origin + "</h1>");
-            out.println("<h1>" + target + "</h1>");
-            out.println("<h1>" + status + "</h1>");
-
-//            boolean canUpdate = manufacturingWarehouseManagementBean.createStorageBin(warehouseEntity.getId(), type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
-//            if (!canUpdate) {
-//                result = "?errMsg=Type already exist. Please try again.";
-//                response.sendRedirect("A3/storageBinManagement_Add.jsp" + result);
-//            } else {
-//                result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
-//                response.sendRedirect("StorageBinManagement_Servlet" + result);
-//            }
+            if (origin.equals(target)) {
+                result = "?errMsg=Invalid movement, Orgin and Target are the same.";
+                response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
+            } else {
+                boolean canUpdate = manufacturingWarehouseManagementBean.createTransferOrder(warehouseEntity.getId(), Long.parseLong(origin), Long.parseLong(target), null);
+                if (!canUpdate) {
+                    result = "?errMsg=Type already exist. Please try again.";
+                    response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
+                } else {
+                    result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
+                    response.sendRedirect("TransferOrderManagement_Servlet" + result);
+                }
+            }
         } catch (Exception ex) {
             out.println(ex);
         }

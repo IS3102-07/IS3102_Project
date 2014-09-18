@@ -40,7 +40,7 @@
                                         <%
                                             List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
                                             for (int i = 0; i < storageBins.size(); i++) {
-                                                out.println("<option value='" + storageBins.get(i).getId() + "'>" + storageBins.get(i).getId() + "</option>");
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getId() + "</option>");
                                             }
                                         %>
                                     </select>
@@ -51,17 +51,9 @@
                                     <select  class="form-control" name="target" required="true">
                                         <%
                                             for (int i = 0; i < storageBins.size(); i++) {
-                                                out.println("<option value='" + storageBins.get(i).getId() + "'>" + storageBins.get(i).getId() + "</option>");
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getId() + "</option>");
                                             }
                                         %>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select  class="form-control" name="status" required="true">
-                                        <option>Pending</option> 
-                                        <option>Completed</option> 
-                                        <option>Unfulfillable</option> 
                                     </select>
                                 </div>
                                 <div class="form-group">
