@@ -169,7 +169,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     public StorageBinEntity getInboundStorageBin(Long warehouseID) {
         try {
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-            String id = warehouseEntity.getId() + "";
+            Long id = warehouseEntity.getId();
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Inbound' AND sb.warehouse.id=:id");
             q.setParameter("id", id);
             storageBin = (StorageBinEntity) q.getSingleResult();
@@ -184,7 +184,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     public StorageBinEntity getOutboundStorageBin(Long warehouseID) {
         try {
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-            String id = warehouseEntity.getId() + "";
+            Long id = warehouseEntity.getId();
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Outbound' AND sb.warehouse.id=:id");
             q.setParameter("id", id);
             storageBin = (StorageBinEntity) q.getSingleResult();
