@@ -17,6 +17,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -71,7 +72,7 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
     }
 
     @Override
-    public Boolean distributeProductionPlan(Long regionalOfficeId, Calendar month) {
+    public Boolean distributeProductionPlan(Long regionalOfficeId, Calendar date) {
         try {
             List<ManufacturingFacilityEntity> manufacturingFacilityList = this.getManufacturingFacilityListByRegionalOffice(regionalOfficeId);
             Collections.sort(manufacturingFacilityList, new CustomeComparator_MF());
@@ -80,9 +81,17 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
                 List<StoreEntity> storeList = mf.getStoreList();
                 Collections.sort(storeList, new CustomeComparator_Store());
                 for (StoreEntity store : storeList) {
-                    List<SaleAndOperationPlanEntity> sopList = store.getSaleAndOperationPlanList();
+                    Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store = ?1 and sop.month = ?2")
+                                .setParameter(1, store)
+                                .setParameter(2, date.get(Calendar.MONTH));
+                    List<SaleAndOperationPlanEntity> sopList = q.getResultList();
                     for (SaleAndOperationPlanEntity sop : sopList) {
-                        
+                        if (sop.getManufacturingFacility() == null) {
+                            if (residueCapacity > sop.getProductGroup().getWorkHours()) {
+                                residueCapacity -= sop.getProductGroup().getWorkHours();
+                                sop.setManufacturingFacility(mf);
+                            }
+                        }
                     }
                 }
             }
