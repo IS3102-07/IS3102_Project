@@ -50,7 +50,10 @@
                             <h1 class="page-header">Transfer Order Management</h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement_view.jsp"><%=warehouseEntity.getWarehouseName()%>t</a>
+                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement_view.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement.jsp">Manufacturing Warehouse Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Transfer Order Management
@@ -82,7 +85,7 @@
                                                             <th>Target</th>
                                                             <th>Status</th>
                                                             <th>Warehouse</th>
-                                                            <th>Update</th>
+                                                            <th>?? </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -130,8 +133,8 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Storage Bin" onclick="addStorageBin()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Storage Bin" onclick="removeStorageBin()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Transfer Order" onclick="addTO()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Transfer Order" onclick="removeTO()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    

@@ -75,12 +75,15 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
         try {
             List<ManufacturingFacilityEntity> manufacturingFacilityList = this.getManufacturingFacilityListByRegionalOffice(regionalOfficeId);
             Collections.sort(manufacturingFacilityList, new CustomeComparator_MF());
-            for(ManufacturingFacilityEntity mf: manufacturingFacilityList){
+            for (ManufacturingFacilityEntity mf : manufacturingFacilityList) {
                 Integer residueCapacity = mf.getCapacity();
                 List<StoreEntity> storeList = mf.getStoreList();
                 Collections.sort(storeList, new CustomeComparator_Store());
-                for(StoreEntity store: storeList){
-                    //List<SaleAndOperationPlanEntity> sopList = 
+                for (StoreEntity store : storeList) {
+                    List<SaleAndOperationPlanEntity> sopList = store.getSaleAndOperationPlanList();
+                    for (SaleAndOperationPlanEntity sop : sopList) {
+                        
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -102,17 +105,19 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
             }
         }
     }
-    
+
     private class CustomeComparator_Store implements Comparator<StoreEntity> {
+
         @Override
         public int compare(StoreEntity s1, StoreEntity s2) {
-            if(s1.getManufacturingFacilityList().size() > s2.getManufacturingFacilityList().size())
+            if (s1.getManufacturingFacilityList().size() > s2.getManufacturingFacilityList().size()) {
                 return 1;
-            else if(s1.getManufacturingFacilityList().size() == s2.getManufacturingFacilityList().size())
+            } else if (s1.getManufacturingFacilityList().size() == s2.getManufacturingFacilityList().size()) {
                 return 0;
-            else 
+            } else {
                 return -1;
-        }        
+            }
+        }
     }
-    
+
 }

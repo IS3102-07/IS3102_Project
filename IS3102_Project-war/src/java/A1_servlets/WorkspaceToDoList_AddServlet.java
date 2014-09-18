@@ -6,13 +6,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "WorkspaceToDoList_AddServlet", urlPatterns = {"/WorkspaceToDoList_AddServlet"})
 public class WorkspaceToDoList_AddServlet extends HttpServlet {
 
     @EJB
@@ -37,7 +35,7 @@ public class WorkspaceToDoList_AddServlet extends HttpServlet {
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
             Long staffId = staffEntity.getId();
             String description = request.getParameter("description");
-            boolean canCreate = workspaceBean.addToDoList(description);
+            boolean canCreate = workspaceBean.addToDoList(staffId, description);
             if (!canCreate) {
                 result = "?errMsg=Error creating ToDo record. Please try again.";
                 response.sendRedirect("A1/WorkspaceToDoList_AddServlet.jsp" + result);
