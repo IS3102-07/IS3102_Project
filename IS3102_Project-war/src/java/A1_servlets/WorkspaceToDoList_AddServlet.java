@@ -1,23 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package A1_servlets;
 
-import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
-import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "WorkspaceToDoList_AddServlet", urlPatterns = {"/WorkspaceToDoList_AddServlet"})
+/**
+ *
+ * @author Neo
+ */
 public class WorkspaceToDoList_AddServlet extends HttpServlet {
-
-    @EJB
-    private WorkspaceBeanLocal workspaceBean;
-    private String result;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,22 +30,17 @@ public class WorkspaceToDoList_AddServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            HttpSession session = request.getSession();
-            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
-            Long staffId = staffEntity.getId();
-            String description = request.getParameter("description");
-            boolean canCreate = workspaceBean.addToDoList(description);
-            if (!canCreate) {
-                result = "?errMsg=Error creating ToDo record. Please try again.";
-                response.sendRedirect("A1/WorkspaceToDoList_AddServlet.jsp" + result);
-            } else {
-                result = "?errMsg=ToDo record added successfully.";
-                response.sendRedirect("A1/WorkspaceToDoList_Servlet" + result);
-            }
-        } catch (Exception ex) {
-            out.println(ex);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet WorkspaceToDoList_AddServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet WorkspaceToDoList_AddServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

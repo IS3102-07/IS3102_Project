@@ -1,46 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A3_servlets;
 
+import EntityManager.WarehouseEntity;
+import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Neo
- */
 public class TransferOrderManagement_AddServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TransferOrderManagement_AddServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TransferOrderManagement_AddServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            HttpSession session;
+            session = request.getSession();
+            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+            String origin = request.getParameter("origin");
+            String target = request.getParameter("target");
+            String status = request.getParameter("status");
+
+            out.println("<h1>" + warehouseEntity.getId() + "</h1>");
+            out.println("<h1>" + origin + "</h1>");
+            out.println("<h1>" + target + "</h1>");
+            out.println("<h1>" + status + "</h1>");
+
+//            boolean canUpdate = manufacturingWarehouseManagementBean.createStorageBin(warehouseEntity.getId(), type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
+//            if (!canUpdate) {
+//                result = "?errMsg=Type already exist. Please try again.";
+//                response.sendRedirect("A3/storageBinManagement_Add.jsp" + result);
+//            } else {
+//                result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
+//                response.sendRedirect("StorageBinManagement_Servlet" + result);
+//            }
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 

@@ -1,17 +1,92 @@
-<%-- 
-    Document   : transferOrderManagement_Add
-    Created on : Sep 15, 2014, 9:22:48 PM
-    Author     : Neo
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+<%@page import="EntityManager.StorageBinEntity"%>
+<%@page import="java.util.List"%>
+<html lang="en">
+    <jsp:include page="../header2.html" />
     <body>
-        <h1>Hello World!</h1>
+        <div id="wrapper">
+            <jsp:include page="../menu1.jsp" />
+            <div id="page-wrapper">
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                Create Transfer Order
+                            </h1>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-user"></i>  <a href="manufacturingWarehouseManagement.jsp">Manufacturing Warehouse Management</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-user"></i><a href="transferOrderManagement.jsp"> Transfer Order Management</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-edit"></i> Add Transfer Order
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                    <jsp:include page="../displayMessage.jsp" />
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form role="form" action="../TransferOrderManagement_AddServlet">
+                                <div class="form-group">
+                                    <label>Origin</label>
+                                    <select  class="form-control" name="origin" required="true">
+                                        <%
+                                            List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
+                                            for (int i = 0; i < storageBins.size(); i++) {
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>" + storageBins.get(i).getId() + "</option>");
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Target</label>
+                                    <select  class="form-control" name="target" required="true">
+                                        <%
+                                            for (int i = 0; i < storageBins.size(); i++) {
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>" + storageBins.get(i).getId() + "</option>");
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select  class="form-control" name="status" required="true">
+                                        <option>Pending</option> 
+                                        <option>Completed</option> 
+                                        <option>Unfulfillable</option> 
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-lg btn-primary btn-block">
+                                </div>  
+                            </form>
+                        </div>
+                        <!-- /.row -->
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- /#page-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+
+
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+
     </body>
+
 </html>
