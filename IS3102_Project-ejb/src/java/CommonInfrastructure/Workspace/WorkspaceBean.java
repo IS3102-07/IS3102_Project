@@ -152,7 +152,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public List<MessageOutboxEntity> listAllSentMessages(Long staffID) {
+    public List<MessageOutboxEntity> listAllOutboxMessages(Long staffID) {
         System.out.println("listAllSentMessages() called with staffID:" + staffID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
@@ -192,7 +192,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public boolean deleteInboxMessage(Long staffID, Long messageID) {
+    public boolean deleteSingleInboxMessage(Long staffID, Long messageID) {
         System.out.println("deleteInboxMessage() called with staffID:" + staffID + " & messageID: " + messageID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
@@ -217,7 +217,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public boolean deleteSentMessage(Long staffID, Long messageID) {
+    public boolean deleteSingleOutboxMessage(Long staffID, Long messageID) {
         System.out.println("deleteSentMessage() called with staffID:" + staffID + " & messageID: " + messageID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");

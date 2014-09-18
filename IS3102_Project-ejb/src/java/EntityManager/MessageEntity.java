@@ -8,11 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 @Entity
-public class MessageEntity implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class MessageEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +30,7 @@ public class MessageEntity implements Serializable {
     private Boolean messageRead;
 
     //1-1 message
-    public void create(StaffEntity sender, StaffEntity receiver, String message){
+    public void createOneToOneMessage(StaffEntity sender, StaffEntity receiver, String message){
         this.setSender(sender);
         List<StaffEntity> receivers = new ArrayList();
         receivers.add(receiver);
@@ -36,7 +39,7 @@ public class MessageEntity implements Serializable {
         this.sentDate = new Date();
     }
     //1-m message
-    public void create(StaffEntity sender, List<StaffEntity> receivers, String message){
+    public void createOneToManyMessage(StaffEntity sender, List<StaffEntity> receivers, String message){
         this.setSender(sender);
         this.setReceivers(receivers);
         this.setMessage(message);
