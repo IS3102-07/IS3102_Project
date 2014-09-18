@@ -37,6 +37,8 @@ public class WarehouseEntity implements Serializable {
     private List<TransferOrderEntity> transferOrders;
     @ManyToOne
     private CountryEntity country;
+    @ManyToOne
+    private RegionalOfficeEntity regionalOffice;
     
     public WarehouseEntity(){
         this.storageBins = new ArrayList<>();
@@ -58,6 +60,14 @@ public class WarehouseEntity implements Serializable {
         return warehouseName;
     }
 
+    public RegionalOfficeEntity getRegionalOffice() {
+        return regionalOffice;
+    }
+
+    public void setRegionalOffice(RegionalOfficeEntity regionalOffice) {
+        this.regionalOffice = regionalOffice;
+    }    
+    
     public void setWarehouseName(String warehouseName) {
         this.warehouseName = warehouseName;
     }        
