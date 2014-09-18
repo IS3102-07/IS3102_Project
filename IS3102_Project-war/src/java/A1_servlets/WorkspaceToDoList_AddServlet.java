@@ -3,38 +3,42 @@ package A1_servlets;
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
+@WebServlet(name = "WorkspaceToDoList_AddServlet", urlPatterns = {"/WorkspaceToDoList_AddServlet"})
+public class WorkspaceToDoList_AddServlet extends HttpServlet {
 
     @EJB
-    private WorkspaceBeanLocal workspaceBeanLocal;
+    private WorkspaceBeanLocal workspaceBean;
+    private String result;
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String result;
         try {
-            String sender = request.getParameter("sender");
-            String title = request.getParameter("title");
-            String message = request.getParameter("message");
-            Long expiryDateLong = Date.parse(request.getParameter("expiryDate"));
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(expiryDateLong);
-            Date expiryDate = cal.getTime();
-            if (workspaceBeanLocal.makeAnnouncement(sender, title, message, expiryDate)) {
-                result = "?errMsg=Announcement broadcasted.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+            String description = request.getParameter("description");
+            boolean canCreate = workspaceBean.addToDoList(description);
+            if (!canCreate) {
+                result = "?errMsg=Error creating ToDo record. Please try again.";
+                response.sendRedirect("A1/WorkspaceToDoList_AddServlet.jsp" + result);
             } else {
-                result = "?errMsg=Failed to broadcast announcement.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+                result = "?errMsg=ToDo record added successfully.";
+                response.sendRedirect("A1/WorkspaceToDoList_Servlet" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

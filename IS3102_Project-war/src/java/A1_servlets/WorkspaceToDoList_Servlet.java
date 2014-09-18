@@ -1,43 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package A1_servlets;
 
-import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
-import java.util.Date;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
+/**
+ *
+ * @author Jason
+ */
+@WebServlet(name = "WorkspaceToDoList_AddServlet", urlPatterns = {"/WorkspaceToDoList_AddServlet"})
+public class WorkspaceToDoList_Servlet extends HttpServlet {
 
-    @EJB
-    private WorkspaceBeanLocal workspaceBeanLocal;
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String result;
-        try {
-            String sender = request.getParameter("sender");
-            String title = request.getParameter("title");
-            String message = request.getParameter("message");
-            Long expiryDateLong = Date.parse(request.getParameter("expiryDate"));
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(expiryDateLong);
-            Date expiryDate = cal.getTime();
-            if (workspaceBeanLocal.makeAnnouncement(sender, title, message, expiryDate)) {
-                result = "?errMsg=Announcement broadcasted.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
-            } else {
-                result = "?errMsg=Failed to broadcast announcement.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
-            }
-        } catch (Exception ex) {
-            out.println(ex);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet WorkspaceToDoList_AddServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet WorkspaceToDoList_AddServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
