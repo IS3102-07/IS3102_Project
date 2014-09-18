@@ -1,6 +1,7 @@
 package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "WorkspaceToDoList_AddServlet", urlPatterns = {"/WorkspaceToDoList_AddServlet"})
 public class WorkspaceToDoList_AddServlet extends HttpServlet {
@@ -31,6 +33,9 @@ public class WorkspaceToDoList_AddServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession();
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            Long staffId = staffEntity.getId();
             String description = request.getParameter("description");
             boolean canCreate = workspaceBean.addToDoList(description);
             if (!canCreate) {
