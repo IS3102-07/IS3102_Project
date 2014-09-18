@@ -37,7 +37,7 @@ public class WorkspaceToDoList_AddServlet extends HttpServlet {
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
             Long staffId = staffEntity.getId();
             String description = request.getParameter("description");
-            boolean canCreate = workspaceBean.addToDoList(description);
+            boolean canCreate = workspaceBean.addToDoList(staffId, description);
             if (!canCreate) {
                 result = "?errMsg=Error creating ToDo record. Please try again.";
                 response.sendRedirect("A1/WorkspaceToDoList_AddServlet.jsp" + result);

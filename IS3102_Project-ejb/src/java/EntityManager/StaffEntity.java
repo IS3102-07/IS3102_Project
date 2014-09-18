@@ -83,6 +83,7 @@ public class StaffEntity implements Serializable {
         this.setRoles(new ArrayList<>());
         this.inboxMessages = new ArrayList<>();
         this.sentMessages = new ArrayList<>();
+        this.toDoList = new ArrayList<>();
     }
 
     public String getPasswordReset() {
