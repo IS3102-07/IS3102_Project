@@ -379,4 +379,14 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             return false;
         }
     }
+
+    @Override
+    public List<AnnouncementEntity> getListOfAllAnnouncement() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteAnnouncement(Long announcementId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

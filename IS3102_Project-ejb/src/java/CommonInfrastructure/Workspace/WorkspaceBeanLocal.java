@@ -1,5 +1,6 @@
 package CommonInfrastructure.Workspace;
 
+import EntityManager.AnnouncementEntity;
 import EntityManager.MessageEntity;
 import EntityManager.ToDoEntity;
 import java.util.Date;
@@ -29,6 +30,10 @@ public interface WorkspaceBeanLocal {
 
     public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
 
+    public List<AnnouncementEntity> getListOfAllAnnouncement();
+    
+    public boolean deleteAnnouncement(Long announcementId);
+    
     public boolean addToDoList(String description);
 
     public boolean removeToDoList(Long id);
