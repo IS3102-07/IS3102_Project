@@ -275,7 +275,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public TransferOrderEntity createTransferOrder(Long warehouseID, Long originStorageBinID, Long targetStorageBinID, LineItemEntity lineItem) {
+    public boolean createTransferOrder(Long warehouseID, Long originStorageBinID, Long targetStorageBinID, LineItemEntity lineItem) {
         System.out.println("createTransferOrder() called.");
         try {
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
@@ -284,10 +284,10 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             StorageBinEntity target = em.getReference(StorageBinEntity.class, targetStorageBinID);
             transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, originStorageBin, target);
             em.persist(transferOrder);
-            return transferOrder;
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to createStorageBin:\n" + ex);
-            return null;
+            return false;
         }
     }
 
