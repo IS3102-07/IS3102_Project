@@ -29,6 +29,7 @@ public class ManufacturingFacilityEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private Integer capacity;
     @OneToOne
     private WarehouseEntity warehouse;
     @ManyToMany
@@ -44,6 +45,14 @@ public class ManufacturingFacilityEntity implements Serializable {
     public void create(String name) {
         this.setName(name);
     }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }        
 
     public RegionalOfficeEntity getRegionalOffice() {
         return regionalOffice;

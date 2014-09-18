@@ -27,13 +27,16 @@ public class StorageBinManagement_Servlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-
-            List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseEntity.getId());
-            session.setAttribute("storageBins", storageBins);
-            if (errMsg == null || errMsg.equals("")) {
-                response.sendRedirect("A3/storageBinManagement.jsp");
+            if (warehouseEntity == null) {
+                response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
             } else {
-                response.sendRedirect("A3/storageBinManagement.jsp?errMsg=" + errMsg);
+                List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseEntity.getId());
+                session.setAttribute("storageBins", storageBins);
+                if (errMsg == null || errMsg.equals("")) {
+                    response.sendRedirect("A3/storageBinManagement.jsp");
+                } else {
+                    response.sendRedirect("A3/storageBinManagement.jsp?errMsg=" + errMsg);
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

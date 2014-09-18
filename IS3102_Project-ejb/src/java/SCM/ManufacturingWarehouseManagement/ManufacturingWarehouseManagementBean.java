@@ -275,12 +275,15 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public List<TransferOrderEntity> createTransferOrder(Long warehouseID, StorageBinEntity origin, List<StorageBinEntity> targets, List<LineItemEntity> lineItems) {
+    public List<TransferOrderEntity> createTransferOrder(Long warehouseID, Long originStorageBinID, List<Long> targetStorageBinsIDs, List<LineItemEntity> lineItems) {
         try {
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             List<TransferOrderEntity> listOfTransferOrdersCreated = new ArrayList<TransferOrderEntity>();
+            StorageBinEntity originStorageBin = em.getReference(StorageBinEntity.class, originStorageBinID);
+
             for (int i = 0; i < lineItems.size(); i++) {
-                transferOrder = new TransferOrderEntity(warehouseEntity, lineItems.get(i), origin, targets.get(i));
+                StorageBinEntity target = em.getReference(StorageBinEntity.class, targetStorageBinsIDs);
+                transferOrder = new TransferOrderEntity(warehouseEntity, lineItems.get(i), originStorageBin, target);
                 em.persist(transferOrder);
                 listOfTransferOrdersCreated.add(transferOrder);
             }
