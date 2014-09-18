@@ -26,6 +26,8 @@ public class StoreEntity implements Serializable {
     private WarehouseEntity warehouse;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
     private List<SaleForcastEntity> saleForcastList;    
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
+    private List<SaleAndOperationPlanEntity> saleAndOperationPlanList;    
     @ManyToMany(mappedBy="storeList")
     @JoinTable(name="store_manufacturingFacility")
     private List<ManufacturingFacilityEntity> manufacturingFacilityList;
@@ -35,11 +37,20 @@ public class StoreEntity implements Serializable {
     public StoreEntity(){
         this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();
+        this.saleAndOperationPlanList = new ArrayList<>();
     }
     
     public void create(String name) {
         this.setName(name);
     }    
+
+    public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {
+        return saleAndOperationPlanList;
+    }
+
+    public void setSaleAndOperationPlanList(List<SaleAndOperationPlanEntity> saleAndOperationPlanList) {
+        this.saleAndOperationPlanList = saleAndOperationPlanList;
+    }        
 
     public RegionalOfficeEntity getRegionalOffice() {
         return regionalOffice;
