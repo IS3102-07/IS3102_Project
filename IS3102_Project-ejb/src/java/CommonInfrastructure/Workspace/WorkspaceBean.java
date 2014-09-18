@@ -167,9 +167,10 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
-    public MessageEntity readInboxMessage(Long staffID, Long messageID) {
-        System.out.println("readMessage() called with staffID:" + staffID + " & messageID: " + messageID);
-        MessageEntity message = null;
+    @Override
+    public MessageInboxEntity readInboxMessage(Long staffID, Long messageID) {
+        System.out.println("readInboxMessage() called with staffID:" + staffID + " & messageID: " + messageID);
+        MessageInboxEntity message = null;
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
@@ -183,6 +184,32 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
                 }
             }
             staffEntity.setInboxMessages(inboxMessages);
+            em.merge(staffEntity);
+            System.out.println("Message returned.");
+            return message;
+        } catch (Exception ex) {
+            System.out.println("\nServer error in reading a message:\n" + ex);
+            return null;
+        }
+    }
+
+    @Override
+    public MessageOutboxEntity readSentMessage(Long staffID, Long messageID) {
+        System.out.println("readOutboxMessage() called with staffID:" + staffID + " & messageID: " + messageID);
+        MessageOutboxEntity message = null;
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
+            q.setParameter("staffID", staffID);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            List<MessageOutboxEntity> sentMessages = staffEntity.getSentMessages();
+            for (MessageOutboxEntity currentMessage : sentMessages) {
+                if (currentMessage.getId().equals(messageID)) {
+                    currentMessage.setMessageRead(true);
+                    message = currentMessage;
+                    break;
+                }
+            }
+            staffEntity.setSentMessages(sentMessages);
             em.merge(staffEntity);
             System.out.println("Message returned.");
             return message;

@@ -23,7 +23,8 @@ public interface WorkspaceBeanLocal {
 
     public List<MessageOutboxEntity> listAllOutboxMessages(Long staffID);
 
-    public MessageEntity readInboxMessage(Long staffID, Long messageID); // returns null if staff or message not found
+    public MessageInboxEntity readInboxMessage(Long staffID, Long messageID); // returns null if staff or message not found
+    public MessageOutboxEntity readSentMessage(Long staffID, Long messageID); // returns null if staff or message not found
     //Following returns true if operation suceeds
 
     public boolean deleteSingleInboxMessage(Long staffID, Long messageID);
