@@ -22,7 +22,6 @@ public class StorageBinManagement_RemoveServlet extends HttpServlet {
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    //out.println("<h1>" + deleteArr[i] + "</h1>");
                     manufacturingWarehouseManagementBean.deleteStorageBin(Long.parseLong(deleteArr[i]));
                 }
                 response.sendRedirect("StorageBinManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");

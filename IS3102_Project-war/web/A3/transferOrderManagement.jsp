@@ -1,6 +1,13 @@
+<%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="EntityManager.TransferOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
+
+<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+    if (warehouseEntity == null) {
+        pageContext.forward("manufacturingWarehouseManagement_view.jsp");
+    } else {
+%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -27,20 +34,16 @@
                 document.transferOrderManagement.action = "transferOrderManagement_Add.jsp";
                 document.transferOrderManagement.submit();
             }
-            function checkAll() {
-                alert("Check all the checkboxes...");
-                var allRows = document.transferOrderManagement.getElementsByTagName("delete");
-                for (var i = 0; i < allRows.length; i++) {
-                    if (allRows[i].type == 'checkbox') {
-                        allRows[i].checked = true;
-                    }
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
                 }
             }
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <%
-                WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
                 try {
             %>
             <div id="page-wrapper">
@@ -78,14 +81,14 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Date Created</th>
                                                             <th>Date Transferred</th>
                                                             <th>Origin</th>
                                                             <th>Target</th>
                                                             <th>Status</th>
                                                             <th>Warehouse</th>
-                                                            <th>?? </th>
+                                                            <th>Details </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -102,13 +105,18 @@
                                                                 <%=transferOrders.get(i).getDateCreated()%>
                                                             </td>
                                                             <td>
-                                                                <%=transferOrders.get(i).getDateTransferred()%>
+                                                                <%
+                                                                    if (transferOrders.get(i).getDateTransferred() == null) {
+                                                                        out.println("-");
+                                                                    } else {
+                                                                        out.println(transferOrders.get(i).getDateTransferred());
+                                                                    }%>
                                                             </td>
                                                             <td>
-                                                                <%=transferOrders.get(i).getOrigin()%>
+                                                                Bin <%=((StorageBinEntity) transferOrders.get(i).getOrigin()).getId()%>
                                                             </td>
                                                             <td>
-                                                                <%=transferOrders.get(i).getTarget()%>
+                                                                Bin <%=((StorageBinEntity) transferOrders.get(i).getTarget()).getId()%>
                                                             </td>
                                                             <td>
                                                                 <%=transferOrders.get(i).getStatus()%>
@@ -126,6 +134,7 @@
                                                             } catch (Exception ex) {
                                                                 response.sendRedirect("manufacturingWarehouseManagement.jsp");
                                                             }
+    }
                                                         %>
                                                     </tbody>
                                                 </table>
@@ -164,7 +173,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

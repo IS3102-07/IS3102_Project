@@ -37,13 +37,13 @@ public interface WorkspaceBeanLocal {
     
     public boolean deleteAnnouncement(Long announcementId);
     
-    public boolean addToDoList(Long staffId, String description);//
+    public boolean addToDoList(Long staffId, String description);
 
     public boolean removeToDoList(Long toDoId);
 
     public boolean editToDoList(Long id, String description);
 
-    public List<ToDoEntity> getAllToDoListOfAStaff(Long staffId);//
+    public List<ToDoEntity> getAllToDoListOfAStaff(Long staffId);
 
     public boolean markToDoListAsDone(Long id);
 
