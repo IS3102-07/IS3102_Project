@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -28,7 +29,7 @@ public class TransferOrderEntity implements Serializable {
     @OneToOne
     private StorageBinEntity target;
     private String status;
-    @OneToOne
+    @ManyToOne
     private WarehouseEntity warehouse;
     
 
