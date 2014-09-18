@@ -6,13 +6,20 @@
 
 package MRP.ProductionPlanDistribution;
 
+import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.StoreEntity;
 import javax.ejb.Local;
+import javax.ejb.Remove;
 
 /**
  *
- * @author Jason
+ * @author Lin Baoyu
  */
 @Local
 public interface ProductionPlanDistributionBeanLocal {
     
+    public Boolean addStoreToManufacturingFacilityAllocationList(Long storeId, Long manufacturingFacilityId);
+    
+    @Remove
+    public void remove();
 }

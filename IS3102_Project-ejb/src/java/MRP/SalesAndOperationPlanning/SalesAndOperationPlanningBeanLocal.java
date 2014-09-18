@@ -10,9 +10,9 @@ import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.SaleForcastEntity;
 import EntityManager.StoreEntity;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remove;
 
 /**
  *
@@ -33,4 +33,6 @@ public interface SalesAndOperationPlanningBeanLocal {
     
     public SaleAndOperationPlanEntity getSOPbyId(Long id);
     
+    @Remove
+    public void remove();
 }

@@ -7,7 +7,6 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -110,9 +109,7 @@ public class SaleAndOperationPlanEntity implements Serializable {
     public void setTargetInventoryLevel(Integer targetInventoryLevel) {
         this.targetInventoryLevel = targetInventoryLevel;
     }
-
-    
-    
+        
     @Override
     public int hashCode() {
         int hash = 0;

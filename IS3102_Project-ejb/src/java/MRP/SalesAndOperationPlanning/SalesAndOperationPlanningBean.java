@@ -12,6 +12,7 @@ import EntityManager.StoreEntity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -94,6 +95,12 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
             ex.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    @Remove
+    public void remove() {
+        System.out.println("The Sale and Operation Planning Bean has been removed.");
     }
     
     
