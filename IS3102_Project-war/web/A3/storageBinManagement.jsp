@@ -3,7 +3,7 @@
 <%@page import="java.util.List"%>
 <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
-        pageContext.forward("../A1/workspace.jsp");
+        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
     } else {
 %>
 <html lang="en">

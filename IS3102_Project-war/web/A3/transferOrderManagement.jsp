@@ -5,7 +5,7 @@
 
 <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
-        pageContext.forward("manufacturingWarehouseManagement_view.jsp");
+        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
     } else {
 %>
 <html lang="en">
@@ -134,7 +134,6 @@
                                                             } catch (Exception ex) {
                                                                 response.sendRedirect("manufacturingWarehouseManagement.jsp");
                                                             }
-    }
                                                         %>
                                                     </tbody>
                                                 </table>
@@ -181,3 +180,4 @@
     </body>
 
 </html>
+<%}%>
