@@ -302,6 +302,25 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
+    public boolean updateAnnouncement(Long announcementId, String message, Date expiryDate) {
+        System.out.println("updateAnnouncement() is called.");
+        try {
+            AnnouncementEntity announcementEntity = em.find(AnnouncementEntity.class, announcementId);
+            announcementEntity.setMessage(message);
+            announcementEntity.setExpiryDate(expiryDate);
+            em.merge(announcementEntity);
+            System.out.println("updateAnnouncement() is successful.");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("updateAnnouncement() EntityNotFoundException:\n" + ex);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("failed to perform updateAnnouncement():\n" + ex);
+            return false;
+        }
+    }
+
+    @Override
     public boolean deleteAnnouncement(Long announcementId) {
         System.out.println("deleteAnnouncement() called.");
         try {
@@ -443,25 +462,6 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             return false;
         } catch (Exception ex) {
             System.out.println("failed to perform markToDoListAsUndone():\n" + ex);
-            return false;
-        }
-    }
-
-    @Override
-    public boolean updateAnnouncement(Long announcementId, String message, Date expiryDate) {
-        System.out.println("updateAnnouncement() is called.");
-        try {
-            AnnouncementEntity announcementEntity = em.find(AnnouncementEntity.class, announcementId);
-            announcementEntity.setMessage(message);
-            announcementEntity.setExpiryDate(expiryDate);
-            em.merge(announcementEntity);
-            System.out.println("updateAnnouncement() is successful.");
-            return true;
-        } catch (EntityNotFoundException ex) {
-            System.out.println("updateAnnouncement() EntityNotFoundException:\n" + ex);
-            return false;
-        } catch (Exception ex) {
-            System.out.println("failed to perform updateAnnouncement():\n" + ex);
             return false;
         }
     }
