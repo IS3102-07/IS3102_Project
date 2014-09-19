@@ -29,12 +29,12 @@ public class LineItemManagement_RemoveServlet extends HttpServlet {
             String transferOrderId = request.getParameter("id");
             boolean canUpdate = manufacturingWarehouseManagementBean.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
             if (!canUpdate) {
-                result = "?errMsg=Item not found. Please try again.";
+                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
                 response.sendRedirect("A3/lineItemManagement.jsp" + result);
             } else {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
-                result = "?errMsg=Item added successfully.";
+                result = "?errMsg=Item removed successfully.&id="+transferOrderId;
                 response.sendRedirect("A3/lineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {

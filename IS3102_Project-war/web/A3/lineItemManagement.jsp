@@ -10,7 +10,7 @@
         try {
             String transferOrderID = request.getParameter("id");
             List<TransferOrderEntity> transferOrders = (List<TransferOrderEntity>) (session.getAttribute("transferOrders"));
-            TransferOrderEntity transferOrder = null;
+            TransferOrderEntity transferOrder = new TransferOrderEntity();
             for (int i = 0; i < transferOrders.size(); i++) {
                 if (transferOrders.get(i).getId() == Integer.parseInt(transferOrderID)) {
                     transferOrder = transferOrders.get(i);
@@ -35,7 +35,6 @@
                             <h1 class="page-header">
                                 Line Item
                             </h1>
-                            <jsp:include page="../displayMessage.jsp" />
                             <ol class="breadcrumb">
                                 <li class="active">
                                     <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement_view.jsp"><%=warehouseEntity.getWarehouseName()%></a>
@@ -53,7 +52,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
-
+                    <jsp:include page="../displayMessage.jsp" />
                     <div class="row">
                         <div class="col-lg-6">
 
@@ -97,6 +96,7 @@
                     <%
                             } catch (Exception ex) {
                                 response.sendRedirect("../TransferOrderManagement_Servlet");
+                                ex.printStackTrace();
                             }
                         }%>
 

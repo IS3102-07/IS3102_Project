@@ -98,7 +98,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#">
+                                <a href="../WorkspaceToDoList_Servlet">
                                     <div class="panel-footer" style="padding-bottom: 30px;">
                                         <span class="pull-left">View Details</span>
                                         <span class="pull-right"><i class="icon icon-arrow-circle-right"></i></span>

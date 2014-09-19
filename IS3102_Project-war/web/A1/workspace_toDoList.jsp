@@ -6,26 +6,33 @@
     <jsp:include page="../header2.html" />
 
     <body>
+
+
         <script>
-            function updateRole(id) {
-                rolesManagement.id.value = id;
-                document.rolesManagement.action = "roleManagement_update.jsp";
-                document.rolesManagement.submit();
+
+            function updateToDoList(id) {
+                toDoList.id.value = id;
+                document.toDoList.action = "workspace_toDoListUpdate.jsp";
+                document.toDoList.submit();
             }
-            function removeRole() {
+            function removeToDoList() {
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.rolesManagement.action = "../RoleManagement_RemoveRoleServlet";
-                    document.rolesManagement.submit();
+                    document.toDoList.action = "../WorkspaceToDoList_RemoveServlet";
+                    document.toDoList.submit();
                 } else {
                     window.event.returnValue = false;
                 }
             }
-            function addRole() {
-                window.event.returnValue = true;
-                document.rolesManagement.action = "roleManagement_add.jsp";
-                document.rolesManagement.submit();
+            function markDoneOrUndone(id) {
+                toDoList.id.value = id;
+                //document.toDoList.action = "workspace_toDoListUpdate.jsp";
+                document.toDoList.submit();
+            }
+            function addToDoList() {
+                document.toDoList.action = "../WorkspaceToDoList_AddServlet";
+                document.toDoList.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -41,13 +48,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Roles Management</h1>
+                            <h1 class="page-header">ToDo List</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
+                                    <i class="icon icon-user"></i>  <a href="workspace.jsp">Workspace</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Role Management
+                                    <i class="icon icon-edit"></i> ToDo List Management
                                 </li>
                             </ol>
                         </div>
@@ -62,20 +69,20 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Insert some text";
+                                            errMsg = "Welcome to ToDo List Management!";
                                         }
                                         out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="rolesManagement">
+                                <form name="toDoList">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            
+
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Role" onclick="removeRole()"  />
+                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add ToDo"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete  ToDo" onclick="removeToDoList()"  />
                                                 </div>
                                             </div>
                                             <br>
@@ -84,30 +91,43 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox" onclick="checkAll(this)" /></th>
-                                                            <th>Name</th>
-                                                            <th>Access Level</th>
-                                                            <th>Staff</th>
+                                                            <th>Description</th>
+                                                            <th>Done/Undone</th>
+                                                            <th>Mark As Done</th>
                                                             <th>Update</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<ToDoEntity> toDoList = (List<ToDoEntity>) (request.getAttribute("toDoList"));
+                                                            List<ToDoEntity> toDoList = (List<ToDoEntity>) (session.getAttribute("toDoList"));
                                                             if (toDoList != null) {
                                                                 for (int i = 0; i < toDoList.size(); i++) {
                                                         %>
                                                         <tr>
-                                                            <td>
+                                                            <td style="width:40px;" >
+                                                                <input type="hidden" name="done" disabled value="<%=toDoList.get(i).isDone()%>"/>
                                                                 <input type="checkbox" name="delete" value="<%=toDoList.get(i).getId()%>" />
                                                             </td>
                                                             <td>
                                                                 <%=toDoList.get(i).getDescription()%>
                                                             </td>
                                                             <td>
-                                                                <%=toDoList.get(i)%>
+                                                                <%
+                                                                    boolean isDone = toDoList.get(i).isDone();
+                                                                    String val = "";
+                                                                    String doneVal = "Mark As Done";
+                                                                    if (isDone == true) {
+                                                                        val = "checked";
+                                                                        doneVal = "Mark As Undone";
+                                                                    }
+                                                                %>
+                                                                <input type="checkbox" disabled name="status" <%=val%> value="<%=toDoList.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=toDoList.get(i).getId()%>" value="update" onclick="javascript:updateRole('<%=roles.get(i).getId()%>')"/>
+                                                                <input type="submit" name="btnDone" class="btn btn-primary btn-block" value="<%=doneVal%>"  onclick="javascript:markDoneOrUndone('<%=toDoList.get(i).getId()%>')"/>
+                                                            </td>
+                                                            <td style="width: 150px;">
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=toDoList.get(i).getId()%>" value="update" onclick="javascript:updateToDoList('<%=toDoList.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -121,15 +141,26 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Role" onclick="removeRole()"  />
+                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add ToDo"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete ToDo" onclick="removeToDoList()"  />
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        <div id="addToDoForm" hidden>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-5">
+                                                        <p class="page-header">Add New ToDo</p>
+                                                        Description: 
+                                                        <textarea class="form-control" type="" name="description"></textarea><br>
+                                                        <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="addToDoList()"  />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="id" value="">    
                                         </div>
-
                                     </div>
                                     <!-- /.panel-body -->
+
                                 </form>
 
                             </div>
@@ -150,8 +181,14 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
+            });
+
+            $(".btnAdd").click(function () {
+                $("html, body").animate({scrollTop: $(document).height()}, "slow");
+                $("#addToDoForm").show("slow", function () {
+                });
             });
         </script>
     </body>
