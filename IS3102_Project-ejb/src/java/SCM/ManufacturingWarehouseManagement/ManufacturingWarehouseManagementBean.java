@@ -354,7 +354,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
             transferOrderEntity.setLineItem(null);
             em.merge(transferOrderEntity);
-            System.out.println("Item remove from transfer order.");
+            Long lineItemID = transferOrderEntity.getLineItem().getId();
+            LineItemEntity lineItemEntity = em.getReference(LineItemEntity.class, lineItemID);
+            em.remove(lineItemEntity);
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to removeLineItemFromTransferOrder:\n" + ex);
