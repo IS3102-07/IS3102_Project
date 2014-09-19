@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LineItemManagement_Servlet extends HttpServlet {
+public class LineItemManagement_RemoveServlet extends HttpServlet {
 
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
@@ -25,13 +25,9 @@ public class LineItemManagement_Servlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            String transferOrderId = request.getParameter("id");
-            String sku = request.getParameter("sku");
-            String quantity = request.getParameter("quantity");
-
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-
-            boolean canUpdate = manufacturingWarehouseManagementBean.addLineItemToTransferOrder(Long.parseLong(transferOrderId), sku, Integer.parseInt(quantity));
+            String transferOrderId = request.getParameter("id");
+            boolean canUpdate = manufacturingWarehouseManagementBean.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
             if (!canUpdate) {
                 result = "?errMsg=Item not found. Please try again.";
                 response.sendRedirect("A3/lineItemManagement.jsp" + result);
@@ -39,7 +35,7 @@ public class LineItemManagement_Servlet extends HttpServlet {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
                 result = "?errMsg=Item added successfully.";
-                response.sendRedirect("A3/lineItemManagement.jsp" + result);
+                response.sendRedirect("lineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

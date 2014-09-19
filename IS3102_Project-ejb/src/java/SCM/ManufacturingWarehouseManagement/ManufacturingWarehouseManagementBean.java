@@ -328,12 +328,16 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         System.out.println("addLineItemToTransferOrder() called.");
         try {
             ItemEntity itemEntity = searchItemBySKU(SKU);
-            if (itemEntity == null)
+            System.out.println("asdad");
+            if (itemEntity == null) {
+                System.out.println("444s");
                 return false;//cannot find item
-            LineItemEntity lineItem = new LineItemEntity(itemEntity, quantity, null);
+            }
+            LineItemEntity lineItem = new LineItemEntity(itemEntity, quantity, "");
+            System.out.println("2");
             TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
             transferOrderEntity.setLineItem(lineItem);
-            em.merge(transferOrder);
+            em.merge(transferOrderEntity);
             System.out.println("Item added to transfer order.");
             return true;
         } catch (Exception ex) {
@@ -349,7 +353,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         try {
             TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
             transferOrderEntity.setLineItem(null);
-            em.merge(transferOrder);
+            em.merge(transferOrderEntity);
             System.out.println("Item remove from transfer order.");
             return true;
         } catch (Exception ex) {

@@ -126,6 +126,15 @@ public class StartupBean {
                 System.out.println("Skipping creating of warehouse entities:\n" + ex);
                 ex.printStackTrace();
             }
+            try {
+                //Create item
+                FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "Furniture 1", "Tables & Desks","desc", "imageURL", 1,1,1);
+                em.persist(furnitureEntity);
+                System.out.println("Created item entities.");
+            } catch (Exception ex) {
+                System.out.println("Skipping creating of item entities:\n" + ex);
+                ex.printStackTrace();
+            }
         } catch (Exception ex) {
             System.out.println("Skipped init of database:\n" + ex);
             ex.printStackTrace();
