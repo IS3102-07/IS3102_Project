@@ -33,11 +33,11 @@
 
                         try {
                             String id = request.getParameter("id");
-                            List<AnnouncementEntity> roles = (List<AnnouncementEntity>) (session.getAttribute("roles"));
-                            AnnouncementEntity role = new AnnouncementEntity();
-                            for (int i = 0; i < roles.size(); i++) {
-                                if (roles.get(i).getId() == Integer.parseInt(id)) {
-                                    role = roles.get(i);
+                            List<AnnouncementEntity> listOfAnnouncements = (List<AnnouncementEntity>) (session.getAttribute("listOfAnnouncements"));
+                            AnnouncementEntity announcement = new AnnouncementEntity();
+                            for (int i = 0; i < listOfAnnouncements.size(); i++) {
+                                if (listOfAnnouncements.get(i).getId() == Integer.parseInt(id)) {
+                                    announcement = listOfAnnouncements.get(i);
                                 }
                             }
                     %>
@@ -47,29 +47,32 @@
 
                             <form role="form" action="../RoleManagement_UpdateRoleServlet">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input class="form-control" name="name" type="text" value="<%=role.getName()%>" disabled/>
+                                    <label>Sender</label>
+                                    <input class="form-control" name="sender" type="text" value="<%=announcement.getSender()%>" disabled/>
                                 </div>
                                 <div class="form-group">
-                                    <label>Access Level</label>
-                                    <input class="form-control" name="accessLevel" type="text" value="<%=role.getAccessLevel()%>">
+                                    <label>Title</label>
+                                    <input class="form-control" name="title" type="text" value="<%=announcement.getTitle()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label>Role</label>
-                                    <input class="form-control" required="true" type="text" name="email" disabled/>
+                                    <label>Message</label>
+                                    <input class="form-control" required="true" type="text" name="message" value="<%=announcement.getMessage()%>"/>
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Expiry Date</label>
+                                    <input class="form-control" required="true" type="text" name="expiryDate" value="<%=announcement.getExpiryDate()%>"/>
+                                </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
-                                <input type="hidden" value="<%=role.getId()%>" name="id">
+                                <input type="hidden" value="<%=announcement.getId()%>" name="id">
                             </form>
                         </div>
                         <!-- /.row -->
                     </div>
                     <%
                         } catch (Exception ex) {
-                            response.sendRedirect("../RoleManagement_RoleServlet");
+                            response.sendRedirect("../WorkspaceAnnouncement_Servlet");
                         }%>
 
                 </div>
