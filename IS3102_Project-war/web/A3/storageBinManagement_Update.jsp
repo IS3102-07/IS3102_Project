@@ -28,6 +28,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
+                    <jsp:include page="../displayMessage.jsp" />
 
                     <%
                         List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
