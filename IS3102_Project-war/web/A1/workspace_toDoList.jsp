@@ -27,7 +27,7 @@
             }
             function markDoneOrUndone(id) {
                 toDoList.id.value = id;
-                document.toDoList.action = "workspace_toDoListUpdate.jsp";
+                //document.toDoList.action = "workspace_toDoListUpdate.jsp";
                 document.toDoList.submit();
             }
             function addToDoList() {
