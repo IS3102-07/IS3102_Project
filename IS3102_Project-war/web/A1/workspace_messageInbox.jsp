@@ -6,38 +6,41 @@
 <%@page import="java.util.List"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
-
     <body>
         <script>
-
-            var checkFlag = 'false';
-            function readMessage() {
-                document.messageManagement.action = "../WorkspaceMessage_ViewServlet";
-                document.messageManagement.submit();
+            function readMessage(id) {
+            messageManagement.messageID.value = id;
+                    document.messageManagement.action = "../WorkspaceMessage_ViewServlet";
+                    document.messageManagement.submit();
             }
             function deleteMessage() {
-                var yes = confirm("Are you sure you want to delete the selected messages?\nThis action can not be undone!");
-                if (yes == true) {
-                    window.event.returnValue = true;
+            var yes = confirm("Are you sure you want to delete the selected messages?\nThis action can not be undone!");
+                    checkboxes = document.getElementsByName('delete');
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+            }
+            } else if (yes == true) {
+            window.event.returnValue = true;
+                    messageManagement.deleteType.value = "many";
                     document.messageManagement.action = "../WorkspaceMessage_RemoveServlet";
                     document.messageManagement.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
+            } else {
+            window.event.returnValue = false;
+            }
             }
             function sendMessage() {
-                window.event.returnValue = true;
-                document.messageManagement.action = "workspace_messageAdd.jsp";
-                document.messageManagement.submit();
+            window.event.returnValue = true;
+                    document.messageManagement.action = "workspace_messageAdd.jsp";
+                    document.messageManagement.submit();
             }
             function checkAll(source) {
-                checkboxes = document.getElementsByName('delete');
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    checkboxes[i].checked = source.checked;
-                }
+            checkboxes = document.getElementsByName('delete');
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+            }
             }
             function viewSentMsg() {
-                document.messageManagement.action = "workspace_messageSent.jsp";
+            document.messageManagement.action = "workspace_messageSent.jsp";
             }
         </script>
         <div id="wrapper">
@@ -102,30 +105,36 @@
                                                                 <input type="checkbox" name="delete" value="<%=inbox.get(i).getMessageId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=inbox.get(i).getSenderName()%>
+                                                                <% if (!inbox.get(i).isMessageRead()) {%><b><%}%>
+                                                                    <%=inbox.get(i).getSenderName()%>
+                                                                    <% if (!inbox.get(i).isMessageRead()) {%></b><%}%>
                                                             </td>
                                                             <td>
-                                                                <%
-                                                                    Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                                                    String dateString = formatter.format(inbox.get(i).getSentDate());
-                                                                    out.println(dateString);
-                                                                %>
+                                                                <% if (!inbox.get(i).isMessageRead()) {%><b><%}%>
+                                                                    <%
+                                                                        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                                                        String dateString = formatter.format(inbox.get(i).getSentDate());
+                                                                        out.println(dateString);
+                                                                    %>
+                                                                    <% if (!inbox.get(i).isMessageRead()) {%></b><%}%>
                                                             </td>
                                                             <td>
-                                                                <%
-                                                                    List<String> receviers = (List<String>) (inbox.get(i).getReceiversName());
-                                                                    if (receviers.isEmpty()) {
-                                                                        out.println("-");
-                                                                    } else {
-                                                                        for (int k = 0; k < receviers.size(); k++) {
-                                                                            out.println(receviers.get(k));
+                                                                <% if (!inbox.get(i).isMessageRead()) {%><b><%}%>
+                                                                    <%
+                                                                        List<String> receviers = (List<String>) (inbox.get(i).getReceiversName());
+                                                                        if (receviers.isEmpty()) {
+                                                                            out.println("-");
+                                                                        } else {
+                                                                            for (int k = 0; k < receviers.size(); k++) {
+                                                                                out.println(receviers.get(k));
+                                                                            }
                                                                         }
-                                                                    }
-                                                                %>
+                                                                    %>
+                                                                    <% if (!inbox.get(i).isMessageRead()) {%></b><%}%>
                                                             </td>
                                                             <td>
-                                                                <input type="hidden" name="messageID" value="<%=inbox.get(i).getMessageId()%>" />
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Read" onclick="readMessage()" />
+                                                                <input type="text" name="messageID" value="<%=inbox.get(i).getMessageId()%>" />
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Read" onclick="readMessage(<%=inbox.get(i).getMessageId()%>)" />
                                                             </td>
                                                         </tr>
                                                         <%
@@ -170,8 +179,8 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
-                $('#dataTables-example').dataTable();
+                    $(document).ready(function() {
+            $('#dataTables-example').dataTable();
             }
             );
         </script>

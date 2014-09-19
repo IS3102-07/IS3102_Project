@@ -109,7 +109,8 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            out.println(ex);
+            ex.printStackTrace();
         }
     }
 
