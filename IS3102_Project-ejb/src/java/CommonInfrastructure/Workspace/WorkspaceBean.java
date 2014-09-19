@@ -197,7 +197,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
 
     @Override
     public MessageOutboxEntity readSentMessage(Long staffID, Long messageID) {
-        System.out.println("readOutboxMessage() called with staffID:" + staffID + " & messageID: " + messageID);
+        System.out.println("readSentMessage() called with staffID:" + staffID + " & messageID: " + messageID);
         MessageOutboxEntity message = null;
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
