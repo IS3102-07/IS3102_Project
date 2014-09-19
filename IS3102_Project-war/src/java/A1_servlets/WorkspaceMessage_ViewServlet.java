@@ -41,6 +41,7 @@ public class WorkspaceMessage_ViewServlet extends HttpServlet {
             if (view == null) {
                 response.sendRedirect("../WorkspaceMessage_Servlet");
             } else if (view.equals("inbox")) {
+                System.out.println("HUAT"+messageID);
                 MessageInboxEntity messageInboxEntity = workspaceBean.readInboxMessage(staffEntity.getId(), Long.parseLong(messageID));
                 MessageHelper messageHelper = new MessageHelper();
                 //Set data to message helper

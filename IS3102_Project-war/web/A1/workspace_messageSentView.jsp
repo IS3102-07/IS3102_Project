@@ -15,7 +15,7 @@
     <body>
         <script>
             function viewSentMsg() {
-                document.location.href = "workspace_messageSent.jsp";
+                document.location.href = "../WorkspaceMessage_Servlet?view=sentMessages";
             }
         </script>
         <div id="wrapper">
@@ -35,7 +35,7 @@
                                     <i class="icon icon-user"></i> <a href="workspace_messageInbox.jsp">Messages</a>
                                 </li>
                                 <li class ="active">
-                                    <i class="icon icon-user"></i> <a href="workspace_messageSentMessages.jsp">Sent Messages</a>
+                                    <i class="icon icon-user"></i> <a href="workspace_messageSent.jsp">Sent Messages</a>
                                 </li>
                                 <li class="active">
                                     <i class ="icon icon-edit"></i> Read Message
@@ -72,7 +72,7 @@
                                             receiverDisplayString += " <" + messageHelper.getReceiversEmail().get(i) + ">;";
                                         }
                                     %>
-                                    <input class="form-control" required="true" type="text" name="<%=receiverDisplayString%>" disabled/>
+                                    <input class="form-control" required="true" type="text" value="<%=receiverDisplayString%>" disabled/>
                                 </div>
                                 <div>
                                     <label>Message</label><br/>

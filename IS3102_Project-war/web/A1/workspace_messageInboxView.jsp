@@ -72,7 +72,7 @@
                                             receiverDisplayString += " <" + messageHelper.getReceiversEmail().get(i) + ">;";
                                         }
                                     %>
-                                    <input class="form-control" required="true" type="text" name="<%=receiverDisplayString%>" disabled/>
+                                    <input class="form-control" required="true" type="text" value="<%=receiverDisplayString%>" disabled/>
                                 </div>
                                 <div>
                                     <label>Message</label><br/>
