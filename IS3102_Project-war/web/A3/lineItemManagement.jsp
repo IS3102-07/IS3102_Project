@@ -6,8 +6,6 @@
 <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
         pageContext.forward("manufacturingWarehouseManagement_view.jsp");
-    } else if (request.getParameter("id") == null) {
-        pageContext.forward("transferOrderManagement.jsp");
     } else {
         try {
             String transferOrderID = request.getParameter("id");
@@ -37,6 +35,7 @@
                             <h1 class="page-header">
                                 Line Item
                             </h1>
+                            <jsp:include page="../displayMessage.jsp" />
                             <ol class="breadcrumb">
                                 <li class="active">
                                     <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement_view.jsp"><%=warehouseEntity.getWarehouseName()%></a>
@@ -107,14 +106,6 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-
-
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-        </script>
 
     </body>
 

@@ -35,7 +35,7 @@ public class LineItemManagement_RemoveServlet extends HttpServlet {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
                 result = "?errMsg=Item added successfully.";
-                response.sendRedirect("lineItemManagement.jsp" + result);
+                response.sendRedirect("A3/lineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

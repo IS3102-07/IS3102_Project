@@ -66,7 +66,13 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    insert some wordings
+                                    <%
+                                        String errMsg = request.getParameter("errMsg");
+                                        if (errMsg == null || errMsg.equals("")) {
+                                            errMsg = "Insert some text";
+                                        }
+                                        out.println(errMsg);
+                                    %>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="storagebinManagement">
@@ -170,7 +176,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
