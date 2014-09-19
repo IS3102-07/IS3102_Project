@@ -31,13 +31,13 @@ public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
         String result;
         PrintWriter out = response.getWriter();
         try {
-            String id = request.getParameter("id");
+            String id = request.getParameter("delete");
             if (workspaceBeanLocal.deleteAnnouncement(Long.valueOf(id))) {
                 result = "?errMsg=Announcement deleted.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+                response.sendRedirect("A1/workspace_viewAnnouncement.jsp" + result);
             } else {
                 result = "?errMsg=Failed to delete announcement.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+                response.sendRedirect("A1/workspace_viewAnnouncement.jsp" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

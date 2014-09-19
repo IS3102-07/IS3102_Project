@@ -29,7 +29,7 @@
                     <jsp:include page="../displayMessage.jsp" />
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" action="../WorkspaceAnnouncement_AddServlet" onsubmit="">
+                            <form role="form" action="../WorkspaceAnnouncement_AddServlet">
                                 <div class="form-group">
                                     <label>Sender</label>
                                     <input class="form-control" name="sender" type="text" required="true" value="Announcement Messenger">
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Expiry Date</label>
-                                    <input class="form-control" required="true" type="date" name="expiryDate" >
+                                    <input class="form-control" required="true" type="Date" name="expiryDate" >
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Broadcast Message" class="btn btn-lg btn-primary btn-block">
