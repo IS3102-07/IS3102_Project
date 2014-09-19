@@ -1,7 +1,6 @@
 package CommonInfrastructure.Workspace;
 
 import EntityManager.AnnouncementEntity;
-import EntityManager.MessageEntity;
 import EntityManager.MessageInboxEntity;
 import EntityManager.MessageOutboxEntity;
 import EntityManager.StaffEntity;
