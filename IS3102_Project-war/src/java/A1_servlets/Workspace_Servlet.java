@@ -1,13 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package A1_servlets;
 
-import EntityManager.StaffEntity;
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
-import EntityManager.CountryEntity;
-import SCM.SupplierManagement.SupplierManagementBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,35 +16,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AccountManagement_LoginServlet extends HttpServlet {
+/**
+ *
+ * @author -VeRyLuNaTiC
+ */
+public class Workspace_Servlet extends HttpServlet {
 
-    @EJB
-    private AccountManagementBeanLocal accountManagementBean;
-    @EJB
-    private SupplierManagementBeanLocal supplierManagementBean;
     @EJB
     private WorkspaceBeanLocal workspaceBean;
-    private String result;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
+        try (PrintWriter out = response.getWriter()) {
             HttpSession session;
             session = request.getSession();
-
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
             if (staffEntity == null) {
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                staffEntity = accountManagementBean.loginStaff(email, password);
-            }
-            List<CountryEntity> countries = supplierManagementBean.getListOfCountries();
-            session.setAttribute("countries", countries);
-
-            if (staffEntity == null) {
-                result = "Login fail. Please try again.";
-                response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
+                response.sendRedirect("A1/staffLogin.jsp");
             } else {
                 session.setAttribute("staffEntity", staffEntity);
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
@@ -51,14 +41,10 @@ public class AccountManagement_LoginServlet extends HttpServlet {
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
                 response.sendRedirect("A1/workspace.jsp");
             }
-        } catch (Exception ex) {
-            out.println(ex);
-            ex.printStackTrace();
         }
-
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

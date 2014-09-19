@@ -15,7 +15,7 @@
     <body>
         <script>
             function viewInbox() {
-                document.messageManagement.action = "workspace_messageInbox.jsp";
+                document.messageManagement.action = "asads";
             }
         </script>
         <div id="wrapper">

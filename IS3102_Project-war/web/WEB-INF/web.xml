@@ -284,6 +284,10 @@
         <servlet-name>WorkspaceToDoList_AddServlet</servlet-name>
         <servlet-class>A1_servlets.WorkspaceToDoList_AddServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Workspace_Servlet</servlet-name>
+        <servlet-class>A1_servlets.Workspace_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -567,6 +571,10 @@
     <servlet-mapping>
         <servlet-name>WorkspaceToDoList_AddServlet</servlet-name>
         <url-pattern>/WorkspaceToDoList_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Workspace_Servlet</servlet-name>
+        <url-pattern>/Workspace_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
