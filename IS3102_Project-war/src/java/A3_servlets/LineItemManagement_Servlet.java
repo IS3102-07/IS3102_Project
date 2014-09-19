@@ -33,12 +33,12 @@ public class LineItemManagement_Servlet extends HttpServlet {
 
             boolean canUpdate = manufacturingWarehouseManagementBean.addLineItemToTransferOrder(Long.parseLong(transferOrderId), sku, Integer.parseInt(quantity));
             if (!canUpdate) {
-                result = "?errMsg=Item not found. Please try again.";
+                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
                 response.sendRedirect("A3/lineItemManagement.jsp" + result);
             } else {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
-                result = "?errMsg=Item added successfully.";
+                result = "?errMsg=Item added successfully.&id="+transferOrderId;
                 response.sendRedirect("A3/lineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {

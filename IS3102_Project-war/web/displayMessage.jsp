@@ -6,7 +6,7 @@
 %>
 <div class="row">
     <div class="col-lg-6">
-        <div class="alert alert-danger">
+        <div class="alert alert-info">
             <%=errMsg%>
         </div>
     </div>
