@@ -5,16 +5,20 @@
  */
 package A1_servlets;
 
+import EntityManager.AnnouncementEntity;
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import EntityManager.RoleEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,19 +35,17 @@ public class WorkspaceAnnouncement_Servlet extends HttpServlet {
         String result;
         PrintWriter out = response.getWriter();
         try {
-            String sender = request.getParameter("sender");
-            String title = request.getParameter("title");
-            String message = request.getParameter("message");
-            Long expiryDateLong = Date.parse(request.getParameter("expiryDate"));
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(expiryDateLong);
-            Date expiryDate = cal.getTime();
-            if (workspaceBeanLocal.makeAnnouncement(sender, title, message, expiryDate)) {
-                result = "?errMsg=Announcement broadcasted.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+            HttpSession session;
+            session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+
+            List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
+            session.setAttribute("listOfAnnouncements", listOfAnnouncements);
+
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A1/workspace_viewAnnouncement.jsp");
             } else {
-                result = "?errMsg=Failed to broadcast announcement.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+                response.sendRedirect("A1/workspace_viewAnnouncement.jsp?errMsg=" + errMsg);
             }
         } catch (Exception ex) {
             out.println(ex);

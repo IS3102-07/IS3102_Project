@@ -20,7 +20,7 @@
                                     <i class="icon icon-user"></i>  <a href="workspace_viewAnnouncement.jsp">Announcement</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i><a href="workspace_BroadcastAnnouncement.jsp"> Broadcast Announcement</a>
+                                    <i class="icon icon-edit"></i>Broadcast Announcement
                                 </li>
                             </ol>
                         </div>
@@ -35,6 +35,10 @@
                                     <input class="form-control" name="sender" type="text" required="true" value="Announcement Messenger">
                                 </div>
                                 <div class="form-group">
+                                    <label>Title</label>
+                                    <input class="form-control" required="true" type="text" name="title" >
+                                </div>
+                                <div class="form-group">
                                     <label>Message</label>
                                     <input class="form-control" required="true" type="text" name="message" >
                                 </div>
@@ -45,7 +49,7 @@
                                 <div class="form-group">
                                     <input type="submit" value="Broadcast Message" class="btn btn-lg btn-primary btn-block">
                                 </div>
-                                <input type="hidden" value="A1/workspace_BroadcastAnnouncement.jsp" name="source">
+                                <input type="hidden" value="A1/workspace_viewAnnouncement.jsp" name="source">
                             </form>
                         </div>
                         <!-- /.row -->
