@@ -1,5 +1,6 @@
 package SCM.ManufacturingWarehouseManagement;
 
+import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
@@ -25,8 +26,8 @@ public interface ManufacturingWarehouseManagementBeanLocal {
 
     public boolean createTransferOrder(Long warehouseID, Long originStorageBinId, Long targetStorageBinID, LineItemEntity lineItem);
     
-    public TransferOrderEntity addLineItemToTransferOrder(Long transferOrderID, LineItemEntity lineItem);
-    public TransferOrderEntity removeLineItemFromTransferOrder(Long transferOrderID, LineItemEntity lineItem);
+    public Boolean addLineItemToTransferOrder(Long transferOrderID, String SKU, Integer quantity);
+    public Boolean removeLineItemFromTransferOrder(Long transferOrderID);
 
     public boolean markTransferOrderAsCompleted(Long transferOrderId);
 
@@ -41,4 +42,6 @@ public interface ManufacturingWarehouseManagementBeanLocal {
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId);
 
     public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems);
+    
+    public ItemEntity searchItemBySKU(String SKU);
 }

@@ -1,7 +1,10 @@
 package SCM.ManufacturingWarehouseManagement;
 
+import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.RawMaterialEntity;
+import EntityManager.RetailProductEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
@@ -292,33 +295,66 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public TransferOrderEntity addLineItemToTransferOrder(Long transferOrderID, LineItemEntity lineItem) {
+    public ItemEntity searchItemBySKU(String SKU) {
+        try {
+            ItemEntity itemEntity = new FurnitureEntity();
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            itemEntity = (ItemEntity) q.getSingleResult();
+            return itemEntity;
+        } catch (EntityNotFoundException ex1) {
+            try {
+                ItemEntity itemEntity = new RawMaterialEntity();
+                Query q = em.createQuery("SELECT t FROM RawMaterialEntity t where t.SKU=:SKU");
+                q.setParameter("SKU", SKU);
+                itemEntity = (ItemEntity) q.getSingleResult();
+                return itemEntity;
+            } catch (EntityNotFoundException ex2) {
+                try {
+                    ItemEntity itemEntity = new RetailProductEntity();
+                    Query q = em.createQuery("SELECT t FROM RetailProductEntity t where t.SKU=:SKU");
+                    q.setParameter("SKU", SKU);
+                    itemEntity = (ItemEntity) q.getSingleResult();
+                    return itemEntity;
+                } catch (EntityNotFoundException ex3) {
+                    return null;
+                }
+            }
+        }
+    }
+
+    @Override
+    public Boolean addLineItemToTransferOrder(Long transferOrderID, String SKU, Integer quantity) {
         System.out.println("addLineItemToTransferOrder() called.");
         try {
+            ItemEntity itemEntity = searchItemBySKU(SKU);
+            if (itemEntity == null)
+                return false;//cannot find item
+            LineItemEntity lineItem = new LineItemEntity(itemEntity, quantity, null);
             TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
             transferOrderEntity.setLineItem(lineItem);
             em.persist(transferOrder);
             System.out.println("Item added to transfer order.");
-            return transferOrder;
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to addLineItemToTransferOrder:\n" + ex);
-            return null;
+            return false;
         }
 
     }
 
     @Override
-    public TransferOrderEntity removeLineItemFromTransferOrder(Long transferOrderID, LineItemEntity lineItem) {
+    public Boolean removeLineItemFromTransferOrder(Long transferOrderID) {
         System.out.println("removeLineItemFromTransferOrder() called.");
         try {
             TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
             transferOrderEntity.setLineItem(null);
             em.persist(transferOrder);
             System.out.println("Item remove from transfer order.");
-            return transferOrder;
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to removeLineItemFromTransferOrder:\n" + ex);
-            return null;
+            return false;
         }
     }
 //TODO NEED TO TEST
