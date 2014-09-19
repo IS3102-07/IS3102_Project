@@ -333,7 +333,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             LineItemEntity lineItem = new LineItemEntity(itemEntity, quantity, null);
             TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
             transferOrderEntity.setLineItem(lineItem);
-            em.persist(transferOrder);
+            em.merge(transferOrder);
             System.out.println("Item added to transfer order.");
             return true;
         } catch (Exception ex) {
@@ -349,7 +349,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         try {
             TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
             transferOrderEntity.setLineItem(null);
-            em.persist(transferOrder);
+            em.merge(transferOrder);
             System.out.println("Item remove from transfer order.");
             return true;
         } catch (Exception ex) {
