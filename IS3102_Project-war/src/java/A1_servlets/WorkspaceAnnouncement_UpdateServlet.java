@@ -1,46 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A1_servlets;
 
+import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Jason
- */
 public class WorkspaceAnnouncement_UpdateServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @EJB
+    private WorkspaceBeanLocal workspaceBeanLocal;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet WorkspaceAnnouncement_UpdateServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet WorkspaceAnnouncement_UpdateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        String result;
+        try {
+            String announcementId = request.getParameter("id");
+            String message = request.getParameter("message");
+            Long expiryDateLong = Date.parse(request.getParameter("expiryDate"));
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(expiryDateLong);
+            Date expiryDate = cal.getTime();
+            boolean canUpdate = workspaceBeanLocal.updateAnnouncement(Long.valueOf(announcementId), message, expiryDate);
+            if (!canUpdate) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("roleManagement_update.jsp" + result);
+            } else {
+                result = "?errMsg=Role updated successfully.";
+                response.sendRedirect("RoleManagement_RoleServlet" + result);
+            }
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 

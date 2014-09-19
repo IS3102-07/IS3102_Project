@@ -1,59 +1,171 @@
+<%@page import="EntityManager.AnnouncementEntity"%>
+<%@page import="java.util.List"%>
 <html lang="en">
+
     <jsp:include page="../header2.html" />
+
     <body>
+        <script>
+            function updateAnnouncement(id) {
+                announcementsManagement.id.value = id;
+                document.announcementsManagement.action = "workspace_updateAnnouncement.jsp";
+                document.announcementsManagement.submit();
+            }
+            function removeAnnouncement() {
+                var yes = confirm("Are you sure?!");
+                if (yes == true) {
+                    window.event.returnValue = true;
+                    document.announcementsManagement.action = "../WorkspaceAnnouncement_DeleteServlet";
+                    document.announcementsManagement.submit();
+                } else {
+                    window.event.returnValue = false;
+                }
+            }
+            function addAnnouncement() {
+                window.event.returnValue = true;
+                document.announcementsManagement.action = "workspace_BroadcastAnnouncement.jsp";
+                document.announcementsManagement.submit();
+            }
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+
+        </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">
-                                View Announcements
-                            </h1>
+                            <h1 class="page-header">View Announcements</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="workspace.jsp">Workspace</a>
+                                    <i class="icon icon-user"></i>  <a href="workspace.jsp">Work Space</a>
                                 </li>
-                                <li>
-                                    <i class="icon icon-user"></i>  <a href="workspace_viewAnnouncement.jsp">Announcement</a>
-                                </li>                         
+                                <li class="active">
+                                    <i class="icon icon-edit"></i> View Announcements
+                                </li>
                             </ol>
                         </div>
+                        <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                    <jsp:include page="../displayMessage.jsp" />
+
                     <div class="row">
-                        <div class="col-lg-6">
-                            <form role="form" action="../WorkspaceAnnouncement_AddServlet" onsubmit="">
-                                <div class="form-group">
-                                    <label>Sender</label>
-                                    <input class="form-control" name="sender" type="text" required="true" value="Announcement Messenger">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <%
+                                        String errMsg = request.getParameter("errMsg");
+                                        if (errMsg == null || errMsg.equals("")) {
+                                            errMsg = "Insert some text";
+                                        }
+                                        out.println(errMsg);
+                                    %>
                                 </div>
-                                <div class="form-group">
-                                    <label>Message</label>
-                                    <input class="form-control" required="true" type="text" name="message" >
-                                </div>
-                                <div class="form-group">
-                                    <label>Expiry Date</label>
-                                    <input class="form-control" required="true" type="date" name="expiryDate" >
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Broadcast Message" class="btn btn-lg btn-primary btn-block">
-                                </div>
-                                <input type="hidden" value="A1/workspace_BroadcastAnnouncement.jsp" name="source">
-                            </form>
+                                <!-- /.panel-heading -->
+                                <form name="announcementsManagement">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Announcement" onclick="addAnnouncement()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Announcements" onclick="removeAnnouncement()"  />
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" onclick="checkAll(this)" /></th>
+                                                            <th>ID</th>
+                                                            <th>Sender</th>
+                                                            <th>Title</th>
+                                                            <th>Message</th>
+                                                            <th>Broadcasted Date</th>
+                                                            <th>Expiry Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            List<AnnouncementEntity> listOfAnnouncements = (List<AnnouncementEntity>) (session.getAttribute("listOfAnnouncements"));
+                                                            if (listOfAnnouncements != null) {
+                                                                for (int i = 0; i < listOfAnnouncements.size(); i++) {
+                                                        %>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="checkbox" name="delete" value="<%=listOfAnnouncements.get(i).getId()%>" />
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfAnnouncements.get(i).getId()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfAnnouncements.get(i).getSender()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfAnnouncements.get(i).getTitle()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfAnnouncements.get(i).getMessage()%>
+                                                            </td>
+                                                            <td>      
+                                                                <%=listOfAnnouncements.get(i).getBroadcastedDate() %>
+                                                            </td>
+                                                            <td>      
+                                                                <%=listOfAnnouncements.get(i).getExpiryDate() %>
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=listOfAnnouncements.get(i).getId()%>" value="update" onclick="javascript:updateAnnouncement('<%=listOfAnnouncements.get(i).getId()%>')"/>
+                                                            </td>
+                                                        </tr>
+                                                        <%
+                                                                }
+                                                            }
+                                                        %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.table-responsive -->
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Announcement" onclick="addAnnouncement()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Announcement" onclick="removeAnnouncement()"  />
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="id" value="">    
+                                        </div>
+
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </form>
+
+                            </div>
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.row -->
-
+                        <!-- /.col-lg-12 -->
                     </div>
-                </div>
+                    <!-- /.row -->
 
+
+                </div>
+                <!-- /.container-fluid -->
             </div>
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-    </body>
 
+
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function() {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+    </body>
 </html>
