@@ -1,4 +1,4 @@
-<%@page import="EntityManager.RoleEntity"%>
+<%@page import="EntityManager.AnnouncementEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
@@ -12,17 +12,17 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Role Update
+                                Announcement Update
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
+                                    <i class="icon icon-user"></i>  <a href="workspace.jsp">Workspace</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i><a href="roleManagement.jsp"> Role Management</a>
+                                    <i class="icon icon-user"></i><a href="workspace_viewAnnouncement.jsp"> View Announcements</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Role Update
+                                    <i class="icon icon-edit"></i> Announcement Update
                                 </li>
                             </ol>
                         </div>
@@ -33,8 +33,8 @@
 
                         try {
                             String id = request.getParameter("id");
-                            List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
-                            RoleEntity role = new RoleEntity();
+                            List<AnnouncementEntity> roles = (List<AnnouncementEntity>) (session.getAttribute("roles"));
+                            AnnouncementEntity role = new AnnouncementEntity();
                             for (int i = 0; i < roles.size(); i++) {
                                 if (roles.get(i).getId() == Integer.parseInt(id)) {
                                     role = roles.get(i);
