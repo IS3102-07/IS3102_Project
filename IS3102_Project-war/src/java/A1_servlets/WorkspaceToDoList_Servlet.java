@@ -27,9 +27,8 @@ public class WorkspaceToDoList_Servlet extends HttpServlet {
             String errMsg = request.getParameter("errMsg");//
             StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");//
             List<ToDoEntity> toDoList = workspaceBean.getAllToDoListOfAStaff(staff.getId());
-            
-            request.setAttribute("toDoList", toDoList);//
 
+            session.setAttribute("toDoList", toDoList);//
             if (errMsg == null || errMsg.equals("")) {
                 response.sendRedirect("A1/workspace_toDoList.jsp");
             } else {
