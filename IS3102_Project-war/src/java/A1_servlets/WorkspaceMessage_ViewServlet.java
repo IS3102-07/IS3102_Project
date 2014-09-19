@@ -30,15 +30,16 @@ public class WorkspaceMessage_ViewServlet extends HttpServlet {
             session = request.getSession();
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
             if (staffEntity == null) {
-                response.sendRedirect("A1/staffLogin.jsp");
+                    response.sendRedirect("A1/staffLogin.jsp");
             } else {
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
-                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
-            String messageID = request.getParameter("id");
+            String messageID = request.getParameter("messageID");
             String view = request.getParameter("view");
             if (view == null) {
+                response.sendRedirect("../WorkspaceMessage_Servlet");
             } else if (view.equals("inbox")) {
                 MessageInboxEntity messageInboxEntity = workspaceBean.readInboxMessage(staffEntity.getId(), Long.parseLong(messageID));
                 MessageHelper messageHelper = new MessageHelper();
@@ -58,8 +59,8 @@ public class WorkspaceMessage_ViewServlet extends HttpServlet {
                 messageHelper.setReceiversName(receiversName);
                 messageHelper.setReceiversEmail(receiversEmail);
 
-                request.setAttribute("message", messageHelper);
-                request.setAttribute("view", "inbox");
+                session.setAttribute("message", messageHelper);
+                session.setAttribute("view", "inbox");
                 response.sendRedirect("A1/workspace_messageInboxView.jsp");
             } else if (view.equals("sentMessages")) {
                 MessageOutboxEntity messageOutboxEntity = workspaceBean.readSentMessage(staffEntity.getId(), Long.parseLong(messageID));
@@ -79,12 +80,12 @@ public class WorkspaceMessage_ViewServlet extends HttpServlet {
                 }
                 messageHelper.setReceiversName(receiversName);
                 messageHelper.setReceiversEmail(receiversEmail);
-                
-                request.setAttribute("message", messageHelper);
-                request.setAttribute("view", "sentMessages");
-                response.sendRedirect("A1/workspace_messageOutboxView.jsp");
+
+                session.setAttribute("message", messageHelper);
+                session.setAttribute("view", "sentMessages");
+                response.sendRedirect("A1/workspace_messageSentView.jsp");
             } else { // not in either inbox or outbox view
-                response.sendRedirect("A1/workspace.jsp");
+                response.sendRedirect("../WorkspaceMessage_Servlet");
             }
         } catch (Exception ex) {
             out.println(ex);

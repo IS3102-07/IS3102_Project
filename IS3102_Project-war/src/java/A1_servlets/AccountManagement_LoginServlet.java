@@ -47,7 +47,7 @@ public class AccountManagement_LoginServlet extends HttpServlet {
             } else {
                 session.setAttribute("staffEntity", staffEntity);
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
-                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
                 response.sendRedirect("A1/workspace.jsp");
             }

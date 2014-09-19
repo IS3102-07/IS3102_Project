@@ -25,13 +25,11 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
             if (staffEntity == null) {
                 response.sendRedirect("A1/staffLogin.jsp");
-            } else {
-                session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
-                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
-                session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
 
             String[] deleteArr = request.getParameterValues("delete");
+            String deleteSingleMessageType = request.getParameter("deleteMessageType");
+            String deleteSingleMessageID = request.getParameter("messageID");
             String deleteMessageType = request.getParameter("deleteMessageType");
 
             if (deleteArr != null) {
@@ -47,12 +45,21 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
                 } else {
                     response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
                 }
+            } else if (deleteSingleMessageID != null) {
+                if (deleteSingleMessageType.equals("inbox")) {
+                    workspaceBean.deleteSingleInboxMessage(staffEntity.getId(), Long.parseLong(deleteSingleMessageID));
+                    response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Successfully deleted message.");
+                } else { //outbox
+                    workspaceBean.deleteSingleOutboxMessage(staffEntity.getId(), Long.parseLong(deleteSingleMessageID));
+                    response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Successfully deleted message.");
+                }
             } else {
                 response.sendRedirect("WorkspaceMessage_Servlet?errMsg=No messages selected for deletion.");
             }
 
         } catch (Exception ex) {
             out.println(ex);
+            ex.printStackTrace();
         }
     }
 

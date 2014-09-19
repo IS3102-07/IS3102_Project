@@ -30,7 +30,7 @@ public class WorkspaceMessage_AddServlet extends HttpServlet {
                 response.sendRedirect("A1/staffLogin.jsp");
             } else {
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
-                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
             String message = request.getParameter("message");
@@ -58,7 +58,7 @@ public class WorkspaceMessage_AddServlet extends HttpServlet {
                 Long senderStaffID = staffEntity.getId();
                 workspaceBean.sendMessageToMultipleReceiver(senderStaffID, receiversStaffID, message);
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
-                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
                 response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Message sent.");
             }

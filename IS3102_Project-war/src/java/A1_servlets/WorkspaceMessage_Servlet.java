@@ -33,66 +33,66 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 response.sendRedirect("A1/staffLogin.jsp");
             } else {
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
-                session.setAttribute("inbox", workspaceBean.listAllInboxMessages(staffEntity.getId()));
+                session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
             String errMsg = request.getParameter("errMsg");
 
+            List<MessageInboxEntity> inboxMessageEntities = workspaceBean.listAllInboxMessages(staffEntity.getId());
+            List<MessageHelper> inboxMessageHelpers = new ArrayList<>();
+            for (MessageInboxEntity currentMessage : inboxMessageEntities) {
+                MessageHelper messageHelper = new MessageHelper();
+                messageHelper.setMessageId(currentMessage.getId());
+                messageHelper.setSenderName(currentMessage.getSender().getName());
+                messageHelper.setSenderEmail(currentMessage.getSender().getEmail());
+                List<String> receiversName = new ArrayList<>();
+                List<String> receiversEmail = new ArrayList<>();
+                for (int i = 0; i < currentMessage.getReceivers().size(); i++) {
+                    receiversName.add(currentMessage.getReceivers().get(i).getName());
+                    receiversEmail.add(currentMessage.getReceivers().get(i).getEmail());
+                }
+                messageHelper.setReceiversName(receiversName);
+                messageHelper.setReceiversEmail(receiversEmail);
+                messageHelper.setMessage(currentMessage.getMessage());
+                messageHelper.setSentDate(currentMessage.getSentDate());
+                messageHelper.setMessageRead(currentMessage.getMessageRead());
+                inboxMessageHelpers.add(messageHelper);
+            }
+            session.setAttribute("inboxMessagesHelpers", inboxMessageHelpers);
+            List<MessageOutboxEntity> sentMessageEntities = workspaceBean.listAllOutboxMessages(staffEntity.getId());
+            List<MessageHelper> sentMessageHelpers = new ArrayList<>();
+            for (MessageOutboxEntity currentMessage : sentMessageEntities) {
+                MessageHelper messageHelper = new MessageHelper();
+                messageHelper.setMessageId(currentMessage.getId());
+                messageHelper.setSenderName(currentMessage.getSender().getName());
+                messageHelper.setSenderEmail(currentMessage.getSender().getEmail());
+                List<String> receiversName = new ArrayList<>();
+                List<String> receiversEmail = new ArrayList<>();
+                for (int i = 0; i < currentMessage.getReceivers().size(); i++) {
+                    receiversName.add(currentMessage.getReceivers().get(i).getName());
+                    receiversEmail.add(currentMessage.getReceivers().get(i).getEmail());
+                }
+                messageHelper.setReceiversName(receiversName);
+                messageHelper.setReceiversEmail(receiversEmail);
+                messageHelper.setMessage(currentMessage.getMessage());
+                messageHelper.setSentDate(currentMessage.getSentDate());
+                messageHelper.setMessageRead(currentMessage.getMessageRead());
+                sentMessageHelpers.add(messageHelper);
+            }
+            session.setAttribute("sentMessagesHelpers", sentMessageHelpers);
+            
             String view = (String) session.getAttribute("view");
-            if (view == null) {
-                List<MessageInboxEntity> inboxMessageEntities = workspaceBean.listAllInboxMessages(staffEntity.getId());
-                List<MessageHelper> inboxMessageHelpers = new ArrayList<>();
-                for (MessageInboxEntity currentMessage : inboxMessageEntities) {
-                    MessageHelper messageHelper = new MessageHelper();
-                    messageHelper.setMessageId(currentMessage.getId());
-                    messageHelper.setSenderName(currentMessage.getSender().getName());
-                    messageHelper.setSenderEmail(currentMessage.getSender().getEmail());
-                    List<String> receiversName = new ArrayList<>();
-                    List<String> receiversEmail = new ArrayList<>();
-                    for (int i = 0; i < currentMessage.getReceivers().size(); i++) {
-                        receiversName.add(currentMessage.getReceivers().get(i).getName());
-                        receiversEmail.add(currentMessage.getReceivers().get(i).getEmail());
-                    }
-                    messageHelper.setReceiversName(receiversName);
-                    messageHelper.setReceiversEmail(receiversEmail);
-                    messageHelper.setMessage(currentMessage.getMessage());
-                    messageHelper.setSentDate(currentMessage.getSentDate());
-                    messageHelper.setMessageRead(currentMessage.getMessageRead());
-                    inboxMessageHelpers.add(messageHelper);
-                }
-                session.setAttribute("inboxMessages", inboxMessageHelpers);
-                List<MessageOutboxEntity> sentMessageEntities = workspaceBean.listAllOutboxMessages(staffEntity.getId());
-                List<MessageHelper> sentMessageHelpers = new ArrayList<>();
-                for (MessageOutboxEntity currentMessage : sentMessageEntities) {
-                    MessageHelper messageHelper = new MessageHelper();
-                    messageHelper.setMessageId(currentMessage.getId());
-                    messageHelper.setSenderName(currentMessage.getSender().getName());
-                    messageHelper.setSenderEmail(currentMessage.getSender().getEmail());
-                    List<String> receiversName = new ArrayList<>();
-                    List<String> receiversEmail = new ArrayList<>();
-                    for (int i = 0; i < currentMessage.getReceivers().size(); i++) {
-                        receiversName.add(currentMessage.getReceivers().get(i).getName());
-                        receiversEmail.add(currentMessage.getReceivers().get(i).getEmail());
-                    }
-                    messageHelper.setReceiversName(receiversName);
-                    messageHelper.setReceiversEmail(receiversEmail);
-                    messageHelper.setMessage(currentMessage.getMessage());
-                    messageHelper.setSentDate(currentMessage.getSentDate());
-                    messageHelper.setMessageRead(currentMessage.getMessageRead());
-                    sentMessageHelpers.add(messageHelper);
-                }
-                session.setAttribute("sentMessages", sentMessageHelpers);
-
+            if (view == null || view.equals("inbox")) {
                 if (errMsg == null || errMsg.equals("")) {
                     response.sendRedirect("A1/workspace_messageInbox.jsp");
                 } else {
                     response.sendRedirect("A1/workspace_messageInbox.jsp?errMsg=" + errMsg);
                 }
-            } else if (view.equals("SentMessages")){
+            } else if (view.equals("sentMessages")) {
                 if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A1/workspace_messageSentMessages.jsp");
+                    response.sendRedirect("A1/workspace_messageSent.jsp");
                 } else {
-                    response.sendRedirect("A1/workspace_messageSentMessages.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A1/workspace_messageSent.jsp?errMsg=" + errMsg);
                 }
             } else {
                 if (errMsg == null || errMsg.equals("")) {

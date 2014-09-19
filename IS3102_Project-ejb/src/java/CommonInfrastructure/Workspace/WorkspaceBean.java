@@ -234,6 +234,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
                 }
             }
             staffEntity.setInboxMessages(inboxMessages);
+            em.merge(staffEntity);
             System.out.println("Message deleted.");
             return true;
         } catch (Exception ex) {
@@ -249,12 +250,14 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageOutboxEntity> sentMessages = staffEntity.getSentMessages();
+            
             for (MessageOutboxEntity currentMessage : sentMessages) {
                 if (currentMessage.getId().equals(messageID)) {
                     sentMessages.remove(currentMessage);
                     break;
                 }
             }
+            
             staffEntity.setSentMessages(sentMessages);
             em.merge(staffEntity);
             System.out.println("Message deleted.");

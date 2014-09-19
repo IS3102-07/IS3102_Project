@@ -14,8 +14,8 @@
     <jsp:include page="../header2.html" />
     <body>
         <script>
-            function viewInbox() {
-                document.messageManagement.action = "workspace_messageInbox.jsp";
+            function viewSentMsg() {
+                document.messageManagement.action = "workspace_messageSent.jsp";
             }
         </script>
         <div id="wrapper">
@@ -35,7 +35,7 @@
                                     <i class="icon icon-user"></i> <a href="workspace_messageInbox.jsp">Messages</a>
                                 </li>
                                 <li class ="active">
-                                    <i class="icon icon-user"></i> <a href="workspace_messageInbox.jsp">Inbox</a>
+                                    <i class="icon icon-user"></i> <a href="workspace_messageSentMessages.jsp">Sent Messages</a>
                                 </li>
                                 <li class="active">
                                     <i class ="icon icon-edit"></i> Read Message
@@ -53,7 +53,7 @@
                         <div class="col-lg-6">
 
                             <form role="form" action="../WorkspaceMessage_RemoveServlet">
-                                <input type="hidden" name="deleteMessageType" value="inbox" />
+                                <input type="hidden" name="deleteMessageType" value="sentMessage" />
                                 <input type="hidden" name="messageID" value="<%=messageHelper.getMessageId()%>" />
                                 <div class="form-group">
                                     <label>From</label>
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="btn btn-lg btn-primary btn-block" onclick="javascript:viewInbox()">Back to Inbox</button>
+                                    <button class="btn btn-lg btn-primary btn-block" onclick="javascript:viewSentMsg()">Back to Sent Messages</button>
                                     <input type="submit" value="Delete" class="btn btn-lg btn-primary btn-block">
                                 </div>
                             </form>

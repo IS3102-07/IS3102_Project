@@ -36,8 +36,8 @@
                     checkboxes[i].checked = source.checked;
                 }
             }
-            function viewSentMsg() {
-                document.messageManagement.action = "workspace_messageSent.jsp";
+            function viewInbox() {
+                document.messageManagement.action = "workspace_messageInbox.jsp";
             }
         </script>
         <div id="wrapper">
@@ -46,7 +46,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Inbox</h1>
+                            <h1 class="page-header">Sent Messages</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="workspace.jsp">Workspace</a>
@@ -55,7 +55,7 @@
                                     <i class="icon icon-user"></i> <a href="../WorkspaceMessage_Servlet">Messages</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Inbox
+                                    <i class="icon icon-edit"></i> Sent Messages
                                 </li>
                             </ol>
                         </div>
@@ -73,7 +73,7 @@
                                             errMsg = "Insert some text";
                                         }
                                         out.println(errMsg);
-                                        session.setAttribute("view", "inbox");
+                                        session.setAttribute("view", "sentMessages");
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -93,28 +93,28 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<MessageHelper> inbox = (List<MessageHelper>) (session.getAttribute("inboxMessagesHelpers"));
-                                                            if (inbox != null) {
-                                                                for (int i = 0; i < inbox.size(); i++) {
+                                                            List<MessageHelper> sent = (List<MessageHelper>) (session.getAttribute("sentMessagesHelpers"));
+                                                            if (sent != null) {
+                                                                for (int i = 0; i < sent.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <input type="hidden" name="deleteMessageType" value="inbox" />
-                                                                <input type="checkbox" name="delete" value="<%=inbox.get(i).getMessageId()%>" />
+                                                                <input type="hidden" name="deleteMessageType" value="sentMessage" />
+                                                                <input type="checkbox" name="delete" value="<%=sent.get(i).getMessageId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=inbox.get(i).getSenderName()%>
+                                                                <%=sent.get(i).getSenderName()%>
                                                             </td>
                                                             <td>
                                                                 <%
                                                                     Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                                                    String dateString = formatter.format(inbox.get(i).getSentDate());
+                                                                    String dateString = formatter.format(sent.get(i).getSentDate());
                                                                     out.println(dateString);
                                                                 %>
                                                             </td>
                                                             <td>
                                                                 <%
-                                                                    List<String> receviers = (List<String>) (inbox.get(i).getReceiversName());
+                                                                    List<String> receviers = (List<String>) (sent.get(i).getReceiversName());
                                                                     if (receviers.isEmpty()) {
                                                                         out.println("-");
                                                                     } else {
@@ -125,7 +125,7 @@
                                                                 %>
                                                             </td>
                                                             <td>
-                                                                <input type="hidden" name="messageID" value="<%=inbox.get(i).getMessageId()%>" />
+                                                                <input type="hidden" name="messageID" value="<%=sent.get(i).getMessageId()%>" />
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Read" onclick="readMessage()" />
                                                             </td>
                                                         </tr>
@@ -142,8 +142,8 @@
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  /><br/><br/>
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
-                                                    <input type="hidden" name="view" value="inbox"/>
-                                                    <button class="btn btn-primary" onclick="javascript:viewSentMsg()">View Sent Messages</button>
+                                                    <input type="hidden" name="view" value="sentMessages"/>
+                                                    <button class="btn btn-primary" onclick="javascript:viewInbox()">View Inbox</button>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    

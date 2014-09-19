@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.MessageEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
@@ -12,7 +13,11 @@
                 StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
                 if (staffEntity != null) {
                     List<MessageEntity> unreadMessages = (List<MessageEntity>) (session.getAttribute("unreadMessages"));
-                    List<MessageEntity> inbox = (List<MessageEntity>) (session.getAttribute("inbox"));
+                    List<MessageEntity> inbox = (List<MessageEntity>) (session.getAttribute("inboxMessages"));
+                    if (unreadMessages == null)
+                        unreadMessages = new ArrayList();
+                    if (inbox == null)
+                        inbox = new ArrayList();
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
