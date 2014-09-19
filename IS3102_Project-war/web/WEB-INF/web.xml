@@ -288,6 +288,18 @@
         <servlet-name>Workspace_Servlet</servlet-name>
         <servlet-class>A1_servlets.Workspace_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WorkspaceAnnouncement_UpdateServlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceAnnouncement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WorkspaceAnnouncement_DeleteServlet</servlet-name>
+        <servlet-class>A1_servlets.WorkspaceAnnouncement_DeleteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LineItemManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.LineItemManagement_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -575,6 +587,18 @@
     <servlet-mapping>
         <servlet-name>Workspace_Servlet</servlet-name>
         <url-pattern>/Workspace_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceAnnouncement_UpdateServlet</servlet-name>
+        <url-pattern>/WorkspaceAnnouncement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WorkspaceAnnouncement_DeleteServlet</servlet-name>
+        <url-pattern>/WorkspaceAnnouncement_DeleteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LineItemManagement_Servlet</servlet-name>
+        <url-pattern>/LineItemManagement_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -1,7 +1,6 @@
 package CommonInfrastructure.Workspace;
 
 import EntityManager.AnnouncementEntity;
-import EntityManager.MessageEntity;
 import EntityManager.MessageInboxEntity;
 import EntityManager.MessageOutboxEntity;
 import EntityManager.StaffEntity;
@@ -252,14 +251,14 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageOutboxEntity> sentMessages = staffEntity.getSentMessages();
-            
+
             for (MessageOutboxEntity currentMessage : sentMessages) {
                 if (currentMessage.getId().equals(messageID)) {
                     sentMessages.remove(currentMessage);
                     break;
                 }
             }
-            
+
             staffEntity.setSentMessages(sentMessages);
             em.merge(staffEntity);
             System.out.println("Message deleted.");
@@ -298,6 +297,25 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to perform getListOfAllNotExpiredAnnouncement():\n" + ex);
             return null;
+        }
+    }
+
+    @Override
+    public boolean updateAnnouncement(Long announcementId, String message, Date expiryDate) {
+        System.out.println("updateAnnouncement() is called.");
+        try {
+            AnnouncementEntity announcementEntity = em.find(AnnouncementEntity.class, announcementId);
+            announcementEntity.setMessage(message);
+            announcementEntity.setExpiryDate(expiryDate);
+            em.merge(announcementEntity);
+            System.out.println("updateAnnouncement() is successful.");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("updateAnnouncement() EntityNotFoundException:\n" + ex);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("failed to perform updateAnnouncement():\n" + ex);
+            return false;
         }
     }
 
@@ -445,11 +463,6 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             System.out.println("failed to perform markToDoListAsUndone():\n" + ex);
             return false;
         }
-    }
-
-    @Override
-    public boolean updateAnnouncement(Long announcementId, String message, Date expiryDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

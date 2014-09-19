@@ -16,7 +16,7 @@
         <script>
             function updateTO(id) {
                 transferOrderManagement.id.value = id;
-                document.transferOrderManagement.action = "transferOrderManagement_Update.jsp";
+                document.transferOrderManagement.action = "lineItemManagement.jsp";
                 document.transferOrderManagement.submit();
             }
             function removeTO() {
@@ -88,7 +88,7 @@
                                                             <th>Target</th>
                                                             <th>Status</th>
                                                             <th>Warehouse</th>
-                                                            <th>Details </th>
+                                                            <th>Line Item</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -125,7 +125,7 @@
                                                                 <%=warehouseEntity.getWarehouseName()%>
                                                             </td>
                                                             <td>
-
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=transferOrders.get(i).getId()%>" value="View details" onclick="javascript:updateTO('<%=transferOrders.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -172,7 +172,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

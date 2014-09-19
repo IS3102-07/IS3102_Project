@@ -62,7 +62,7 @@ public class ToDoEntity implements Serializable {
         this.description = description;
     }
 
-    public boolean isIsDone() {
+    public boolean isDone() {
         return isDone;
     }
 

@@ -1,11 +1,8 @@
-package A1_servlets;
+package A3_servlets;
 
-import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
-import EntityManager.StaffEntity;
-import EntityManager.ToDoEntity;
+import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,28 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class WorkspaceToDoList_Servlet extends HttpServlet {
+public class LineItemManagement_Servlet extends HttpServlet {
 
     @EJB
-    private WorkspaceBeanLocal workspaceBean;
+    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
-            HttpSession session = request.getSession();
-            String errMsg = request.getParameter("errMsg");//
-            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");//
-            List<ToDoEntity> toDoList = workspaceBean.getAllToDoListOfAStaff(staff.getId());
-            
-            request.setAttribute("toDoList", toDoList);//
+            HttpSession session;
+            session = request.getSession();
 
-            if (errMsg == null || errMsg.equals("")) {
-                response.sendRedirect("A1/workspace_toDoList.jsp");
-            } else {
-                response.sendRedirect("A1/workspace_toDoList.jsp?errMsg=" + errMsg);
-            }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }
