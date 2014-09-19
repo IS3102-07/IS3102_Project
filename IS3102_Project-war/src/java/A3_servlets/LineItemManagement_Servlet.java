@@ -1,8 +1,11 @@
 package A3_servlets;
 
+import EntityManager.TransferOrderEntity;
+import EntityManager.WarehouseEntity;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +17,7 @@ public class LineItemManagement_Servlet extends HttpServlet {
 
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -21,7 +25,22 @@ public class LineItemManagement_Servlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
+            String transferOrderId = request.getParameter("id");
+            String sku = request.getParameter("sku");
+            String quantity = request.getParameter("quantity");
 
+            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+
+            boolean canUpdate = manufacturingWarehouseManagementBean.addLineItemToTransferOrder(Long.parseLong(transferOrderId), sku, Integer.parseInt(quantity));
+            if (!canUpdate) {
+                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
+                response.sendRedirect("A3/lineItemManagement.jsp" + result);
+            } else {
+                List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                session.setAttribute("transferOrders", transferOrders);
+                result = "?errMsg=Item added successfully.&id="+transferOrderId;
+                response.sendRedirect("A3/lineItemManagement.jsp" + result);
+            }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

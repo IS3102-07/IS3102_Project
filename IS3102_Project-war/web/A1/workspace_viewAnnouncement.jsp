@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Broadcast Announcement
+                                View Announcements
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
@@ -18,10 +18,7 @@
                                 </li>
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="workspace_viewAnnouncement.jsp">Announcement</a>
-                                </li>
-                                <li class="active">
-                                    <i class="icon icon-edit"></i><a href="workspace_BroadcastAnnouncement.jsp"> Broadcast Announcement</a>
-                                </li>
+                                </li>                         
                             </ol>
                         </div>
                     </div>

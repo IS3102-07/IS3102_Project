@@ -1,48 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package A1_servlets;
+package A3_servlets;
 
-import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import EntityManager.TransferOrderEntity;
+import EntityManager.WarehouseEntity;
+import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Jason
- */
-public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
+public class LineItemManagement_RemoveServlet extends HttpServlet {
 
     @EJB
-    private WorkspaceBeanLocal workspaceBeanLocal;
+    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private String result;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String result;
         PrintWriter out = response.getWriter();
         try {
-            String id = request.getParameter("id");
-            if (workspaceBeanLocal.deleteAnnouncement(Long.valueOf(id))) {
-                result = "?errMsg=Announcement deleted.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+            HttpSession session;
+            session = request.getSession();
+            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+            String transferOrderId = request.getParameter("id");
+            boolean canUpdate = manufacturingWarehouseManagementBean.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
+            if (!canUpdate) {
+                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
+                response.sendRedirect("A3/lineItemManagement.jsp" + result);
             } else {
-                result = "?errMsg=Failed to delete announcement.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+                List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                session.setAttribute("transferOrders", transferOrders);
+                result = "?errMsg=Item removed successfully.&id="+transferOrderId;
+                response.sendRedirect("A3/lineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
