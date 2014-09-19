@@ -73,7 +73,6 @@
                                             errMsg = "Insert some text";
                                         }
                                         out.println(errMsg);
-                                        session.setAttribute("view", "sentMessages");
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->

@@ -106,7 +106,7 @@
                     <a href="#"><i class="icon icon-user"></i> Profile</a>
                 </li>
                 <li>
-                    <a href="../WorkspaceMessage_Servlet"><i class="icon icon-envelope"></i> Inbox</a>
+                    <a href="../WorkspaceMessage_Servlet?view=inbox"><i class="icon icon-envelope"></i> Inbox</a>
                 </li>
                 <li>
                     <a href="#"><i class="icon icon-gear"></i> Settings</a>

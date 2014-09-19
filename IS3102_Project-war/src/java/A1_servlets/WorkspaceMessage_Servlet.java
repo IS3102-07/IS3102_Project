@@ -80,21 +80,27 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 sentMessageHelpers.add(messageHelper);
             }
             session.setAttribute("sentMessagesHelpers", sentMessageHelpers);
-            
-            String view = (String) session.getAttribute("view");
+
+            String view = request.getParameter("view");
+            if (view == null) {
+                view = (String) session.getAttribute("view");
+            }
             if (view == null || view.equals("inbox")) {
+                session.setAttribute("view", "inbox");
                 if (errMsg == null || errMsg.equals("")) {
                     response.sendRedirect("A1/workspace_messageInbox.jsp");
                 } else {
                     response.sendRedirect("A1/workspace_messageInbox.jsp?errMsg=" + errMsg);
                 }
             } else if (view.equals("sentMessages")) {
+                session.setAttribute("view", "sentMessages");
                 if (errMsg == null || errMsg.equals("")) {
                     response.sendRedirect("A1/workspace_messageSent.jsp");
                 } else {
                     response.sendRedirect("A1/workspace_messageSent.jsp?errMsg=" + errMsg);
                 }
             } else {
+                session.setAttribute("view", "inbox");
                 if (errMsg == null || errMsg.equals("")) {
                     response.sendRedirect("A1/workspace_messageInbox.jsp");
                 } else {

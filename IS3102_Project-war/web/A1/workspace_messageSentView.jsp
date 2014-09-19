@@ -15,7 +15,7 @@
     <body>
         <script>
             function viewSentMsg() {
-                document.messageManagement.action = "workspace_messageSent.jsp";
+                document.location.href = "workspace_messageSent.jsp";
             }
         </script>
         <div id="wrapper">
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="btn btn-lg btn-primary btn-block" onclick="javascript:viewSentMsg()">Back to Sent Messages</button>
+                                    <button type="button" class="btn btn-lg btn-primary btn-block" onclick="javascript:viewSentMsg()">Back to Sent Messages</button>
                                     <input type="submit" value="Delete" class="btn btn-lg btn-primary btn-block">
                                 </div>
                             </form>

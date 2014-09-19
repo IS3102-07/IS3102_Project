@@ -15,7 +15,7 @@
     <body>
         <script>
             function viewInbox() {
-                document.messageManagement.action = "asads";
+                document.location.href = "workspace_messageInbox.jsp";
             }
         </script>
         <div id="wrapper">
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="btn btn-lg btn-primary btn-block" onclick="javascript:viewInbox()">Back to Inbox</button>
+                                    <button type="button" class="btn btn-lg btn-primary btn-block" onclick="javascript:viewInbox()">Back to Inbox</button>
                                     <input type="submit" value="Delete" class="btn btn-lg btn-primary btn-block">
                                 </div>
                             </form>
