@@ -32,12 +32,15 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
             if (staffEntity == null) {
                 response.sendRedirect("A1/staffLogin.jsp");
             } else {
+                // Set session attributes for retriving message count
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
                 session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
             String errMsg = request.getParameter("errMsg");
 
+            // Convert messages into easier to read helpers (for jsp)
+            //inbox
             List<MessageInboxEntity> inboxMessageEntities = workspaceBean.listAllInboxMessages(staffEntity.getId());
             List<MessageHelper> inboxMessageHelpers = new ArrayList<>();
             for (MessageInboxEntity currentMessage : inboxMessageEntities) {
@@ -59,6 +62,7 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 inboxMessageHelpers.add(messageHelper);
             }
             session.setAttribute("inboxMessagesHelpers", inboxMessageHelpers);
+            //sent messages
             List<MessageOutboxEntity> sentMessageEntities = workspaceBean.listAllOutboxMessages(staffEntity.getId());
             List<MessageHelper> sentMessageHelpers = new ArrayList<>();
             for (MessageOutboxEntity currentMessage : sentMessageEntities) {
@@ -81,8 +85,9 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
             }
             session.setAttribute("sentMessagesHelpers", sentMessageHelpers);
 
+            //View controller (between inbox & sent messages
             String view = request.getParameter("view");
-            if (view == null) {
+            if (view == null) { //if never specify in param then get from session
                 view = (String) session.getAttribute("view");
             }
             if (view == null || view.equals("inbox")) {

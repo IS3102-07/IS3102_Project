@@ -6,12 +6,10 @@
 <%@page import="java.util.List"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
-
     <body>
         <script>
-
-            var checkFlag = 'false';
-            function readMessage() {
+            function readMessage(id) {
+                messageManagement.id.value = id;
                 document.messageManagement.action = "../WorkspaceMessage_ViewServlet";
                 document.messageManagement.submit();
             }
@@ -19,7 +17,7 @@
                 var yes = confirm("Are you sure you want to delete the selected messages?\nThis action can not be undone!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.messageManagement.action = "../WorkspaceMessage_RemoveServlet";
+                    document.messageManagement.action = "../WorkspaceMessage_RemoveServlet?deleteMessageType=sentMessages";
                     document.messageManagement.submit();
                 } else {
                     window.event.returnValue = false;
@@ -37,7 +35,7 @@
                 }
             }
             function viewInbox() {
-                document.messageManagement.action = "workspace_messageInbox.jsp";
+                document.location.href = "../WorkspaceMessage_Servlet?view=inbox";
             }
         </script>
         <div id="wrapper">
@@ -98,7 +96,8 @@
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <input type="hidden" name="deleteMessageType" value="sentMessage" />
+                                                                <input type="hidden" name="deleteMessageType" value="sentMessages" />
+                                                                <input type="hidden" name="deleteType" value="many"/>
                                                                 <input type="checkbox" name="delete" value="<%=sent.get(i).getMessageId()%>" />
                                                             </td>
                                                             <td>
@@ -118,14 +117,13 @@
                                                                         out.println("-");
                                                                     } else {
                                                                         for (int k = 0; k < receviers.size(); k++) {
-                                                                            out.println(receviers.get(k));
+                                                                            out.println(receviers.get(k)+"; ");
                                                                         }
                                                                     }
                                                                 %>
                                                             </td>
                                                             <td>
-                                                                <input type="hidden" name="messageID" value="<%=sent.get(i).getMessageId()%>" />
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Read" onclick="readMessage()" />
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Read" id="<%=sent.get(i).getMessageId()%>" onclick="readMessage(<%=sent.get(i).getMessageId()%>)" />
                                                             </td>
                                                         </tr>
                                                         <%
@@ -142,10 +140,10 @@
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  /><br/><br/>
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
                                                     <input type="hidden" name="view" value="sentMessages"/>
-                                                    <button class="btn btn-primary" onclick="javascript:viewInbox()">View Inbox</button>
+                                                    <button type="button" class="btn btn-primary" onclick="javascript:viewInbox()">View Inbox</button>
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="id" value="">    
+                                            <input type="hidden" name="id" value="">
                                         </div>
 
                                     </div>
@@ -170,7 +168,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             }
             );

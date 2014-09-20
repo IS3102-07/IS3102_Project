@@ -9,38 +9,34 @@
     <body>
         <script>
             function readMessage(id) {
-            messageManagement.messageID.value = id;
-                    document.messageManagement.action = "../WorkspaceMessage_ViewServlet";
-                    document.messageManagement.submit();
+                messageManagement.id.value = id;
+                document.messageManagement.action = "../WorkspaceMessage_ViewServlet";
+                document.messageManagement.submit();
             }
             function deleteMessage() {
-            var yes = confirm("Are you sure you want to delete the selected messages?\nThis action can not be undone!");
-                    checkboxes = document.getElementsByName('delete');
-                    for (var i = 0, n = checkboxes.length; i < n; i++) {
-            checkboxes[i].checked = source.checked;
-            }
-            } else if (yes == true) {
-            window.event.returnValue = true;
-                    messageManagement.deleteType.value = "many";
+                var yes = confirm("Are you sure you want to delete the selected messages?\nThis action can not be undone!");
+                if (yes == true) {
+                    window.event.returnValue = true;
                     document.messageManagement.action = "../WorkspaceMessage_RemoveServlet";
                     document.messageManagement.submit();
-            } else {
-            window.event.returnValue = false;
-            }
+                }
+                 else {
+                    window.event.returnValue = false;
+                }
             }
             function sendMessage() {
-            window.event.returnValue = true;
-                    document.messageManagement.action = "workspace_messageAdd.jsp";
-                    document.messageManagement.submit();
+                window.event.returnValue = true;
+                document.messageManagement.action = "workspace_messageAdd.jsp";
+                document.messageManagement.submit();
             }
             function checkAll(source) {
-            checkboxes = document.getElementsByName('delete');
-                    for (var i = 0, n = checkboxes.length; i < n; i++) {
-            checkboxes[i].checked = source.checked;
-            }
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
             }
             function viewSentMsg() {
-            document.messageManagement.action = "workspace_messageSent.jsp";
+                document.location.href = "../WorkspaceMessage_Servlet?view=sentMessages";
             }
         </script>
         <div id="wrapper">
@@ -102,6 +98,7 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="hidden" name="deleteMessageType" value="inbox" />
+                                                                <input type="hidden" name="deleteType" value="many"/>
                                                                 <input type="checkbox" name="delete" value="<%=inbox.get(i).getMessageId()%>" />
                                                             </td>
                                                             <td>
@@ -126,15 +123,14 @@
                                                                             out.println("-");
                                                                         } else {
                                                                             for (int k = 0; k < receviers.size(); k++) {
-                                                                                out.println(receviers.get(k));
+                                                                                out.println(receviers.get(k)+"; ");
                                                                             }
                                                                         }
                                                                     %>
                                                                     <% if (!inbox.get(i).isMessageRead()) {%></b><%}%>
                                                             </td>
                                                             <td>
-                                                                <input type="text" name="messageID" value="<%=inbox.get(i).getMessageId()%>" />
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Read" onclick="readMessage(<%=inbox.get(i).getMessageId()%>)" />
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Read" id="<%=inbox.get(i).getMessageId()%>" onclick="readMessage(<%=inbox.get(i).getMessageId()%>)" />
                                                             </td>
                                                         </tr>
                                                         <%
@@ -151,10 +147,10 @@
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  /><br/><br/>
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
                                                     <input type="hidden" name="view" value="inbox"/>
-                                                    <button class="btn btn-primary" onclick="javascript:viewSentMsg()">View Sent Messages</button>
+                                                    <button type="button" class="btn btn-primary" onclick="javascript:viewSentMsg()">View Sent Messages</button>
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="id" value="">    
+                                            <input type="hidden" name="id" value="">
                                         </div>
 
                                     </div>
@@ -179,8 +175,8 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-                    $(document).ready(function() {
-            $('#dataTables-example').dataTable();
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
             }
             );
         </script>

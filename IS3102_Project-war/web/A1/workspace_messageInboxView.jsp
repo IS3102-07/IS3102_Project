@@ -15,7 +15,7 @@
     <body>
         <script>
             function viewInbox() {
-                document.location.href = "workspace_messageInbox.jsp";
+                document.location.href = "../WorkspaceMessage_Servlet?view=inbox";
             }
         </script>
         <div id="wrapper">

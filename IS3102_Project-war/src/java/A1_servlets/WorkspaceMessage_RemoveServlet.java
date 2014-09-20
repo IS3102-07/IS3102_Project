@@ -29,13 +29,10 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
 
             String deleteType = request.getParameter("deleteType");//single or many
             String[] deleteArr = request.getParameterValues("delete");
-            String deleteSingleMessageType = request.getParameter("deleteMessageType");
-            String deleteSingleMessageID = request.getParameter("messageID");
             String deleteMessageType = request.getParameter("deleteMessageType");//inbox or sentMessages
+            String deleteSingleMessageID = request.getParameter("messageID");
             String view = (String) session.getAttribute("view");
-
-            if (deleteType == "many") {
-                System.out.println("Servlet deleting multiple message.");
+            if (deleteType!=null && deleteType.equals("many")) {
                 if (deleteArr != null) {
                     for (int i = 0; i < deleteArr.length; i++) {
                         if (deleteMessageType.equals("inbox")) {
@@ -44,21 +41,21 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
                             workspaceBean.deleteSingleOutboxMessage(staffEntity.getId(), Long.parseLong(deleteArr[i]));
                         }
                     }
-                    if (deleteMessageType.equals("inbox")) {
-                        response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
-                    } else {
+                    if (view.equals("sentMessages")) {
                         response.sendRedirect("WorkspaceMessage_Servlet?view=sentMessages&errMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
+                    } else {
+                        response.sendRedirect("WorkspaceMessage_Servlet?view=inbox&errMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
                     }
                 } else {
-                    if (view == "inbox") {
-                        response.sendRedirect("WorkspaceMessage_Servlet?view=inbox&errMsg=No messages selected for deletion.");
-                    } else { //outbox
+                    if (view.equals("sentMessages")) {
                         response.sendRedirect("WorkspaceMessage_Servlet?view=sentMessages&errMsg=No messages selected for deletion.");
+                    } else {
+                        response.sendRedirect("WorkspaceMessage_Servlet?view=inbox&errMsg=No messages selected for deletion.");
                     }
                 }
             } else if (deleteSingleMessageID != null && deleteSingleMessageID != "") {
                 System.out.println("Servlet deleting single message.");
-                if (deleteSingleMessageType.equals("inbox")) {
+                if (deleteMessageType.equals("inbox")) {
                     workspaceBean.deleteSingleInboxMessage(staffEntity.getId(), Long.parseLong(deleteSingleMessageID));
                     response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Successfully deleted message.");
                 } else { //outbox

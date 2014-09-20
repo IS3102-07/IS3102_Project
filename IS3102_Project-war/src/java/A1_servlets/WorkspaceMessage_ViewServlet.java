@@ -36,12 +36,11 @@ public class WorkspaceMessage_ViewServlet extends HttpServlet {
                 session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
-            String messageID = request.getParameter("messageID");
+            String messageID = request.getParameter("id");
             String view = request.getParameter("view");
             if (view == null) {
                 response.sendRedirect("../WorkspaceMessage_Servlet");
             } else if (view.equals("inbox")) {
-                System.out.println("HUAT"+messageID);
                 MessageInboxEntity messageInboxEntity = workspaceBean.readInboxMessage(staffEntity.getId(), Long.parseLong(messageID));
                 MessageHelper messageHelper = new MessageHelper();
                 //Set data to message helper
