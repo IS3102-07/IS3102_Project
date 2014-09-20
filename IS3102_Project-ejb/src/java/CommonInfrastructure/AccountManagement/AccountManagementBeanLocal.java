@@ -47,6 +47,8 @@ public interface AccountManagementBeanLocal {
     public boolean roleHasMembersAssigned(Long roleID);
 
     public List<RoleEntity> listAllRoles();
+    
+    public List<RoleEntity> listRolesHeldByStaff(Long staffID);
 
     public RoleEntity searchRole(String name, String accessLevel);
 
@@ -57,7 +59,7 @@ public interface AccountManagementBeanLocal {
 
     public boolean removeStaffRole(Long staffID, Long roleID);
 
-    public boolean editStaffRole(Long staffID, List<RoleEntity> roles);
+    public boolean editStaffRole(Long staffID, List<Long> roleIDs);
 
     public CountryEntity getCountry(String countryName);
 

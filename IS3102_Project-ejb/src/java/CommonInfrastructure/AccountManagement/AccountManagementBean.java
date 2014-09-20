@@ -5,6 +5,7 @@ import EntityManager.CountryEntity;
 import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
+import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -419,6 +420,29 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
+    public List<RoleEntity> listRolesHeldByStaff(Long staffID) {
+        System.out.println("listRolesHeldByStaff() called.");
+        List<RoleEntity> roleEntities = new ArrayList();
+        int result = 0;
+        try {
+            StaffEntity staffEntity = em.getReference(StaffEntity.class, staffID);
+            roleEntities = staffEntity.getRoles();
+            for (RoleEntity roleEntity : roleEntities) {
+                result++;
+            }
+            System.out.println("Returned " + result + " roles.");
+            return roleEntities;
+        } catch (NoResultException ex) {
+            System.out.println("No roles found to be returned.");
+            roleEntities.clear();
+            return roleEntities;
+        } catch (Exception ex) {
+            System.out.println("\nServer error while listing all roles.\n" + ex);
+            return null;
+        }
+    }
+
+    @Override
     public RoleEntity searchRole(String name, String accessLevel) {
         System.out.println("searchRole() called with name:" + name);
         try {
@@ -532,12 +556,18 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean editStaffRole(Long staffID, List<RoleEntity> roles) {
+    public boolean editStaffRole(Long staffID, List<Long> roleIDs) {
         System.out.println("editStaffRole() called with staffID:" + staffID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            staffEntity.setRoles(new ArrayList());//blank their roles
+            List<RoleEntity> roles = new ArrayList<RoleEntity>();
+            for (int i=0;i<roleIDs.size();i++){
+                roles.add(em.getReference(RoleEntity.class, roleIDs.get(i)));
+                
+            }
             staffEntity.setRoles(roles);
             em.merge(staffEntity);
             System.out.println("Roles successfully updated for staff id:" + staffID);
