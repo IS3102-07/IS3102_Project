@@ -1,3 +1,6 @@
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.Date"%>
+<%@page import="EntityManager.MessageInboxEntity"%>
 <%@page import="CommonInfrastructure.AccountManagement.AccountManagementBeanLocal"%>
 <%@page import="javax.ejb.EJB"%>
 <%@page import="java.util.ArrayList"%>
@@ -14,6 +17,78 @@
     List<RoleEntity> roles = staffEntity.getRoles();
     Long[] approvedRolesID;
     boolean roleCanView;
+%>
+
+<%
+    List<MessageInboxEntity> listOfInboxMsg = (List<MessageInboxEntity>) session.getAttribute("inboxMessages");
+    /*  MessageInboxEntity msg = new MessageInboxEntity();
+     msg.setId(1L);
+     msg.setMessage("helloooooooo how are you?");
+     StaffEntity staff = new StaffEntity();
+     staff.setName("Gabriel");
+     msg.setSender(staff);
+     msg.setSentDate(Calendar.getInstance().getTime());
+
+     listOfInboxMsg.add(msg);*/
+
+    int sizeOfList = listOfInboxMsg.size();
+    MessageInboxEntity inbox;
+    String inbox1_id = "";
+    String inbox1_date = "";
+    String inbox1_sender = "";
+    String inbox1_message = "";
+
+    String inbox2_id = "";
+    String inbox2_date = "";
+    String inbox2_sender = "";
+    String inbox2_message = "";
+
+    String inbox3_id = "";
+    String inbox3_date = "";
+    String inbox3_sender = "";
+    String inbox3_message = "";
+    switch (sizeOfList) {
+        case 0:
+            break;
+        case 1:
+            inbox = listOfInboxMsg.get(0);
+            inbox1_id = inbox.getId() + "";
+            inbox1_date = inbox.getSentDate().toString();
+            inbox1_sender = inbox.getSender().getName();
+            inbox1_message = inbox.getMessage();
+            break;
+        case 2:
+            inbox = listOfInboxMsg.get(0);
+            inbox1_id = inbox.getId() + "";
+            inbox1_date = inbox.getSentDate().toString();
+            inbox1_sender = inbox.getSender().getName();
+            inbox1_message = inbox.getMessage();
+
+            inbox = listOfInboxMsg.get(1);
+            inbox2_id = inbox.getId() + "";
+            inbox2_date = inbox.getSentDate().toString();
+            inbox2_sender = inbox.getSender().getName();
+            inbox2_message = inbox.getMessage();
+            break;
+        default:
+            inbox = listOfInboxMsg.get(0);
+            inbox1_id = inbox.getId() + "";
+            inbox1_date = inbox.getSentDate().toString();
+            inbox1_sender = inbox.getSender().getName();
+            inbox1_message = inbox.getMessage();
+
+            inbox = listOfInboxMsg.get(1);
+            inbox2_id = inbox.getId() + "";
+            inbox2_date = inbox.getSentDate().toString();
+            inbox2_sender = inbox.getSender().getName();
+            inbox2_message = inbox.getMessage();
+
+            inbox = listOfInboxMsg.get(2);
+            inbox3_id = inbox.getId() + "";
+            inbox3_date = inbox.getSentDate().toString();
+            inbox3_sender = inbox.getSender().getName();
+            inbox3_message = inbox.getMessage();
+    }
 %>
 
 
@@ -34,35 +109,35 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-envelope"></i> <b class="caret"></b></a>
             <ul class="dropdown-menu message-dropdown">
-                <li class="message-preview">
+                <li class="message-preview" id="m1">
                     <a href="#">
                         <div class="media">
                             <div class="media-body">
-                                <h5 class="media-heading"><strong><%=staffEntity.getName()%></strong></h5>
-                                <p class="small text-muted"><i class="icon icon-clock-o"></i> Yesterday at 4:32 PM</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                <h5 class="media-heading"><strong><%=inbox1_sender%></strong></h5><!--Sender-->
+                                <p class="small text-muted"><i class="icon icon-clock-o"><%=inbox1_date%></i> </p><!--Date sent-->
+                                <p><%=inbox1_message%></p> <!--Message Content-->
                             </div>
                         </div>
                     </a>
                 </li>
-                <li class="message-preview">
+                <li class="message-preview" id="m2">
                     <a href="#">
                         <div class="media">
                             <div class="media-body">
-                                <h5 class="media-heading"><strong>John Smith</strong></h5>
-                                <p class="small text-muted"><i class="icon icon-clock-o"></i> Yesterday at 4:32 PM</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                <h5 class="media-heading"><strong><%=inbox2_sender%></strong></h5><!--Sender-->
+                                <p class="small text-muted"><i class="icon icon-clock-o"><%=inbox2_date%></i> </p><!--Date sent-->
+                                <p><%=inbox2_message%></p> <!--Message Content-->
                             </div>
                         </div>
                     </a>
                 </li>
                 <li class="message-preview" onLoad="refreshMsg()">
-                    <a href="#">
-                        <div class="media">
+                    <a href ="#">
+                        <div class="media" id="m3">
                             <div class="media-body">
-                                <h5 class="media-heading"><strong>John Smith</strong></h5>
-                                <p class="small text-muted"><i class="icon icon-clock-o"></i> Yesterday at 4:32 PM</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                <h5 class="media-heading"><strong><%=inbox3_sender%></strong></h5><!--Sender-->
+                                <p class="small text-muted"><i class="icon icon-clock-o"><%=inbox3_date%></i> </p><!--Date sent-->
+                                <p><%=inbox3_message%></p> <!--Message Content-->
                             </div>
                         </div>
                     </a>
