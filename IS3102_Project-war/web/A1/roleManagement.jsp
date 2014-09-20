@@ -44,10 +44,10 @@
                             <h1 class="page-header">Roles Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="accountManagement.jsp">Account Management</a>
+                                    <i class="icon icon-users"></i> <a href="accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Role Management
+                                    <i class="icon icon-users"></i> Role Management
                                 </li>
                             </ol>
                         </div>
@@ -119,7 +119,7 @@
                                                                 %>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=roles.get(i).getId()%>" value="update" onclick="javascript:updateRole('<%=roles.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=roles.get(i).getId()%>" value="Update" onclick="javascript:updateRole('<%=roles.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%

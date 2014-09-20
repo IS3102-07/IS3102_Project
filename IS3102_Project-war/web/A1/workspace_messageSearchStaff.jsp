@@ -32,16 +32,16 @@
                             <h1 class="page-header">Select Message Recipients</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="workspace.jsp">Workspace</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="workspace.jsp">Workspace</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-inbox"></i> <a href="workspace_messageInbox.jsp">Messages</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-envelope"></i> <a href="workspace_messageAdd.jsp">Compose and Send Message</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i> <a href="workspace_messageInbox.jsp">Messages</a>
-                                </li>
-                                <li class="active">
-                                    <i class="icon icon-user"></i> <a href="workspace_messageAdd.jsp">Compose and Send Message</a>
-                                </li>
-                                <li class="active">
-                                    <i class="icon icon-edit"></i> Select Message Recipients
+                                    <i class="icon icon-user-md"></i> Select Message Recipients
                                 </li>
                             </ol>
                         </div>

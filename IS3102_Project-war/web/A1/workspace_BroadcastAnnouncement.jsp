@@ -14,13 +14,13 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="workspace.jsp">Workspace</a>
+                                    <i class="icon icon-dashboard"></i> <a href="../Workspace_Servlet">Workspace</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="workspace_viewAnnouncement.jsp">Announcement</a>
+                                    <i class="icon icon-bell"></i> <a href="workspace_viewAnnouncement.jsp">Announcement</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i>Broadcast Announcement
+                                    <i class="icon icon-bullhorn"></i> Broadcast Announcement
                                 </li>
                             </ol>
                         </div>

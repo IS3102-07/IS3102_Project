@@ -8,6 +8,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">Account Management</h1>
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="icon icon-users"></i> Account Management
+                                </li>
+                            </ol>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>

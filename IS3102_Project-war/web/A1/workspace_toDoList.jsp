@@ -46,10 +46,10 @@
                             <h1 class="page-header">ToDo List</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="workspace.jsp">Workspace</a>
+                                    <i class="icon icon-dashboard"></i> <a href="../Workspace_Servlet">Workspace</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> ToDo List Management
+                                    <i class="icon icon-list"></i> ToDo List
                                 </li>
                             </ol>
                         </div>

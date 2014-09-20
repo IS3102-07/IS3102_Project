@@ -24,13 +24,13 @@
                             <h1 class="page-header">Compose and Send Message</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i> <a href="workspace.jsp">Workspace</a>
+                                    <i class="icon icon-dashboard"></i> <a href="workspace.jsp">Workspace</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i> <a href="workspace_messageInbox.jsp">Messages</a>
+                                    <i class="icon icon-inbox"></i> <a href="workspace_messageInbox.jsp">Messages</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Compose and Send Message
+                                    <i class="icon icon-envelope"></i> Compose and Send Message
                                 </li>
                             </ol>
                         </div>
