@@ -382,10 +382,12 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public boolean removeToDoList(Long toDoId) {
+    public boolean removeToDoList(Long staffId, Long toDoId) {
         System.out.println("removeToDoList() called.");
         try {
+            StaffEntity staff = em.find(StaffEntity.class, staffId);
             ToDoEntity toDo = em.find(ToDoEntity.class, toDoId);
+            staff.getToDoList().remove(toDo);
             em.remove(toDo);
             System.out.println("removeToDoList() is successful.");
             return true;
@@ -461,6 +463,29 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             return false;
         } catch (Exception ex) {
             System.out.println("failed to perform markToDoListAsUndone():\n" + ex);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean toggleToDoListIsDone(Long id) {
+        System.out.println("toggleToDoListIsDone() is called.");
+        try {
+            ToDoEntity toDo = em.find(ToDoEntity.class, id);
+
+            if (toDo.isDone()) {
+                toDo.setIsDone(false);
+            } else {
+                toDo.setIsDone(true);
+            }
+            em.merge(toDo);
+            System.out.println("toggleToDoListIsDone() is successful.");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("toggleToDoListIsDone() EntityNotFoundException:\n" + ex);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("failed to perform toggleToDoListIsDone():\n" + ex);
             return false;
         }
     }

@@ -2,6 +2,7 @@
 package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -9,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class WorkspaceToDoList_RemoveServlet extends HttpServlet {
     @EJB
@@ -29,9 +31,12 @@ public class WorkspaceToDoList_RemoveServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String[] deleteArr = request.getParameterValues("delete");
+            HttpSession session = request.getSession();
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            Long staffId = staffEntity.getId();
             if (deleteArr != null) {
                 for (String s : deleteArr) {
-                    workspaceBean.removeToDoList(Long.parseLong(s));
+                    workspaceBean.removeToDoList(staffId, Long.parseLong(s));
                 }
                 response.sendRedirect("WorkspaceToDoList_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {

@@ -1,25 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Jason
- */
 public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
 
     @EJB
@@ -31,13 +21,13 @@ public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
         String result;
         PrintWriter out = response.getWriter();
         try {
-            String id = request.getParameter("id");
+            String id = request.getParameter("delete");
             if (workspaceBeanLocal.deleteAnnouncement(Long.valueOf(id))) {
                 result = "?errMsg=Announcement deleted.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+                response.sendRedirect("A1/workspace_viewAnnouncement.jsp" + result);
             } else {
                 result = "?errMsg=Failed to delete announcement.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+                response.sendRedirect("A1/workspace_viewAnnouncement.jsp" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

@@ -1,4 +1,3 @@
-
 package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class WorkspaceToDoList_UpdateServlet extends HttpServlet {
+
     @EJB
     private WorkspaceBeanLocal workspaceBean;
     private String result;
@@ -19,13 +19,12 @@ public class WorkspaceToDoList_UpdateServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String toDoId = request.getParameter("toDoId");
-            String description = request.getParameter("description");
-
-            boolean canUpdate = workspaceBean.editToDoList(Long.parseLong(toDoId), description);
+            System.out.println("lai lai  " + request.getParameter("id"));
+            Long toDoId = Long.parseLong(request.getParameter("id"));
+            boolean canUpdate = workspaceBean.toggleToDoListIsDone(toDoId);
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
-                response.sendRedirect("workspace_toDoListUpdate.jsp" + result);
+                response.sendRedirect("WorkspaceToDoList_Servlet" + result);
             } else {
                 result = "?errMsg=ToDoList updated successfully.";
                 response.sendRedirect("WorkspaceToDoList_Servlet" + result);

@@ -2,14 +2,9 @@
 <%@page import="EntityManager.ToDoEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
-
     <jsp:include page="../header2.html" />
-
     <body>
-
-
         <script>
-
             function updateToDoList(id) {
                 toDoList.id.value = id;
                 document.toDoList.action = "workspace_toDoListUpdate.jsp";
@@ -17,8 +12,8 @@
             }
             function removeToDoList() {
                 var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
+                if (yes === true) {
+                    //window.event.returnValue = true;
                     document.toDoList.action = "../WorkspaceToDoList_RemoveServlet";
                     document.toDoList.submit();
                 } else {
@@ -27,7 +22,7 @@
             }
             function markDoneOrUndone(id) {
                 toDoList.id.value = id;
-                //document.toDoList.action = "workspace_toDoListUpdate.jsp";
+                document.toDoList.action = "../WorkspaceToDoList_UpdateServlet";
                 document.toDoList.submit();
             }
             function addToDoList() {
@@ -81,8 +76,8 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add ToDo"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete  ToDo" onclick="removeToDoList()"  />
+                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add a task"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete task(s)" onclick="removeToDoList()"  />
                                                 </div>
                                             </div>
                                             <br>
@@ -91,10 +86,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox" onclick="checkAll(this)" /></th>
-                                                            <th>Description</th>
-                                                            <th>Done/Undone</th>
-                                                            <th>Mark As Done</th>
-                                                            <th>Update</th>
+                                                            <th style="width:71%;">Description</th>
+                                                            <th style="width:12%;">Done/Undone</th>
+                                                            <th style="width:17%;">Mark Done/Undone</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -105,11 +99,15 @@
                                                         %>
                                                         <tr>
                                                             <td style="width:40px;" >
-                                                                <input type="hidden" name="done" disabled value="<%=toDoList.get(i).isDone()%>"/>
+                                                                <input type="hidden" name="id" value="<%=toDoList.get(i).getId()%>"/>
+                                                                <input type="hidden" name="isDone" value="<%=toDoList.get(i).isDone()%>"/>
                                                                 <input type="checkbox" name="delete" value="<%=toDoList.get(i).getId()%>" />
                                                             </td>
                                                             <td>
                                                                 <%=toDoList.get(i).getDescription()%>
+                                                               <!-- <input type="button" class="fade1" hidden style="float: right; width: 10%; margin-left: 3px;" id="" value="Update" onclick="javascript:updateToDoList('<%=toDoList.get(i).getId()%>')"/>
+                                                                <input type="text"  class="fade2" hidden style="float: right; width: 50%;" value=""/>
+                                                                -->
                                                             </td>
                                                             <td>
                                                                 <%
@@ -126,9 +124,9 @@
                                                             <td>
                                                                 <input type="submit" name="btnDone" class="btn btn-primary btn-block" value="<%=doneVal%>"  onclick="javascript:markDoneOrUndone('<%=toDoList.get(i).getId()%>')"/>
                                                             </td>
-                                                            <td style="width: 150px;">
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=toDoList.get(i).getId()%>" value="update" onclick="javascript:updateToDoList('<%=toDoList.get(i).getId()%>')"/>
-                                                            </td>
+                                                            <!--<td hidden style="width: 150px;">
+                                                                <input type="button" name="btnEdit" id="" class="btn btn-primary btn-block" id="" value="Edit" onclick="javascript:updateToDoList('')"/>
+                                                            </td>-->
                                                         </tr>
                                                         <%
                                                                 }
@@ -141,8 +139,8 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add ToDo"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete ToDo" onclick="removeToDoList()"  />
+                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add a task"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete task(s)" onclick="removeToDoList()"  />
                                                 </div>
                                             </div>  
                                         </div>
@@ -150,7 +148,7 @@
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-5">
-                                                        <p class="page-header">Add New ToDo</p>
+                                                        <p class="page-header" style="font-weight: bold;">Add New Task</p>
                                                         Description: 
                                                         <textarea class="form-control" type="" name="description"></textarea><br>
                                                         <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="addToDoList()"  />
@@ -177,8 +175,6 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-
-
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function () {
@@ -189,6 +185,14 @@
                 $("html, body").animate({scrollTop: $(document).height()}, "slow");
                 $("#addToDoForm").show("slow", function () {
                 });
+            });
+
+            $("#btnEdit").click(function () {
+
+                $(this).parent().$(".fade1").slideDown();
+                $(this).parent().$(".fade2").slideDown();
+                $(this).parent().$(".fade1").addClass('btn btn-primary');
+                $(this).parent()(".fade2").addClass('form-control');
             });
         </script>
     </body>
