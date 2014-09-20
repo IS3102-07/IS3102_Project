@@ -25,7 +25,7 @@ public abstract class MessageEntity implements Serializable {
     private StaffEntity sender;
     private List<StaffEntity> receivers;
     private String message;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date sentDate;
     private Boolean messageRead;
 
