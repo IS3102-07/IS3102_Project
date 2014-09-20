@@ -19,7 +19,6 @@ public class WorkspaceToDoList_UpdateServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            System.out.println("lai lai  " + request.getParameter("id"));
             Long toDoId = Long.parseLong(request.getParameter("id"));
             boolean canUpdate = workspaceBean.toggleToDoListIsDone(toDoId);
             if (!canUpdate) {

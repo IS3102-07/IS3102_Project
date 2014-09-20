@@ -1,3 +1,5 @@
+<%@page import="EntityManager.AnnouncementEntity"%>
+<%@page import="EntityManager.ToDoEntity"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.MessageEntity"%>
 <%@page import="java.util.List"%>
@@ -12,12 +14,18 @@
             <%
                 StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
                 if (staffEntity != null) {
+                    List<AnnouncementEntity> announcement = (List<AnnouncementEntity>) (session.getAttribute("listOfAnnouncements"));
                     List<MessageEntity> unreadMessages = (List<MessageEntity>) (session.getAttribute("unreadMessages"));
                     List<MessageEntity> inbox = (List<MessageEntity>) (session.getAttribute("inboxMessages"));
+                    List<ToDoEntity> toDoList = (List<ToDoEntity>) (session.getAttribute("toDoList"));
+                    if (announcement == null)
+                        announcement = new ArrayList();
                     if (unreadMessages == null)
                         unreadMessages = new ArrayList();
                     if (inbox == null)
                         inbox = new ArrayList();
+                    if(toDoList == null)
+                        toDoList = new ArrayList();
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -44,8 +52,8 @@
                                             <i class="icon icon-bell icon-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">26</div>
-                                            <div>New Announcement!</div>
+                                            <div class="huge"><%=announcement.size()%></div>
+                                            <div>Announcement<%if(announcement.size()!=1){%>s<%}%></div>
                                         </div>
                                     </div>
                                 </div>
@@ -68,10 +76,10 @@
                                         <div class="col-xs-9 text-right">
                                             <% if(unreadMessages.size()>0) { %>
                                             <div class="huge"><%=unreadMessages.size()%></div>
-                                            <div>New Message!</div>
+                                            <div>New Message<%if(inbox.size()!=1){%>s<%}%>!</div>
                                             <%} else { %>
                                             <div class="huge"><%=inbox.size()%></div>
-                                            <div>Messages in Inbox</div>
+                                            <div>Message<%if(inbox.size()!=1){%>s<%}%> in Inbox</div>
                                             <%}%>
                                         </div>
                                     </div>
@@ -93,8 +101,8 @@
                                             <i class="icon icon-tasks icon-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">26</div>
-                                            <div>Todo List!</div>
+                                            <div class="huge"><%=toDoList.size()%></div>
+                                            <div>Item<%if(toDoList.size()!=1){%>s<%}%> in Todo List</div>
                                         </div>
                                     </div>
                                 </div>
