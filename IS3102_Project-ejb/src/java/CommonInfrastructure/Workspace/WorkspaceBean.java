@@ -382,10 +382,12 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public boolean removeToDoList(Long toDoId) {
+    public boolean removeToDoList(Long staffId, Long toDoId) {
         System.out.println("removeToDoList() called.");
         try {
+            StaffEntity staff = em.find(StaffEntity.class, staffId);
             ToDoEntity toDo = em.find(ToDoEntity.class, toDoId);
+            staff.getToDoList().remove(toDo);
             em.remove(toDo);
             System.out.println("removeToDoList() is successful.");
             return true;

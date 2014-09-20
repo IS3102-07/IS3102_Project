@@ -2,14 +2,9 @@
 <%@page import="EntityManager.ToDoEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
-
     <jsp:include page="../header2.html" />
-
     <body>
-
-
         <script>
-
             function updateToDoList(id) {
                 toDoList.id.value = id;
                 document.toDoList.action = "workspace_toDoListUpdate.jsp";
@@ -17,8 +12,8 @@
             }
             function removeToDoList() {
                 var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
+                if (yes === true) {
+                    //window.event.returnValue = true;
                     document.toDoList.action = "../WorkspaceToDoList_RemoveServlet";
                     document.toDoList.submit();
                 } else {
@@ -81,8 +76,8 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add ToDo"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete  ToDo" onclick="removeToDoList()"  />
+                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add a task"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete task(s)" onclick="removeToDoList()"  />
                                                 </div>
                                             </div>
                                             <br>
@@ -91,10 +86,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox" onclick="checkAll(this)" /></th>
-                                                            <th>Description</th>
-                                                            <th>Done/Undone</th>
-                                                            <th>Mark As Done</th>
-                                                            <th>Update</th>
+                                                            <th style="width:59%;">Description</th>
+                                                            <th style="width:12%;">Done/Undone</th>
+                                                            <th style="width:17%;">Mark Done/Undone</th>
+                                                            <th style="width:12%;">Edit Task</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -127,7 +122,7 @@
                                                                 <input type="submit" name="btnDone" class="btn btn-primary btn-block" value="<%=doneVal%>"  onclick="javascript:markDoneOrUndone('<%=toDoList.get(i).getId()%>')"/>
                                                             </td>
                                                             <td style="width: 150px;">
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=toDoList.get(i).getId()%>" value="update" onclick="javascript:updateToDoList('<%=toDoList.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=toDoList.get(i).getId()%>" value="Edit" onclick="javascript:updateToDoList('<%=toDoList.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -141,8 +136,8 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add ToDo"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete ToDo" onclick="removeToDoList()"  />
+                                                    <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add a task"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete task(s)" onclick="removeToDoList()"  />
                                                 </div>
                                             </div>  
                                         </div>

@@ -41,7 +41,7 @@ public interface WorkspaceBeanLocal {
     
     public boolean addToDoList(Long staffId, String description);
 
-    public boolean removeToDoList(Long toDoId);
+    public boolean removeToDoList(Long staffId, Long toDoId);
 
     public boolean editToDoList(Long id, String description);
 
