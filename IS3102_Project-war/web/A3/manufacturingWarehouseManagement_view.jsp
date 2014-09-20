@@ -16,7 +16,12 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Warehouse Manufacturing Management</h1>
+                            <h1 class="page-header">Manufacturing Warehouse Management</h1>
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="icon icon-home"></i> Manufacturing Warehouse Management
+                                </li>
+                            </ol>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -36,7 +41,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th>id</th>
+                                                            <th>ID</th>
                                                             <th>Name</th>
                                                             <th>Country</th>
                                                             <th>Address</th>

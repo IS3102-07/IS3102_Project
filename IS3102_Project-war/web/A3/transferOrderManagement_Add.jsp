@@ -1,5 +1,11 @@
+<%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
+<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+    if (warehouseEntity == null) {
+        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+    } else {
+%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -16,10 +22,13 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="manufacturingWarehouseManagement.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
                                 </li>
-                                <li class="active">
-                                    <i class="icon icon-user"></i><a href="transferOrderManagement.jsp"> Transfer Order Management</a>
+                                <li>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-exchange"></i> <a href="transferOrderManagement.jsp">Transfer Order Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Add Transfer Order
@@ -82,3 +91,4 @@
     </body>
 
 </html>
+<%}%>

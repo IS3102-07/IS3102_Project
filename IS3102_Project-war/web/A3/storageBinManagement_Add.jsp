@@ -1,3 +1,9 @@
+<%@page import="EntityManager.WarehouseEntity"%>
+<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+    if (warehouseEntity == null) {
+        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+    } else {
+%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -14,13 +20,16 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="manufacturingWarehouseManagement.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-archive"></i><a href="storageBinManagement.jsp"> Storage Bin Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i><a href="storageBinManagement.jsp"> Storage Bin Management</a>
-                                </li>
-                                <li class="active">
-                                    <i class="icon icon-edit"></i> Add Storage bin
+                                    <i class="icon icon-edit"></i> Add Storage Bin
                                 </li>
                             </ol>
                         </div>
@@ -36,9 +45,9 @@
                                     <label>Type</label>
                                     <select  class="form-control" name="type" required="true">
                                         <option>Pallet</option>
+                                        <option>Shelf</option>
                                         <option>Inbound</option>
                                         <option>Outbound</option>
-                                        <option>Warehouse</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -79,3 +88,4 @@
     </body>
 
 </html>
+<%}%>

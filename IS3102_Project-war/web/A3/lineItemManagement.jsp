@@ -33,20 +33,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Line Item
+                                Transfer Order
                             </h1>
                             <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement_view.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                <li>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-exchange"></i><a href="transferOrderManagement.jsp"> Transfer Order Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement.jsp">Manufacturing Warehouse Management</a>
-                                </li>
-                                <li class="active">
-                                    <i class="icon icon-edit"></i> <a href="transferOrderManagement.jsp">Transfer Order <%=transferOrder.getId()%></a>
-                                </li>
-                                <li class="active">
-                                    <i class="icon icon-edit"></i> Line Item Management
+                                    <i class="icon icon-edit"></i> Transfer Order <%=transferOrder.getId()%>
                                 </li>
                             </ol>
                         </div>
@@ -87,7 +87,7 @@
                                             <input class="form-control" name="quantity" type="number" value="<%=transferOrder.getLineItem().getQuantity()%>" disabled >
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Renove Line Item" class="btn btn-lg btn-primary btn-block">
+                                            <input type="submit" value="Remove Line Item" class="btn btn-lg btn-primary btn-block">
                                         </div>
                                         <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
                                     </form>

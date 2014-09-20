@@ -50,11 +50,14 @@
                         <div class="col-lg-12">
                             <h1 class="page-header">Storage Bin Management</h1>
                             <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement_view.jsp"><%=warehouseEntity.getWarehouseName()%>t</a>
+                                <li>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Storage Bin Management
+                                    <i class="icon icon-archive"></i> Storage Bin Management
                                 </li>
                             </ol>
                         </div>
@@ -126,9 +129,9 @@
                                                                     int freeVolume = storageBins.get(i).getFreeVolume();
                                                                     if (volume == freeVolume) {
                                                                 %>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=storageBins.get(i).getId()%>" value="update" onclick="javascript:updateStorageBin('<%=storageBins.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=storageBins.get(i).getId()%>" value="Update" onclick="javascript:updateStorageBin('<%=storageBins.get(i).getId()%>')"/>
                                                                 <%} else {%>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="update" disabled/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="Update" disabled/>
                                                                 <%}%>
                                                             </td>
                                                         </tr>

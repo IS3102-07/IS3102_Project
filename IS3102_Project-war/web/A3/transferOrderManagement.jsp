@@ -52,14 +52,14 @@
                         <div class="col-lg-12">
                             <h1 class="page-header">Transfer Order Management</h1>
                             <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement_view.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                <li>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-edit"></i> <a href="manufacturingWarehouseManagement.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Transfer Order Management
+                                    <i class="icon icon-exchange"></i> Transfer Order Management
                                 </li>
                             </ol>
                         </div>

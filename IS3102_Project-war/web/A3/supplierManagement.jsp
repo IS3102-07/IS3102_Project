@@ -44,11 +44,8 @@
                         <div class="col-lg-12">
                             <h1 class="page-header">Supplier Management</h1>
                             <ol class="breadcrumb">
-                                <li>
-                                    <i class="icon icon-user"></i>  <a href="supplierManagement.jsp">Supplier Management</a>
-                                </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Supplier Management
+                                    <i class="icon icon-user"></i> Supplier Management
                                 </li>
                             </ol>
                         </div>
