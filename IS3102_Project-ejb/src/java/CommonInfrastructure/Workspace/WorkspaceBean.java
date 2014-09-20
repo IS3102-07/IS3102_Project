@@ -467,4 +467,27 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
         }
     }
 
+    @Override
+    public boolean toggleToDoListIsDone(Long id) {
+        System.out.println("toggleToDoListIsDone() is called.");
+        try {
+            ToDoEntity toDo = em.find(ToDoEntity.class, id);
+
+            if (toDo.isDone()) {
+                toDo.setIsDone(false);
+            } else {
+                toDo.setIsDone(true);
+            }
+            em.merge(toDo);
+            System.out.println("toggleToDoListIsDone() is successful.");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("toggleToDoListIsDone() EntityNotFoundException:\n" + ex);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("failed to perform toggleToDoListIsDone():\n" + ex);
+            return false;
+        }
+    }
+
 }

@@ -22,7 +22,7 @@
             }
             function markDoneOrUndone(id) {
                 toDoList.id.value = id;
-                //document.toDoList.action = "workspace_toDoListUpdate.jsp";
+                document.toDoList.action = "../WorkspaceToDoList_UpdateServlet";
                 document.toDoList.submit();
             }
             function addToDoList() {
@@ -86,10 +86,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox" onclick="checkAll(this)" /></th>
-                                                            <th style="width:59%;">Description</th>
+                                                            <th style="width:71%;">Description</th>
                                                             <th style="width:12%;">Done/Undone</th>
                                                             <th style="width:17%;">Mark Done/Undone</th>
-                                                            <th style="width:12%;">Edit Task</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -100,11 +99,15 @@
                                                         %>
                                                         <tr>
                                                             <td style="width:40px;" >
-                                                                <input type="hidden" name="done" disabled value="<%=toDoList.get(i).isDone()%>"/>
+                                                                <input type="hidden" name="id" value="<%=toDoList.get(i).getId()%>"/>
+                                                                <input type="hidden" name="isDone" value="<%=toDoList.get(i).isDone()%>"/>
                                                                 <input type="checkbox" name="delete" value="<%=toDoList.get(i).getId()%>" />
                                                             </td>
                                                             <td>
                                                                 <%=toDoList.get(i).getDescription()%>
+                                                               <!-- <input type="button" class="fade1" hidden style="float: right; width: 10%; margin-left: 3px;" id="" value="Update" onclick="javascript:updateToDoList('<%=toDoList.get(i).getId()%>')"/>
+                                                                <input type="text"  class="fade2" hidden style="float: right; width: 50%;" value=""/>
+                                                                -->
                                                             </td>
                                                             <td>
                                                                 <%
@@ -121,9 +124,9 @@
                                                             <td>
                                                                 <input type="submit" name="btnDone" class="btn btn-primary btn-block" value="<%=doneVal%>"  onclick="javascript:markDoneOrUndone('<%=toDoList.get(i).getId()%>')"/>
                                                             </td>
-                                                            <td style="width: 150px;">
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=toDoList.get(i).getId()%>" value="Edit" onclick="javascript:updateToDoList('<%=toDoList.get(i).getId()%>')"/>
-                                                            </td>
+                                                            <!--<td hidden style="width: 150px;">
+                                                                <input type="button" name="btnEdit" id="" class="btn btn-primary btn-block" id="" value="Edit" onclick="javascript:updateToDoList('')"/>
+                                                            </td>-->
                                                         </tr>
                                                         <%
                                                                 }
@@ -145,7 +148,7 @@
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-5">
-                                                        <p class="page-header">Add New ToDo</p>
+                                                        <p class="page-header" style="font-weight: bold;">Add New Task</p>
                                                         Description: 
                                                         <textarea class="form-control" type="" name="description"></textarea><br>
                                                         <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="addToDoList()"  />
@@ -172,8 +175,6 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-
-
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function () {
@@ -184,6 +185,14 @@
                 $("html, body").animate({scrollTop: $(document).height()}, "slow");
                 $("#addToDoForm").show("slow", function () {
                 });
+            });
+
+            $("#btnEdit").click(function () {
+
+                $(this).parent().$(".fade1").slideDown();
+                $(this).parent().$(".fade2").slideDown();
+                $(this).parent().$(".fade1").addClass('btn btn-primary');
+                $(this).parent()(".fade2").addClass('form-control');
             });
         </script>
     </body>

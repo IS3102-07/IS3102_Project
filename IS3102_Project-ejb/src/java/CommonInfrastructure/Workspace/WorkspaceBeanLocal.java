@@ -24,6 +24,7 @@ public interface WorkspaceBeanLocal {
     public List<MessageOutboxEntity> listAllOutboxMessages(Long staffID);
 
     public MessageInboxEntity readInboxMessage(Long staffID, Long messageID); // returns null if staff or message not found
+
     public MessageOutboxEntity readSentMessage(Long staffID, Long messageID); // returns null if staff or message not found
     //Following returns true if operation suceeds
 
@@ -34,11 +35,11 @@ public interface WorkspaceBeanLocal {
     public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
 
     public List<AnnouncementEntity> getListOfAllNotExpiredAnnouncement();
-    
+
     public boolean updateAnnouncement(Long announcementId, String message, Date expiryDate);
-    
+
     public boolean deleteAnnouncement(Long announcementId);
-    
+
     public boolean addToDoList(Long staffId, String description);
 
     public boolean removeToDoList(Long staffId, Long toDoId);
@@ -50,6 +51,8 @@ public interface WorkspaceBeanLocal {
     public boolean markToDoListAsDone(Long id);
 
     public boolean markToDoListAsUndone(Long id);
+
+    public boolean toggleToDoListIsDone(Long id);
 
     public String getStaffEmail(Long staffID);
 
