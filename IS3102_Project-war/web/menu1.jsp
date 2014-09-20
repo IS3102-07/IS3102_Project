@@ -149,7 +149,7 @@
                         <a href="#">System Security</a>
                     </li>
                     <li>
-                        <a href="../A1/workspace_BroadcastAnnouncement.jsp">Workspace</a>
+                        <a href="../A1/workspace.jsp">Workspace</a>
                     </li>
                 </ul>
             </li>
