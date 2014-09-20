@@ -99,7 +99,6 @@
                                                         %>
                                                         <tr>
                                                             <td style="width:40px;" >
-                                                                <input type="hidden" name="id" value="<%=toDoList.get(i).getId()%>"/>
                                                                 <input type="hidden" name="isDone" value="<%=toDoList.get(i).isDone()%>"/>
                                                                 <input type="checkbox" name="delete" value="<%=toDoList.get(i).getId()%>" />
                                                             </td>
@@ -158,7 +157,7 @@
                                         </div>
                                     </div>
                                     <!-- /.panel-body -->
-
+                                    <input type="hidden" name="id" value=""/>
                                 </form>
 
                             </div>
