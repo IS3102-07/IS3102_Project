@@ -1,3 +1,4 @@
+<%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.StaffEntity"%>
 <html lang="en">
@@ -36,12 +37,12 @@
 
 
                     <%
-                        List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
+                        List<StaffEntity> staffs = (List<StaffEntity>) session.getAttribute("staffs");
                         try {
-                            String id = request.getParameter("id");
+                            String id = (String) session.getAttribute("staffUpdateId");
                             StaffEntity staff = new StaffEntity();
                             for (int i = 0; i < staffs.size(); i++) {
-                                if (staffs.get(i).getId() == Integer.parseInt(id)) {
+                                if (staffs.get(i).getId() == Long.parseLong(id)) {
                                     staff = staffs.get(i);
                                 }
                             }
@@ -68,23 +69,54 @@
                                     <input class="form-control" required="true" type="text" name="phone" value="<%=staff.getPhone()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label>New Password</label>
-                                    <input class="form-control" type="password" name="password" required="true" >
+                                    <label>New Password (leave blank unless setting a new password)</label>
+                                    <input class="form-control" type="password" name="password">
                                 </div>
                                 <div class="form-group">
-                                    <label>Re-enter Password</label>
-                                    <input class="form-control" type="password"  name="repassword"required="true" >
+                                    <label>Re-enter New Password</label>
+                                    <input class="form-control" type="password"  name="repassword">
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>
                                     <input class="form-control" type="text" required="true" name="address" value="<%=staff.getAddress()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label>Roles</label>
+                                    <label>Roles</label><br/>
+                                    <%
+                                        List<RoleEntity> roles = (List<RoleEntity>) session.getAttribute("staffUpdateRoles");
+                                        boolean role1, role2, role3, role4, role5, role6, role7;
+                                        role1 = role2 = role3 = role4 = role5 = role6 = role7 = false;
 
+                                        for (RoleEntity currentRole : roles) {
+                                            System.out.println(currentRole.getName());
+                                            if (currentRole.getId().toString().equals("1")) {
+                                                role1 = true;
+                                            } else if (currentRole.getId().toString().equals("2")) {
+                                                role2 = true;
+                                            } else if (currentRole.getId().toString().equals("3")) {
+                                                role3 = true;
+                                            } else if (currentRole.getId().toString().equals("4")) {
+                                                role4 = true;
+                                            } else if (currentRole.getId().toString().equals("5")) {
+                                                role5 = true;
+                                            } else if (currentRole.getId().toString().equals("6")) {
+                                                role6 = true;
+                                            } else if (currentRole.getId().toString().equals("7")) {
+                                                role7 = true;
+                                            }
+                                        }
+                                    %>
+                                    <input type="checkbox" name="roles" value="1L" <%if (role1) {%>checked<%}%>/> Administrator &nbsp; &nbsp; &nbsp;
+                                    <input type="checkbox" name="roles" value="2L" <%if (role2) {%>checked<%}%>/> Regional Manager &nbsp; &nbsp; &nbsp;
+                                    <input type="checkbox" name="roles" value="3L" <%if (role3) {%>checked<%}%>/> Warehouse Manager &nbsp; &nbsp; &nbsp;
+                                    <input type="checkbox" name="roles" value="4L" <%if (role4) {%>checked<%}%>/> Store Manager &nbsp; &nbsp; &nbsp;
+                                    <input type="checkbox" name="roles" value="5L" <%if (role5) {%>checked<%}%>/> Marketing Director &nbsp; &nbsp; &nbsp;
+                                    <input type="checkbox" name="roles" value="6L" <%if (role6) {%>checked<%}%>/> Product Development Engineer &nbsp; &nbsp; &nbsp;
+                                    <input type="checkbox" name="roles" value="7L" <%if (role7) {%>checked<%}%>/> Purchasing Manager &nbsp; &nbsp; &nbsp;
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
+                                    <input type="hidden" name="update" value="yes"/>
+                                    <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block"/>
                                 </div>
                                 <input type="hidden" value="<%=staff.getId()%>" name="id">
                             </form>
@@ -94,7 +126,8 @@
                     <%
                         } catch (Exception ex) {
                             response.sendRedirect("../StaffManagement_StaffServlet");
-                            }%>
+                            ex.printStackTrace();
+                        }%>
 
                 </div>
 

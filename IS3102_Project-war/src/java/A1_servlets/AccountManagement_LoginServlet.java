@@ -4,6 +4,7 @@ import EntityManager.StaffEntity;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import EntityManager.CountryEntity;
+import EntityManager.RoleEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -46,6 +47,7 @@ public class AccountManagement_LoginServlet extends HttpServlet {
                 response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
             } else {
                 session.setAttribute("staffEntity", staffEntity);
+                session.setAttribute("staffRoles", accountManagementBean.listRolesHeldByStaff(staffEntity.getId()));
                 session.setAttribute("listOfAnnouncements", workspaceBean.getListOfAllNotExpiredAnnouncement());
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
                 session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));

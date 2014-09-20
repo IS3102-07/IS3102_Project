@@ -9,7 +9,7 @@
         <script>
             function updateStaff(id) {
                 staffManagement.id.value = id;
-                document.staffManagement.action = "staffManagement_update.jsp";
+                document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
                 document.staffManagement.submit();
             }
             function removeStaff() {
@@ -79,7 +79,7 @@
                                                             <th>Email</th>
                                                             <th>Phone</th>
                                                             <th>Roles</th>
-                                                            <th>Update</th>
+                                                            <th>Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -119,7 +119,7 @@
                                                                 %>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=staffs.get(i).getId()%>" value="update" onclick="javascript:updateStaff('<%=staffs.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=staffs.get(i).getId()%>" value="Update" onclick="javascript:updateStaff('<%=staffs.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
