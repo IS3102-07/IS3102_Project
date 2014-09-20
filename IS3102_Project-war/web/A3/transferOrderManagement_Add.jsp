@@ -36,7 +36,7 @@
                             <form role="form" action="../TransferOrderManagement_AddServlet">
                                 <div class="form-group">
                                     <label>Origin</label>
-                                    <select  class="form-control" name="origin" required="true">
+                                    <select class="form-control" name="origin" required="true">
                                         <%
                                             List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
                                             for (int i = 0; i < storageBins.size(); i++) {
@@ -48,7 +48,7 @@
 
                                 <div class="form-group">
                                     <label>Target</label>
-                                    <select  class="form-control" name="target" required="true">
+                                    <select class="form-control" name="target" required="true">
                                         <%
                                             for (int i = 0; i < storageBins.size(); i++) {
                                                 out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getId() + "</option>");

@@ -53,47 +53,78 @@
                     </div>
                     <!-- /.row -->
                     <jsp:include page="../displayMessage.jsp" />
+
                     <div class="row">
                         <div class="col-lg-6">
-
-                            <%if (lineItem == null) {%>
-                            <form role="form" action="../LineItemManagement_Servlet">
-                                <div class="form-group">
-                                    <label>SKU</label>
-                                    <input class="form-control" name="sku" type="text"  >
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> Line Item Management</h3>
                                 </div>
-                                <div class="form-group">
-                                    <label>Quantity</label>
-                                    <input class="form-control" name="quantity" type="number" required="true" >
+                                <div class="panel-body">
+                                    <%if (lineItem == null) {%>
+                                    <form role="form" action="../LineItemManagement_Servlet">
+                                        <div class="form-group">
+                                            <label>SKU</label>
+                                            <input class="form-control" name="sku" type="text"  >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input class="form-control" name="quantity" type="number" required="true" >
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Add Line Item" class="btn btn-lg btn-primary btn-block">
+                                        </div>
+                                        <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
+                                    </form>
+                                    <%} else {%>
+                                    <form role="form" action="../LineItemManagement_RemoveServlet">
+                                        <div class="form-group">
+                                            <label>SKU</label>
+                                            <input class="form-control" name="sku" type="text" value="<%=transferOrder.getLineItem().getItem().getSKU()%>" disabled >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input class="form-control" name="quantity" type="number" value="<%=transferOrder.getLineItem().getQuantity()%>" disabled >
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Renove Line Item" class="btn btn-lg btn-primary btn-block">
+                                        </div>
+                                        <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
+                                    </form>
+                                    <%}%>
                                 </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Add Item" class="btn btn-lg btn-primary btn-block">
-                                </div>
-                                <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
-                            </form>
-                            <%} else {%>
-                            <form role="form" action="../LineItemManagement_RemoveServlet">
-                                <div class="form-group">
-                                    <label>SKU</label>
-                                    <input class="form-control" name="sku" type="text" value="<%=transferOrder.getLineItem().getItem().getSKU()%>" disabled >
-                                </div>
-                                <div class="form-group">
-                                    <label>Quantity</label>
-                                    <input class="form-control" name="quantity" type="number" value="<%=transferOrder.getLineItem().getQuantity()%>" disabled >
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Renove Item" class="btn btn-lg btn-primary btn-block">
-                                </div>
-                                <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
-                            </form>
-                            <%}%>
-
-
+                            </div>
                         </div>
                         <!-- /.row -->
-                    </div>
 
-                    <%
+                        <%
+                            if (lineItem != null) {
+                        %>
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> Transfer Order Status</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <form role="form" action="../LineItemManagement_UpdateServlet">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <select class="form-control" name="status" required="true">
+                                                <option></option>
+                                                <option>Completed</option>
+                                                <option>Unfulfillable</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Update Status" class="btn btn-lg btn-primary btn-block">
+                                        </div>
+                                        <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%                           }
                             } catch (Exception ex) {
                                 response.sendRedirect("../TransferOrderManagement_Servlet");
                                 ex.printStackTrace();
