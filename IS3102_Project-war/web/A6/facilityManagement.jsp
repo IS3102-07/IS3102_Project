@@ -41,7 +41,7 @@
                             <div class="col-md-3">
                                 <div class="featured-box featured-box-tertiary">
                                     <div class="box-content">
-                                        <a href="../RoleManagement_RoleServlet"><i class="icon-featured icon icon-cogs"> </i>
+                                        <a href="../FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index"><i class="icon-featured icon icon-cogs"> </i>
                                             <h4>Manufacturing <br>Facility</h4>    
                                         </a>
                                     </div>
