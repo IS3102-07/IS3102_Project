@@ -69,6 +69,13 @@
                                 <form name="staffManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Register Staff" onclick="addStaff()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Staff" onclick="removeStaff()"  />
+                                                </div>
+                                            </div>
+                                            <br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
