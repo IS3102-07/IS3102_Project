@@ -66,7 +66,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Create" class="btn btn-lg btn-primary btn-block">
+                                    <input type="submit" value="Create Transfer Order" class="btn btn-lg btn-primary btn-block">
                                 </div>  
                             </form>
                         </div>

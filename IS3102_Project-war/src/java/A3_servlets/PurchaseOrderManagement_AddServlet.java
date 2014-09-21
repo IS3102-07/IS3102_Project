@@ -37,7 +37,6 @@ public class PurchaseOrderManagement_AddServlet extends HttpServlet {
 //                    result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
 //                    response.sendRedirect("TransferOrderManagement_Servlet" + result);
 //                }
-//
 //            }
         } catch (Exception ex) {
             out.println(ex);
