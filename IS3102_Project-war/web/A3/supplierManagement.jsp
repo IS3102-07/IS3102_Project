@@ -60,7 +60,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Insert some text";
+                                            errMsg = "Add or remove suppliers";
                                         }
                                         out.println(errMsg);
                                     %>

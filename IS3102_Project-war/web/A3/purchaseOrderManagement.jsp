@@ -52,7 +52,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Insert some text";
+                                            errMsg = "Add purchase orders";
                                         }
                                         out.println(errMsg);
                                     %>

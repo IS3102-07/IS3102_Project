@@ -72,7 +72,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Insert some text";
+                                            errMsg = "Add and remove storage bins";
                                         }
                                         out.println(errMsg);
                                     %>

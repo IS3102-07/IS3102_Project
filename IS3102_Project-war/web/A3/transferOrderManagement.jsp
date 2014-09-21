@@ -74,7 +74,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Insert some text";
+                                            errMsg = "Add or remove transfer orders";
                                         }
                                         out.println(errMsg);
                                     %>

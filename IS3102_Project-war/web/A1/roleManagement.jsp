@@ -62,7 +62,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add new roles or remove existing roles below";
+                                            errMsg = "Add new roles or remove existing roles";
                                         }
                                         out.println(errMsg);
                                     %>
