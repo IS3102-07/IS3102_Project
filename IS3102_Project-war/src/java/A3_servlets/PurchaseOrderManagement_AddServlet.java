@@ -28,16 +28,16 @@ public class PurchaseOrderManagement_AddServlet extends HttpServlet {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatter.parse(expectedDate);
 
-//            if (supplierId != null && destinationId != null) {
-//                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.createPurchaseOrder(Long.parseLong(supplierId), Long.parseLong(destinationId), date);
-//                if (!canUpdate) {
-//                    result = "?errMsg=Type already exist. Please try again.";
-//                    response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
-//                } else {
-//                    result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
-//                    response.sendRedirect("TransferOrderManagement_Servlet" + result);
-//                }
-//            }
+            if (supplierId != null && destinationId != null) {
+                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.createPurchaseOrder(Long.parseLong(supplierId), Long.parseLong(destinationId), date);
+                if (!canUpdate) {
+                    result = "?errMsg=Supplier or Warehouse no longer exist / active.";
+                    response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
+                } else {
+                    result = "?errMsg=Purchase Order created successfully";
+                    response.sendRedirect("PurchaseOrderManagement_Servlet" + result);
+                }
+            }
         } catch (Exception ex) {
             out.println(ex);
         }
