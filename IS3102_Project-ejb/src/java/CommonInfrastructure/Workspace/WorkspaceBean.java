@@ -124,8 +124,13 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageInboxEntity> inboxMessages = staffEntity.getInboxMessages();
+
+            ArrayList<MessageInboxEntity> arrList = new ArrayList<>();
+            for (int i = inboxMessages.size() - 1; i > 0; i--) {
+                arrList.add(inboxMessages.get(i));
+            }
             System.out.println("Message list returned.");
-            return inboxMessages;
+            return arrList;
         } catch (Exception ex) {
             System.out.println("\nServer error in listing all inbox messages:\n" + ex);
             return null;
