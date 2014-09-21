@@ -148,15 +148,35 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    @Override
-    public boolean removeManufacturingFacility(String manufacturingFacility) {
-        System.out.println("removeManufacturingFacility() called with staffID:" + manufacturingFacility);
+    public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName) {
+        System.out.println("editManufacturingFacility() called with ID:" + id);
         try {
             Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
 
             for (Object o : q.getResultList()) {
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
-                if (i.getName().equalsIgnoreCase(manufacturingFacility)) {
+                if (i.getId() == id) {
+                    i.setName(manufacturingFacilityName);
+                    em.merge(i);
+                    System.out.println("\nServer edited manufacturing facility:\n" + manufacturingFacilityName);
+                    return true;
+                }
+            }
+            return false; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to edit manufacturing facility:\n" + ex);
+            return false;
+        }
+    }
+    @Override
+    public boolean removeManufacturingFacility(String manufacturingFacility) {
+        System.out.println("removeManufacturingFacility() called with ID:" + manufacturingFacility);
+        try {
+            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
+
+            for (Object o : q.getResultList()) {
+                ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
+                if (i.getId() == Long.valueOf(manufacturingFacility)) {
                     em.remove(i);
                     em.flush();
                     System.out.println("\nServer removed manufacturing facility:\n" + manufacturingFacility);

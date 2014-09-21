@@ -3,6 +3,8 @@ package A3_servlets;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,7 @@ public class PurchaseOrderManagement_AddServlet extends HttpServlet {
 
     @EJB
     private RetailProductsAndRawMaterialsPurchasingBeanLocal retailProductsAndRawMaterialsPurchasingBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -20,9 +23,22 @@ public class PurchaseOrderManagement_AddServlet extends HttpServlet {
         try {
             String supplierId = request.getParameter("supplier");
             String destinationId = request.getParameter("destination");
+            String expectedDate = request.getParameter("expectedDate");
 
-            out.println("<h1>" + destinationId + "</h1>");
-            retailProductsAndRawMaterialsPurchasingBean.createPurchaseOrder(null, null, null);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatter.parse(expectedDate);
+
+//            if (supplierId != null && destinationId != null) {
+//                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.createPurchaseOrder(Long.parseLong(supplierId), Long.parseLong(destinationId), date);
+//                if (!canUpdate) {
+//                    result = "?errMsg=Type already exist. Please try again.";
+//                    response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
+//                } else {
+//                    result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
+//                    response.sendRedirect("TransferOrderManagement_Servlet" + result);
+//                }
+//
+//            }
         } catch (Exception ex) {
             out.println(ex);
         }

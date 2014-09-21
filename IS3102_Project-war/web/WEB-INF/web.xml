@@ -352,13 +352,21 @@
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <servlet-class>A3_servlets.PurchaseOrderManagement_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sop_index</servlet-name>
+        <jsp-file>/A2/sop_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>sop_schedule</servlet-name>
+        <jsp-file>/A2/sop_schedule.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
-        <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
+        <servlet-name>PurchaseOrderManagement_AddServlet</servlet-name>
+        <url-pattern>/PurchaseOrderManagement_AddServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -689,10 +697,6 @@
         <url-pattern>/AccountManagement_ResetPasswordServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SaleAndOperationPlanning_Servlet</servlet-name>
-        <url-pattern>/SaleAndOperationPlanning_Servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>A2_servlets.SaleAndOperationPlanning_Servlet</servlet-name>
         <url-pattern>/A2/SaleAndOperationPlanning_Servlet/*</url-pattern>
     </servlet-mapping>
@@ -703,6 +707,18 @@
     <servlet-mapping>
         <servlet-name>FacilityManagement_StoreServlet</servlet-name>
         <url-pattern>/FacilityManagement_StoreServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaleAndOperationPlanning_Servlet</servlet-name>
+        <url-pattern>/SaleAndOperationPlanning_Servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sop_index</servlet-name>
+        <url-pattern>/A2/sop_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sop_schedule</servlet-name>
+        <url-pattern>/A2/sop_schedule</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
