@@ -12,13 +12,26 @@
                 document.retailProductManagement.submit();
             }
             function removeRetailProduct() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.retailProductManagement.action = "../RetailProductManagement_RemoveRetailProductServlet";
-                    document.retailProductManagement.submit();
-                } else {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    alert("No items selected.");
                     window.event.returnValue = false;
+                } else {
+
+                    var yes = confirm("Are you sure?!");
+                    if (yes == true) {
+                        window.event.returnValue = true;
+                        document.announcementsManagement.action = "../RetailProductManagement_RemoveRetailProductServlet";
+                        document.announcementsManagement.submit();
+                    } else {
+                        window.event.returnValue = false;
+                    }
                 }
             }
             function addRetailProduct() {

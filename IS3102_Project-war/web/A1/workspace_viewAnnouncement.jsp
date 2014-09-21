@@ -95,7 +95,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Insert some text";
+                                            errMsg = "List of announcements and its details.";
                                         }
                                         out.println(errMsg);
                                     %>
