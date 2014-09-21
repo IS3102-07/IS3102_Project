@@ -44,6 +44,13 @@
 
                                 <div class="panel-body">
                                     <div class="table-responsive">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input type="submit" name="submit-btn" value="Add Manufacturing Facility" class="btn btn-primary" data-loading-text="Loading...">
+                                                <input type="submit" name="submit-btn" value="Delete Manufacturing Facility" class="btn btn-primary" data-loading-text="Loading...">
+                                            </div>
+                                        </div>
+                                        <br>
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                             <form action="../FacilityManagement_ManufacturingFacilityServlet/createManufacturingFacility_GET">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -119,7 +126,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

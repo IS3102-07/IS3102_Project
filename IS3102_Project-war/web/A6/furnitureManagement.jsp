@@ -63,6 +63,13 @@
                                 <form name="furnitureManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Furniture" onclick="addFurniture()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Furniture" onclick="removeFurniture()"  />
+                                                </div>
+                                            </div>
+                                            <br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>

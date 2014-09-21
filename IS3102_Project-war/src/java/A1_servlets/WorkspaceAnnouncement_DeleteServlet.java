@@ -29,7 +29,7 @@ public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
                 result = "?errMsg=Failed to delete announcement.";
                 response.sendRedirect("A1/workspace_viewAnnouncement.jsp" + result);
             }
-        } catch (Exception ex) {
+        } catch (Exception ex) {      
             out.println(ex);
         }
 
