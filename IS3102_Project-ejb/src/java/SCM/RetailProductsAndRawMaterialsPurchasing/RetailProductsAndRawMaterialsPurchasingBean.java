@@ -23,7 +23,7 @@ public RetailProductsAndRawMaterialsPurchasingBean() {
 }
   
 @Override
-public PurchaseOrderEntity createPurchaseOrder(Long supplierID, Long receivingWarehouseID, Date expectedReceivedDate) {
+public Boolean createPurchaseOrder(Long supplierID, Long receivingWarehouseID, Date expectedReceivedDate) {
     System.out.println("createPurchaseOrder() called");
      try {
          SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
@@ -31,12 +31,12 @@ public PurchaseOrderEntity createPurchaseOrder(Long supplierID, Long receivingWa
          PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity(supplierEntity, warehouseEntity, expectedReceivedDate);
          em.persist(purchaseOrder);
          System.out.println("PurchaseOrder with id: "+ purchaseOrder.getId() + " is created successfully");
-         return purchaseOrder;
+         return true;
      }
      catch(EntityExistsException ex){
          ex.printStackTrace();
          System.out.println("Failed to create purchase order.");
-         return null;
+         return false;
      }
 }
 
