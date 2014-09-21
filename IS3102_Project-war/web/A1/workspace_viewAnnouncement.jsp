@@ -1,5 +1,26 @@
+<%@page import="EntityManager.RoleEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.AnnouncementEntity"%>
 <%@page import="java.util.List"%>
+<%
+    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+    boolean roleCanEditAnnouncement = false;
+    if (staffEntity != null) {
+        List<RoleEntity> roles = staffEntity.getRoles();
+        Long[] approvedRolesID = new Long[]{1L, 2L};
+        for (RoleEntity roleEntity : roles) {
+            for (Long ID : approvedRolesID) {
+                if (roleEntity.getId().equals(ID)) {
+                    roleCanEditAnnouncement = true;
+                    break;
+                }
+            }
+            if (roleCanEditAnnouncement) {
+                break;
+            }
+        }
+    }
+%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -70,7 +91,7 @@
                                 <form name="announcementsManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            
+
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Announcement" onclick="addAnnouncement()"  />
@@ -88,7 +109,10 @@
                                                             <th>Title</th>
                                                             <th>Message</th>
                                                             <th>Broadcasted Date</th>
+                                                                <% if (roleCanEditAnnouncement) {%>
                                                             <th>Expiry Date</th>
+                                                            <th>Update</th>
+                                                                <%}%>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -114,14 +138,16 @@
                                                                 <%=listOfAnnouncements.get(i).getMessage()%>
                                                             </td>
                                                             <td>      
-                                                                <%=listOfAnnouncements.get(i).getBroadcastedDate() %>
+                                                                <%=listOfAnnouncements.get(i).getBroadcastedDate()%>
                                                             </td>
+                                                            <% if (roleCanEditAnnouncement) {%>
                                                             <td>      
-                                                                <%=listOfAnnouncements.get(i).getExpiryDate() %>
+                                                                <%=listOfAnnouncements.get(i).getExpiryDate()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=listOfAnnouncements.get(i).getId()%>" value="update" onclick="javascript:updateAnnouncement('<%=listOfAnnouncements.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=listOfAnnouncements.get(i).getId()%>" value="Update" onclick="javascript:updateAnnouncement('<%=listOfAnnouncements.get(i).getId()%>')"/>
                                                             </td>
+                                                            <%}%>
                                                         </tr>
                                                         <%
                                                                 }
@@ -163,7 +189,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
