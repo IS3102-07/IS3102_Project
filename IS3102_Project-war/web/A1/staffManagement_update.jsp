@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../StaffManagement_UpdateStaffServlet">
+                            <form role="form" action="../StaffManagement_UpdateStaffServlet" onsubmit="return validatePassword()">
                                 <div class="form-group">
                                     <label>Identification No</label>
                                     <input class="form-control" required="true" name="identificationNo" type="text" value="<%=staff.getIdentificationNo()%>">
@@ -70,11 +70,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>New Password (leave blank unless setting a new password)</label>
-                                    <input class="form-control" type="password" name="password">
+                                    <input class="form-control" type="password" name="password" id="password">
                                 </div>
                                 <div class="form-group">
                                     <label>Re-enter New Password</label>
-                                    <input class="form-control" type="password"  name="repassword">
+                                    <input class="form-control" type="password" name="repassword" id="repassword">
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>
@@ -143,7 +143,21 @@
                 $('#dataTables-example').dataTable();
             });
         </script>
-
+        <script>
+            function validatePassword() {
+                var password = document.getElementById("password").value;
+                var repassword = document.getElementById("repassword").value;
+                var ok = true;
+                if (password != repassword) {
+                    //alert("Passwords Do not match");
+                    document.getElementById("password").style.borderColor = "#E34234";
+                    document.getElementById("repassword").style.borderColor = "#E34234";
+                    alert("Passwords do not match. Please key again.");
+                    ok = false;
+                }
+                return ok;
+            }
+        </script>F
     </body>
 
 </html>
