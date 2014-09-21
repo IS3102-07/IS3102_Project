@@ -71,9 +71,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
 
     @Override
     public boolean removeRegionalOffice(String regionalOfficeName) {
-        System.out.println("removeRegionalOffice() called with staffID:" + regionalOfficeName);
+        System.out.println("removeRegionalOffice() called with ID:" + regionalOfficeName);
         try {
-            Query q = em.createQuery("SELECT t FROM regionalOfficeEntity t");
+            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
 
             for (Object o : q.getResultList()) {
                 RegionalOfficeEntity i = (RegionalOfficeEntity) o;
