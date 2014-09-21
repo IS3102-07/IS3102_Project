@@ -63,6 +63,7 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
                     response.sendRedirect("WorkspaceMessage_Servlet?view=sentMessages&errMsg=Successfully deleted message.");
                 }
             } else {
+                System.out.println("asd");
                 response.sendRedirect("WorkspaceMessage_Servlet?view=inbox&errMsg=No messages selected for deletion.");
             }
         } catch (Exception ex) {
