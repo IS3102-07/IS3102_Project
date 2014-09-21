@@ -344,6 +344,22 @@
         <servlet-name>FacilityManagement_StoreServlet</servlet-name>
         <servlet-class>A6_servlets.FacilityManagement_StoreServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderManagement_AddServlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
+        <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
+        <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
