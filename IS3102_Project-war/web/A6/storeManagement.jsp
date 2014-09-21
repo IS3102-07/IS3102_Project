@@ -59,7 +59,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<StoreEntity> storeEntityList = (List<StoreEntity>) request.getAttribute("storeEntityList");
+                                                            List<StoreEntity> storeEntityList = (List<StoreEntity>) request.getAttribute("storeList");
                                                             if (storeEntityList != null) {
                                                                 for (StoreEntity storeEntity : storeEntityList) {
                                                         %>
