@@ -41,7 +41,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
         switch (target) {
 
             case "/storeManagement_index":
-                List<StoreEntity> storeList = fmBean.viewListOfStorey();
+                List<StoreEntity> storeList = fmBean.viewListOfStore();
                 request.setAttribute("storeList", storeList);
                 nextPage = "/A6/storeManagement";
                 break;

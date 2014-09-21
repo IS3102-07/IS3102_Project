@@ -1,3 +1,4 @@
+<%@page import="EntityManager.StoreEntity"%>
 <%@page import="EntityManager.RegionalOfficeEntity"%>
 <%@page import="HelperClasses.MessageHelper"%>
 <%@page import="java.text.Format"%>
@@ -25,12 +26,6 @@
                     </div>
                     <!-- /.row -->
 
-                    <style>
-                        select {
-                            max-width: 300px;
-                        }
-                    </style>
-
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -38,7 +33,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Select regional office first, then select store";
+                                            errMsg = "Select one regional office to access";
                                         }
                                         out.println(errMsg);
                                     %>
@@ -46,29 +41,21 @@
                                 <div class="panel-body">
 
                                     <form action="">
-                                        <div class="form-group">
-                                            <label for="select_regionalOffice">Regional Office</label>
-                                            <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">
-                                                <option>South China Regional Office</option>
-                                                <%
-                                                    List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
-                                                    for (RegionalOfficeEntity r : regionalOfficeList) {
-                                                %>
-                                                <option value="<%= r.getId()%>"><%= r.getName()%></option>
-                                                <%
-                                                    }
-                                                %>
-                                            </select>                                                 
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="select_store">Store</label>
-                                            <select id="select_store" class="form-control" name="store">
-                                                <option>Tangling Store</option>
-                                                <%
-
-                                                %>
-                                            </select>
-                                        </div>
+                                        
+                                        <table class="table table-bordered">
+                                            
+                                            <thead>
+                                                <tr>
+                                                    <th></th><th></th><th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody>
+                                                <tr></tr>
+                                            </tbody>
+                                            
+                                        </table>
+                                        
                                         <input type="submit" class="btn btn-primary" value="Access">
 
                                     </form>
@@ -90,23 +77,6 @@
         </div>
         <!-- /#wrapper -->
 
-        <script>
-            function getStore() {
-                var regionalOffice = $("#select_regionalOffice").find('option:selected').text();
-
-                var xmlhttp = new XMLHttpRequest();                
-                                
-                xmlhttp.onreadystatechange = function ()
-                {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                    {
-                        document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-                    }
-                }
-                xmlhttp.open("GET", "url?regionalOffice=" + regionalOffice, true);
-                xmlhttp.send();
-            }
-        </script>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>

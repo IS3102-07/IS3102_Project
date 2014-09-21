@@ -5,15 +5,18 @@
  */
 package A2_servlets;
 
+import EntityManager.RegionalOfficeEntity;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -25,15 +28,29 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String nextPage = "/A3/createShippingOrderBasicInfo";
+        String nextPage = "/A2/sop_index";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        HttpSession session = request.getSession();
 
         String target = request.getPathInfo();
-
+        
         switch (target) {
-            
+            case "/sop_index_GET":                
+                List<RegionalOfficeEntity> regionalOfficeList = new ArrayList<>(); // 1234567890 wait for regional office 
+                request.setAttribute("regionalOfficeList", regionalOfficeList);
+                nextPage = "/A2/sop_index";
+                break;
+            case "/sop_index_Post":
+                try{
+                    Long storeId = Long.parseLong(request.getParameter("store"));
+                    session.setAttribute("sop_storeId", storeId);
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
+                break;
+                
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
