@@ -93,7 +93,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit regional office.");
                 }
-                nextPage = "/FacilityManagement_Servlet/regionalOfficeManagement_index";
+                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
                 break;
             case "/deleteRegionalOffice":
                 String[] deletes = request.getParameterValues("delete");
@@ -103,7 +103,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                         fmBean.removeRegionalOffice(regionalOffice_Id);                        
                     }
                 }
-                nextPage = "/FacilityManagement_Servlet/regionalOfficeManagement_index";
+                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
                 break;
 
         }
