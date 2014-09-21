@@ -112,7 +112,7 @@
                                                                         out.println("-");
                                                                     } else {
                                                                         for (int k = 0; k < staffs.size(); k++) {
-                                                                            out.println(staffs.get(i).getName());
+                                                                            out.println(staffs.get(k).getName());
                                                                         }
                                                                     }
                                                                 %>
