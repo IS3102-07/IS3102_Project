@@ -215,6 +215,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         try {
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
             Integer numberOfQuantityToMove = transferOrder.getLineItem().getQuantity();
+            System.out.println("The number of quantity to move is " + numberOfQuantityToMove);
             for (int i = 0;
                     i < numberOfQuantityToMove;
                     i++) {
@@ -222,10 +223,10 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 if (!isPass) {
                     UserTransaction ut = context.getUserTransaction();
                     ut.rollback();
+                    System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back");
                     throw new Exception();
                 }
             }
-
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to markTransferOrderAsCompleted:\n" + ex);

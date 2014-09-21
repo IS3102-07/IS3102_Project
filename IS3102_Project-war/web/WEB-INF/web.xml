@@ -316,6 +316,14 @@
         <servlet-name>AccountManagement_ResetPasswordServlet</servlet-name>
         <servlet-class>A1_servlets.AccountManagement_ResetPasswordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaleAndOperationPlanning_Servlet</servlet-name>
+        <servlet-class>A2_servlets.SaleAndOperationPlanning_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A2_servlets.SaleAndOperationPlanning_Servlet</servlet-name>
+        <servlet-class>A2_servlets.SaleAndOperationPlanning_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -631,6 +639,14 @@
     <servlet-mapping>
         <servlet-name>AccountManagement_ResetPasswordServlet</servlet-name>
         <url-pattern>/AccountManagement_ResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaleAndOperationPlanning_Servlet</servlet-name>
+        <url-pattern>/SaleAndOperationPlanning_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2_servlets.SaleAndOperationPlanning_Servlet</servlet-name>
+        <url-pattern>/A2/SaleAndOperationPlanning_Servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

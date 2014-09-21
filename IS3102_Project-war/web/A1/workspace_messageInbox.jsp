@@ -20,7 +20,7 @@
                     document.messageManagement.action = "../WorkspaceMessage_RemoveServlet";
                     document.messageManagement.submit();
                 }
-                 else {
+                else {
                     window.event.returnValue = false;
                 }
             }
@@ -86,6 +86,7 @@
                                                             <th>From</th>
                                                             <th>Date Received</th>
                                                             <th>To</th>
+                                                            <th>Message</th>
                                                             <th>Open</th>
                                                         </tr>
                                                     </thead>
@@ -123,11 +124,20 @@
                                                                             out.println("-");
                                                                         } else {
                                                                             for (int k = 0; k < receviers.size(); k++) {
-                                                                                out.println(receviers.get(k)+"; ");
+                                                                                out.println(receviers.get(k) + "; ");
                                                                             }
                                                                         }
                                                                     %>
                                                                     <% if (!inbox.get(i).isMessageRead()) {%></b><%}%>
+                                                            </td>
+                                                            <td>
+                                                                <%
+                                                                    if (inbox.get(i).getMessage().length() < 90) {
+                                                                        out.print(inbox.get(i).getMessage());
+                                                                    } else {
+                                                                        out.print(inbox.get(i).getMessage().substring(0, 90)+"...");
+                                                                    }
+                                                                %>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Read" id="<%=inbox.get(i).getMessageId()%>" onclick="readMessage(<%=inbox.get(i).getMessageId()%>)" />
