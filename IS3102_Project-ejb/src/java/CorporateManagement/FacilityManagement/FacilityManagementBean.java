@@ -47,6 +47,27 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return false;
         }
     }
+    
+    public Boolean editRegionalOffice(String regionalOfficeName) {
+        System.out.println("editRegionalOffice() called with ID:" + regionalOfficeName);
+        try {
+            Query q = em.createQuery("SELECT t FROM regionalOfficeEntity t");
+
+            for (Object o : q.getResultList()) {
+                RegionalOfficeEntity i = (RegionalOfficeEntity) o;
+                if (i.getName().equalsIgnoreCase(regionalOfficeName)) {
+                    i.setName(regionalOfficeName);
+                    em.merge(i);
+                    System.out.println("\nServer edited regional office:\n" + regionalOfficeName);
+                    return true;
+                }
+            }
+            return false; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove regional office:\n" + ex);
+            return false;
+        }
+    }
 
     @Override
     public boolean removeRegionalOffice(String regionalOfficeName) {
@@ -289,10 +310,10 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
-    
+
     @Override
-    public Boolean editWarehouse(Long Id, String warehouseName, String address, String telephone, String email){
-        try{
+    public Boolean editWarehouse(Long Id, String warehouseName, String address, String telephone, String email) {
+        try {
             WarehouseEntity warehouse = em.find(WarehouseEntity.class, Id);
             warehouse.setWarehouseName(warehouseName);
             warehouse.setAddress(address);
@@ -300,12 +321,12 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             warehouse.setEmail(email);
             em.merge(warehouse);
             return true;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
-        }        
+        }
     }
-    
+
     @Override
     public Boolean deleteWarehouse(Long id) {
         try {
@@ -340,15 +361,15 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
-    
+
     @Override
-    public WarehouseEntity getWarehouseById(Long Id){
-        try{
+    public WarehouseEntity getWarehouseById(Long Id) {
+        try {
             return em.find(WarehouseEntity.class, Id);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
-        }        
+        }
     }
 
     @Override
