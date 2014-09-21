@@ -278,7 +278,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    public List<StoreEntity> viewListOfStorey() {
+    public List<StoreEntity> viewListOfStore() {
         System.out.println("viewListOfStorey() called.");
         List<StoreEntity> listOfStore = new ArrayList<StoreEntity>();
         try {
