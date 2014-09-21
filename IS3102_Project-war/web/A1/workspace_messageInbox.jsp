@@ -69,7 +69,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Insert some text";
+                                            errMsg = "Create message, delete inbox message and view sent messages";
                                         }
                                         out.println(errMsg);
                                     %>
