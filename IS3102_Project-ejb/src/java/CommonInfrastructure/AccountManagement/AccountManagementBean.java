@@ -182,6 +182,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         try {
             StaffEntity staffEntity = new StaffEntity();
             staffEntity.create(identificationNo, name, phone, email, address, passwordSalt, passwordHash);
+            staffEntity.setRoles(new ArrayList());
             em.persist(staffEntity);
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
