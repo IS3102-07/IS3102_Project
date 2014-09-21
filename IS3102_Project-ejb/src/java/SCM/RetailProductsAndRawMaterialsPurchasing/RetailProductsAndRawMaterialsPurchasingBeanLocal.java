@@ -9,7 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface RetailProductsAndRawMaterialsPurchasingBeanLocal {
+public interface RetailProductsAndRawMaterialsPurchasingBeanLocal { 
    public Boolean createPurchaseOrder(Long supplierID, Long recivingWarehouseID, Date expectedReceivedDate);
    public Boolean addLineItemToPurchaseOrder(Long id, LineItemEntity lineItem);
    public Boolean updatePurchaseOrder(Long id, String status);
