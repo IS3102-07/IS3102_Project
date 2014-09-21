@@ -15,4 +15,5 @@ public interface RetailProductsAndRawMaterialsPurchasingBeanLocal {
    public Boolean updatePurchaseOrder(Long id, String status);
    public PurchaseOrderEntity getPurchaseOrderById(Long id);
    public List<PurchaseOrderEntity> getPurchaseOrderListByStatus(String status);
+   public List<PurchaseOrderEntity> getPurchaseOrderList();
 }

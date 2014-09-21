@@ -86,6 +86,16 @@ public PurchaseOrderEntity createPurchaseOrder(SupplierEntity supplier, Warehous
         }        
     }
     
+    @Override
+    public List<PurchaseOrderEntity> getPurchaseOrderList() {
+        try{
+            Query q = em.createQuery("select p from PurchaseOrderEntity p");
+            return q.getResultList();
+        }catch(Exception ex){
+            return new ArrayList<>();
+        }        
+    }
+    
     
 }
 
