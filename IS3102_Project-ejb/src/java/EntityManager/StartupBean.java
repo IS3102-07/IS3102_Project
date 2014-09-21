@@ -135,6 +135,17 @@ public class StartupBean {
                 System.out.println("Skipping creating of item entities:\n" + ex);
                 ex.printStackTrace();
             }
+            try {
+                //Create supplier
+                SupplierEntity supplierEntity = new SupplierEntity("Supplier 1", "67911580", "supplier1@email.com", "231 Bukit Panjang Road");
+                em.persist(supplierEntity);
+                supplierEntity = new SupplierEntity("Supplier 2", "67911432", "supplier2@email.com", "3 Dover Road");
+                em.persist(supplierEntity);
+                System.out.println("Created supplierEntity.");
+            } catch (Exception ex) {
+                System.out.println("Skipping creating of supplierEntity:\n" + ex);
+                ex.printStackTrace();
+            }
         } catch (Exception ex) {
             System.out.println("Skipped init of database:\n" + ex);
             ex.printStackTrace();
