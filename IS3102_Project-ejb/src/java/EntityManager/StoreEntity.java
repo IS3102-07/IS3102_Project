@@ -27,6 +27,8 @@ public class StoreEntity implements Serializable {
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
     private List<SaleForcastEntity> saleForcastList;    
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
+    private List<SalesFigureEntity> salesFigureList;    
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
     private List<SaleAndOperationPlanEntity> saleAndOperationPlanList;    
     @ManyToMany(mappedBy="storeList")
     @JoinTable(name="store_manufacturingFacility")
@@ -98,6 +100,14 @@ public class StoreEntity implements Serializable {
 
     public void setWarehouse(WarehouseEntity warehouse) {
         this.warehouse = warehouse;
+    }
+
+    public List<SalesFigureEntity> getSalesFigureList() {
+        return salesFigureList;
+    }
+   
+    public void setSalesFigureList(List<SalesFigureEntity> salesFigureList) {
+        this.salesFigureList = salesFigureList;
     }
     
     
