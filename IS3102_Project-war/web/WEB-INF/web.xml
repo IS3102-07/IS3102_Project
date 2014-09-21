@@ -1398,6 +1398,14 @@
         <servlet-name>FacilityManagement_StoreServlet</servlet-name>
         <url-pattern>/FacilityManagement_StoreServlet/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
+        <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderManagement_AddServlet</servlet-name>
+        <url-pattern>/PurchaseOrderManagement_AddServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
