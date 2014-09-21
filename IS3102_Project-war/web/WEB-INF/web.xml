@@ -336,6 +336,14 @@
         <servlet-name>FacilityManagement_RegionalOfficeServlet</servlet-name>
         <servlet-class>A6_servlets.FacilityManagement_RegionalOfficeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderManagement_AddServlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderManagement_AddServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -671,6 +679,14 @@
     <servlet-mapping>
         <servlet-name>FacilityManagement_RegionalOfficeServlet</servlet-name>
         <url-pattern>/FacilityManagement_RegionalOfficeServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
+        <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderManagement_AddServlet</servlet-name>
+        <url-pattern>/PurchaseOrderManagement_AddServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
