@@ -67,6 +67,10 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label>Expected Receiving Date:</label>
+                                            <input class="form-control" name="expectedDate" type="date" required="true"/>
+                                        </div>
+                                        <div class="form-group">
                                             <input type="submit" value="Create Purchase Order" class="btn btn-lg btn-primary btn-block">
                                         </div>  
                                     </form>
