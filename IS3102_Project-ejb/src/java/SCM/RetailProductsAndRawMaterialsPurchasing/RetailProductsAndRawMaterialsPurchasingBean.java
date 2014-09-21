@@ -27,7 +27,6 @@ public PurchaseOrderEntity createPurchaseOrder(SupplierEntity supplier, Warehous
      try {
          PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity(supplier, receivedWarehouse, expectedReceivedDate);
          em.persist(purchaseOrder);
-         
          System.out.println("PurchaseOrder with id: "+ purchaseOrder.getId() + " is created successfully");
          return purchaseOrder;
      }
@@ -88,10 +87,14 @@ public PurchaseOrderEntity createPurchaseOrder(SupplierEntity supplier, Warehous
     
     @Override
     public List<PurchaseOrderEntity> getPurchaseOrderList() {
+        System.out.println("getPurchaseOrderList() called");
         try{
             Query q = em.createQuery("select p from PurchaseOrderEntity p");
+            System.out.println("List returned.");
             return q.getResultList();
         }catch(Exception ex){
+            System.out.println("Failed to return list.");
+            ex.printStackTrace();
             return new ArrayList<>();
         }        
     }
