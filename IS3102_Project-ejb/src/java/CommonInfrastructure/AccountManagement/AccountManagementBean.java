@@ -63,6 +63,26 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
+    public MemberEntity getMemberByEmail(String email) {
+        System.out.println("getMemberByEmail() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.email=:email");
+            q.setParameter("email", email);
+            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+            return memberEntity;
+        } catch (NoResultException ex) {
+            System.out.println("Failed to find member.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getMemberByEmail:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @Override
     public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password) {
         System.out.println("editMember() called with memberID:" + memberID);
 
@@ -172,7 +192,27 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    @Override
+    public StaffEntity getStaffByEmail(String email) {
+        System.out.println("getStaffByEmail() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
+            q.setParameter("email", email);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            return staffEntity;
+        } catch (NoResultException ex) {
+            System.out.println("Failed to find staff.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getStaffByEmail:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
     //For administrator to edit staff account.
+
     @Override
     public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address) {
         System.out.println("editStaff() called with staffID:" + staffID);
@@ -564,9 +604,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             staffEntity.setRoles(new ArrayList());//blank their roles
             List<RoleEntity> roles = new ArrayList<RoleEntity>();
-            for (int i=0;i<roleIDs.size();i++){
+            for (int i = 0; i < roleIDs.size(); i++) {
                 roles.add(em.getReference(RoleEntity.class, roleIDs.get(i)));
-                
+
             }
             staffEntity.setRoles(roles);
             em.merge(staffEntity);

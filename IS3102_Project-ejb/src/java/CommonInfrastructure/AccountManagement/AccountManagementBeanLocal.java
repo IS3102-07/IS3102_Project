@@ -14,6 +14,8 @@ public interface AccountManagementBeanLocal {
     public boolean checkMemberEmailExists(String email);
 
     public boolean registerMember(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String password);
+    
+    public MemberEntity getMemberByEmail(String email);
 
     public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password);
 
@@ -22,6 +24,8 @@ public interface AccountManagementBeanLocal {
     public boolean checkStaffEmailExists(String email);
 
     public StaffEntity registerStaff(String identificationNo, String name, String phone, String email, String address, String password);
+    
+    public StaffEntity getStaffByEmail(String email);
 
     public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address);
 

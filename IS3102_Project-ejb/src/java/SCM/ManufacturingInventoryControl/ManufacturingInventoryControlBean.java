@@ -1,4 +1,3 @@
-
 package SCM.ManufacturingInventoryControl;
 
 import EntityManager.FurnitureEntity;
@@ -19,19 +18,19 @@ import javax.persistence.Query;
 
 @Stateless
 public class ManufacturingInventoryControlBean implements ManufacturingInventoryControlBeanLocal {
-
+    
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-
+    
     @PersistenceContext
     private EntityManager em;
-
+    
     @Override
     public List<StorageBinEntity> getEmptyStorageBins(Long warehouseID, ItemEntity itemEntity) {
         System.out.println("getEmptyStorageBins() called with ItemEntity:" + itemEntity);
-
+        
         WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-
+        
         List<StorageBinEntity> listOfAppropriateEmptyStorageBins = new ArrayList<>();
         String storageBinType = "";
         if (itemEntity instanceof FurnitureEntity) {
@@ -60,7 +59,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-
+    
     @Override
     public boolean addItemToReceivingBin(Long warehouseID, String SKU) {
         System.out.println("addItemToStorageBin() called with SKU:" + SKU);
@@ -86,7 +85,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-
+    
     @Override
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination) {
         System.out.println("moveItemBetweenStorageBins() called with SKU:" + SKU);
@@ -114,7 +113,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-
+    
     @Override
     public Integer checkItemQty(Long warehouseId, String SKU) {
         System.out.println("checkItemQty() called with SKU:" + SKU);
@@ -140,8 +139,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-
+    
+    @Override
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU) {
+        System.out.println("findStorageBinsThatContainsItem() called");
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.items.SKU=:SKU");
             q.setParameter("id", warehouseId);
@@ -153,6 +154,207 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to findStorageBinThatContainsItem:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer getTotalVolumeOfInboundStorageBin(Long warehouseID) {
+        System.out.println("getTotalVolumeOfInboundStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Inbound")) {
+                    volume += storageBinEntity.getVolume();
+                }
+            }
+            System.out.println("Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalVolumeOfInboundStorageBin, warehouse not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalVolumeOfInboundStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer getTotalVolumeOfOutboundStorageBin(Long warehouseID) {
+        System.out.println("getTotalVolumeOfOutboundStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Outbound")) {
+                    volume += storageBinEntity.getVolume();
+                }
+            }
+            System.out.println("Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalVolumeOfOutboundStorageBin, warehouse not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalVolumeOfOutboundStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer getTotalVolumeOfShelfStorageBin(Long warehouseID) {
+        System.out.println("getTotalVolumeOfShelfStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Shelf")) {
+                    volume += storageBinEntity.getVolume();
+                }
+            }
+            System.out.println("Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalVolumeOfShelfStorageBin, warehouse not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalVolumeOfShelfStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer getTotalVolumeOfPalletStorageBin(Long warehouseID) {
+        System.out.println("getTotalVolumeOfPalletStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Shelf")) {
+                    volume += storageBinEntity.getVolume();
+                }
+            }
+            System.out.println("Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalVolumeOfPalletStorageBin, warehouse not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalVolumeOfPalletStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer getTotalFreeVolumeOfInboundStorageBin(Long warehouseID) {
+        System.out.println("getTotalFreeVolumeOfInboundStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Inbound")) {
+                    volume += storageBinEntity.getFreeVolume();
+                }
+            }
+            System.out.println("Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalFreeVolumeOfInboundStorageBin, warehouse not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalFreeVolumeOfInboundStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer getTotalFreeVolumeOfOutboundStorageBin(Long warehouseID) {
+        System.out.println("getTotalFreeVolumeOfOutboundStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Outbound")) {
+                    volume += storageBinEntity.getFreeVolume();
+                }
+            }
+            System.out.println("Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalFreeVolumeOfOutboundStorageBin, warehouse not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalFreeVolumeOfOutboundStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID) {
+        System.out.println("getTotalFreeVolumeOfShelfStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Shelf")) {
+                    volume += storageBinEntity.getFreeVolume();
+                }
+            }
+            System.out.println("Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalFreeVolumeOfShelfStorageBin, warehouse not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalFreeVolumeOfShelfStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID) {
+        System.out.println("getTotalFreeVolumeOfPalletStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Pallet")) {
+                    volume += storageBinEntity.getFreeVolume();
+                }
+            }
+            System.out.println("Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalFreeVolumeOfPalletStorageBin, warehouse not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalFreeVolumeOfPalletStorageBin:\n" + ex);
+            ex.printStackTrace();
             return null;
         }
     }

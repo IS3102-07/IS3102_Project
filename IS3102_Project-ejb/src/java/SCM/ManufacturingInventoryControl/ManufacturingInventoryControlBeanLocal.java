@@ -24,4 +24,15 @@ public interface ManufacturingInventoryControlBeanLocal {
     
     public Integer checkItemQty(Long warehouseId, String SKU);
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU);
+    
+    public Integer getTotalVolumeOfInboundStorageBin(Long warehouseID);
+    public Integer getTotalVolumeOfOutboundStorageBin(Long warehouseID);
+    public Integer getTotalVolumeOfShelfStorageBin(Long warehouseID);
+    public Integer getTotalVolumeOfPalletStorageBin(Long warehouseID);
+    public Integer getTotalFreeVolumeOfInboundStorageBin(Long warehouseID);
+    public Integer getTotalFreeVolumeOfOutboundStorageBin(Long warehouseID);
+    public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID);
+    public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID);
+    
+    
 }

@@ -13,6 +13,8 @@
             String errMsg = request.getParameter("errMsg");
             if (errMsg == null || errMsg.equals("")) {
                 errMsg = "";
+            } else {
+                errMsg +="<br/><br/>";
             }
         %>
         <div role="main" class="main">
