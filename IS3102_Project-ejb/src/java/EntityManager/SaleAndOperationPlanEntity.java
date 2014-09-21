@@ -35,9 +35,7 @@ public class SaleAndOperationPlanEntity implements Serializable {
     private ProductGroupEntity productGroup;
     @ManyToOne
     private MonthScheduleEntity schedule;
-    
-    
-    @Temporal(javax.persistence.TemporalType.DATE)    
+            
     private int year;
     private int month;
     private Integer productionPlan;

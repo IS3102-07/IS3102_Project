@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class MonthScheduleEntity implements Serializable {
     private Calendar date;
     private Integer year;
     private Integer month;
-    @OneToMany
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="schedule")
     private List<SaleAndOperationPlanEntity> sopList;
     
     public MonthScheduleEntity(){

@@ -28,10 +28,30 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;    
     
+    public MonthScheduleEntity createSchedule(Calendar schedule){
+        try{
+            Integer year = schedule.get(Calendar.YEAR);
+            Integer month = schedule.get(Calendar.MONTH);
+            Query q = em.createQuery("select s from MonthScheduleEntity s where s.year = ?1 and s.month = ?2")            
+                        .setParameter(1, year)
+                        .setParameter(2, month);
+            if(q.getResultList().isEmpty()){
+                MonthScheduleEntity scheduleEntity = new MonthScheduleEntity(schedule);
+                em.persist(scheduleEntity);
+                return scheduleEntity;
+            }
+            else 
+                q.getResultList().get(0);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
     @Override
     public SaleAndOperationPlanEntity createSOP(SaleForcastEntity saleForcast, StoreEntity store, Calendar schedule, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel){
         try{
-            MonthScheduleEntity scheduleEntity = new MonthScheduleEntity(schedule);
+            MonthScheduleEntity scheduleEntity = this.createSchedule(schedule);
             SaleAndOperationPlanEntity sop = new SaleAndOperationPlanEntity(saleForcast, store, productionPlan, currentInventoryLevel, targetInventoryLevel, scheduleEntity);
             em.persist(sop);
             return sop;
