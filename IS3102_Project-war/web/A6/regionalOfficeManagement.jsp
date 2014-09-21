@@ -44,8 +44,15 @@
 
                                 <div class="panel-body">
                                     <div class="table-responsive">
+                                        <form action="../FacilityManagement_RegionalOfficeServlet/createRegionalOffice_GET">
+                                        <div class="row">
+                                                <div class="col-md-12">
+                                                        <input type="submit" name="submit-btn" value="Add Regional Office" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <input type="submit" name="submit-btn" value="Delete Regional Office" class="btn btn-primary" data-loading-text="Loading..."></div>
+                                            </div>
+                                        <br/>
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../FacilityManagement_RegionalOfficeServlet/createRegionalOffice_GET">
+                                            
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>

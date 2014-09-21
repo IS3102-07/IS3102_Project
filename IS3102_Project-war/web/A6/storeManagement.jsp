@@ -44,8 +44,16 @@
 
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../FacilityManagement_StoreServlet/createStore_GET">
+                                        <form action="../FacilityManagement_StoreServlet/createStore_GET">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="submit" name="submit-btn" value="Add Store" class="btn btn-primary" data-loading-text="Loading...">
+                                                    <input type="submit" name="submit-btn" value="Delete Store" class="btn btn-primary" data-loading-text="Loading...">
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
@@ -84,46 +92,46 @@
                                                         <input type="submit" name="submit-btn" value="Delete Store" class="btn btn-primary" data-loading-text="Loading...">
                                                     </div>
                                                 </div>
-                                            </form>    
-                                        </div>
+                                        </form>    
                                     </div>
-                                    <!-- /.table-responsive -->
                                 </div>
-                                <!-- /.panel-body -->
-
+                                <!-- /.table-responsive -->
                             </div>
-                            <!-- /.panel -->
-                        </div>
-                        <!-- /.col-lg-12 -->
-                    </div>
-                    <!-- /.row -->
+                            <!-- /.panel-body -->
 
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /.row -->
 
             </div>
-            <!-- /#page-wrapper -->
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- /#wrapper -->
+        <!-- /#page-wrapper -->
 
-        <%
-            if (request.getAttribute("alertMessage") != null) {
-        %>
-        <script>
+    </div>
+    <!-- /#wrapper -->
+
+    <%
+        if (request.getAttribute("alertMessage") != null) {
+    %>
+    <script>
             alert("<%= request.getAttribute("alertMessage")%>");
-        </script>
-        <%
-            }
-        %>
+    </script>
+    <%
+        }
+    %>
 
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-        </script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function() {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
 
-    </body>
+</body>
 
 </html>
