@@ -40,7 +40,7 @@
                     <div class="row">
                         <div class="col-lg-6">                           
 
-                            <form class="myForm" action="../FacilityManagement_Servlet/createRegionalOffice_POST">
+                            <form class="myForm" action="../FacilityManagement_RegionalOfficeServlet/createRegionalOffice_POST">
                                 <div class="form-group">
                                     <label for="input_regionalOfficeName">Regional Office Name</label>
                                     <input type="text" class="form-control" id="input_regionalOfficeName" name="regionalOfficeName" required="true">
