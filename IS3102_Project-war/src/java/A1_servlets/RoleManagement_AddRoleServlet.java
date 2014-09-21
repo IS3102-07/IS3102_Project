@@ -25,7 +25,7 @@ public class RoleManagement_AddRoleServlet extends HttpServlet {
             boolean ifExist = accountManagementBean.checkIfRoleExists(name);
             if (ifExist) {
                 result = "?errMsg=Role already registered.";
-                response.sendRedirect("roleManagement_add.jsp" + result);
+                response.sendRedirect("A1/roleManagement_add.jsp" + result);
             } else {
                 accountManagementBean.createRole(name, accessLevel);
                 result = "?errMsg=Role added successfully.";
