@@ -3,10 +3,7 @@ package CommonInfrastructure.SystemSecurity;
 import EntityManager.StaffEntity;
 import EntityManager.MemberEntity;
 import javax.ejb.Stateless;
-import javax.mail.*;
-import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Properties;
 import javax.ejb.EJBException;
 import javax.mail.Message;
@@ -61,7 +58,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             props.put("mail.smtp.debug", "true");
             javax.mail.Authenticator auth = new SMTPAuthenticator();
             Session session = Session.getInstance(props, auth);
-            System.out.println("After password authentication");
             session.setDebug(true);
             Message msg = new MimeMessage(session);
             if (msg != null) {
@@ -94,7 +90,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 MemberEntity i = (MemberEntity) o;
                 if (i.getEmail().equalsIgnoreCase(email)) {
                     activationCode += i.getActivationCode();
-                    System.out.println("\nServer returns activation code of member:\n" + activationCode);
                 }
             }
         } catch (Exception ex) {
@@ -112,7 +107,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             props.put("mail.smtp.debug", "true");
             javax.mail.Authenticator auth = new SMTPAuthenticator();
             Session session = Session.getInstance(props, auth);
-            System.out.println("After password authentication");
             session.setDebug(true);
             Message msg = new MimeMessage(session);
             if (msg != null) {
@@ -145,7 +139,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                     i.setPasswordReset();
                     em.merge(i);
                     passwordReset += i.getPasswordReset();
-                    System.out.println("\nServer returns activation code of staff:\n" + passwordReset);
                 }
             }
         } catch (Exception ex) {
@@ -163,7 +156,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             props.put("mail.smtp.debug", "true");
             javax.mail.Authenticator auth = new SMTPAuthenticator();
             Session session = Session.getInstance(props, auth);
-            System.out.println("After password authentication");
             session.setDebug(true);
             Message msg = new MimeMessage(session);
             if (msg != null) {
@@ -213,7 +205,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             props.put("mail.smtp.debug", "true");
             javax.mail.Authenticator auth = new SMTPAuthenticator();
             Session session = Session.getInstance(props, auth);
-            System.out.println("After password authentication");
             session.setDebug(true);
             Message msg = new MimeMessage(session);
             if (msg != null) {
@@ -234,19 +225,21 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
         }
     }
 
-    public Boolean validateCodeForStaff(String email, String code) {
+    public Boolean activateStaffAccount(String email, String code) {
         System.out.println("Server called validateCodeForStaff():");
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t");
 
             for (Object o : q.getResultList()) {
-                StaffEntity i = (StaffEntity) o;
-                if (i.getEmail().equalsIgnoreCase(email)) {
-                    if (i.getActivationCode().equals(code)) {
-                        System.out.println("\nServer activation code valid of staff:\n" + email);
+                StaffEntity staffEntity = (StaffEntity) o;
+                if (staffEntity.getEmail().equalsIgnoreCase(email)) {
+                    if (staffEntity.getActivationCode().equals(code)) {
+                        System.out.println("\nServer activation code valid for staff:\n" + email);
+                        staffEntity.setAccountActivationStatus(true);
+                        em.merge(staffEntity);
                         return true;
                     } else {
-                        System.out.println("\nServer activation code invalid of staff:\n" + email);
+                        System.out.println("\nServer activation code invalid for staff:\n" + email);
                         return false;
                     }
                 }
@@ -258,16 +251,18 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
         return false;
     }
 
-    public Boolean validateCodeForMember(String username, String code) {
+    public Boolean activateMemberAccount(String username, String code) {
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity t");
 
             for (Object o : q.getResultList()) {
-                MemberEntity i = (MemberEntity) o;
-                if (i.getName().equalsIgnoreCase(username)) {
+                MemberEntity memberEntity = (MemberEntity) o;
+                if (memberEntity.getName().equalsIgnoreCase(username)) {
 
-                    if (i.getActivationCode().equals(code)) {
+                    if (memberEntity.getActivationCode().equals(code)) {
                         System.out.println("\nServer activation code valid of member:\n" + username);
+                        memberEntity.setAccountActivationStatus(true);
+                        em.merge(memberEntity);
                         return true;
                     } else {
                         System.out.println("\nServer activation code invalid of member:\n" + username);
