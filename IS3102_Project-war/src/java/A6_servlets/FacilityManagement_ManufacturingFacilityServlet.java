@@ -41,8 +41,8 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
         switch (target) {
 
             case "/manufacturingFacilityManagement_index":
-                List<ManufacturingFacilityEntity> manufacturingFacilityEntity = fmBean.viewListOfManufacturingFacility();
-                request.setAttribute("manufacturingFacilityEntity", manufacturingFacilityEntity);
+                List<ManufacturingFacilityEntity> manufacturingFacilityList = fmBean.viewListOfManufacturingFacility();
+                request.setAttribute("manufacturingFacilityList", manufacturingFacilityList);
                 nextPage = "/A6/manufacturingFacilityManagement";
                 break;
 

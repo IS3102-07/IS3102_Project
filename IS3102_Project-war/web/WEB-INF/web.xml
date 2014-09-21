@@ -252,6 +252,10 @@
         <servlet-name>createRegionalOffice</servlet-name>
         <jsp-file>/A6/createRegionalOffice.jsp</jsp-file>
     </servlet>
+     <servlet>
+        <servlet-name>createManufacturingFacility</servlet-name>
+        <jsp-file>/A6/createManufacturingFacility.jsp</jsp-file>
+    </servlet>
     <servlet>
         <servlet-name>createStore</servlet-name>
         <jsp-file>/A6/createStore.jsp</jsp-file>
@@ -623,6 +627,10 @@
     <servlet-mapping>
         <servlet-name>createRegionalOffice</servlet-name>
         <url-pattern>/A6/createRegionalOffice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createManufacturingFacility</servlet-name>
+        <url-pattern>/A6/createManufacturingFacility</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>createStore</servlet-name>
