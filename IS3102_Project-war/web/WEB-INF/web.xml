@@ -709,16 +709,16 @@
         <url-pattern>/FacilityManagement_StoreServlet/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SaleAndOperationPlanning_Servlet</servlet-name>
+        <url-pattern>/SaleAndOperationPlanning_Servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>sop_index</servlet-name>
-        <url-pattern>/sop_index</url-pattern>
+        <url-pattern>/A2/sop_index</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>sop_schedule</servlet-name>
-        <url-pattern>/sop_schedule</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SaleAndOperationPlanning_Servlet</servlet-name>
-        <url-pattern>/SaleAndOperationPlanning_Servlet/*</url-pattern>
+        <url-pattern>/A2/sop_schedule</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -51,11 +51,13 @@
                                             <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">
                                                 <option>South China Regional Office</option>
                                                 <%
-                                                    List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
-                                                    for (RegionalOfficeEntity r : regionalOfficeList) {
+                                                    if (request.getAttribute("regionalOfficeList") != null) {
+                                                        List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
+                                                        for (RegionalOfficeEntity r : regionalOfficeList) {
                                                 %>
                                                 <option value="<%= r.getId()%>"><%= r.getName()%></option>
                                                 <%
+                                                        }
                                                     }
                                                 %>
                                             </select>                                                 
@@ -94,8 +96,8 @@
             function getStore() {
                 var regionalOffice = $("#select_regionalOffice").find('option:selected').text();
 
-                var xmlhttp = new XMLHttpRequest();                
-                                
+                var xmlhttp = new XMLHttpRequest();
+
                 xmlhttp.onreadystatechange = function ()
                 {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
