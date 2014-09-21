@@ -71,7 +71,13 @@
                                 <form name="rolesManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Role" onclick="removeRole()"  />
+                                                </div>
+                                            </div>
+                                            <br>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
