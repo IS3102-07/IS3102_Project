@@ -89,8 +89,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     @Override
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination) {
         System.out.println("moveItemBetweenStorageBins() called with SKU:" + SKU);
+        em.refresh(source);
+        em.refresh(destination);
         List<ItemEntity> itemsInSourceBin = source.getItems();
-        List<ItemEntity> itemsInDestinationBin = destination.getItems();
+        List<ItemEntity> itemsInDestinationBin = destination.getItems();        
         try {
             for (int i = 0; i < itemsInSourceBin.size(); i++) {
                 if (itemsInSourceBin.get(i).getSKU().equals(SKU)) {
@@ -101,8 +103,6 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     break;
                 }
             }
-            em.merge(itemsInSourceBin);
-            em.merge(itemsInDestinationBin);
             System.out.println("The item is moved successfully between bins.");
             return true;
         } catch (EntityNotFoundException ex) {
@@ -110,6 +110,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         } catch (Exception ex) {
             System.out.println("\nServer failed to move the item between bins:\n" + ex);
+            ex.printStackTrace();
             return false;
         }
     }
