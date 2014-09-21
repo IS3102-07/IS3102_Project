@@ -609,10 +609,6 @@
         <url-pattern>/A6/editRegionalOffice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>editStore</servlet-name>
-        <url-pattern>/A6/editStore</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
         <url-pattern>/WorkspaceMessage_RemoveServlet</url-pattern>
     </servlet-mapping>
