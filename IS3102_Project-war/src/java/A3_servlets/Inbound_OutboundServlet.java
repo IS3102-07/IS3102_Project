@@ -12,7 +12,6 @@ import EntityManager.LineItemEntity;
 import EntityManager.ShippingOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
-import SCM.InboundAndOutboundLogistics.LineItemModel;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
