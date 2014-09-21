@@ -219,7 +219,14 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             for (int i = 0;
                     i < numberOfQuantityToMove;
                     i++) {
-                boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(transferOrder.getLineItem().getItem().getSKU(), transferOrder.getOrigin(), transferOrder.getTarget());
+                String SKU = transferOrder.getLineItem().getItem().getSKU();
+                StorageBinEntity originBin = transferOrder.getOrigin();
+                StorageBinEntity targetBin = transferOrder.getTarget();
+                System.out.println("Moving in progress....");
+                System.out.println("SKU number is " + SKU);
+                System.out.println("originBin: " + originBin.getId() + "moving to targetBin: " + targetBin);
+
+                boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
                 if (!isPass) {
                     UserTransaction ut = context.getUserTransaction();
                     ut.rollback();
