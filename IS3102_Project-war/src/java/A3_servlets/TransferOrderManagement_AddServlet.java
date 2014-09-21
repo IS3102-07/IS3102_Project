@@ -33,10 +33,10 @@ public class TransferOrderManagement_AddServlet extends HttpServlet {
             } else {
                 boolean canUpdate = manufacturingWarehouseManagementBean.createTransferOrder(warehouseEntity.getId(), Long.parseLong(origin), Long.parseLong(target), null);
                 if (!canUpdate) {
-                    result = "?errMsg=Type already exist. Please try again.";
+                    result = "?errMsg=Ops error, please try again.";
                     response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
                 } else {
-                    result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
+                    result = "?errMsg=Transfer Order created successfully.&id=" + warehouseEntity.getWarehouseName();
                     response.sendRedirect("TransferOrderManagement_Servlet" + result);
                 }
             }
