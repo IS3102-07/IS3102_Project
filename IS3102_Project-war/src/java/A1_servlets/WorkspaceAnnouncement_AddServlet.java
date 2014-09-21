@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 
 public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
 
@@ -23,18 +24,21 @@ public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
         String result;
         try {
             System.out.println("1We reached add servlet for announcement");
-            
+
             String sender = request.getParameter("sender");
             String title = request.getParameter("title");
             String message = request.getParameter("message");
             System.out.println("2We reached add servlet for announcement");
-            Long expiryDateLong = Date.parse(request.getParameter("expiryDate"));
+            System.out.println("Expiry date long " + request.getParameter("expiryDate"));
+
+            String expiryDate = request.getParameter("expiryDate");
             
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(expiryDateLong);
-            Date expiryDate = cal.getTime();
-            
-            if (workspaceBeanLocal.makeAnnouncement(sender, title, message, expiryDate)) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatter.parse(expiryDate);
+            System.out.println(date);
+
+            System.out.println("Expiry date long " + date);
+            if (workspaceBeanLocal.makeAnnouncement(sender, title, message, date)) {
                 result = "?errMsg=Announcement broadcasted.";
                 response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
             } else {
