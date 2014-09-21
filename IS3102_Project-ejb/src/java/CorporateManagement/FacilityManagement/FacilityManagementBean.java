@@ -51,7 +51,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public Boolean editRegionalOffice(String regionalOfficeName) {
         System.out.println("editRegionalOffice() called with ID:" + regionalOfficeName);
         try {
-            Query q = em.createQuery("SELECT t FROM regionalOfficeEntity t");
+            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
 
             for (Object o : q.getResultList()) {
                 RegionalOfficeEntity i = (RegionalOfficeEntity) o;
@@ -237,18 +237,38 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
-
-    public boolean removeStore(String storeName) {
-        System.out.println("removeStore() called with storeName:" + storeName);
+    
+    public Boolean editStore(Long id, String storeName) {
+        System.out.println("editStore() called with ID:" + id);
         try {
             Query q = em.createQuery("SELECT t FROM StoreEntity t");
 
             for (Object o : q.getResultList()) {
                 StoreEntity i = (StoreEntity) o;
-                if (i.getName().equalsIgnoreCase(storeName)) {
+                if (i.getId() == id) {
+                    i.setName(storeName);
+                    em.merge(i);
+                    System.out.println("\nServer edited regional office:\n" + id);
+                    return true;
+                }
+            }
+            return false; //Could not find the role to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove regional office:\n" + ex);
+            return false;
+        }
+    }
+    public boolean removeStore(String id) {
+        System.out.println("removeStore() called with storeName:" + id);
+        try {
+            Query q = em.createQuery("SELECT t FROM StoreEntity t");
+
+            for (Object o : q.getResultList()) {
+                StoreEntity i = (StoreEntity) o;
+                if (i.getId() == Long.valueOf(id)) {
                     em.remove(i);
                     em.flush();
-                    System.out.println("\nServer removed store:\n" + storeName);
+                    System.out.println("\nServer removed store:\n" + id);
                     return true;
                 }
             }

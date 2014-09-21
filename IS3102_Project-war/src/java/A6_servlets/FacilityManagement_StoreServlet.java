@@ -6,7 +6,7 @@
 package A6_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.RegionalOfficeEntity;
+import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Administrator
  */
-public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
+public class FacilityManagement_StoreServlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal fmBean;
@@ -40,73 +40,73 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
 
         switch (target) {
 
-            case "/regionalOfficeManagement_index":
-                List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
-                request.setAttribute("regionalOfficeList", regionalOfficeList);
-                nextPage = "/A6/regionalOfficeManagement";
+            case "/storeManagement_index":
+                List<StoreEntity> storeList = fmBean.viewListOfStorey();
+                request.setAttribute("storeList", storeList);
+                nextPage = "/A6/storeManagement";
                 break;
 
-            case "/createRegionalOffice_GET":
-                System.out.println("Create regional office in servlet");
+            case "/createStore_GET":
+                System.out.println("Create store in servlet");
                 String submit_btn = request.getParameter("submit-btn");
-                if (submit_btn.equals("Add Regional Office")) {
-                    nextPage = "/A6/createRegionalOffice";
-                } else if (submit_btn.equals("Delete Regional Office")) {
-                    nextPage = "/FacilityManagement_RegionalOfficeServlet/deleteRegionalOffice";
+                if (submit_btn.equals("Add Store")) {
+                    nextPage = "/A6/createStore";
+                } else if (submit_btn.equals("Delete Store")) {
+                    nextPage = "/FacilityManagement_StoreServlet/deleteStore";
                 }
                 break;
 
-            case "/createRegionalOffice_POST":
+            case "/createStore_POST":
                 try {
-                    String regionalOfficeName = request.getParameter("regionalOfficeName");
+                    String storeName = request.getParameter("storeName");
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
 
-                    boolean regionalOffice = fmBean.addRegionalOffice(regionalOfficeName);
-                    if (regionalOffice != false) {
-                        request.setAttribute("alertMessage", "A new regional office record has been saved.");
+                    StoreEntity store = fmBean.createStore(storeName);
+                    if (store != null) {
+                        request.setAttribute("alertMessage", "A new store record has been saved.");
                     } else {
-                        request.setAttribute("alertMessage", "Fail to create regional office due to duplicated regional office name.");
+                        request.setAttribute("alertMessage", "Fail to create store due to duplicated regional office name.");
                     }
-                    request.setAttribute("regionalOffice", regionalOffice);
-                    nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
+                    request.setAttribute("store", store);
+                    nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 break;
 
-            case "/editRegionalOffice_GET":
-                String regionalOfficeId = request.getParameter("delete");
-                System.out.println("Regional office ID is " + regionalOfficeId);
-                RegionalOfficeEntity regionalOffice = fmBean.viewRegionalOffice(regionalOfficeId);
-                request.setAttribute("regionalOffice", regionalOffice);
-                nextPage = "/A6/editRegionalOffice";
+            case "/editStore_GET":
+                String storeId = request.getParameter("delete");
+                System.out.println("Store ID is " + storeId);
+                StoreEntity store = fmBean.viewStoreEntity(storeId);
+                request.setAttribute("store", store);
+                nextPage = "/A6/editStore";
                 break;
 
-            case "/editRegionalOffice_POST":
-                String regionalOfficeName = request.getParameter("regionalOfficeName");
+            case "/editStore_POST":
+                String storeName = request.getParameter("storeName");
                 String address = request.getParameter("address");
                 String telephone = request.getParameter("telephone");
                 String email = request.getParameter("email");
-                Long id = Long.parseLong(request.getParameter("regionalOfficeId"));
+                Long id = Long.parseLong(request.getParameter("storeId"));
 
-                if (fmBean.editRegionalOffice(regionalOfficeName)) {
-                    request.setAttribute("alertMessage", "The regional office has been saved.");
+                if (fmBean.editStore(id, storeName)) {
+                    request.setAttribute("alertMessage", "The store has been saved.");
                 } else {
-                    request.setAttribute("alertMessage", "Fail to edit regional office.");
+                    request.setAttribute("alertMessage", "Fail to edit store.");
                 }
-                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
+                nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
                 break;
-            case "/deleteRegionalOffice":
+            case "/deleteStore":
                 String[] deletes = request.getParameterValues("delete");
                 if (deletes != null) {
-                    for (String regionalOfficeString : deletes) {
-                        String regionalOffice_Id = regionalOfficeString;
-                        fmBean.removeRegionalOffice(regionalOffice_Id);
+                    for (String storeString : deletes) {
+                        String store_Id = storeString;
+                        fmBean.removeStore(store_Id);
                     }
                 }
-                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
+                nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
                 break;
 
         }

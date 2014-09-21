@@ -336,6 +336,10 @@
         <servlet-name>FacilityManagement_RegionalOfficeServlet</servlet-name>
         <servlet-class>A6_servlets.FacilityManagement_RegionalOfficeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FacilityManagement_StoreServlet</servlet-name>
+        <servlet-class>A6_servlets.FacilityManagement_StoreServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
         <url-pattern>/ECommerce_LoginServlet</url-pattern>
@@ -671,6 +675,10 @@
     <servlet-mapping>
         <servlet-name>FacilityManagement_RegionalOfficeServlet</servlet-name>
         <url-pattern>/FacilityManagement_RegionalOfficeServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FacilityManagement_StoreServlet</servlet-name>
+        <url-pattern>/FacilityManagement_StoreServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
