@@ -10,11 +10,11 @@
     <body class="dark">
 
         <%
-            String errMsg = request.getParameter("errMsg");
-            if (errMsg == null || errMsg.equals("")) {
-                errMsg = "";
+            String msg = request.getParameter("msg");
+            if (msg == null || msg.equals("")) {
+                msg = "";
             } else {
-                errMsg +="<br/><br/>";
+                msg +="<br/><br/>";
             }
         %>
         <div role="main" class="main">

@@ -56,11 +56,8 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     String address = request.getParameter("address");
                     String phone = request.getParameter("phone");
 
-                    //TODO WHY IS THIS PART NOT GETTING ROLES????
                     String[] roles = request.getParameterValues("roles");
-                    if (roles == null) {
-                        System.out.println("JIALAT LIAOOO");
-                    }
+
                     List<Long> roleIDs = new ArrayList();
                     for (int i = 0; i < roles.length; i++) {
                         roleIDs.add(Long.parseLong(roles[i]));

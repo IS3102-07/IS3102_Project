@@ -487,7 +487,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public RoleEntity searchRole(String name, String accessLevel) {
         System.out.println("searchRole() called with name:" + name);
         try {
-            Query q = em.createQuery("SELECT t FROM RoleEntity where t.name=:name AND t.accessLevel=:accessLevel");
+            Query q = em.createQuery("SELECT t FROM RoleEntity t where t.name=:name AND t.accessLevel=:accessLevel");
             q.setParameter("name", name);
             q.setParameter("accessLevel", name);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
@@ -506,7 +506,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public boolean checkIfStaffHasRole(Long staffID, Long roleID) {
         System.out.println("checkIfStaffHasRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:staffID");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:staffID");
             q.setParameter("staffID", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             Collection<RoleEntity> roles = staffEntity.getRoles();
@@ -531,7 +531,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public boolean addStaffRole(Long staffID, Long roleID) {
         System.out.println("addStaffRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
@@ -554,7 +554,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public boolean removeStaffRole(Long staffID, Long roleID) {
         System.out.println("removeStaffRole() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
@@ -582,7 +582,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     private boolean assignStaffRoles(Long staffID, List<RoleEntity> roles) {
         System.out.println("assignStaffRoles() called with staffID:" + staffID);
         StaffEntity staffEntity = new StaffEntity();
-        Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
+        Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
         try {
             q.setParameter("id", staffID);
             staffEntity = (StaffEntity) q.getSingleResult();
@@ -600,7 +600,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public boolean editStaffRole(Long staffID, List<Long> roleIDs) {
         System.out.println("editStaffRole() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity where t.id=:id");
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
             q.setParameter("id", staffID);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             staffEntity.setRoles(new ArrayList());//blank their roles

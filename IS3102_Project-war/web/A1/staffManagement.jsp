@@ -113,7 +113,7 @@
                                                                         out.println("-");
                                                                     } else {
                                                                         for (int k = 0; k < roles.size(); k++) {
-                                                                            out.println(roles.get(i).getName());
+                                                                            out.println(roles.get(k).getName());
                                                                         }
                                                                     }
                                                                 %>
