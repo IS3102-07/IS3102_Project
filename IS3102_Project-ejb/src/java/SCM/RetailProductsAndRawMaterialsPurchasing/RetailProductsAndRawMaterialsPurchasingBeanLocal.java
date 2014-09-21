@@ -10,7 +10,7 @@ import javax.ejb.Local;
 
 @Local
 public interface RetailProductsAndRawMaterialsPurchasingBeanLocal {
-   public PurchaseOrderEntity createPurchaseOrder(SupplierEntity supplier, WarehouseEntity receivedWarehouse, Date expectedReceivedDate);
+   public PurchaseOrderEntity createPurchaseOrder(Long supplierID, Long recivingWarehouseID, Date expectedReceivedDate);
    public Boolean addLineItemToPurchaseOrder(Long id, LineItemEntity lineItem);
    public Boolean updatePurchaseOrder(Long id, String status);
    public PurchaseOrderEntity getPurchaseOrderById(Long id);
