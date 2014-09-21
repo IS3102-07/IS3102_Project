@@ -83,6 +83,13 @@
                                 <form name="transferOrderManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Transfer Order" onclick="addTO()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Transfer Order" onclick="removeTO()"  />
+                                                </div>
+                                            </div>
+                                            <br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>

@@ -64,7 +64,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Welcome to ToDo List Management!";
+                                            errMsg = "Add or delete tasks";
                                         }
                                         out.println(errMsg);
                                     %>
