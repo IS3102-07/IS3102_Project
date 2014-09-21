@@ -23,21 +23,14 @@ public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String result;
         try {
-            System.out.println("1We reached add servlet for announcement");
-
             String sender = request.getParameter("sender");
             String title = request.getParameter("title");
             String message = request.getParameter("message");
-            System.out.println("2We reached add servlet for announcement");
-            System.out.println("Expiry date long " + request.getParameter("expiryDate"));
-
             String expiryDate = request.getParameter("expiryDate");
             
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatter.parse(expiryDate);
-            System.out.println(date);
-
-            System.out.println("Expiry date long " + date);
+            
             if (workspaceBeanLocal.makeAnnouncement(sender, title, message, date)) {
                 result = "?errMsg=Announcement broadcasted.";
                 response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);

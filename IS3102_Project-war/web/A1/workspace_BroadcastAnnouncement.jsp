@@ -17,7 +17,7 @@
                                     <i class="icon icon-dashboard"></i> <a href="../Workspace_Servlet">Workspace</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-bell"></i> <a href="workspace_viewAnnouncement.jsp">Announcement</a>
+                                    <i class="icon icon-bell"></i> <a href="../WorkspaceAnnouncement_Servlet">Announcement</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-bullhorn"></i> Broadcast Announcement

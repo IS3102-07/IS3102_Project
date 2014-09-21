@@ -106,13 +106,13 @@
                                             }
                                         }
                                     %>
-                                    <input type="checkbox" name="roles" value="1L" <%if (role1) {%>checked<%}%>/> Administrator &nbsp; &nbsp; &nbsp;
-                                    <input type="checkbox" name="roles" value="2L" <%if (role2) {%>checked<%}%>/> Regional Manager &nbsp; &nbsp; &nbsp;
-                                    <input type="checkbox" name="roles" value="3L" <%if (role3) {%>checked<%}%>/> Warehouse Manager &nbsp; &nbsp; &nbsp;
-                                    <input type="checkbox" name="roles" value="4L" <%if (role4) {%>checked<%}%>/> Store Manager &nbsp; &nbsp; &nbsp;
-                                    <input type="checkbox" name="roles" value="5L" <%if (role5) {%>checked<%}%>/> Marketing Director &nbsp; &nbsp; &nbsp;
-                                    <input type="checkbox" name="roles" value="6L" <%if (role6) {%>checked<%}%>/> Product Development Engineer &nbsp; &nbsp; &nbsp;
-                                    <input type="checkbox" name="roles" value="7L" <%if (role7) {%>checked<%}%>/> Purchasing Manager &nbsp; &nbsp; &nbsp;
+                                    <input type="checkbox" name="roles" value="1" <%if (role1) {%>checked<%}%>/> Administrator &nbsp; &nbsp; &nbsp;<br/>
+                                    <input type="checkbox" name="roles" value="2" <%if (role2) {%>checked<%}%>/> Regional Manager &nbsp; &nbsp; &nbsp;<br/>
+                                    <input type="checkbox" name="roles" value="3" <%if (role3) {%>checked<%}%>/> Warehouse Manager &nbsp; &nbsp; &nbsp;<br/>
+                                    <input type="checkbox" name="roles" value="4" <%if (role4) {%>checked<%}%>/> Store Manager &nbsp; &nbsp; &nbsp;<br/>
+                                    <input type="checkbox" name="roles" value="5" <%if (role5) {%>checked<%}%>/> Marketing Director &nbsp; &nbsp; &nbsp;<br/>
+                                    <input type="checkbox" name="roles" value="6" <%if (role6) {%>checked<%}%>/> Product Development Engineer &nbsp; &nbsp; &nbsp;<br/>
+                                    <input type="checkbox" name="roles" value="7" <%if (role7) {%>checked<%}%>/> Purchasing Manager &nbsp; &nbsp; &nbsp;<br/>
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" name="update" value="yes"/>

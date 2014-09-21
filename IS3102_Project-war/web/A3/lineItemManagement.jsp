@@ -106,6 +106,24 @@
                                     <h3 class="panel-title"> Transfer Order Status</h3>
                                 </div>
                                 <div class="panel-body">
+                                    <%
+                                        if (!transferOrder.getStatus().equals("Pending")) {
+                                    %>
+                                    <form role="form" >
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <select class="form-control" name="status" disabled>
+                                                <option><%=transferOrder.getStatus()%></option>
+                                            </select>
+                                            <br>
+                                            <div class="form-group">
+                                                <input type="submit" value="Update Status" class="btn btn-lg btn-primary btn-block" disabled="">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <%
+                                    } else {
+                                    %>
                                     <form role="form" action="../LineItemManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>Status</label>
@@ -114,12 +132,14 @@
                                                 <option>Completed</option>
                                                 <option>Unfulfillable</option>
                                             </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="submit" value="Update Status" class="btn btn-lg btn-primary btn-block">
+                                            <br>
+                                            <div class="form-group">
+                                                <input type="submit" value="Update Status" class="btn btn-lg btn-primary btn-block">
+                                            </div>
                                         </div>
                                         <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
                                     </form>
+                                    <%}%>
                                 </div>
                             </div>
                         </div>
