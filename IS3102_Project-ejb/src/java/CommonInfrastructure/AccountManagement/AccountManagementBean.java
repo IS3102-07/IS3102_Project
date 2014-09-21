@@ -600,9 +600,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public boolean editStaffRole(Long staffID, List<Long> roleIDs) {
         System.out.println("editStaffRole() called with staffID:" + staffID);
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
-            q.setParameter("id", staffID);
-            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+           
+            StaffEntity staffEntity = em.find(StaffEntity.class,staffID);
             staffEntity.setRoles(new ArrayList());//blank their roles
             List<RoleEntity> roles = new ArrayList<RoleEntity>();
             for (int i = 0; i < roleIDs.size(); i++) {
