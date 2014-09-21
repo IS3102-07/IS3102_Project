@@ -37,7 +37,7 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div id="overview" class="tab-pane active">
-                                        <form role="form" action=".#" >
+                                        <form role="form" action="../StaffManagement_UpdateStaffServlet">
                                             <h4>Personal Information</h4>
                                             <div class="form-group">
                                                 <label>Identification No</label>
@@ -49,7 +49,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>E-mail Address</label>
-                                                <input class="form-control" required="true" type="email" name="email" value="<%=staffEntity.getEmail()%>" disabled/>
+                                                <input class="form-control" required="true" value="<%=staffEntity.getEmail()%>" disabled/>
                                             </div>
                                             <div class="form-group">
                                                 <label>Phone</label>
@@ -76,6 +76,9 @@
                                                         <input type="submit" value="Submit" class="btn btn-primary"/>
                                                         <input type="reset" value="Reset" class="btn btn-primary"/>
                                                     </div>
+                                                    <input type="hidden" value="<%=staffEntity.getId()%>" name="id">
+                                                    <input type="hidden" value="A1/staffProfile.jsp" name="source"/>
+                                                    <input type="hidden" value="<%=staffEntity.getEmail()%>" name="email"/>
                                                 </div>
                                             </div>
                                         </form>

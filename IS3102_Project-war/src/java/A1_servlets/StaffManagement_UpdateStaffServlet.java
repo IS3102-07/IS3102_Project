@@ -2,6 +2,7 @@ package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.RoleEntity;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    private String result ="";
+    private String result = "";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -26,42 +27,64 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String update = request.getParameter("update");
-            if (update != null && update.equals("yes")) {
+            String source = request.getParameter("source");
+            if (source != null) {
                 String staffId = request.getParameter("id");
                 String identificationNo = request.getParameter("identificationNo");
                 String name = request.getParameter("name");
+                String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 String address = request.getParameter("address");
                 String phone = request.getParameter("phone");
-                
-                //TODO WHY IS THIS PART NOT GETTING ROLES????
-                String[] roles = request.getParameterValues("roles");
-                if(roles==null){
-                    System.out.println("JIALAT LIAOOO");
-                }
-                List<Long> roleIDs = new ArrayList();
-                for (int i = 0; i < roles.length; i++) {
-                    roleIDs.add(Long.parseLong(roles[i]));
-                }
-                boolean canUpdateRoles = accountManagementBean.editStaffRole(Long.parseLong(staffId), roleIDs);
                 boolean canUpdateInfo = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address);
                 if (!canUpdateInfo) {
-                    result += "&errMsg=Error updating staff particulars.";
-                }
-                if (!canUpdateRoles) {
-                    result += "&errMsg=Error updating staff role(s).";
-                }
-                if (!canUpdateInfo || !canUpdateRoles) {
-                    response.sendRedirect("A1/staffManagement_update.jsp?" + result);
+                    result += "?&errMsg=Error updating your particulars.";
+                    response.sendRedirect(source + result);
                 } else {
-                    result = "?errMsg=Staff updated successfully.";
-                    response.sendRedirect("StaffManagement_StaffServlet" + result);
+                    StaffEntity staffEntity = accountManagementBean.getStaffByEmail(email);
+                    session.setAttribute("staffEntity", staffEntity);
+                    result = "?errMsg=Particulars updated successfully.";
+                    response.sendRedirect(source + result);
+                    //response.sendRedirect("StaffManagement_StaffServlet" + result);
                 }
             } else {
-                response.sendRedirect("A1/staffManagement_update.jsp");
-                session.setAttribute("staffUpdateId", request.getParameter("id"));
-                List<RoleEntity> staffUpdateRoles = (List<RoleEntity>) accountManagementBean.listRolesHeldByStaff(Long.parseLong(request.getParameter("id")));
-                session.setAttribute("staffUpdateRoles", staffUpdateRoles);
+                if (update != null && update.equals("yes")) {
+                    String staffId = request.getParameter("id");
+                    String identificationNo = request.getParameter("identificationNo");
+                    String name = request.getParameter("name");
+                    String password = request.getParameter("password");
+                    String address = request.getParameter("address");
+                    String phone = request.getParameter("phone");
+
+                    //TODO WHY IS THIS PART NOT GETTING ROLES????
+                    String[] roles = request.getParameterValues("roles");
+                    if (roles == null) {
+                        System.out.println("JIALAT LIAOOO");
+                    }
+                    List<Long> roleIDs = new ArrayList();
+                    for (int i = 0; i < roles.length; i++) {
+                        roleIDs.add(Long.parseLong(roles[i]));
+                    }
+                    boolean canUpdateRoles = accountManagementBean.editStaffRole(Long.parseLong(staffId), roleIDs);
+                    boolean canUpdateInfo = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address);
+                    if (!canUpdateInfo) {
+                        result += "&errMsg=Error updating staff particulars.";
+                    }
+                    if (!canUpdateRoles) {
+                        result += "&errMsg=Error updating staff role(s).";
+                    }
+                    if (!canUpdateInfo || !canUpdateRoles) {
+                        response.sendRedirect("A1/staffManagement_update.jsp?" + result);
+                    } else {
+                        result = "?errMsg=Staff updated successfully.";
+                        response.sendRedirect("StaffManagement_StaffServlet" + result);
+                    }
+                } else {
+                    response.sendRedirect("A1/staffManagement_update.jsp");
+                    session.setAttribute("staffUpdateId", request.getParameter("id"));
+                    List<RoleEntity> staffUpdateRoles = (List<RoleEntity>) accountManagementBean.listRolesHeldByStaff(Long.parseLong(request.getParameter("id")));
+                    session.setAttribute("staffUpdateRoles", staffUpdateRoles);
+                }
             }
         } catch (Exception ex) {
             out.println(ex);
