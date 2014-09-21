@@ -23,16 +23,19 @@ public RetailProductsAndRawMaterialsPurchasingBean() {
 }
   
 @Override
-public PurchaseOrderEntity createPurchaseOrder(SupplierEntity supplier, WarehouseEntity receivedWarehouse, Date expectedReceivedDate) {     
+public PurchaseOrderEntity createPurchaseOrder(Long supplierID, Long receivingWarehouseID, Date expectedReceivedDate) {
+    System.out.println("createPurchaseOrder() called");
      try {
-         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity(supplier, receivedWarehouse, expectedReceivedDate);
+         SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
+         WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, receivingWarehouseID);
+         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity(supplierEntity, warehouseEntity, expectedReceivedDate);
          em.persist(purchaseOrder);
-         
          System.out.println("PurchaseOrder with id: "+ purchaseOrder.getId() + " is created successfully");
          return purchaseOrder;
      }
      catch(EntityExistsException ex){
          ex.printStackTrace();
+         System.out.println("Failed to create purchase order.");
          return null;
      }
 }
@@ -82,6 +85,20 @@ public PurchaseOrderEntity createPurchaseOrder(SupplierEntity supplier, Warehous
             Query q = em.createQuery("select p from PurchaseOrderEntity p where p.status = ?1").setParameter(1, status);
             return q.getResultList();
         }catch(Exception ex){
+            return new ArrayList<>();
+        }        
+    }
+    
+    @Override
+    public List<PurchaseOrderEntity> getPurchaseOrderList() {
+        System.out.println("getPurchaseOrderList() called");
+        try{
+            Query q = em.createQuery("select p from PurchaseOrderEntity p");
+            System.out.println("List returned.");
+            return q.getResultList();
+        }catch(Exception ex){
+            System.out.println("Failed to return list.");
+            ex.printStackTrace();
             return new ArrayList<>();
         }        
     }

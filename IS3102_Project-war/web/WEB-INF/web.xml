@@ -249,6 +249,10 @@
         <jsp-file>/A6/createRegionalOffice.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>createStore</servlet-name>
+        <jsp-file>/A6/createStore.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
         <servlet-class>A3_servlets.ManufacturingWarehouseManagement_Servlet</servlet-class>
     </servlet>
@@ -335,6 +339,10 @@
     <servlet>
         <servlet-name>FacilityManagement_RegionalOfficeServlet</servlet-name>
         <servlet-class>A6_servlets.FacilityManagement_RegionalOfficeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FacilityManagement_StoreServlet</servlet-name>
+        <servlet-class>A6_servlets.FacilityManagement_StoreServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ECommerce_LoginServlet</servlet-name>
@@ -585,6 +593,10 @@
         <url-pattern>/A6/createRegionalOffice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>createStore</servlet-name>
+        <url-pattern>/A6/createStore</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
         <url-pattern>/ManufacturingWarehouseManagement_Servlet</url-pattern>
     </servlet-mapping>
@@ -595,6 +607,10 @@
     <servlet-mapping>
         <servlet-name>editRegionalOffice</servlet-name>
         <url-pattern>/A6/editRegionalOffice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editStore</servlet-name>
+        <url-pattern>/A6/editStore</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
@@ -671,6 +687,10 @@
     <servlet-mapping>
         <servlet-name>FacilityManagement_RegionalOfficeServlet</servlet-name>
         <url-pattern>/FacilityManagement_RegionalOfficeServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FacilityManagement_StoreServlet</servlet-name>
+        <url-pattern>/FacilityManagement_StoreServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

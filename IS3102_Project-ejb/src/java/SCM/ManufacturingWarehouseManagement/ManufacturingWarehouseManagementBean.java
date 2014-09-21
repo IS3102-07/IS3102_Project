@@ -210,15 +210,13 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public
-            boolean markTransferOrderAsCompleted(Long transferOrderId) {
+    public boolean markTransferOrderAsCompleted(Long transferOrderId) {
+        System.out.println("markTransferOrderAsCompleted() called");
         try {
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
             Integer numberOfQuantityToMove = transferOrder.getLineItem().getQuantity();
             System.out.println("The number of quantity to move is " + numberOfQuantityToMove);
-            for (int i = 0;
-                    i < numberOfQuantityToMove;
-                    i++) {
+            for (int i = 0;i < numberOfQuantityToMove;i++) {
                 String SKU = transferOrder.getLineItem().getItem().getSKU();
                 StorageBinEntity originBin = transferOrder.getOrigin();
                 StorageBinEntity targetBin = transferOrder.getTarget();

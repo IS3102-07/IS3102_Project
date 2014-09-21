@@ -33,10 +33,11 @@ public class SaleAndOperationPlanEntity implements Serializable {
     private ManufacturingFacilityEntity manufacturingFacility;
     @ManyToOne
     private ProductGroupEntity productGroup;
+    @ManyToOne
+    private MonthScheduleEntity schedule;
     
     
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar date;
+    @Temporal(javax.persistence.TemporalType.DATE)    
     private int year;
     private int month;
     private Integer productionPlan;
@@ -45,17 +46,33 @@ public class SaleAndOperationPlanEntity implements Serializable {
     
     public SaleAndOperationPlanEntity(){}
 
-    public SaleAndOperationPlanEntity(SaleForcastEntity saleForcast, StoreEntity store, Calendar date, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel) {
+    public SaleAndOperationPlanEntity(SaleForcastEntity saleForcast, StoreEntity store, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel, MonthScheduleEntity schedule) {
         this.saleForcast = saleForcast;
-        this.store = store;
-        this.date = date;
-        this.year = date.get(Calendar.YEAR);
-        this.month = date.get(Calendar.MONTH);
+        this.schedule = schedule;
+        this.store = store;        
+        this.year = schedule.getYear();
+        this.month = schedule.getMonth();
         this.productionPlan = productionPlan;
         this.currentInventoryLevel = currentInventoryLevel;
         this.targetInventoryLevel = targetInventoryLevel;
     }        
 
+    public MonthScheduleEntity getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(MonthScheduleEntity schedule) {
+        this.schedule = schedule;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+        
     public ProductGroupEntity getProductGroup() {
         return productGroup;
     }
@@ -87,16 +104,6 @@ public class SaleAndOperationPlanEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Calendar getMonth() {
-        return date;
-    }
-
-    public void setMonth(Calendar date) {
-        this.date = date;
-        this.year = date.get(Calendar.YEAR);
-        this.month = date.get(Calendar.MONTH);
-    }        
     
     public int getYear(){
         return this.year;

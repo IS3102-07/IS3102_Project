@@ -3,57 +3,48 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package A2_servlets;
 
-import EntityManager.RegionalOfficeEntity;
+package A6_servlets;
+
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Administrator
+ * @author yang
  */
-public class SaleAndOperationPlanning_Servlet extends HttpServlet {
-    
+@WebServlet(name = "FacilityManagement_ManufacturingFacilityServlet", urlPatterns = {"/FacilityManagement_ManufacturingFacilityServlet/*"})
+public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String nextPage = "/A2/sop_index";
-        ServletContext servletContext = getServletContext();
-        RequestDispatcher dispatcher;
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        HttpSession session = request.getSession();
-
-        String target = request.getPathInfo();
-        
-        switch (target) {
-            case "/sop_index_GET":                
-                List<RegionalOfficeEntity> regionalOfficeList = new ArrayList<>(); // 1234567890 wait for regional office 
-                request.setAttribute("regionalOfficeList", regionalOfficeList);
-                nextPage = "/A2/sop_index";
-                break;
-            case "/sop_index_Post":
-                try{
-                    Long storeId = Long.parseLong(request.getParameter("store"));
-                    session.setAttribute("sop_storeId", storeId);
-                }catch(Exception ex){
-                    ex.printStackTrace();
-                }
-                break;
-                
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet FacilityManagement_ManufacturingFacilityServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet FacilityManagement_ManufacturingFacilityServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        dispatcher = servletContext.getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
