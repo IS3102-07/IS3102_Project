@@ -31,7 +31,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2 class="page-header">Holla! <%=staffEntity.getName()%></h2>
+                            <h1 class="page-header">Holla! <%=staffEntity.getName()%></h1>
                             <ol class="breadcrumb">
                                 <li class="active">
                                     <i class="icon icon-dashboard"></i> Workspace
@@ -98,7 +98,7 @@
                                 <div class="panel-heading">
                                     <div class="row">
                                         <div class="col-xs-3">
-                                            <i class="icon icon-tasks icon-5x"></i>
+                                            <i class="icon icon-list icon-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge"><%=toDoList.size()%></div>
