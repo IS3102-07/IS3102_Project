@@ -12,13 +12,26 @@
                 document.furnitureManagement.submit();
             }
             function removeFurniture() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.furnitureManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
-                    document.furnitureManagement.submit();
-                } else {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    alert("No items selected.");
                     window.event.returnValue = false;
+                } else {
+
+                    var yes = confirm("Are you sure?!");
+                    if (yes == true) {
+                        window.event.returnValue = true;
+                        document.announcementsManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
+                        document.announcementsManagement.submit();
+                    } else {
+                        window.event.returnValue = false;
+                    }
                 }
             }
             function addFurniture() {
