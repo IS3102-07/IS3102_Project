@@ -670,7 +670,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FacilityManagement_RegionalOfficeServlet</servlet-name>
-        <url-pattern>/FacilityManagement_RegionalOfficeServlet</url-pattern>
+        <url-pattern>/FacilityManagement_RegionalOfficeServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

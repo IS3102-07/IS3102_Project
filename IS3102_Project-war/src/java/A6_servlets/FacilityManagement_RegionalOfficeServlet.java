@@ -46,12 +46,12 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 nextPage = "/A6/regionalOfficeManagement";
                 break;
 
-            case "/createOfficeManagement_GET":
+            case "/createRegionalOffice_GET":
                 String submit_btn = request.getParameter("submit-btn");
                 if(submit_btn.equals("Add Regional Office"))
                     nextPage = "/A6/createRegionalOffice";
                 else if(submit_btn.equals("Delete Regional Office"))
-                    nextPage = "/FacilityManagement_Servlet/deleteRegionalOffice";
+                    nextPage = "/FacilityManagement_RegionalOfficeServlet/deleteRegionalOffice";
                 break;
 
             case "/createRegionalOffice_POST":
@@ -68,7 +68,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                         request.setAttribute("alertMessage", "Fail to create regional office due to duplicated regional office name.");
                     }
                     request.setAttribute("regionalOffice", regionalOffice);
-                    nextPage = "/FacilityManagement_Servlet/regionalOfficeManagement_index";
+                    nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -93,7 +93,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit regional office.");
                 }
-                nextPage = "/FacilityManagement_Servlet/regionalOfficeManagement_index";
+                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
                 break;
             case "/deleteRegionalOffice":
                 String[] deletes = request.getParameterValues("delete");
@@ -103,7 +103,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                         fmBean.removeRegionalOffice(regionalOffice_Id);                        
                     }
                 }
-                nextPage = "/FacilityManagement_Servlet/regionalOfficeManagement_index";
+                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
                 break;
 
         }
