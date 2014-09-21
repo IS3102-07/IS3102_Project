@@ -32,7 +32,7 @@
                             <div class="col-md-3">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../RoleManagement_RoleServlet"><i class="icon-featured icon icon-home"> </i>
+                                        <a href="../FacilityManagement_StoreServlet/storeManagement_index"><i class="icon-featured icon icon-home"> </i>
                                             <h4>Store <br>Facility</h4>
                                         </a>
                                     </div>

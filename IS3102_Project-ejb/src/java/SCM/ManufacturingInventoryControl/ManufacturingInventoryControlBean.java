@@ -88,11 +88,12 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     
     @Override
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination) {
-        System.out.println("moveItemBetweenStorageBins() called with SKU:" + SKU);
+        System.out.println("moveSingleItemBetweenStorageBins() called with SKU:" + SKU);
         em.refresh(source);
         em.refresh(destination);
         List<ItemEntity> itemsInSourceBin = source.getItems();
-        List<ItemEntity> itemsInDestinationBin = destination.getItems();        
+        List<ItemEntity> itemsInDestinationBin = destination.getItems();   
+        boolean itemRemoved;
         try {
             for (int i = 0; i < itemsInSourceBin.size(); i++) {
                 if (itemsInSourceBin.get(i).getSKU().equals(SKU)) {

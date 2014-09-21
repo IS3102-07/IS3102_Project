@@ -294,7 +294,7 @@
                         <a href="../ManufacturingInventoryControl_MICServlet">Manufacturing's Inventory Control</a>
                     </li>
                     <li>
-                        <a href="#">Retail Products and Raw Materials Purchasing</a>
+                        <a href="../PurchaseOrderManagement_Servlet">Retail Products and Raw Materials Purchasing</a>
                     </li>
                     <li>
                         <a href="../SupplierManagement_SupplierServlet">Supplier Management</a>
