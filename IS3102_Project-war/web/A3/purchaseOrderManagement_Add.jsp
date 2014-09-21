@@ -78,48 +78,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Line item Management
-                                </div>
-                                <!-- /.panel-heading -->
-
-                                <form name="transferOrderManagement">
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                                    <thead>
-                                                        <tr>
-                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th>Date Created</th>
-                                                            <th>Date Transferred</th>
-                                                            <th>Origin</th>
-                                                            <th>Target</th>
-                                                            <th>Status</th>
-                                                            <th>Warehouse</th>
-                                                            <th>Details</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> 
-                    <!-- /.row for line item management -->
-
                 </div>
 
             </div>

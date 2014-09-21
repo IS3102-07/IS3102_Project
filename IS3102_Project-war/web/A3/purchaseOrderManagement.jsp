@@ -16,7 +16,7 @@
         <script>
             function updatePO(id) {
                 purchaseOrderManagement.id.value = id;
-                document.purchaseOrderManagement.action = "lineItemManagement.jsp";
+                document.purchaseOrderManagement.action = "purchaseOrderManagement_Update.jsp";
                 document.purchaseOrderManagement.submit();
             }
             function addPO() {
@@ -93,8 +93,8 @@
                                                                 <%=purchaseOrders.get(i).getExpectedReceivedDate()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=purchaseOrders.get(i).getId()%>" value="View Details" onclick="javascript:updateTO('<%=purchaseOrders.get(i).getId()%>')"/>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=purchaseOrders.get(i).getId()%>" value="View Details" onclick="javascript:updateTO('<%=purchaseOrders.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary" id="<%=purchaseOrders.get(i).getId()%>" value="Update" onclick="javascript:updatePO('<%=purchaseOrders.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary" id="<%=purchaseOrders.get(i).getId()%>" value="Submit" onclick="javascript:updateTO('<%=purchaseOrders.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
