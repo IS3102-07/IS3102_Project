@@ -51,7 +51,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public Boolean editRegionalOffice(String regionalOfficeName) {
         System.out.println("editRegionalOffice() called with ID:" + regionalOfficeName);
         try {
-            Query q = em.createQuery("SELECT t FROM regionalOfficeEntity t");
+            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
 
             for (Object o : q.getResultList()) {
                 RegionalOfficeEntity i = (RegionalOfficeEntity) o;
