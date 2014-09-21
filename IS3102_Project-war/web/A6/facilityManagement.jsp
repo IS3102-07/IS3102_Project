@@ -22,7 +22,7 @@
                             <div class="col-md-3">
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
-                                        <a href="../StaffManagement_StaffServlet"><i class="icon-featured icon icon-globe"> </i>
+                                        <a href="../FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index"><i class="icon-featured icon icon-globe"> </i>
                                             <h4>Regional <br>Office</h4>
                                         </a>
                                     </div>

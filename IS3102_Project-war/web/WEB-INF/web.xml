@@ -245,12 +245,20 @@
         <jsp-file>/A6/createWarehouse.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>createRegionalOffice</servlet-name>
+        <jsp-file>/A6/createRegionalOffice.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
         <servlet-class>A3_servlets.ManufacturingWarehouseManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>editWarehouse</servlet-name>
         <jsp-file>/A6/editWarehouse.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>editRegionalOffice</servlet-name>
+        <jsp-file>/A6/editRegionalOffice.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
@@ -573,12 +581,20 @@
         <url-pattern>/A6/createWarehouse</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>createRegionalOffice</servlet-name>
+        <url-pattern>/A6/createRegionalOffice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ManufacturingWarehouseManagement_Servlet</servlet-name>
         <url-pattern>/ManufacturingWarehouseManagement_Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>editWarehouse</servlet-name>
         <url-pattern>/A6/editWarehouse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editRegionalOffice</servlet-name>
+        <url-pattern>/A6/editRegionalOffice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
