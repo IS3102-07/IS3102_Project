@@ -110,7 +110,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-envelope"></i> <b class="caret"></b></a>
             <ul class="dropdown-menu message-dropdown">
                 <li class="message-preview" id="m1">
-                    <a href="#">
+                    <a href="../WorkspaceMessage_Servlet">
                         <div class="media">
                             <div class="media-body">
                                 <h5 class="media-heading"><strong><%=inbox1_sender%></strong></h5><!--Sender-->
@@ -121,7 +121,7 @@
                     </a>
                 </li>
                 <li class="message-preview" id="m2">
-                    <a href="#">
+                    <a href="../WorkspaceMessage_Servlet">
                         <div class="media">
                             <div class="media-body">
                                 <h5 class="media-heading"><strong><%=inbox2_sender%></strong></h5><!--Sender-->
@@ -132,7 +132,7 @@
                     </a>
                 </li>
                 <li class="message-preview" onLoad="refreshMsg()">
-                    <a href ="#">
+                    <a href="../WorkspaceMessage_Servlet">
                         <div class="media" id="m3">
                             <div class="media-body">
                                 <h5 class="media-heading"><strong><%=inbox3_sender%></strong></h5><!--Sender-->
@@ -178,7 +178,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=staffEntity.getName()%><b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#"><i class="icon icon-user"></i> Profile</a>
+                    <a href="../A1/staffProfile.jsp"><i class="icon icon-user"></i> Profile</a>
                 </li>
                 <li>
                     <a href="../WorkspaceMessage_Servlet?view=inbox"><i class="icon icon-envelope"></i> Inbox</a>

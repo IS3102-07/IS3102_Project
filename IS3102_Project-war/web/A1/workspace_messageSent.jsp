@@ -85,6 +85,7 @@
                                                             <th>From</th>
                                                             <th>Date Received</th>
                                                             <th>To</th>
+                                                            <th>Message</th>
                                                             <th>Open</th>
                                                         </tr>
                                                     </thead>
@@ -119,6 +120,15 @@
                                                                         for (int k = 0; k < receviers.size(); k++) {
                                                                             out.println(receviers.get(k)+"; ");
                                                                         }
+                                                                    }
+                                                                %>
+                                                            </td>
+                                                            <td>
+                                                                <%
+                                                                    if (sent.get(i).getMessage().length() < 90) {
+                                                                        out.print(sent.get(i).getMessage());
+                                                                    } else {
+                                                                        out.print(sent.get(i).getMessage().substring(0, 90)+"...");
                                                                     }
                                                                 %>
                                                             </td>
