@@ -86,41 +86,17 @@
                                     <h3 class="panel-title"> Purchase Order ID: <%=purchaseOrder.getId()%> - Add Line Item </h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form role="form" action="../PurchaseOrderManagement_UpdateServlet">
+                                    <form role="form" action="../PurchaseOrderLineItemManagement_AddServlet">
                                         <div class="form-group">
-                                            <label>Supplier</label>
-                                            <select class="form-control" name="supplier" required="true">
-                                                <%                                                    for (int i = 0; i < activeSuppliers.size(); i++) {
-                                                        if (activeSuppliers.get(i).getSupplierName().equals(purchaseOrder.getSupplier().getSupplierName())) {
-                                                            out.println("<option selected value='" + activeSuppliers.get(i).getId() + "'>" + activeSuppliers.get(i).getSupplierName() + "</option>");
-                                                        } else {
-                                                            out.println("<option value='" + activeSuppliers.get(i).getId() + "'>" + activeSuppliers.get(i).getSupplierName() + "</option>");
-                                                        }
-                                                    }
-                                                %>
-                                            </select>
+                                            <label>SKU</label>
+                                            <input class="form-control" name="sku" type="text"  >
                                         </div>
                                         <div class="form-group">
-                                            <label>Destination</label>
-                                            <select class="form-control" name="destination" required="true">
-                                                <%
-                                                    for (int i = 0; i < warehouses.size(); i++) {
-                                                        if (warehouses.get(i).getWarehouseName().equals(purchaseOrder.getReceivedWarehouse().getWarehouseName())) {
-                                                            out.println("<option selected value='" + warehouses.get(i).getId() + "'>" + warehouses.get(i).getWarehouseName() + "</option>");
-                                                        } else {
-                                                            out.println("<option value='" + warehouses.get(i).getId() + "'>" + warehouses.get(i).getWarehouseName() + "</option>");
-                                                        }
-
-                                                    }
-                                                %>
-                                            </select>
+                                            <label>Quantity</label>
+                                            <input class="form-control" name="quantity" type="number" required="true" >
                                         </div>
                                         <div class="form-group">
-                                            <label>Expected Receiving Date:</label>
-                                            <input class="form-control" name="expectedDate" type="date" required="true" value="<%=purchaseOrder.getExpectedReceivedDate()%>"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="submit" value="Update Purchase Order" class="btn btn-lg btn-primary btn-block">
+                                            <input type="submit" value="Add Line Item" class="btn btn-lg btn-primary btn-block">
                                         </div>  
                                         <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">
                                     </form>

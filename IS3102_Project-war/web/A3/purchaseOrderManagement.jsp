@@ -16,8 +16,9 @@
         <script>
             function updatePO(id) {
                 purchaseOrderManagement.id.value = id;
-                document.purchaseOrderManagement.action = "purchaseOrderManagement_Update.jsp";
+                document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_Servlet";
                 document.purchaseOrderManagement.submit();
+
             }
             function addPO() {
                 window.event.returnValue = true;

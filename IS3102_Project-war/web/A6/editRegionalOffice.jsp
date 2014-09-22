@@ -49,17 +49,17 @@
 
                                 <div class="form-group">
                                     <label for="input_address">Address</label>
-                                    <input type="text" class="form-control" id="input_address"  name="address" value="Blank" >
+                                    <input type="text" class="form-control" id="input_address"  name="address" value="<%= regionalOffice.getAddress()%>" >
                                 </div>
 
                                 <div class="form-group">
                                     <label for="input_telephone">Telephone</label>
-                                    <input type="text" class="form-control" id="input_telephone"  name="telephone" value="Blank" >
+                                    <input type="text" class="form-control" id="input_telephone"  name="telephone" value="<%= regionalOffice.getTelephone()%>" >
                                 </div>
 
                                 <div class="form-group">
                                     <label for="input_email">Email</label>
-                                    <input type="email" class="form-control" id="input_email"  name="email" value="Blank" >
+                                    <input type="email" class="form-control" id="input_email"  name="email" value="<%= regionalOffice.getEmail()%>" >
                                 </div>
                                 <input type="hidden" name="regionalOfficeId" value="<%= regionalOffice.getId()%>">
                                 <div class="form-group">

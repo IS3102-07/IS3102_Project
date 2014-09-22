@@ -49,11 +49,12 @@ public class ManufacturingFacilityEntity implements Serializable {
         this.SaleAndOperationPlanList = new ArrayList<>();
     }
     
-    public void create(String name, String address, String telephone, String email) {
+    public void create(String name, String address, String telephone, String email, Integer capacity) {
         this.setName(name);
         this.setAddress(address);
         this.setTelephone(telephone);
         this.setEmail(email);
+        this.setCapacity(capacity);
     }
 
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {

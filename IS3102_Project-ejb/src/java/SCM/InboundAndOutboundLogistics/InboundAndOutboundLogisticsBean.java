@@ -48,6 +48,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
         try{
             Query query = em.createQuery("select s from ShippingOrderEntity s where s.id = ?1").setParameter(1, id);
             ShippingOrderEntity shippingOrder = (ShippingOrderEntity) query.getSingleResult();
+            lineItem.setShippingOrder(shippingOrder);
             shippingOrder.getLineItems().add(lineItem);
             em.merge(shippingOrder);
             em.flush();
