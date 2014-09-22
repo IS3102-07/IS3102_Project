@@ -22,6 +22,9 @@ public class StoreEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String address;
+    private String telephone;
+    private String email;
     @OneToOne
     private WarehouseEntity warehouse;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
@@ -42,8 +45,11 @@ public class StoreEntity implements Serializable {
         this.saleAndOperationPlanList = new ArrayList<>();
     }
     
-    public void create(String name) {
+    public void create(String name, String address, String telephone, String email) {
         this.setName(name);
+        this.setAddress(address);
+        this.setTelephone(telephone);
+        this.setEmail(email);
     }    
 
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {
@@ -93,7 +99,25 @@ public class StoreEntity implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
+public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
+    public String getTelephone() {
+        return address;
+    }
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public WarehouseEntity getWarehouse() {
         return warehouse;
     }
