@@ -207,6 +207,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean createBOM(String name, String description) {//
         System.out.println("createBillOfMaterial() called with name:" + name);
         try {
@@ -223,6 +224,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean editBOM(String name, String description){//
         System.out.println("editBillOfMaterial() called with bill of material name:" + name + "and description: " + description);
 
