@@ -77,7 +77,7 @@
                                                             <td><%= storeEntity.getAddress()%></td>
                                                             <td><%= storeEntity.getTelephone()%></td>
                                                             <td><%= storeEntity.getEmail()%></td>
-                                                            <td><a href="../FacilityManagement_StoreServlet/editStore_GET?storeId=<%= storeEntity.getId()%>"><button class="btn btn-primary">View</button></a></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= storeEntity.getId() %>">View</button></a></td>
                                                         </tr>
                                                         <%
                                                                 }

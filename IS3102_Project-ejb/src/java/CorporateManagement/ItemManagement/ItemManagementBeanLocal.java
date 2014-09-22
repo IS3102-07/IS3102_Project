@@ -36,7 +36,7 @@ public interface ItemManagementBeanLocal {
     public List<RetailProductEntity> listAllRetailProduct();
    
     public boolean createBOM(String name, String description);
-    public boolean editBOM(String name, String description);
+    public boolean editBOM(Long BOMId, String name, String description);
     public boolean deleteBOM(Long BOMId);
     public BillOfMaterialEntity viewSingleBOM(Long BOMId);
     public List<BillOfMaterialEntity> listAllBOM();

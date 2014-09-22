@@ -35,7 +35,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
+        Long storeId;
         String target = request.getPathInfo();
 
         switch (target) {
@@ -53,6 +53,10 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     nextPage = "/A6/createStore";
                 } else if (submit_btn.equals("Delete Store")) {
                     nextPage = "/FacilityManagement_StoreServlet/deleteStore";
+                } else {
+                    storeId = Long.parseLong(submit_btn);
+                    request.setAttribute("storeId", storeId);
+                    nextPage = "/FacilityManagement_StoreServlet/editStore_GET";  
                 }
                 break;
 
@@ -78,7 +82,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 break;
 
             case "/editStore_GET":
-                String storeId = request.getParameter("delete");
+                storeId = (long)request.getAttribute("storeId");
                 System.out.println("Store ID is " + storeId);
                 StoreEntity store = fmBean.viewStoreEntity(storeId);
                 request.setAttribute("store", store);
@@ -92,7 +96,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 Long id = Long.parseLong(request.getParameter("storeId"));
 
-                if (fmBean.editStore(id, storeName)) {
+                if (fmBean.editStore(id, storeName, address, telephone, email)) {
                     request.setAttribute("alertMessage", "The store has been saved.");
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit store.");
