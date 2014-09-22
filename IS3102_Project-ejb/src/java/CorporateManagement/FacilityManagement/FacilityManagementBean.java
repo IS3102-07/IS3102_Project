@@ -403,6 +403,17 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
+            
+    @Override
+    public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId) {
+        try {
+            Query q = em.createQuery("select s from StoreEntity s where s.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
 
     @Override
     @Remove
