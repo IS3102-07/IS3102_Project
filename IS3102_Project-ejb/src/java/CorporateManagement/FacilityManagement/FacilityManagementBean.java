@@ -144,21 +144,18 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName) {
+    public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity) {
         System.out.println("editManufacturingFacility() called with ID:" + id);
         try {
-            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
-
-            for (Object o : q.getResultList()) {
-                ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
-                if (i.getId() == id) {
-                    i.setName(manufacturingFacilityName);
-                    em.merge(i);
-                    System.out.println("\nServer edited manufacturing facility:\n" + manufacturingFacilityName);
-                    return true;
-                }
-            }
-            return false; //Could not find the role to remove
+             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
+            manufacturingFacility.setName(manufacturingFacilityName);
+            manufacturingFacility.setAddress(address);
+            manufacturingFacility.setTelephone(telephone);
+            manufacturingFacility.setEmail(email);
+            manufacturingFacility.setCapacity(capacity);
+            em.merge(manufacturingFacility);
+            System.out.println("\nServer edited manufacturing facility: " + id);
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to edit manufacturing facility:\n" + ex);
             return false;
@@ -191,18 +188,10 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityId) {
         System.out.println("viewManufacturingFacility() called with manufacturingFacility:" + manufacturingFacilityId);
         try {
-            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
-
-            for (Object o : q.getResultList()) {
-                ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
-                if (i.getId() == manufacturingFacilityId) {
-                    System.out.println("\nServer returns manufacturing facility:\n" + manufacturingFacilityId);
-                    return i;
-                }
-            }
-            return null; //Could not find the role to remove
+            ManufacturingFacilityEntity manufacturingFacilityEntity = em.find(ManufacturingFacilityEntity.class, manufacturingFacilityId);
+            return manufacturingFacilityEntity;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to remove regional office:\n" + ex);
+            System.out.println("\nServer failed to return manufacturing facility:\n" + ex);
             return null;
         }
     }
