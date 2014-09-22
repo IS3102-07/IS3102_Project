@@ -188,15 +188,15 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public ManufacturingFacilityEntity viewManufacturingFacility(String manufacturingFacility) {
-        System.out.println("viewManufacturingFacility() called with manufacturingFacility:" + manufacturingFacility);
+    public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityId) {
+        System.out.println("viewManufacturingFacility() called with manufacturingFacility:" + manufacturingFacilityId);
         try {
             Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
 
             for (Object o : q.getResultList()) {
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
-                if (i.getName().equalsIgnoreCase(manufacturingFacility)) {
-                    System.out.println("\nServer returns regional office:\n" + manufacturingFacility);
+                if (i.getId() == manufacturingFacilityId) {
+                    System.out.println("\nServer returns manufacturing facility:\n" + manufacturingFacilityId);
                     return i;
                 }
             }

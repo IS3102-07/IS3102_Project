@@ -29,7 +29,7 @@ public interface FacilityManagementBeanLocal {
     public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName);
     public boolean removeManufacturingFacility(String manufacturingFacilityName);
-    public ManufacturingFacilityEntity viewManufacturingFacility(String manufacturingFacilityEntity);
+    public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityEntityId);
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();
 
     public StoreEntity createStore(String storeName, String address, String telephone, String email);
