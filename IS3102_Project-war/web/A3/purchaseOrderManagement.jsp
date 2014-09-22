@@ -18,7 +18,12 @@
                 purchaseOrderManagement.id.value = id;
                 document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_Servlet";
                 document.purchaseOrderManagement.submit();
-
+            }
+            function submitPO(id) {
+                purchaseOrderManagement.id.value = id;
+                purchaseOrderManagement.source.value = "submit";
+                document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_Servlet";
+                document.purchaseOrderManagement.submit();
             }
             function addPO() {
                 window.event.returnValue = true;
@@ -76,6 +81,7 @@
                                                             <th>Supplier</th>
                                                             <th>Shipping Destination</th>
                                                             <th>Expected Receiving Date</th>
+                                                            <th>Status</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -100,8 +106,11 @@
                                                                 <%=purchaseOrders.get(i).getExpectedReceivedDate()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary" id="<%=purchaseOrders.get(i).getId()%>" value="Update" onclick="javascript:updatePO('<%=purchaseOrders.get(i).getId()%>')"/>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary" id="<%=purchaseOrders.get(i).getId()%>" value="Submit" onclick="javascript:updateTO('<%=purchaseOrders.get(i).getId()%>')"/>
+                                                                <%=purchaseOrders.get(i).getStatus()%>
+                                                            </td>
+                                                            <td style="width:200px">
+                                                                <input <%if (purchaseOrders.get(i).getStatus().equals("Completed") || purchaseOrders.get(i).getStatus().equals("Unfulfillable")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary"  value="Update" onclick="javascript:updatePO('<%=purchaseOrders.get(i).getId()%>')"/>
+                                                                <input <%if (purchaseOrders.get(i).getStatus().equals("Submitted") || purchaseOrders.get(i).getStatus().equals("Shipped") || purchaseOrders.get(i).getStatus().equals("Completed") || purchaseOrders.get(i).getStatus().equals("Unfulfillable")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary"  value="Submit" onclick="javascript:submitPO('<%=purchaseOrders.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -121,6 +130,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
+                                            <input type="hidden" name="source" value="">   
                                         </div>
 
                                     </div>

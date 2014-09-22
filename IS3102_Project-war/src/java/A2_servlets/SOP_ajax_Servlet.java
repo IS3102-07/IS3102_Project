@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.json.JSONObject;
 /**
  *
  * @author Administrator
@@ -27,20 +26,20 @@ public class SOP_ajax_Servlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
-        System.out.println("ajax is called. regional office is:" + regionalOfficeId);
-        
-        List<StoreEntity> storeList = fmBean.getStoreListByRegionalOffice(regionalOfficeId);
-        JSONObject json = new JSONObject();
-        for(StoreEntity s: storeList){
-            json.put(s.getName(), s.getName());
-        }                        
-        try (PrintWriter out = response.getWriter()) {
-            out.write(json.toString());
-            
-        }
+//        response.setContentType("text/html;charset=UTF-8");
+//        
+//        Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
+//        System.out.println("ajax is called. regional office is:" + regionalOfficeId);
+//        
+//        List<StoreEntity> storeList = fmBean.getStoreListByRegionalOffice(regionalOfficeId);
+//        JSONObject json = new JSONObject();
+//        for(StoreEntity s: storeList){
+//            json.put(s.getName(), s.getName());
+//        }                        
+//        try (PrintWriter out = response.getWriter()) {
+//            out.write(json.toString());
+//            
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -27,17 +27,30 @@ public class PurchaseOrderLineItemManagement_Servlet extends HttpServlet {
             session = request.getSession();
             String purchaseOrderId = request.getParameter("id");
             String errMsg = request.getParameter("errMsg");
-            
-            List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
-            session.setAttribute("purchaseOrders", purchaseOrders);
+            String source = request.getParameter("source");
 
-            if (errMsg != null && purchaseOrderId != null) {
-                response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
+            if (source!=null && source.equals("submit")) {
+                List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
+                session.setAttribute("purchaseOrders", purchaseOrders);
+
+                if (errMsg != null && purchaseOrderId != null) {
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId + "&errMsg=" + errMsg);
+                } else {
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId);
+                }
             } else {
-                response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId);
+                List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
+                session.setAttribute("purchaseOrders", purchaseOrders);
+
+                if (errMsg != null && purchaseOrderId != null) {
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
+                } else {
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId);
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
