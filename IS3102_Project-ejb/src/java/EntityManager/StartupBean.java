@@ -128,9 +128,9 @@ public class StartupBean {
             }
             try {
                 //Create item
-                FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "LiINNMON/ADILS", "Tables & Desks","Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 1,1,1);
+                FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "LiINNMON ADILS", "Tables & Desks","Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 1,1,1);
                 em.persist(furnitureEntity);
-                furnitureEntity = new FurnitureEntity("F2", "MOSHULT", "Beds & Mattresses","Get all-over support and comfort with a resilient foam mattress. This mattress is approved for children. It has a child-proof zipper without a pull mechanism, which eliminates small parts and prevents children from opening it. Easy to keep clean since you can remove the cover and wash it by machine. Easy to bring home since the mattress is roll packed.", "imageURL", 1,1,1);
+                furnitureEntity = new FurnitureEntity("F2", "MOSHULT", "Beds & Mattresses","Get all-over support and comfort with a resilient foam mattress. This mattress is approved for children.", "imageURL", 1,1,1);
                 em.persist(furnitureEntity);
                 RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1,1,1);
                 em.persist(rawMaterialEntity);
