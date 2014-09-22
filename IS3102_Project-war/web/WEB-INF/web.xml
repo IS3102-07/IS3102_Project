@@ -400,6 +400,10 @@
         <servlet-name>ManufacturingInventoryControl_RemoveServlet</servlet-name>
         <servlet-class>A3_servlets.ManufacturingInventoryControl_RemoveServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>A2/sop_main.jsp</servlet-name>
+        <jsp-file>/A2/sop_main.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -799,6 +803,10 @@
     <servlet-mapping>
         <servlet-name>ManufacturingInventoryControl_RemoveServlet</servlet-name>
         <url-pattern>/ManufacturingInventoryControl_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/sop_main.jsp</servlet-name>
+        <url-pattern>/A2/sop_main</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
