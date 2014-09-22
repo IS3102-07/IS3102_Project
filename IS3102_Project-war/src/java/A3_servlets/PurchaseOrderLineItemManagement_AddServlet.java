@@ -1,28 +1,41 @@
 package A3_servlets;
 
+import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class PurchaseOrderLineItemManagement_AddServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @EJB
+    private RetailProductsAndRawMaterialsPurchasingBeanLocal retailProductsAndRawMaterialsPurchasingBean;
+    private String result;
 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PurchaseOrderLineItemManagement_AddServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PurchaseOrderLineItemManagement_AddServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String purchaseOrderId = request.getParameter("id");
+            String sku = request.getParameter("sku");
+            String quantity = request.getParameter("quantity");
+
+            boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.addLineItemToPurchaseOrder(Long.parseLong(purchaseOrderId), sku, Integer.parseInt(quantity));
+            if (!canUpdate) {
+                result = "?errMsg=Purchase Order or SKU not found.";
+                response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
+            } else {
+                result = "?errMsg=Line item added successfully.&id=" + purchaseOrderId;
+                response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
+            }
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 
