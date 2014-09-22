@@ -6,6 +6,8 @@
 
 package MRP.SalesAndOperationPlanning;
 
+import EntityManager.MonthScheduleEntity;
+import EntityManager.ProductGroupEntity;
 import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.SaleForcastEntity;
 import EntityManager.StoreEntity;
@@ -19,7 +21,7 @@ import javax.ejb.Remove;
  * @author Lin Baoyu
  */
 @Local
-public interface SalesAndOperationPlanningBeanLocal {
+public interface SalesAndOperationPlanningBeanLocal {    
 
     public SaleAndOperationPlanEntity createSOP(SaleForcastEntity saleForcast, StoreEntity store, Calendar schedule, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
     
@@ -29,9 +31,15 @@ public interface SalesAndOperationPlanningBeanLocal {
     
     public List<SaleAndOperationPlanEntity> getSOPList();
     
-    public List<SaleAndOperationPlanEntity> getSOPlistByYear(Calendar year);
+    public List<SaleAndOperationPlanEntity> getSOPlistByYear(int year);
     
     public SaleAndOperationPlanEntity getSOPbyId(Long id);
+    
+    public List<MonthScheduleEntity> getScheduleList();
+    
+    public List<ProductGroupEntity> getUnplannedProductGroup(Long storeId, Long scheduleId);
+    
+    public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList(Long storeId, Long scheduleId);
     
     @Remove
     public void remove();

@@ -5,11 +5,16 @@
  */
 package A2_servlets;
 
+import EntityManager.MonthScheduleEntity;
+import EntityManager.ProductGroupEntity;
 import EntityManager.RegionalOfficeEntity;
+import EntityManager.SaleAndOperationPlanEntity;
+import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,6 +28,9 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleAndOperationPlanning_Servlet extends HttpServlet {
+    @EJB
+    private SalesAndOperationPlanningBeanLocal sopBean;
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,6 +50,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 request.setAttribute("regionalOfficeList", regionalOfficeList);
                 nextPage = "/A2/sop_index";
                 break;
+                
             case "/sop_index_Post":
                 try{
                     Long storeId = Long.parseLong(request.getParameter("store"));
@@ -49,6 +58,44 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
+                nextPage= "/SaleAndOperationPlanning_Servlet/sop_schedule_GET";
+                break;
+                
+            case "/sop_schedule_GET":
+                List<MonthScheduleEntity> scheduleList = sopBean.getScheduleList();
+                // for testing ......
+                MonthScheduleEntity model1 = new MonthScheduleEntity();
+                
+                model1.setYear(2014);
+                model1.setMonth(6);
+                MonthScheduleEntity model2 = new MonthScheduleEntity();
+                
+                model2.setYear(2014);
+                model2.setMonth(7);      
+                scheduleList.add(model1);
+                scheduleList.add(model2);                
+                request.setAttribute("scheduleList", scheduleList);
+                
+                nextPage = "/A2/sop_schedule";
+                break;
+                
+            case "/sop_schedule_POST":
+                try{
+                    Long schedulelId = Long.parseLong(request.getParameter("scheduleId"));
+                    Long storeId = (long)session.getAttribute("sop_storeId");
+                    List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
+                    List<SaleAndOperationPlanEntity> sopList = sopBean.getSaleAndOperationPlanList(storeId, schedulelId);
+                    request.setAttribute("unplannedProductGroupList", unplannedProductGroupList);
+                    request.setAttribute("sopList", sopList);                                        
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }                
+                
+                nextPage = "";
+                break;
+            
+            case "":
+                
                 break;
                 
         }

@@ -7,6 +7,7 @@
 package MRP.SalesAndOperationPlanning;
 
 import EntityManager.MonthScheduleEntity;
+import EntityManager.ProductGroupEntity;
 import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.SaleForcastEntity;
 import EntityManager.StoreEntity;
@@ -109,9 +110,9 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     }
 
     @Override
-    public List<SaleAndOperationPlanEntity> getSOPlistByYear(Calendar year) {
+    public List<SaleAndOperationPlanEntity> getSOPlistByYear(int year) {
         try{
-            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.year = ?1").setParameter(1, year.get(Calendar.YEAR));
+            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.year = ?1").setParameter(1, year);
             return q.getResultList();
         }catch(Exception ex){
             ex.printStackTrace();
@@ -124,6 +125,38 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     public void remove() {
         System.out.println("The Sale and Operation Planning Bean has been removed.");
     }
-    
-    
+
+    @Override
+    public List<MonthScheduleEntity> getScheduleList() {
+        Query q = em.createQuery("select s from MonthScheduleEntity s");
+        return q.getResultList();
+    }    
+
+    @Override
+    public List<ProductGroupEntity> getUnplannedProductGroup(Long storeId, Long scheduleId) {
+        try{
+            Query q1 = em.createQuery("select sop.productGroup from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2")
+                        .setParameter(1, storeId)
+                        .setParameter(2, scheduleId);
+            List<ProductGroupEntity> plannedProductGroupList = q1.getResultList();                        
+            Query q2 = em.createQuery("select p from ProductGroupEntity p where p not member of ?1").setParameter(1, plannedProductGroupList);
+            return q2.getResultList();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+        
+    @Override
+    public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList(Long storeId, Long scheduleId) {
+        try{
+            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2")
+                        .setParameter(1, storeId)
+                        .setParameter(2, scheduleId);
+            return q.getResultList();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();        
+    }
 }

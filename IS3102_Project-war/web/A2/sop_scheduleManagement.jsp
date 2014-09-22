@@ -49,10 +49,10 @@
                                             <form action="../SaleAndOperationPlanning_Servlet/sop_schedule_POST">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
-                                                        <tr>                                                            
+                                                        <tr>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Year</th>
-                                                            <th>Month</th>                                                            
-                                                            <th>Action</th>
+                                                            <th>Month</th>                                                                                                                        
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -61,17 +61,23 @@
                                                             if (scheduleList != null) {
                                                                 for (MonthScheduleEntity schedule : scheduleList) {
                                                         %>
-                                                        <tr>                                                            
-                                                            <td><%= schedule.getYear() %></td>
-                                                            <td><%= schedule.getMonth() %></td>
-                                                            <td><button class="btn btn-primary" name="scheduleId" value="<%= schedule.getId() %>">Access</button></a></td>
-                                                        </tr>
-                                                        <%
-                                                                }
+                                                        <tr>   
+                                                    <input type="checkbox" name="delete" value="<%=schedule.getId()%>" />
+                                                    <td><%= schedule.getYear()%></td>
+                                                    <td><%= schedule.getMonth()%></td>                                                            
+                                                    </tr>
+                                                    <%
                                                             }
-                                                        %>
+                                                        }
+                                                    %>
                                                     </tbody>
-                                                </table>                                                    
+                                                </table>    
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="submit" name="submit-btn" value="Add Schedule" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <input type="submit" name="submit-btn" value="Delete Schedule" class="btn btn-primary" data-loading-text="Loading...">
+                                                    </div>
+                                                </div>
                                             </form>    
                                         </div>
                                     </div>

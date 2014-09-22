@@ -45,19 +45,17 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <form action="">
+                                    <form action="../SaleAndOperationPlanning_Servlet/sop_index_Post">
                                         <div class="form-group">
                                             <label for="select_regionalOffice">Regional Office</label>
                                             <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">
                                                 <option>South China Regional Office</option>
                                                 <%
-                                                    if (request.getAttribute("regionalOfficeList") != null) {
-                                                        List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
-                                                        for (RegionalOfficeEntity r : regionalOfficeList) {
+                                                    List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
+                                                    for (RegionalOfficeEntity r : regionalOfficeList) {
                                                 %>
                                                 <option value="<%= r.getId()%>"><%= r.getName()%></option>
                                                 <%
-                                                        }
                                                     }
                                                 %>
                                             </select>                                                 
@@ -67,7 +65,7 @@
                                             <select id="select_store" class="form-control" name="store">
                                                 <option>Tangling Store</option>
                                                 <%
-
+                                                    
                                                 %>
                                             </select>
                                         </div>
