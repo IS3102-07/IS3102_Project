@@ -91,10 +91,10 @@
 
         <script>
             function getStore() {
-                var regionalOffice = $("#select_regionalOffice").find('option:selected').val();
-                alert("id: "+regionalOffice);
-                $.get('../SaleAndOperationPlanning_Servlet/ajax',{regionalOffice:regionalOffice},function(responseText) { 
-                        $('#welcometext').text(responseText);         
+                var regionalOfficeId = $("#select_regionalOffice").find('option:selected').val();
+                alert("id: "+regionalOfficeId);
+                $.get('../SOP_ajax_Servlet',{regionalOfficeId:regionalOfficeId},function(responseText) { 
+                        alert(responseText);       
                     });
             }
         </script>

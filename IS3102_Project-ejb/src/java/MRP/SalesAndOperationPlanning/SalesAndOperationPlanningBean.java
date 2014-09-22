@@ -190,4 +190,36 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
         }
         return new ArrayList<>();
     }
+
+    @Override
+    public List<SOP_Helper> getSOPHelperList(Long storeId, Long scheduleId) {
+        try {
+            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2")
+                    .setParameter(1, storeId)
+                    .setParameter(2, scheduleId);
+            List<SaleAndOperationPlanEntity> sopList = q.getResultList();
+            List<SOP_Helper> helperList = new ArrayList<>();
+            for(SaleAndOperationPlanEntity sop: sopList){
+                SOP_Helper helper = new SOP_Helper();
+                helper.sop = sop;
+                helper.productGroup = sop.getProductGroup();
+                helper.saleForecast = sop.getSaleForcast();
+                helperList.add(helper);
+            }
+            return helperList;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public MonthScheduleEntity getScheduleById(Long id) {
+        try {
+            return em.find(MonthScheduleEntity.class, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 }

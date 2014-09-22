@@ -41,7 +41,11 @@ public interface SalesAndOperationPlanningBeanLocal {
     
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList(Long storeId, Long scheduleId);
     
+    public List<SOP_Helper> getSOPHelperList(Long storeId, Long scheduleId);
+    
     public MonthScheduleEntity createSchedule(Integer year, Integer month);
+    
+    public MonthScheduleEntity getScheduleById(Long id);
     
     public Boolean deleteSchedule(Long id);
     
