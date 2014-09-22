@@ -33,10 +33,10 @@ public interface ItemManagementBeanLocal {
     public RetailProductEntity viewRetailProduct(String SKU);
    public List<RetailProductEntity> listAllRetailProduct();
    
-    public boolean createBillOfMaterial(String name);
-    public boolean editBillOfMaterial(String name);
-    public boolean deleteBillOfMaterial(String bomName);
-    public BillOfMaterialEntity viewBillOfMaterial(String name);
+    public boolean createBOM(String name, String description);
+    public boolean editBOM(String name);
+    public boolean deleteBOM(Long BOMId);
+    public BillOfMaterialEntity viewSingleBOM(String name);
     public List<BillOfMaterialEntity> listAllBOM();
     
     public boolean createProductionGroup(String name);

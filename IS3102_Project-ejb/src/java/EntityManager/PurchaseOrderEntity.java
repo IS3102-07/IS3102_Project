@@ -13,10 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author Xiaodong
- */
 @Entity
 public class PurchaseOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -26,7 +22,7 @@ public class PurchaseOrderEntity implements Serializable {
     
     @ManyToOne
     private SupplierEntity supplier;    
-    @OneToMany(mappedBy="purchaseOrder",cascade={CascadeType.ALL})
+    @OneToMany(cascade={CascadeType.ALL})
     private List<LineItemEntity> lineItems;                
     @ManyToOne
     private WarehouseEntity receivedWarehouse;  

@@ -35,4 +35,5 @@ public interface ManufacturingInventoryControlBeanLocal {
     public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID);
     
     public List<ItemStorageBinHelper> getItemList(Long warehouseID);
+    public Boolean emptyStorageBin(Long storageBinID);
 }

@@ -19,19 +19,19 @@ import javax.persistence.Query;
 
 @Stateless
 public class ManufacturingInventoryControlBean implements ManufacturingInventoryControlBeanLocal {
-    
+
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public List<StorageBinEntity> getEmptyStorageBins(Long warehouseID, ItemEntity itemEntity) {
         System.out.println("getEmptyStorageBins() called with ItemEntity:" + itemEntity);
-        
+
         WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-        
+
         List<StorageBinEntity> listOfAppropriateEmptyStorageBins = new ArrayList<>();
         String storageBinType = "";
         if (itemEntity instanceof FurnitureEntity) {
@@ -60,7 +60,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public boolean addItemToReceivingBin(Long warehouseID, String SKU) {
         System.out.println("addItemToStorageBin() called with SKU:" + SKU);
@@ -86,19 +86,19 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination) {
         System.out.println("moveSingleItemBetweenStorageBins() called with SKU:" + SKU);
         em.refresh(source);
         em.refresh(destination);
         List<ItemEntity> itemsInSourceBin = source.getItems();
-        List<ItemEntity> itemsInDestinationBin = destination.getItems();   
+        List<ItemEntity> itemsInDestinationBin = destination.getItems();
         boolean itemRemoved = false;
         try {
             for (int i = 0; i < itemsInSourceBin.size(); i++) {
                 if (itemsInSourceBin.get(i).getSKU().equals(SKU)) {
-                    itemRemoved=true;
+                    itemRemoved = true;
                     ItemEntity itemRemovedFromSource = itemsInSourceBin.remove(i);
                     itemsInDestinationBin.add(itemRemovedFromSource);
                     source.setFreeVolume(source.getFreeVolume() + itemRemovedFromSource.getVolume());
@@ -106,7 +106,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     break;
                 }
             }
-            if(itemRemoved) {
+            if (itemRemoved) {
                 System.out.println("The item is moved successfully between bins.");
             } else {
                 System.out.println("Item was not moved. No item was found.");
@@ -121,7 +121,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public Integer checkItemQty(Long warehouseId, String SKU) {
         System.out.println("checkItemQty() called with SKU:" + SKU);
@@ -147,7 +147,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU) {
         System.out.println("findStorageBinsThatContainsItem() called");
@@ -166,7 +166,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfInboundStorageBin(Long warehouseID) {
         System.out.println("getTotalVolumeOfInboundStorageBin() called");
@@ -191,7 +191,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfOutboundStorageBin(Long warehouseID) {
         System.out.println("getTotalVolumeOfOutboundStorageBin() called");
@@ -216,7 +216,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfShelfStorageBin(Long warehouseID) {
         System.out.println("getTotalVolumeOfShelfStorageBin() called");
@@ -241,7 +241,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfPalletStorageBin(Long warehouseID) {
         System.out.println("getTotalVolumeOfPalletStorageBin() called");
@@ -266,7 +266,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfInboundStorageBin(Long warehouseID) {
         System.out.println("getTotalFreeVolumeOfInboundStorageBin() called");
@@ -291,7 +291,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfOutboundStorageBin(Long warehouseID) {
         System.out.println("getTotalFreeVolumeOfOutboundStorageBin() called");
@@ -316,7 +316,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID) {
         System.out.println("getTotalFreeVolumeOfShelfStorageBin() called");
@@ -341,7 +341,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID) {
         System.out.println("getTotalFreeVolumeOfPalletStorageBin() called");
@@ -366,16 +366,82 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
+    //Assumes one type of item is in each storage bin, so just return the firstone
+    private ItemEntity getItemInsideStorageBin(Long storageBinID) {
+        try {
+            StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
+            ItemEntity itemEntity = storageBinEntity.getItems().get(0);
+            if (itemEntity == null) {
+                return null;
+            } else {
+                return itemEntity;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public List<ItemStorageBinHelper> getItemList(Long warehouseID) {
-        List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<ItemStorageBinHelper>();
-        List<ItemEntity> itemsInWarehouse = new ArrayList<ItemEntity>();
-        WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-        List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
-        for(StorageBinEntity storageBin : storageBins) {
-            storageBin.getItems();
+        System.out.println("getItemList() called");
+        try {
+            List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<ItemStorageBinHelper>();
+            List<ItemEntity> itemsInWarehouse = new ArrayList<ItemEntity>();
+            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+            List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
+
+            //Create the list of unique items in that warehouse
+            for (StorageBinEntity storageBin : storageBins) {
+                ItemEntity itemEntity = getItemInsideStorageBin(storageBin.getId());
+                if (itemEntity != null) {
+                    if (!itemsInWarehouse.contains(itemEntity)) {
+                        itemsInWarehouse.add(itemEntity);
+                    }
+                }
+            }
+
+            //Create the helper list to be returned
+            for (ItemEntity itemEntity : itemsInWarehouse) {
+                for (StorageBinEntity storageBinEntity : storageBins) {
+                    //Only add to the list if the storagebin is not empty
+                    if (storageBinEntity.getItems() != null && storageBinEntity.getItems().size() != 0) {
+                        ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
+                        itemStorageBinHelper.setSKU(itemEntity.getSKU());
+                        itemStorageBinHelper.setItemName(itemEntity.getName());
+                        itemStorageBinHelper.setStorageBinID(storageBinEntity.getId());
+                        itemStorageBinHelper.setItemQty(storageBinEntity.getItems().size());
+                        itemStorageBinHelper.setItemType(itemEntity.getType());
+                        itemStorageBinHelperList.add(itemStorageBinHelper);
+                    }
+                }
+            }
+            return itemStorageBinHelperList;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Warehouse could not be found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("System failed to getItemList()");
+            ex.printStackTrace();
+            return null;
         }
-        return itemStorageBinHelperList;
+    }
+
+    @Override
+    public Boolean emptyStorageBin(Long storageBinID) {
+        System.out.println("emptyStorageBin() called");
+        try {
+            StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
+            storageBinEntity.setItems(new ArrayList<ItemEntity>());
+            storageBinEntity.setFreeVolume(storageBinEntity.getVolume());
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Storage Bin could not be found.");
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package SCM.RetailProductsAndRawMaterialsPurchasing;
 
+import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.PurchaseOrderEntity;
 import EntityManager.SupplierEntity;
@@ -58,15 +59,20 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
         }
     }
     @Override
-    public Boolean addLineItemToPurchaseOrder(Long id, LineItemEntity lineItem) {
+    public Boolean addLineItemToPurchaseOrder(Long purchaseOrderID, String SKU, Integer qty) {
+        System.out.println("addLineItemToPurchaseOrder() called");
         try {
-            Query query = em.createQuery("select p from PurchaseOrderEntity p where p.id = ?1").setParameter(1, id);
+            Query query = em.createQuery("select p from PurchaseOrderEntity p where p.id = ?1").setParameter(1, purchaseOrderID);
             PurchaseOrderEntity purchaseOrder = (PurchaseOrderEntity) query.getSingleResult();
+            query = em.createQuery("select p from ItemEntity p where p.SKU = ?1").setParameter(1, SKU);
+            ItemEntity itemEntity = (ItemEntity) query.getSingleResult();
+            LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, null);
             purchaseOrder.getLineItems().add(lineItem);
             em.merge(purchaseOrder);
             em.flush();
             return true;
         } catch (Exception ex) {
+            System.out.println("Failed to addLineItemToPurchaseOrder()");
             ex.printStackTrace();
             return false;
         }
