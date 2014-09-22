@@ -12,7 +12,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i>Facility Management
+                                    <i class="icon icon-home"></i> Facility Management
                                 </li>                                                             
                             </ol>
                         </div>
