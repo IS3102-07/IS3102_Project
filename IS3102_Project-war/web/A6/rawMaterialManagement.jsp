@@ -58,7 +58,7 @@
                                     <i class="icon icon-user"></i>  <a href="rawMaterialManagement.jsp">Raw Material Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Raw Material Management
+                                    <i class="icon icon-user"></i> Raw Material Management
                                 </li>
                             </ol>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    insert some wordings
+                                    Add or delete raw materials
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="rawMaterialManagement">

@@ -58,7 +58,7 @@
                                     <i class="icon icon-sitemap"></i>  <a href="billOfMaterialManagement.jsp">Bill of Material Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Bill of Material Management
+                                    <i class="icon icon-sitemap"></i> Bill of Material Management
                                 </li>
                             </ol>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Welcome to BOM Management!
+                                    Add or remove Bill Of Materials
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="billOfMaterialManagement">
