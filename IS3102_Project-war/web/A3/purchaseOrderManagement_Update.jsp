@@ -2,8 +2,9 @@
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<% List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    if (purchaseOrders == null) {
+<%
+    List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
+    if (purchaseOrders == null || request.getParameter("id") == null) {
         response.sendRedirect("../PurchaseOrderManagement_Servlet");
     } else {
         List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("activeSuppliers"));
@@ -22,6 +23,12 @@
     <jsp:include page="../header2.html" />
     <body>
         <script>
+            function addPOLineItem(id) {
+
+                purchaseOrderManagement.id.value = id;
+                document.purchaseOrderManagement.action = "purchaseOrderManagement_AddLineItem.jsp";
+                document.purchaseOrderManagement.submit();
+            }
             function updatePOLineItem(id) {
                 purchaseOrderManagement.id.value = id;
                 document.purchaseOrderManagement.action = "purchaseOrderManagement_UpdateLineItem.jsp";
@@ -31,16 +38,11 @@
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.purchaseOrderManagement.action = "../StorageBinManagement_RemoveServlet";
+                    document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_RemoveServlet";
                     document.purchaseOrderManagement.submit();
                 } else {
                     window.event.returnValue = false;
                 }
-            }
-            function addPOLineItem() {
-                window.event.returnValue = true;
-                document.purchaseOrderManagement.action = "purchaseOrderManagement_AddLineItem.jsp";
-                document.purchaseOrderManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -58,7 +60,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Update Purchase Order
+                                Purchase Order - Update
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
@@ -139,7 +141,7 @@
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addPOLineItem()"  />
+                                                        <input type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPOLineItem('<%=purchaseOrder.getId()%>')"/>
                                                         <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="removePOLineItem()"  />
                                                     </div>
                                                 </div>
@@ -164,11 +166,12 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addPOLineItem()"  />
+                                                <input type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPOLineItem('<%=purchaseOrder.getId()%>')"/>
                                                 <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="removePOLineItem()"  />
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">
                                 </form>
                             </div>
                         </div>
