@@ -17,7 +17,6 @@ public class BillOfMaterialEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String description;
-    
     @OneToOne
     FurnitureEntity furniture;
     @OneToMany
