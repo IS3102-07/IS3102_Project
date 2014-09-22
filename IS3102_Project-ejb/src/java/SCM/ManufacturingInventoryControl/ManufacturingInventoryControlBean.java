@@ -93,10 +93,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         em.refresh(destination);
         List<ItemEntity> itemsInSourceBin = source.getItems();
         List<ItemEntity> itemsInDestinationBin = destination.getItems();   
-        boolean itemRemoved;
+        boolean itemRemoved = false;
         try {
             for (int i = 0; i < itemsInSourceBin.size(); i++) {
                 if (itemsInSourceBin.get(i).getSKU().equals(SKU)) {
+                    itemRemoved=true;
                     ItemEntity itemRemovedFromSource = itemsInSourceBin.remove(i);
                     itemsInDestinationBin.add(itemRemovedFromSource);
                     source.setFreeVolume(source.getFreeVolume() + itemRemovedFromSource.getVolume());
@@ -105,7 +106,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 }
             }
             System.out.println("The item is moved successfully between bins.");
-            return true;
+            return itemRemoved;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed to move the item between bins, item not found.");
             return false;
