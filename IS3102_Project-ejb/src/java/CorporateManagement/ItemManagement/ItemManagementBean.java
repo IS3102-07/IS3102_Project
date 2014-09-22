@@ -7,6 +7,8 @@ import EntityManager.ProductGroupEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
+import EntityManager.ProductGroupLineItemEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
 import javax.persistence.EntityManager;
@@ -452,6 +454,111 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     @Remove
     public void remove() {
         System.out.println("Item Management Bean is removed.");
+    }
+
+    @Override
+    public ProductGroupEntity createProductGroup(String name, Integer workhours) {
+        try {
+            Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
+            if (q.getResultList().isEmpty()) {
+                ProductGroupEntity prouductGroup = new ProductGroupEntity(name, workhours);
+                em.persist(name);
+                return prouductGroup;
+            } else {
+                return (ProductGroupEntity) q.getResultList().get(0);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ProductGroupEntity getProductGroup(Long id) {
+        try {
+            return em.find(ProductGroupEntity.class, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<ProductGroupEntity> getAllProductGroup() {
+        try {
+            Query q = em.createQuery("select pg from ProductGroupEntity pg");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public ProductGroupLineItemEntity createProductGroupLineItem(Long furnitureId, double percent) {
+        try {
+            FurnitureEntity furniture = em.find(FurnitureEntity.class, furnitureId);
+            ProductGroupLineItemEntity lineItem = new ProductGroupLineItemEntity();
+            lineItem.setFurniture(furniture);
+            lineItem.setPercent(percent);
+            em.persist(lineItem);
+            return lineItem;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public Boolean deleteProductGroupLineItem(Long id) {
+        try {
+            em.remove(em.find(ProductGroupLineItemEntity.class, id));
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean editProductGroupLineItem(Long id, double percent) {
+        try {
+            ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, id);
+            lineItem.setPercent(percent);
+            em.merge(lineItem);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId) {
+        try {
+            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+            ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);
+            lineItem.setProductGroup(productGroup);
+            productGroup.getLineItemList().add(lineItem);
+            em.merge(productGroup);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId) {
+        try {
+            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+            ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);
+            productGroup.getLineItemList().remove(lineItem);
+            em.merge(productGroup);
+            this.deleteProductGroupLineItem(lineItemId);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
 }

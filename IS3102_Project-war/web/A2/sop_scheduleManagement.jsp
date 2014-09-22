@@ -46,7 +46,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/sop_scheduleManagement_POST">
+                                            <form action="../SaleAndOperationPlanning_Servlet/deleteSchedule">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
@@ -62,10 +62,10 @@
                                                                 for (MonthScheduleEntity schedule : scheduleList) {
                                                         %>
                                                         <tr>   
-                                                            <input type="checkbox" name="delete" value="<%=schedule.getId()%>" />
-                                                            <td><%= schedule.getYear()%></td>
-                                                            <td><%= schedule.getMonth()%></td>                                                            
-                                                        </tr>
+                                                    <td><input type="checkbox" name="delete" value="<%=schedule.getId()%>" /></td>
+                                                    <td><%= schedule.getYear()%></td>
+                                                    <td><%= schedule.getMonth()%></td>                                                            
+                                                    </tr>
                                                     <%
                                                             }
                                                         }
@@ -73,12 +73,39 @@
                                                     </tbody>
                                                 </table>    
                                                 <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="submit" name="submit-btn" value="Add Schedule" class="btn btn-primary" data-loading-text="Loading...">
+                                                    <div class="col-md-12">                                                        
                                                         <input type="submit" name="submit-btn" value="Delete Schedule" class="btn btn-primary" data-loading-text="Loading...">
                                                     </div>
                                                 </div>
-                                            </form>    
+                                            </form>  
+                                            <hr/>
+                                            <form class="form-inline" action="../SaleAndOperationPlanning_Servlet/addSchedule">
+                                                <h4><b>Add Schedule:</b></h4>
+                                                <div class="form-group">
+                                                    <label><b>Year</b></label>
+                                                    <input type="number" name="year" class="form-control" style="min-width: 200px" required="true">
+                                                </div>                                                
+                                                <div class="form-group">
+                                                    <label><b>Month</b></label>
+                                                    <select class="form-control" style="min-width: 200px" name="month" required="true">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                    </select>
+                                                </div>     
+                                                <div class="form-group">
+                                                    <input type="submit" name="submit-btn" value="Add Schedule" class="btn btn-primary" data-loading-text="Loading...">
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                     <!-- /.table-responsive -->
