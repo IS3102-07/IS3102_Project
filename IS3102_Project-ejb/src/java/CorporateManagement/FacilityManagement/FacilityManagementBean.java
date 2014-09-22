@@ -147,7 +147,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity) {
         System.out.println("editManufacturingFacility() called with ID:" + id);
         try {
-            ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
+             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
             manufacturingFacility.setName(manufacturingFacilityName);
             manufacturingFacility.setAddress(address);
             manufacturingFacility.setTelephone(telephone);
@@ -394,7 +394,8 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public WarehouseEntity getWarehouseById(Long Id) {
+    public WarehouseEntity
+            getWarehouseById(Long Id) {
         try {
             return em.find(WarehouseEntity.class, Id);
         } catch (Exception ex) {
@@ -407,17 +408,6 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     @Remove
     public void remove() {
         System.out.println("Facility Management is removed");
-    }
-
-    @Override
-    public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId) {
-        try {
-            Query q = em.createQuery("select s from StoreEntity s where s.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
-            return q.getResultList();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return new ArrayList<>();
     }
 
 }
