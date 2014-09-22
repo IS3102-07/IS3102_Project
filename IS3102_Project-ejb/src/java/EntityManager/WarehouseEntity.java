@@ -24,9 +24,7 @@ public class WarehouseEntity implements Serializable {
     private String email;
     private String telephone;
     @OneToMany(mappedBy = "warehouse")
-    private List<StorageBinEntity> storageBins; 
-    @OneToMany(mappedBy = "warehouses")
-    private List<ItemEntity> items;
+    private List<StorageBinEntity> storageBins;
     @OneToOne(mappedBy="warehouse")
     private StoreEntity store;
     @OneToOne(mappedBy="warehouse")
@@ -42,7 +40,6 @@ public class WarehouseEntity implements Serializable {
     
     public WarehouseEntity(){
         this.storageBins = new ArrayList<>();
-        this.items = new ArrayList<>();
         this.purchaseOrderEntityList = new ArrayList<>();
     }    
 
@@ -52,7 +49,6 @@ public class WarehouseEntity implements Serializable {
         this.email = email;
         this.telephone = telephone;
         this.storageBins = new ArrayList<>();
-        this.items = new ArrayList<>();
         this.purchaseOrderEntityList = new ArrayList<>();
     }                
     
@@ -159,22 +155,6 @@ public class WarehouseEntity implements Serializable {
 
     public void setCountry(CountryEntity country) {
         this.country = country;
-    }
-
-    
-
-    /**
-     * @return the items
-     */
-    public List<ItemEntity> getItems() {
-        return items;
-    }
-
-    /**
-     * @param items the items to set
-     */
-    public void setItems(List<ItemEntity> items) {
-        this.items = items;
     }
 
     public List<PurchaseOrderEntity> getPurchaseOrderEntityList() {
