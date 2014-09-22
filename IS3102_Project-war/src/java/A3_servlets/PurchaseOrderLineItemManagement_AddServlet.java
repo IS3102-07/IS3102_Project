@@ -20,16 +20,14 @@ public class PurchaseOrderLineItemManagement_AddServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session;
-            session = request.getSession();
             String purchaseOrderId = request.getParameter("id");
             String sku = request.getParameter("sku");
             String quantity = request.getParameter("quantity");
 
             boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.addLineItemToPurchaseOrder(Long.parseLong(purchaseOrderId), sku, Integer.parseInt(quantity));
             if (!canUpdate) {
-                result = "?errMsg=Purchase Order or SKU not found.";
-                response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
+                result = "?errMsg=Purchase Order or SKU not found.&id=" + purchaseOrderId;
+                response.sendRedirect("A3/purchaseOrderManagement_AddLineItem.jsp" + result);
             } else {
                 result = "?errMsg=Line item added successfully.&id=" + purchaseOrderId;
                 response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
