@@ -35,7 +35,7 @@ public class FacilityManagement_Servlet extends HttpServlet {
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
+        Long warehouseId;
         String target = request.getPathInfo();
 
         switch (target) {
@@ -47,11 +47,16 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 break;
 
             case "/createWarehouse_GET":
-                String submit_btn = request.getParameter("submit-btn");
+                String submit_btn = request.getParameter("submit-btn");                
                 if(submit_btn.equals("Add Warehouse"))
                     nextPage = "/A6/createWarehouse";
                 else if(submit_btn.equals("Delete Warehouse"))
                     nextPage = "/FacilityManagement_Servlet/deleteWarehouse";
+                else {
+                    warehouseId = Long.parseLong(submit_btn);
+                    request.setAttribute("warehouseId", warehouseId);
+                    nextPage = "/FacilityManagement_Servlet/editWarehouse_GET";                
+                }
                 break;
 
             case "/createWarehouse_POST":
@@ -75,7 +80,7 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 break;
 
             case "/editWarehouse_GET":
-                Long warehouseId = Long.parseLong(request.getParameter("warehouseId"));
+                warehouseId = (long)request.getAttribute("warehouseId");
                 WarehouseEntity warehouse = fmBean.getWarehouseById(warehouseId);
                 request.setAttribute("warehouse", warehouse);
                 nextPage = "/A6/editWarehouse";
@@ -95,6 +100,7 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 }
                 nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
                 break;
+                
             case "/deleteWarehouse":
                 String[] deletes = request.getParameterValues("delete");
                 if(deletes != null){

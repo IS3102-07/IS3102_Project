@@ -25,10 +25,10 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Facility Management</a>
+                                    <i class="icon icon-home"></i>  <a href="facilityManagement.jsp">Facility Management</a>
                                 </li>                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Warehouse Management</a>
+                                    <i class="icon icon-home"></i>Warehouse Management
                                 </li>
                             </ol>
                         </div>
@@ -77,7 +77,7 @@
                                                             <td><%= warehouse.getAddress()%></td>
                                                             <td><%= warehouse.getTelephone()%></td>
                                                             <td><%= warehouse.getEmail()%></td>
-                                                            <td><button class="btn btn-primary" name="warehouseId" value="<%= warehouse.getId() %>">Access</button></td>                                                            
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= warehouse.getId() %>">Access</button></td>                                                            
                                                         </tr>
                                                         <%
                                                                 }

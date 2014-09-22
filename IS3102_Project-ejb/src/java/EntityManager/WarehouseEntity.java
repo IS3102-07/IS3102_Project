@@ -112,14 +112,6 @@ public class WarehouseEntity implements Serializable {
         this.id = id;
     }
 
-    public List<StorageBinEntity> getStorageBin() {
-        return storageBins;
-    }
-
-    public void setStorageBin(List<StorageBinEntity> storageBin) {
-        this.storageBins = storageBin;
-    }
-
     public StoreEntity getStore() {
         return store;
     }

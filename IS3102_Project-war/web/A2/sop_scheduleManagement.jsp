@@ -46,7 +46,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/sop_schedule_POST">
+                                            <form action="../SaleAndOperationPlanning_Servlet/sop_scheduleManagement_POST">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
@@ -62,10 +62,10 @@
                                                                 for (MonthScheduleEntity schedule : scheduleList) {
                                                         %>
                                                         <tr>   
-                                                    <input type="checkbox" name="delete" value="<%=schedule.getId()%>" />
-                                                    <td><%= schedule.getYear()%></td>
-                                                    <td><%= schedule.getMonth()%></td>                                                            
-                                                    </tr>
+                                                            <input type="checkbox" name="delete" value="<%=schedule.getId()%>" />
+                                                            <td><%= schedule.getYear()%></td>
+                                                            <td><%= schedule.getMonth()%></td>                                                            
+                                                        </tr>
                                                     <%
                                                             }
                                                         }
