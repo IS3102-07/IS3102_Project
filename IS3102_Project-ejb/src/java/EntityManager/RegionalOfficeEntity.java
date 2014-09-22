@@ -86,7 +86,7 @@ public class RegionalOfficeEntity implements Serializable {
     }
     
     public String getTelephone() {
-        return address;
+        return telephone;
     }
     public void setTelephone(String telephone) {
         this.telephone = telephone;

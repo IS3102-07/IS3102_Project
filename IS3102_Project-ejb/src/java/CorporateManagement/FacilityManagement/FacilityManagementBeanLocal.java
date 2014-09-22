@@ -21,7 +21,7 @@ import javax.ejb.Remove;
 public interface FacilityManagementBeanLocal {
 
     public boolean addRegionalOffice(String regionalOfficeName, String address, String telephone, String email);
-    public Boolean editRegionalOffice(String regionalOfficeName);
+    public Boolean editRegionalOffice(Long id, String regionalOfficeName, String address, String telephone, String email);
     public boolean removeRegionalOffice(String regionalOfficeName);
     public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeName);
     public List<RegionalOfficeEntity> viewListOfRegionalOffice();
