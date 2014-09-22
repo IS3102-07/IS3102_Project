@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LineItemManagement_RemoveServlet extends HttpServlet {
+public class TransferOrderLineItemManagement_RemoveServlet extends HttpServlet {
 
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
@@ -30,12 +30,12 @@ public class LineItemManagement_RemoveServlet extends HttpServlet {
             boolean canUpdate = manufacturingWarehouseManagementBean.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
             if (!canUpdate) {
                 result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
-                response.sendRedirect("A3/lineItemManagement.jsp" + result);
+                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
                 result = "?errMsg=Item removed successfully.&id="+transferOrderId;
-                response.sendRedirect("A3/lineItemManagement.jsp" + result);
+                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

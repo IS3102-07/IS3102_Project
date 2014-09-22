@@ -317,16 +317,16 @@
         <servlet-class>A1_servlets.WorkspaceAnnouncement_DeleteServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LineItemManagement_Servlet</servlet-name>
-        <servlet-class>A3_servlets.LineItemManagement_Servlet</servlet-class>
+        <servlet-name>TransferOrderLineItemManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.TransferOrderLineItemManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LineItemManagement_RemoveServlet</servlet-name>
-        <servlet-class>A3_servlets.LineItemManagement_RemoveServlet</servlet-class>
+        <servlet-name>TransferOrderLineItemManagement_RemoveServlet</servlet-name>
+        <servlet-class>A3_servlets.TransferOrderLineItemManagement_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LineItemManagement_UpdateServlet</servlet-name>
-        <servlet-class>A3_servlets.LineItemManagement_UpdateServlet</servlet-class>
+        <servlet-name>TransferOrderLineItemManagement_UpdateServlet</servlet-name>
+        <servlet-class>A3_servlets.TransferOrderLineItemManagement_UpdateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AccountManagement_ActivateServlet</servlet-name>
@@ -697,16 +697,16 @@
         <url-pattern>/WorkspaceAnnouncement_DeleteServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LineItemManagement_Servlet</servlet-name>
-        <url-pattern>/LineItemManagement_Servlet</url-pattern>
+        <servlet-name>TransferOrderLineItemManagement_Servlet</servlet-name>
+        <url-pattern>/TransferOrderLineItemManagement_Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LineItemManagement_RemoveServlet</servlet-name>
-        <url-pattern>/LineItemManagement_RemoveServlet</url-pattern>
+        <servlet-name>TransferOrderLineItemManagement_RemoveServlet</servlet-name>
+        <url-pattern>/TransferOrderLineItemManagement_RemoveServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LineItemManagement_UpdateServlet</servlet-name>
-        <url-pattern>/LineItemManagement_UpdateServlet</url-pattern>
+        <servlet-name>TransferOrderLineItemManagement_UpdateServlet</servlet-name>
+        <url-pattern>/TransferOrderLineItemManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AccountManagement_ActivateServlet</servlet-name>

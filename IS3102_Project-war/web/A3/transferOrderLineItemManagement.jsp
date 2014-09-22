@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <%if (lineItem == null) {%>
-                                    <form role="form" action="../LineItemManagement_Servlet">
+                                    <form role="form" action="../TransferOrderLineItemManagement_Servlet">
                                         <div class="form-group">
                                             <label>SKU</label>
                                             <input class="form-control" name="sku" type="text"  >
@@ -77,7 +77,7 @@
                                         <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
                                     </form>
                                     <%} else {%>
-                                    <form role="form" action="../LineItemManagement_RemoveServlet">
+                                    <form role="form" action="../TransferOrderLineItemManagement_RemoveServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
                                             <input class="form-control" name="sku" type="text" value="<%=transferOrder.getLineItem().getItem().getSKU()%>" disabled >
@@ -124,7 +124,7 @@
                                     <%
                                     } else {
                                     %>
-                                    <form role="form" action="../LineItemManagement_UpdateServlet">
+                                    <form role="form" action="../TransferOrderLineItemManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select class="form-control" name="status" required="true">
