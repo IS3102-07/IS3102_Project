@@ -4,13 +4,10 @@
 <%@page import="java.util.List"%>
 <%
     List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    if (purchaseOrders == null) {
+    String id = request.getParameter("id");
+    if (purchaseOrders == null || id == null) {
         response.sendRedirect("../PurchaseOrderManagement_Servlet");
     } else {
-        List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("activeSuppliers"));
-        List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
-        String id = request.getParameter("id");
-
         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
         for (int i = 0; i < purchaseOrders.size(); i++) {
             if (purchaseOrders.get(i).getId() == Integer.parseInt(id)) {
@@ -22,34 +19,6 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
-        <script>
-            function updatePOLineItem(id) {
-                purchaseOrderManagement.id.value = id;
-                document.purchaseOrderManagement.action = "purchaseOrderManagement_UpdateLineItem.jsp";
-                document.purchaseOrderManagement.submit();
-            }
-            function removePOLineItem() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_RemoveServlet";
-                    document.purchaseOrderManagement.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
-            }
-            function addPOLineItem() {
-                window.event.returnValue = true;
-                document.purchaseOrderManagement.action = "purchaseOrderManagement_AddLineItem.jsp";
-                document.purchaseOrderManagement.submit();
-            }
-            function checkAll(source) {
-                checkboxes = document.getElementsByName('delete');
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    checkboxes[i].checked = source.checked;
-                }
-            }
-        </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
