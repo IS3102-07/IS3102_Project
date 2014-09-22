@@ -52,13 +52,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Bill Of Material Management</h1>
+                            <h1 class="page-header">Bill of Materials Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="billOfMaterialManagement.jsp">Bill Of Material Management</a>
+                                    <i class="icon icon-sitemap"></i>  <a href="billOfMaterialManagement.jsp">Bill of Material Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Bill Of Material Management
+                                    <i class="icon icon-edit"></i> Bill of Material Management
                                 </li>
                             </ol>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    insert some wordings
+                                    Welcome to BOM Management!
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="billOfMaterialManagement">
@@ -79,8 +79,8 @@
                                             
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Bill Of Material" onclick="addBillOfMaterial()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Bill Of Material" onclick="removeBillOfMaterial()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addBillOfMaterial()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove BOM(s)" onclick="removeBillOfMaterial()"  />
                                                 </div>
                                             </div>
                                             <br/>
@@ -101,21 +101,18 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<BillOfMaterialEntity> billOfMaterials = (List<BillOfMaterialEntity>) (session.getAttribute("billOfMaterialList"));
+                                                            List<BillOfMaterialEntity> listOfBOM = (List<BillOfMaterialEntity>) (session.getAttribute("listOfBOM"));
 
                                                             try {
-                                                                if (billOfMaterials != null) {
-                                                                    for (int i = 0; i < billOfMaterials.size(); i++) {
+                                                                if (listOfBOM != null) {
+                                                                    for (int i = 0; i < listOfBOM.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <input type="checkbox" name="delete" value="<%=billOfMaterials.get(i).getId()%>" />
+                                                                <input type="checkbox" name="delete" value="<%=listOfBOM.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=billOfMaterials.get(i).getName()%>
-                                                            </td>
-                                                            <td>
-                                                                Blank
+                                                                <%=listOfBOM.get(i).getName()%>
                                                             </td>
                                                             <td>
                                                                 Blank
@@ -133,7 +130,10 @@
                                                                 Blank
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=billOfMaterials.get(i).getId()%>" value="update" onclick="javascript:updateRawMaterial('<%=billOfMaterials.get(i).getId()%>')"/>
+                                                                Blank
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=listOfBOM.get(i).getId()%>" value="update" onclick="javascript:updateRawMaterial('<%=listOfBOM.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -149,8 +149,8 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Bill Of Material" onclick="addRawMaterial()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Bill Of Material" onclick="removeRawMaterial()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addRawMaterial()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove BOM(s)" onclick="removeRawMaterial()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
