@@ -207,16 +207,16 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean createBillOfMaterial(String name) {
+    public boolean createBillOfMaterial(String name) {//
         System.out.println("createBillOfMaterial() called with name:" + name);
 
         Long id;
         try {
-            BillOfMaterialEntity billOfMaterialEntity = new BillOfMaterialEntity();
-            billOfMaterialEntity.create(name);
-            em.persist(billOfMaterialEntity);
-            id = billOfMaterialEntity.getId();
-            System.out.println("Bill Of Material Name \"" + name + "\" registered successfully as id:" + id);
+//            BillOfMaterialEntity billOfMaterialEntity = new BillOfMaterialEntity();
+//            billOfMaterialEntity.create(name);
+//            em.persist(billOfMaterialEntity);
+//            id = billOfMaterialEntity.getId();
+            //System.out.println("Bill Of Material Name \"" + name + "\" registered successfully as id:" + id);
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register bill of material:\n" + ex);
@@ -224,22 +224,22 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editBillOfMaterial(String name) {
+    public boolean editBillOfMaterial(String name) {//
         System.out.println("editBillOfMaterial() called with bill of material name:" + name);
 
         Long id;
         try {
             Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
 
-            for (Object o : q.getResultList()) {
-                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
-                if (i.getName().equalsIgnoreCase(name)) {
-                    i.setName(name);
-                    em.flush();
-                    System.out.println("\nServer updated bill of material:\n" + name);
-                    return true;
-                }
-            }
+//            for (Object o : q.getResultList()) {
+//                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
+//                if (i.getName().equalsIgnoreCase(name)) {
+//                    i.setName(name);
+//                    em.flush();
+//                    System.out.println("\nServer updated bill of material:\n" + name);
+//                    return true;
+//                }
+//            }
             return false; //Could not find the role to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to update bill of material:\n" + ex);
@@ -251,16 +251,16 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         System.out.println("deleteBillOfMaterial() called with bomName:" + bomName);
         try {
             Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
-
-            for (Object o : q.getResultList()) {
-                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
-                if (i.getName().equalsIgnoreCase(bomName)) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed bill of material:\n" + bomName);
-                    return true;
-                }
-            }
+//
+//            for (Object o : q.getResultList()) {
+//                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
+//                if (i.getName().equalsIgnoreCase(bomName)) {
+//                    em.remove(i);
+//                    em.flush();
+//                    System.out.println("\nServer removed bill of material:\n" + bomName);
+//                    return true;
+//                }
+//            }
             return false; //Could not find the role to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove bill of material:\n" + ex);
@@ -273,13 +273,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         try {
             Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
 
-            for (Object o : q.getResultList()) {
-                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
-                if (i.getName().equalsIgnoreCase(name)) {
-                    System.out.println("\nServer returns bill of material:\n" + name);
-                    return i;
-                }
-            }
+//            for (Object o : q.getResultList()) {
+//                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
+//                if (i.getName().equalsIgnoreCase(name)) {
+//                    System.out.println("\nServer returns bill of material:\n" + name);
+//                    return i;
+//                }
+//            }
             return null; //Could not find the role to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to view bill of material:\n" + ex);

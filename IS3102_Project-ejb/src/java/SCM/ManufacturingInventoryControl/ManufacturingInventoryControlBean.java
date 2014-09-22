@@ -6,6 +6,7 @@ import EntityManager.RawMaterialEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
+import HelperClasses.ItemStorageBinHelper;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             storageBinType = "Shelf";
         }
         try {
-            List<StorageBinEntity> storageBinEntities = warehouseEntity.getStorageBin();
+            List<StorageBinEntity> storageBinEntities = warehouseEntity.getStorageBins();
             for (StorageBinEntity binEntity : storageBinEntities) {
                 if (binEntity.getItems().size() == 0 && binEntity.getType().equals(storageBinType)) {
                     listOfAppropriateEmptyStorageBins.add(binEntity);
@@ -364,5 +365,17 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             ex.printStackTrace();
             return null;
         }
+    }
+    
+    @Override
+    public List<ItemStorageBinHelper> getItemList(Long warehouseID) {
+        List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<ItemStorageBinHelper>();
+        List<ItemEntity> itemsInWarehouse = new ArrayList<ItemEntity>();
+        WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+        List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
+        for(StorageBinEntity storageBin : storageBins) {
+            storageBin.getItems();
+        }
+        return itemStorageBinHelperList;
     }
 }
