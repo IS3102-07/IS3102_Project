@@ -5,6 +5,7 @@ import EntityManager.ItemEntity;
 import EntityManager.BillOfMaterialEntity;
 import EntityManager.RawMaterialEntity;
 import EntityManager.ProductGroupEntity;
+import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.RetailProductEntity;
 import java.util.List;
 import javax.ejb.Local;
@@ -49,6 +50,15 @@ public interface ItemManagementBeanLocal {
      public boolean removeItem(String itemName);
      public ItemEntity viewItem(String itemName);
      */
+    
+    public ProductGroupEntity createProductGroup(String name, Integer workhours);
+    public ProductGroupEntity getProductGroup(Long id);
+    public List<ProductGroupEntity> getAllProductGroup();    
+    public ProductGroupLineItemEntity createProductGroupLineItem(Long furnitureId, double percent);    
+    public Boolean editProductGroupLineItem(Long id, double percent);
+    public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId);
+    public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId);
+    
 
     @Remove
     public void remove();
