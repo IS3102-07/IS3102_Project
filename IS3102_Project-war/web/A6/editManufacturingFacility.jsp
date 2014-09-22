@@ -26,13 +26,13 @@
                             <h1 class="page-header">Manufacturing Facility Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="facilityManagement.jsp">Facility Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="regionalOfficeManagement.jsp">Manufacturing Facility Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../A6/manufacturingFacilityManagement.jsp">Manufacturing Facility Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-edit"></i>  Edit Manufacturing Facility
+                                    <i class="icon icon-edit"></i> Edit Manufacturing Facility
                                 </li>
                             </ol>
                         </div>

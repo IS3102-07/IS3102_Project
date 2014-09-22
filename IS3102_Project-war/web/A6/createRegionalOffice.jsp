@@ -25,13 +25,13 @@
                             <h1 class="page-header">Regional Office Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Facility Management</a>
+                                    <i class="icon icon-home"></i>   <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Regional Office Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../A6/manufacturingFacilityManagement.jsp">Regional Office Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-edit"></i>  <a href="#">Add New Regional Office</a>
+                                    <i class="icon icon-edit"></i> Add New Regional Office</a>
                                 </li>
                             </ol>
                         </div>
