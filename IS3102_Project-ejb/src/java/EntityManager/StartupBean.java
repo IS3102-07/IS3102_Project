@@ -141,15 +141,15 @@ public class StartupBean {
             }
             try {
                 //Create supplier
-                CountryEntity countryEntity = em.getReference(CountryEntity.class, Long.parseLong("1"));
-                SupplierEntity supplierEntity = new SupplierEntity("Supplier 1", "67911580", "supplier1@email.com", "231 Bukit Panjang Road");
-                supplierEntity.setCountry(countryEntity);
-                em.persist(supplierEntity);
-                supplierEntity = new SupplierEntity("Supplier 2", "67911432", "supplier2@email.com", "3 Dover Road");
-                countryEntity = em.getReference(CountryEntity.class, Long.parseLong("2"));
-                supplierEntity.setCountry(countryEntity);
-                em.persist(supplierEntity);
-                System.out.println("Created supplierEntity.");
+//                CountryEntity countryEntity = em.getReference(CountryEntity.class, Long.parseLong("1"));
+//                SupplierEntity supplierEntity = new SupplierEntity("Supplier 1", "67911580", "supplier1@email.com", "231 Bukit Panjang Road");
+//                supplierEntity.setCountry(countryEntity);
+//                em.persist(supplierEntity);
+//                supplierEntity = new SupplierEntity("Supplier 2", "67911432", "supplier2@email.com", "3 Dover Road");
+//                countryEntity = em.getReference(CountryEntity.class, Long.parseLong("2"));
+//                supplierEntity.setCountry(countryEntity);
+//                em.persist(supplierEntity);
+//                System.out.println("Created supplierEntity.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of supplierEntity:\n" + ex);
                 ex.printStackTrace();
