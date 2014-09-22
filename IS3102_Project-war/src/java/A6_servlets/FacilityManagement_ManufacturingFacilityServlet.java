@@ -90,13 +90,16 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 break;
 
             case "/editManufacturingFacility_POST":
+                System.out.println("reach manufacturing facility post");
                 String manufacturingFacilityName = request.getParameter("manufacturingFacilityName");
                 String address = request.getParameter("address");
                 String telephone = request.getParameter("telephone");
                 String email = request.getParameter("email");
-                Long id = Long.parseLong(request.getParameter("regionalOfficeId"));
-
-                if (fmBean.editManufacturingFacility(id, manufacturingFacilityName)) {
+                System.out.println(manufacturingFacilityName + address + telephone + email);
+                String capacity = request.getParameter("capacity");
+                Long id = Long.parseLong(request.getParameter("manufacturingFacilityId"));
+                System.out.println(id + " is id");
+                if (fmBean.editManufacturingFacility(id, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity))) {
                     request.setAttribute("alertMessage", "The manufacturing facility has been saved.");
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit manufacturing facility.");
