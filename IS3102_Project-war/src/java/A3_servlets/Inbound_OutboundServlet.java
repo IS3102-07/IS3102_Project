@@ -14,7 +14,6 @@ import EntityManager.WarehouseEntity;
 import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -119,9 +118,7 @@ public class Inbound_OutboundServlet extends HttpServlet {
                 httpSession = request.getSession();
                 currentShippingOrderId = (long) httpSession.getAttribute("currentShippingOrderId");
                 
-                LineItemEntity lineItem = new LineItemEntity(item, quantity, packType);
-                
-                ioBean.addLineItemToShippingOrder(currentShippingOrderId, lineItem);
+                ioBean.addLineItemToShippingOrder(currentShippingOrderId, itemCode, quantity, packType);
                 
                 nextPage = "/A3/createShippingOrder_LineItems";
                 break;

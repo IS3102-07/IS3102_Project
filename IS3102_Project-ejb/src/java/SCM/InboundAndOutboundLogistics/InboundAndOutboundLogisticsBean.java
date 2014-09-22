@@ -65,6 +65,31 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
             return false;
         }
     }
+    
+    @Override
+    public Boolean addLineItemToShippingOrder(Long shippingOrderID, String SKU, Integer qty,String packType) {
+        System.out.println("addLineItemToShippingOrder() called");
+        try {
+            Query query = em.createQuery("select s from ShippingOrderEntity s where s.id = ?1").setParameter(1, shippingOrderID);
+            ShippingOrderEntity shippingOrder = (ShippingOrderEntity) query.getSingleResult();
+            query = em.createQuery("select p from ItemEntity p where p.SKU = ?1").setParameter(1, SKU);
+            ItemEntity itemEntity = (ItemEntity) query.getSingleResult();
+            LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, packType);
+            lineItem.setShippingOrder(shippingOrder);
+            shippingOrder.getLineItems().add(lineItem);
+            em.merge(shippingOrder);
+            em.flush();
+            System.out.println("Lineitem added.");
+            return true;
+        } catch (NoResultException ex) {
+            System.out.println("Failed to addLineItemToShippingOrder(). Purchase order or SKU not found.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Fail to addLineItemToShippingOrder()");
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public Boolean removeLineItemFromShippingOrder(Long shippingOrderID, Long lineItemID) {

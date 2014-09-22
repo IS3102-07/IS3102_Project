@@ -21,6 +21,7 @@ public interface InboundAndOutboundLogisticsBeanLocal {
     public Boolean updateShippingOrder(Long shippingOrderID, Long sourceWarehouseID, Long destinationWarehouseID, String shippingType, Date expectedReceivedDate);
     public Boolean updateShippingOrderStatus(Long shippingOrderID, String status);
     public Boolean addLineItemToShippingOrder(Long shippingOrderID, String SKU, Integer qty);
+    public Boolean addLineItemToShippingOrder(Long shippingOrderID, String SKU, Integer qty, String packType);
     public Boolean removeLineItemFromShippingOrder(Long shippingOrderID, Long lineItemID);
     public Boolean updateLineItemFromShippingOrder(Long shippingOrderID, Long lineItemID, String SKU, Integer qty);
     public List<ShippingOrderEntity> getShippingOrderList(WarehouseEntity origin, Date shippedDate);
