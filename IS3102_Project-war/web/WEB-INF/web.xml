@@ -252,7 +252,7 @@
         <servlet-name>createRegionalOffice</servlet-name>
         <jsp-file>/A6/createRegionalOffice.jsp</jsp-file>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>createManufacturingFacility</servlet-name>
         <jsp-file>/A6/createManufacturingFacility.jsp</jsp-file>
     </servlet>
@@ -367,6 +367,10 @@
     <servlet>
         <servlet-name>sop_schedule</servlet-name>
         <jsp-file>/A2/sop_schedule.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderManagement_UpdateServlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderManagement_UpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -735,6 +739,10 @@
     <servlet-mapping>
         <servlet-name>sop_schedule</servlet-name>
         <url-pattern>/A2/sop_schedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderManagement_UpdateServlet</servlet-name>
+        <url-pattern>/PurchaseOrderManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

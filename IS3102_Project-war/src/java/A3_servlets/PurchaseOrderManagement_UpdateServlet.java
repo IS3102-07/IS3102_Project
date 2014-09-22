@@ -1,56 +1,48 @@
 package A3_servlets;
 
-import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.PurchaseOrderEntity;
-import EntityManager.SupplierEntity;
-import EntityManager.WarehouseEntity;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
-import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class PurchaseOrderManagement_Servlet extends HttpServlet {
+public class PurchaseOrderManagement_UpdateServlet extends HttpServlet {
 
     @EJB
     private RetailProductsAndRawMaterialsPurchasingBeanLocal retailProductsAndRawMaterialsPurchasingBean;
-    @EJB
-    private SupplierManagementBeanLocal supplierManagementBean;
-    @EJB
-    private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
-            HttpSession session;
-            session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
-            session.setAttribute("purchaseOrders", purchaseOrders);
+            String purchaseOrderId = request.getParameter("id");
+            String supplierId = request.getParameter("supplier");
+            String destinationId = request.getParameter("destination");
+            String expectedDate = request.getParameter("expectedDate");
 
-            List<SupplierEntity> activeSuppliers = supplierManagementBean.viewActiveSupplierList();
-            session.setAttribute("activeSuppliers", activeSuppliers);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatter.parse(expectedDate);
 
-            List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
-            session.setAttribute("warehouses", warehouses);
-
-            if (errMsg == null || errMsg.equals("")) {
-                response.sendRedirect("A3/purchaseOrderManagement.jsp");
-                return;
-            } else {
-                response.sendRedirect("A3/purchaseOrderManagement.jsp?errMsg=" + errMsg);
-                return;
+            if (supplierId != null && destinationId != null) {
+                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrder(Long.parseLong(purchaseOrderId), Long.parseLong(supplierId), Long.parseLong(destinationId), date);
+                if (!canUpdate) {
+                    result = "?errMsg=Supplier or Warehouse no longer exist / active.";
+                    response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
+                } else {
+                    result = "?errMsg=Purchase Order updated successfully";
+                    response.sendRedirect("PurchaseOrderManagement_Servlet" + result);
+                }
             }
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

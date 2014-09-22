@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Create Purchase Order
+                                Update Purchase Order
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
@@ -54,7 +54,7 @@
                                     <h3 class="panel-title"> Purchase Order</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form role="form" action="../PurchaseOrderManagement_AddServlet">
+                                    <form role="form" action="../PurchaseOrderManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>Supplier</label>
                                             <select class="form-control" name="supplier" required="true">
@@ -90,6 +90,7 @@
                                         <div class="form-group">
                                             <input type="submit" value="Update Purchase Order" class="btn btn-lg btn-primary btn-block">
                                         </div>  
+                                        <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">
                                     </form>
                                 </div>
                             </div>
