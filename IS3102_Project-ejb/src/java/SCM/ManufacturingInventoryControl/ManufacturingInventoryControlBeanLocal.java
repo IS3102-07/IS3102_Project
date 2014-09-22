@@ -2,7 +2,7 @@ package SCM.ManufacturingInventoryControl;
 
 import EntityManager.ItemEntity;
 import EntityManager.StorageBinEntity;
-import EntityManager.WarehouseEntity;
+import HelperClasses.ItemStorageBinHelper;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -34,5 +34,5 @@ public interface ManufacturingInventoryControlBeanLocal {
     public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID);
     public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID);
     
-    
+    public List<ItemStorageBinHelper> getItemList(Long warehouseID);
 }
