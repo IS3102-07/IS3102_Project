@@ -31,7 +31,7 @@
                                     <i class="icon icon-home"></i>  <a href="storeManagement.jsp">Store Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-edit"></i>Add New Store
+                                    <i class="icon icon-edit"></i> Add New Store
                                 </li>
                             </ol>
                         </div>

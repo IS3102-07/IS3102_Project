@@ -31,7 +31,7 @@
                                     <i class="icon icon-home"></i>  <a href="manufacturingFacilityManagement.jsp">Manufacturing Facility Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-edit"></i>Add New Manufacturing Facility
+                                    <i class="icon icon-edit"></i> Add New Manufacturing Facility
                                 </li>
                             </ol>
                         </div>
