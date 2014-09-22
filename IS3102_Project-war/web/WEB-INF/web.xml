@@ -416,6 +416,34 @@
         <servlet-name>SOP_ajax_Servlet</servlet-name>
         <servlet-class>A2_servlets.SOP_ajax_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShippingOrderLineItemManagement_AddServlet</servlet-name>
+        <servlet-class>A3_servlets.ShippingOrderLineItemManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingOrderLineItemManagement_RemoveServlet</servlet-name>
+        <servlet-class>A3_servlets.ShippingOrderLineItemManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingOrderLineItemManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.ShippingOrderLineItemManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingOrderLineItemManagement_UpdateServlet</servlet-name>
+        <servlet-class>A3_servlets.ShippingOrderLineItemManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingOrderManagement_AddServlet</servlet-name>
+        <servlet-class>A3_servlets.ShippingOrderManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingOrderManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.ShippingOrderManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingOrderManagement_UpdateServlet</servlet-name>
+        <servlet-class>A3_servlets.ShippingOrderManagement_UpdateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -831,6 +859,34 @@
     <servlet-mapping>
         <servlet-name>SOP_ajax_Servlet</servlet-name>
         <url-pattern>/SOP_ajax_Servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingOrderLineItemManagement_AddServlet</servlet-name>
+        <url-pattern>/ShippingOrderLineItemManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingOrderLineItemManagement_RemoveServlet</servlet-name>
+        <url-pattern>/ShippingOrderLineItemManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingOrderLineItemManagement_Servlet</servlet-name>
+        <url-pattern>/ShippingOrderLineItemManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingOrderLineItemManagement_UpdateServlet</servlet-name>
+        <url-pattern>/ShippingOrderLineItemManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingOrderManagement_AddServlet</servlet-name>
+        <url-pattern>/ShippingOrderManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingOrderManagement_Servlet</servlet-name>
+        <url-pattern>/ShippingOrderManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingOrderManagement_UpdateServlet</servlet-name>
+        <url-pattern>/ShippingOrderManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -88,6 +88,7 @@
                     <%
                         } catch (Exception ex) {
                             response.sendRedirect("../SupplierManagement_SupplierServlet");
+                            ex.printStackTrace();
                         }%>
                 </div>
 

@@ -80,7 +80,7 @@
                                                             <th>Email</th>
                                                             <th>Country</th>
                                                             <th>Address</th>
-                                                            <th>Update</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -116,7 +116,7 @@
                                                                 <%=suppliers.get(i).getAddress()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=suppliers.get(i).getId()%>" value="update" onclick="javascript:updateSupplier('<%=suppliers.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=suppliers.get(i).getId()%>" value="Update" onclick="javascript:updateSupplier('<%=suppliers.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
