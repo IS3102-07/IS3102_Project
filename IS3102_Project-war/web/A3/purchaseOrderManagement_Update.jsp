@@ -30,8 +30,8 @@
                 document.purchaseOrderManagement.action = "purchaseOrderManagement_AddLineItem.jsp";
                 document.purchaseOrderManagement.submit();
             }
-            function updatePOLineItem(id) {
-                purchaseOrderManagement.id.value = id;
+            function updatePOLineItem(lineItemId) {
+                purchaseOrderManagement.lineItemId.value = lineItemId;
                 document.purchaseOrderManagement.action = "purchaseOrderManagement_UpdateLineItem.jsp";
                 document.purchaseOrderManagement.submit();
             }
@@ -143,7 +143,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPOLineItem('<%=purchaseOrder.getId()%>')"/>
-                                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="removePOLineItem()"  />
+                                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removePOLineItem()"  />
                                                     </div>
                                                 </div>
                                                 <br>
@@ -160,12 +160,14 @@
                                                     <tbody>
                                                         <%
                                                             List<LineItemEntity> lineItems = purchaseOrder.getLineItems();
-
                                                             if (lineItems != null) {
                                                                 for (int i = 0; i < lineItems.size(); i++) {
                                                         %>
 
                                                         <tr>
+                                                            <td>
+                                                                <input type="checkbox" name="delete" value="<%=lineItems.get(i).getId()%>" />
+                                                            </td>
                                                             <td>
                                                                 <%=lineItems.get(i).getItem().getSKU()%>
                                                             </td>
@@ -176,7 +178,7 @@
                                                                 <%=lineItems.get(i).getQuantity()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePOLineItem('<%=purchaseOrder.getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePOLineItem('<%=lineItems.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%}
@@ -188,11 +190,12 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPOLineItem('<%=purchaseOrder.getId()%>')"/>
-                                                <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="removePOLineItem()"  />
+                                                <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removePOLineItem()"  />
                                             </div>
                                         </div>
                                     </div>
                                     <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">
+                                    <input type="hidden" name="lineItemId">
                                 </form>
                             </div>
                         </div>

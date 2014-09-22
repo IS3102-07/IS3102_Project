@@ -269,6 +269,10 @@
         <jsp-file>/A6/editWarehouse.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>editStore</servlet-name>
+        <jsp-file>/A6/editStore.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>editRegionalOffice</servlet-name>
         <jsp-file>/A6/editRegionalOffice.jsp</jsp-file>
     </servlet>
@@ -679,6 +683,10 @@
     <servlet-mapping>
         <servlet-name>editWarehouse</servlet-name>
         <url-pattern>/A6/editWarehouse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editStore</servlet-name>
+        <url-pattern>/A6/editStore</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>editRegionalOffice</servlet-name>

@@ -30,8 +30,6 @@ public class PurchaseOrderLineItemManagement_Servlet extends HttpServlet {
             
             List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
             session.setAttribute("purchaseOrders", purchaseOrders);
-//            List<LineItemEntity> purchaseOrderLineItem = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderById(Long.parseLong(purchaseOrderId)).getLineItems();
-//            session.setAttribute("purchaseOrderLineItem", purchaseOrderLineItem);
 
             if (errMsg != null && purchaseOrderId != null) {
                 response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
