@@ -35,7 +35,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
+        Long manufacturingFacilityId;
         String target = request.getPathInfo();
 
         switch (target) {
@@ -53,6 +53,10 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                     nextPage = "/A6/createManufacturingFacility";
                 } else if (submit_btn.equals("Delete Manufacturing Facility")) {
                     nextPage = "/FacilityManagement_ManufacturingFacilityServlet/deleteManufacturingFacility";
+                } else {
+                    manufacturingFacilityId = Long.parseLong(submit_btn);
+                    request.setAttribute("manufacturingFacilityId", manufacturingFacilityId);
+                    nextPage = "/FacilityManagement_ManufacturingFacilityServlet/editManufacturingFacility_GET";
                 }
                 break;
 
@@ -77,7 +81,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 break;
 
             case "/editManufacturingFacility_GET":
-                String manufacturingFacilityId = request.getParameter("delete");
+                manufacturingFacilityId = (long) request.getAttribute("delete");
                 System.out.println("Manufacturing Facility ID is " + manufacturingFacilityId);
                 ManufacturingFacilityEntity manufacturingFacility = fmBean.viewManufacturingFacility(manufacturingFacilityId);
                 request.setAttribute("manufacturingFacility", manufacturingFacility);

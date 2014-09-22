@@ -79,7 +79,7 @@
                                                             <td><%= manufacturingFacilityEntity.getTelephone()%></td>
                                                             <td><%= manufacturingFacilityEntity.getEmail()%></td>
                                                             <td><%= manufacturingFacilityEntity.getCapacity()%></td>
-                                                            <td><a href="../FacilityManagement_ManufacturingFacilityServlet/editManufacturingFacility_GET?storeId=<%= manufacturingFacilityEntity.getId()%>"><button class="btn btn-primary">View</button></a></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= manufacturingFacilityEntity.getId() %>">View</button></td>
                                                         </tr>
                                                         <%
                                                                 }
