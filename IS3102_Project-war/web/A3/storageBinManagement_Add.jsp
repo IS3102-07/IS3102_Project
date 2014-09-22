@@ -63,7 +63,7 @@
                                     <input class="form-control" name="height" type="number" required="true"/>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
+                                    <input type="submit" value="Add Storage Bin" class="btn btn-lg btn-primary btn-block">
                                 </div>  
                             </form>
                         </div>

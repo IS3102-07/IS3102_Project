@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LineItemManagement_Servlet extends HttpServlet {
+public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
@@ -25,22 +25,26 @@ public class LineItemManagement_Servlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            String transferOrderId = request.getParameter("id");
-            String sku = request.getParameter("sku");
-            String quantity = request.getParameter("quantity");
-
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+            String transferOrderId = request.getParameter("id");
+            String status = request.getParameter("status");
 
-            boolean canUpdate = manufacturingWarehouseManagementBean.addLineItemToTransferOrder(Long.parseLong(transferOrderId), sku, Integer.parseInt(quantity));
+            boolean canUpdate = false;
+            if (status.equals("Completed")) {
+                canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId));
+            } else if (status.equals("Unfulfillable")) {
+                canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
+            }
             if (!canUpdate) {
-                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
-                response.sendRedirect("A3/lineItemManagement.jsp" + result);
+                result = "?errMsg=Please try again.&id=" + transferOrderId;
+                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
-                result = "?errMsg=Item added successfully.&id="+transferOrderId;
-                response.sendRedirect("A3/lineItemManagement.jsp" + result);
+                result = "?errMsg=Line item added successfully.&id=" + transferOrderId;
+                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }
