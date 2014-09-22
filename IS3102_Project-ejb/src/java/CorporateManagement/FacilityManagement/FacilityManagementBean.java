@@ -258,23 +258,21 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    public Boolean editStore(Long id, String storeName) {
+    public Boolean editStore(Long id, String storeName, String address, String telephone, String email) {
         System.out.println("editStore() called with ID:" + id);
         try {
-            Query q = em.createQuery("SELECT t FROM StoreEntity t");
+            StoreEntity storeEntity = em.find(StoreEntity.class, id);
 
-            for (Object o : q.getResultList()) {
-                StoreEntity i = (StoreEntity) o;
-                if (i.getId() == id) {
-                    i.setName(storeName);
-                    em.merge(i);
-                    System.out.println("\nServer edited regional office:\n" + id);
-                    return true;
-                }
-            }
-            return false; //Could not find the role to remove
+            storeEntity.setName(storeName);
+            storeEntity.setAddress(address);
+            storeEntity.setTelephone(telephone);
+            storeEntity.setEmail(email);
+            em.merge(storeEntity);
+            System.out.println("\nServer edited store:\n" + id);
+            return true;
+
         } catch (Exception ex) {
-            System.out.println("\nServer failed to remove regional office:\n" + ex);
+            System.out.println("\nServer failed to edit store:\n" + ex);
             return false;
         }
     }
@@ -300,21 +298,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    public StoreEntity viewStoreEntity(String storeEntity) {
-        System.out.println("viewStoreEntity() called with storeEntity:" + storeEntity);
+    public StoreEntity viewStoreEntity(Long storeId) {
+        System.out.println("viewStoreEntity() called with storeEntity Id:" + storeId);
         try {
-            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
-
-            for (Object o : q.getResultList()) {
-                StoreEntity i = (StoreEntity) o;
-                if (i.getName().equalsIgnoreCase(storeEntity)) {
-                    System.out.println("\nServer returns store entity:\n" + storeEntity);
-                    return i;
-                }
-            }
-            return null; //Could not find the role to remove
+            StoreEntity storeEntity = em.find(StoreEntity.class, storeId);
+            System.out.println("\nServer viewed store:\n" + storeId);
+            return storeEntity;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to remove regional office:\n" + ex);
+            System.out.println("\nServer failed to view store:\n" + ex);
             return null;
         }
     }

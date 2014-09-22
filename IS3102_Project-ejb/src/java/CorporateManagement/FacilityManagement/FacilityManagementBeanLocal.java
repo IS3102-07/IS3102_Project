@@ -33,9 +33,9 @@ public interface FacilityManagementBeanLocal {
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();
 
     public StoreEntity createStore(String storeName, String address, String telephone, String email);
-    public Boolean editStore(Long id, String storeName);
+    public Boolean editStore(Long id, String storeName, String address, String telephone, String email);
     public boolean removeStore(String storeName);
-    public StoreEntity viewStoreEntity(String storeEntity);
+    public StoreEntity viewStoreEntity(Long storeId);
     public List<StoreEntity> viewListOfStore();
 
     public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email);
