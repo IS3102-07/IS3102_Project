@@ -100,7 +100,7 @@
                                                             <th>Height</th>
                                                             <th>Total Volume</th>
                                                             <th>Avaliable Volume</th>
-                                                            <th>Update</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

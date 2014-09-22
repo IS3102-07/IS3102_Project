@@ -86,7 +86,7 @@
                                                             <th>Name</th>
                                                             <th>Access Level</th>
                                                             <th>Staff</th>
-                                                            <th>Update</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

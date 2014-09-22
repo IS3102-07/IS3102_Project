@@ -97,7 +97,7 @@
                                                             <th>Length</th>
                                                             <th>Width</th>
                                                             <th>Height</th>
-                                                            <th>Update</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -137,7 +137,7 @@
                                                                 <%=retailProducts.get(i).getHeight()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=retailProducts.get(i).getId()%>" value="update" onclick="javascript:updateRetailProduct('<%=retailProducts.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=retailProducts.get(i).getId()%>" value="Update" onclick="javascript:updateRetailProduct('<%=retailProducts.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
