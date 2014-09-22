@@ -221,9 +221,6 @@
                         <a href="../A1/accountManagement.jsp">Account Management</a>
                     </li>
                     <li>
-                        <a href="#">System Security</a>
-                    </li>
-                    <li>
                         <a href="../A1/workspace.jsp">Workspace</a>
                     </li>
                 </ul>
