@@ -58,7 +58,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th>Store Name</th>
+                                                            <th>Store Name</th>                                                            
                                                             <th>Address</th>
                                                             <th>Telephone</th>
                                                             <th>Email Address</th>
@@ -73,7 +73,7 @@
                                                         %>
                                                         <tr>
                                                             <td><input type="checkbox" name="delete" value="<%= storeEntity.getId()%>" /></td>
-                                                            <td><%= storeEntity.getName()%></td>
+                                                            <td><%= storeEntity.getName()%></td>                                                            
                                                             <td><%= storeEntity.getAddress()%></td>
                                                             <td><%= storeEntity.getTelephone()%></td>
                                                             <td><%= storeEntity.getEmail()%></td>

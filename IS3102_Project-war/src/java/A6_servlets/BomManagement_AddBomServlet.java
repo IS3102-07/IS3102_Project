@@ -21,11 +21,11 @@ import javax.ejb.EJB;
  * @author Neo
  */
 public class BomManagement_AddBomServlet extends HttpServlet {
-
+    
     @EJB
     private ItemManagementBeanLocal itemManagementBeanLocal;
     private String result;
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -34,7 +34,7 @@ public class BomManagement_AddBomServlet extends HttpServlet {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String source = request.getParameter("source");
-
+            out.print("hello!!!");
             boolean ifExist = false;
 //            if (itemManagementBeanLocal.viewBillOfMaterial(name).getName().equals(name)) {
 //                ifExist = true;

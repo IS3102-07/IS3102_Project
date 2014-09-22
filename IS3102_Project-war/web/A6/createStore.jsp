@@ -1,3 +1,5 @@
+<%@page import="EntityManager.RegionalOfficeEntity"%>
+<%@page import="java.util.List"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -13,6 +15,9 @@
                     font-size: 18px;
                 }
                 input{
+                    max-width: 280px;
+                }
+                select{
                     max-width: 280px;
                 }
             </style>
@@ -44,6 +49,21 @@
                                 <div class="form-group">
                                     <label for="input_storeOfficeName">Store Name</label>
                                     <input type="text" class="form-control" id="input_storeName" name="storeName" required="true">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input_address">Regional Office</label>                                    
+                                    <select name="regionalOfficeId" class="form-control" required="true">
+                                        <% List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList"); 
+                                        
+                                            for (RegionalOfficeEntity ro : regionalOfficeList) {
+                                        %>
+                                        <option value="<%= ro.getId() %>"><%= ro.getName() %></option>
+                                        <%
+                                            }
+                                        %>
+
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
