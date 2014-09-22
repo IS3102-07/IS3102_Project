@@ -35,7 +35,7 @@ public class ShippingOrderEntity implements Serializable {
     private Date expectedReceivedDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date receivedDate;
-    @OneToMany(cascade={CascadeType.ALL})
+    @OneToMany(mappedBy="shippingOrder",cascade={CascadeType.ALL})
     private List<LineItemEntity> lineItems; 
     @ManyToOne
     private WarehouseEntity origin;
