@@ -133,7 +133,7 @@
                                                                 <%=rawMaterials.get(i).getHeight()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=rawMaterials.get(i).getId()%>" value="update" onclick="javascript:updateRawMaterial('<%=rawMaterials.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=rawMaterials.get(i).getId()%>" value="Update" onclick="javascript:updateRawMaterial('<%=rawMaterials.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
