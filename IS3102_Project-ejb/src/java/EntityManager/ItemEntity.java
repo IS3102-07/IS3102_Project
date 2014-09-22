@@ -23,6 +23,7 @@ public abstract class ItemEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String SKU;
+    private String name;
     private String batch;
     @OneToMany(cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
@@ -66,6 +67,14 @@ public abstract class ItemEntity implements Serializable {
         int hash = 0;
         hash += (SKU != null ? SKU.hashCode() : 0);
         return hash;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

@@ -30,13 +30,15 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     public RawMaterialEntity(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
         super(SKU, _length, width, height);
         this.name = name;
+        super.setName(name);
         this.category = category;
         this.description = description;
 
     }
 
     public void create(String name) {
-        setName(name);
+        this.name = name;
+        super.setName(name);
     }
 
     public List<Supplier_RawMaterialEntity> getListOfSupplier_RawMaterialInfo() {
@@ -61,6 +63,7 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+        super.setName(name);
     }
 
     @Override
