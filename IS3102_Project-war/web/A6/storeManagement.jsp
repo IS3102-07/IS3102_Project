@@ -74,9 +74,9 @@
                                                         <tr>
                                                             <td><input type="checkbox" name="delete" value="<%= storeEntity.getId()%>" /></td>
                                                             <td><%= storeEntity.getName()%></td>
-                                                            <td>Blank</td>
-                                                            <td>Blank</td>
-                                                            <td>Blank</td>
+                                                            <td><%= storeEntity.getAddress()%></td>
+                                                            <td><%= storeEntity.getTelephone()%></td>
+                                                            <td><%= storeEntity.getEmail()%></td>
                                                             <td><a href="../FacilityManagement_StoreServlet/editStore_GET?storeId=<%= storeEntity.getId()%>"><button class="btn btn-primary">View</button></a></td>
                                                         </tr>
                                                         <%

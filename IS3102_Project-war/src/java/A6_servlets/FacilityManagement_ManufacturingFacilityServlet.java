@@ -63,7 +63,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
 
-                    ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(manufacturingFacilityName);
+                    ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(manufacturingFacilityName, address, telephone, email);
                     if (manufacturingFacility != null) {
                         request.setAttribute("alertMessage", "A new manufacturing facility record has been saved.");
                     } else {
