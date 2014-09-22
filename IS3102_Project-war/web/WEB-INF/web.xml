@@ -372,6 +372,22 @@
         <servlet-name>PurchaseOrderManagement_UpdateServlet</servlet-name>
         <servlet-class>A3_servlets.PurchaseOrderManagement_UpdateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderLineItemManagement_Servlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderLineItemManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderLineItemManagement_AddServlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderLineItemManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderLineItemManagement_RemoveServlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderLineItemManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderLineItemManagement_UpdateServlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderLineItemManagement_UpdateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -743,6 +759,22 @@
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_UpdateServlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderLineItemManagement_Servlet</servlet-name>
+        <url-pattern>/PurchaseOrderLineItemManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderLineItemManagement_AddServlet</servlet-name>
+        <url-pattern>/PurchaseOrderLineItemManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderLineItemManagement_RemoveServlet</servlet-name>
+        <url-pattern>/PurchaseOrderLineItemManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderLineItemManagement_UpdateServlet</servlet-name>
+        <url-pattern>/PurchaseOrderLineItemManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

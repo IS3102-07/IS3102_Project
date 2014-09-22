@@ -21,6 +21,34 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
+        <script>
+            function updatePOLineItem(id) {
+                purchaseOrderManagement.id.value = id;
+                document.purchaseOrderManagement.action = "purchaseOrderManagement_UpdateLineItem.jsp";
+                document.purchaseOrderManagement.submit();
+            }
+            function removePOLineItem() {
+                var yes = confirm("Are you sure?!");
+                if (yes == true) {
+                    window.event.returnValue = true;
+                    document.purchaseOrderManagement.action = "../StorageBinManagement_RemoveServlet";
+                    document.purchaseOrderManagement.submit();
+                } else {
+                    window.event.returnValue = false;
+                }
+            }
+            function addPOLineItem() {
+                window.event.returnValue = true;
+                document.purchaseOrderManagement.action = "purchaseOrderManagement_AddLineItem.jsp";
+                document.purchaseOrderManagement.submit();
+            }
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+        </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
@@ -51,7 +79,7 @@
                         <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> Purchase Order</h3>
+                                    <h3 class="panel-title"> Purchase Order ID: <%=purchaseOrder.getId()%></h3>
                                 </div>
                                 <div class="panel-body">
                                     <form role="form" action="../PurchaseOrderManagement_UpdateServlet">
@@ -105,11 +133,17 @@
                                     Line item Management
                                 </div>
                                 <!-- /.panel-heading -->
-
-                                <form name="transferOrderManagement">
+                                <form name="purchaseOrderManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addPOLineItem()"  />
+                                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="removePOLineItem()"  />
+                                                    </div>
+                                                </div>
+                                                <br>
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
@@ -126,6 +160,12 @@
                                                     <tbody>
                                                     </tbody>
                                                 </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addPOLineItem()"  />
+                                                <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="removePOLineItem()"  />
                                             </div>
                                         </div>
                                     </div>
