@@ -26,13 +26,13 @@
                             <h1 class="page-header">Manufacturing Facility Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="facilityManagement.jsp">Facility Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="regionalOfficeManagement.jsp">Manufacturing Facility Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../A6/manufacturingFacilityManagement.jsp">Manufacturing Facility Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i>  Edit Manufacturing Facility
+                                    <i class="icon icon-edit"></i> Edit Manufacturing Facility
                                 </li>
                             </ol>
                         </div>
@@ -40,28 +40,33 @@
 
                     <div class="row">
                         <div class="col-lg-6">                           
-                            <% ManufacturingFacilityEntity manufacturingFacilityEntity = (ManufacturingFacilityEntity) request.getAttribute("manufacturingFacilityEntity");%>
+                            <% ManufacturingFacilityEntity manufacturingFacility = (ManufacturingFacilityEntity) request.getAttribute("manufacturingFacility");%>
                             <form class="myForm" action="../FacilityManagement_ManufacturingFacilityServlet/editManufacturingFacility_POST">
                                 <div class="form-group">
                                     <label for="input_manufacturingFacilityName">Manufacturing Facility Name</label>
-                                    <input type="text" class="form-control" id="input_manufacturingFacilityName" name="manufacturingFacilityName" value="<%= manufacturingFacilityEntity.getName()%>" required="true">
+                                    <input type="text" class="form-control" id="input_manufacturingFacilityName" name="manufacturingFacilityName" value="<%= manufacturingFacility.getName()%>" required="true">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="input_address">Address</label>
-                                    <input type="text" class="form-control" id="input_address"  name="address" value="<%= manufacturingFacilityEntity.getAddress()%>" >
+                                    <input type="text" class="form-control" id="input_address"  name="address" value="<%= manufacturingFacility.getAddress()%>" >
                                 </div>
 
                                 <div class="form-group">
                                     <label for="input_telephone">Telephone</label>
-                                    <input type="text" class="form-control" id="input_telephone"  name="telephone" value="<%= manufacturingFacilityEntity.getTelephone()%>" >
+                                    <input type="text" class="form-control" id="input_telephone"  name="telephone" value="<%= manufacturingFacility.getTelephone()%>" >
                                 </div>
 
                                 <div class="form-group">
                                     <label for="input_email">Email</label>
-                                    <input type="email" class="form-control" id="input_email"  name="email" value="<%= manufacturingFacilityEntity.getEmail()%>" >
+                                    <input type="email" class="form-control" id="input_email"  name="email" value="<%= manufacturingFacility.getEmail()%>" >
                                 </div>
-                                <input type="hidden" name="regionalOfficeId" value="<%= manufacturingFacilityEntity.getId()%>">
+                                
+                                <div class="form-group">
+                                    <label for="input_email">Capacity</label>
+                                    <input type="number" class="form-control" id="input_email"  name="capacity" value="<%= manufacturingFacility.getCapacity()%>" >
+                                </div>
+                                <input type="hidden" name="manufacturingFacilityId" value="<%= manufacturingFacility.getId()%>">
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary" value="submit">
                                 </div>

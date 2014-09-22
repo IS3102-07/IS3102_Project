@@ -58,7 +58,7 @@
                                     <i class="icon icon-user"></i>  <a href="retailProductManagement.jsp">Retail Product Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Retail Product Management
+                                    <i class="icon icon-user"></i> Retail Product Management
                                 </li>
                             </ol>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    insert some wordings
+                                    Add or remove retail product
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="retailProductManagement">

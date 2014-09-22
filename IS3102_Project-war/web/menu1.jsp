@@ -221,9 +221,6 @@
                         <a href="../A1/accountManagement.jsp">Account Management</a>
                     </li>
                     <li>
-                        <a href="#">System Security</a>
-                    </li>
-                    <li>
                         <a href="../A1/workspace.jsp">Workspace</a>
                     </li>
                 </ul>
@@ -290,9 +287,6 @@
                     <i class="icon icon-home"></i> SCM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="SCM" class="collapse">
-                    <li>
-                        <a href="../ManufacturingInventoryControl_MICServlet">Manufacturing's Inventory Control</a>
-                    </li>
                     <li>
                         <a href="../PurchaseOrderManagement_Servlet">Retail Products and Raw Materials Purchasing</a>
                     </li>

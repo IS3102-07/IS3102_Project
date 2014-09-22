@@ -20,7 +20,7 @@
                                     <i class="icon icon-users"></i> <a href="staffManagement.jsp">Staff Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-plus"></i> Register Staff
+                                    <i class="icon icon-edit"></i> Register Staff
                                 </li>
                             </ol>
                         </div>

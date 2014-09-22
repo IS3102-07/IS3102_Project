@@ -25,13 +25,13 @@
                             <h1 class="page-header">Warehouse Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Facility Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../A6/facilityManagement">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Warehouse Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../A6/warehouseManagement">Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Add New Warehouse</a>
+                                    <i class="icon icon-edit"></i> Add New Warehouse</a>
                                 </li>
                             </ol>
                         </div>

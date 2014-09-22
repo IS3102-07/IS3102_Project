@@ -46,6 +46,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="featured-box featured-box-secundary">
+                                    <div class="box-content">
+                                        <a href="../ManufacturingInventoryControl_Servlet"><i class="icon-featured icon icon-th"> </i>
+                                            <h4>Inventory Control</h4>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">

@@ -165,7 +165,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
     }
 
     @Override
-    public Boolean updatePurchaseOrder(Long id, String status) {
+    public Boolean updatePurchaseOrderStatus(Long id, String status) {
         try {
             PurchaseOrderEntity purchaseOrder = em.find(PurchaseOrderEntity.class, id);
             purchaseOrder.setStatus(status);
