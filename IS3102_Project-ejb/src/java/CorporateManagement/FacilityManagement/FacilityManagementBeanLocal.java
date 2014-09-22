@@ -26,7 +26,7 @@ public interface FacilityManagementBeanLocal {
     public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeName);
     public List<RegionalOfficeEntity> viewListOfRegionalOffice();
 
-    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacilityName, String address, String telephone, String email);
+    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName);
     public boolean removeManufacturingFacility(String manufacturingFacilityName);
     public ManufacturingFacilityEntity viewManufacturingFacility(String manufacturingFacilityEntity);

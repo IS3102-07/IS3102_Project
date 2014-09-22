@@ -93,21 +93,21 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeName) {
-        System.out.println("viewRegionalOffice() called with regionalOfficeName:" + regionalOfficeName);
+    public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeId) {
+        System.out.println("viewRegionalOffice() called with regionalOfficeName:" + regionalOfficeId);
         try {
-            Query q = em.createQuery("SELECT t FROM regionalOfficeEntity t");
-
+            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
             for (Object o : q.getResultList()) {
                 RegionalOfficeEntity i = (RegionalOfficeEntity) o;
-                if (i.getName().equalsIgnoreCase(regionalOfficeName)) {
-                    System.out.println("\nServer returns regional office:\n" + regionalOfficeName);
+                System.out.println(" i id is : " + i + " =" + regionalOfficeId);
+                if (i.getId() == Long.valueOf(regionalOfficeId)) {
+                    System.out.println("\nServer returns regional office:\n" + regionalOfficeId);
                     return i;
                 }
             }
             return null; //Could not find the role to remove
         } catch (Exception ex) {
-            System.out.println("\nServer failed to remove regional office:\n" + ex);
+            System.out.println("\nServer failed to return regional office:\n" + ex);
             return null;
         }
     }
@@ -130,13 +130,13 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacility, String address, String telephone, String email) {
+    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacility, String address, String telephone, String email, Integer capacity) {
         System.out.println("createManufacturingFacility() called with name:" + manufacturingFacility);
         String name;
         Long id;
         try {
             ManufacturingFacilityEntity manufacturingFacilityEntity = new ManufacturingFacilityEntity();
-            manufacturingFacilityEntity.create(manufacturingFacility, address, telephone, email);
+            manufacturingFacilityEntity.create(manufacturingFacility, address, telephone, email, capacity);
             em.persist(manufacturingFacilityEntity);
             name = manufacturingFacilityEntity.getName();
             id = manufacturingFacilityEntity.getId();
