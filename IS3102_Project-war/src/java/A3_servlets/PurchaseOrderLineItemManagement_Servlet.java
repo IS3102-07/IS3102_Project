@@ -1,44 +1,28 @@
 package A3_servlets;
 
-import EntityManager.TransferOrderEntity;
-import EntityManager.WarehouseEntity;
-import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class LineItemManagement_RemoveServlet extends HttpServlet {
-
-    @EJB
-    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-    private String result;
+public class PurchaseOrderLineItemManagement_Servlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            HttpSession session;
-            session = request.getSession();
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            String transferOrderId = request.getParameter("id");
-            boolean canUpdate = manufacturingWarehouseManagementBean.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
-            if (!canUpdate) {
-                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
-                response.sendRedirect("A3/lineItemManagement.jsp" + result);
-            } else {
-                List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
-                session.setAttribute("transferOrders", transferOrders);
-                result = "?errMsg=Item removed successfully.&id="+transferOrderId;
-                response.sendRedirect("A3/lineItemManagement.jsp" + result);
-            }
-        } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet PurchaseOrderLineItemManagement_Servlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet PurchaseOrderLineItemManagement_Servlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

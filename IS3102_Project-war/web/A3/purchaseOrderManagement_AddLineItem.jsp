@@ -1,9 +1,3 @@
-<%-- 
-    Document   : transferOrderManagement_Update
-    Created on : Sep 15, 2014, 9:23:01 PM
-    Author     : Neo
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

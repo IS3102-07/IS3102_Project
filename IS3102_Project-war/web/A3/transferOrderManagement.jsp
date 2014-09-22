@@ -16,7 +16,7 @@
         <script>
             function updateTO(id) {
                 transferOrderManagement.id.value = id;
-                document.transferOrderManagement.action = "lineItemManagement.jsp";
+                document.transferOrderManagement.action = "transferOrderLineItemManagement.jsp";
                 document.transferOrderManagement.submit();
             }
             function removeTO() {

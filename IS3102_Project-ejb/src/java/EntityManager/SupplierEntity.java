@@ -29,8 +29,8 @@ public class SupplierEntity implements Serializable {
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
     @OneToMany(mappedBy="supplier", cascade={CascadeType.ALL})
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
-    @OneToOne
-    private PurchaseOrderEntity purchaseOrder;
+    @OneToMany(mappedBy="supplier")
+    private List<PurchaseOrderEntity> purchaseOrders;
             
     public SupplierEntity() {
 
@@ -52,13 +52,14 @@ public class SupplierEntity implements Serializable {
         this.id = id;
     }
 
-    public PurchaseOrderEntity getPurchaseOrder() {
-        return purchaseOrder;
+    public List<PurchaseOrderEntity> getPurchaseOrders() {
+        return purchaseOrders;
     }
 
-    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
-        this.purchaseOrder = purchaseOrder;
+    public void setPurchaseOrders(List<PurchaseOrderEntity> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
     }
+
 
     public String getSupplierName() {
         return supplierName;

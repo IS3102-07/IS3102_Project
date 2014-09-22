@@ -25,10 +25,10 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Facility Management</a>
+                                    <i class="icon icon-home"></i>  <a href="facilityManagement.jsp">Facility Management</a>
                                 </li>                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Warehouse Management</a>
+                                    <i class="icon icon-home"></i>Warehouse Management
                                 </li>
                             </ol>
                         </div>

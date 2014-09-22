@@ -1,11 +1,8 @@
 package A3_servlets;
 
-import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.PurchaseOrderEntity;
-import EntityManager.SupplierEntity;
+import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
-import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
-import SCM.SupplierManagement.SupplierManagementBeanLocal;
+import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,38 +13,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PurchaseOrderManagement_Servlet extends HttpServlet {
+public class TransferOrderLineItemManagement_RemoveServlet extends HttpServlet {
 
     @EJB
-    private RetailProductsAndRawMaterialsPurchasingBeanLocal retailProductsAndRawMaterialsPurchasingBean;
-    @EJB
-    private SupplierManagementBeanLocal supplierManagementBean;
-    @EJB
-    private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
             HttpSession session;
             session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
-            session.setAttribute("purchaseOrders", purchaseOrders);
-
-            List<SupplierEntity> activeSuppliers = supplierManagementBean.viewActiveSupplierList();
-            session.setAttribute("activeSuppliers", activeSuppliers);
-
-            List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
-            session.setAttribute("warehouses", warehouses);
-
-            if (errMsg == null || errMsg.equals("")) {
-                response.sendRedirect("A3/purchaseOrderManagement.jsp");
-                return;
+            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+            String transferOrderId = request.getParameter("id");
+            boolean canUpdate = manufacturingWarehouseManagementBean.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
+            if (!canUpdate) {
+                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
+                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else {
-                response.sendRedirect("A3/purchaseOrderManagement.jsp?errMsg=" + errMsg);
-                return;
+                List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                session.setAttribute("transferOrders", transferOrders);
+                result = "?errMsg=Item removed successfully.&id="+transferOrderId;
+                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
