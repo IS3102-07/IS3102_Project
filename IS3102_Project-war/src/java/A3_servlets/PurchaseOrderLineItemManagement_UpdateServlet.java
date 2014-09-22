@@ -26,8 +26,8 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
             boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updateLineItemFromPurchaseOrder(Long.parseLong(purchaseOrderId), Long.parseLong(lineItemId), sku, Integer.parseInt(quantity));
             if (!canUpdate) {
-                result = "?errMsg=Purchase Order or Line Item or SKU not found.&id=" + purchaseOrderId;
-                response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
+                result = "?errMsg=Purchase Order or SKU not found.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;
+                response.sendRedirect("A3/purchaseOrderManagement_UpdateLineItem.jsp" + result);
             } else {
                 result = "?errMsg=Line Item updated successfully.&id=" + purchaseOrderId;
                 response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);

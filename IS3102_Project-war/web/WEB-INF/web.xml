@@ -277,6 +277,10 @@
         <jsp-file>/A6/editRegionalOffice.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>editManufacturingFacility</servlet-name>
+        <jsp-file>/A6/editManufacturingFacility.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
         <servlet-class>A1_servlets.WorkspaceMessage_RemoveServlet</servlet-class>
     </servlet>
@@ -691,6 +695,10 @@
     <servlet-mapping>
         <servlet-name>editRegionalOffice</servlet-name>
         <url-pattern>/A6/editRegionalOffice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editManufacturingFacility</servlet-name>
+        <url-pattern>/A6/editManufacturingFacility</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WorkspaceMessage_RemoveServlet</servlet-name>
