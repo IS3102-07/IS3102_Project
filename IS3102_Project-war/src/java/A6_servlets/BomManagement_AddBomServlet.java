@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import javax.ejb.EJB;
+
 /**
  *
  * @author Neo
@@ -24,19 +25,15 @@ public class BomManagement_AddBomServlet extends HttpServlet {
     @EJB
     private ItemManagementBeanLocal itemManagementBeanLocal;
     private String result;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String identificationNo = request.getParameter("identificationNo");
             String name = request.getParameter("name");
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            String email = request.getParameter("email");
+            String description = request.getParameter("description");
             String source = request.getParameter("source");
-            
+
             boolean ifExist = false;
 //            if (itemManagementBeanLocal.viewBillOfMaterial(name).getName().equals(name)) {
 //                ifExist = true;
@@ -45,7 +42,7 @@ public class BomManagement_AddBomServlet extends HttpServlet {
                 result = "?errMsg=Registration fail. BOM already registered.";
                 response.sendRedirect(source + result);
             } else {
-                itemManagementBeanLocal.createBillOfMaterial(name);
+                itemManagementBeanLocal.createBOM(name, description);
                 if (source.equals("A1/staffManagement_add.jsp")) {
                     response.sendRedirect("StaffManagement_StaffServlet");
                 }

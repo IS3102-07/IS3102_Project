@@ -60,7 +60,11 @@
                                     <label for="input_email">Email</label>
                                     <input type="email" class="form-control" id="input_email"  name="email" >
                                 </div>
-
+                                
+                                <div class="form-group">
+                                    <label for="input_email">Capacity</label>
+                                    <input type="number" class="form-control" id="input_email"  name="capacity" >
+                                </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary" value="submit">
                                 </div>

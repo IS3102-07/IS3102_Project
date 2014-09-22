@@ -1,15 +1,17 @@
+<%@page import="EntityManager.LineItemEntity"%>
 <%@page import="EntityManager.SupplierEntity"%>
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
 <%
     List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    if (purchaseOrders == null || request.getParameter("id") == null) {
+    String id = request.getParameter("id");
+    if (purchaseOrders == null || id == null) {
         response.sendRedirect("../PurchaseOrderManagement_Servlet");
     } else {
         List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("activeSuppliers"));
         List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
-        String id = request.getParameter("id");
+        id = request.getParameter("id");
 
         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
         for (int i = 0; i < purchaseOrders.size(); i++) {
@@ -24,7 +26,6 @@
     <body>
         <script>
             function addPOLineItem(id) {
-
                 purchaseOrderManagement.id.value = id;
                 document.purchaseOrderManagement.action = "purchaseOrderManagement_AddLineItem.jsp";
                 document.purchaseOrderManagement.submit();
@@ -132,7 +133,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Line item Management
+                                    <h3 class="panel-title">Line item Management</h3>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="purchaseOrderManagement">
@@ -150,16 +151,36 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th>Date Created</th>
-                                                            <th>Date Transferred</th>
-                                                            <th>Origin</th>
-                                                            <th>Target</th>
-                                                            <th>Status</th>
-                                                            <th>Warehouse</th>
-                                                            <th>Details</th>
+                                                            <th>SKU</th>
+                                                            <th>Item Name</th>
+                                                            <th>Quantity</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <%
+                                                            List<LineItemEntity> lineItems = purchaseOrder.getLineItems();
+
+                                                            if (lineItems != null) {
+                                                                for (int i = 0; i < lineItems.size(); i++) {
+                                                        %>
+
+                                                        <tr>
+                                                            <td>
+                                                                <%=lineItems.get(i).getItem().getSKU()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=lineItems.get(i).getItem().getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=lineItems.get(i).getQuantity()%>
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePOLineItem('<%=purchaseOrder.getId()%>')"/>
+                                                            </td>
+                                                        </tr>
+                                                        <%}
+                                                            }%>
                                                     </tbody>
                                                 </table>
                                             </div>

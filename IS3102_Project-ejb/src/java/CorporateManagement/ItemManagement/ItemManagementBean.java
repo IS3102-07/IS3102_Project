@@ -37,9 +37,9 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         System.out.println("editRawMaterial() called with SKU:" + SKU);
         try {
             RawMaterialEntity i = em.find(RawMaterialEntity.class, Long.valueOf(id));
-                i.setName(name);
-                i.setCategory(category);
-                i.setDescription(description);
+            i.setName(name);
+            i.setCategory(category);
+            i.setDescription(description);
             em.merge(i);
             em.flush();
             System.out.println("\nServer updated raw material:\n" + name);
@@ -99,10 +99,10 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         try {
             FurnitureEntity i = em.find(FurnitureEntity.class, Long.valueOf(id));
             System.out.println("i name is " + i.getName() + " image url is : " + imageURL);
-                i.setName(name);
-                i.setCategory(category);
-                i.setDescription(description);
-                i.setImageURL(imageURL);
+            i.setName(name);
+            i.setCategory(category);
+            i.setDescription(description);
+            i.setImageURL(imageURL);
             em.merge(i);
             em.flush();
             System.out.println("\nServer updated furniture:\n" + name);
@@ -162,11 +162,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         System.out.println("editRetailProduct() called with SKU:" + SKU);
         try {
             RetailProductEntity i = em.find(RetailProductEntity.class, Long.valueOf(id));
-                i.setName(name);
-                i.setCategory(category);    
-                i.setDescription(description);
-                i.setImageURL(imageURL);
-                em.merge(i);
+            i.setName(name);
+            i.setCategory(category);
+            i.setDescription(description);
+            i.setImageURL(imageURL);
+            em.merge(i);
             em.flush();
             System.out.println("\nServer updated retail product:\n" + name);
             return true;
@@ -207,7 +207,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean createBillOfMaterial(String name) {//
+    public boolean createBOM(String name, String description) {//
         System.out.println("createBillOfMaterial() called with name:" + name);
 
         Long id;
@@ -224,7 +224,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editBillOfMaterial(String name) {//
+    public boolean editBOM(String name) {//
         System.out.println("editBillOfMaterial() called with bill of material name:" + name);
 
         Long id;
@@ -247,28 +247,22 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean deleteBillOfMaterial(String bomName) {
-        System.out.println("deleteBillOfMaterial() called with bomName:" + bomName);
+    @Override
+    public boolean deleteBOM(Long BOMId) {
+        System.out.println("deleteBillOfMaterial() called with bomName:" + BOMId);
         try {
-            Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
-//
-//            for (Object o : q.getResultList()) {
-//                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
-//                if (i.getName().equalsIgnoreCase(bomName)) {
-//                    em.remove(i);
-//                    em.flush();
-//                    System.out.println("\nServer removed bill of material:\n" + bomName);
-//                    return true;
-//                }
-//            }
-            return false; //Could not find the role to remove
+            BillOfMaterialEntity BOM = em.find(BillOfMaterialEntity.class, BOMId);
+            em.remove(BOM);
+            System.out.println("deleteBillOfMaterial() is successful.");
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove bill of material:\n" + ex);
             return false;
         }
     }
 
-    public BillOfMaterialEntity viewBillOfMaterial(String name) {
+    @Override
+    public BillOfMaterialEntity viewSingleBOM(String name) {
         System.out.println("viewBillOfMaterial() called with name:" + name);
         try {
             Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
@@ -406,8 +400,9 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public List<BillOfMaterialEntity> listAllBOM() {
         System.out.println("listAllBOM() called.");
         try {
-            Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
+            Query q = em.createQuery("SELECT b FROM BillOfMaterialEntity b");
             List<BillOfMaterialEntity> billOfMaterialEntity = q.getResultList();
+            System.out.println("listAllBOM() is successful.");
             return billOfMaterialEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to list all BOM:\n" + ex);

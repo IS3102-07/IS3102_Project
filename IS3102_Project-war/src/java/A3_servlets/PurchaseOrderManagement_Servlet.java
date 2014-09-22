@@ -44,10 +44,8 @@ public class PurchaseOrderManagement_Servlet extends HttpServlet {
 
             if (errMsg == null || errMsg.equals("")) {
                 response.sendRedirect("A3/purchaseOrderManagement.jsp");
-                return;
             } else {
                 response.sendRedirect("A3/purchaseOrderManagement.jsp?errMsg=" + errMsg);
-                return;
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

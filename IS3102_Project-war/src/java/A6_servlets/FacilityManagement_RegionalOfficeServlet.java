@@ -38,7 +38,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
+        Long regionalOfficeId;
         String target = request.getPathInfo();
 
         switch (target) {
@@ -55,10 +55,15 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 request.setAttribute("manufacturingFacilityList", manufacturingFacilityList);
                 
                 String submit_btn = request.getParameter("submit-btn");
+                System.out.print(submit_btn);
                 if (submit_btn.equals("Add Regional Office")) {
                     nextPage = "/A6/createRegionalOffice";
                 } else if (submit_btn.equals("Delete Regional Office")) {
                     nextPage = "/FacilityManagement_RegionalOfficeServlet/deleteRegionalOffice";
+                } else {
+                    regionalOfficeId = Long.parseLong(submit_btn);
+                    request.setAttribute("regionalOfficeId", regionalOfficeId);
+                    nextPage = "/FacilityManagement_RegionalOfficeServlet/editRegionalOffice_GET";  
                 }
                 break;
 
@@ -83,9 +88,10 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 break;
 
             case "/editRegionalOffice_GET":
-                String regionalOfficeId = request.getParameter("delete");
+                regionalOfficeId = (long)request.getAttribute("regionalOfficeId");
                 System.out.println("Regional office ID is " + regionalOfficeId);
-                RegionalOfficeEntity regionalOffice = fmBean.viewRegionalOffice(regionalOfficeId);
+                RegionalOfficeEntity regionalOffice = fmBean.viewRegionalOffice(String.valueOf(regionalOfficeId));
+                System.out.println("ID of regional office to be displayed" + regionalOffice.getId());
                 request.setAttribute("regionalOffice", regionalOffice);
                 nextPage = "/A6/editRegionalOffice";
                 break;

@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Transfer Order: <%=transferOrder.getId()%>
+                                Transfer Order
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
@@ -58,7 +58,7 @@
                         <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> Line Item Management</h3>
+                                    <h3 class="panel-title"> Transfer Order ID: <%=transferOrder.getId()%> - Line Item Management</h3>
                                 </div>
                                 <div class="panel-body">
                                     <%if (lineItem == null) {%>
