@@ -10,11 +10,11 @@ import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.SaleAndOperationPlanEntity;
+import EntityManager.StoreEntity;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -48,33 +48,34 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
         List<MonthScheduleEntity> scheduleList;
         String target = request.getPathInfo();
 
-        switch (target) {
+        switch (target) {            
 
             case "/sop_scheduleManagement_GET":
                 scheduleList = sopBean.getScheduleList();
                 request.setAttribute("scheduleList", scheduleList);
                 nextPage = "/A2/sop_scheduleManagement";
                 break;
-                
+
             case "/sop_scheduleManagement_POST":
                 String submit = request.getParameter("submit-btn");
-                if(submit.equals("Add Schedule"))
+                if (submit.equals("Add Schedule")) {
                     nextPage = "/SaleAndOperationPlanning_Servlet/addSchedule";
-                else if(submit.equals("Delete Schedule"))
+                } else if (submit.equals("Delete Schedule")) {
                     nextPage = "/SaleAndOperationPlanning_Servlet/deleteSchedule";
+                }
                 break;
-                
+
             case "/addSchedule":
                 Integer year = Integer.parseInt(request.getParameter("year"));
-                Integer month = Integer.parseInt(request.getParameter("month"));                
-                sopBean.createSchedule(year, month);                
+                Integer month = Integer.parseInt(request.getParameter("month"));
+                sopBean.createSchedule(year, month);
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET";
                 break;
-                
+
             case "/deleteSchedule":
                 String[] deletes = request.getParameterValues("delete");
-                if(deletes != null){
-                    for(String scheduleIdStr: deletes){
+                if (deletes != null) {
+                    for (String scheduleIdStr : deletes) {
                         Long scheduleId = Long.parseLong(scheduleIdStr);
                         sopBean.deleteSchedule(scheduleId);
                     }
@@ -102,7 +103,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 break;
 
             case "/sop_schedule_GET":
-                scheduleList = sopBean.getScheduleList();                                      
+                scheduleList = sopBean.getScheduleList();
                 request.setAttribute("scheduleList", scheduleList);
                 nextPage = "/A2/sop_schedule";
                 break;
@@ -110,16 +111,29 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sop_schedule_POST":
                 try {
                     Long schedulelId = Long.parseLong(request.getParameter("scheduleId"));
-                    Long storeId = (long) session.getAttribute("sop_storeId");
-                    List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
-                    List<SaleAndOperationPlanEntity> sopList = sopBean.getSaleAndOperationPlanList(storeId, schedulelId);
-                    request.setAttribute("unplannedProductGroupList", unplannedProductGroupList);
-                    request.setAttribute("sopList", sopList);
+                    session.setAttribute("schedulelId", schedulelId);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
+                break;
 
-                nextPage = "";
+            case "/sop_main_GET":
+                try {
+                    Long storeId = (long) session.getAttribute("sop_storeId");
+                    Long schedulelId = (long) session.getAttribute("scheduleId");
+                    List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
+                    List<SaleAndOperationPlanEntity> sopList = sopBean.getSaleAndOperationPlanList(storeId, schedulelId);
+                    StoreEntity store = fmBean.viewStoreEntity(storeId);
+                    MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
+                    request.setAttribute("store", store);
+                    request.setAttribute("schedule", schedule);
+                    request.setAttribute("unplannedProductGroupList", unplannedProductGroupList);
+                    request.setAttribute("sopList", sopList);
+                    nextPage = "/A2/sop_main";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 break;
 
             case "":

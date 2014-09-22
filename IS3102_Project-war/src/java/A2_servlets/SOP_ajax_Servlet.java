@@ -1,44 +1,50 @@
-package A6_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A2_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.BillOfMaterialEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class BomManagement_BomServlet extends HttpServlet {
+/**
+ *
+ * @author Administrator
+ */
+public class SOP_ajax_Servlet extends HttpServlet {
 
-    @EJB
-    private ItemManagementBeanLocal itemManagementBean;
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            HttpSession session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            List<BillOfMaterialEntity> listOfBOM = itemManagementBean.listAllBOM();
-            session.setAttribute("listOfBOM", listOfBOM);
-            session.setAttribute("listOfFurniture", itemManagementBean.listAllFurniture());
-
-            if (errMsg == null || errMsg.equals("")) {
-                response.sendRedirect("A6/bomManagement.jsp");
-            } else {
-                response.sendRedirect("A6/bomManagement.jsp?errMsg=" + errMsg);
-            }
-        } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SOP_ajax_Servlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SOP_ajax_Servlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

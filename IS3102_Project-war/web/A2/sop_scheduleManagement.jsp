@@ -29,7 +29,7 @@
                                     <i class="icon icon-dashboard"></i>  <a href="#">Sale And Operation Planning</a>
                                 </li>                             
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Schedule</a>
+                                    <i class="icon icon-calendar"></i>  <a href="#">Schedule</a>
                                 </li>
                             </ol>
                         </div>
