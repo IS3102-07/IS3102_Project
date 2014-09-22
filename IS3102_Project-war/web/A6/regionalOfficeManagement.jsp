@@ -76,7 +76,7 @@
                                                             <td><%= regionalOffice.getAddress()%></td>
                                                             <td><%= regionalOffice.getTelephone()%></td>
                                                             <td><%= regionalOffice.getEmail()%></td>
-                                                            <td><a href="../FacilityManagement_RegionalOfficeServlet/editRegionalOffice_GET?regionalOfficeId=<%= regionalOffice.getId()%>"><button class="btn btn-primary">View</button></a></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= regionalOffice.getId() %>">Access</button></td>
                                                         </tr>
                                                         <%
                                                                 }

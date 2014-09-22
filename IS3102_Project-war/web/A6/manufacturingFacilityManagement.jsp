@@ -62,6 +62,7 @@
                                                             <th>Address</th>
                                                             <th>Telephone</th>
                                                             <th>Email Address</th>
+                                                            <th>Capacity</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -74,9 +75,10 @@
                                                         <tr>
                                                             <td><input type="checkbox" name="delete" value="<%= manufacturingFacilityEntity.getId()%>" /></td>
                                                             <td><%= manufacturingFacilityEntity.getName()%></td>
-                                                            <td>Blank</td>
-                                                            <td>Blank</td>
-                                                            <td>Blank</td>
+                                                            <td><%= manufacturingFacilityEntity.getAddress()%></td>
+                                                            <td><%= manufacturingFacilityEntity.getTelephone()%></td>
+                                                            <td><%= manufacturingFacilityEntity.getEmail()%></td>
+                                                            <td><%= manufacturingFacilityEntity.getCapacity()%></td>
                                                             <td><a href="../FacilityManagement_ManufacturingFacilityServlet/editManufacturingFacility_GET?storeId=<%= manufacturingFacilityEntity.getId()%>"><button class="btn btn-primary">View</button></a></td>
                                                         </tr>
                                                         <%
