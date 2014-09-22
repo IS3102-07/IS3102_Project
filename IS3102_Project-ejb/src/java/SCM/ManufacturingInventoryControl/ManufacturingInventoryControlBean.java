@@ -105,7 +105,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     break;
                 }
             }
-            System.out.println("The item is moved successfully between bins.");
+            if(itemRemoved) {
+                System.out.println("The item is moved successfully between bins.");
+            } else {
+                System.out.println("Item was not moved. No item was found.");
+            }
             return itemRemoved;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed to move the item between bins, item not found.");
