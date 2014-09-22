@@ -128,11 +128,11 @@ public class StartupBean {
             }
             try {
                 //Create item
-                FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "LiINNMON ADILS", "Tables & Desks","Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 1,1,1);
+                FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "LiINNMON ADILS", "Tables & Desks", "Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 1, 1, 1);
                 em.persist(furnitureEntity);
-                furnitureEntity = new FurnitureEntity("F2", "MOSHULT", "Beds & Mattresses","Get all-over support and comfort with a resilient foam mattress. This mattress is approved for children.", "imageURL", 1,1,1);
+                furnitureEntity = new FurnitureEntity("F2", "MOSHULT", "Beds & Mattresses", "Get all-over support and comfort with a resilient foam mattress. This mattress is approved for children.", "imageURL", 1, 1, 1);
                 em.persist(furnitureEntity);
-                RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1,1,1);
+                RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
                 em.persist(rawMaterialEntity);
                 System.out.println("Created item entities.");
             } catch (Exception ex) {
@@ -142,8 +142,17 @@ public class StartupBean {
             try {
                 //Create supplier
                 SupplierEntity supplierEntity = new SupplierEntity("Supplier 1", "67911580", "supplier1@email.com", "231 Bukit Panjang Road");
+                CountryEntity country = new CountryEntity();
+                country.setCountryCode(12);
+                country.setCurrency("BN");
+                country.setExchangeRate(0.75);
+                country.setName("Brunei");
+                em.persist(country);
+                supplierEntity.setCountry(country);
                 em.persist(supplierEntity);
+                
                 supplierEntity = new SupplierEntity("Supplier 2", "67911432", "supplier2@email.com", "3 Dover Road");
+                supplierEntity.setCountry(country);
                 em.persist(supplierEntity);
                 System.out.println("Created supplierEntity.");
             } catch (Exception ex) {
