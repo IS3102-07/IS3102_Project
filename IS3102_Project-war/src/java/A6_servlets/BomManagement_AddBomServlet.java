@@ -38,9 +38,9 @@ public class BomManagement_AddBomServlet extends HttpServlet {
             String source = request.getParameter("source");
             
             boolean ifExist = false;
-            if (itemManagementBeanLocal.viewBillOfMaterial(name).getName().equals(name)) {
-                ifExist = true;
-            }
+//            if (itemManagementBeanLocal.viewBillOfMaterial(name).getName().equals(name)) {
+//                ifExist = true;
+//            } //to be fixed
             if (ifExist) {
                 result = "?errMsg=Registration fail. BOM already registered.";
                 response.sendRedirect(source + result);
