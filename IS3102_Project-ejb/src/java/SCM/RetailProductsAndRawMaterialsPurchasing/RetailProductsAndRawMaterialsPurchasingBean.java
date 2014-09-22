@@ -59,7 +59,8 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
         }
     }
     @Override
-    public Boolean addLineItemToPurchaseOrder(Long purchaseOrderID, Long SKU, Integer qty) {
+    public Boolean addLineItemToPurchaseOrder(Long purchaseOrderID, String SKU, Integer qty) {
+        System.out.println("addLineItemToPurchaseOrder() called");
         try {
             Query query = em.createQuery("select p from PurchaseOrderEntity p where p.id = ?1").setParameter(1, purchaseOrderID);
             PurchaseOrderEntity purchaseOrder = (PurchaseOrderEntity) query.getSingleResult();
@@ -71,6 +72,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             em.flush();
             return true;
         } catch (Exception ex) {
+            System.out.println("Failed to addLineItemToPurchaseOrder()");
             ex.printStackTrace();
             return false;
         }
