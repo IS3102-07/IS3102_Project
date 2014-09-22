@@ -31,6 +31,9 @@ public class ManufacturingFacilityEntity implements Serializable {
     private Long id;
     private String name;
     private Integer capacity;
+    private String address;
+    private String telephone;
+    private String email;
     @OneToOne
     private WarehouseEntity warehouse;
     @ManyToMany
@@ -46,8 +49,11 @@ public class ManufacturingFacilityEntity implements Serializable {
         this.SaleAndOperationPlanList = new ArrayList<>();
     }
     
-    public void create(String name) {
+    public void create(String name, String address, String telephone, String email) {
         this.setName(name);
+        this.setAddress(address);
+        this.setTelephone(telephone);
+        this.setEmail(email);
     }
 
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {
@@ -89,7 +95,25 @@ public class ManufacturingFacilityEntity implements Serializable {
     public void setWarehouse(WarehouseEntity warehouse) {
         this.warehouse = warehouse;
     }        
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
     
+    public String getTelephone() {
+        return address;
+    }
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public void setName(String name) {
         this.name = name;
     }

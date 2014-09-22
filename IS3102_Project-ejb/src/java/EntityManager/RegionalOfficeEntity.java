@@ -27,6 +27,9 @@ public class RegionalOfficeEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String address;
+    private String telephone;
+    private String email;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
     List<WarehouseEntity> warehouseList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
@@ -40,8 +43,11 @@ public class RegionalOfficeEntity implements Serializable {
         this.warehouseList = new ArrayList<>();
     }        
     
-    public void create(String name) {
+    public void create(String name, String address, String telephone, String email) {
         this.setName(name);
+        this.setAddress(address);
+        this.setTelephone(telephone);
+        this.setEmail(email);
     }        
 
     public List<WarehouseEntity> getWarehouseList() {
@@ -72,6 +78,25 @@ public class RegionalOfficeEntity implements Serializable {
         this.name = name;
     }
     
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
+    public String getTelephone() {
+        return address;
+    }
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public String getName() {
         return name;
     }
