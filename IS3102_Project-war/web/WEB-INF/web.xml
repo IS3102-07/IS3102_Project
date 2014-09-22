@@ -412,6 +412,10 @@
         <servlet-name>A2/sop_main.jsp</servlet-name>
         <jsp-file>/A2/sop_main.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>SOP_ajax_Servlet</servlet-name>
+        <servlet-class>A2_servlets.SOP_ajax_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -823,6 +827,10 @@
     <servlet-mapping>
         <servlet-name>A2/sop_main.jsp</servlet-name>
         <url-pattern>/A2/sop_main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SOP_ajax_Servlet</servlet-name>
+        <url-pattern>/SOP_ajax_Servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

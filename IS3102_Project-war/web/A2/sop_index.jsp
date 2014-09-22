@@ -49,7 +49,8 @@
                                         <div class="form-group">
                                             <label for="select_regionalOffice">Regional Office</label>
                                             <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">
-                                                <option>South China Regional Office</option>
+                                                <option value="10">South China Regional Office</option>
+                                                <option value="12">South Eastern Regional Office</option>
                                                 <%
                                                     List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
                                                     for (RegionalOfficeEntity r : regionalOfficeList) {
@@ -65,7 +66,7 @@
                                             <select id="select_store" class="form-control" name="store">
                                                 <option>Tangling Store</option>
                                                 <%
-                                                    
+
                                                 %>
                                             </select>
                                         </div>
@@ -90,19 +91,11 @@
 
         <script>
             function getStore() {
-                var regionalOffice = $("#select_regionalOffice").find('option:selected').text();
-
-                var xmlhttp = new XMLHttpRequest();
-
-                xmlhttp.onreadystatechange = function ()
-                {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-                    {
-                        document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-                    }
-                }
-                xmlhttp.open("GET", "url?regionalOffice=" + regionalOffice, true);
-                xmlhttp.send();
+                var regionalOffice = $("#select_regionalOffice").find('option:selected').val();
+                alert("id: "+regionalOffice);
+                $.get('../SaleAndOperationPlanning_Servlet/ajax',{regionalOffice:regionalOffice},function(responseText) { 
+                        $('#welcometext').text(responseText);         
+                    });
             }
         </script>
 
