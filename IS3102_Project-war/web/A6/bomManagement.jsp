@@ -76,7 +76,7 @@
                                 <form name="billOfMaterialManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            
+
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addBillOfMaterial()"  />
@@ -89,14 +89,12 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th>Name</th>
-                                                            <th>Category</th>
+                                                            <th>BOM Name</th>
                                                             <th>Description</th>
-                                                            <th>SKU</th>
-                                                            <th>Length</th>
-                                                            <th>Width</th>
-                                                            <th>Height</th>
-                                                            <th>Update</th>
+                                                            <th>Furniture</th>
+                                                            <th>Link BOM And Furniture</th>
+                                                            <th>View BOM</th>
+                                                            <th>Edit BOM</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -113,12 +111,6 @@
                                                             </td>
                                                             <td>
                                                                 <%=listOfBOM.get(i).getName()%>
-                                                            </td>
-                                                            <td>
-                                                                Blank
-                                                            </td>
-                                                            <td>
-                                                                Blank
                                                             </td>
                                                             <td>
                                                                 Blank
@@ -180,7 +172,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
