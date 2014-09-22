@@ -2,8 +2,11 @@ package SCM.ManufacturingInventoryControl;
 
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.PurchaseOrderEntity;
 import EntityManager.RawMaterialEntity;
 import EntityManager.RetailProductEntity;
+import EntityManager.ShippingOrderEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
 import HelperClasses.ItemStorageBinHelper;
@@ -58,6 +61,58 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         } catch (Exception ex) {
             System.out.println("\nServer failed return listOfAppropriateEmptyStorageBins:\n" + ex);
             return null;
+        }
+    }
+
+    @Override
+    public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID, Long warehouseID) {
+        System.out.println("moveInboundPurchaseOrderItemsToReceivingBin called()");
+        try {
+            PurchaseOrderEntity purchaseOrderEntity = em.getReference(PurchaseOrderEntity.class, purchaseOrderID);
+            List<LineItemEntity> lineItemsInPurchaseOrder = purchaseOrderEntity.getLineItems();
+            for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
+                ItemEntity itemEntity = lineItemEntity.getItem();
+                int quantity = lineItemEntity.getQuantity();
+                for (int i = 0; i < quantity; i++) {
+                    if (!addItemToReceivingBin(warehouseID, itemEntity.getSKU())) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Could not find either purchase order or the warehouse.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Failed to moveInboundPurchaseOrderItemsToReceivingBin()");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID, Long warehouseID) {
+        System.out.println("moveInboundShippingOrderItemsToReceivingBin called()");
+        try {
+            ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
+            List<LineItemEntity> lineItemsInPurchaseOrder = shippingOrderEntity.getLineItems();
+            for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
+                ItemEntity itemEntity = lineItemEntity.getItem();
+                int quantity = lineItemEntity.getQuantity();
+                for (int i = 0; i < quantity; i++) {
+                    if (!addItemToReceivingBin(warehouseID, itemEntity.getSKU())) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Could not find either shipping order or the warehouse.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Failed to moveInboundShippingOrderItemsToReceivingBin()");
+            ex.printStackTrace();
+            return false;
         }
     }
 
