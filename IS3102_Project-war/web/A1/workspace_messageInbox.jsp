@@ -80,8 +80,8 @@
                                         <div class="table-responsive">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  /><br/><br/>
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  />
                                                     <input type="hidden" name="view" value="inbox"/>
                                                     <button type="button" class="btn btn-primary" onclick="javascript:viewSentMsg()">View Sent Messages</button>
                                                 </div>
@@ -163,8 +163,9 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  /><br/><br/>
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  />
+                                                    
                                                     <input type="hidden" name="view" value="inbox"/>
                                                     <button type="button" class="btn btn-primary" onclick="javascript:viewSentMsg()">View Sent Messages</button>
                                                 </div>
