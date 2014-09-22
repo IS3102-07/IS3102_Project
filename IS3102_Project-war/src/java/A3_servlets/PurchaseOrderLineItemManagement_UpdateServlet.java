@@ -1,7 +1,9 @@
 package A3_servlets;
 
+import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,20 +11,31 @@ import javax.servlet.http.HttpServletResponse;
 
 public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @EJB
+    private RetailProductsAndRawMaterialsPurchasingBeanLocal retailProductsAndRawMaterialsPurchasingBean;
+    private String result;
 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PurchaseOrderLineItemManagement_UpdateServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PurchaseOrderLineItemManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String purchaseOrderId = request.getParameter("id");
+            String lineItemId = request.getParameter("lineitemId");
+            String sku = request.getParameter("sku");
+            String quantity = request.getParameter("quantity");
+
+            boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updateLineItemFromPurchaseOrder(Long.parseLong(purchaseOrderId), Long.parseLong(lineItemId), sku, Integer.parseInt(quantity));
+            if (!canUpdate) {
+                result = "?errMsg=Purchase Order or Line Item or SKU not found.&id=" + purchaseOrderId;
+                response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
+            } else {
+                result = "?errMsg=Line Item updated successfully.&id=" + purchaseOrderId;
+                response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
+            }
+
+            //retailProductsAndRawMaterialsPurchasingBean.updateLineItemFromPurchaseOrder(Long.MIN_VALUE, Long.MIN_VALUE, lineItemId, Integer.SIZE)
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
         }
     }
 
