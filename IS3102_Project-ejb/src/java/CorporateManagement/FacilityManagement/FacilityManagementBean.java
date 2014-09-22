@@ -30,13 +30,13 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
-    public boolean addRegionalOffice(String regionalOfficeName) {
+    public boolean addRegionalOffice(String regionalOfficeName, String address, String telephone, String email) {
         System.out.println("addRegionalOffice() called with name:" + regionalOfficeName);
         String name;
         Long id;
         try {
             RegionalOfficeEntity regionalOfficeEntity = new RegionalOfficeEntity();
-            regionalOfficeEntity.create(regionalOfficeName);
+            regionalOfficeEntity.create(regionalOfficeName, address, telephone, email);
             em.persist(regionalOfficeEntity);
             name = regionalOfficeEntity.getName();
             id = regionalOfficeEntity.getId();
@@ -130,13 +130,13 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacility) {
+    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacility, String address, String telephone, String email) {
         System.out.println("createManufacturingFacility() called with name:" + manufacturingFacility);
         String name;
         Long id;
         try {
             ManufacturingFacilityEntity manufacturingFacilityEntity = new ManufacturingFacilityEntity();
-            manufacturingFacilityEntity.create(manufacturingFacility);
+            manufacturingFacilityEntity.create(manufacturingFacility, address, telephone, email);
             em.persist(manufacturingFacilityEntity);
             name = manufacturingFacilityEntity.getName();
             id = manufacturingFacilityEntity.getId();
@@ -240,13 +240,13 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    public StoreEntity createStore(String storeName) {
+    public StoreEntity createStore(String storeName, String address, String telephone, String email) {
         System.out.println("createStore() called with name:" + storeName);
         String name;
         Long id;
         try {
             StoreEntity storeEntity = new StoreEntity();
-            storeEntity.create(storeName);
+            storeEntity.create(storeName, address, telephone, email);
             em.persist(storeEntity);
             name = storeEntity.getName();
             id = storeEntity.getId();

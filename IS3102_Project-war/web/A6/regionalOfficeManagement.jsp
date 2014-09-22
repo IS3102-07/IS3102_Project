@@ -73,9 +73,9 @@
                                                         <tr>
                                                             <td><input type="checkbox" name="delete" value="<%= regionalOffice.getId()%>" /></td>
                                                             <td><%= regionalOffice.getName()%></td>
-                                                            <td>Blank</td>
-                                                            <td>Blank</td>
-                                                            <td>Blank</td>
+                                                            <td><%= regionalOffice.getAddress()%></td>
+                                                            <td><%= regionalOffice.getTelephone()%></td>
+                                                            <td><%= regionalOffice.getEmail()%></td>
                                                             <td><a href="../FacilityManagement_RegionalOfficeServlet/editRegionalOffice_GET?regionalOfficeId=<%= regionalOffice.getId()%>"><button class="btn btn-primary">View</button></a></td>
                                                         </tr>
                                                         <%

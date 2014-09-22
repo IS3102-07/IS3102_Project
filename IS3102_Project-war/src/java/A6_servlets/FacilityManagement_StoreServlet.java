@@ -64,7 +64,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     String email = request.getParameter("email");
                     
                     System.out.println("Posting from create store :");
-                    StoreEntity store = fmBean.createStore(storeName);
+                    StoreEntity store = fmBean.createStore(storeName, address, telephone, email);
                     if (store != null) {
                         request.setAttribute("alertMessage", "A new store record has been saved.");
                     } else {
