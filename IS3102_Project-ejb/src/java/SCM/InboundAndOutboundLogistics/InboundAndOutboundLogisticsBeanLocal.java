@@ -6,7 +6,6 @@
 package SCM.InboundAndOutboundLogistics;
 
 import EntityManager.ItemEntity;
-import EntityManager.LineItemEntity;
 import EntityManager.ShippingOrderEntity;
 import EntityManager.WarehouseEntity;
 import java.util.Date;
