@@ -28,7 +28,7 @@
                                     <i class="icon icon-home"></i>  <a href="facilityManagement.jsp">Facility Management</a>
                                 </li>                             
                                 <li>
-                                    <i class="icon icon-home"></i>Manufacturing Facility Management
+                                    <i class="icon icon-home"></i> Manufacturing Facility Management
                                 </li>
                             </ol>
                         </div>

@@ -31,7 +31,7 @@
                                     <i class="icon icon-home"></i>  <a href="#">Regional Office Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Add New Regional Office</a>
+                                    <i class="icon icon-edit"></i>  <a href="#">Add New Regional Office</a>
                                 </li>
                             </ol>
                         </div>

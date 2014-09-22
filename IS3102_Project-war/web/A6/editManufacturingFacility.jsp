@@ -32,7 +32,7 @@
                                     <i class="icon icon-home"></i>  <a href="regionalOfficeManagement.jsp">Manufacturing Facility Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i>  Edit Manufacturing Facility
+                                    <i class="icon icon-edit"></i>  Edit Manufacturing Facility
                                 </li>
                             </ol>
                         </div>

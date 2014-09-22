@@ -32,7 +32,7 @@
                                     <i class="icon icon-home"></i>  <a href="storeManagement.jsp">Store Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Edit Store</a>
+                                    <i class="icon icon-edit"></i>  <a href="#">Edit Store</a>
                                 </li>
                             </ol>
                         </div>
