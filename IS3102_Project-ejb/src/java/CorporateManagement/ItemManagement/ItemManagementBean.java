@@ -217,7 +217,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             BOM.setDescription(description);
             BOM.setName(name);
             em.persist(BOM);
-            
+
             System.out.println("Bill Of Material Name \"" + name + "\" registered successfully as id:" + BOM.getId());
             return true;
         } catch (Exception ex) {
@@ -227,7 +227,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public boolean editBOM(String name, String description){//
+    public boolean editBOM(String name, String description) {//
         System.out.println("editBillOfMaterial() called with bill of material name:" + name + "and description: " + description);
 
         Long id;
@@ -259,20 +259,28 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public BillOfMaterialEntity viewSingleBOM(Long BOMId) {
         System.out.println("viewBillOfMaterial() called with id:" + BOMId);
         try {
-            Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
-
-//            for (Object o : q.getResultList()) {
-//                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
-//                if (i.getName().equalsIgnoreCase(name)) {
-//                    System.out.println("\nServer returns bill of material:\n" + name);
-//                    return i;
-//                }
-//            }
-            return null; //Could not find the role to remove
+            BillOfMaterialEntity BOM = em.find(BillOfMaterialEntity.class, BOMId);
+            System.out.println("viewSingleBOM() is successful.");
+            return BOM;
         } catch (Exception ex) {
             System.out.println("\nServer failed to view bill of material:\n" + ex);
             return null;
         }
+    }
+
+    @Override
+    public boolean addLineItemToBOM(String SKU, Integer qty, Long BOMId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteLineItemFromBOM(Long lineItemId, Long BOMId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean linkBOMAndFurniture(Long BOMId, Long FurnitureId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public boolean createProductionGroup(String name) {

@@ -3,6 +3,7 @@ package CorporateManagement.ItemManagement;
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.BillOfMaterialEntity;
+import EntityManager.LineItemEntity;
 import EntityManager.RawMaterialEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.ProductGroupLineItemEntity;
@@ -32,13 +33,17 @@ public interface ItemManagementBeanLocal {
     public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL);
     public boolean removeRetailProduct(String SKU);
     public RetailProductEntity viewRetailProduct(String SKU);
-   public List<RetailProductEntity> listAllRetailProduct();
+    public List<RetailProductEntity> listAllRetailProduct();
    
     public boolean createBOM(String name, String description);
     public boolean editBOM(String name, String description);
     public boolean deleteBOM(Long BOMId);
     public BillOfMaterialEntity viewSingleBOM(Long BOMId);
     public List<BillOfMaterialEntity> listAllBOM();
+    
+    public boolean addLineItemToBOM(String SKU, Integer qty, Long BOMId);
+    public boolean deleteLineItemFromBOM(Long lineItemId, Long BOMId);
+    public boolean linkBOMAndFurniture(Long BOMId, Long FurnitureId);
     
     public boolean createProductionGroup(String name);
     public boolean editProductionGroup(String name);
