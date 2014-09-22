@@ -12,7 +12,7 @@ import javax.ejb.Local;
 public interface RetailProductsAndRawMaterialsPurchasingBeanLocal { 
    public Boolean createPurchaseOrder(Long supplierID, Long recivingWarehouseID, Date expectedReceivedDate);
    public Boolean updatePurchaseOrder(Long purchaseOrderID, Long supplierID, Long recivingWarehouseID, Date expectedReceivedDate);
-   public Boolean addLineItemToPurchaseOrder(Long id, LineItemEntity lineItem);
+   public Boolean addLineItemToPurchaseOrder(Long id, Long SKU, Integer qty);
    public Boolean updatePurchaseOrder(Long id, String status);
    public PurchaseOrderEntity getPurchaseOrderById(Long id);
    public List<PurchaseOrderEntity> getPurchaseOrderListByStatus(String status);
