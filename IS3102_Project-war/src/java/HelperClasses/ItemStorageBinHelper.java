@@ -1,9 +1,5 @@
 package HelperClasses;
 
-/**
- *
- * @author -VeRyLuNaTiC
- */
 public class ItemStorageBinHelper {
     private String SKU;
     private String itemName;

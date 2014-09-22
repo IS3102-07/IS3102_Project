@@ -388,6 +388,10 @@
         <servlet-name>PurchaseOrderLineItemManagement_UpdateServlet</servlet-name>
         <servlet-class>A3_servlets.PurchaseOrderLineItemManagement_UpdateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>A2/sop_scheduleManagement</servlet-name>
+        <jsp-file>/A2/sop_scheduleManagement.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -775,6 +779,10 @@
     <servlet-mapping>
         <servlet-name>PurchaseOrderLineItemManagement_UpdateServlet</servlet-name>
         <url-pattern>/PurchaseOrderLineItemManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/sop_scheduleManagement</servlet-name>
+        <url-pattern>/A2/sop_scheduleManagement</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
