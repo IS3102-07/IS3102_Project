@@ -1,6 +1,7 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -45,6 +46,7 @@ public class PurchaseOrderEntity implements Serializable {
         this.receivedWarehouse = destination;
         this.expectedReceivedDate = expectedReceivedDate;
         this.setStatus("Pending");
+        this.lineItems = new ArrayList<>();
     }        
     
     public Long getId() {
