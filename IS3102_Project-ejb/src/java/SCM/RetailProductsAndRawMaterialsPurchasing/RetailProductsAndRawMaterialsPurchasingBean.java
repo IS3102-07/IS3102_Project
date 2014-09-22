@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -58,6 +59,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             return false;
         }
     }
+
     @Override
     public Boolean addLineItemToPurchaseOrder(Long purchaseOrderID, String SKU, Integer qty) {
         System.out.println("addLineItemToPurchaseOrder() called");
@@ -66,14 +68,77 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             PurchaseOrderEntity purchaseOrder = (PurchaseOrderEntity) query.getSingleResult();
             query = em.createQuery("select p from ItemEntity p where p.SKU = ?1").setParameter(1, SKU);
             ItemEntity itemEntity = (ItemEntity) query.getSingleResult();
-            LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, null);            
+            LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, null);
             lineItem.setPurchaseOrder(purchaseOrder);
-            purchaseOrder.getLineItems().add(lineItem);           
+            purchaseOrder.getLineItems().add(lineItem);
             em.merge(purchaseOrder);
             em.flush();
             return true;
         } catch (Exception ex) {
             System.out.println("Failed to addLineItemToPurchaseOrder()");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean removeLineItemFromPurchaseOrder(Long lineItemID, Long purchaseOrderID) {
+        System.out.println("removeLineItemToPurchaseOrder() called");
+        boolean lineItemRemoved = false;
+        try {
+            try {
+                PurchaseOrderEntity purchaseOrder = em.getReference(PurchaseOrderEntity.class, purchaseOrderID);
+                List<LineItemEntity> lineItems = purchaseOrder.getLineItems();
+                for (int i = 0; i < lineItems.size(); i++) {
+                    if (lineItems.get(i).getId().equals(lineItemID)) {
+                        purchaseOrder.getLineItems().remove(i);
+                        lineItemRemoved = true;
+                        break;
+                    }
+                }
+            } catch (EntityNotFoundException ex) {
+                System.out.println("Purchase order not found.");
+                return false;
+            }
+            try {
+                LineItemEntity lineItem = em.getReference(LineItemEntity.class, lineItemID);
+                em.remove(lineItem);
+                em.flush();
+                return lineItemRemoved;
+            } catch (EntityNotFoundException ex) {
+                System.out.println("Line item not found.");
+                return false;
+            }
+        } catch (Exception ex) {
+            System.out.println("Failed to addLineItemToPurchaseOrder()");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean updateLineItemFromPurchaseOrder(Long purchaseOrderID, Long lineItemID, String SKU, Integer qty) {
+        System.out.println("updateLineItemFromPurchaseOrder() called");
+        Boolean itemUpdated = false;
+        try {
+            PurchaseOrderEntity purchaseOrder = em.getReference(PurchaseOrderEntity.class, purchaseOrderID);
+            List<LineItemEntity> lineItems = purchaseOrder.getLineItems();
+            for (int i = 0; i < lineItems.size(); i++) {
+                if (lineItems.get(i).getId().equals(lineItemID)) {
+                    Query query = em.createQuery("select p from ItemEntity p where p.SKU = ?1").setParameter(1, SKU);
+                    ItemEntity itemEntity = (ItemEntity) query.getSingleResult();
+                    LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, null);
+                    lineItems.set(i, lineItem);
+                    itemUpdated = true;
+                    break;
+                }
+            }
+            return itemUpdated;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Purchase order not found.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Failed to updateLineItemFromPurchaseOrder()");
             ex.printStackTrace();
             return false;
         }
