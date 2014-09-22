@@ -26,7 +26,7 @@ public class PurchaseOrderEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToOne(mappedBy = "purchaseOrder")
+    @ManyToOne
     private SupplierEntity supplier;    
     @OneToMany(mappedBy="purchaseOrder",cascade={CascadeType.ALL})
     private List<LineItemEntity> lineItems;                
