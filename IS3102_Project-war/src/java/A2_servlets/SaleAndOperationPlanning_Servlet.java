@@ -14,6 +14,7 @@ import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -56,7 +57,29 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 break;
                 
             case "/sop_scheduleManagement_POST":
+                String submit = request.getParameter("submit-btn");
+                if(submit.equals("Add Schedule"))
+                    nextPage = "/SaleAndOperationPlanning_Servlet/addSchedule";
+                else if(submit.equals("Delete Schedule"))
+                    nextPage = "/SaleAndOperationPlanning_Servlet/deleteSchedule";
+                break;
                 
+            case "/addSchedule":
+                Integer year = Integer.parseInt(request.getParameter("year"));
+                Integer month = Integer.parseInt(request.getParameter("month"));                
+                sopBean.createSchedule(year, month);                
+                nextPage = "/SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET";
+                break;
+                
+            case "/deleteSchedule":
+                String[] deletes = request.getParameterValues("delete");
+                if(deletes != null){
+                    for(String scheduleIdStr: deletes){
+                        Long scheduleId = Long.parseLong(scheduleIdStr);
+                        sopBean.deleteSchedule(scheduleId);
+                    }
+                }
+                nextPage = "/SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET";
                 break;
 
             case "/sop_index_GET":
@@ -79,20 +102,8 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 break;
 
             case "/sop_schedule_GET":
-                scheduleList = sopBean.getScheduleList();
-                
-                // for testing ......
-                MonthScheduleEntity model1 = new MonthScheduleEntity();
-                model1.setYear(2014);
-                model1.setMonth(6);
-                MonthScheduleEntity model2 = new MonthScheduleEntity();
-                model2.setYear(2014);
-                model2.setMonth(7);
-                scheduleList.add(model1);
-                scheduleList.add(model2);
-                
+                scheduleList = sopBean.getScheduleList();                                      
                 request.setAttribute("scheduleList", scheduleList);
-
                 nextPage = "/A2/sop_schedule";
                 break;
 
