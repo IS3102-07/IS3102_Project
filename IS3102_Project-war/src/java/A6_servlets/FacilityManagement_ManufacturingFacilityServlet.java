@@ -49,6 +49,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
             case "/createManufacturingFacility_GET":
                 System.out.println("Create manufacturing facility in servlet");
                 String submit_btn = request.getParameter("submit-btn");
+                System.out.println(submit_btn);
                 if (submit_btn.equals("Add Manufacturing Facility")) {
                     nextPage = "/A6/createManufacturingFacility";
                 } else if (submit_btn.equals("Delete Manufacturing Facility")) {
@@ -81,7 +82,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 break;
 
             case "/editManufacturingFacility_GET":
-                manufacturingFacilityId = (long) request.getAttribute("delete");
+                manufacturingFacilityId = (long) request.getAttribute("manufacturingFacilityId");
                 System.out.println("Manufacturing Facility ID is " + manufacturingFacilityId);
                 ManufacturingFacilityEntity manufacturingFacility = fmBean.viewManufacturingFacility(manufacturingFacilityId);
                 request.setAttribute("manufacturingFacility", manufacturingFacility);
