@@ -103,7 +103,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 Long id = Long.parseLong(request.getParameter("regionalOfficeId"));
 
-                if (fmBean.editRegionalOffice(regionalOfficeName)) {
+                if (fmBean.editRegionalOffice(id, regionalOfficeName, address, telephone, email)) {
                     request.setAttribute("alertMessage", "The regional office has been saved.");
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit regional office.");
