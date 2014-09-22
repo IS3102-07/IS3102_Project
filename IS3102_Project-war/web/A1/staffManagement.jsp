@@ -86,7 +86,7 @@
                                                             <th>Email</th>
                                                             <th>Phone</th>
                                                             <th>Roles</th>
-                                                            <th>Actions</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
