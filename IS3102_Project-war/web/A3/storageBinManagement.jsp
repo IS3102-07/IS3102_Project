@@ -93,6 +93,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th>ID</th>
                                                             <th>Type</th>
                                                             <th>Length</th>
                                                             <th>Width</th>
@@ -111,6 +112,9 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="checkbox" name="delete" value="<%=storageBins.get(i).getId()%>" />
+                                                            </td>
+                                                            <td>
+                                                                <%=storageBins.get(i).getId()%>
                                                             </td>
                                                             <td>
                                                                 <%=storageBins.get(i).getType()%>
