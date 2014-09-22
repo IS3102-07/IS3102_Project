@@ -21,9 +21,7 @@ public class LineItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
     private ShippingOrderEntity shippingOrder;
-    @ManyToOne
     private PurchaseOrderEntity purchaseOrder;
     @OneToOne
     private ItemEntity item;
