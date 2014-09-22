@@ -32,7 +32,7 @@
                                     <i class="icon icon-home"></i>  <a href="#">Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Edit New Warehouse</a>
+                                    <i class="icon icon-edit"></i>  <a href="#">Edit New Warehouse</a>
                                 </li>
                             </ol>
                         </div>

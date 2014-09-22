@@ -31,7 +31,7 @@
                                     <i class="icon icon-home"></i>  <a href="#">Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="#">Add New Warehouse</a>
+                                    <i class="icon icon-edit"></i>  <a href="#">Add New Warehouse</a>
                                 </li>
                             </ol>
                         </div>
