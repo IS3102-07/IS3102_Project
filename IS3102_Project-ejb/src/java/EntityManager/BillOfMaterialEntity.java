@@ -1,24 +1,31 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class BillOfMaterialEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private String description;
     
-    public BillOfMaterialEntity() {}
-    
-    public void create(String name) {
-        this.name = name;
+    @OneToOne
+    FurnitureEntity furniture;
+    @OneToMany
+    List<LineItemEntity> listOfLineItems;
+
+    public BillOfMaterialEntity() {
     }
+
     public Long getId() {
         return id;
     }
@@ -26,13 +33,31 @@ public class BillOfMaterialEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
- public String getName() {
-        return name;
+
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
+    public FurnitureEntity getFurniture() {
+        return furniture;
+    }
+
+    public void setFurniture(FurnitureEntity furniture) {
+        this.furniture = furniture;
+    }
+
+    public List<LineItemEntity> getListOfLineItems() {
+        return listOfLineItems;
+    }
+
+    public void setListOfLineItems(List<LineItemEntity> listOfLineItems) {
+        this.listOfLineItems = listOfLineItems;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -57,5 +82,5 @@ public class BillOfMaterialEntity implements Serializable {
     public String toString() {
         return "entityManagerBean.BillOfMaterial[ id=" + id + " ]";
     }
-    
+
 }
