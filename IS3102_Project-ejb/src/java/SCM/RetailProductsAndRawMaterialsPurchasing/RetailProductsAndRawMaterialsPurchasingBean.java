@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -53,9 +54,12 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             purchaseOrderEntity.setExpectedReceivedDate(expectedReceivedDate);
             System.out.println("PurchaseOrder updated successfully");
             return true;
-        } catch (EntityExistsException ex) {
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Purchase order or supplier or warehouse not found.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Failed to updatePurchaseOrder.");
             ex.printStackTrace();
-            System.out.println("Failed to create purchase order.");
             return false;
         }
     }
@@ -74,6 +78,9 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             em.merge(purchaseOrder);
             em.flush();
             return true;
+        } catch (NoResultException ex) {
+            System.out.println("Failed to addLineItemToPurchaseOrder(). Purchase order or SKU not found.");
+            return false;
         } catch (Exception ex) {
             System.out.println("Failed to addLineItemToPurchaseOrder()");
             ex.printStackTrace();
@@ -134,7 +141,10 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
                 }
             }
             return itemUpdated;
-        } catch (EntityNotFoundException ex) {
+        } catch (NoResultException ex) {
+            System.out.println("SKU not found.");
+            return false;
+        }  catch (EntityNotFoundException ex) {
             System.out.println("Purchase order not found.");
             return false;
         } catch (Exception ex) {
