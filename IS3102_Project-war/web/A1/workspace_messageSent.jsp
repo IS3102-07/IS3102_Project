@@ -147,7 +147,7 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  /><br/><br/>
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  />
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
                                                     <input type="hidden" name="view" value="sentMessages"/>
                                                     <button type="button" class="btn btn-primary" onclick="javascript:viewInbox()">View Inbox</button>
