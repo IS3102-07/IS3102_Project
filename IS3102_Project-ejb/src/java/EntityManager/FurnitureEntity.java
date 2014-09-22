@@ -32,6 +32,7 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
+        super.setType("Furniture");
     }
 
     public ProductGroupLineItemEntity getProductGroupLineItemEntity() {

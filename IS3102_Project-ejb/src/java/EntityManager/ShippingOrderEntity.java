@@ -27,7 +27,7 @@ public class ShippingOrderEntity implements Serializable {
     private Long id;
     private String shippingType;    
     private String status;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date shippedDate;

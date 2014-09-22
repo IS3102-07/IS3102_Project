@@ -24,6 +24,7 @@ public abstract class ItemEntity implements Serializable {
     private Long id;
     private String SKU;
     private String name;
+    private String type;
     private String batch;
     @OneToMany(cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
@@ -137,4 +138,13 @@ public abstract class ItemEntity implements Serializable {
     public void setBatch(String batch) {
         this.batch = batch;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
 }

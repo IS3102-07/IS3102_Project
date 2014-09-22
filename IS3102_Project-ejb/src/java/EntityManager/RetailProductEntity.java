@@ -30,6 +30,7 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
+        super.setType("Retail Product");
     }
     
     public List<Supplier_RetailProductEntity> getListOfSupplier_RetailProductInfo() {

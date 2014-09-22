@@ -33,7 +33,7 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
         super.setName(name);
         this.category = category;
         this.description = description;
-
+        super.setType("Raw Material");
     }
 
     public void create(String name) {
