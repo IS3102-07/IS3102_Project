@@ -27,12 +27,13 @@ public class SupplierManagement_SupplierServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
 
-
             List<SupplierEntity> suppliers = supplierManagementBean.viewAllSupplierList();
             session.setAttribute("suppliers", suppliers);
             if (errMsg == null || errMsg.equals("")) {
+                System.out.println("No error message to be passed.");
                 response.sendRedirect("A3/supplierManagement.jsp");
             } else {
+                System.out.println("Error message to be passed.");
                 response.sendRedirect("A3/supplierManagement.jsp?errMsg=" + errMsg);
             }
         } catch (Exception ex) {

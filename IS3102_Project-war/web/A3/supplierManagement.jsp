@@ -1,3 +1,4 @@
+<%@page import="EntityManager.CountryEntity"%>
 <%@page import="EntityManager.SupplierEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -86,6 +87,7 @@
                                                         <%
                                                             List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
                                                             if (suppliers != null) {
+
                                                                 for (int i = 0; i < suppliers.size(); i++) {
                                                         %>
                                                         <tr>
@@ -102,7 +104,13 @@
                                                                 <%=suppliers.get(i).getEmail()%>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getCountry().getName()%>
+                                                                <%CountryEntity country = suppliers.get(i).getCountry();
+                                                                    if (country != null) {
+                                                                        out.print(country.getName());
+                                                                    } else {
+                                                                        out.print("NIL");
+                                                                    }
+                                                                %>
                                                             </td>
                                                             <td>
                                                                 <%=suppliers.get(i).getAddress()%>

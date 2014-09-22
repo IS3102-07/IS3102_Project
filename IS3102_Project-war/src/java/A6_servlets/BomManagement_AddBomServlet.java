@@ -30,6 +30,7 @@ public class BomManagement_AddBomServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String source = request.getParameter("source");

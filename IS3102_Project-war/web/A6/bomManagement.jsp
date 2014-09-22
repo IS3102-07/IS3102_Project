@@ -9,8 +9,8 @@
         <script>
             function updateBillOfMaterial(id) {
                 billOfMaterialManagement.id.value = id;
-                document.billOfMaterialManagement.action = "billOfMaterialManagement_update.jsp";
-                document.billOfMaterialManagement.submit();
+                document.bomManagement.action = "billOfMaterialManagement_update.jsp";
+                document.bomManagement.submit();
             }
             function removeBillOfMaterial() {
                 checkboxes = document.getElementsByName('delete');
@@ -35,10 +35,10 @@
                     }
                 }
             }
-            function addBillOfMaterial() {
+            function addBOM() {
                 window.event.returnValue = true;
-                document.billOfMaterialManagement.action = "billOfMaterialManagement_add.jsp";
-                document.billOfMaterialManagement.submit();
+                document.bomManagement.action = "billOfMaterialManagement_add.jsp";
+                document.bomManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -153,7 +153,7 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addRawMaterial()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addBOM()"  />
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove BOM(s)" onclick="removeRawMaterial()"  />
                                                 </div>
                                             </div>
