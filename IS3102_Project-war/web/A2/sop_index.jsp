@@ -48,9 +48,7 @@
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_index_Post">
                                         <div class="form-group">
                                             <label for="select_regionalOffice">Regional Office</label>
-                                            <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">
-                                                <option value="10">South China Regional Office</option>
-                                                <option value="12">South Eastern Regional Office</option>
+                                            <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">                                                
                                                 <%
                                                     List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
                                                     for (RegionalOfficeEntity r : regionalOfficeList) {
@@ -91,10 +89,10 @@
 
         <script>
             function getStore() {
-                var regionalOffice = $("#select_regionalOffice").find('option:selected').val();
-                alert("id: "+regionalOffice);
-                $.get('../SaleAndOperationPlanning_Servlet/ajax',{regionalOffice:regionalOffice},function(responseText) { 
-                        $('#welcometext').text(responseText);         
+                var regionalOfficeId = $("#select_regionalOffice").find('option:selected').val();
+                alert("id: " + regionalOfficeId);
+                $.get('../SOP_ajax_Servlet',{regionalOfficeId:regionalOfficeId},function(responseText) { 
+                        alert(responseText);         
                     });
             }
         </script>

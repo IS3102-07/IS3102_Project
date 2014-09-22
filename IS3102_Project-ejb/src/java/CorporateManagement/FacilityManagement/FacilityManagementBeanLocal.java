@@ -34,6 +34,7 @@ public interface FacilityManagementBeanLocal {
     
     public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId);
     public StoreEntity createStore(String storeName, String address, String telephone, String email);
+    public Boolean addStoreToRegionalOffice(Long id, Long storeId);
     public Boolean editStore(Long id, String storeName, String address, String telephone, String email);
     public boolean removeStore(String storeName);
     public StoreEntity viewStoreEntity(Long storeId);
@@ -46,7 +47,7 @@ public interface FacilityManagementBeanLocal {
     
     public WarehouseEntity getWarehouseById(Long Id);
     public List<WarehouseEntity> getWarehouseList();
-    public Boolean addStoreConnectionToManufacturingFacility(Long id, StoreEntity store);
+    
     
     @Remove
     public void remove();

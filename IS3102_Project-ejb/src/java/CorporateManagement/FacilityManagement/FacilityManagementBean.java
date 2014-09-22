@@ -214,14 +214,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public Boolean
-            addStoreConnectionToManufacturingFacility(Long id, StoreEntity store) {
+    public Boolean addStoreToRegionalOffice(Long id, Long storeId) {
         try {
-            ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
-            manufacturingFacility.getStoreList()
-                    .add(store);
-            em.merge(manufacturingFacility);
-
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            RegionalOfficeEntity regionalOffice = em.find(RegionalOfficeEntity.class, id);
+            store.setRegionalOffice(regionalOffice);
+            regionalOffice.getStoreList().add(store);                    
+            em.merge(regionalOffice);
+            em.merge(store);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

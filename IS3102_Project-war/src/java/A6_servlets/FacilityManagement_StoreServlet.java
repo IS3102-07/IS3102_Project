@@ -6,6 +6,7 @@
 package A6_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -50,6 +51,8 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 System.out.println("Create store in servlet");
                 String submit_btn = request.getParameter("submit-btn");
                 if (submit_btn.equals("Add Store")) {
+                    List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
+                    request.setAttribute("regionalOfficeList", regionalOfficeList);
                     nextPage = "/A6/createStore";
                 } else if (submit_btn.equals("Delete Store")) {
                     nextPage = "/FacilityManagement_StoreServlet/deleteStore";
@@ -66,9 +69,11 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
+                    Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                     
                     System.out.println("Posting from create store :");
                     StoreEntity store = fmBean.createStore(storeName, address, telephone, email);
+                    fmBean.addStoreToRegionalOffice(regionalOfficeId, store.getId());
                     if (store != null) {
                         request.setAttribute("alertMessage", "A new store record has been saved.");
                     } else {
