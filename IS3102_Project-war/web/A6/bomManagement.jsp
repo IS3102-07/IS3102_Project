@@ -1,3 +1,4 @@
+<%@page import="EntityManager.FurnitureEntity"%>
 <%@page import="EntityManager.BillOfMaterialEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -55,10 +56,10 @@
                             <h1 class="page-header">Bill of Materials Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-sitemap"></i>  <a href="billOfMaterialManagement.jsp">Bill of Material Management</a>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Bill of Material Management
+                                    <i class="icon icon-sitemap"></i> Bill of Material Management
                                 </li>
                             </ol>
                         </div>
@@ -88,19 +89,17 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th>BOM Name</th>
-                                                            <th>Description</th>
-                                                            <th>Furniture</th>
-                                                            <th>Link BOM And Furniture</th>
-                                                            <th>View BOM</th>
-                                                            <th>Edit BOM</th>
+                                                            <th style="width:5%"><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th style="width:15%">BOM Name</th>
+                                                            <th style="width:15%">Furniture</th>
+                                                            <th style="width:40%">Description</th>
+                                                            <th style="width:13%">Edit BOM</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
+                                                            List<FurnitureEntity> listOfFurniture = (List<FurnitureEntity>) (session.getAttribute("listOfFurniture"));
                                                             List<BillOfMaterialEntity> listOfBOM = (List<BillOfMaterialEntity>) (session.getAttribute("listOfBOM"));
-
                                                             try {
                                                                 if (listOfBOM != null) {
                                                                     for (int i = 0; i < listOfBOM.size(); i++) {
@@ -113,19 +112,32 @@
                                                                 <%=listOfBOM.get(i).getName()%>
                                                             </td>
                                                             <td>
-                                                                Blank
+                                                                <%
+                                                                    FurnitureEntity f = listOfBOM.get(i).getFurniture();
+                                                                    String furnitureName = null;
+                                                                    if (f != null) {
+                                                                        furnitureName = f.getName();
+                                                                    } else {
+                                                                        if (furnitureName != null) {
+                                                                            out.print(furnitureName);
+                                                                        } else {
+                                                                            out.print("<select class=\"form-inline\" name='furnitureDropdown'>");
+                                                                            out.print("<option value=''>Select</option>");
+                                                                            for (FurnitureEntity furniture : listOfFurniture) {
+                                                                                out.print("<option value='" + furniture.getId() + "'>");
+                                                                                out.print(furniture.getName());
+                                                                                out.print("</option>");
+                                                                            }
+                                                                            out.print("</select>");
+                                                                            out.print("<input type='button' style='width:30%;height:30px;float:right;' name='btnLink' class='btn btn-primary btn-block' value='Link' onclick='javascript:linkFurniture('" + listOfFurniture.get(i).getId() + "')'/>");
+                                                                        }
+                                                                    }%>
                                                             </td>
                                                             <td>
-                                                                Blank
+                                                                <%=listOfBOM.get(i).getDescription()%>
                                                             </td>
                                                             <td>
-                                                                Blank
-                                                            </td>
-                                                            <td>
-                                                                Blank
-                                                            </td>
-                                                            <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=listOfBOM.get(i).getId()%>" value="update" onclick="javascript:updateRawMaterial('<%=listOfBOM.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Edit" onclick="javascript:updateRawMaterial('<%=listOfBOM.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
