@@ -26,9 +26,11 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     public RetailProductEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height){
         super(SKU, _length, width, height);
         this.name = name;
+        super.setName(name);
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
+        super.setType("Retail Product");
     }
     
     public List<Supplier_RetailProductEntity> getListOfSupplier_RetailProductInfo() {
@@ -52,6 +54,7 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+        super.setName(name);
     }
 
     @Override

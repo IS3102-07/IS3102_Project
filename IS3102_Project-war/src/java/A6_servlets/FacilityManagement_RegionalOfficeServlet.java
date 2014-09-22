@@ -7,6 +7,9 @@ package A6_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.RegionalOfficeEntity;
+import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.WarehouseEntity;
+import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -48,6 +51,9 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
 
             case "/createRegionalOffice_GET":
                 System.out.println("Create regional office in servlet");
+                List<ManufacturingFacilityEntity> manufacturingFacilityList = fmBean.viewListOfManufacturingFacility();
+                request.setAttribute("manufacturingFacilityList", manufacturingFacilityList);
+                
                 String submit_btn = request.getParameter("submit-btn");
                 if (submit_btn.equals("Add Regional Office")) {
                     nextPage = "/A6/createRegionalOffice";
@@ -63,7 +69,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
 
-                    boolean regionalOffice = fmBean.addRegionalOffice(regionalOfficeName);
+                    boolean regionalOffice = fmBean.addRegionalOffice(regionalOfficeName, address, telephone, email);
                     if (regionalOffice != false) {
                         request.setAttribute("alertMessage", "A new regional office record has been saved.");
                     } else {

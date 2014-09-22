@@ -20,19 +20,19 @@ import javax.ejb.Remove;
 @Local
 public interface FacilityManagementBeanLocal {
 
-    public boolean addRegionalOffice(String regionalOfficeName);
+    public boolean addRegionalOffice(String regionalOfficeName, String address, String telephone, String email);
     public Boolean editRegionalOffice(String regionalOfficeName);
     public boolean removeRegionalOffice(String regionalOfficeName);
     public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeName);
     public List<RegionalOfficeEntity> viewListOfRegionalOffice();
 
-    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacilityName);
+    public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacilityName, String address, String telephone, String email);
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName);
     public boolean removeManufacturingFacility(String manufacturingFacilityName);
     public ManufacturingFacilityEntity viewManufacturingFacility(String manufacturingFacilityEntity);
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();
 
-    public StoreEntity createStore(String storeName);
+    public StoreEntity createStore(String storeName, String address, String telephone, String email);
     public Boolean editStore(Long id, String storeName);
     public boolean removeStore(String storeName);
     public StoreEntity viewStoreEntity(String storeEntity);

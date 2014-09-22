@@ -28,9 +28,11 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     public FurnitureEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         super(SKU, _length, width, height);
         this.name = name;
+        super.setName(name);
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
+        super.setType("Furniture");
     }
 
     public ProductGroupLineItemEntity getProductGroupLineItemEntity() {
@@ -55,6 +57,7 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+        super.setName(name);
     }
 
     public String getDescription() {

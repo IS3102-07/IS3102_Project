@@ -1,7 +1,6 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -34,12 +32,15 @@ public class PurchaseOrderEntity implements Serializable {
     private WarehouseEntity receivedWarehouse;  
     @Temporal(value = TemporalType.DATE)
     private Date expectedReceivedDate;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date createdDate;
     
     private String status;
     
     public PurchaseOrderEntity() {}
 
     public PurchaseOrderEntity(SupplierEntity supplier, WarehouseEntity destination, Date expectedReceivedDate) {
+        this.createdDate = new Date();
         this.supplier = supplier;
         this.receivedWarehouse = destination;
         this.expectedReceivedDate = expectedReceivedDate;
@@ -89,6 +90,10 @@ public class PurchaseOrderEntity implements Serializable {
 
     public void setReceivedWarehouse(WarehouseEntity destination) {
         this.receivedWarehouse = destination;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
     }
     
 }
