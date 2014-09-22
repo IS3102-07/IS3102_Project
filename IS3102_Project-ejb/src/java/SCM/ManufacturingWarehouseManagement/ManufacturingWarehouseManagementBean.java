@@ -226,9 +226,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
                 boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
                 if (!isPass) {
-                    UserTransaction ut = context.getUserTransaction();
-                    ut.rollback();
-                    System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back");
+                    System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in origin bin.");
                     throw new Exception();
                 }
             }
