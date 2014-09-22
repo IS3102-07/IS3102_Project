@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.FurnitureEntity"%>
 <%@page import="EntityManager.BillOfMaterialEntity"%>
 <%@page import="java.util.List"%>
@@ -9,7 +10,7 @@
         <script>
             function updateBillOfMaterial(id) {
                 billOfMaterialManagement.id.value = id;
-                document.bomManagement.action = "billOfMaterialManagement_update.jsp";
+                document.bomManagement.action = "bomManagement_update.jsp";
                 document.bomManagement.submit();
             }
             function removeBillOfMaterial() {
@@ -37,7 +38,7 @@
             }
             function addBOM() {
                 window.event.returnValue = true;
-                document.bomManagement.action = "billOfMaterialManagement_add.jsp";
+                document.bomManagement.action = "bomManagement_add.jsp";
                 document.bomManagement.submit();
             }
             function checkAll(source) {
@@ -74,13 +75,13 @@
                                     Add or remove Bill Of Materials
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="billOfMaterialManagement">
+                                <form name="bomManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addBillOfMaterial()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addBOM()"  />
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove BOM(s)" onclick="removeBillOfMaterial()"  />
                                                 </div>
                                             </div>
@@ -91,7 +92,7 @@
                                                         <tr>
                                                             <th style="width:5%"><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th style="width:15%">BOM Name</th>
-                                                            <th style="width:15%">Furniture</th>
+                                                            <th>Furniture</th>
                                                             <th style="width:40%">Description</th>
                                                             <th style="width:13%">Edit BOM</th>
                                                         </tr>
@@ -100,6 +101,13 @@
                                                         <%
                                                             List<FurnitureEntity> listOfFurniture = (List<FurnitureEntity>) (session.getAttribute("listOfFurniture"));
                                                             List<BillOfMaterialEntity> listOfBOM = (List<BillOfMaterialEntity>) (session.getAttribute("listOfBOM"));
+                                                            ArrayList<FurnitureEntity> arrList = new ArrayList();
+                                                            for (FurnitureEntity f : listOfFurniture) {
+                                                                if (f.getBOM() == null) {
+                                                                    arrList.add(f);
+                                                                }
+                                                            }
+                                                            listOfFurniture = arrList;
                                                             try {
                                                                 if (listOfBOM != null) {
                                                                     for (int i = 0; i < listOfBOM.size(); i++) {
