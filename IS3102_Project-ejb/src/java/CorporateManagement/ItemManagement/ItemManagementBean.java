@@ -209,39 +209,31 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean createBOM(String name, String description) {//
         System.out.println("createBillOfMaterial() called with name:" + name);
-
-        Long id;
         try {
-//            BillOfMaterialEntity billOfMaterialEntity = new BillOfMaterialEntity();
-//            billOfMaterialEntity.create(name);
-//            em.persist(billOfMaterialEntity);
-//            id = billOfMaterialEntity.getId();
-            //System.out.println("Bill Of Material Name \"" + name + "\" registered successfully as id:" + id);
+            BillOfMaterialEntity BOM = new BillOfMaterialEntity();
+            BOM.setDescription(description);
+            BOM.setName(name);
+            em.persist(BOM);
+            
+            System.out.println("Bill Of Material Name \"" + name + "\" registered successfully as id:" + BOM.getId());
             return true;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to register bill of material:\n" + ex);
+            System.out.println("\nServer failed to createBOM():\n" + ex);
             return false;
         }
     }
 
-    public boolean editBOM(String name) {//
-        System.out.println("editBillOfMaterial() called with bill of material name:" + name);
+    @Override
+    public boolean editBOM(String name, String description){//
+        System.out.println("editBillOfMaterial() called with bill of material name:" + name + "and description: " + description);
 
         Long id;
         try {
             Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
 
-//            for (Object o : q.getResultList()) {
-//                BillOfMaterialEntity i = (BillOfMaterialEntity) o;
-//                if (i.getName().equalsIgnoreCase(name)) {
-//                    i.setName(name);
-//                    em.flush();
-//                    System.out.println("\nServer updated bill of material:\n" + name);
-//                    return true;
-//                }
-//            }
             return false; //Could not find the role to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to update bill of material:\n" + ex);
@@ -264,8 +256,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public BillOfMaterialEntity viewSingleBOM(String name) {
-        System.out.println("viewBillOfMaterial() called with name:" + name);
+    public BillOfMaterialEntity viewSingleBOM(Long BOMId) {
+        System.out.println("viewBillOfMaterial() called with id:" + BOMId);
         try {
             Query q = em.createQuery("SELECT t FROM BillOfMaterialEntity t");
 
