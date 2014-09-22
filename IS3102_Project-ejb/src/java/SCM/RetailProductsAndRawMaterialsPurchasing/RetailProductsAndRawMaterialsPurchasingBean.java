@@ -77,6 +77,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             purchaseOrder.getLineItems().add(lineItem);
             em.merge(purchaseOrder);
             em.flush();
+            System.out.println("Lineitem added.");
             return true;
         } catch (NoResultException ex) {
             System.out.println("Failed to addLineItemToPurchaseOrder(). Purchase order or SKU not found.");
