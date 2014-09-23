@@ -55,10 +55,10 @@
                                     <h3 class="panel-title"> Purchase Order ID: <%=purchaseOrder.getId()%> - Add Line Item </h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form role="form" action="../shippingOrderManagement_UpdateLineItem">
+                                    <form role="form" action="../PurchaseOrderLineItemManagement_AddServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text" required="true">
+                                            <input class="form-control" name="sku" type="text"  required="true" >
                                         </div>
                                         <div class="form-group">
                                             <label>Quantity</label>
