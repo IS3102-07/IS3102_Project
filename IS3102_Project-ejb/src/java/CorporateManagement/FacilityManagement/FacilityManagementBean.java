@@ -9,6 +9,7 @@ import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
+import HelperClasses.StoreHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
@@ -292,7 +293,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public Boolean removeStore(Long storeId) {
         try {
             Query q = em.createQuery("select s from StoreEntity s where s.id = ?1").setParameter(1, storeId);
-            StoreEntity store = (StoreEntity)q.getSingleResult();
+            StoreEntity store = (StoreEntity) q.getSingleResult();
             store.getRegionalOffice().getStoreList().remove(store);
             em.remove(store);
             return true;
@@ -445,6 +446,60 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public StoreHelper getStoreHelperClass(Long Id) {
+        try {
+            StoreEntity store = this.viewStoreEntity(Id);
+            StoreHelper helper = new StoreHelper();
+            helper.store = store;
+            helper.regionalOffice = store.getRegionalOffice();
+            System.out.println("return helper class");
+            return helper;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<StoreHelper> getStoreHelperList() {
+        try {
+            List<StoreEntity> storeList = this.viewListOfStore();
+            List<StoreHelper> helperList = new ArrayList<StoreHelper>();
+            for(StoreEntity s: storeList){
+                StoreHelper helper = new StoreHelper();
+                helper.store = s;
+                helper.regionalOffice = s.getRegionalOffice();
+                helperList.add(helper);
+            }
+            return helperList;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Boolean updateStoreToRegionalOffice(Long regionalOfficeId, Long storeId) {
+        try {
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            RegionalOfficeEntity newRegionalOffice = em.find(RegionalOfficeEntity.class, regionalOfficeId);            
+            RegionalOfficeEntity oldRegionalOffice = store.getRegionalOffice();
+            
+            oldRegionalOffice.getStoreList().remove(store);
+            store.setRegionalOffice(newRegionalOffice);
+            newRegionalOffice.getStoreList().add(store);
+            
+            em.merge(oldRegionalOffice);            
+            em.merge(store);
+            em.merge(newRegionalOffice);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }
