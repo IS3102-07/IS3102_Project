@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Access Level</label>
-                                    <input class="form-control" name="accessLevel" type="text" value="<%=role.getAccessLevel()%>">
+                                    <input class="form-control" name="accessLevel" type="text" value="<%=role.getAccessLevel()%>" required="true">
                                 </div>
                                 <div class="form-group">
                                     <label>Role</label>
