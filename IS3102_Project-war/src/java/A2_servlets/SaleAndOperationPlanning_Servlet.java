@@ -6,11 +6,13 @@
 package A2_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.StoreEntity;
+import HelperClasses.StoreHelper;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -30,11 +32,13 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleAndOperationPlanning_Servlet extends HttpServlet {
-
+    @EJB
+    private ItemManagementBeanLocal imBean;
     @EJB
     private FacilityManagementBeanLocal fmBean;
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,7 +52,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
         List<MonthScheduleEntity> scheduleList;
         String target = request.getPathInfo();
 
-        switch (target) {            
+        switch (target) {
 
             case "/sop_scheduleManagement_GET":
                 scheduleList = sopBean.getScheduleList();
@@ -96,7 +100,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 try {
                     String storeName = request.getParameter("storeName");
                     StoreEntity store = fmBean.getStoreByName(storeName);
-                    session.setAttribute("sop_storeId", store.getId());                    
+                    session.setAttribute("sop_storeId", store.getId());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -112,7 +116,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sop_schedule_POST":
                 try {
                     Long schedulelId = Long.parseLong(request.getParameter("scheduleId"));
-                    session.setAttribute("scheduleId", schedulelId);                    
+                    session.setAttribute("scheduleId", schedulelId);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -120,7 +124,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 break;
 
             case "/sop_main_GET":
-                try {                    
+                try {
                     Long storeId = (long) session.getAttribute("sop_storeId");
                     Long schedulelId = (long) session.getAttribute("scheduleId");
                     List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
@@ -130,15 +134,36 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                     request.setAttribute("store", store);
                     request.setAttribute("schedule", schedule);
                     request.setAttribute("unplannedProductGroupList", unplannedProductGroupList);
-                    request.setAttribute("sopList", sopList);                    
+                    request.setAttribute("sopList", sopList);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 nextPage = "/A2/sop_main";
                 break;
 
-            case "/sop_create_GET":
+            case "/sop_main_POST":
                 Long productGroupId = Long.parseLong(request.getParameter("productGroupId"));
+                session.setAttribute("productGroupId", productGroupId);
+                nextPage = "/SaleAndOperationPlanning_Servlet/sop_create_GET";
+                break;
+
+            case "/sop_create_GET":
+                Long storeId = (long) session.getAttribute("sop_storeId");
+                StoreHelper storeHelper = fmBean.getStoreHelperClass(storeId);
+                productGroupId = (long) session.getAttribute("productGroupId");
+                ProductGroupEntity productGrup = imBean.getProductGroup(productGroupId);
+                
+                
+                nextPage = "/A2/sop_create";
+                break;
+                
+            case "/sop_create_POST":
+                
+                break;
+                
+            case "/sop_edit_GET":
+                
+                nextPage = "/A2/sop_edit";
                 break;
 
         }
