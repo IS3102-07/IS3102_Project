@@ -294,7 +294,7 @@
                         <a href="../SupplierManagement_SupplierServlet">Supplier Management</a>
                     </li>
                     <li>
-                        <a href="#">Inbound and Outbound Logistics</a>
+                        <a href="../ShippingOrderManagement_Servlet">Inbound and Outbound Logistics</a>
                     </li>
                     <li>
                         <a href="../ManufacturingWarehouseManagement_Servlet">Manufacturing's Warehouse Management</a>

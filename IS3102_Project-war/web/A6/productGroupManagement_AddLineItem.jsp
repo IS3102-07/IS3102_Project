@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Percent</label>
-                                            <input class="form-control" name="percent" type="number" min="1" step="1" required="true" >
+                                            <input class="form-control" name="percent" type="number" min="0" step="0.1" max="100" required="true" >
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" value="Add Line Item" class="btn btn-lg btn-primary btn-block">

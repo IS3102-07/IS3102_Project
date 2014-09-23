@@ -1,3 +1,7 @@
+<%@page import="EntityManager.ProductGroupEntity"%>
+<%@page import="HelperClasses.StoreHelper"%>
+<%@page import="EntityManager.MonthScheduleEntity"%>
+<%@page import="EntityManager.StoreEntity"%>
 <%@page import="EntityManager.RegionalOfficeEntity"%>
 <%@page import="HelperClasses.MessageHelper"%>
 <%@page import="java.text.Format"%>
@@ -35,32 +39,45 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <p>Store, Schedule, Product Group</p>
+                                    <div class="row">                             
+                                        <div class="col-lg-4">
+                                            <%  StoreHelper storeHelper = (StoreHelper) request.getAttribute("storeHelper");%>
+                                            <h4><b> Store:  </b><%= storeHelper.store.getName()%></h4>
+                                        </div>                                                
+                                        <div class="col-lg-4">
+                                            <% MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule");%>
+                                            <h4><b> Period: </b><%= schedule.getYear()%> - <%= schedule.getMonth()%> </h4>
+                                        </div>                                      
+                                        <div class="col-lg-4">
+                                            <% ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup"); %>
+                                            <h4><b> Product Group:  </b><%= productGroup.getName()%></h4>
+                                        </div>
+                                    </div>                                        
                                 </div>
                                 <div class="panel-body">
-                                    
-                                    <form action="../SaleAndOperationPlanning_Servlet/sop_index_Post">
+
+                                    <form action="../SaleAndOperationPlanning_Servlet/sop_create_POST">
                                         <div class="form-group">
                                             <label>Sale Forecast</label>
                                             <input type="number" class="form-control" name="saleForecast" value="300" required="true" >
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label>Production Plan</label>
                                             <input type="number" class="form-control" name="productionPlan" required="true" >
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label>Current Inventory level</label>
                                             <input type="number" class="form-control" name="currentInventory" value="20" required="true">
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label>Target Inventory Level</label>
                                             <input type="number" class="form-control" name="targetInventoty" required="true" >
                                         </div>
-                                        
-                                        <input type="submit" class="btn btn-primary" value="Access">
+
+                                        <input type="submit" class="btn btn-primary" value="Submit">
 
                                     </form>
 
@@ -85,7 +102,7 @@
                 $.get('../SOP_ajax_Servlet', {regionalOfficeId: regionalOfficeId}, function (responseText) {
                     var stores = responseText.trim().split(';');
                     var x = document.getElementById("select_store");
-                    while(x.length > 0){
+                    while (x.length > 0) {
                         x.remove(0);
                     }
                     for (var i = 0; i < stores.length - 1; i++) {
