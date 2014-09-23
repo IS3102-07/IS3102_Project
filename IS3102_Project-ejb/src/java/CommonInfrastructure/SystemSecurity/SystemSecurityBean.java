@@ -31,7 +31,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
 
     //When staff user account is created, this function should be invoked
     public Boolean sendActivationEmailForStaff(String email) {
-        System.out.println("Server called sendActivationEmailForStaff():");
+        System.out.println("Server called sendActivationEmailForStaff():" + email);
         String activationCode = "";
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t");
@@ -62,7 +62,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             Message msg = new MimeMessage(session);
             if (msg != null) {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
-                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmailAddress, false));
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Activation");
                 String messageText = "Greetings from Island Furniture... \n\nHere is your activation code to be keyed in in order to activate your staff account :\n\n" + activationCode;
                 msg.setText(messageText);
@@ -111,7 +111,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             Message msg = new MimeMessage(session);
             if (msg != null) {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
-                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmailAddress, false));
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Activation");
                 String messageText = "Greetings from Island Furniture... \n\nHere is your activation code to be keyed in in order to activate your member account :\n\n" + activationCode;
                 msg.setText(messageText);
