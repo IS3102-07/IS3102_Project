@@ -47,15 +47,15 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 break;
 
             case "/createWarehouse_GET":
-                String submit_btn = request.getParameter("submit-btn");                
-                if(submit_btn.equals("Add Warehouse"))
+                String submit_btn = request.getParameter("submit-btn");
+                if (submit_btn.equals("Add Warehouse")) {
                     nextPage = "/A6/createWarehouse";
-                else if(submit_btn.equals("Delete Warehouse"))
+                } else if (submit_btn.equals("Delete Warehouse")) {
                     nextPage = "/FacilityManagement_Servlet/deleteWarehouse";
-                else {
+                } else {
                     warehouseId = Long.parseLong(submit_btn);
                     request.setAttribute("warehouseId", warehouseId);
-                    nextPage = "/FacilityManagement_Servlet/editWarehouse_GET";                
+                    nextPage = "/FacilityManagement_Servlet/editWarehouse_GET";
                 }
                 break;
 
@@ -65,22 +65,26 @@ public class FacilityManagement_Servlet extends HttpServlet {
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
-                    
-                    WarehouseEntity warehouse = fmBean.createWarehouse(warehouseName, address, telephone, email);
-                    if (warehouse != null) {
-                        request.setAttribute("alertMessage", "A new warehouse record has been saved.");
-                    } else {
+
+                    if (fmBean.checkNameExistsOfWarehouse(warehouseName)) {
                         request.setAttribute("alertMessage", "Fail to create warehouse due to duplicated warehouse name.");
+                    } else {
+                        WarehouseEntity warehouse = fmBean.createWarehouse(warehouseName, address, telephone, email);
+                        if (warehouse != null) {
+                            request.setAttribute("alertMessage", "A new warehouse record has been saved.");
+                        } else {
+                            request.setAttribute("alertMessage", "Fail to create warehouse due to duplicated warehouse name.");
+                        }
+                        request.setAttribute("warehouse", warehouse);
+                        nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
                     }
-                    request.setAttribute("warehouse", warehouse);
-                    nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 break;
 
             case "/editWarehouse_GET":
-                warehouseId = (long)request.getAttribute("warehouseId");
+                warehouseId = (long) request.getAttribute("warehouseId");
                 WarehouseEntity warehouse = fmBean.getWarehouseById(warehouseId);
                 request.setAttribute("warehouse", warehouse);
                 nextPage = "/A6/editWarehouse";
@@ -100,13 +104,13 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 }
                 nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
                 break;
-                
+
             case "/deleteWarehouse":
                 String[] deletes = request.getParameterValues("delete");
-                if(deletes != null){
-                    for(String warehouseString: deletes){
+                if (deletes != null) {
+                    for (String warehouseString : deletes) {
                         Long warehouse_Id = Long.parseLong(warehouseString);
-                        fmBean.deleteWarehouse(warehouse_Id);                        
+                        fmBean.deleteWarehouse(warehouse_Id);
                     }
                 }
                 nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
