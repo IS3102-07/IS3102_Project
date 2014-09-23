@@ -24,7 +24,7 @@
                         </div>
                         <h10 class="text-info"><%=errMsg%></h10>
                         <div class="panel-body">
-                            <form role="form" name="LoginForm" action="../AccountManagement_LoginServlet">
+                            <form role="form" name="LoginForm" action="../AccountManagement_SendResetPasswordServlet">
 
                                 <div class="row">
                                     <div class="form-group">
