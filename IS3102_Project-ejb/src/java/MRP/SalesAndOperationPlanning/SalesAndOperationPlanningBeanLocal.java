@@ -25,6 +25,8 @@ public interface SalesAndOperationPlanningBeanLocal {
 
     public SaleAndOperationPlanEntity createSOP(SaleForcastEntity saleForcast, StoreEntity store, Calendar schedule, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
     
+    public SaleAndOperationPlanEntity createSOP(Long storeId, Long scheduleId, Long productGroupId, Integer saleForcast, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
+    
     public Boolean editSOP(Long Id, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
     
     public Boolean deleteSOP(Long Id);

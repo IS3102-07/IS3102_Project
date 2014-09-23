@@ -170,20 +170,20 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                     .setParameter(1, storeId)
                     .setParameter(2, scheduleId);
             List<ProductGroupEntity> plannedProductGroupList = q1.getResultList();
-            
+
             Query q2 = em.createQuery("select p from ProductGroupEntity p");
             List<ProductGroupEntity> allProductGroupList = q2.getResultList();
-            
+
             List<ProductGroupEntity> unPlannedProductGroupList = new ArrayList<>();
-            
-            for(ProductGroupEntity p: allProductGroupList){
-                if(!plannedProductGroupList.contains(p)){
+
+            for (ProductGroupEntity p : allProductGroupList) {
+                if (!plannedProductGroupList.contains(p)) {
                     unPlannedProductGroupList.add(p);
                 }
             }
-            
+
             return unPlannedProductGroupList;
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -211,7 +211,7 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                     .setParameter(2, scheduleId);
             List<SaleAndOperationPlanEntity> sopList = q.getResultList();
             List<SOP_Helper> helperList = new ArrayList<>();
-            for(SaleAndOperationPlanEntity sop: sopList){
+            for (SaleAndOperationPlanEntity sop : sopList) {
                 SOP_Helper helper = new SOP_Helper();
                 helper.sop = sop;
                 helper.productGroup = sop.getProductGroup();
@@ -229,6 +229,21 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     public MonthScheduleEntity getScheduleById(Long id) {
         try {
             return em.find(MonthScheduleEntity.class, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public SaleAndOperationPlanEntity createSOP(Long storeId, Long scheduleId, Long productGroupId, Integer saleForcast, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel) {
+        try {
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+            SaleAndOperationPlanEntity sop = new SaleAndOperationPlanEntity(store, productGroup, schedule, saleForcast, productionPlan, currentInventoryLevel, targetInventoryLevel);
+            em.persist(sop);
+            return sop;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
