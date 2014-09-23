@@ -33,7 +33,7 @@ public class PurchaseOrderManagement_UpdateServlet extends HttpServlet {
                 boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrder(Long.parseLong(purchaseOrderId), Long.parseLong(supplierId), Long.parseLong(destinationId), date);
                 if (!canUpdate) {
                     result = "?errMsg=Supplier or Warehouse no longer exist / active.";
-                    response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
+                    response.sendRedirect("A3/purchaseOrderManagement_Add.jsp" + result);
                 } else {
                     result = "?errMsg=Purchase Order updated successfully";
                     response.sendRedirect("PurchaseOrderManagement_Servlet" + result);

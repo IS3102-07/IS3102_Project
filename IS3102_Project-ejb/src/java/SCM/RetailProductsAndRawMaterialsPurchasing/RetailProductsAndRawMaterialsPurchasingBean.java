@@ -201,5 +201,21 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             return new ArrayList<>();
         }
     }
+    
+    @Override
+    public boolean checkSKUExists(String SKU) {
+        try {
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException n) {
+            System.out.println("\nServer return no result:\n" + n);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to perform checkSKUExists:\n" + ex);
+            return false;
+        }
+    }
 
 }
