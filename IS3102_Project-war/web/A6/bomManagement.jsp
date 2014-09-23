@@ -137,7 +137,7 @@
                                                                                 out.print("</option>");
                                                                             }
                                                                             out.print("</select>");
-                                                                            out.print("<input type='button' style='width:30%;height:30px;float:right;' name='btnLink' class='btn btn-primary btn-block' value='Link' onclick='javascript:linkFurniture('" + listOfFurniture.get(i).getId() + "')'/>");
+                                                                            out.print("<input type='button' style='width:30%;height:30px;float:right;' name='btnLink' class='btn btn-primary btn-block' value='Link' onclick='javascript:linkFurniture('" + listOfBOM.get(i).getId() + "')'/>");
                                                                         }
                                                                     }%>
                                                             </td>

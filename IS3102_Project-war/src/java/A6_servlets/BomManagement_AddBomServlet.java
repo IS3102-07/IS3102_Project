@@ -5,7 +5,6 @@
  */
 package A6_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,39 +14,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Neo
  */
 public class BomManagement_AddBomServlet extends HttpServlet {
-    
+
     @EJB
     private ItemManagementBeanLocal itemManagementBeanLocal;
     private String result;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String source = request.getParameter("source");
-            out.print("hello!!!");
             boolean ifExist = false;
-//            if (itemManagementBeanLocal.viewBillOfMaterial(name).getName().equals(name)) {
-//                ifExist = true;
-//            } //to be fixed
             if (ifExist) {
                 result = "?errMsg=Registration fail. BOM already registered.";
                 response.sendRedirect(source + result);
             } else {
                 itemManagementBeanLocal.createBOM(name, description);
-                if (source.equals("A1/staffManagement_add.jsp")) {
-                    response.sendRedirect("StaffManagement_StaffServlet");
-                }
-                response.sendRedirect(source);
+                result = "?errMsg= BOM has been added successfully.";
+                response.sendRedirect("BomManagement_BomServlet" + result);
             }
         }
     }
