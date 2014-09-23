@@ -473,8 +473,8 @@
         <servlet-class>A6_servlets.BomManagement_AddLineItemBomServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BomMangement_RemoveLineItemBomServlet</servlet-name>
-        <servlet-class>A6_servlets.BomMangement_RemoveLineItemBomServlet</servlet-class>
+        <servlet-name>BomManagement_RemoveLineItemBomServlet</servlet-name>
+        <servlet-class>A6_servlets.BomManagement_RemoveLineItemBomServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProductGroupManagement_RemoveServlet</servlet-name>

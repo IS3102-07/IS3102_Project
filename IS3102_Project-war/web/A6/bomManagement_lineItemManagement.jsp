@@ -19,6 +19,29 @@
                 document.lineItemManagement.action = "../BomManagement_AddLineItemBomServlet";
                 document.lineItemManagement.submit();
             }
+            function removeLineItem() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    alert("No items selected.");
+                    window.event.returnValue = false;
+                } else {
+
+                    var yes = confirm("Are you sure?!");
+                    if (yes === true) {
+                        window.event.returnValue = true;
+                        document.lineItemManagement.action = "../BomManagement_RemoveLineItemBomServlet";
+                        document.lineItemManagement.submit();
+                    } else {
+                        window.event.returnValue = false;
+                    }
+                }
+            }
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -104,8 +127,9 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">  
-                                            <input type="hidden" name="bomId" value="<%=session.getAttribute("bomId")%>">  
+
                                         </div>
+                                        <input type="hidden" name="bomId" value="<%=session.getAttribute("bomId")%>"/>  
                                         <div id="addLineItemForm" hidden>
                                             <div class="row">
                                                 <div class="form-group">
