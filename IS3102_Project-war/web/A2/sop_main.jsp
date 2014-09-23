@@ -1,3 +1,4 @@
+<%@page import="MRP.SalesAndOperationPlanning.SOP_Helper"%>
 <%@page import="EntityManager.StoreEntity"%>
 <%@page import="EntityManager.SaleAndOperationPlanEntity"%>
 <%@page import="EntityManager.ProductGroupEntity"%>
@@ -72,7 +73,6 @@
                                                     <tbody>
                                                         <%
                                                             List<ProductGroupEntity> unplannedProductGroupList = (List<ProductGroupEntity>) request.getAttribute("unplannedProductGroupList");
-
                                                             for (ProductGroupEntity p : unplannedProductGroupList) {
                                                         %>
                                                         <tr>
@@ -111,34 +111,44 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/deleteSchedule">
+                                            <form action="../SaleAndOperationPlanning_Servlet/sopManagement">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable2">
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th>Year</th>
-                                                            <th>Month</th>                                                                                                                        
+                                                            <th>Product Group</th>
+                                                            <th>Sale Forecast</th>
+                                                            <th>Production Plan</th>
+                                                            <th>Current Inventory</th>
+                                                            <th>Target Inventory</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%--                    
+
                                                         <%
-                                                            List<SaleAndOperationPlanEntity> sopList = (List<SaleAndOperationPlanEntity>) request.getAttribute("sopList");
-                                                            for (SaleAndOperationPlanEntity sop : sopList) {
+                                                            List<SOP_Helper> sopHelperList = (List<SOP_Helper>) request.getAttribute("sopHelperList");
+                                                            for (SOP_Helper model : sopHelperList) {
                                                         %>
                                                         <tr>
-                                                            <td></td><td></td><td></td><td></td><td></td>
+                                                            <td><input type="checkbox" name="delete" value="<%= model.sop.getId()%>" /></td>
+                                                            <td><%= model.productGroup.getProductGroupName()%></td>
+                                                            <td><%= model.sop.getSaleForcastdata()%></td>
+                                                            <td><%= model.sop.getProductionPlan() %></td>
+                                                            <td><%= model.sop.getCurrentInventoryLevel()%></td>
+                                                            <td><%= model.sop.getTargetInventoryLevel()%></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= model.sop.getId()%>">Edit</button></td>
                                                         </tr>
                                                         <%
                                                             }
 
                                                         %>
-                                                        --%>
+
                                                     </tbody>
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-12">                                                        
-                                                        <input type="submit" name="submit-btn" value="Delete Schedule" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <input type="submit" name="submit-btn" value="Delete Sale And Operation Plan" class="btn btn-primary" data-loading-text="Loading...">
                                                     </div>
                                                 </div>
                                             </form>                                              
@@ -164,7 +174,7 @@
         </div>
         <!-- /#wrapper -->
 
-        <%
+        <%            
             if (request.getAttribute("alertMessage") != null) {
         %>
         <script>

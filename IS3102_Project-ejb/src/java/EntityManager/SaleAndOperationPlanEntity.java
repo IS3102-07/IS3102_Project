@@ -68,6 +68,13 @@ public class SaleAndOperationPlanEntity implements Serializable {
         this.targetInventoryLevel = targetInventoryLevel;
     }       
 
+    public Integer getSaleForcastdata() {
+        return saleForcastdata;
+    }
+
+    public void setSaleForcastdata(Integer saleForcastdata) {
+        this.saleForcastdata = saleForcastdata;
+    }    
     
     public MonthScheduleEntity getSchedule() {
         return schedule;

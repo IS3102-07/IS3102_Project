@@ -115,7 +115,7 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 }
                 nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
                 break;
-
+                
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
