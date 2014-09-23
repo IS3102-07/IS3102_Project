@@ -310,7 +310,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         try {
             BillOfMaterialEntity BOM = em.find(BillOfMaterialEntity.class, BOMId);
             FurnitureEntity furniture = em.find(FurnitureEntity.class, FurnitureId);
-            furniture.setBOM(BOM);
+            BOM.setFurniture(furniture);
             System.out.println("linkBOMAndFurniture() is successful.");
             return true;
         } catch (Exception ex) {
@@ -335,6 +335,19 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         System.out.println("listAllFurniture() called.");
         try {
             Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            List<FurnitureEntity> furnitureEntity = q.getResultList();
+            return furnitureEntity;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all furniture:\n" + ex);
+            return null;
+        }
+    }
+
+    @Override
+    public List<FurnitureEntity> listAllFurnitureWithoutBOM() {
+        System.out.println("listAllFurniture() called.");
+        try {
+            Query q = em.createQuery("Select fu from FurnitureEntity fu where fu.id not in (Select f.id from FurnitureEntity f, BillOfMaterialEntity b where f.id=b.furniture.id)");
             List<FurnitureEntity> furnitureEntity = q.getResultList();
             return furnitureEntity;
         } catch (Exception ex) {
