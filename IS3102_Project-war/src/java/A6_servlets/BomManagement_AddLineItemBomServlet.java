@@ -30,10 +30,12 @@ public class BomManagement_AddLineItemBomServlet extends HttpServlet {
             boolean canCreate = itemManagementBean.addLineItemToBOM(SKU, qty, bomId);
 
             if (!canCreate) {
-                result = "?errMsg=Error adding Line Item. Please try again.";
+                System.out.println("cannot add line item in servlet");
+                result = "?errMsg=Error adding Line Item. Please try again.&id=" + bomId;
                 response.sendRedirect("BomManagement_LineItemBomServlet" + result);
             } else {
-                result = "?errMsg=Line Item added successfully.";
+                System.out.println("can add line item in servlet");
+                result = "?errMsg=Line Item added successfully.&id=" + bomId;
                 response.sendRedirect("BomManagement_LineItemBomServlet" + result);
             }
         } catch (Exception ex) {

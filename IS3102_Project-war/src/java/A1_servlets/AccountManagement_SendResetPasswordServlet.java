@@ -1,43 +1,60 @@
-package A6_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A1_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.BillOfMaterialEntity;
-import EntityManager.LineItemEntity;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class BomManagement_LineItemBomServlet extends HttpServlet {
+/**
+ *
+ * @author yang
+ */
+public class AccountManagement_SendResetPasswordServlet extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
+    private SystemSecurityBeanLocal systemSecurityBean;
+    private String result;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         try {
-            String errMsg = request.getParameter("errMsg");
-            Long bomId = Long.parseLong(request.getParameter("id"));
-            BillOfMaterialEntity bom = itemManagementBean.viewSingleBOM(bomId);
-            List<LineItemEntity> bomListLineOfItems = bom.getListOfLineItems();
+            String email = request.getParameter("email");
 
-            HttpSession session = request.getSession();
-            session.setAttribute("bomListLineOfItems", bomListLineOfItems);
-            session.setAttribute("bomId", bomId);
-            if (errMsg == null || errMsg.equals("")) {
-                response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?bomName=" + bom.getName());
+            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
+            if (ifExist) {
+                systemSecurityBean.sendPasswordResetEmailForStaff(email);
+                result = "?errMsg=Send email success.";
+                response.sendRedirect("/A1/staffForgetPassword" + result);
             } else {
-                response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?errMsg=" + errMsg + "&bomName=" + bom.getName());
+                result = "?errMsg=Registration fail. Staff email does not exist.";
+                response.sendRedirect("./A1/staffForgetPassword" + result);
             }
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            System.out.println(ex);
+        } finally {
+            System.out.close();
         }
     }
 
