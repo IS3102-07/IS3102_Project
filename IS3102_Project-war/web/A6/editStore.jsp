@@ -35,7 +35,7 @@
                                     <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../A6/regionalOfficeManagement.jsp">Store Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../FacilityManagement_StoreServlet/storeManagement_index">Store Management</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-edit"></i> Edit Store</a>
@@ -89,7 +89,7 @@
                                 <input type="hidden" name="storeId" value="<%= storeHelper.store.getId()%>">
                                 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>
                             </form>
 

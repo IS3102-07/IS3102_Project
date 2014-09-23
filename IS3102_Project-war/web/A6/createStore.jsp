@@ -33,7 +33,7 @@
                                     <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../A6/storeManagement.jsp">Store Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../FacilityManagement_StoreServlet/storeManagement_index">Store Management</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-edit"></i> Add New Store

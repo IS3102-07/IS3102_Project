@@ -29,7 +29,7 @@
                                     <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../A6/warehouseManagement.jsp">Warehouse Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../FacilityManagement_Servlet/warehouseManagement_index">Warehouse Management</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-edit"></i> Edit New Warehouse</a>
@@ -63,7 +63,7 @@
                                 </div>
                                 <input type="hidden" name="warehouseId" value="<%= warehouse.getId()%>">
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>
                             </form>
 

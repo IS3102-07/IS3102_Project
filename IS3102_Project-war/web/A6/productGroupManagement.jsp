@@ -32,6 +32,29 @@
                     }
                 }
             }
+            
+            function removePG() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    alert("No items selected.");
+                    window.event.returnValue = false;
+                } else {
+                    var yes = confirm("Are you sure?!");
+                    if (yes == true) {
+                        window.event.returnValue = true;
+                        document.rawMaterialManagement.action = "../ProductGroupManagement_RemoveServlet";
+                        document.rawMaterialManagement.submit();
+                    } else {
+                        window.event.returnValue = false;
+                    }
+                }
+            }
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -75,6 +98,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Product Group" onclick="addPG()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Product Group" onclick="removePG()"  />
                                                 </div>
                                             </div>
                                             <br>
@@ -134,6 +158,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Product Group" onclick="addPG()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Product Group" onclick="removePG()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
