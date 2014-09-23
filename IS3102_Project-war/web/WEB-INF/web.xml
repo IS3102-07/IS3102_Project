@@ -468,6 +468,14 @@
         <servlet-name>BomManagement_LineItemBomServlet</servlet-name>
         <servlet-class>A6_servlets.BomManagement_LineItemBomServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BomManagement_AddLineItemBomServlet</servlet-name>
+        <servlet-class>A6_servlets.BomManagement_AddLineItemBomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BomMangement_RemoveLineItemBomServlet</servlet-name>
+        <servlet-class>A6_servlets.BomMangement_RemoveLineItemBomServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -935,6 +943,14 @@
     <servlet-mapping>
         <servlet-name>BomManagement_LineItemBomServlet</servlet-name>
         <url-pattern>/BomManagement_LineItemBomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BomManagement_AddLineItemBomServlet</servlet-name>
+        <url-pattern>/BomManagement_AddLineItemBomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BomMangement_RemoveLineItemBomServlet</servlet-name>
+        <url-pattern>/BomMangement_RemoveLineItemBomServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

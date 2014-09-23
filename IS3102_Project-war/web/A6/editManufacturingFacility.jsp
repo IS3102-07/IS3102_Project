@@ -35,7 +35,7 @@
                                     <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../A6/manufacturingFacilityManagement.jsp">Manufacturing Facility Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index">Manufacturing Facility Management</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-edit"></i> Edit Manufacturing Facility
@@ -92,7 +92,7 @@
                                 </div>
                                 <input type="hidden" name="manufacturingFacilityId" value="<%= mfHelper.manufacturingFacilityEntity.getId()%>">
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>
                             </form>
 

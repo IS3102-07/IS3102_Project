@@ -42,7 +42,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
 
         switch (target) {
 
-            case "/manufacturingFacilityManagement_index":                
+            case "/manufacturingFacilityManagement_index":
                 List<ManufacturingFacilityHelper> helperList = fmBean.getManufacturingFacilityHelperList();
                 request.setAttribute("helperList", helperList);
                 nextPage = "/A6/manufacturingFacilityManagement";
@@ -73,16 +73,22 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                     String email = request.getParameter("email");
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                     Integer capacity = Integer.valueOf(request.getParameter("capacity"));
-                    
-                    ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(manufacturingFacilityName, address, telephone, email, capacity);
-                    fmBean.addManufacturingFacilityToRegionalOffice(regionalOfficeId, manufacturingFacility.getId());
-                    if (manufacturingFacility != null) {
-                        request.setAttribute("alertMessage", "A new manufacturing facility record has been saved.");
+
+                    if (fmBean.checkNameExistsOfManufacturingFacility(manufacturingFacilityName)) {
+                        request.setAttribute("alertMessage", "Fail to create manufacturing facility due to duplicated manufacturing facility name.");
+                        request.setAttribute("manufacturingFacility", true);
+                        nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
                     } else {
-                        request.setAttribute("alertMessage", "Fail to create manufacturing facility due to duplicated name.");
+                        ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(manufacturingFacilityName, address, telephone, email, capacity);
+                        fmBean.addManufacturingFacilityToRegionalOffice(regionalOfficeId, manufacturingFacility.getId());
+                        if (manufacturingFacility != null) {
+                            request.setAttribute("alertMessage", "A new manufacturing facility record has been saved.");
+                        } else {
+                            request.setAttribute("alertMessage", "Fail to create manufacturing facility due to duplicated name.");
+                        }
+                        request.setAttribute("manufacturingFacility", manufacturingFacility);
+                        nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
                     }
-                    request.setAttribute("manufacturingFacility", manufacturingFacility);
-                    nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -109,8 +115,8 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 String capacity = request.getParameter("capacity");
                 Long mfId = Long.parseLong(request.getParameter("manufacturingFacilityId"));
                 System.out.println(mfId + " is id");
-                if (fmBean.editManufacturingFacility(mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity)) &&
-                       fmBean.updateManufacturingFacilityToRegionalOffice(regionalOfficeId, mfId) ) {
+                if (fmBean.editManufacturingFacility(mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity))
+                        && fmBean.updateManufacturingFacilityToRegionalOffice(regionalOfficeId, mfId)) {
                     request.setAttribute("alertMessage", "The manufacturing facility has been saved.");
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit manufacturing facility.");
