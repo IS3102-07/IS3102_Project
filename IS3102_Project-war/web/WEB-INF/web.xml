@@ -464,6 +464,10 @@
         <servlet-name>A2/sop_edit</servlet-name>
         <jsp-file>/A2/sop_edit.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>BomManagement_LineItemBomServlet</servlet-name>
+        <servlet-class>A6_servlets.BomManagement_LineItemBomServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -927,6 +931,10 @@
     <servlet-mapping>
         <servlet-name>A2/sop_edit</servlet-name>
         <url-pattern>/A2/sop_edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BomManagement_LineItemBomServlet</servlet-name>
+        <url-pattern>/BomManagement_LineItemBomServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
