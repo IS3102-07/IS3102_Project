@@ -1,11 +1,11 @@
-<%@page import="EntityManager.WarehouseEntity"%>
-<%@page import="EntityManager.SupplierEntity"%>
-<%@page import="EntityManager.PurchaseOrderEntity"%>
+<%@page import="EntityManager.ProductGroupLineItemEntity"%>
+<%@page import="EntityManager.ProductGroupEntity"%>
 <%@page import="java.util.List"%>
 
-<% List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    if (purchaseOrders == null) {
-        response.sendRedirect("../PurchaseOrderManagement_Servlet");
+<%
+    List<ProductGroupEntity> productGroups = (List<ProductGroupEntity>) (session.getAttribute("productGroups"));
+    if (productGroups == null) {
+        response.sendRedirect("../ProductGroupManagement_Servlet");
     } else {
 %>
 <html lang="en">
@@ -14,21 +14,24 @@
 
     <body>
         <script>
-            function updatePO(id) {
-                purchaseOrderManagement.id.value = id;
-                document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_Servlet";
-                document.purchaseOrderManagement.submit();
+            function updatePG(id) {
+                productGroupManagement.id.value = id;
+                document.productGroupManagement.action = "../ProductGroupLineItemManagement_Servlet";
+                document.productGroupManagement.submit();
             }
-            function submitPO(id) {
-                purchaseOrderManagement.id.value = id;
-                purchaseOrderManagement.source.value = "submit";
-                document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_Servlet";
-                document.purchaseOrderManagement.submit();
-            }
-            function addPO() {
+            function addPG() {
                 window.event.returnValue = true;
-                document.purchaseOrderManagement.action = "purchaseOrderManagement_Add.jsp";
-                document.purchaseOrderManagement.submit();
+                document.productGroupManagement.action = "productGroupManagement_Add.jsp";
+                document.productGroupManagement.submit();
+            }
+            function checkAll() {
+                alert("Check all the checkboxes...");
+                var allRows = document.supplierManagement.getElementsByTagName("delete");
+                for (var i = 0; i < allRows.length; i++) {
+                    if (allRows[i].type == 'checkbox') {
+                        allRows[i].checked = true;
+                    }
+                }
             }
         </script>
         <div id="wrapper">
@@ -40,10 +43,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Purchase Order Management</h1>
+                            <h1 class="page-header">Product Group Management</h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-exchange"></i> Purchase Order Management
+                                    <i class="icon icon-exchange"></i> Product Group Management
                                 </li>
                             </ol>
                         </div>
@@ -58,18 +61,18 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add purchase orders";
+                                            errMsg = "Add Product Group";
                                         }
                                         out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="purchaseOrderManagement">
+                                <form name="productGroupManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Product Group" onclick="addPO()"  />
                                                 </div>
                                             </div>
                                             <br>
@@ -77,40 +80,35 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th>Purchase Order ID</th>
-                                                            <th>Supplier</th>
-                                                            <th>Shipping Destination</th>
-                                                            <th>Expected Receiving Date</th>
-                                                            <th>Status</th>
+                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
+                                                            <th>Product Group</th>
+                                                            <th>Item SKUs</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            if (purchaseOrders != null) {
-                                                                for (int i = 0; i < purchaseOrders.size(); i++) {
-                                                                    SupplierEntity supplier = purchaseOrders.get(i).getSupplier();
-                                                                    WarehouseEntity warehouse = purchaseOrders.get(i).getReceivedWarehouse();
+                                                            if (productGroups != null) {
+                                                                for (int i = 0; i < productGroups.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <%=purchaseOrders.get(i).getId()%>
+                                                                <input type="checkbox" name="delete" value="<%=productGroups.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=supplier.getSupplierName()%>
+                                                                <%=productGroups.get(i).getProductGroupName()%>
                                                             </td>
                                                             <td>
-                                                                <%=warehouse.getWarehouseName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=purchaseOrders.get(i).getExpectedReceivedDate()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=purchaseOrders.get(i).getStatus()%>
+                                                                <%
+                                                                    List<ProductGroupLineItemEntity> lineItems = productGroups.get(i).getLineItemList();
+                                                                    for (int k = 0; k < lineItems.size(); k++) {
+                                                                            out.println(lineItems.get(k).getFurniture().getSKU() + " , ");
+                                                                    }
+
+                                                                %>
                                                             </td>
                                                             <td style="width:200px">
-                                                                <input <%if (purchaseOrders.get(i).getStatus().equals("Completed") || purchaseOrders.get(i).getStatus().equals("Unfulfillable")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary"  value="Update" onclick="javascript:updatePO('<%=purchaseOrders.get(i).getId()%>')"/>
-                                                                <input <%if (purchaseOrders.get(i).getStatus().equals("Submitted") || purchaseOrders.get(i).getStatus().equals("Shipped") || purchaseOrders.get(i).getStatus().equals("Completed") || purchaseOrders.get(i).getStatus().equals("Unfulfillable")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary"  value="Submit" onclick="javascript:submitPO('<%=purchaseOrders.get(i).getId()%>')"/>
+                                                                <input  type="button" name="btnEdit" class="btn btn-primary"  value="Update" onclick="javascript:updatePG('<%=productGroups.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -126,7 +124,7 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Product Group" onclick="addPG()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
