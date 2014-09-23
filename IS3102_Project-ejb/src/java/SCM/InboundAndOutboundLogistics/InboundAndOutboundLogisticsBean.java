@@ -29,8 +29,10 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     private EntityManager em;
 
     @Override
-    public ShippingOrderEntity createShippingOrderBasicInfo(String ShippingType, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
-        ShippingOrderEntity shippingOrder = new ShippingOrderEntity(ShippingType, shippedDate, expectedReceivedDate, origin, destination);
+    public ShippingOrderEntity createShippingOrderBasicInfo(Date expectedReceivedDate, Long sourceWarehouseID, Long destinationWarehouseID) {
+        WarehouseEntity sourceWarehouse = em.getReference(WarehouseEntity.class, sourceWarehouseID);
+        WarehouseEntity destinationWarehouse = em.getReference(WarehouseEntity.class, destinationWarehouseID);
+        ShippingOrderEntity shippingOrder = new ShippingOrderEntity(expectedReceivedDate, sourceWarehouse, destinationWarehouse);
         try {
             em.persist(shippingOrder);
             System.out.println("ShippingOrder with id: " + shippingOrder.getId() + " is created successfully");
@@ -65,9 +67,9 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
             return false;
         }
     }
-    
+
     @Override
-    public Boolean addLineItemToShippingOrder(Long shippingOrderID, String SKU, Integer qty,String packType) {
+    public Boolean addLineItemToShippingOrder(Long shippingOrderID, String SKU, Integer qty, String packType) {
         System.out.println("addLineItemToShippingOrder() called");
         try {
             Query query = em.createQuery("select s from ShippingOrderEntity s where s.id = ?1").setParameter(1, shippingOrderID);
@@ -128,7 +130,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
 
     @Override
     public Boolean updateLineItemFromShippingOrder(Long shippingOrderID, Long lineItemID, String SKU, Integer qty) {
-System.out.println("updateLineItemFromShippingOrder() called");
+        System.out.println("updateLineItemFromShippingOrder() called");
         Boolean itemUpdated = false;
         try {
             ShippingOrderEntity shippingOrder = em.getReference(ShippingOrderEntity.class, shippingOrderID);
@@ -147,7 +149,7 @@ System.out.println("updateLineItemFromShippingOrder() called");
         } catch (NoResultException ex) {
             System.out.println("SKU not found.");
             return false;
-        }  catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             System.out.println("Shipping order not found.");
             return false;
         } catch (Exception ex) {
@@ -168,7 +170,7 @@ System.out.println("updateLineItemFromShippingOrder() called");
     }
 
     @Override
-    public Boolean updateShippingOrder(Long shippingOrderID, Long sourceWarehouseID, Long destinationWarehouseID, String shippingType, Date expectedReceivedDate) {
+    public Boolean updateShippingOrder(Long shippingOrderID, Long sourceWarehouseID, Long destinationWarehouseID, Date expectedReceivedDate) {
         System.out.println("updatePurchaseOrder() called");
         try {
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
@@ -177,7 +179,6 @@ System.out.println("updateLineItemFromShippingOrder() called");
             shippingOrderEntity.setOrigin(sourceWarehouse);
             shippingOrderEntity.setDestination(destinationWarehouse);
             shippingOrderEntity.setExpectedReceivedDate(expectedReceivedDate);
-            shippingOrderEntity.setShippingType(shippingType);
             System.out.println("ShippingOrder updated successfully");
             return true;
         } catch (EntityNotFoundException ex) {
@@ -244,6 +245,20 @@ System.out.println("updateLineItemFromShippingOrder() called");
         } catch (Exception ex) {
             ex.printStackTrace();
             return new ArrayList<ShippingOrderEntity>();
+        }
+    }
+
+    @Override
+    public List<ShippingOrderEntity> getShippingOrderList() {
+        System.out.println("getShippingOrderList() called");
+        try {
+            Query q = em.createQuery("select p from ShippingOrderEntity p");
+            System.out.println("List returned.");
+            return q.getResultList();
+        } catch (Exception ex) {
+            System.out.println("Failed to return list.");
+            ex.printStackTrace();
+            return new ArrayList<>();
         }
     }
 
