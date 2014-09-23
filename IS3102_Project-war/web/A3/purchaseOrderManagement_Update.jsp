@@ -123,7 +123,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Expected Receiving Date:</label> <%=formatedDate%>
+                                            <label>Expected Receiving Date:</label>
                                             <input class="form-control" name="expectedDate" type="date" required="true" value="<%=formatedDate%>" <%if (isSubmit != null || !purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%>/>
                                         </div>
                                         <div class="form-group">

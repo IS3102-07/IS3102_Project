@@ -65,10 +65,6 @@
         <servlet-class>A6_servlets.BomManagement_BomServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ProductionGroupManagement_ProductionGroupServlet</servlet-name>
-        <servlet-class>A6_servlets.ProductionGroupManagement_ProductionGroupServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>RawMaterialManagement_RawMaterialServlet</servlet-name>
         <servlet-class>A6_servlets.RawMaterialManagement_RawMaterialServlet</servlet-class>
     </servlet>
@@ -119,18 +115,6 @@
     <servlet>
         <servlet-name>FurnitureManagement_UpdateFurnitureServlet</servlet-name>
         <servlet-class>A6_servlets.FurnitureManagement_UpdateFurnitureServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProductionGroupManagement_AddProductionGroupServlet</servlet-name>
-        <servlet-class>A6_servlets.ProductionGroupManagement_AddProductionGroupServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProductionGroupManagement_UpdateProductionGroupServlet</servlet-name>
-        <servlet-class>A6_servlets.ProductionGroupManagement_UpdateProductionGroupServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProductionGroupManagement_RemoveProductionGroupServlet</servlet-name>
-        <servlet-class>A6_servlets.ProductionGroupManagement_RemoveProductionGroupServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RetailProductManagement_AddRetailProductServlet</servlet-name>
@@ -440,6 +424,34 @@
         <servlet-name>ShippingOrderManagement_UpdateServlet</servlet-name>
         <servlet-class>A3_servlets.ShippingOrderManagement_UpdateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProductGroupLineItemManagement_AddServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductGroupLineItemManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductGroupLineItemManagement_RemoveServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductGroupLineItemManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductGroupLineItemManagement_Servlet</servlet-name>
+        <servlet-class>A6_servlets.ProductGroupLineItemManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductGroupLineItemManagement_UpdateServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductGroupLineItemManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductGroupManagement_AddServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductGroupManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductGroupManagement_Servlet</servlet-name>
+        <servlet-class>A6_servlets.ProductGroupManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductGroupManagement_UpdateServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductGroupManagement_UpdateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -509,10 +521,6 @@
         <url-pattern>/BomManagement_BomServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProductionGroupManagement_ProductionGroupServlet</servlet-name>
-        <url-pattern>/ProductionGroupManagement_ProductionGroupServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>RawMaterialManagement_RawMaterialServlet</servlet-name>
         <url-pattern>/RawMaterialManagement_RawMaterialServlet</url-pattern>
     </servlet-mapping>
@@ -563,18 +571,6 @@
     <servlet-mapping>
         <servlet-name>FurnitureManagement_UpdateFurnitureServlet</servlet-name>
         <url-pattern>/FurnitureManagement_UpdateFurnitureServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductionGroupManagement_AddProductionGroupServlet</servlet-name>
-        <url-pattern>/ProductionGroupManagement_AddProductionGroupServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductionGroupManagement_UpdateProductionGroupServlet</servlet-name>
-        <url-pattern>/ProductionGroupManagement_UpdateProductionGroupServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductionGroupManagement_RemoveProductionGroupServlet</servlet-name>
-        <url-pattern>/ProductionGroupManagement_RemoveProductionGroupServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RetailProductManagement_AddRetailProductServlet</servlet-name>
@@ -879,6 +875,34 @@
     <servlet-mapping>
         <servlet-name>ShippingOrderManagement_UpdateServlet</servlet-name>
         <url-pattern>/ShippingOrderManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductGroupLineItemManagement_AddServlet</servlet-name>
+        <url-pattern>/ProductGroupLineItemManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductGroupLineItemManagement_RemoveServlet</servlet-name>
+        <url-pattern>/ProductGroupLineItemManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductGroupLineItemManagement_Servlet</servlet-name>
+        <url-pattern>/ProductGroupLineItemManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductGroupLineItemManagement_UpdateServlet</servlet-name>
+        <url-pattern>/ProductGroupLineItemManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductGroupManagement_AddServlet</servlet-name>
+        <url-pattern>/ProductGroupManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductGroupManagement_Servlet</servlet-name>
+        <url-pattern>/ProductGroupManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductGroupManagement_UpdateServlet</servlet-name>
+        <url-pattern>/ProductGroupManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -29,10 +30,14 @@ public class ManufacturingFacilityEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Lob
     private String name;
     private Integer capacity;
+    @Lob
     private String address;
+    @Lob
     private String telephone;
+    @Lob
     private String email;
     @OneToOne
     private WarehouseEntity warehouse;

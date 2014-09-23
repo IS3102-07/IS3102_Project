@@ -76,7 +76,7 @@
                                                             <td><%= regionalOffice.getAddress()%></td>
                                                             <td><%= regionalOffice.getTelephone()%></td>
                                                             <td><%= regionalOffice.getEmail()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= regionalOffice.getId() %>">Access</button></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= regionalOffice.getId() %>">View</button></td>
                                                         </tr>
                                                         <%
                                                                 }

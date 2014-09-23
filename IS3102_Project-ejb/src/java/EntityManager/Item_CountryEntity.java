@@ -15,10 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-/**
- *
- * @author -VeRyLuNaTiC
- */
 @Entity
 public class Item_CountryEntity implements Serializable {
     private static final long serialVersionUID = 1L;

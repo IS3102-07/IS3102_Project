@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Neo
  */
-public class ProductionGroupManagement_RemoveProductionGroupServlet extends HttpServlet {
+public class ProductGroupManagement_UpdateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class ProductionGroupManagement_RemoveProductionGroupServlet extends Http
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductionGroupManagement_RemoveProductionGroupServlet</title>");            
+            out.println("<title>Servlet ProductGroupManagement_UpdateServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductionGroupManagement_RemoveProductionGroupServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProductGroupManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
