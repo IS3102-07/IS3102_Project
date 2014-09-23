@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -17,9 +18,13 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     private Long id;
     @OneToMany(mappedBy="retailProduct")
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
+    @Lob
     private String name;
+    @Lob
     private String category;
+    @Lob
     private String description;
+    @Lob
     private String imageURL;
 
     public RetailProductEntity(){}

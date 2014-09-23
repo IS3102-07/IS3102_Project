@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -19,13 +20,19 @@ public class MemberEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Lob
     private String name;
+    @Lob
     private String address;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date DOB;
+    @Lob
     private String email;
+    @Lob
     private String phone;
+    @Lob
     private String city;
+    @Lob
     private String zipCode;
     private String passwordSalt;
     private String passwordHash;

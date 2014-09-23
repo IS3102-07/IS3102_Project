@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 
 @Entity
@@ -15,8 +16,11 @@ public class AnnouncementEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Lob
     private String sender;
+    @Lob
     private String title;
+    @Lob
     private String message;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date broadcastedDate;

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -24,6 +25,7 @@ public abstract class MessageEntity implements Serializable {
     private StaffEntity messageOwner;
     private StaffEntity sender;
     private List<StaffEntity> receivers;
+    @Lob
     private String message;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date sentDate;
