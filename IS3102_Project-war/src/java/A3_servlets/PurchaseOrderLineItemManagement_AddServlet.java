@@ -23,14 +23,18 @@ public class PurchaseOrderLineItemManagement_AddServlet extends HttpServlet {
             String purchaseOrderId = request.getParameter("id");
             String sku = request.getParameter("sku");
             String quantity = request.getParameter("quantity");
-
-            boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.addLineItemToPurchaseOrder(Long.parseLong(purchaseOrderId), sku, Integer.parseInt(quantity));
-            if (!canUpdate) {
-                result = "?errMsg=Purchase Order or SKU not found.&id=" + purchaseOrderId;
+            if (!retailProductsAndRawMaterialsPurchasingBean.checkSKUExists(sku)) {
+                result = "?errMsg=SKU not found.&id=" + purchaseOrderId;
                 response.sendRedirect("A3/purchaseOrderManagement_AddLineItem.jsp" + result);
             } else {
-                result = "?errMsg=Line item added successfully.&id=" + purchaseOrderId;
-                response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
+                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.addLineItemToPurchaseOrder(Long.parseLong(purchaseOrderId), sku, Integer.parseInt(quantity));
+                if (!canUpdate) {
+                    result = "?errMsg=Purchase Order not found.&id=" + purchaseOrderId;
+                    response.sendRedirect("A3/purchaseOrderManagement_AddLineItem.jsp" + result);
+                } else {
+                    result = "?errMsg=Line item added successfully.&id=" + purchaseOrderId;
+                    response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
+                }
             }
         } catch (Exception ex) {
             out.println(ex);
