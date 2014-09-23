@@ -10,6 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 
 public class StaffManagement_AddStaffServlet extends HttpServlet {
 
@@ -37,20 +39,31 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
                 result = "?errMsg=Registration fail. Staff email already registered.";
                 response.sendRedirect(source + result);
             } else {
-                StaffEntity staffEntity = accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
-                System.out.println("Reached here1" + email);
-                System.out.println("Reached here2");
-
-                Boolean testSendMail = systemSecurityBean.sendActivationEmailForStaff(email);
-
-                if (testSendMail) {
-                    System.out.println("Successfully sent email to staff email : " + email);
-                }
-                result = "?errMsg=Staff added successfully.";
                 if (source.equals("A1/staffManagement_add.jsp")) {
+                    accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
+                    systemSecurityBean.sendActivationEmailForStaff(email);
+                    result = "?errMsg=Staff added successfully.";
                     response.sendRedirect("StaffManagement_StaffServlet" + result);
+                } else {
+                    String remoteAddr = request.getRemoteAddr();
+                    ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+                    reCaptcha.setPrivateKey("6LdjyvoSAAAAAHnUl50AJU-edkUqFtPQi9gCqDai");
+
+                    String challenge = request.getParameter("recaptcha_challenge_field");
+                    String uresponse = request.getParameter("recaptcha_response_field");
+                    ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+
+                    if (reCaptchaResponse.isValid()) {
+                        accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
+                        systemSecurityBean.sendActivationEmailForStaff(email);
+                        result = "?errMsg=Staff added successfully.";
+                        response.sendRedirect(source+result);
+                    } else {
+                        result = "?errMsg=You have entered an wrong Captcha code.";
+                        response.sendRedirect("A1/staffRegister.jsp"+result);
+                    }
+
                 }
-                response.sendRedirect(source);
             }
         } catch (Exception ex) {
             out.println(ex);

@@ -39,6 +39,7 @@
                                         <div class="col-md-12">
                                             <label>Password</label>
                                             <input type="password" name="password" id="password" class="form-control input-lg" required="true">
+                                            <a class="pull-right" href="#">(Lost Password?)</a>
                                         </div>
                                     </div>
                                 </div>
