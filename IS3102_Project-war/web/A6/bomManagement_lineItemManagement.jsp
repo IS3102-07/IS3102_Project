@@ -16,9 +16,9 @@
                 }
             }
             function addLineItem() {
-                window.event.returnValue = true;
-                document.bomManagement.action = "../BomManagement_AddLineItemBomServlet";
-                document.bomManagement.submit();
+                alert("lai liaooo!!!!");
+                document.lineItemManagement.action = "../BomManagement_AddLineItemBomServlet";
+                document.lineItemManagement.submit();
             }
         </script>
         <div id="wrapper">
