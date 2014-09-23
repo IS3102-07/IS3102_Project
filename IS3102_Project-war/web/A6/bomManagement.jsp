@@ -85,6 +85,7 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
+                    <jsp:include page="../displayMessage.jsp" />
 
                     <div class="row">
                         <div class="col-lg-12">

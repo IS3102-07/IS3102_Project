@@ -24,10 +24,9 @@ public class BomManagement_RemoveLineItemBomServlet extends HttpServlet {
             System.out.println("bomId " + bomId);
             if (deleteArr != null) {
                 for (String deleteArr1 : deleteArr) {
-                    System.out.println("deleteArr " + deleteArr1);
                     itemManagementBean.deleteLineItemFromBOM(Long.parseLong(deleteArr1), bomId);
                 }
-                response.sendRedirect("BomManagement_LineItemBomServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("BomManagement_LineItemBomServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + bomId);
             }
         } catch (Exception ex) {
             out.println(ex);
