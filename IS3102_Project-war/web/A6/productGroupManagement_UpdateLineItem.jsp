@@ -17,9 +17,11 @@
 
         List<ProductGroupLineItemEntity> lineItems = productGroup.getLineItemList();
         ProductGroupLineItemEntity lineItem = new ProductGroupLineItemEntity();
-        for (int i = 0; i < lineItems.size(); i++) {
-            if (lineItems.get(i).getId() == Integer.parseInt(id)) {
-                lineItem = lineItems.get(i);
+        if (lineItems != null) {
+            for (int i = 0; i < lineItems.size(); i++) {
+                if (lineItems.get(i).getId() == Integer.parseInt(lineItemId)) {
+                    lineItem = lineItems.get(i);
+                }
             }
         }
 
@@ -55,15 +57,14 @@
 
                     <jsp:include page="../displayMessage.jsp" />
 
-
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> Product Group ID: <%=productGroup.getId()%> - Add Line Item </h3>
+                                    <h3 class="panel-title"> Product Group ID: <%=productGroup.getId()%> - Update Line Item</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form role="form" action="../ProductGroupLineItemManagement_AddServlet">
+                                    <form role="form" action="../ProductGroupLineItemManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
                                             <input class="form-control" name="sku" type="text" value="<%=lineItem.getFurniture().getSKU()%>" required="true">
@@ -73,14 +74,16 @@
                                             <input class="form-control" name="percent" type="number" min="1" step="1" required="true" value="<%=lineItem.getPercent()%>" >
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Add Line Item" class="btn btn-lg btn-primary btn-block">
+                                            <input type="submit" value="Update Line Item" class="btn btn-lg btn-primary btn-block">
                                         </div>  
                                         <input type="hidden" value="<%=productGroup.getId()%>" name="id">
+                                        <input type="hidden" value="<%=lineItem.getId()%>" name="lineitemId">
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                 </div>
                 <!-- /#page-wrapper -->

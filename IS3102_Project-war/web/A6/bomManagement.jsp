@@ -97,9 +97,10 @@
                                                         <tr>
                                                             <th style="width:5%"><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th style="width:15%">BOM Name</th>
-                                                            <th>Furniture</th>
-                                                            <th style="width:40%">Description</th>
-                                                            <th style="width:12%">Edit BOM</th>
+                                                            <th style="width:25%">Furniture</th>
+                                                            <th style="width:35%">Description</th>
+                                                            <th style="width:10%">Line Item(s)</th>
+                                                            <th style="width:10%">Edit BOM</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -151,6 +152,9 @@
                                                             </td>
                                                             <td>
                                                                 <%=listOfBOM.get(i).getDescription()%>
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" name="btnLineItem" class="btn btn-primary btn-block" value="Manage" onclick="javascript:lineItem('<%=listOfBOM.get(i).getId()%>')"/>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Edit" onclick="javascript:updateBOM('<%=listOfBOM.get(i).getId()%>')"/>

@@ -1,3 +1,4 @@
+<%@page import="EntityManager.LineItemEntity"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.FurnitureEntity"%>
 <%@page import="EntityManager.BillOfMaterialEntity"%>
@@ -58,64 +59,39 @@
                                                     <thead>
                                                         <tr>
                                                             <th style="width:5%"><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th style="width:15%">BOM Name</th>
-                                                            <th>Furniture</th>
-                                                            <th style="width:40%">Description</th>
+                                                            <th style="width:15%">Raw Material</th>
+                                                            <th>Quantity</th>
                                                             <th style="width:12%">Edit BOM</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<FurnitureEntity> listOfFurniture = (List<FurnitureEntity>) (session.getAttribute("listOfFurniture"));
-                                                            List<BillOfMaterialEntity> listOfBOM = (List<BillOfMaterialEntity>) (session.getAttribute("listOfBOM"));
-//                                                            ArrayList<FurnitureEntity> arrList = new ArrayList();
-//                                                            for (FurnitureEntity f : listOfFurniture) {
-//                                                               if (f.getBOM() == null) {
-//                                                                    arrList.add(f);
-//                                                                }
-//                                                            }
-//                                                            listOfFurniture = arrList;
+                                                            List<LineItemEntity> listOfLineItem = (List<LineItemEntity>) (session.getAttribute("listOfLineItem"));
                                                             try {
-                                                                if (listOfBOM != null) {
-                                                                    for (int i = 0; i < listOfBOM.size(); i++) {
+                                                                if (listOfLineItem != null) {
+                                                                    for (int i = 0; i < listOfLineItem.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <input type="checkbox" name="delete" value="<%=listOfBOM.get(i).getId()%>" />
+                                                                <input type="checkbox" name="delete" value="<%=listOfLineItem.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=listOfBOM.get(i).getName()%>
+                                                             Raw Material 1
                                                             </td>
                                                             <td>
-                                                                <%
-                                                                    FurnitureEntity f = listOfBOM.get(i).getFurniture();
-                                                                    String furnitureName = null;
-                                                                    if (f != null) {
-                                                                        furnitureName = f.getName();
-                                                                        System.out.println("whatttttttt!!!! name is " + furnitureName);
-                                                                        out.print(furnitureName);
-                                                                    } else {
-                                                                %>
-                                                                <select class="form-inline" name="furnitureId<%=listOfBOM.get(i).getId()%>">
+                                                                <select class="form-inline" name="quantity">
                                                                     <option value="">Select</option>
                                                                     <%
-                                                                        for (FurnitureEntity furniture : listOfFurniture) {
-                                                                            out.print("<option value=\"" + furniture.getId() + "\">");
-                                                                            out.print(furniture.getName());
+                                                                        for (int j = 1; j <= 20; j++) {
+                                                                            out.print("<option value=\"" + j + "\">");
+                                                                            out.print(j);
                                                                             out.print("</option>");
                                                                         }
                                                                     %>
                                                                 </select>
-                                                                <input type="button" style="width:30%;height:30px;float:right;" name="btnLink" class="btn btn-primary btn-block" value="Link" onclick="javascript:linkFurniture('<%=listOfBOM.get(i).getId()%>')"/>
-                                                                <%
-                                                                    }
-                                                                %>
                                                             </td>
                                                             <td>
-                                                                <%=listOfBOM.get(i).getDescription()%>
-                                                            </td>
-                                                            <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Edit" onclick="javascript:updateBOM('<%=listOfBOM.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Edit" onclick="javascript:updateBOM('')"/>
                                                             </td>
                                                         </tr>
                                                         <%

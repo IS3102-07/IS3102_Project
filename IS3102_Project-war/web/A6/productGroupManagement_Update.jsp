@@ -164,6 +164,7 @@
                                     </div>
                                     <input type="hidden" value="<%=productGroup.getId()%>" name="id">
                                     <input type="hidden" name="lineItemId">
+                                    <input type="hidden" name="_sku">
                                 </form>
                             </div>
                         </div>
