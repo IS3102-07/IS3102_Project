@@ -147,7 +147,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity) {
         System.out.println("editManufacturingFacility() called with ID:" + id);
         try {
-             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
+            ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, id);
             manufacturingFacility.setName(manufacturingFacilityName);
             manufacturingFacility.setAddress(address);
             manufacturingFacility.setTelephone(telephone);
@@ -219,7 +219,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             StoreEntity store = em.find(StoreEntity.class, storeId);
             RegionalOfficeEntity regionalOffice = em.find(RegionalOfficeEntity.class, id);
             store.setRegionalOffice(regionalOffice);
-            regionalOffice.getStoreList().add(store);                    
+            regionalOffice.getStoreList().add(store);
             em.merge(regionalOffice);
             em.merge(store);
             return true;
@@ -403,7 +403,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return null;
         }
     }
-            
+
     @Override
     public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId) {
         try {
@@ -419,6 +419,17 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     @Remove
     public void remove() {
         System.out.println("Facility Management is removed");
+    }
+
+    @Override
+    public StoreEntity getStoreByName(String storeName) {
+        try {
+            Query q = em.createQuery("select s from StoreEntity s where s.name = ?1").setParameter(1, storeName);
+            return (StoreEntity)q.getSingleResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 }

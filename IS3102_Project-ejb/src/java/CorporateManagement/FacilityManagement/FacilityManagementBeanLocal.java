@@ -32,6 +32,7 @@ public interface FacilityManagementBeanLocal {
     public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityEntityId);
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();
     
+    public StoreEntity getStoreByName(String storeName);
     public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId);
     public StoreEntity createStore(String storeName, String address, String telephone, String email);
     public Boolean addStoreToRegionalOffice(Long id, Long storeId);

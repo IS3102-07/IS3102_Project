@@ -53,7 +53,7 @@
 
                                 <div class="form-group">
                                     <label for="input_address">Regional Office</label>                                    
-                                    <select name="regionalOfficeId" class="form-control" required="true">
+                                    <select name="regionalOfficeId" class="form-control" required="true">                                        
                                         <% List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList"); 
                                         
                                             for (RegionalOfficeEntity ro : regionalOfficeList) {
