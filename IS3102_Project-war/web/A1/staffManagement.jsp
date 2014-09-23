@@ -120,7 +120,11 @@
                                                                         out.println("-");
                                                                     } else {
                                                                         for (int k = 0; k < roles.size(); k++) {
-                                                                            out.println(roles.get(k).getName());
+                                                                            if (k == (roles.size() - 1)) {
+                                                                                out.println(roles.get(k).getName());
+                                                                            } else {
+                                                                                out.println(roles.get(k).getName() + ", ");
+                                                                            }
                                                                         }
                                                                     }
                                                                 %>

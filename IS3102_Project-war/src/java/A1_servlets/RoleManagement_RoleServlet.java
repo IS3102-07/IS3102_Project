@@ -2,6 +2,7 @@ package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.RoleEntity;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -28,6 +29,8 @@ public class RoleManagement_RoleServlet extends HttpServlet {
 
             List<RoleEntity> roles = accountManagementBean.listAllRoles();
             session.setAttribute("roles", roles);
+            List<StaffEntity> staffs = accountManagementBean.listAllStaff();
+            session.setAttribute("staffs", staffs);
 
             if (errMsg == null || errMsg.equals("")) {
                 response.sendRedirect("A1/roleManagement.jsp");

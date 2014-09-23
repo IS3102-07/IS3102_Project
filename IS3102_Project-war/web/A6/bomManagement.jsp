@@ -10,7 +10,7 @@
         <script>
             function linkFurniture(id) {
                 bomManagement.id.value = id;
-                document.bomManagement.action = "bomManagement_update.jsp";
+                document.bomManagement.action = "../BomManagement_LinkBomServlet";
                 document.bomManagement.submit();
             }
             function updateBOM(id) {
@@ -106,13 +106,13 @@
                                                         <%
                                                             List<FurnitureEntity> listOfFurniture = (List<FurnitureEntity>) (session.getAttribute("listOfFurniture"));
                                                             List<BillOfMaterialEntity> listOfBOM = (List<BillOfMaterialEntity>) (session.getAttribute("listOfBOM"));
-                                                            ArrayList<FurnitureEntity> arrList = new ArrayList();
-                                                            for (FurnitureEntity f : listOfFurniture) {
-                                                                if (f.getBOM() == null) {
-                                                                    arrList.add(f);
-                                                                }
-                                                            }
-                                                            listOfFurniture = arrList;
+//                                                            ArrayList<FurnitureEntity> arrList = new ArrayList();
+//                                                            for (FurnitureEntity f : listOfFurniture) {
+//                                                               if (f.getBOM() == null) {
+//                                                                    arrList.add(f);
+//                                                                }
+//                                                            }
+//                                                            listOfFurniture = arrList;
                                                             try {
                                                                 if (listOfBOM != null) {
                                                                     for (int i = 0; i < listOfBOM.size(); i++) {
@@ -130,21 +130,24 @@
                                                                     String furnitureName = null;
                                                                     if (f != null) {
                                                                         furnitureName = f.getName();
+                                                                        System.out.println("whatttttttt!!!! name is " + furnitureName);
+                                                                        out.print(furnitureName);
                                                                     } else {
-                                                                        if (furnitureName != null) {
-                                                                            out.print(furnitureName);
-                                                                        } else {
-                                                                            out.print("<select class=\"form-inline\" name='furnitureDropdown'>");
-                                                                            out.print("<option value=''>Select</option>");
-                                                                            for (FurnitureEntity furniture : listOfFurniture) {
-                                                                                out.print("<option value='" + furniture.getId() + "'>");
-                                                                                out.print(furniture.getName());
-                                                                                out.print("</option>");
-                                                                            }
-                                                                            out.print("</select>");
-                                                                            out.print("<input type='button' style='width:30%;height:30px;float:right;' name='btnLink' class='btn btn-primary btn-block' value='Link' onclick='javascript:linkFurniture('" + listOfBOM.get(i).getId() + "')'/>");
+                                                                %>
+                                                                <select class="form-inline" name="furnitureId<%=listOfBOM.get(i).getId()%>">
+                                                                    <option value="">Select</option>
+                                                                    <%
+                                                                        for (FurnitureEntity furniture : listOfFurniture) {
+                                                                            out.print("<option value=\"" + furniture.getId() + "\">");
+                                                                            out.print(furniture.getName());
+                                                                            out.print("</option>");
                                                                         }
-                                                                    }%>
+                                                                    %>
+                                                                </select>
+                                                                <input type="button" style="width:30%;height:30px;float:right;" name="btnLink" class="btn btn-primary btn-block" value="Link" onclick="javascript:linkFurniture('<%=listOfBOM.get(i).getId()%>')"/>
+                                                                <%
+                                                                    }
+                                                                %>
                                                             </td>
                                                             <td>
                                                                 <%=listOfBOM.get(i).getDescription()%>
@@ -172,11 +175,9 @@
                                             </div>
                                             <input type="hidden" name="id" value="">    
                                         </div>
-
                                     </div>
                                     <!-- /.panel-body -->
                                 </form>
-
                             </div>
                             <!-- /.panel -->
                         </div>

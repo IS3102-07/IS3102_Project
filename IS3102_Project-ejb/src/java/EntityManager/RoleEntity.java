@@ -27,7 +27,7 @@ public class RoleEntity implements Serializable {
     public void create(String name, String accessLevel) {
         this.setName(name);
         this.setAccessLevel(accessLevel);
-        staffs = new ArrayList<StaffEntity>();
+        staffs = new ArrayList();
     }
 
     public Long getId() {
