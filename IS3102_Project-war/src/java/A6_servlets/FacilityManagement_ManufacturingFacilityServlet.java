@@ -8,6 +8,7 @@ package A6_servlets;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
+import HelperClasses.ManufacturingFacilityHelper;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -41,9 +42,9 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
 
         switch (target) {
 
-            case "/manufacturingFacilityManagement_index":
-                List<ManufacturingFacilityEntity> manufacturingFacilityList = fmBean.viewListOfManufacturingFacility();
-                request.setAttribute("manufacturingFacilityList", manufacturingFacilityList);
+            case "/manufacturingFacilityManagement_index":                
+                List<ManufacturingFacilityHelper> helperList = fmBean.getManufacturingFacilityHelperList();
+                request.setAttribute("helperList", helperList);
                 nextPage = "/A6/manufacturingFacilityManagement";
                 break;
 
@@ -70,8 +71,11 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
+                    Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                     Integer capacity = Integer.valueOf(request.getParameter("capacity"));
+                    
                     ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(manufacturingFacilityName, address, telephone, email, capacity);
+                    fmBean.addManufacturingFacilityToRegionalOffice(regionalOfficeId, manufacturingFacility.getId());
                     if (manufacturingFacility != null) {
                         request.setAttribute("alertMessage", "A new manufacturing facility record has been saved.");
                     } else {
@@ -87,8 +91,10 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
             case "/editManufacturingFacility_GET":
                 manufacturingFacilityId = (long) request.getAttribute("manufacturingFacilityId");
                 System.out.println("Manufacturing Facility ID is " + manufacturingFacilityId);
-                ManufacturingFacilityEntity manufacturingFacility = fmBean.viewManufacturingFacility(manufacturingFacilityId);
-                request.setAttribute("manufacturingFacility", manufacturingFacility);
+                ManufacturingFacilityHelper mfHelper = fmBean.getManufacturingFacilityHelper(manufacturingFacilityId);
+                request.setAttribute("mfHelper", mfHelper);
+                List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
+                request.setAttribute("regionalOfficeList", regionalOfficeList);
                 nextPage = "/A6/editManufacturingFacility";
                 break;
 
@@ -98,11 +104,13 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 String address = request.getParameter("address");
                 String telephone = request.getParameter("telephone");
                 String email = request.getParameter("email");
+                Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                 System.out.println(manufacturingFacilityName + address + telephone + email);
                 String capacity = request.getParameter("capacity");
-                Long id = Long.parseLong(request.getParameter("manufacturingFacilityId"));
-                System.out.println(id + " is id");
-                if (fmBean.editManufacturingFacility(id, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity))) {
+                Long mfId = Long.parseLong(request.getParameter("manufacturingFacilityId"));
+                System.out.println(mfId + " is id");
+                if (fmBean.editManufacturingFacility(mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity)) &&
+                       fmBean.updateManufacturingFacilityToRegionalOffice(regionalOfficeId, mfId) ) {
                     request.setAttribute("alertMessage", "The manufacturing facility has been saved.");
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit manufacturing facility.");
@@ -114,7 +122,8 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 if (deletes != null) {
                     for (String manufacturingFacilityString : deletes) {
                         String manufacturingFacility_Id = manufacturingFacilityString;
-                        fmBean.removeManufacturingFacility(manufacturingFacility_Id);
+                        mfId = Long.parseLong(manufacturingFacility_Id);
+                        fmBean.removeManufacturingFacility(mfId);
                     }
                 }
                 nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
