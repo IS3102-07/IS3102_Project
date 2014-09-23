@@ -572,7 +572,18 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
             q.setParameter("id", roleID);
+            // Remove from roles side
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
+            List<StaffEntity> staffs = roleEntity.getStaffs();
+            for (StaffEntity currentStaff : staffs) {
+                if(currentStaff == staffEntity) {
+                    staffs.remove(currentStaff);
+                    roleEntity.setStaffs(staffs);
+                    em.merge(roleEntity);
+                    break;
+                }
+            }
+            //Remove from staff side
             List<RoleEntity> roles = staffEntity.getRoles();
             for (RoleEntity currentRole : roles) {
                 if (currentRole == roleEntity) {
