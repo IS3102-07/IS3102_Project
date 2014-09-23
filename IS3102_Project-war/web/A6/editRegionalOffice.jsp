@@ -63,7 +63,7 @@
                                 </div>
                                 <input type="hidden" name="regionalOfficeId" value="<%= regionalOffice.getId()%>">
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>
                             </form>
 

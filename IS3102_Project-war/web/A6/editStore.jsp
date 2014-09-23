@@ -89,7 +89,7 @@
                                 <input type="hidden" name="storeId" value="<%= storeHelper.store.getId()%>">
                                 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>
                             </form>
 
