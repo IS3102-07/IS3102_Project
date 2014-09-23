@@ -71,7 +71,7 @@
                                 </div>
                                <div class="form-group">
                                     <label>SKU</label>
-                                    <input class="form-control" type="text"  name="SKU" required="true" value="<%=rawMaterial.getDescription()%>" disabled>
+                                    <input class="form-control" type="text"  name="SKU" required="true" value="<%=rawMaterial.getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
