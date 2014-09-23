@@ -48,8 +48,8 @@
                     var yes = confirm("Are you sure?!");
                     if (yes == true) {
                         window.event.returnValue = true;
-                        document.rawMaterialManagement.action = "../ProductGroupManagement_RemoveServlet";
-                        document.rawMaterialManagement.submit();
+                        document.productGroupManagement.action = "../ProductGroupManagement_RemoveServlet";
+                        document.productGroupManagement.submit();
                     } else {
                         window.event.returnValue = false;
                     }
