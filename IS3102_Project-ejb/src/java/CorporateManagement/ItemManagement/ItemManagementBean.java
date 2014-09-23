@@ -430,6 +430,26 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
     
     @Override
+    public Boolean editProductGroup(Long productGroupID, String name, Integer workhours) {
+        System.out.println("editProductGroup() called");
+        try {
+            Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
+            List<ProductGroupEntity> listOfProductGroupEntity = q.getResultList();
+            ProductGroupEntity productGroupEntity = em.getReference(ProductGroupEntity.class, productGroupID);
+            if (listOfProductGroupEntity==null || listOfProductGroupEntity.size()==0 || productGroupEntity.getId().equals(productGroupID)) {
+                productGroupEntity.setName(name);
+                productGroupEntity.setWorkHours(workhours);
+                em.merge(productGroupEntity);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    @Override
     public ProductGroupEntity getProductGroup(Long id) {
         try {
             return em.find(ProductGroupEntity.class, id);

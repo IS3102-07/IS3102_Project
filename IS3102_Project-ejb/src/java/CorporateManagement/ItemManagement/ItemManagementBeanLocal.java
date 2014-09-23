@@ -52,6 +52,7 @@ public interface ItemManagementBeanLocal {
      */
     
     public ProductGroupEntity createProductGroup(String name, Integer workhours);
+    public Boolean editProductGroup(Long productGroupID, String name, Integer workhours);
     public ProductGroupEntity getProductGroup(Long id);
     public List<ProductGroupEntity> getAllProductGroup();    
     public ProductGroupLineItemEntity createProductGroupLineItem(String furnitureSKU, double percent);    
