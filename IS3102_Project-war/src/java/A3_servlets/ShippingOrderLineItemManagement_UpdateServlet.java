@@ -44,6 +44,7 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
                 if (!inboundAndOutboundLogisticsBeanLocal.checkSKUExists(sku)) {
                     result = "?errMsg=SKU not found.&id=" + shippingOrderId + "&lineItemId=" + lineItemId;
                     response.sendRedirect("A3/shippingOrderManagement_UpdateLineItem.jsp" + result);
+                } else {
                     boolean canUpdate = inboundAndOutboundLogisticsBeanLocal.updateLineItemFromShippingOrder(Long.parseLong(shippingOrderId), Long.parseLong(lineItemId), sku, Integer.parseInt(quantity));
                     if (!canUpdate) {
                         result = "?errMsg=Shipping Order not found.&id=" + shippingOrderId + "&lineItemId=" + lineItemId;
