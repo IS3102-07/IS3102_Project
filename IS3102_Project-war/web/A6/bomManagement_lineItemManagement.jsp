@@ -22,13 +22,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Line Item Management</h1>
+                            <h1 class="page-header">Line Item Management for BOM: <%=request.getParameter("bomName")%></h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-sitemap"></i>  <a href="bomManagement.jsp">Bill of Material Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-calendar"></i> Line Item Management
+                                    <i class="icon icon-calendar"></i> Line Item Management for BOM: <%=request.getParameter("bomName")%>
                                 </li>
                             </ol>
                         </div>
@@ -49,8 +49,8 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addBOM()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeBOM()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addLineItem()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeLineItem()"  />
                                                 </div>
                                             </div>
                                             <br/>
@@ -59,14 +59,13 @@
                                                     <thead>
                                                         <tr>
                                                             <th style="width:5%"><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th style="width:15%">Raw Material</th>
-                                                            <th>Quantity</th>
-                                                            <th style="width:12%">Edit BOM</th>
+                                                            <th style="width:30%">Raw Material</th>
+                                                            <th style="width:15%">Quantity</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<LineItemEntity> listOfLineItem = (List<LineItemEntity>) (session.getAttribute("listOfLineItem"));
+                                                            List<LineItemEntity> listOfLineItem = (List<LineItemEntity>) (session.getAttribute("bomListLineOfItems"));
                                                             try {
                                                                 if (listOfLineItem != null) {
                                                                     for (int i = 0; i < listOfLineItem.size(); i++) {
@@ -79,19 +78,7 @@
                                                              Raw Material 1
                                                             </td>
                                                             <td>
-                                                                <select class="form-inline" name="quantity">
-                                                                    <option value="">Select</option>
-                                                                    <%
-                                                                        for (int j = 1; j <= 20; j++) {
-                                                                            out.print("<option value=\"" + j + "\">");
-                                                                            out.print(j);
-                                                                            out.print("</option>");
-                                                                        }
-                                                                    %>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Edit" onclick="javascript:updateBOM('')"/>
+                                                                <%=listOfLineItem.get(i).getQuantity()%>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -107,8 +94,8 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addBOM()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeBOM()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addLineItem()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeLineItem()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    

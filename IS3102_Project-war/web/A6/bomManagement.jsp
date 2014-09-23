@@ -10,7 +10,7 @@
         <script>
             function lineItem(id) {
                 bomManagement.id.value = id;
-                document.bomManagement.action = "../BomManagement_LinkBomServlet";
+                document.bomManagement.action = "../BomManagement_LineItemBomServlet";
                 document.bomManagement.submit();
             }
             function linkFurniture(id) {
