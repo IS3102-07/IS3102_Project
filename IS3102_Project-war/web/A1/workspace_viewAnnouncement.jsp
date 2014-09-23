@@ -147,7 +147,7 @@
                                                             <td>
                                                                 <%=listOfAnnouncements.get(i).getTitle()%>
                                                             </td>
-                                                            <td>
+                                                            <td style="width: 20px">
                                                                 <%=listOfAnnouncements.get(i).getMessage()%>
                                                             </td>
                                                             <td>      
@@ -202,7 +202,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
