@@ -25,7 +25,6 @@
                 document.productGroupManagement.submit();
             }
             function checkAll() {
-                alert("Check all the checkboxes...");
                 var allRows = document.supplierManagement.getElementsByTagName("delete");
                 for (var i = 0; i < allRows.length; i++) {
                     if (allRows[i].type == 'checkbox') {
@@ -72,7 +71,7 @@
                                         <div class="table-responsive">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Product Group" onclick="addPO()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Product Group" onclick="addPG()"  />
                                                 </div>
                                             </div>
                                             <br>
@@ -82,6 +81,7 @@
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll()" /></th>
                                                             <th>Product Group</th>
+                                                            <th>Work Hours</th>
                                                             <th>Item SKUs</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -99,16 +99,22 @@
                                                                 <%=productGroups.get(i).getProductGroupName()%>
                                                             </td>
                                                             <td>
+                                                                <%=productGroups.get(i).getWorkHours()%>
+                                                            </td>
+                                                            <td>
                                                                 <%
                                                                     List<ProductGroupLineItemEntity> lineItems = productGroups.get(i).getLineItemList();
                                                                     for (int k = 0; k < lineItems.size(); k++) {
+                                                                        if (k == lineItems.size() - 1) {
+                                                                            out.println(lineItems.get(k).getFurniture().getSKU());
+                                                                        } else {
                                                                             out.println(lineItems.get(k).getFurniture().getSKU() + " , ");
+                                                                        }
                                                                     }
-
                                                                 %>
                                                             </td>
                                                             <td style="width:200px">
-                                                                <input  type="button" name="btnEdit" class="btn btn-primary"  value="Update" onclick="javascript:updatePG('<%=productGroups.get(i).getId()%>')"/>
+                                                                <input  type="button" name="btnEdit" class="btn btn-primary btn-block"  value="Update" onclick="javascript:updatePG('<%=productGroups.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%

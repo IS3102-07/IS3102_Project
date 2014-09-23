@@ -9,6 +9,7 @@ import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
+import HelperClasses.ManufacturingFacilityHelper;
 import HelperClasses.StoreHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -172,6 +173,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             for (Object o : q.getResultList()) {
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
                 if (i.getId() == Long.valueOf(manufacturingFacility)) {
+                    RegionalOfficeEntity regionalOffice = i.getRegionalOffice();
+                    regionalOffice.getManufacturingFacilityEntityList().remove(i);
+                    em.merge(regionalOffice);
                     em.remove(i);
                     em.flush();
                     System.out.println("\nServer removed manufacturing facility:\n" + manufacturingFacility);
@@ -468,7 +472,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         try {
             List<StoreEntity> storeList = this.viewListOfStore();
             List<StoreHelper> helperList = new ArrayList<StoreHelper>();
-            for(StoreEntity s: storeList){
+            for (StoreEntity s : storeList) {
                 StoreHelper helper = new StoreHelper();
                 helper.store = s;
                 helper.regionalOffice = s.getRegionalOffice();
@@ -485,14 +489,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public Boolean updateStoreToRegionalOffice(Long regionalOfficeId, Long storeId) {
         try {
             StoreEntity store = em.find(StoreEntity.class, storeId);
-            RegionalOfficeEntity newRegionalOffice = em.find(RegionalOfficeEntity.class, regionalOfficeId);            
+            RegionalOfficeEntity newRegionalOffice = em.find(RegionalOfficeEntity.class, regionalOfficeId);
             RegionalOfficeEntity oldRegionalOffice = store.getRegionalOffice();
-            
+
             oldRegionalOffice.getStoreList().remove(store);
             store.setRegionalOffice(newRegionalOffice);
             newRegionalOffice.getStoreList().add(store);
-            
-            em.merge(oldRegionalOffice);            
+
+            em.merge(oldRegionalOffice);
             em.merge(store);
             em.merge(newRegionalOffice);
             return true;
@@ -500,6 +504,91 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public ManufacturingFacilityHelper getManufacturingFacilityHelper(Long manufacturingFacilityId) {
+        try {
+            ManufacturingFacilityHelper helper = new ManufacturingFacilityHelper();
+            ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, manufacturingFacilityId);
+            helper.manufacturingFacilityEntity = mf;
+            helper.regionalOffice = mf.getRegionalOffice();
+            return helper;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<ManufacturingFacilityHelper> getManufacturingFacilityHelperList() {
+        try {
+            List<ManufacturingFacilityEntity> mfList = this.viewListOfManufacturingFacility();
+            List<ManufacturingFacilityHelper> helperList = new ArrayList<ManufacturingFacilityHelper>();
+            for (ManufacturingFacilityEntity mf : mfList) {
+                ManufacturingFacilityHelper helper = new ManufacturingFacilityHelper();
+                helper.manufacturingFacilityEntity = mf;
+                helper.regionalOffice = mf.getRegionalOffice();
+                helperList.add(helper);
+            }
+            return helperList;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Boolean addManufacturingFacilityToRegionalOffice(Long regionalOfficeId, Long MFid) {
+        try {
+            ManufacturingFacilityEntity MF = em.find(ManufacturingFacilityEntity.class, MFid);
+            RegionalOfficeEntity ro = em.find(RegionalOfficeEntity.class, regionalOfficeId);
+            MF.setRegionalOffice(ro);
+            ro.getManufacturingFacilityEntityList().add(MF);
+            em.merge(MF);
+            em.merge(ro);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean updateManufacturingFacilityToRegionalOffice(Long regionalOfficeId, Long MFid) {
+        try {
+            ManufacturingFacilityEntity MF = em.find(ManufacturingFacilityEntity.class, MFid);
+            RegionalOfficeEntity newRO = em.find(RegionalOfficeEntity.class, regionalOfficeId);
+            RegionalOfficeEntity oldRO = MF.getRegionalOffice();
+
+            oldRO.getManufacturingFacilityEntityList().remove(MF);
+            MF.setRegionalOffice(newRO);
+            newRO.getManufacturingFacilityEntityList().add(MF);
+
+            em.merge(newRO);
+            em.merge(MF);
+            em.merge(oldRO);
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean removeManufacturingFacility(Long Id) {
+        try {
+            ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, Id);
+            RegionalOfficeEntity ro = mf.getRegionalOffice();
+            ro.getManufacturingFacilityEntityList().remove(mf);
+            em.merge(ro);
+            em.remove(mf);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
 }

@@ -58,7 +58,7 @@
                                     <form role="form" action="../PurchaseOrderLineItemManagement_AddServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text"  >
+                                            <input class="form-control" name="sku" type="text"  required="true" >
                                         </div>
                                         <div class="form-group">
                                             <label>Quantity</label>
@@ -80,16 +80,6 @@
             <!-- /#container fluid -->
         </div>
         <!-- /#wrapper -->
-
-
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-        </script>
-
     </body>
-
 </html>
 <%}%>

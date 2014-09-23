@@ -3,7 +3,7 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
-
+ 
         <script>
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');

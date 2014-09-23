@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="input_address">Regional Office</label>                                    
+                                    <label>Regional Office</label>                                    
                                     <select name="regionalOfficeId" class="form-control" required="true">
                                         <option value="<%= storeHelper.regionalOffice.getId()%>"> <%= storeHelper.regionalOffice.getName()%> </option>
 

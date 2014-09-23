@@ -9,6 +9,7 @@ import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.ProductGroupLineItemEntity;
+import EntityManager.StorageBinEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
@@ -430,7 +431,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
             if (q.getResultList().isEmpty()) {
                 ProductGroupEntity prouductGroup = new ProductGroupEntity(name, workhours);
-                em.persist(name);
+                em.persist(prouductGroup);
                 return prouductGroup;
             } else {
                 return (ProductGroupEntity) q.getResultList().get(0);
@@ -440,7 +441,27 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return null;
     }
-
+    
+    @Override
+    public Boolean editProductGroup(Long productGroupID, String name, Integer workhours) {
+        System.out.println("editProductGroup() called");
+        try {
+            Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
+            List<ProductGroupEntity> listOfProductGroupEntity = q.getResultList();
+            ProductGroupEntity productGroupEntity = em.getReference(ProductGroupEntity.class, productGroupID);
+            if (listOfProductGroupEntity==null || listOfProductGroupEntity.size()==0 || productGroupEntity.getId().equals(productGroupID)) {
+                productGroupEntity.setName(name);
+                productGroupEntity.setWorkHours(workhours);
+                em.merge(productGroupEntity);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
     @Override
     public ProductGroupEntity getProductGroup(Long id) {
         try {
@@ -463,15 +484,21 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public ProductGroupLineItemEntity createProductGroupLineItem(Long furnitureId, double percent) {
+    public ProductGroupLineItemEntity createProductGroupLineItem(String SKU, double percent) {
+        System.out.println("createProductGroupLineItem() called");
         try {
-            FurnitureEntity furniture = em.find(FurnitureEntity.class, furnitureId);
+            Query q = em.createQuery("Select f from FurnitureEntity f where f.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            FurnitureEntity furniture = (FurnitureEntity) q.getSingleResult();
             ProductGroupLineItemEntity lineItem = new ProductGroupLineItemEntity();
             lineItem.setFurniture(furniture);
             lineItem.setPercent(percent);
             em.persist(lineItem);
             return lineItem;
-        } catch (Exception ex) {
+        } catch (NoResultException ex) {
+            System.out.println("Cuold not find furniture with SKU.");
+        }catch (Exception ex) {
+            System.out.println("Failed to createProductGroupLineItem()");
             ex.printStackTrace();
         }
         return null;
@@ -508,6 +535,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             lineItem.setProductGroup(productGroup);
             productGroup.getLineItemList().add(lineItem);
             em.merge(productGroup);
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -516,6 +544,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     @Override
     public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId) {
+        System.out.println("removeLineItemFromProductGroup() called");
         try {
             ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);
