@@ -1,5 +1,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <!DOCTYPE html>
 <!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
@@ -10,10 +12,12 @@
     <body class="dark">
 
         <%
+            ReCaptcha c = ReCaptchaFactory.newReCaptcha("your_public_key", "your_private_key", false);
             String errMsg = request.getParameter("errMsg");
             if (errMsg == null || errMsg.equals("")) {
                 errMsg = "";
             }
+            c.createRecaptchaHtml(null, null);
         %>
         <div role="main" class="main">
             <div class="row">
