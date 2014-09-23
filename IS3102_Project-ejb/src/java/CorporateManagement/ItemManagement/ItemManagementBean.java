@@ -502,6 +502,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             lineItem.setProductGroup(productGroup);
             productGroup.getLineItemList().add(lineItem);
             em.merge(productGroup);
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
