@@ -20,10 +20,10 @@ import javax.persistence.Query;
 
 @Stateless
 public class ItemManagementBean implements ItemManagementBeanLocal {
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
         System.out.println("addRawMaterial() called with SKU:" + SKU);
         try {
@@ -36,7 +36,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean editRawMaterial(String id, String SKU, String name, String category, String description) {
         System.out.println("editRawMaterial() called with SKU:" + SKU);
         try {
@@ -53,7 +53,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean removeRawMaterial(String SKU) {
         System.out.println("removeRawMaterial() called with SKU:" + SKU);
         try {
@@ -65,12 +65,12 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public RawMaterialEntity viewRawMaterial(String SKU) {
         System.out.println("viewRawMaterial() called with SKU:" + SKU);
         try {
             Query q = em.createQuery("SELECT t FROM RawMaterialEntity t");
-            
+
             for (Object o : q.getResultList()) {
                 RawMaterialEntity i = (RawMaterialEntity) o;
                 if (i.getSKU().equalsIgnoreCase(SKU)) {
@@ -84,7 +84,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public boolean addFurniture(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addFurniture() called with SKU:" + SKU);
         try {
@@ -97,7 +97,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean editFurniture(String id, String SKU, String name, String category, String description, String imageURL) {
         System.out.println("editFurniture() called with SKU:" + SKU + " id : " + id);
         try {
@@ -117,7 +117,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean removeFurniture(String SKU) {
         System.out.println("removeFurniture() called with SKU:" + SKU);
         try {
@@ -129,12 +129,12 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public FurnitureEntity viewFurniture(String SKU) {
         System.out.println("viewRawMaterial() called with SKU:" + SKU);
         try {
             Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
-            
+
             for (Object o : q.getResultList()) {
                 FurnitureEntity i = (FurnitureEntity) o;
                 if (i.getSKU().equalsIgnoreCase(SKU)) {
@@ -148,7 +148,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addRetailProduct() called with SKU:" + SKU);
         try {
@@ -161,7 +161,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL) {
         System.out.println("editRetailProduct() called with SKU:" + SKU);
         try {
@@ -179,7 +179,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public boolean removeRetailProduct(String SKU) {
         System.out.println("removeRetailProduct() called with SKU:" + SKU);
         try {
@@ -191,12 +191,12 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public RetailProductEntity viewRetailProduct(String SKU) {
         System.out.println("viewRetailProduct() called with SKU:" + SKU);
         try {
             Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
-            
+
             for (Object o : q.getResultList()) {
                 RetailProductEntity i = (RetailProductEntity) o;
                 if (i.getSKU().equalsIgnoreCase(SKU)) {
@@ -210,7 +210,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public boolean createBOM(String name, String description) {//
         System.out.println("createBillOfMaterial() called with name:" + name);
@@ -219,7 +219,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             BOM.setDescription(description);
             BOM.setName(name);
             em.persist(BOM);
-            
+
             System.out.println("Bill Of Material Name \"" + name + "\" registered successfully as id:" + BOM.getId());
             return true;
         } catch (Exception ex) {
@@ -227,7 +227,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     @Override
     public boolean editBOM(Long BOMId, String name, String description) {//
         System.out.println("editBOM() called with bill of material name:" + name + "and description: " + description);
@@ -237,13 +237,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             BOM.setDescription(description);
             em.persist(BOM);
             System.out.println("editBOM() is successful.");
-            return true;            
+            return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to editBOM():\n" + ex);
             return false;
         }
     }
-    
+
     @Override
     public boolean deleteBOM(Long BOMId) {
         System.out.println("deleteBillOfMaterial() called with bomName:" + BOMId);
@@ -257,7 +257,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     @Override
     public BillOfMaterialEntity viewSingleBOM(Long BOMId) {
         System.out.println("viewBillOfMaterial() called with id:" + BOMId);
@@ -270,7 +270,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public boolean addLineItemToBOM(String SKU, Integer qty, Long BOMId) {
         System.out.println("addLineItemToBOM() called with id:" + BOMId);
@@ -285,7 +285,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     @Override
     public boolean deleteLineItemFromBOM(Long lineItemId, Long BOMId) {
         System.out.println("deleteLineItemFromBOM() called with id:" + BOMId);
@@ -303,7 +303,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     @Override
     public boolean linkBOMAndFurniture(Long BOMId, Long FurnitureId) {
         System.out.println("linkBOMAndFurniture() called with id:" + BOMId);
@@ -318,7 +318,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     public List<RawMaterialEntity> listAllRawMaterials() {
         System.out.println("listAllRawMaterials() called.");
         try {
@@ -330,7 +330,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public List<FurnitureEntity> listAllFurniture() {
         System.out.println("listAllFurniture() called.");
         try {
@@ -342,7 +342,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public List<RetailProductEntity> listAllRetailProduct() {
         System.out.println("listAllRetailProduct() called.");
         try {
@@ -354,7 +354,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public List<BillOfMaterialEntity> listAllBOM() {
         System.out.println("listAllBOM() called.");
         try {
@@ -367,7 +367,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     public List<ProductGroupEntity> listAllProductionGroup() {
         System.out.println("listAllProductionGroup() called.");
         try {
@@ -379,7 +379,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public ItemEntity getItemBySKU(String SKU) {
 //        Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
@@ -389,7 +389,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 //        }
         return null;
     }
-    
+
     @Override
     public boolean checkSKUExists(String SKU) {
         try {
@@ -405,13 +405,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
-    
+
     @Override
     @Remove
     public void remove() {
         System.out.println("Item Management Bean is removed.");
     }
-    
+
     @Override
     public ProductGroupEntity createProductGroup(String name, Integer workhours) {
         try {
@@ -428,7 +428,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return null;
     }
-    
+
     @Override
     public Boolean editProductGroup(Long productGroupID, String name, Integer workhours) {
         System.out.println("editProductGroup() called");
@@ -436,7 +436,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
             List<ProductGroupEntity> listOfProductGroupEntity = q.getResultList();
             ProductGroupEntity productGroupEntity = em.getReference(ProductGroupEntity.class, productGroupID);
-            if (listOfProductGroupEntity==null || listOfProductGroupEntity.isEmpty() || productGroupEntity.getId().equals(productGroupID)) {
+            if (listOfProductGroupEntity == null || listOfProductGroupEntity.isEmpty() || productGroupEntity.getId().equals(productGroupID)) {
                 productGroupEntity.setName(name);
                 productGroupEntity.setWorkHours(workhours);
                 em.merge(productGroupEntity);
@@ -449,6 +449,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
+
     @Override
     public ProductGroupEntity getProductGroup(Long id) {
         try {
@@ -458,7 +459,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return null;
     }
-    
+
     @Override
     public List<ProductGroupEntity> getAllProductGroup() {
         try {
@@ -469,7 +470,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return new ArrayList<>();
     }
-    
+
     @Override
     public ProductGroupLineItemEntity createProductGroupLineItem(String SKU, double percent) {
         System.out.println("createProductGroupLineItem() called");
@@ -484,13 +485,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return lineItem;
         } catch (NoResultException ex) {
             System.out.println("Cuold not find furniture with SKU.");
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Failed to createProductGroupLineItem()");
             ex.printStackTrace();
         }
         return null;
     }
-    
+
     public Boolean deleteProductGroupLineItem(Long id) {
         try {
             em.remove(em.find(ProductGroupLineItemEntity.class, id));
@@ -500,12 +501,33 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return false;
     }
-    
+
     @Override
-    public Boolean editProductGroupLineItem(Long id, double percent) {
+    public Boolean checkIfSKUIsFurniture(String SKU) {
         try {
-            ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, id);
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
+            if (itemEntity.getType().equals("Furniture")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean editProductGroupLineItem(Long productGroupLineItemID, String SKU, double percent) {
+        try {
+            ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, productGroupLineItemID);
             lineItem.setPercent(percent);
+            Query q = em.createQuery("Select i from FurnitureEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            FurnitureEntity furnitureEntity = (FurnitureEntity) q.getSingleResult();
+            lineItem.setFurniture(furnitureEntity);
             em.merge(lineItem);
             return true;
         } catch (Exception ex) {
@@ -513,7 +535,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return false;
     }
-    
+
     @Override
     public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId) {
         try {
@@ -528,7 +550,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return false;
     }
-    
+
     @Override
     public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId) {
         System.out.println("removeLineItemFromProductGroup() called");
@@ -544,5 +566,5 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return false;
     }
-    
+
 }
