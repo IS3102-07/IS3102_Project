@@ -42,9 +42,9 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
 
         switch (target) {
 
-            case "/storeManagement_index":                
+            case "/storeManagement_index":
                 List<StoreHelper> models = fmBean.getStoreHelperList();
-                request.setAttribute("modelList", models);                
+                request.setAttribute("modelList", models);
                 nextPage = "/A6/storeManagement";
                 break;
 
@@ -60,7 +60,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 } else {
                     storeId = Long.parseLong(submit_btn);
                     request.setAttribute("storeId", storeId);
-                    nextPage = "/FacilityManagement_StoreServlet/editStore_GET";  
+                    nextPage = "/FacilityManagement_StoreServlet/editStore_GET";
                 }
                 break;
 
@@ -71,27 +71,33 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
-                    
-                    System.out.println("Posting from create store :");
-                    StoreEntity store = fmBean.createStore(storeName, address, telephone, email);
-                    fmBean.addStoreToRegionalOffice(regionalOfficeId, store.getId());
-                    if (store != null) {
-                        request.setAttribute("alertMessage", "A new store record has been saved.");
+
+                    if (fmBean.checkNameExistsOfStore(storeName)) {
+                        request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
+                        request.setAttribute("regionalOffice", true);
+                        nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
                     } else {
-                        request.setAttribute("alertMessage", "Fail to create store due to duplicated regional office name.");
+                        System.out.println("Posting from create store :");
+                        StoreEntity store = fmBean.createStore(storeName, address, telephone, email);
+                        fmBean.addStoreToRegionalOffice(regionalOfficeId, store.getId());
+                        if (store != null) {
+                            request.setAttribute("alertMessage", "A new store record has been saved.");
+                        } else {
+                            request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
+                        }
+                        request.setAttribute("store", store);
+                        nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
                     }
-                    request.setAttribute("store", store);
-                    nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 break;
 
             case "/editStore_GET":
-                storeId = (long)request.getAttribute("storeId");
-                System.out.println("Store ID is " + storeId);                
+                storeId = (long) request.getAttribute("storeId");
+                System.out.println("Store ID is " + storeId);
                 StoreHelper storeHelper = fmBean.getStoreHelperClass(storeId);
-                request.setAttribute("storeHelper", storeHelper);                
+                request.setAttribute("storeHelper", storeHelper);
                 List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
                 request.setAttribute("regionalOfficeList", regionalOfficeList);
                 nextPage = "/A6/editStore";
@@ -104,16 +110,16 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 Long id = Long.parseLong(request.getParameter("storeId"));
                 Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
-                
-                if (fmBean.editStore(id, storeName, address, telephone, email) && 
-                        fmBean.updateStoreToRegionalOffice(regionalOfficeId, id)) {
+
+                if (fmBean.editStore(id, storeName, address, telephone, email)
+                        && fmBean.updateStoreToRegionalOffice(regionalOfficeId, id)) {
                     request.setAttribute("alertMessage", "The store has been saved.");
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit store.");
                 }
                 nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
                 break;
-                
+
             case "/deleteStore":
                 String[] deletes = request.getParameterValues("delete");
                 if (deletes != null) {

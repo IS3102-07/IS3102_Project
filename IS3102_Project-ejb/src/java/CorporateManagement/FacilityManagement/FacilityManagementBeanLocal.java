@@ -27,12 +27,14 @@ public interface FacilityManagementBeanLocal {
     public boolean removeRegionalOffice(String regionalOfficeName);
     public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeName);
     public List<RegionalOfficeEntity> viewListOfRegionalOffice();
+    public boolean checkNameExistsOfRegionalOffice(String name);
 
     public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
     public boolean removeManufacturingFacility(String manufacturingFacilityName);
     public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityEntityId);
-    public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();        
+    public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();    
+    public boolean checkNameExistsOfManufacturingFacility(String name);
     
     public ManufacturingFacilityHelper getManufacturingFacilityHelper(Long manufacturingFacilityId);
     public List<ManufacturingFacilityHelper> getManufacturingFacilityHelperList();
@@ -45,6 +47,7 @@ public interface FacilityManagementBeanLocal {
     public boolean removeStore(String storeName);    
     public StoreEntity viewStoreEntity(Long storeId);
     public List<StoreEntity> viewListOfStore();
+    public boolean checkNameExistsOfStore(String name);
     
     public StoreEntity getStoreByName(String storeName);
     public Boolean removeStore(Long storeId);
@@ -58,6 +61,7 @@ public interface FacilityManagementBeanLocal {
     public Boolean editWarehouse(Long id, String warehouseName, String address, String telephone, String email);
     public Boolean deleteWarehouse(Long id);
     public WarehouseEntity getWarehouseByName(String warehouseName);
+    public boolean checkNameExistsOfWarehouse(String name);
     
     public WarehouseEntity getWarehouseById(Long Id);
     public List<WarehouseEntity> getWarehouseList();

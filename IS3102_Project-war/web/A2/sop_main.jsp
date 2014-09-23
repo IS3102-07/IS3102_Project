@@ -164,7 +164,8 @@
         </div>
         <!-- /#wrapper -->
 
-        <%            if (request.getAttribute("alertMessage") != null) {
+        <%
+            if (request.getAttribute("alertMessage") != null) {
         %>
         <script>
             alert("<%= request.getAttribute("alertMessage")%>");
