@@ -551,8 +551,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             roles.add(roleEntity);
             List<StaffEntity> staffs = roleEntity.getStaffs();
             staffs.add(staffEntity);
+            em.merge(roleEntity);
             staffEntity.setRoles(roles);
-            em.persist(staffEntity);
+            em.merge(staffEntity);
             System.out.println("Role:" + roleEntity.getName()
                     + " .Access level:" + roleEntity.getAccessLevel() + " added successfully to staff id:" + staffID);
             return true;
@@ -577,7 +578,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 if (currentRole == roleEntity) {
                     roles.remove(currentRole);
                     staffEntity.setRoles(roles);
-                    em.persist(staffEntity);
+                    em.merge(staffEntity);
                     System.out.println("Role:" + currentRole.getName()
                             + " .Access level:" + currentRole.getAccessLevel() + " removed successfully from staff id:" + staffID);
                     return true; //Found the role & removed it
