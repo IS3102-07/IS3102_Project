@@ -9,6 +9,7 @@ import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
+import HelperClasses.ManufacturingFacilityHelper;
 import HelperClasses.StoreHelper;
 import java.util.List;
 import javax.ejb.Local;
@@ -32,6 +33,11 @@ public interface FacilityManagementBeanLocal {
     public boolean removeManufacturingFacility(String manufacturingFacilityName);
     public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityEntityId);
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();        
+    
+    public ManufacturingFacilityHelper getManufacturingFacilityHelper(Long manufacturingFacilityId);
+    public List<ManufacturingFacilityHelper> getManufacturingFacilityHelperList();
+    public Boolean addManufacturingFacilityToRegionalOffice(Long regionalOfficeId, Long MFid);
+    public Boolean updateManufacturingFacilityToRegionalOffice(Long regionalOfficeId, Long MFid);
     
     public StoreEntity createStore(String storeName, String address, String telephone, String email);    
     public Boolean editStore(Long id, String storeName, String address, String telephone, String email);

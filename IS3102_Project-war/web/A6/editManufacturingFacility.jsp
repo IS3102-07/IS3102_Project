@@ -1,3 +1,6 @@
+<%@page import="HelperClasses.ManufacturingFacilityHelper"%>
+<%@page import="EntityManager.RegionalOfficeEntity"%>
+<%@page import="java.util.List"%>
 <%@page import="EntityManager.ManufacturingFacilityEntity"%>
 <html lang="en">
 
@@ -14,6 +17,9 @@
                     font-size: 18px;
                 }
                 input{
+                    max-width: 280px;
+                }
+                select{
                     max-width: 280px;
                 }
             </style>
@@ -40,33 +46,51 @@
 
                     <div class="row">
                         <div class="col-lg-6">                           
-                            <% ManufacturingFacilityEntity manufacturingFacility = (ManufacturingFacilityEntity) request.getAttribute("manufacturingFacility");%>
+                            <% ManufacturingFacilityHelper mfHelper = (ManufacturingFacilityHelper) request.getAttribute("mfHelper");%>
                             <form class="myForm" action="../FacilityManagement_ManufacturingFacilityServlet/editManufacturingFacility_POST">
                                 <div class="form-group">
                                     <label for="input_manufacturingFacilityName">Manufacturing Facility Name</label>
-                                    <input type="text" class="form-control" id="input_manufacturingFacilityName" name="manufacturingFacilityName" value="<%= manufacturingFacility.getName()%>" required="true">
+                                    <input type="text" class="form-control" id="input_manufacturingFacilityName" name="manufacturingFacilityName" value="<%= mfHelper.manufacturingFacilityEntity.getName()%>" required="true">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Regional Office</label>                                    
+                                    <select name="regionalOfficeId" class="form-control" required="true">
+                                        <option value="<%= mfHelper.regionalOffice.getId()%>"> <%= mfHelper.regionalOffice.getName()%> </option>
+
+                                        <% List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
+                                            for (RegionalOfficeEntity ro : regionalOfficeList) {
+                                                if (ro.getId() != mfHelper.regionalOffice.getId()) {
+                                        %>
+                                        <option value="<%= ro.getId()%>"><%= ro.getName()%></option>
+                                        <%
+                                                }
+                                            }
+                                        %>
+
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="input_address">Address</label>
-                                    <input type="text" class="form-control" id="input_address"  name="address" value="<%= manufacturingFacility.getAddress()%>" >
+                                    <input type="text" class="form-control" id="input_address"  name="address" value="<%= mfHelper.manufacturingFacilityEntity.getAddress()%>" >
                                 </div>
 
                                 <div class="form-group">
                                     <label for="input_telephone">Telephone</label>
-                                    <input type="text" class="form-control" id="input_telephone"  name="telephone" value="<%= manufacturingFacility.getTelephone()%>" >
+                                    <input type="text" class="form-control" id="input_telephone"  name="telephone" value="<%= mfHelper.manufacturingFacilityEntity.getTelephone()%>" >
                                 </div>
 
                                 <div class="form-group">
                                     <label for="input_email">Email</label>
-                                    <input type="email" class="form-control" id="input_email"  name="email" value="<%= manufacturingFacility.getEmail()%>" >
+                                    <input type="email" class="form-control" id="input_email"  name="email" value="<%= mfHelper.manufacturingFacilityEntity.getEmail()%>" >
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="input_email">Capacity</label>
-                                    <input type="number" class="form-control" id="input_email"  name="capacity" value="<%= manufacturingFacility.getCapacity()%>" >
+                                    <input type="number" class="form-control" id="input_email"  name="capacity" value="<%= mfHelper.manufacturingFacilityEntity.getCapacity()%>" >
                                 </div>
-                                <input type="hidden" name="manufacturingFacilityId" value="<%= manufacturingFacility.getId()%>">
+                                <input type="hidden" name="manufacturingFacilityId" value="<%= mfHelper.manufacturingFacilityEntity.getId()%>">
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary" value="submit">
                                 </div>
