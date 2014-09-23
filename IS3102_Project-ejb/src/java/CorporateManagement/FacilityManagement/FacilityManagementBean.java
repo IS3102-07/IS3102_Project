@@ -234,6 +234,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         String name;
         Long id;
         try {
+
             StoreEntity storeEntity = new StoreEntity();
             storeEntity.create(storeName, address, telephone, email);
             em.persist(storeEntity);
@@ -285,6 +286,20 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             System.out.println("\nServer failed to remove store:\n" + ex);
             return false;
         }
+    }
+
+    @Override
+    public Boolean removeStore(Long storeId) {
+        try {
+            Query q = em.createQuery("select s from StoreEntity s where s.id = ?1").setParameter(1, storeId);
+            StoreEntity store = (StoreEntity)q.getSingleResult();
+            store.getRegionalOffice().getStoreList().remove(store);
+            em.remove(store);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     public StoreEntity viewStoreEntity(Long storeId) {
@@ -425,7 +440,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public StoreEntity getStoreByName(String storeName) {
         try {
             Query q = em.createQuery("select s from StoreEntity s where s.name = ?1").setParameter(1, storeName);
-            return (StoreEntity)q.getSingleResult();
+            return (StoreEntity) q.getSingleResult();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
