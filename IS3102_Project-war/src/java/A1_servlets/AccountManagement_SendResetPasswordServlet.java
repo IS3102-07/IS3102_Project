@@ -46,10 +46,10 @@ public class AccountManagement_SendResetPasswordServlet extends HttpServlet {
             if (ifExist) {
                 systemSecurityBean.sendPasswordResetEmailForStaff(email);
                 result = "?errMsg=Send email success.";
-                response.sendRedirect("/A1/staffForgetPassword" + result);
+                response.sendRedirect("./A1/staffForgetPassword.jsp" + result);
             } else {
-                result = "?errMsg=Registration fail. Staff email does not exist.";
-                response.sendRedirect("./A1/staffForgetPassword" + result);
+                result = "?errMsg=Staff email does not exist.";
+                response.sendRedirect("./A1/staffForgetPassword.jsp" + result);
             }
         } catch (Exception ex) {
             System.out.println(ex);
