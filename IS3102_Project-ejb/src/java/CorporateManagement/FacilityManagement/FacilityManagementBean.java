@@ -7,6 +7,7 @@ package CorporateManagement.FacilityManagement;
 
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
+import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
 import HelperClasses.ManufacturingFacilityHelper;
@@ -16,6 +17,8 @@ import java.util.List;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -50,6 +53,25 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    public boolean checkNameExistsOfRegionalOffice(String name) {
+        System.out.println("checkNameExistsOfRegionalOffice() called with name:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
+            for (Object o : q.getResultList()) {
+                RegionalOfficeEntity i = (RegionalOfficeEntity) o;
+                System.out.println(" i name is : " + i.getName());
+                if (i.getName().equalsIgnoreCase(name)) {
+                    System.out.println("Found existing name");
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to return regional office:\n" + ex);
+            return false;
+        }
+    }
+
     public Boolean editRegionalOffice(Long id, String regionalOfficeName, String address, String telephone, String email) {
         System.out.println("editRegionalOffice() called with ID:" + id + regionalOfficeName + address + telephone + email);
         try {
@@ -70,24 +92,20 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     @Override
     public boolean removeRegionalOffice(String regionalOfficeName) {
         System.out.println("removeRegionalOffice() called with ID:" + regionalOfficeName);
-
         try {
-            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
-
-            for (Object o : q.getResultList()) {
-                RegionalOfficeEntity i = (RegionalOfficeEntity) o;
-                if (i.getId() == (Long.valueOf(regionalOfficeName))) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed regional office:\n" + regionalOfficeName);
-                    return true;
-                }
-            }
-            return false; //Could not find the role to remove
+            em.remove(em.getReference(RegionalOfficeEntity.class, Long.valueOf(regionalOfficeName)));
+            em.flush();
+            System.out.println("Regional office removed succesfully");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            ex.printStackTrace();
+            System.out.println("Failed to remove regional office, regional office not found.");
+            return false;
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove regional office:\n" + ex);
             return false;
         }
+        
     }
 
     @Override
@@ -143,6 +161,21 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to register manufacturing facility:\n" + ex);
             return null;
+        }
+    }
+
+    public boolean checkNameExistsOfManufacturingFacility(String name) {
+        try {
+            Query q = em.createQuery("Select i from ManufacturingFacilityEntity i where i.NAME=:name");
+            q.setParameter("name", name);
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException n) {
+            System.out.println("\nServer return no result:\n" + n);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to perform name check of manufacturing facility:\n" + ex);
+            return false;
         }
     }
 
@@ -253,6 +286,25 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    public boolean checkNameExistsOfStore(String name) {
+        System.out.println("checkNameExistsOfStore() called with name:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM StoreEntity t");
+            for (Object o : q.getResultList()) {
+                StoreEntity i = (StoreEntity) o;
+                System.out.println(" i name is : " + i.getName());
+                if (i.getName().equalsIgnoreCase(name)) {
+                    System.out.println("Found existing name");
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to return store:\n" + ex);
+            return false;
+        }
+    }
+
     public Boolean editStore(Long id, String storeName, String address, String telephone, String email) {
         System.out.println("editStore() called with ID:" + id);
         try {
@@ -350,6 +402,21 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean checkNameExistsOfWarehouse(String name) {
+        try {
+            Query q = em.createQuery("Select i from WarehouseEntity i where i.warehouseName:name");
+            q.setParameter("name", name);
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException n) {
+            System.out.println("\nServer return no result:\n" + n);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to perform name check of warehouse:\n" + ex);
+            return false;
         }
     }
 
