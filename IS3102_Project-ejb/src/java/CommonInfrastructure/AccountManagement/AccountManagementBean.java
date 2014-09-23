@@ -543,6 +543,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
             List<RoleEntity> roles = staffEntity.getRoles();
             roles.add(roleEntity);
+            List<StaffEntity> staffs = roleEntity.getStaffs();
+            staffs.add(staffEntity);
             staffEntity.setRoles(roles);
             em.persist(staffEntity);
             System.out.println("Role:" + roleEntity.getName()
