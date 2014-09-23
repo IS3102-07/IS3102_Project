@@ -55,7 +55,7 @@
                             <h1 class="page-header">Retail Product Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="retailProductManagement.jsp">Retail Product Management</a>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-user"></i> Retail Product Management

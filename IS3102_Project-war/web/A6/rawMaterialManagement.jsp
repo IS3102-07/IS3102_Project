@@ -54,7 +54,7 @@
                             <h1 class="page-header">Raw Material Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="rawMaterialManagement.jsp">Raw Material Management</a>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-user"></i> Raw Material Management
