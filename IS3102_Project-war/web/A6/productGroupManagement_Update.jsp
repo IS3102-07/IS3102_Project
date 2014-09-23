@@ -86,7 +86,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Work Hours: </label>
-                                            <input class="form-control" name="workhours" type="number" required="true" value="<%=productGroup.getWorkHours()%>"/>
+                                            <input class="form-control" name="workhours" type="number" min="1" step="1" required="true" value="<%=productGroup.getWorkHours()%>"/>
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" value="Update Product Group" class="btn btn-lg btn-primary btn-block">
