@@ -1,46 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A6_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Neo
- */
 public class BomManagement_UpdateBomServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private ItemManagementBeanLocal itemManagementBean;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet BomManagement_UpdateBomServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet BomManagement_UpdateBomServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            String id = request.getParameter("id");
+            boolean canUpdate = itemManagementBean.editBOM(Long.parseLong(id), name, description);
+            if (!canUpdate) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("bomManagement_update.jsp" + result);
+            } else {
+                result = "?errMsg=BOM updated successfully.";
+                response.sendRedirect("BomManagement_BomServlet" + result);
+            }
+        } catch (Exception ex) {
+            out.println(ex);
+
         }
     }
 

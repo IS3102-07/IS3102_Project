@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -20,6 +21,7 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     private Long id;
     @OneToMany(mappedBy = "rawMaterial")
     private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
+    @Lob
     private String name;
     private String category;
     private String description;

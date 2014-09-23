@@ -1,46 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A6_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBean;
+import EntityManager.ProductGroupEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Neo
- */
-public class ProductionGroupManagement_UpdateProductionGroupServlet extends HttpServlet {
+public class ProductGroupManagement_Servlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private ItemManagementBean ItemManagementBean;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductionGroupManagement_UpdateProductionGroupServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductionGroupManagement_UpdateProductionGroupServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+
+            List<ProductGroupEntity> productGroups = ItemManagementBean.getAllProductGroup();
+            session.setAttribute("productGroups", productGroups);
+
+            if (errMsg == null || errMsg.equals("")) {
+               // response.sendRedirect("A6/productGroupManagement.jsp");
+            } else {
+               // response.sendRedirect("A6/productGroupManagement.jsp?errMsg=" + errMsg);
+            }
+
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

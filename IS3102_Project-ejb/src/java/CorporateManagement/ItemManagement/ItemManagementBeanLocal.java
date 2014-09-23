@@ -44,11 +44,6 @@ public interface ItemManagementBeanLocal {
     public boolean addLineItemToBOM(String SKU, Integer qty, Long BOMId);
     public boolean deleteLineItemFromBOM(Long lineItemId, Long BOMId);
     public boolean linkBOMAndFurniture(Long BOMId, Long FurnitureId);
-    
-    public boolean createProductionGroup(String name);
-    public boolean editProductionGroup(String name);
-    public boolean deleteProductionGroup(String bomName);
-    public ProductGroupEntity viewProductionGroup(String name);
     /*
      public boolean addItem(String name, String materialID, String description, String imageURL);
      public boolean editItem(String name, String materialID, String description, String imageURL);

@@ -1,3 +1,5 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="EntityManager.AnnouncementEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -28,7 +30,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
-
+                    <jsp:include page="../displayMessage.jsp" />
                     <%
 
                         try {
@@ -45,7 +47,7 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../RoleManagement_UpdateRoleServlet">
+                            <form role="form" action="../WorkspaceAnnouncement_UpdateServlet">
                                 <div class="form-group">
                                     <label>Sender</label>
                                     <input class="form-control" name="sender" type="text" value="<%=announcement.getSender()%>" disabled/>
@@ -60,7 +62,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Expiry Date</label>
-                                    <input class="form-control" required="true" type="text" name="expiryDate" value="<%=announcement.getExpiryDate()%>"/>
+                                    <% DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                                        String formatedExpiryDate = df.format(announcement.getExpiryDate());%>
+                                    <input class="form-control" required="true" type="text" name="expiryDate" value="<%=formatedExpiryDate%>"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
@@ -73,6 +77,7 @@
                     <%
                         } catch (Exception ex) {
                             response.sendRedirect("../WorkspaceAnnouncement_Servlet");
+                            ex.printStackTrace();
                         }%>
 
                 </div>
@@ -85,7 +90,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

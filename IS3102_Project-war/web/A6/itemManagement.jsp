@@ -55,8 +55,8 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-fiveneary">
                                     <div class="box-content">
-                                        <a href="../ProductionGroupManagement_ProductionGroupServlet"><i class="icon-featured icon icon-cogs"> </i>
-                                            <h4>Production Group Management</h4>
+                                        <a href="../ProductGroupManagement_Servlet"><i class="icon-featured icon icon-cogs"> </i>
+                                            <h4>Product Group Management</h4>
                                         </a>
                                     </div>
                                 </div>

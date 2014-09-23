@@ -3,12 +3,11 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 
 @Entity
 public class FeedbackEntity implements Serializable {
@@ -19,13 +18,20 @@ public class FeedbackEntity implements Serializable {
     
 //    @ManyToOne
 //    private MemberEntity member;
+    @Lob
     private String subject;
+    @Lob
     private String title;
+    @Lob
     private String name;
+    @Lob
     private String surname;
     private Integer phone;
+    @Lob
     private String email;
+    @Lob
     private String attachmentFilePath;
+    @Lob
     private String message;
 
     public String getSubject() {

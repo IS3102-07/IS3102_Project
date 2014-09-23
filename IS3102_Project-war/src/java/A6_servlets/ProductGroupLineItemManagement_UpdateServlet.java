@@ -1,53 +1,46 @@
-package A1_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A6_servlets;
 
-import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
-import EntityManager.AnnouncementEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class WorkspaceAnnouncement_UpdateServlet extends HttpServlet {
+/**
+ *
+ * @author Neo
+ */
+public class ProductGroupLineItemManagement_UpdateServlet extends HttpServlet {
 
-    @EJB
-    private WorkspaceBeanLocal workspaceBeanLocal;
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String result;
-        try {
-            String announcementId = request.getParameter("id");
-            String message = request.getParameter("message");
-            String expiryDate = request.getParameter("expiryDate");
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(expiryDate);
-
-            boolean canUpdate = workspaceBeanLocal.updateAnnouncement(Long.valueOf(announcementId), message, date);
-            if (canUpdate) {
-                result = "?id=" + announcementId + "&errMsg=Announcement updated.";
-                //update announcement list
-                List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
-                HttpSession session;
-                session = request.getSession();
-                session.setAttribute("listOfAnnouncements", listOfAnnouncements);
-                response.sendRedirect("A1/workspace_updateAnnouncement.jsp" + result);
-            } else {
-                result = "?id=" + announcementId + "&errMsg=Failed to update announcement.";
-                response.sendRedirect("A1/workspace_updateAnnouncement.jsp" + result);
-            }
-        } catch (Exception ex) {
-            out.println(ex);
-            ex.printStackTrace();
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProductGroupLineItemManagement_UpdateServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProductGroupLineItemManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

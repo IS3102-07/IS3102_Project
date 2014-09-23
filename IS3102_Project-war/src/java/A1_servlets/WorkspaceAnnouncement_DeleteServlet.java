@@ -2,13 +2,16 @@
 package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import EntityManager.AnnouncementEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
 
@@ -24,6 +27,11 @@ public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
             String id = request.getParameter("delete");
             if (workspaceBeanLocal.deleteAnnouncement(Long.valueOf(id))) {
                 result = "?errMsg=Announcement deleted.";
+                //update announcement list
+                List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
+                HttpSession session;
+                session = request.getSession();
+                session.setAttribute("listOfAnnouncements", listOfAnnouncements);
                 response.sendRedirect("A1/workspace_viewAnnouncement.jsp" + result);
             } else {
                 result = "?errMsg=Failed to delete announcement.";
