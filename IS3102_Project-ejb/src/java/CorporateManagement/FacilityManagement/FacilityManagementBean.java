@@ -9,6 +9,7 @@ import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
+import HelperClasses.StoreHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
@@ -234,6 +235,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         String name;
         Long id;
         try {
+
             StoreEntity storeEntity = new StoreEntity();
             storeEntity.create(storeName, address, telephone, email);
             em.persist(storeEntity);
@@ -285,6 +287,20 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             System.out.println("\nServer failed to remove store:\n" + ex);
             return false;
         }
+    }
+
+    @Override
+    public Boolean removeStore(Long storeId) {
+        try {
+            Query q = em.createQuery("select s from StoreEntity s where s.id = ?1").setParameter(1, storeId);
+            StoreEntity store = (StoreEntity) q.getSingleResult();
+            store.getRegionalOffice().getStoreList().remove(store);
+            em.remove(store);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     public StoreEntity viewStoreEntity(Long storeId) {
@@ -425,11 +441,65 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public StoreEntity getStoreByName(String storeName) {
         try {
             Query q = em.createQuery("select s from StoreEntity s where s.name = ?1").setParameter(1, storeName);
-            return (StoreEntity)q.getSingleResult();
+            return (StoreEntity) q.getSingleResult();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public StoreHelper getStoreHelperClass(Long Id) {
+        try {
+            StoreEntity store = this.viewStoreEntity(Id);
+            StoreHelper helper = new StoreHelper();
+            helper.store = store;
+            helper.regionalOffice = store.getRegionalOffice();
+            System.out.println("return helper class");
+            return helper;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<StoreHelper> getStoreHelperList() {
+        try {
+            List<StoreEntity> storeList = this.viewListOfStore();
+            List<StoreHelper> helperList = new ArrayList<StoreHelper>();
+            for(StoreEntity s: storeList){
+                StoreHelper helper = new StoreHelper();
+                helper.store = s;
+                helper.regionalOffice = s.getRegionalOffice();
+                helperList.add(helper);
+            }
+            return helperList;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Boolean updateStoreToRegionalOffice(Long regionalOfficeId, Long storeId) {
+        try {
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            RegionalOfficeEntity newRegionalOffice = em.find(RegionalOfficeEntity.class, regionalOfficeId);            
+            RegionalOfficeEntity oldRegionalOffice = store.getRegionalOffice();
+            
+            oldRegionalOffice.getStoreList().remove(store);
+            store.setRegionalOffice(newRegionalOffice);
+            newRegionalOffice.getStoreList().add(store);
+            
+            em.merge(oldRegionalOffice);            
+            em.merge(store);
+            em.merge(newRegionalOffice);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }

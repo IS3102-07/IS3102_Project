@@ -9,6 +9,7 @@ import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
+import HelperClasses.StoreHelper;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Remove;
@@ -30,16 +31,21 @@ public interface FacilityManagementBeanLocal {
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
     public boolean removeManufacturingFacility(String manufacturingFacilityName);
     public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityEntityId);
-    public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();
+    public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();        
     
-    public StoreEntity getStoreByName(String storeName);
-    public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId);
-    public StoreEntity createStore(String storeName, String address, String telephone, String email);
-    public Boolean addStoreToRegionalOffice(Long id, Long storeId);
+    public StoreEntity createStore(String storeName, String address, String telephone, String email);    
     public Boolean editStore(Long id, String storeName, String address, String telephone, String email);
-    public boolean removeStore(String storeName);
+    public boolean removeStore(String storeName);    
     public StoreEntity viewStoreEntity(Long storeId);
     public List<StoreEntity> viewListOfStore();
+    
+    public StoreEntity getStoreByName(String storeName);
+    public Boolean removeStore(Long storeId);
+    public Boolean addStoreToRegionalOffice(Long regionalOfficeId, Long storeId);
+    public Boolean updateStoreToRegionalOffice(Long regionalOfficeId, Long storeId);
+    public StoreHelper getStoreHelperClass(Long Id);
+    public List<StoreHelper> getStoreHelperList();    
+    public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId);
 
     public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email);
     public Boolean editWarehouse(Long id, String warehouseName, String address, String telephone, String email);

@@ -96,7 +96,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 try {
                     String storeName = request.getParameter("storeName");
                     StoreEntity store = fmBean.getStoreByName(storeName);
-                    session.setAttribute("sop_storeId", store.getId());
+                    session.setAttribute("sop_storeId", store.getId());                    
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -112,7 +112,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sop_schedule_POST":
                 try {
                     Long schedulelId = Long.parseLong(request.getParameter("scheduleId"));
-                    session.setAttribute("schedulelId", schedulelId);
+                    session.setAttribute("scheduleId", schedulelId);                    
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -120,7 +120,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 break;
 
             case "/sop_main_GET":
-                try {
+                try {                    
                     Long storeId = (long) session.getAttribute("sop_storeId");
                     Long schedulelId = (long) session.getAttribute("scheduleId");
                     List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
@@ -137,8 +137,8 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 nextPage = "/A2/sop_main";
                 break;
 
-            case "":
-
+            case "/sop_create_GET":
+                Long productGroupId = Long.parseLong(request.getParameter("productGroupId"));
                 break;
 
         }

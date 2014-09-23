@@ -170,8 +170,20 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                     .setParameter(1, storeId)
                     .setParameter(2, scheduleId);
             List<ProductGroupEntity> plannedProductGroupList = q1.getResultList();
-            Query q2 = em.createQuery("select p from ProductGroupEntity p where p not member of ?1").setParameter(1, plannedProductGroupList);
-            return q2.getResultList();
+            
+            Query q2 = em.createQuery("select p from ProductGroupEntity p");
+            List<ProductGroupEntity> allProductGroupList = q2.getResultList();
+            
+            List<ProductGroupEntity> unPlannedProductGroupList = new ArrayList<>();
+            
+            for(ProductGroupEntity p: allProductGroupList){
+                if(!plannedProductGroupList.contains(p)){
+                    unPlannedProductGroupList.add(p);
+                }
+            }
+            
+            return unPlannedProductGroupList;
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
