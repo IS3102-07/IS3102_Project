@@ -8,6 +8,11 @@
 
     <body>
         <script>
+            function lineItem(id) {
+                bomManagement.id.value = id;
+                document.bomManagement.action = "../BomManagement_LinkBomServlet";
+                document.bomManagement.submit();
+            }
             function linkFurniture(id) {
                 bomManagement.id.value = id;
                 document.bomManagement.action = "../BomManagement_LinkBomServlet";
