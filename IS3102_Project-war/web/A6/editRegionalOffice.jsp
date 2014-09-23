@@ -29,7 +29,7 @@
                                     <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../A6/regionalOfficeManagement.jsp">Regional Office Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index">Regional Office Management</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-edit"></i>  Edit Regional Office
@@ -63,7 +63,7 @@
                                 </div>
                                 <input type="hidden" name="regionalOfficeId" value="<%= regionalOffice.getId()%>">
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>
                             </form>
 

@@ -80,7 +80,7 @@
                                                                 <input type="checkbox" name="delete" value="<%=listOfLineItem.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                Raw Material 1
+                                                                Raw Material
                                                             </td>
                                                             <td>
                                                                 <%=listOfLineItem.get(i).getQuantity()%>

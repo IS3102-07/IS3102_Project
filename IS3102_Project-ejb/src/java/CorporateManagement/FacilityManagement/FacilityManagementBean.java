@@ -165,16 +165,20 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     public boolean checkNameExistsOfManufacturingFacility(String name) {
+        System.out.println("checkNameExistsOfManufacturingFacility() called with name:" + name);
         try {
-            Query q = em.createQuery("Select i from ManufacturingFacilityEntity i where i.NAME=:name");
-            q.setParameter("name", name);
-            q.getSingleResult();
-            return true;
-        } catch (NoResultException n) {
-            System.out.println("\nServer return no result:\n" + n);
+            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
+            for (Object o : q.getResultList()) {
+                ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
+                System.out.println(" i name is : " + i.getName());
+                if (i.getName().equalsIgnoreCase(name)) {
+                    System.out.println("Found existing name");
+                    return true;
+                }
+            }
             return false;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to perform name check of manufacturing facility:\n" + ex);
+            System.out.println("\nServer failed to find manufacturing facility:\n" + ex);
             return false;
         }
     }
