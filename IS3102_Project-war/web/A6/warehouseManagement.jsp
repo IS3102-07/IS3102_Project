@@ -77,7 +77,7 @@
                                                             <td><%= warehouse.getAddress()%></td>
                                                             <td><%= warehouse.getTelephone()%></td>
                                                             <td><%= warehouse.getEmail()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= warehouse.getId() %>">Access</button></td>                                                            
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= warehouse.getId() %>">View</button></td>                                                            
                                                         </tr>
                                                         <%
                                                                 }
