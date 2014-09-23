@@ -136,7 +136,6 @@
                                                                     String furnitureName = null;
                                                                     if (f != null) {
                                                                         furnitureName = f.getName();
-                                                                        System.out.println("whatttttttt!!!! name is " + furnitureName);
                                                                         out.print(furnitureName);
                                                                     } else {
                                                                 %>

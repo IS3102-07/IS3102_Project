@@ -15,6 +15,11 @@
                     checkboxes[i].checked = source.checked;
                 }
             }
+            function addLineItem() {
+                window.event.returnValue = true;
+                document.bomManagement.action = "../BomManagement_AddLineItemBomServlet";
+                document.bomManagement.submit();
+            }
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -49,7 +54,7 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addLineItem()"  />
+                                                    <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Line Item" />
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeLineItem()"  />
                                                 </div>
                                             </div>
@@ -75,7 +80,7 @@
                                                                 <input type="checkbox" name="delete" value="<%=listOfLineItem.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                             Raw Material 1
+                                                                Raw Material 1
                                                             </td>
                                                             <td>
                                                                 <%=listOfLineItem.get(i).getQuantity()%>
@@ -94,11 +99,45 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Line Item" onclick="addLineItem()"  />
+                                                    <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Line Item"/>
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeLineItem()"  />
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="id" value="">    
+                                            <input type="hidden" name="id" value="">  
+                                            <input type="hidden" name="bomId" value="<%=session.getAttribute("bomId")%>">  
+                                        </div>
+                                        <div id="addLineItemForm" hidden>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-3"><br>
+                                                        Raw Material SKU: 
+                                                        <input type="text" class="form-control" name="sku"/><br>
+                                                        Quantity: <select class="form-inline" name="qty"> 
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                            <option value="19">19</option>
+                                                            <option value="20">20</option>
+                                                        </select>
+                                                        <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="addLineItem()"  />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- /.panel-body -->
@@ -125,6 +164,12 @@
         <script>
             $(document).ready(function () {
                 $('#dataTables-example').dataTable();
+            });
+
+            $(".btnAdd").click(function () {
+                $("html, body").animate({scrollTop: $(document).height()}, "slow");
+                $("#addLineItemForm").show("slow", function () {
+                });
             });
         </script>
 
