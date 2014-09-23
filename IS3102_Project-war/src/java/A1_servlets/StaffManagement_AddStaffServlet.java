@@ -1,6 +1,7 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
 import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,9 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
     private String result;
+
+    @EJB
+    private SystemSecurityBeanLocal systemSecurityBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -34,6 +38,14 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
                 response.sendRedirect(source + result);
             } else {
                 StaffEntity staffEntity = accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
+                System.out.println("Reached here1" + email);
+                System.out.println("Reached here2");
+
+                Boolean testSendMail = systemSecurityBean.sendActivationEmailForStaff(email);
+
+                if (testSendMail) {
+                    System.out.println("Successfully sent email to staff email : " + email);
+                }
                 result = "?errMsg=Staff added successfully.";
                 if (source.equals("A1/staffManagement_add.jsp")) {
                     response.sendRedirect("StaffManagement_StaffServlet" + result);
