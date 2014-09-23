@@ -90,7 +90,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Add or remove Bill Of Materials
+                                    Add or remove Bill Of Materials.
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="bomManagement">

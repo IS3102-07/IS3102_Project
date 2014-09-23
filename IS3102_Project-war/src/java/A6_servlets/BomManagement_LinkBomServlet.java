@@ -22,10 +22,13 @@ public class BomManagement_LinkBomServlet extends HttpServlet {
         try {
             String id = request.getParameter("id");
             String furnitureId = request.getParameter("furnitureId" + id);
-            
+            if (furnitureId.equals("")) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("BomManagement_BomServlet" + result);
+            }
             System.out.println("BOMId: " + id);
             System.out.println("FurnitureId: " + furnitureId);
-            
+
             boolean success = itemManagementBean.linkBOMAndFurniture(Long.parseLong(id), Long.parseLong(furnitureId));
             if (!success) {
                 result = "?errMsg=Please try again.";
