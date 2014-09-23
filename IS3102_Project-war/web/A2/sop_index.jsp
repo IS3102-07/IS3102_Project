@@ -14,10 +14,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Sale And Operation Planning</h1>
+                            <h1 class="page-header">Sales And Operation Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sale And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales And Operation Planning</a>
                                 </li>                                
                             </ol>
                         </div>
@@ -49,7 +49,7 @@
                                         <div class="form-group">
                                             <label for="select_regionalOffice">Regional Office</label>
                                             <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">
-                                                <option>--select regional office--</option>
+                                                <option>--Select regional office--</option>
                                                 <%
                                                     List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
                                                     for (RegionalOfficeEntity r : regionalOfficeList) {
