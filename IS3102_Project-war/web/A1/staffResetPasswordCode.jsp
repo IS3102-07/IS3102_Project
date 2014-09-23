@@ -24,7 +24,8 @@
                         <div class="panel-body">
                             <form role="form" name="registrationForm" action="../StaffManagement_AddStaffServlet" onsubmit="return validatePassword()">
                                 <div class="box-content">
-                                    <h3>Register An Account</h3>
+                                    <h3>Reset Account Password</h3>
+                                    <h10 class="text-info"><%=errMsg%></h10>
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-12">
@@ -59,7 +60,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+                                            <input type="submit" value="Reset Password" class="btn btn-lg btn-primary btn-block">
                                         </div>
                                     </div>
                                     <input type="hidden" value="A1/staffLogin.jsp" name="source">

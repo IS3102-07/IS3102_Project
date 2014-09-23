@@ -45,8 +45,8 @@ public class AccountManagement_SendResetPasswordServlet extends HttpServlet {
             boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
             if (ifExist) {
                 systemSecurityBean.sendPasswordResetEmailForStaff(email);
-                result = "?errMsg=Send email success.";
-                response.sendRedirect("./A1/staffForgetPassword.jsp" + result);
+                result = "?errMsg=Send email success. Please enter your activation code to reset your password.";
+                response.sendRedirect("./A1/staffResetPasswordCode.jsp" + result);
             } else {
                 result = "?errMsg=Staff email does not exist.";
                 response.sendRedirect("./A1/staffForgetPassword.jsp" + result);
