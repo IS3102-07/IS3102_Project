@@ -53,7 +53,7 @@ public class StaffEntity implements Serializable {
     private Boolean accountLockStatus;
     private String unlockCode;
     private String passwordReset;
-
+    private Integer invalidLoginAttempt;
     @OneToOne
     private CountryEntity country;
 
@@ -86,6 +86,7 @@ public class StaffEntity implements Serializable {
         this.setUnlockCode();
         this.setPasswordReset();
         this.setCountry(null);
+        this.setInvalidLoginAttempt(0);
         this.setRoles(new ArrayList<>());
         this.inboxMessages = new ArrayList<>();
         this.sentMessages = new ArrayList<>();
@@ -113,6 +114,13 @@ public class StaffEntity implements Serializable {
         return activationCode;
     }
 
+    public void setInvalidLoginAttempt(Integer attempt) {
+        this.invalidLoginAttempt = attempt;
+    }
+
+    public Integer getInvalidLoginAttempt() {
+        return invalidLoginAttempt;
+    }
     public void setActivationCode() {
         SecureRandom random = new SecureRandom();
         activationCode = new BigInteger(130, random).toString();
