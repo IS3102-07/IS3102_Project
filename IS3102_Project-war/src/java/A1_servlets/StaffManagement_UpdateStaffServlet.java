@@ -45,7 +45,6 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     session.setAttribute("staffEntity", staffEntity);
                     result = "?errMsg=Particulars updated successfully.";
                     response.sendRedirect(source + result);
-                    //response.sendRedirect("StaffManagement_StaffServlet" + result);
                 }
             } else {
                 if (update != null && update.equals("yes")) {

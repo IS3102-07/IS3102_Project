@@ -441,7 +441,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
         return null;
     }
-    
+
     @Override
     public Boolean editProductGroup(Long productGroupID, String name, Integer workhours) {
         System.out.println("editProductGroup() called");
@@ -449,7 +449,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
             List<ProductGroupEntity> listOfProductGroupEntity = q.getResultList();
             ProductGroupEntity productGroupEntity = em.getReference(ProductGroupEntity.class, productGroupID);
-            if (listOfProductGroupEntity==null || listOfProductGroupEntity.size()==0 || productGroupEntity.getId().equals(productGroupID)) {
+            if (listOfProductGroupEntity == null || listOfProductGroupEntity.isEmpty() || productGroupEntity.getId().equals(productGroupID)) {
                 productGroupEntity.setName(name);
                 productGroupEntity.setWorkHours(workhours);
                 em.merge(productGroupEntity);
@@ -462,6 +462,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return false;
         }
     }
+
     @Override
     public ProductGroupEntity getProductGroup(Long id) {
         try {
@@ -497,7 +498,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return lineItem;
         } catch (NoResultException ex) {
             System.out.println("Cuold not find furniture with SKU.");
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Failed to createProductGroupLineItem()");
             ex.printStackTrace();
         }
@@ -515,10 +516,31 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public Boolean editProductGroupLineItem(Long id, double percent) {
+    public Boolean checkIfSKUIsFurniture(String SKU) {
         try {
-            ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, id);
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
+            if (itemEntity.getType().equals("Furniture")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean editProductGroupLineItem(Long productGroupLineItemID, String SKU, double percent) {
+        try {
+            ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, productGroupLineItemID);
             lineItem.setPercent(percent);
+            Query q = em.createQuery("Select i from FurnitureEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            FurnitureEntity furnitureEntity = (FurnitureEntity) q.getSingleResult();
+            lineItem.setFurniture(furnitureEntity);
             em.merge(lineItem);
             return true;
         } catch (Exception ex) {
