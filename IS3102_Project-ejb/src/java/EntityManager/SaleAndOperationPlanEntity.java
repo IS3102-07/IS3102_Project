@@ -38,6 +38,7 @@ public class SaleAndOperationPlanEntity implements Serializable {
             
     private int year;
     private int month;
+    private Integer saleForcastdata;
     private Integer productionPlan;
     private Integer currentInventoryLevel;
     private Integer targetInventoryLevel;
@@ -55,6 +56,19 @@ public class SaleAndOperationPlanEntity implements Serializable {
         this.targetInventoryLevel = targetInventoryLevel;
     }        
 
+    public SaleAndOperationPlanEntity(StoreEntity store, ProductGroupEntity productGroup, MonthScheduleEntity schedule, Integer saleForcastdata, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel) {
+        this.store = store;
+        this.productGroup = productGroup;
+        this.schedule = schedule;
+        this.year = schedule.getYear();
+        this.month = schedule.getMonth();
+        this.saleForcastdata = saleForcastdata;
+        this.productionPlan = productionPlan;
+        this.currentInventoryLevel = currentInventoryLevel;
+        this.targetInventoryLevel = targetInventoryLevel;
+    }       
+
+    
     public MonthScheduleEntity getSchedule() {
         return schedule;
     }
