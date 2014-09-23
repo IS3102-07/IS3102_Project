@@ -321,6 +321,12 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
             q.setParameter("email", email);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            
+            System.out.println("Staff activation status" + staffEntity.getAccountActivationStatus());
+            if (staffEntity.getAccountActivationStatus() == false) {
+                System.out.println("Account not yet activated.");
+                return null;
+            }
             String passwordSalt = staffEntity.getPasswordSalt();
             String passwordHash = generatePasswordHash(passwordSalt, password);
             if (passwordHash.equals(staffEntity.getPasswordHash())) {
