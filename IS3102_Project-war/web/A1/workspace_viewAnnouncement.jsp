@@ -15,9 +15,6 @@
                     break;
                 }
             }
-            if (roleCanEditAnnouncement) {
-                break;
-            }
         }
     }
 %>
@@ -104,13 +101,14 @@
                                 <form name="announcementsManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-
+                                            <%if (roleCanEditAnnouncement) {%>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Announcement" onclick="addAnnouncement()"  />
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Announcements" onclick="removeAnnouncement()"  />
                                                 </div>
                                             </div>
+                                            <%}%>
                                             <br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -170,13 +168,14 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
-
+                                            <%if (roleCanEditAnnouncement) {%>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Announcement" onclick="addAnnouncement()"  />
                                                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Announcement" onclick="removeAnnouncement()"  />
                                                 </div>
                                             </div>
+                                            <%}%>
                                             <input type="hidden" name="id" value="">    
                                         </div>
 
