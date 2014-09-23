@@ -37,8 +37,8 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-12">
-                                                <label>Activation Code</label>
-                                                <input type="text" name="activationCode" class="form-control input-lg" required="true">
+                                                <label>Reset Code</label>
+                                                <input type="text" name="resetCode" class="form-control input-lg" required="true">
                                             </div>
                                         </div>
                                     </div>

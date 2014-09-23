@@ -7,6 +7,7 @@ package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -31,29 +32,11 @@ public class AccountManagement_ResetPasswordServlet extends HttpServlet {
 
             String email = request.getParameter("email");
             String resetCode = request.getParameter("resetCode");
-            String accountType = request.getParameter("accountType");
-            if (email == null || resetCode == null || accountType == null) {
-                if (accountType != null && accountType.equals("member")) {
-                    response.sendRedirect("A1/memberResetAccount.jsp");
-                } else if (accountType != null && accountType.equals("staff")) {
-                    response.sendRedirect("A1/staffResetAccount.jsp");
-                } else {
-                    response.sendRedirect("A1/error.jsp");
-                }
-            } else {
-                if (accountType.equals("staff")) {
-                    if (systemSecurityBean.validatePasswordResetForStaff(email, resetCode)) {
-
-                    } else {
-
-                    }
-                } else if (accountType.equals("member")) {
-                    if (systemSecurityBean.validatePasswordResetForMember(email, resetCode)) {
-
-                    } else {
-
-                    }
-                }
+            String password = request.getParameter("password");
+            
+            if (systemSecurityBean.validatePasswordResetForStaff(email, resetCode)) {
+                accountManagementBean.resetStaffPassword(email, password);
+                
             }
 
         } catch (Exception ex) {

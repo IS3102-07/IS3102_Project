@@ -30,7 +30,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @EJB
     private SystemSecurityBeanLocal systemSecurityBean;
-    
+
     public AccountManagementBean() {
         System.out.println("\nCommonInfrastructure Server (EJB) created.");
     }
@@ -587,7 +587,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
             List<StaffEntity> staffs = roleEntity.getStaffs();
             for (StaffEntity currentStaff : staffs) {
-                if(currentStaff == staffEntity) {
+                if (currentStaff == staffEntity) {
                     staffs.remove(currentStaff);
                     roleEntity.setStaffs(staffs);
                     em.merge(roleEntity);
@@ -678,6 +678,21 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             System.out.println("\nServer failed to generate password salt.\n" + ex);
         }
         return Arrays.toString(salt);
+    }
+
+    public boolean resetStaffPassword(String email, String password) {
+        String passwordSalt = generatePasswordSalt();
+        String passwordHash = generatePasswordHash(passwordSalt, password);
+
+        StaffEntity staff = getStaffByEmail(email);
+        
+        staff.setPasswordSalt(passwordSalt);
+        staff.setPasswordHash(passwordHash);
+        
+        em.merge(staff);
+        System.out.println("Staff \"" + email + "\" changed password successful as id:");
+        return true;
+        
     }
 
     // Uses supplied salt and password to generate a hashed password
