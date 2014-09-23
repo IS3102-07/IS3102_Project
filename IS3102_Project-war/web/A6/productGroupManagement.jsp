@@ -105,9 +105,12 @@
                                                                 <%
                                                                     List<ProductGroupLineItemEntity> lineItems = productGroups.get(i).getLineItemList();
                                                                     for (int k = 0; k < lineItems.size(); k++) {
-                                                                        out.println(lineItems.get(k).getFurniture().getSKU() + " , ");
+                                                                        if (k == lineItems.size() - 1) {
+                                                                            out.println(lineItems.get(k).getFurniture().getSKU());
+                                                                        } else {
+                                                                            out.println(lineItems.get(k).getFurniture().getSKU() + " , ");
+                                                                        }
                                                                     }
-
                                                                 %>
                                                             </td>
                                                             <td style="width:200px">
