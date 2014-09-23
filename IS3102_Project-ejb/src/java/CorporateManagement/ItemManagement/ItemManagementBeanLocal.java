@@ -44,6 +44,7 @@ public interface ItemManagementBeanLocal {
     public boolean addLineItemToBOM(String SKU, Integer qty, Long BOMId);
     public boolean deleteLineItemFromBOM(Long lineItemId, Long BOMId);
     public boolean linkBOMAndFurniture(Long BOMId, Long FurnitureId);
+    public List<FurnitureEntity> listAllFurnitureWithoutBOM();
     /*
      public boolean addItem(String name, String materialID, String description, String imageURL);
      public boolean editItem(String name, String materialID, String description, String imageURL);

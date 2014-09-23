@@ -26,7 +26,7 @@ public class BomManagement_BomServlet extends HttpServlet {
             String errMsg = request.getParameter("errMsg");
             List<BillOfMaterialEntity> listOfBOM = itemManagementBean.listAllBOM();
             session.setAttribute("listOfBOM", listOfBOM);
-            session.setAttribute("listOfFurniture", itemManagementBean.listAllFurniture());
+            session.setAttribute("listOfFurniture", itemManagementBean.listAllFurnitureWithoutBOM());
 
             if (errMsg == null || errMsg.equals("")) {
                 response.sendRedirect("A6/bomManagement.jsp");
