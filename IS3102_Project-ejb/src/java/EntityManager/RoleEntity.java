@@ -1,4 +1,3 @@
-
 package EntityManager;
 
 import java.io.Serializable;
@@ -13,6 +12,7 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class RoleEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,13 +21,15 @@ public class RoleEntity implements Serializable {
     private String name;
     @Lob
     private String accessLevel;
-    @ManyToMany(mappedBy="roles")
-    private List<StaffEntity> staffs = new ArrayList<StaffEntity>();
+    @ManyToMany(mappedBy = "roles")
+    private List<StaffEntity> staffs;
 
     public void create(String name, String accessLevel) {
         this.setName(name);
         this.setAccessLevel(accessLevel);
+        staffs = new ArrayList();
     }
+
     public Long getId() {
         return id;
     }
@@ -96,5 +98,5 @@ public class RoleEntity implements Serializable {
     public void setStaffs(List<StaffEntity> staffs) {
         this.staffs = staffs;
     }
-    
+
 }

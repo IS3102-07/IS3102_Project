@@ -1,6 +1,7 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +27,8 @@ public class StaffManagement_StaffServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
 
+            List<RoleEntity> roles = accountManagementBean.listAllRoles();
+            session.setAttribute("roles", roles);
             List<StaffEntity> staffs = accountManagementBean.listAllStaff();
             session.setAttribute("staffs", staffs);
 

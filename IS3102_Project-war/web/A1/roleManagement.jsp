@@ -112,7 +112,11 @@
                                                                         out.println("-");
                                                                     } else {
                                                                         for (int k = 0; k < staffs.size(); k++) {
-                                                                            out.println(staffs.get(k).getName());
+                                                                            if (k == (staffs.size() - 1)) {
+                                                                                out.println(staffs.get(k).getName());
+                                                                            } else {
+                                                                                out.println(staffs.get(k).getName() + ", ");
+                                                                            }
                                                                         }
                                                                     }
                                                                 %>
@@ -161,7 +165,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
