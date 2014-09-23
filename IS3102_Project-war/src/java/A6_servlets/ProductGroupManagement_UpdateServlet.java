@@ -10,19 +10,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ProductGroupManagement_UpdateServlet extends HttpServlet {
-    
+
     @EJB
     private ItemManagementBeanLocal ItemManagementBean;
     private String result;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            String productGroupId = request.getParameter("id");
             String name = request.getParameter("name");
             String workhours = request.getParameter("workhours");
-            
-          //  ItemManagementBean.editProductGroupLineItem(Long.MIN_VALUE, percent)
+
+            boolean canUpdate = ItemManagementBean.editProductGroup(Long.parseLong(productGroupId), name, Integer.parseInt(workhours));
+
+            if (!canUpdate) {
+                result = "?errMsg=Product group name already exist or Product group ID not found.&id=" + productGroupId;
+                response.sendRedirect("A6/productGroupManagement_Update.jsp" + result);
+            } else {
+                result = "?errMsg=Product group updated successfully.&id=" + productGroupId;
+                response.sendRedirect("ProductGroupLineItemManagement_Servlet" + result);
+            }
         } catch (Exception ex) {
             out.println(ex);
         }
