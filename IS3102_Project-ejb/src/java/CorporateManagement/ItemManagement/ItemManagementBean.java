@@ -580,4 +580,15 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         return false;
     }
 
+    public boolean removeProductGroup(Long productGroupID) {
+        System.out.println("removeProductGroup() called with SKU:" + productGroupID);
+        try {
+            em.remove(em.getReference(ProductGroupEntity.class, productGroupID));
+            System.out.println("Product Group removed succesfully");
+            return false; //Could not find to remove
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove product group:\n" + ex);
+            return false;
+        }
+    }
 }

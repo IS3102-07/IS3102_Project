@@ -476,6 +476,10 @@
         <servlet-name>BomMangement_RemoveLineItemBomServlet</servlet-name>
         <servlet-class>A6_servlets.BomMangement_RemoveLineItemBomServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProductGroupManagement_RemoveServlet</servlet-name>
+        <servlet-class>A6_servlets.ProductGroupManagement_RemoveServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -951,6 +955,10 @@
     <servlet-mapping>
         <servlet-name>BomMangement_RemoveLineItemBomServlet</servlet-name>
         <url-pattern>/BomMangement_RemoveLineItemBomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductGroupManagement_RemoveServlet</servlet-name>
+        <url-pattern>/ProductGroupManagement_RemoveServlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
