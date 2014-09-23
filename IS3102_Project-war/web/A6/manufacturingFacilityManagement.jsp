@@ -1,3 +1,4 @@
+<%@page import="HelperClasses.ManufacturingFacilityHelper"%>
 <%@page import="EntityManager.ManufacturingFacilityEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -59,6 +60,7 @@
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Manufacturing Facility Name</th>
+                                                            <th>Regional Office</th>
                                                             <th>Address</th>
                                                             <th>Telephone</th>
                                                             <th>Email Address</th>
@@ -68,18 +70,19 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<ManufacturingFacilityEntity> manufacturingFacilityList = (List<ManufacturingFacilityEntity>) request.getAttribute("manufacturingFacilityList");
-                                                            if (manufacturingFacilityList != null) {
-                                                                for (ManufacturingFacilityEntity manufacturingFacilityEntity : manufacturingFacilityList) {
+                                                            List<ManufacturingFacilityHelper> helperList = (List<ManufacturingFacilityHelper>) request.getAttribute("helperList");
+                                                            if (helperList != null) {
+                                                                for (ManufacturingFacilityHelper helper : helperList) {
                                                         %>
                                                         <tr>
-                                                            <td><input type="checkbox" name="delete" value="<%= manufacturingFacilityEntity.getId()%>" /></td>
-                                                            <td><%= manufacturingFacilityEntity.getName()%></td>
-                                                            <td><%= manufacturingFacilityEntity.getAddress()%></td>
-                                                            <td><%= manufacturingFacilityEntity.getTelephone()%></td>
-                                                            <td><%= manufacturingFacilityEntity.getEmail()%></td>
-                                                            <td><%= manufacturingFacilityEntity.getCapacity()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= manufacturingFacilityEntity.getId() %>">View</button></td>
+                                                            <td><input type="checkbox" name="delete" value="<%= helper.manufacturingFacilityEntity.getId()%>" /></td>
+                                                            <td><%= helper.manufacturingFacilityEntity.getName()%></td>
+                                                            <td><%= helper.regionalOffice.getName() %></td>
+                                                            <td><%= helper.manufacturingFacilityEntity.getAddress()%></td>
+                                                            <td><%= helper.manufacturingFacilityEntity.getTelephone()%></td>
+                                                            <td><%= helper.manufacturingFacilityEntity.getEmail()%></td>
+                                                            <td><%= helper.manufacturingFacilityEntity.getCapacity()%></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= helper.manufacturingFacilityEntity.getId()%>">View</button></td>
                                                         </tr>
                                                         <%
                                                                 }

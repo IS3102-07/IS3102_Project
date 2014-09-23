@@ -173,6 +173,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             for (Object o : q.getResultList()) {
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
                 if (i.getId() == Long.valueOf(manufacturingFacility)) {
+                    RegionalOfficeEntity regionalOffice = i.getRegionalOffice();
+                    regionalOffice.getManufacturingFacilityEntityList().remove(i);
+                    em.merge(regionalOffice);
                     em.remove(i);
                     em.flush();
                     System.out.println("\nServer removed manufacturing facility:\n" + manufacturingFacility);
@@ -522,7 +525,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         try {
             List<ManufacturingFacilityEntity> mfList = this.viewListOfManufacturingFacility();
             List<ManufacturingFacilityHelper> helperList = new ArrayList<ManufacturingFacilityHelper>();
-            for(ManufacturingFacilityEntity mf: mfList){
+            for (ManufacturingFacilityEntity mf : mfList) {
                 ManufacturingFacilityHelper helper = new ManufacturingFacilityHelper();
                 helper.manufacturingFacilityEntity = mf;
                 helper.regionalOffice = mf.getRegionalOffice();
@@ -557,15 +560,30 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             ManufacturingFacilityEntity MF = em.find(ManufacturingFacilityEntity.class, MFid);
             RegionalOfficeEntity newRO = em.find(RegionalOfficeEntity.class, regionalOfficeId);
             RegionalOfficeEntity oldRO = MF.getRegionalOffice();
-            
+
             oldRO.getManufacturingFacilityEntityList().remove(MF);
             MF.setRegionalOffice(newRO);
             newRO.getManufacturingFacilityEntityList().add(MF);
-            
+
             em.merge(newRO);
             em.merge(MF);
             em.merge(oldRO);
-            
+
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean removeManufacturingFacility(Long Id) {
+        try {
+            ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, Id);
+            RegionalOfficeEntity ro = mf.getRegionalOffice();
+            ro.getManufacturingFacilityEntityList().remove(mf);
+            em.merge(ro);
+            em.remove(mf);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

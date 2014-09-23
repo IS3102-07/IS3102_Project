@@ -38,6 +38,7 @@ public interface FacilityManagementBeanLocal {
     public List<ManufacturingFacilityHelper> getManufacturingFacilityHelperList();
     public Boolean addManufacturingFacilityToRegionalOffice(Long regionalOfficeId, Long MFid);
     public Boolean updateManufacturingFacilityToRegionalOffice(Long regionalOfficeId, Long MFid);
+    public Boolean removeManufacturingFacility(Long Id);
     
     public StoreEntity createStore(String storeName, String address, String telephone, String email);    
     public Boolean editStore(Long id, String storeName, String address, String telephone, String email);

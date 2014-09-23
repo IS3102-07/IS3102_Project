@@ -42,9 +42,9 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
 
         switch (target) {
 
-            case "/manufacturingFacilityManagement_index":
-                List<ManufacturingFacilityEntity> manufacturingFacilityList = fmBean.viewListOfManufacturingFacility();
-                request.setAttribute("manufacturingFacilityList", manufacturingFacilityList);
+            case "/manufacturingFacilityManagement_index":                
+                List<ManufacturingFacilityHelper> helperList = fmBean.getManufacturingFacilityHelperList();
+                request.setAttribute("helperList", helperList);
                 nextPage = "/A6/manufacturingFacilityManagement";
                 break;
 
@@ -122,7 +122,8 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 if (deletes != null) {
                     for (String manufacturingFacilityString : deletes) {
                         String manufacturingFacility_Id = manufacturingFacilityString;
-                        fmBean.removeManufacturingFacility(manufacturingFacility_Id);
+                        mfId = Long.parseLong(manufacturingFacility_Id);
+                        fmBean.removeManufacturingFacility(mfId);
                     }
                 }
                 nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
