@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 /**
@@ -26,9 +27,13 @@ public class RegionalOfficeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Lob
     private String name;
+    @Lob
     private String address;
+    @Lob
     private String telephone;
+    @Lob
     private String email;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
     List<WarehouseEntity> warehouseList;

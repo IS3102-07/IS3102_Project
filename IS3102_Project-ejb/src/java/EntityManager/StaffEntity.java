@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import javax.persistence.CascadeType;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -35,10 +36,15 @@ public class StaffEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Lob
     private String identificationNo;
+    @Lob
     private String name;
+    @Lob
     private String phone;
+    @Lob
     private String email;
+    @Lob
     private String address;
     private String passwordSalt;
     private String passwordHash;
