@@ -24,9 +24,6 @@ public class ProductGroupManagement_AddServlet extends HttpServlet {
             String workhours = request.getParameter("workhours");
             ProductGroupEntity productGroup = ItemManagementBean.createProductGroup(name, Integer.parseInt(workhours));
 
-            out.println("<h1>" + name + "</h1>");
-            out.println("<h1>" + workhours + "</h1>");
-            out.println("<h1>" + "11" + "</h1>");
             if (productGroup == null) {
                 result = "?errMsg=Product group name already exist.";
                  response.sendRedirect("A6/productGroupManagement_Add.jsp" + result);
