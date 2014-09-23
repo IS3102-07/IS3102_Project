@@ -20,6 +20,7 @@ public class RawMaterialManagement_RemoveRawMaterialServlet extends HttpServlet 
         try {
             //pass in arr of SKUs
             String[] deleteArr = request.getParameterValues("delete");
+            System.out.println("We are here");
             if (deleteArr != null) {
                 for (String deleteArr1 : deleteArr) {
                     itemManagementBean.removeRawMaterial(deleteArr1);

@@ -1,28 +1,56 @@
 package A6_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.ProductGroupEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ProductGroupLineItemManagement_UpdateServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @EJB
+    private ItemManagementBeanLocal ItemManagementBean;
+    private String result;
 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductGroupLineItemManagement_UpdateServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductGroupLineItemManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String productGroupId = request.getParameter("id");
+            String lineitemId = request.getParameter("lineitemId");
+            String sku = request.getParameter("sku");
+            String percent = request.getParameter("percent");
+
+            //    result = "A6/productGroupManagement_UpdateLineItem.jsp?errMsg=Item successfully updated.&id=" + productGroupId + "&lineItemId=" + lineitemId;
+            //out.println("<h1>" + result + "</h1>");
+            if (!ItemManagementBean.checkSKUExists(sku)) {
+                result = "?errMsg=SKU not found.&id=" + productGroupId + "&lineItemId=" + lineitemId;
+                response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);
+            } else if (!ItemManagementBean.checkIfSKUIsFurniture(sku)) {
+                result = "?errMsg=SKU is not a funriture.&id=" + productGroupId + "&lineItemId=" + lineitemId;
+                response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);
+            } else {
+                boolean canUpdate = ItemManagementBean.editProductGroupLineItem(Long.parseLong(lineitemId), sku, Double.parseDouble(percent));
+                if (!canUpdate) {
+                    result = "?errMsg=Unable update Product Group.&id=" + productGroupId + "&lineItemId=" + lineitemId;
+                    response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);
+                } else {
+                    List<ProductGroupEntity> productGroups = ItemManagementBean.getAllProductGroup();
+                    session.setAttribute("productGroups", productGroups);
+                    result = "?errMsg=Item successfully updated.&id=" + productGroupId + "&lineItemId=" + lineitemId;
+                    response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);
+                }
+            }
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 
