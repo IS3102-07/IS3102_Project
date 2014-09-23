@@ -13,6 +13,7 @@ import EntityManager.RegionalOfficeEntity;
 import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.StoreHelper;
+import MRP.SalesAndOperationPlanning.SOP_Helper;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -128,13 +129,13 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                     Long storeId = (long) session.getAttribute("sop_storeId");
                     Long schedulelId = (long) session.getAttribute("scheduleId");
                     List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
-                    List<SaleAndOperationPlanEntity> sopList = sopBean.getSaleAndOperationPlanList(storeId, schedulelId);
+                    List<SOP_Helper> sopHelperList = sopBean.getSOPHelperList(storeId, schedulelId);
                     StoreEntity store = fmBean.viewStoreEntity(storeId);
                     MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
                     request.setAttribute("store", store);
                     request.setAttribute("schedule", schedule);
                     request.setAttribute("unplannedProductGroupList", unplannedProductGroupList);
-                    request.setAttribute("sopList", sopList);
+                    request.setAttribute("sopHelperList", sopHelperList);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -183,16 +184,36 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 break;
 
-            case "/sop_edit_GET":
+            case "/sopManagement":
+                String submit_btn = request.getParameter("submit-btn");
+                if (submit_btn.equals("Delete Sale And Operation Plan")) {                    
+                    nextPage = "/SaleAndOperationPlanning_Servlet/sop_edit_GET";
+                } else {                    
+                    nextPage = "/SaleAndOperationPlanning_Servlet/deleteSOP";
+                }
+                break;
 
+            case "/sop_edit_GET":
+                Long sopId = Long.parseLong(request.getParameter("submit-btn"));
+                SaleAndOperationPlanEntity sopEntity = sopBean.getSOPbyId(sopId);
+                request.setAttribute("sopEntity", sopEntity);
                 nextPage = "/A2/sop_edit";
                 break;
 
             case "/sop_edit_POST":
-
+                saleForecast = Integer.parseInt(request.getParameter("saleForecast"));
+                productionPlan = Integer.parseInt(request.getParameter("productionPlan"));
+                currentInventory = Integer.parseInt(request.getParameter("currentInventory"));
+                targetInventoty = Integer.parseInt(request.getParameter("targetInventoty"));
+                sopId = Long.parseLong(request.getParameter("sopId"));
+                sopBean.editSOP(sopId, productionPlan, currentInventory, targetInventoty);
                 nextPage = "";
                 break;
 
+            case "/deleteSOP":
+
+                nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
+                break;
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
