@@ -436,7 +436,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
             List<ProductGroupEntity> listOfProductGroupEntity = q.getResultList();
             ProductGroupEntity productGroupEntity = em.getReference(ProductGroupEntity.class, productGroupID);
-            if (listOfProductGroupEntity==null || listOfProductGroupEntity.size()==0 || productGroupEntity.getId().equals(productGroupID)) {
+            if (listOfProductGroupEntity==null || listOfProductGroupEntity.isEmpty() || productGroupEntity.getId().equals(productGroupID)) {
                 productGroupEntity.setName(name);
                 productGroupEntity.setWorkHours(workhours);
                 em.merge(productGroupEntity);
@@ -531,6 +531,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     
     @Override
     public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId) {
+        System.out.println("removeLineItemFromProductGroup() called");
         try {
             ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);

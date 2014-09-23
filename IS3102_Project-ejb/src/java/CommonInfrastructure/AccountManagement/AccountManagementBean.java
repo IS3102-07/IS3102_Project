@@ -1,7 +1,7 @@
 package CommonInfrastructure.AccountManagement;
 
 import EntityManager.CountryEntity;
-
+import CommonInfrastructure.SystemSecurity.SystemSecurityBean;
 import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
@@ -26,6 +26,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
+    
+
 
     public AccountManagementBean() {
         System.out.println("\nCommonInfrastructure Server (EJB) created.");
@@ -184,8 +186,10 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             staffEntity.create(identificationNo, name, phone, email, address, passwordSalt, passwordHash);
             staffEntity.setRoles(new ArrayList());
             em.persist(staffEntity);
+            em.flush();
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
+            
             return staffEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register staff:\n" + ex);
