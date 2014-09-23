@@ -1,46 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A3_servlets;
 
+import EntityManager.ShippingOrderEntity;
+import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Neo
- */
 public class ShippingOrderManagement_AddServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocal;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ShippingOrderManagement_AddServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ShippingOrderManagement_AddServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String sourceId = request.getParameter("source");
+            String destinationId = request.getParameter("destination");
+            String expectedDate = request.getParameter("expectedDate");
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatter.parse(expectedDate);
+
+            if (sourceId != null && destinationId != null) {
+                ShippingOrderEntity shippingOrderEntity = inboundAndOutboundLogisticsBeanLocal.createShippingOrderBasicInfo(date,Long.parseLong(sourceId), Long.parseLong(destinationId));
+                if (shippingOrderEntity==null) {
+                    result = "?errMsg=One or both of the warehouse selected could not be found.";
+                    response.sendRedirect("A3/shippingOrderManagement_Add.jsp" + result);
+                } else {
+                    result = "?errMsg=Shipping Order created successfully";
+                    response.sendRedirect("ShippingOrderManagement_Servlet" + result);
+                }
+            }
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 
