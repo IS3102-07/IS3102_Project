@@ -28,7 +28,7 @@
                                     <i class="icon icon-home"></i>   <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../A6/manufacturingFacilityManagement.jsp">Regional Office Management</a>
+                                    <i class="icon icon-home"></i>  <a href="../A6/regionalOfficeManagement.jsp">Regional Office Management</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-edit"></i> Add New Regional Office</a>
@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>
                             </form>
 

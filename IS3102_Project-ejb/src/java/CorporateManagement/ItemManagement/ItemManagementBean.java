@@ -418,7 +418,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
             if (q.getResultList().isEmpty()) {
                 ProductGroupEntity prouductGroup = new ProductGroupEntity(name, workhours);
-                em.persist(name);
+                em.persist(prouductGroup);
                 return prouductGroup;
             } else {
                 return (ProductGroupEntity) q.getResultList().get(0);

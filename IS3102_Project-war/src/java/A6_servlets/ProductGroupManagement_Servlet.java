@@ -1,6 +1,6 @@
 package A6_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBean;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.ProductGroupEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 public class ProductGroupManagement_Servlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBean ItemManagementBean;
+    private ItemManagementBeanLocal ItemManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -30,9 +30,9 @@ public class ProductGroupManagement_Servlet extends HttpServlet {
             session.setAttribute("productGroups", productGroups);
 
             if (errMsg == null || errMsg.equals("")) {
-               // response.sendRedirect("A6/productGroupManagement.jsp");
+                response.sendRedirect("A6/productGroupManagement.jsp");
             } else {
-               // response.sendRedirect("A6/productGroupManagement.jsp?errMsg=" + errMsg);
+                response.sendRedirect("A6/productGroupManagement.jsp?errMsg=" + errMsg);
             }
 
         } catch (Exception ex) {

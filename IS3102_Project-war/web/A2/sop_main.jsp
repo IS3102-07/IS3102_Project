@@ -41,11 +41,11 @@
                     <div class="row">                        
                         <div class="col-lg-6">
                             <%  StoreEntity store = (StoreEntity)request.getAttribute("store");  %>
-                            <h4> Store: <%= store.getName() %> </h4>
+                            <h4><b> Store:  </b><%= store.getName() %></h4>
                         </div>                                                
                         <div class="col-lg-6">
                             <% MonthScheduleEntity schedule = (MonthScheduleEntity)request.getAttribute("schedule"); %>
-                            <h4> <%= schedule.getYear() %> - <%= schedule.getMonth() %> </h4>
+                            <h4><b> Period: </b><%= schedule.getYear() %> - <%= schedule.getMonth() %> </h4>
                         </div>              
                     </div>
                     
@@ -61,7 +61,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/">
+                                            <form action="../SaleAndOperationPlanning_Servlet/sop_create_GET">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable1">
                                                     <thead>
                                                         <tr>

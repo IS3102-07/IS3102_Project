@@ -1,42 +1,29 @@
+
 package A6_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.ProductGroupEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ProductGroupManagement_AddServlet extends HttpServlet {
+public class BomManagement_LinkBomServlet extends HttpServlet {
 
-    @EJB
-    private ItemManagementBeanLocal ItemManagementBean;
-    private String result;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            String name = request.getParameter("name");
-            String workhours = request.getParameter("workhours");
-            ProductGroupEntity productGroup = ItemManagementBean.createProductGroup(name, Integer.parseInt(workhours));
-
-            out.println("<h1>" + name + "</h1>");
-            out.println("<h1>" + workhours + "</h1>");
-            out.println("<h1>" + "11" + "</h1>");
-            if (productGroup == null) {
-                result = "?errMsg=Product group name already exist.";
-                 response.sendRedirect("A6/productGroupManagement_Add.jsp" + result);
-            } else {
-                result = "?errMsg=Product group created successfully";
-                response.sendRedirect("ProductGroupManagement_Servlet" + result);
-            }
-
-        } catch (Exception ex) {
-            out.println(ex);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet BomManagement_LinkBomServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet BomManagement_LinkBomServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

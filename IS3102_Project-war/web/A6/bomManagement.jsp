@@ -8,6 +8,11 @@
 
     <body>
         <script>
+            function linkFurniture(id) {
+                bomManagement.id.value = id;
+                document.bomManagement.action = "bomManagement_update.jsp";
+                document.bomManagement.submit();
+            }
             function updateBOM(id) {
                 bomManagement.id.value = id;
                 document.bomManagement.action = "bomManagement_update.jsp";
@@ -94,7 +99,7 @@
                                                             <th style="width:15%">BOM Name</th>
                                                             <th>Furniture</th>
                                                             <th style="width:40%">Description</th>
-                                                            <th style="width:13%">Edit BOM</th>
+                                                            <th style="width:12%">Edit BOM</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
