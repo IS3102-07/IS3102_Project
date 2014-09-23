@@ -65,15 +65,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
-                                    <input class="form-control" type="text" required="true" name="length" >
+                                    <input class="form-control" type="number" required="true" name="length" >
                                 </div>
                                 <div class="form-group">
                                     <label>Width</label>
-                                    <input class="form-control" type="text" required="true" name="width" >
+                                    <input class="form-control" type="number" required="true" name="width" >
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
-                                    <input class="form-control" type="text" required="true" name="height" >
+                                    <input class="form-control" type="number" required="true" name="height" >
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
