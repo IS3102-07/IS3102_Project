@@ -12,12 +12,10 @@
     <body class="dark">
 
         <%
-            ReCaptcha c = ReCaptchaFactory.newReCaptcha("your_public_key", "your_private_key", false);
             String errMsg = request.getParameter("errMsg");
             if (errMsg == null || errMsg.equals("")) {
                 errMsg = "";
             }
-            c.createRecaptchaHtml(null, null);
         %>
         <div role="main" class="main">
             <div class="row">
