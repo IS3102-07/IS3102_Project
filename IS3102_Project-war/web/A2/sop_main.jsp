@@ -38,17 +38,17 @@
                         </div>
                     </div>
                     
-                    <div class="row">                        
-                        <div class="col-lg-6">
+                    <div class="row">                             
+                        <div class="col-lg-4">
                             <%  StoreEntity store = (StoreEntity)request.getAttribute("store");  %>
                             <h4><b> Store:  </b><%= store.getName() %></h4>
                         </div>                                                
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <% MonthScheduleEntity schedule = (MonthScheduleEntity)request.getAttribute("schedule"); %>
                             <h4><b> Period: </b><%= schedule.getYear() %> - <%= schedule.getMonth() %> </h4>
-                        </div>              
+                        </div>                                      
                     </div>
-                    
+                    <br>
                     <!-- /.row -->
                     <div class="row">
                         <div class="col-lg-12">
