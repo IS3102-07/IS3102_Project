@@ -60,7 +60,7 @@ public interface ItemManagementBeanLocal {
     public Boolean editProductGroupLineItem(Long productGroupLineItemID, String SKU, double percent);
     public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId);
     public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId);
-    
+    public boolean removeProductGroup(Long productGroupID);
     public Boolean checkIfSKUIsFurniture(String SKU);
 
     @Remove

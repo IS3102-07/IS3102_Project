@@ -249,4 +249,14 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
         }
         return null;
     }
+
+    @Override
+    public ProductGroupEntity getProductGroupBySOP(Long sopId) {
+        try {
+            return em.find(SaleAndOperationPlanEntity.class, sopId).getProductGroup();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 }

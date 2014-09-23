@@ -20,29 +20,21 @@
                 <div class="col-md-4 col-md-offset-4">  
                     <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
                         <div class="panel-heading"> 
-                            <i class="icon-4x icon icon-unlock-alt"  style="margin-top: 10px;"></i><h6 class="panel-title">Sign In</h6>
+                            <i class="icon-4x icon icon-unlock-alt"  style="margin-top: 10px;"></i><h6 class="panel-title">Forget Password?</h6>
                         </div>
                         <h10 class="text-info"><%=errMsg%></h10>
                         <div class="panel-body">
-                            <form role="form" name="LoginForm" action="../AccountManagement_LoginServlet">
+                            <form role="form" name="LoginForm" action="../AccountManagement_SendResetPasswordServlet">
 
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <label>E-mail Address</label>
+                                            <label>Enter Your E-mail Address To Receive Password Reset</label>
                                             <input type="email" name="email" id="email" class="form-control input-lg" required="true">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <label>Password</label>
-                                            <input type="password" name="password" id="password" class="form-control input-lg" required="true">
-                                            <a class="pull-right" href="staffForgetPassword.jsp">(Lost Password?)</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="row">
                                     <div class="col-md-12">
                                         <input type="submit" onclick="validateForm()" value="Login" class="btn btn-lg btn-primary btn-block" data-loading-text="Loading...">
