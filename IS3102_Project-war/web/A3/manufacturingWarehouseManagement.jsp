@@ -192,14 +192,19 @@
                             ex.printStackTrace();
                         }%>
                 </div>
-
             </div>
             <!-- /#wrapper -->
-            <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-            <script>
-                $(document).ready(function () {
-                    $('#dataTables-example').dataTable();
-                });
-            </script>
+
+
+            <!-- Vendor -->
+            <script src="../vendor/jquery.js"></script>
+            <script src="../vendor/jquery.appear.js"></script>
+            <script src="../vendor/jquery.easing.js"></script>
+
+            <!-- Theme Base, Components and Settings -->
+            <script src="../js/theme.js"></script>
+
+            <!-- Theme Initialization Files -->
+            <script src="../js/theme.init.js"></script>
     </body>
 </html>

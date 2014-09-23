@@ -562,8 +562,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             roles.add(roleEntity);
             List<StaffEntity> staffs = roleEntity.getStaffs();
             staffs.add(staffEntity);
+            em.merge(roleEntity);
             staffEntity.setRoles(roles);
-            em.persist(staffEntity);
+            em.merge(staffEntity);
             System.out.println("Role:" + roleEntity.getName()
                     + " .Access level:" + roleEntity.getAccessLevel() + " added successfully to staff id:" + staffID);
             return true;
@@ -582,13 +583,24 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             q = em.createQuery("SELECT t FROM RoleEntity where t.id=:id");
             q.setParameter("id", roleID);
+            // Remove from roles side
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
+            List<StaffEntity> staffs = roleEntity.getStaffs();
+            for (StaffEntity currentStaff : staffs) {
+                if(currentStaff == staffEntity) {
+                    staffs.remove(currentStaff);
+                    roleEntity.setStaffs(staffs);
+                    em.merge(roleEntity);
+                    break;
+                }
+            }
+            //Remove from staff side
             List<RoleEntity> roles = staffEntity.getRoles();
             for (RoleEntity currentRole : roles) {
                 if (currentRole == roleEntity) {
                     roles.remove(currentRole);
                     staffEntity.setRoles(roles);
-                    em.persist(staffEntity);
+                    em.merge(staffEntity);
                     System.out.println("Role:" + currentRole.getName()
                             + " .Access level:" + currentRole.getAccessLevel() + " removed successfully from staff id:" + staffID);
                     return true; //Found the role & removed it

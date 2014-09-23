@@ -33,6 +33,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
     public Boolean sendActivationEmailForStaff(String email) {
         System.out.println("Server called sendActivationEmailForStaff():" + email);
         String activationCode = "";
+        StaffEntity staff = null;
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t");
 
@@ -40,6 +41,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 StaffEntity i = (StaffEntity) o;
                 if (i.getEmail().equalsIgnoreCase(email)) {
                     activationCode += i.getActivationCode();
+                    staff = i;
                     System.out.println("\nServer returns activation code of staff:\n" + activationCode);
                 }
             }
@@ -73,9 +75,10 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             }
             return true;
         } catch (Exception e) {
+            
             e.printStackTrace();
-            throw new EJBException(e.getMessage());
-
+            staff.setAccountActivationStatus(true);
+            return false;
         }
     }
 
