@@ -37,15 +37,15 @@
                             </ol>
                         </div>
                     </div>
-                    
+
                     <div class="row">                             
                         <div class="col-lg-4">
-                            <%  StoreEntity store = (StoreEntity)request.getAttribute("store");  %>
-                            <h4><b> Store:  </b><%= store.getName() %></h4>
+                            <%  StoreEntity store = (StoreEntity) request.getAttribute("store");%>
+                            <h4><b> Store:  </b><%= store.getName()%></h4>
                         </div>                                                
                         <div class="col-lg-4">
-                            <% MonthScheduleEntity schedule = (MonthScheduleEntity)request.getAttribute("schedule"); %>
-                            <h4><b> Period: </b><%= schedule.getYear() %> - <%= schedule.getMonth() %> </h4>
+                            <% MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule");%>
+                            <h4><b> Period: </b><%= schedule.getYear()%> - <%= schedule.getMonth()%> </h4>
                         </div>                                      
                     </div>
                     <br>
@@ -61,7 +61,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/sop_create_GET">
+                                            <form action="../SaleAndOperationPlanning_Servlet/sop_main_POST">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable1">
                                                     <thead>
                                                         <tr>
@@ -133,7 +133,7 @@
                                                             }
 
                                                         %>
-                                                --%>
+                                                        --%>
                                                     </tbody>
                                                 </table>    
                                                 <div class="row">
@@ -164,7 +164,8 @@
         </div>
         <!-- /#wrapper -->
 
-        <%            if (request.getAttribute("alertMessage") != null) {
+        <%
+            if (request.getAttribute("alertMessage") != null) {
         %>
         <script>
             alert("<%= request.getAttribute("alertMessage")%>");

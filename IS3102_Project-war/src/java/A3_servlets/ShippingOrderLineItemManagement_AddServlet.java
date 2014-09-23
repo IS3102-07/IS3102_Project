@@ -1,46 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A3_servlets;
 
+import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Neo
- */
 public class ShippingOrderLineItemManagement_AddServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocal;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ShippingOrderLineItemManagement_AddServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ShippingOrderLineItemManagement_AddServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String shippingOrderId = request.getParameter("id");
+            String sku = request.getParameter("sku");
+            String quantity = request.getParameter("quantity");
+
+            if (!inboundAndOutboundLogisticsBeanLocal.checkSKUExists(sku)) {
+                result = "?errMsg=SKU not found.&id=" + shippingOrderId;
+                response.sendRedirect("A3/shippingOrderManagement_AddLineItem.jsp" + result);
+            } else {
+                boolean canUpdate = inboundAndOutboundLogisticsBeanLocal.addLineItemToShippingOrder(Long.parseLong(shippingOrderId), sku, Integer.parseInt(quantity));
+                if (!canUpdate) {
+                    result = "?errMsg=Shipping Order not found.&id=" + shippingOrderId;
+                    response.sendRedirect("A3/shippingOrderManagement_AddLineItem.jsp" + result);
+                } else {
+                    result = "?errMsg=Line item added successfully.&id=" + shippingOrderId;
+                    response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
+                }
+            }
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 

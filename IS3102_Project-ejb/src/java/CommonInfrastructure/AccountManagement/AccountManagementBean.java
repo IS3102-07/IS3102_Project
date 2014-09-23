@@ -1,7 +1,7 @@
 package CommonInfrastructure.AccountManagement;
 
 import EntityManager.CountryEntity;
-import CommonInfrastructure.SystemSecurity.SystemSecurityBean;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
 import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
@@ -20,15 +20,17 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.ejb.EJB;
 
 @Stateful
 public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    private SystemSecurityBeanLocal systemSecurityBean;
     
-
-
     public AccountManagementBean() {
         System.out.println("\nCommonInfrastructure Server (EJB) created.");
     }
@@ -189,7 +191,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             em.flush();
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
-            
+
             return staffEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register staff:\n" + ex);
@@ -217,7 +219,6 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     //For administrator to edit staff account.
-
     @Override
     public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address) {
         System.out.println("editStaff() called with staffID:" + staffID);
@@ -321,7 +322,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
             q.setParameter("email", email);
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
-            
+
             System.out.println("Staff activation status" + staffEntity.getAccountActivationStatus());
             if (staffEntity.getAccountActivationStatus() == false) {
                 System.out.println("Account not yet activated.");
@@ -331,9 +332,19 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             String passwordHash = generatePasswordHash(passwordSalt, password);
             if (passwordHash.equals(staffEntity.getPasswordHash())) {
                 System.out.println("Staff with email:" + email + " logged in successfully.");
+                staffEntity.setInvalidLoginAttempt(0);
                 return staffEntity;
             } else {
                 System.out.println("Login credentials provided were incorrect, password wrong.");
+                Integer numOfInvalidAttempts = staffEntity.getInvalidLoginAttempt();
+                System.out.println("numOfInvalidAttemmpts : " + numOfInvalidAttempts);
+                if (numOfInvalidAttempts == 9) {
+                    staffEntity.setAccountLockStatus(true);
+                    systemSecurityBean.sendPasswordResetEmailForStaff(email);
+                    System.out.println("Account locked and email sent");
+                } else {
+                    staffEntity.setInvalidLoginAttempt(numOfInvalidAttempts + 1);
+                }
                 return null;
             }
         } catch (NoResultException ex) {//cannot find staff with that email
@@ -624,8 +635,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     public boolean editStaffRole(Long staffID, List<Long> roleIDs) {
         System.out.println("editStaffRole() called with staffID:" + staffID);
         try {
-           
-            StaffEntity staffEntity = em.find(StaffEntity.class,staffID);
+
+            StaffEntity staffEntity = em.find(StaffEntity.class, staffID);
             staffEntity.setRoles(new ArrayList());//blank their roles
             List<RoleEntity> roles = new ArrayList<RoleEntity>();
             for (int i = 0; i < roleIDs.size(); i++) {

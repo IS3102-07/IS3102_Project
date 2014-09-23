@@ -8,6 +8,11 @@
 
     <body>
         <script>
+            function lineItem(id) {
+                bomManagement.id.value = id;
+                document.bomManagement.action = "../BomManagement_LineItemBomServlet";
+                document.bomManagement.submit();
+            }
             function linkFurniture(id) {
                 bomManagement.id.value = id;
                 document.bomManagement.action = "../BomManagement_LinkBomServlet";
@@ -131,7 +136,6 @@
                                                                     String furnitureName = null;
                                                                     if (f != null) {
                                                                         furnitureName = f.getName();
-                                                                        System.out.println("whatttttttt!!!! name is " + furnitureName);
                                                                         out.print(furnitureName);
                                                                     } else {
                                                                 %>

@@ -44,6 +44,9 @@
                         <div class="col-lg-12">
                             <h1 class="page-header">Product Group Management</h1>
                             <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
+                                </li>
                                 <li class="active">
                                     <i class="icon icon-exchange"></i> Product Group Management
                                 </li>

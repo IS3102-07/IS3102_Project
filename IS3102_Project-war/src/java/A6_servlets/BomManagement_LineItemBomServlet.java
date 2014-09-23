@@ -1,37 +1,43 @@
-package A3_servlets;
+package A6_servlets;
 
-import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
-import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.BillOfMaterialEntity;
+import EntityManager.LineItemEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ShippingOrderLineItemManagement_RemoveServlet extends HttpServlet {
+public class BomManagement_LineItemBomServlet extends HttpServlet {
 
     @EJB
-    private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocal;
+    private ItemManagementBeanLocal itemManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         try {
-            String purchaseOrderId = request.getParameter("id");
-            String[] deleteArr = request.getParameterValues("delete");
-            if (deleteArr != null) {
-                for (int i = 0; i < deleteArr.length; i++) {
-                    inboundAndOutboundLogisticsBeanLocal.removeLineItemFromShippingOrder(Long.parseLong(purchaseOrderId),Long.parseLong(deleteArr[i]));
-                }
-                response.sendRedirect("ShippingOrderLineItemManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + purchaseOrderId);
+            String errMsg = request.getParameter("errMsg");
+            Long bomId = Long.parseLong(request.getParameter("id"));
+            BillOfMaterialEntity bom = itemManagementBean.viewSingleBOM(bomId);
+            List<LineItemEntity> bomListLineOfItems = bom.getListOfLineItems();
+
+            HttpSession session = request.getSession();
+            session.setAttribute("bomListLineOfItems", bomListLineOfItems);
+            session.setAttribute("bomId", bomId);
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?bomName=" + bom.getName());
             } else {
-                response.sendRedirect("A3/shippingOrderManagement_Update.jsp?errMsg=Nothing is selected.&id=" + purchaseOrderId);
+                response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?errMsg=" + errMsg);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

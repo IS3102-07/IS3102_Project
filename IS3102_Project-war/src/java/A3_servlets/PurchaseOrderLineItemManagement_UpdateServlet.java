@@ -26,7 +26,6 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
             String status1 = request.getParameter("status1");
             String status3 = request.getParameter("status3");
             if (status1 != null) {
-                out.println("<h1>" + "1" + "</h1>");
                 boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), "Submitted");
                 if (!canUpdate) {
                     result = "?source=isSubmit&errMsg=Failed to submit Purchase Order.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;
@@ -37,22 +36,24 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                 }
 
             } else if (status3 != null) {
-                out.println("<h1>" + "2" + "</h1>");
                 boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), status3);
                 result = "?errMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
                 response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
             } else {
-                out.println("<h1>" + "3" + "</h1>");
-                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updateLineItemFromPurchaseOrder(Long.parseLong(purchaseOrderId), Long.parseLong(lineItemId), sku, Integer.parseInt(quantity));
-                if (!canUpdate) {
-                    result = "?errMsg=Purchase Order or SKU not found.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;
+                if (!retailProductsAndRawMaterialsPurchasingBean.checkSKUExists(sku)) {
+                    result = "?errMsg=SKU not found.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;
                     response.sendRedirect("A3/purchaseOrderManagement_UpdateLineItem.jsp" + result);
                 } else {
-                    result = "?errMsg=Line Item updated successfully.&id=" + purchaseOrderId;
-                    response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
+                    boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updateLineItemFromPurchaseOrder(Long.parseLong(purchaseOrderId), Long.parseLong(lineItemId), sku, Integer.parseInt(quantity));
+                    if (!canUpdate) {
+                        result = "?errMsg=Purchase Order not found.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;
+                        response.sendRedirect("A3/purchaseOrderManagement_UpdateLineItem.jsp" + result);
+                    } else {
+                        result = "?errMsg=Line Item updated successfully.&id=" + purchaseOrderId;
+                        response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
+                    }
                 }
             }
-            //retailProductsAndRawMaterialsPurchasingBean.updateLineItemFromPurchaseOrder(Long.MIN_VALUE, Long.MIN_VALUE, lineItemId, Integer.SIZE)
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
             ex.printStackTrace();

@@ -53,7 +53,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 System.out.println("Create regional office in servlet");
                 List<ManufacturingFacilityEntity> manufacturingFacilityList = fmBean.viewListOfManufacturingFacility();
                 request.setAttribute("manufacturingFacilityList", manufacturingFacilityList);
-                
+
                 String submit_btn = request.getParameter("submit-btn");
                 System.out.print(submit_btn);
                 if (submit_btn.equals("Add Regional Office")) {
@@ -63,7 +63,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 } else {
                     regionalOfficeId = Long.parseLong(submit_btn);
                     request.setAttribute("regionalOfficeId", regionalOfficeId);
-                    nextPage = "/FacilityManagement_RegionalOfficeServlet/editRegionalOffice_GET";  
+                    nextPage = "/FacilityManagement_RegionalOfficeServlet/editRegionalOffice_GET";
                 }
                 break;
 
@@ -74,21 +74,27 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
 
-                    boolean regionalOffice = fmBean.addRegionalOffice(regionalOfficeName, address, telephone, email);
-                    if (regionalOffice != false) {
-                        request.setAttribute("alertMessage", "A new regional office record has been saved.");
-                    } else {
+                    if (fmBean.checkNameExistsOfRegionalOffice(regionalOfficeName)) {
                         request.setAttribute("alertMessage", "Fail to create regional office due to duplicated regional office name.");
+                        request.setAttribute("regionalOffice", true);
+                        nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
+                    } else {
+                        boolean regionalOffice = fmBean.addRegionalOffice(regionalOfficeName, address, telephone, email);
+                        if (regionalOffice != false) {
+                            request.setAttribute("alertMessage", "A new regional office record has been saved.");
+                        } else {
+                            request.setAttribute("alertMessage", "Fail to create regional office due to duplicated regional office name.");
+                        }
+                        request.setAttribute("regionalOffice", regionalOffice);
+                        nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
                     }
-                    request.setAttribute("regionalOffice", regionalOffice);
-                    nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 break;
 
             case "/editRegionalOffice_GET":
-                regionalOfficeId = (long)request.getAttribute("regionalOfficeId");
+                regionalOfficeId = (long) request.getAttribute("regionalOfficeId");
                 System.out.println("Regional office ID is " + regionalOfficeId);
                 RegionalOfficeEntity regionalOffice = fmBean.viewRegionalOffice(String.valueOf(regionalOfficeId));
                 System.out.println("ID of regional office to be displayed" + regionalOffice.getId());
