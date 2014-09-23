@@ -1,3 +1,4 @@
+<%@page import="HelperClasses.StoreHelper"%>
 <%@page import="EntityManager.StoreEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -58,7 +59,8 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th>Store Name</th>                                                            
+                                                            <th>Store Name</th> 
+                                                            <th>Regional Office</th>
                                                             <th>Address</th>
                                                             <th>Telephone</th>
                                                             <th>Email Address</th>
@@ -67,17 +69,18 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<StoreEntity> storeEntityList = (List<StoreEntity>) request.getAttribute("storeList");
-                                                            if (storeEntityList != null) {
-                                                                for (StoreEntity storeEntity : storeEntityList) {
+                                                            List<StoreHelper> modelList = (List<StoreHelper>) request.getAttribute("modelList");
+                                                            if (modelList != null) {
+                                                                for (StoreHelper model : modelList) {
                                                         %>
                                                         <tr>
-                                                            <td><input type="checkbox" name="delete" value="<%= storeEntity.getId()%>" /></td>
-                                                            <td><%= storeEntity.getName()%></td>                                                            
-                                                            <td><%= storeEntity.getAddress()%></td>
-                                                            <td><%= storeEntity.getTelephone()%></td>
-                                                            <td><%= storeEntity.getEmail()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= storeEntity.getId() %>">View</button></a></td>
+                                                            <td><input type="checkbox" name="delete" value="<%= model.store.getId()%>" /></td>
+                                                            <td><%= model.store.getName()%></td>     
+                                                            <td><%= model.regionalOffice.getName() %></td>
+                                                            <td><%= model.store.getAddress()%></td>
+                                                            <td><%= model.store.getTelephone()%></td>
+                                                            <td><%= model.store.getEmail()%></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= model.store.getId()%>">View</button></a></td>
                                                         </tr>
                                                         <%
                                                                 }

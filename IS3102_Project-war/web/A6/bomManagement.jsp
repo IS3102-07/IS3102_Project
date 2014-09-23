@@ -8,12 +8,17 @@
 
     <body>
         <script>
-            function updateBillOfMaterial(id) {
-                billOfMaterialManagement.id.value = id;
+            function linkFurniture(id) {
+                bomManagement.id.value = id;
                 document.bomManagement.action = "bomManagement_update.jsp";
                 document.bomManagement.submit();
             }
-            function removeBillOfMaterial() {
+            function updateBOM(id) {
+                bomManagement.id.value = id;
+                document.bomManagement.action = "bomManagement_update.jsp";
+                document.bomManagement.submit();
+            }
+            function removeBOM() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -27,10 +32,10 @@
                 } else {
 
                     var yes = confirm("Are you sure?!");
-                    if (yes == true) {
+                    if (yes === true) {
                         window.event.returnValue = true;
-                        document.announcementsManagement.action = "../BillOfMaterialManagement_RemoveBillOfMaterialServlet";
-                        document.announcementsManagement.submit();
+                        document.bomManagement.action = "../BomManagement_RemoveBomServlet";
+                        document.bomManagement.submit();
                     } else {
                         window.event.returnValue = false;
                     }
@@ -82,7 +87,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addBOM()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove BOM(s)" onclick="removeBillOfMaterial()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove BOM(s)" onclick="removeBOM()"  />
                                                 </div>
                                             </div>
                                             <br/>
@@ -94,7 +99,7 @@
                                                             <th style="width:15%">BOM Name</th>
                                                             <th>Furniture</th>
                                                             <th style="width:40%">Description</th>
-                                                            <th style="width:13%">Edit BOM</th>
+                                                            <th style="width:12%">Edit BOM</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -145,7 +150,7 @@
                                                                 <%=listOfBOM.get(i).getDescription()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Edit" onclick="javascript:updateRawMaterial('<%=listOfBOM.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Edit" onclick="javascript:updateBOM('<%=listOfBOM.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -162,7 +167,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add BOM" onclick="addBOM()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove BOM(s)" onclick="removeRawMaterial()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove BOM(s)" onclick="removeBOM()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    

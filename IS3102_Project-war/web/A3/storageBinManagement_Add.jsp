@@ -52,15 +52,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
-                                    <input class="form-control" name="length" type="number" required="true">
+                                    <input class="form-control" name="length" type="number" min="1" step="1" required="true">
                                 </div>
                                 <div class="form-group">
                                     <label>Width</label>
-                                    <input class="form-control" name="width" type="number" required="true"/>
+                                    <input class="form-control" name="width" type="number" min="1" step="1" required="true"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
-                                    <input class="form-control" name="height" type="number" required="true"/>
+                                    <input class="form-control" name="height" type="number" min="1" step="1" required="true"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add Storage Bin" class="btn btn-lg btn-primary btn-block">

@@ -8,6 +8,7 @@ package A6_servlets;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
+import HelperClasses.StoreHelper;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -41,9 +42,9 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
 
         switch (target) {
 
-            case "/storeManagement_index":
-                List<StoreEntity> storeList = fmBean.viewListOfStore();
-                request.setAttribute("storeList", storeList);
+            case "/storeManagement_index":                
+                List<StoreHelper> models = fmBean.getStoreHelperList();
+                request.setAttribute("modelList", models);
                 nextPage = "/A6/storeManagement";
                 break;
 
@@ -88,9 +89,11 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
 
             case "/editStore_GET":
                 storeId = (long)request.getAttribute("storeId");
-                System.out.println("Store ID is " + storeId);
-                StoreEntity store = fmBean.viewStoreEntity(storeId);
-                request.setAttribute("store", store);
+                System.out.println("Store ID is " + storeId);                
+                StoreHelper storeHelper = fmBean.getStoreHelperClass(storeId);
+                request.setAttribute("storeHelper", storeHelper);                
+                List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
+                request.setAttribute("regionalOfficeList", regionalOfficeList);
                 nextPage = "/A6/editStore";
                 break;
 
@@ -100,20 +103,24 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 String telephone = request.getParameter("telephone");
                 String email = request.getParameter("email");
                 Long id = Long.parseLong(request.getParameter("storeId"));
-
-                if (fmBean.editStore(id, storeName, address, telephone, email)) {
+                Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
+                
+                if (fmBean.editStore(id, storeName, address, telephone, email) && 
+                        fmBean.updateStoreToRegionalOffice(regionalOfficeId, id)) {
                     request.setAttribute("alertMessage", "The store has been saved.");
                 } else {
                     request.setAttribute("alertMessage", "Fail to edit store.");
                 }
                 nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
                 break;
+                
             case "/deleteStore":
                 String[] deletes = request.getParameterValues("delete");
                 if (deletes != null) {
                     for (String storeString : deletes) {
                         String store_Id = storeString;
-                        fmBean.removeStore(store_Id);
+                        storeId = Long.parseLong(store_Id);
+                        fmBean.removeStore(storeId);
                     }
                 }
                 nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
