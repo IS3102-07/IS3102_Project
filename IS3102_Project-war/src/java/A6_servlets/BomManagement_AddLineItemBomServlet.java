@@ -1,37 +1,46 @@
-package A3_servlets;
+package A6_servlets;
 
-import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
-import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ShippingOrderLineItemManagement_RemoveServlet extends HttpServlet {
+/**
+ *
+ * @author Jason
+ */
+public class BomManagement_AddLineItemBomServlet extends HttpServlet {
 
-    @EJB
-    private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocal;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            String purchaseOrderId = request.getParameter("id");
-            String[] deleteArr = request.getParameterValues("delete");
-            if (deleteArr != null) {
-                for (int i = 0; i < deleteArr.length; i++) {
-                    inboundAndOutboundLogisticsBeanLocal.removeLineItemFromShippingOrder(Long.parseLong(purchaseOrderId),Long.parseLong(deleteArr[i]));
-                }
-                response.sendRedirect("ShippingOrderLineItemManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + purchaseOrderId);
-            } else {
-                response.sendRedirect("A3/shippingOrderManagement_Update.jsp?errMsg=Nothing is selected.&id=" + purchaseOrderId);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            out.println(ex);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet BomManagement_AddLineItemBomServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet BomManagement_AddLineItemBomServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

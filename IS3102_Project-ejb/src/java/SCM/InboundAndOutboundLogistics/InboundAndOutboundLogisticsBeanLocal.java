@@ -18,6 +18,7 @@ public interface InboundAndOutboundLogisticsBeanLocal {
 
     // shipping tye can be by ship, by truck, by train etc
     public ShippingOrderEntity createShippingOrderBasicInfo(Date expectedReceivedDate, Long sourceWarehouseID, Long destinationWarehouseID);
+    public boolean checkSKUExists(String SKU);
     public Boolean updateShippingOrder(Long shippingOrderID, Long sourceWarehouseID, Long destinationWarehouseID, Date expectedReceivedDate);
     public Boolean updateShippingOrderStatus(Long shippingOrderID, String status);
     public Boolean addLineItemToShippingOrder(Long shippingOrderID, String SKU, Integer qty);

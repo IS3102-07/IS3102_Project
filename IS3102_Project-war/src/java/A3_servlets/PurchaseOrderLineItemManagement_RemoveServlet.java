@@ -19,11 +19,9 @@ public class PurchaseOrderLineItemManagement_RemoveServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String purchaseOrderId = request.getParameter("id");
-            out.println("<h1>" + purchaseOrderId + "</h1>");
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    out.println("<h1>" + deleteArr[i] + "</h1>");
                     retailProductsAndRawMaterialsPurchasingBean.removeLineItemFromPurchaseOrder(Long.parseLong(deleteArr[i]), Long.parseLong(purchaseOrderId));
                 }
                 response.sendRedirect("PurchaseOrderLineItemManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + purchaseOrderId);

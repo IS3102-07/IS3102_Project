@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 public class ShippingOrderManagement_Servlet extends HttpServlet {
 
     @EJB
-    private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocall;
+    private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocal;
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
 
@@ -29,7 +29,7 @@ public class ShippingOrderManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
-            List<ShippingOrderEntity> shippingOrders = inboundAndOutboundLogisticsBeanLocall.getShippingOrderList();
+            List<ShippingOrderEntity> shippingOrders = inboundAndOutboundLogisticsBeanLocal.getShippingOrderList();
             session.setAttribute("shippingOrders", shippingOrders);
 
             List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
