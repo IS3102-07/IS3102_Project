@@ -26,11 +26,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Sale And Operation Planning
+                                Sales And Operation Planning
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sale And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales And Operation Planning</a>
                                 </li>                             
                                 <li>
                                     <i class="icon icon-list"></i>  <a href="#">Dashboard</a>
@@ -104,7 +104,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><b>Sale And Operation Plans</b></h4>
+                                    <h4><b>Sales And Operation Plans</b></h4>
                                 </div>
                                 <!-- /.panel-heading -->
 
@@ -148,7 +148,7 @@
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-12">                                                        
-                                                        <input type="submit" name="submit-btn" value="Delete Sale And Operation Plan" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <input type="submit" name="submit-btn" value="Delete Sales And Operation Plan" class="btn btn-primary" data-loading-text="Loading...">
                                                     </div>
                                                 </div>
                                             </form>                                              

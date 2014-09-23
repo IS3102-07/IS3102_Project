@@ -51,6 +51,8 @@ public interface SalesAndOperationPlanningBeanLocal {
     
     public Boolean deleteSchedule(Long id);
     
+    public ProductGroupEntity getProductGroupBySOP(Long sopId);
+    
     @Remove
     public void remove();
 }
