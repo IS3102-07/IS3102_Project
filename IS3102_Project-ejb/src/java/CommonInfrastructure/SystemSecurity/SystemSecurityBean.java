@@ -64,7 +64,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Activation");
-                String messageText = "Greetings from Island Furniture... \n\nHere is your activation code to be keyed in in order to activate your staff account :\n\n" + activationCode;
+                String messageText = "Greetings from Island Furniture... \n\nHere is your activation code to be keyed in in order to activate your staff account :\n\nEmail: "+ email +"\nActivation Code: " + activationCode;
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
@@ -113,7 +113,8 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Activation");
-                String messageText = "Greetings from Island Furniture... \n\nHere is your activation code to be keyed in in order to activate your member account :\n\n" + activationCode;
+                String messageText = "Greetings from Island Furniture... \n\n"
+                        + "Here is your activation code to be keyed in in order to activate your member account :\n\n" + activationCode;
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
