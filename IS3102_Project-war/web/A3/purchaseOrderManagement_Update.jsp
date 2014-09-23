@@ -15,7 +15,6 @@
     } else {
         List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("activeSuppliers"));
         List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
-        id = request.getParameter("id");
 
         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
         for (int i = 0; i < purchaseOrders.size(); i++) {

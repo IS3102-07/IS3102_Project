@@ -50,11 +50,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input class="form-control" type="password" name="password" id="password">
+                                    <input class="form-control" type="password" name="password" id="password" required = "true">
                                 </div>
                                 <div class="form-group">
                                     <label>Re-enter Password</label>
-                                    <input class="form-control" type="password" name="repassword" id="repassword">
+                                    <input class="form-control" type="password" name="repassword" id="repassword" required = "true">
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>

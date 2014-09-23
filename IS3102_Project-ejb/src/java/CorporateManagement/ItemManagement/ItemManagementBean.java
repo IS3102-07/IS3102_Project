@@ -9,6 +9,7 @@ import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.ProductGroupLineItemEntity;
+import EntityManager.StorageBinEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
@@ -450,15 +451,21 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
     
     @Override
-    public ProductGroupLineItemEntity createProductGroupLineItem(Long furnitureId, double percent) {
+    public ProductGroupLineItemEntity createProductGroupLineItem(String SKU, double percent) {
+        System.out.println("createProductGroupLineItem() called");
         try {
-            FurnitureEntity furniture = em.find(FurnitureEntity.class, furnitureId);
+            Query q = em.createQuery("Select f from FurnitureEntity f where f.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            FurnitureEntity furniture = (FurnitureEntity) q.getSingleResult();
             ProductGroupLineItemEntity lineItem = new ProductGroupLineItemEntity();
             lineItem.setFurniture(furniture);
             lineItem.setPercent(percent);
             em.persist(lineItem);
             return lineItem;
-        } catch (Exception ex) {
+        } catch (NoResultException ex) {
+            System.out.println("Cuold not find furniture with SKU.");
+        }catch (Exception ex) {
+            System.out.println("Failed to createProductGroupLineItem()");
             ex.printStackTrace();
         }
         return null;
@@ -495,6 +502,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             lineItem.setProductGroup(productGroup);
             productGroup.getLineItemList().add(lineItem);
             em.merge(productGroup);
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
