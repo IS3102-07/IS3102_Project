@@ -130,18 +130,12 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-
-
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- /#page-wrapper -->
-
         </div>
         <!-- /#wrapper -->
-
-
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function () {

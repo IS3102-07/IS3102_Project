@@ -14,9 +14,17 @@
                 document.bomManagement.submit();
             }
             function linkFurniture(id) {
-                bomManagement.id.value = id;
-                document.bomManagement.action = "../BomManagement_LinkBomServlet";
-                document.bomManagement.submit();
+
+                var yes = confirm("Are you sure?!");
+                if (yes === true) {
+                    window.event.returnValue = true;
+                    bomManagement.id.value = id;
+                    document.bomManagement.action = "../BomManagement_LinkBomServlet";
+                    document.bomManagement.submit();
+                } else {
+                    window.event.returnValue = false;
+                }
+
             }
             function updateBOM(id) {
                 bomManagement.id.value = id;

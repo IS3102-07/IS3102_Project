@@ -14,5 +14,5 @@ public interface SalesForecastBeanLocal {
         public SalesFigureEntity getSalesFigure(StoreEntity store, Date month, ItemEntity item);
         public SalesFigureEntity createSalesFigure(Date month, Integer quantity, StoreEntity store, ItemEntity item);
         public SalesFigureEntity getSalesFigure(Long id);
-       
+        public List<SalesFigureEntity> getAllSalesFigureList();
 }
