@@ -7,6 +7,7 @@ package A6_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.RegionalOfficeEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -51,6 +52,8 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 String submit_btn = request.getParameter("submit-btn");
                 System.out.println(submit_btn);
                 if (submit_btn.equals("Add Manufacturing Facility")) {
+                    List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
+                    request.setAttribute("regionalOfficeList", regionalOfficeList);
                     nextPage = "/A6/createManufacturingFacility";
                 } else if (submit_btn.equals("Delete Manufacturing Facility")) {
                     nextPage = "/FacilityManagement_ManufacturingFacilityServlet/deleteManufacturingFacility";
