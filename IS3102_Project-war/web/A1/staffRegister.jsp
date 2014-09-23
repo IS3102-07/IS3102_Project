@@ -1,7 +1,5 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
-<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <!DOCTYPE html>
 <!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
