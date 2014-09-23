@@ -85,7 +85,7 @@
                                     <input type="number" class="form-control" id="input_email" min="1" step="1" name="capacity" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="submit">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>
                             </form>
 

@@ -32,13 +32,13 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleAndOperationPlanning_Servlet extends HttpServlet {
+
     @EJB
     private ItemManagementBeanLocal imBean;
     @EJB
     private FacilityManagementBeanLocal fmBean;
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
-    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -150,20 +150,47 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sop_create_GET":
                 Long storeId = (long) session.getAttribute("sop_storeId");
                 StoreHelper storeHelper = fmBean.getStoreHelperClass(storeId);
+                request.setAttribute("storeHelper", storeHelper);
+
                 productGroupId = (long) session.getAttribute("productGroupId");
-                ProductGroupEntity productGrup = imBean.getProductGroup(productGroupId);
-                
-                
+                ProductGroupEntity productGroup = imBean.getProductGroup(productGroupId);
+                request.setAttribute("productGroup", productGroup);
+
+                Long schedulelId = (long) session.getAttribute("scheduleId");
+                MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
+                request.setAttribute("schedule", schedule);
+
                 nextPage = "/A2/sop_create";
                 break;
-                
+
             case "/sop_create_POST":
-                
+
+                Integer saleForecast = Integer.parseInt(request.getParameter("saleForecast"));
+                Integer productionPlan = Integer.parseInt(request.getParameter("productionPlan"));
+                Integer currentInventory = Integer.parseInt(request.getParameter("currentInventory"));
+                Integer targetInventoty = Integer.parseInt(request.getParameter("targetInventoty"));
+
+                storeId = (long) session.getAttribute("sop_storeId");
+                productGroupId = (long) session.getAttribute("productGroupId");
+                schedulelId = (long) session.getAttribute("scheduleId");
+
+                SaleAndOperationPlanEntity sop = sopBean.createSOP(storeId, schedulelId, productGroupId, saleForecast, productionPlan, currentInventory, targetInventoty);
+                if (sop != null) {
+                    request.setAttribute("alertMessage", "Sale and Operation Plan is created.");
+                } else {
+                    request.setAttribute("alertMessage", "Failed to create Sale and Operation Plan.");
+                }
+                nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 break;
-                
+
             case "/sop_edit_GET":
-                
+
                 nextPage = "/A2/sop_edit";
+                break;
+
+            case "/sop_edit_POST":
+
+                nextPage = "";
                 break;
 
         }

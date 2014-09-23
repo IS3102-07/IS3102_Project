@@ -25,7 +25,6 @@ public class ShippingOrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String shippingType;    
     private String status;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -46,10 +45,8 @@ public class ShippingOrderEntity implements Serializable {
         this.lineItems = new ArrayList<>();
     }
 
-    public ShippingOrderEntity(String ShippingType, Date shippedDate, Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
-        this.shippingType = ShippingType;
+    public ShippingOrderEntity(Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
         this.createdDate = new Date();
-        this.shippedDate = shippedDate;
         this.expectedReceivedDate = expectedReceivedDate;
         this.lineItems = new ArrayList<>();
         this.origin = origin;
@@ -63,14 +60,6 @@ public class ShippingOrderEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getShippingType() {
-        return shippingType;
-    }
-
-    public void setShippingType(String ShippingType) {
-        this.shippingType = ShippingType;
     }
 
     public Date getCreatedDate() {
