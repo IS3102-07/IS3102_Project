@@ -33,7 +33,7 @@
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.productGroupManagement.action = "../PurchaseOrderLineItemManagement_RemoveServlet";
+                    document.productGroupManagement.action = "../ProductGroupLineItemManagement_RemoveServlet";
                     document.productGroupManagement.submit();
                 } else {
                     window.event.returnValue = false;
@@ -92,6 +92,7 @@
                                             <input type="submit" value="Update Product Group" class="btn btn-lg btn-primary btn-block">
                                         </div>  
                                     </form>
+                                    <input type="hidden" value="<%=productGroup.getId()%>" name="id">
                                 </div>
                             </div>
                         </div>

@@ -1,46 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A6_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.ProductGroupLineItemEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Neo
- */
 public class ProductGroupLineItemManagement_AddServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private ItemManagementBeanLocal ItemManagementBean;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductGroupLineItemManagement_AddServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductGroupLineItemManagement_AddServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String productGroupId = request.getParameter("id");
+            String sku = request.getParameter("sku");
+            String percent = request.getParameter("percent");
+
+            ProductGroupLineItemEntity productGroupLineItemEntity = ItemManagementBean.createProductGroupLineItem(sku, Double.parseDouble(percent));
+            boolean canUpdate = false;
+            if (productGroupLineItemEntity != null) {
+                canUpdate = ItemManagementBean.addLineItemToProductGroup(Long.parseLong(productGroupId), productGroupLineItemEntity.getId());
+            }
+            if (!canUpdate) {
+                result = "?errMsg=Product group or SKU not found.&id=" + productGroupId;
+                response.sendRedirect("A6/productGroupManagement_AddLineItem.jsp" + result);
+            } else {
+                result = "?errMsg=Line item added successfully.&id=" + productGroupId;
+                response.sendRedirect("ProductGroupLineItemManagement_Servlet" + result);
+            }
+
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 
