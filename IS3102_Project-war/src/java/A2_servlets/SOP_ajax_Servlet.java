@@ -39,7 +39,7 @@ public class SOP_ajax_Servlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             for (StoreEntity store : storeList) {
                 System.out.println("store.getName: "+store.getName());
-                out.write(store.getName());
+                out.write(store.getName()+";");
             }
         }
     }

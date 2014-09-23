@@ -94,8 +94,9 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
 
             case "/sop_index_Post":
                 try {
-                    Long storeId = Long.parseLong(request.getParameter("store"));
-                    session.setAttribute("sop_storeId", storeId);
+                    String storeName = request.getParameter("storeName");
+                    StoreEntity store = fmBean.getStoreByName(storeName);
+                    session.setAttribute("sop_storeId", store.getId());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -129,11 +130,11 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                     request.setAttribute("store", store);
                     request.setAttribute("schedule", schedule);
                     request.setAttribute("unplannedProductGroupList", unplannedProductGroupList);
-                    request.setAttribute("sopList", sopList);
-                    nextPage = "/A2/sop_main";
+                    request.setAttribute("sopList", sopList);                    
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                nextPage = "/A2/sop_main";
                 break;
 
             case "":

@@ -48,7 +48,8 @@
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_index_Post">
                                         <div class="form-group">
                                             <label for="select_regionalOffice">Regional Office</label>
-                                            <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">                                                
+                                            <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">
+                                                <option>--select regional office--</option>
                                                 <%
                                                     List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
                                                     for (RegionalOfficeEntity r : regionalOfficeList) {
@@ -61,11 +62,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="select_store">Store</label>
-                                            <select id="select_store" class="form-control" name="store">
-                                                <option>Tangling Store</option>
-                                                <%
-
-                                                %>
+                                            <select id="select_store" class="form-control" name="storeName" required="true">
+                                                <option>--Select Store--</option>                                            
                                             </select>
                                         </div>
                                         <input type="submit" class="btn btn-primary" value="Access">
@@ -90,10 +88,18 @@
         <script>
             function getStore() {
                 var regionalOfficeId = $("#select_regionalOffice").find('option:selected').val();
-                alert("id: " + regionalOfficeId);
-                $.get('../SOP_ajax_Servlet',{regionalOfficeId:regionalOfficeId},function(responseText) { 
-                        alert(responseText);         
-                    });
+                $.get('../SOP_ajax_Servlet', {regionalOfficeId: regionalOfficeId}, function (responseText) {
+                    var stores = responseText.trim().split(';');
+                    var x = document.getElementById("select_store");
+                    while(x.length > 0){
+                        x.remove(0);
+                    }
+                    for (var i = 0; i < stores.length - 1; i++) {
+                        var option = document.createElement("option");
+                        option.text = stores[i];
+                        x.add(option);
+                    }
+                });
             }
         </script>
 
