@@ -25,7 +25,7 @@
                             <form role="form" name="registrationForm" action="../AccountManagement_ActivateServlet">
                                 <div class="box-content">
                                     <h3>Staff Account Activation</h3>
-                                    <%=errMsg%>
+                                    <%=msg%>
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-12">
