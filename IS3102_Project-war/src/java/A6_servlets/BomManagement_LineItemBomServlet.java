@@ -34,7 +34,7 @@ public class BomManagement_LineItemBomServlet extends HttpServlet {
             if (errMsg == null || errMsg.equals("")) {
                 response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?bomName=" + bom.getName());
             } else {
-                response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?errMsg=" + errMsg);
+                response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?errMsg=" + errMsg + "&bomName=" + bom.getName());
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

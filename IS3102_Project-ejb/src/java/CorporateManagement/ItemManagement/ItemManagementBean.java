@@ -13,6 +13,8 @@ import EntityManager.StorageBinEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -272,14 +274,21 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean addLineItemToBOM(String SKU, Integer qty, Long BOMId) {
         System.out.println("addLineItemToBOM() called with id:" + BOMId);
         try {
-            LineItemEntity lineItem = new LineItemEntity(getItemBySKU(SKU), qty, "");
-            BillOfMaterialEntity BOM = em.find(BillOfMaterialEntity.class, BOMId);
-            BOM.getListOfLineItems().add(lineItem);
-            System.out.println("addLineItemToBOM() is successful.");
-            return true;
+            //if sku is not a raw material throw exception
+            ItemEntity item = getItemBySKU(SKU);
+            if (item.getType().equals("Raw Material")) {
+                LineItemEntity lineItem = new LineItemEntity(item, qty, "");
+                BillOfMaterialEntity BOM = em.find(BillOfMaterialEntity.class, BOMId);
+                BOM.getListOfLineItems().add(lineItem);
+                System.out.println("addLineItemToBOM() is successful.");
+                return true;
+            }else{
+                throw new Exception();
+            }
         } catch (Exception ex) {
             System.out.println("\nServer failed to addLineItemToBOM():\n" + ex);
             return false;
@@ -395,12 +404,17 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     @Override
     public ItemEntity getItemBySKU(String SKU) {
-//        Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
-//        q.setParameter("SKU", SKU);
-//        if(q.getSingleResult() instanceof ItemEntity){
-//            
-//        }
-        return null;
+        System.out.println("getItemBySKU() called with SKU: " + SKU);
+        try {
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            ItemEntity item = (ItemEntity) q.getSingleResult();
+            System.out.println("getItemBySKU() is successful.");
+            return item;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getItemBySKU():\n" + ex);
+            return null;
+        }
     }
 
     @Override
