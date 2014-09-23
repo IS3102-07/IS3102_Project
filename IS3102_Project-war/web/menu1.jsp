@@ -247,7 +247,7 @@
                 </a>
                 <ul id="MRP" class="collapse">
                     <li>
-                        <a href="#">Sales Forecast</a>
+                        <a href="../HistoricalSalesFigureManagement_Servlet">Historical Sales Figures</a>
                     </li>
                     <li>
                         <a href="#">Sales and Operation Planning</a>

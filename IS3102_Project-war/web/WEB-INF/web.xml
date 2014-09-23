@@ -484,6 +484,14 @@
         <servlet-name>AccountManagement_SendResetPasswordServlet</servlet-name>
         <servlet-class>A1_servlets.AccountManagement_SendResetPasswordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HistoricalSalesFigureManagement_Servlet</servlet-name>
+        <servlet-class>A2_servlets.HistoricalSalesFigureManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HistoricalSalesFigureManagement_AddServlet</servlet-name>
+        <servlet-class>A2_servlets.HistoricalSalesFigureManagement_AddServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -967,6 +975,14 @@
     <servlet-mapping>
         <servlet-name>AccountManagement_SendResetPasswordServlet</servlet-name>
         <url-pattern>/AccountManagement_SendResetPasswordServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricalSalesFigureManagement_Servlet</servlet-name>
+        <url-pattern>/HistoricalSalesFigureManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoricalSalesFigureManagement_AddServlet</servlet-name>
+        <url-pattern>/HistoricalSalesFigureManagement_AddServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

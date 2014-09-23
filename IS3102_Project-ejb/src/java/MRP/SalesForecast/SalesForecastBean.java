@@ -20,9 +20,12 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
     private EntityManager em;
 
     @Override
-    public SalesFigureEntity createSalesFigure(Date month, Integer quantity, StoreEntity store, ItemEntity item) {
-        SalesFigureEntity SalesFigure = new SalesFigureEntity(month, quantity, store, item);
+    public SalesFigureEntity createSalesFigure(Date month, Integer quantity, Long storeID, Long itemID) {
+
         try {
+            StoreEntity store = em.getReference(StoreEntity.class, storeID);
+            ItemEntity item = em.getReference(ItemEntity.class, itemID);
+            SalesFigureEntity SalesFigure = new SalesFigureEntity(month, quantity, store, item);
             em.persist(SalesFigure);
             System.out.println("SalesFigure with id: " + SalesFigure.getId() + " is created successfully");
             return SalesFigure;
