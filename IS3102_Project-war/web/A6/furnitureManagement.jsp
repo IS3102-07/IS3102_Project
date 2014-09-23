@@ -27,8 +27,8 @@
                     var yes = confirm("Are you sure?!");
                     if (yes == true) {
                         window.event.returnValue = true;
-                        document.announcementsManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
-                        document.announcementsManagement.submit();
+                        document.furnitureManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
+                        document.furnitureManagement.submit();
                     } else {
                         window.event.returnValue = false;
                     }

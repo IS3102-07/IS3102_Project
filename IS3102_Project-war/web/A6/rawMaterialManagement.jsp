@@ -23,12 +23,11 @@
                     alert("No items selected.");
                     window.event.returnValue = false;
                 } else {
-
                     var yes = confirm("Are you sure?!");
                     if (yes == true) {
                         window.event.returnValue = true;
-                        document.announcementsManagement.action = "../RawMaterialManagement_RemoveRawMaterialServlet";
-                        document.announcementsManagement.submit();
+                        document.rawMaterialManagement.action = "../RawMaterialManagement_RemoveRawMaterialServlet";
+                        document.rawMaterialManagement.submit();
                     } else {
                         window.event.returnValue = false;
                     }

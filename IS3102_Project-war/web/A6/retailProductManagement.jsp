@@ -27,8 +27,8 @@
                     var yes = confirm("Are you sure?!");
                     if (yes == true) {
                         window.event.returnValue = true;
-                        document.announcementsManagement.action = "../RetailProductManagement_RemoveRetailProductServlet";
-                        document.announcementsManagement.submit();
+                        document.retailProductManagement.action = "../RetailProductManagement_RemoveRetailProductServlet";
+                        document.retailProductManagement.submit();
                     } else {
                         window.event.returnValue = false;
                     }
