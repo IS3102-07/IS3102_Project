@@ -96,7 +96,7 @@
                                                             <th>Length</th>
                                                             <th>Width</th>
                                                             <th>Height</th>
-                                                            <th>Update</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
