@@ -161,7 +161,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             Message msg = new MimeMessage(session);
             if (msg != null) {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
-                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmailAddress, false));
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Password Reset");
                 String messageText = "Greetings from Island Furniture... \n\nHere is your reset password to be keyed in in order to reset your staff account password:\n\n" + passwordReset;
                 msg.setText(messageText);
