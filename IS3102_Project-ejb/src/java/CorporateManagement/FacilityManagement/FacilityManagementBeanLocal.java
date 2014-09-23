@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package CorporateManagement.FacilityManagement;
-
+ 
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
