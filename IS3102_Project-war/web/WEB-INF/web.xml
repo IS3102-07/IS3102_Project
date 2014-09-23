@@ -965,8 +965,8 @@
         <url-pattern>/BomManagement_AddLineItemBomServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BomMangement_RemoveLineItemBomServlet</servlet-name>
-        <url-pattern>/BomMangement_RemoveLineItemBomServlet</url-pattern>
+        <servlet-name>BomManagement_RemoveLineItemBomServlet</servlet-name>
+        <url-pattern>/BomManagement_RemoveLineItemBomServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductGroupManagement_RemoveServlet</servlet-name>
