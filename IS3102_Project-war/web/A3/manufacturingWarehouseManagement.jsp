@@ -63,14 +63,15 @@
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Warehouse Capacity</h3>
                                 </div>
+
                                 <div class="panel-body">
                                     <div class="progress-bars">
                                         <div class="progress-label">
                                             <span>HTML/CSS</span>
                                         </div>
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-primary" data-appear-progress-animation="100%">
-                                                <span class="progress-bar-tooltip">100%</span>
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="20" aria-valuemax="100" style="width: 60%;">
+                                                60%
                                             </div>
                                         </div>
                                         <div class="progress-label">
@@ -195,16 +196,5 @@
             </div>
             <!-- /#wrapper -->
 
-
-            <!-- Vendor -->
-            <script src="../vendor/jquery.js"></script>
-            <script src="../vendor/jquery.appear.js"></script>
-            <script src="../vendor/jquery.easing.js"></script>
-
-            <!-- Theme Base, Components and Settings -->
-            <script src="../js/theme.js"></script>
-
-            <!-- Theme Initialization Files -->
-            <script src="../js/theme.init.js"></script>
     </body>
 </html>
