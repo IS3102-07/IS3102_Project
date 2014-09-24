@@ -4,6 +4,7 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
+
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
@@ -37,7 +38,7 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div id="overview" class="tab-pane active">
-                                        <form role="form" action="../StaffManagement_UpdateStaffServlet">
+                                        <form role="form" action="../StaffManagement_UpdateStaffServlet" onsubmit="return validatePassword()">
                                             <h4>Personal Information</h4>
                                             <div class="form-group">
                                                 <label>Identification No</label>
@@ -59,12 +60,12 @@
                                             <hr class="more-spaced "/>
                                             <h4>Change Password</h4>
                                             <div class="form-group">
-                                                <label>New Password (leave blank unless setting a new password)</label>
-                                                <input class="form-control" type="password" name="password">
+                                                <label>New Password (leave blank unless setting a new password).<br/>Password to be at least 8 characters long.</label>
+                                                <input class="form-control" type="password" name="password" id="password">
                                             </div>
                                             <div class="form-group">
                                                 <label>Re-enter New Password</label>
-                                                <input class="form-control" type="password"  name="repassword">
+                                                <input class="form-control" type="password"  name="repassword" id="repassword">
                                             </div>
                                             <div class="form-group">
                                                 <label>Address</label>
@@ -106,6 +107,30 @@
                     response.sendRedirect("../StaffManagement_StaffServlet");
                     ex.printStackTrace();
                 }%>
+            <script>
+                function validatePassword() {
+                    var password = document.getElementById("password").value;
+                    var repassword = document.getElementById("repassword").value;
+                    var ok = true;
+                    if ((password != null && repassword != null) || (password != "" && repassword != "")) {
+                        if (password != repassword) {
+                            //alert("Passwords Do not match");
+                            document.getElementById("password").style.borderColor = "#E34234";
+                            document.getElementById("repassword").style.borderColor = "#E34234";
+                            alert("Passwords do not match. Please key again.");
+                            ok = false;
+                        } else if (password == repassword) {
+                            if (password.length < 8) {
+                                alert("Passwords too short. At least 8 characters.");
+                                ok = false;
+                            }
+                        }
+                    } else {
+                        return ok;
+                    }
+                    return ok;
+                }
+            </script>
     </body>
 
 </html>

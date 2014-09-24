@@ -28,6 +28,7 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
             session = request.getSession();
             String update = request.getParameter("update");
             String source = request.getParameter("source");
+            System.out.println("What is update : " + update);
             if (source != null) {
                 String staffId = request.getParameter("id");
                 String identificationNo = request.getParameter("identificationNo");
