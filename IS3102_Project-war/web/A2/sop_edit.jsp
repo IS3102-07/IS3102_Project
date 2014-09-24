@@ -68,22 +68,22 @@
                                     <% SaleAndOperationPlanEntity sop = (SaleAndOperationPlanEntity)request.getAttribute("sopEntity");  %>
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_edit_POST">
                                         <div class="form-group">
-                                            <label>Sale Forecast</label>
+                                            <label>Sale Forecast</label> 
                                             <input id="input_saleForecast" type="number" class="form-control" name="saleForecast" value="<%= sop.getSaleForcastdata() %>" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Production Plan</label>
+                                            <label>Production Plan</label> 
                                             <input id="input_productionPlan" type="number" class="form-control" name="productionPlan" value="<%= sop.getProductionPlan() %>" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Current Inventory level</label>
+                                            <label>Current Inventory level</label> 
                                             <input id="input_currentInventory" type="number" class="form-control" name="currentInventory" value="<%= sop.getCurrentInventoryLevel() %>" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Target Inventory Level</label>
+                                            <label>Target Inventory Level</label> 
                                             <input id="input_targetInventoty" type="number" class="form-control" name="targetInventoty" value="<%= sop.getTargetInventoryLevel() %>" required="true" >
                                         </div>
                                         

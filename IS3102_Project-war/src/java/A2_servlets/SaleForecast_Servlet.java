@@ -1,34 +1,46 @@
-package B_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A2_servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ECommerce_RegistrationServlet extends HttpServlet {
+/**
+ *
+ * @author Administrator
+ */
+public class SaleForecast_Servlet extends HttpServlet {
 
-    @EJB
-    private String result;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-
-//            int result = shsmbr.CreateMember(passportNumber, name, password);
-//            if (result == -1) {
-//                result = "Account already exist.";
-//                response.sendRedirect("register.jsp?errMsg=" + message);
-//            } else {
-//                shsmbr.CreateContact(address, phoneNumber, email, passportNumber);
-//                result = "Account successfully created!";
-//                response.sendRedirect("index.jsp?errMsg=" + result);
-//            }
-        } finally {
-            out.close();
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SaleForecast_Servlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SaleForecast_Servlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

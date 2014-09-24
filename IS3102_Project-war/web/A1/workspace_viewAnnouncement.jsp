@@ -38,18 +38,12 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    alert("No items selected.");
                     window.event.returnValue = false;
+                    document.getElementById("messageBox").innerHTML = "No items selected.";
                 } else {
-
-                    var yes = confirm("Are you sure?!");
-                    if (yes == true) {
-                        window.event.returnValue = true;
-                        document.announcementsManagement.action = "../WorkspaceAnnouncement_DeleteServlet";
-                        document.announcementsManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                    window.event.returnValue = true;
+                    document.announcementsManagement.action = "../WorkspaceAnnouncement_DeleteServlet";
+                    document.announcementsManagement.submit();
                 }
             }
             function addAnnouncement() {
@@ -105,7 +99,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Announcement" onclick="addAnnouncement()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Announcements" onclick="removeAnnouncement()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Announcement</button></a>
                                                 </div>
                                             </div>
                                             <%}%>
@@ -172,7 +166,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Announcement" onclick="addAnnouncement()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Announcement" onclick="removeAnnouncement()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Announcement</button></a>
                                                 </div>
                                             </div>
                                             <%}%>
@@ -198,10 +192,25 @@
         </div>
         <!-- /#wrapper -->
 
-
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Staff will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeAnnouncement()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

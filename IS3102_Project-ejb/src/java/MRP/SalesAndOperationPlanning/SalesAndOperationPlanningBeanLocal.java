@@ -9,7 +9,7 @@ package MRP.SalesAndOperationPlanning;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.SaleAndOperationPlanEntity;
-import EntityManager.SaleForcastEntity;
+import EntityManager.SaleForecastEntity;
 import EntityManager.StoreEntity;
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +23,7 @@ import javax.ejb.Remove;
 @Local
 public interface SalesAndOperationPlanningBeanLocal {    
 
-    public SaleAndOperationPlanEntity createSOP(SaleForcastEntity saleForcast, StoreEntity store, Calendar schedule, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
+    public SaleAndOperationPlanEntity createSOP(SaleForecastEntity saleForcast, StoreEntity store, Calendar schedule, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
     
     public SaleAndOperationPlanEntity createSOP(Long storeId, Long scheduleId, Long productGroupId, Integer saleForcast, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel);
     

@@ -13,9 +13,21 @@
                 document.staffManagement.submit();
             }
             function removeStaff() {
-                window.event.returnValue = true;
-                document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
-                document.staffManagement.submit();
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = false;
+                    document.getElementById("messageBox").innerHTML = "No items selected.";
+                } else {
+                    window.event.returnValue = true;
+                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
+                    document.staffManagement.submit();
+                }
             }
             function addStaff() {
                 window.event.returnValue = true;
@@ -173,7 +185,7 @@
                         <h4>Alert</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Staff will be removed. Are you sure?</p>
+                        <p id="messageBox">Staff will be removed. Are you sure?</p>
                     </div>
                     <div class="modal-footer">                        
                         <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStaff()"  />
@@ -185,7 +197,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

@@ -12,6 +12,24 @@
                     checkboxes[i].checked = source.checked;
                 }
             }
+            function removeStore() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = false;
+                    document.getElementById("messageBox").innerHTML = "No items selected.";
+                } else {
+                    window.event.returnValue = true;
+
+                    document.storeManagement.action = "../FacilityManagement_StoreServlet/createStore_GET";
+                    document.storeManagement.submit();
+                }
+            }
         </script>
 
         <div id="wrapper">
@@ -45,11 +63,11 @@
 
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <form action="../FacilityManagement_StoreServlet/createStore_GET">
+                                        <form name="storeManagement" action="../FacilityManagement_StoreServlet/createStore_GET">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="submit" name="submit-btn" value="Add Store" class="btn btn-primary" data-loading-text="Loading...">
-                                                    <input type="submit" name="submit-btn" value="Delete Store" class="btn btn-primary" data-loading-text="Loading...">
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Store</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -76,7 +94,7 @@
                                                         <tr>
                                                             <td><input type="checkbox" name="delete" value="<%= model.store.getId()%>" /></td>
                                                             <td><%= model.store.getName()%></td>     
-                                                            <td><%= model.regionalOffice.getName() %></td>
+                                                            <td><%= model.regionalOffice.getName()%></td>
                                                             <td><%= model.store.getAddress()%></td>
                                                             <td><%= model.store.getTelephone()%></td>
                                                             <td><%= model.store.getEmail()%></td>
@@ -92,7 +110,23 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="submit" name="submit-btn" value="Add Store" class="btn btn-primary" data-loading-text="Loading...">
-                                                        <input type="submit" name="submit-btn" value="Delete Store" class="btn btn-primary" data-loading-text="Loading...">
+                                                       <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Store</button></a>
+                                                    </div>
+                                                </div>
+                                                <div role="dialog" class="modal fade" id="myModal">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4>Alert</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p id="messageBox">Store will be removed. Are you sure?</p>
+                                                            </div>
+                                                            <div class="modal-footer">                                                                                                                                
+                                                                <button class="btn btn-primary" name="submit-btn" value="Delete Store">Confirm</button>
+                                                                <a class="btn btn-default" data-dismiss ="modal">Close</a>                        
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                         </form>    
@@ -122,7 +156,7 @@
         if (request.getAttribute("alertMessage") != null) {
     %>
     <script>
-            alert("<%= request.getAttribute("alertMessage")%>");
+        alert("<%= request.getAttribute("alertMessage")%>");
     </script>
     <%
         }

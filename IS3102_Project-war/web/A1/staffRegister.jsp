@@ -19,21 +19,21 @@
                                     <h3>Register An Account</h3>
 
                                     <div class="row">
-                                            <%
-                                                String errMsg = request.getParameter("errMsg");
-                                                if (errMsg == null || errMsg.equals("")) {
-                                                    errMsg = "";
-                                                } else {
-                                            %>
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="alert alert-danger ">
-                                                        <%=errMsg%>
-                                                    </div>
+                                        <%
+                                            String errMsg = request.getParameter("errMsg");
+                                            if (errMsg == null || errMsg.equals("")) {
+                                                errMsg = "";
+                                            } else {
+                                        %>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-danger ">
+                                                    <%=errMsg%>
                                                 </div>
                                             </div>
-                                            <%}%>
-                                            <!-- /.warning -->
+                                        </div>
+                                        <%}%>
+                                        <!-- /.warning -->
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
@@ -80,6 +80,8 @@
                                         </div>
                                     </div>
 
+                                    <hr class="tall "/>
+                                    
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-6 col-md-offset-3">

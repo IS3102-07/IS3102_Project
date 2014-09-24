@@ -7,7 +7,7 @@
     <body>
 
         <div class="body">
-            <jsp:include page="menu.html" />
+            <jsp:include page="menu1.html" />
 
             <div role="main" class="main">
                 <div class="slider-container">

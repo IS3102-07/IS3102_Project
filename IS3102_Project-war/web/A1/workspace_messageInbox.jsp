@@ -14,14 +14,20 @@
                 document.messageManagement.submit();
             }
             function deleteMessage() {
-                var yes = confirm("Are you sure you want to delete the selected messages?\nThis action can not be undone!");
-                if (yes == true) {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = false;
+                    document.getElementById("messageBox").innerHTML = "No items selected.";
+                } else {
                     window.event.returnValue = true;
                     document.messageManagement.action = "../WorkspaceMessage_RemoveServlet";
                     document.messageManagement.submit();
-                }
-                else {
-                    window.event.returnValue = false;
                 }
             }
             function sendMessage() {
@@ -81,7 +87,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Message</button></a>
                                                     <input type="hidden" name="view" value="inbox"/>
                                                     <button type="button" class="btn btn-primary" onclick="javascript:viewSentMsg()">View Sent Messages</button>
                                                 </div>
@@ -144,7 +150,7 @@
                                                                     if (inbox.get(i).getMessage().length() < 90) {
                                                                         out.print(inbox.get(i).getMessage());
                                                                     } else {
-                                                                        out.print(inbox.get(i).getMessage().substring(0, 90)+"...");
+                                                                        out.print(inbox.get(i).getMessage().substring(0, 90) + "...");
                                                                     }
                                                                 %>
                                                             </td>
@@ -164,8 +170,8 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  />
-                                                    
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Message</button></a>
+
                                                     <input type="hidden" name="view" value="inbox"/>
                                                     <button type="button" class="btn btn-primary" onclick="javascript:viewSentMsg()">View Sent Messages</button>
                                                 </div>
@@ -192,10 +198,25 @@
         </div>
         <!-- /#wrapper -->
 
-
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Staff will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="deleteMessage()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             }
             );

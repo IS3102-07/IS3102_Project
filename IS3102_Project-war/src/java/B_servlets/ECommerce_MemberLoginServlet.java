@@ -1,49 +1,44 @@
 package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-public class ECommerce_LoginServlet extends HttpServlet {
-    AccountManagementBeanLocal accountManagementBeanLocal = lookupCommonInfrastructureBeanLocal();
 
-    
+public class ECommerce_MemberLoginServlet extends HttpServlet {
+
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
-            HttpSession session = request.getSession();
-            session.removeAttribute("member");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
-//            List<String> memberDetails = shsmbr.getMember(passportNumber, password);
-//            if (memberDetails == null) {
-//                out.println("1");
-//                result = "Login fail. Please try again.";
-//                response.sendRedirect("index.jsp?errMsg=" + result);
-//            } else {
-//                memberDetails.get(0);
-//                out.println("2");
-//                session.setAttribute("member", memberDetails);
-//                response.sendRedirect("index.jsp");
-//            }
+            MemberEntity memberEntity = accountManagementBean.loginMember(email, password);
+            if (memberEntity != null) {
+                HttpSession session;
+                session = request.getSession();
+                session.setAttribute("member", memberEntity);
+                //out.println("<h1>" + "can login" + "</h1>");
+                response.sendRedirect("B/memberProfile.jsp");
+            } else {
+                result = "Login fail. Please try again.";
+                response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
+            }
+
         } catch (Exception ex) {
-            out.println("3");
-            result = "Login fail. Please try again.";
-            response.sendRedirect("index.jsp?errMsg=" + result);
-        } finally {
-            out.close();
+            out.println(ex);
+            ex.printStackTrace();
         }
     }
 
@@ -85,16 +80,5 @@ public class ECommerce_LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private AccountManagementBeanLocal lookupCommonInfrastructureBeanLocal() {
-        try {
-            Context c = new InitialContext();
-            //return (CommonInfrastructureBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/CommonInfrastructureBean!CommonInfrastructureModule.CommonInfrastructureBeanLocal");
-            return (AccountManagementBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean!CommonInfrastructure.AccountManagement.AccountManagementBeanLocal");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 
 }
