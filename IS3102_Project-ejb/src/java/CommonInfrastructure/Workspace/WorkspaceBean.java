@@ -126,9 +126,10 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             List<MessageInboxEntity> inboxMessages = staffEntity.getInboxMessages();
 
             ArrayList<MessageInboxEntity> arrList = new ArrayList<>();
-            for (int i = inboxMessages.size() - 1; i > 0; i--) {
+            for (int i = inboxMessages.size() - 1; i >= 0; i--) {
                 arrList.add(inboxMessages.get(i));
             }
+            
             System.out.println("Message list returned.");
             return arrList;
         } catch (Exception ex) {
