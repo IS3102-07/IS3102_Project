@@ -1,5 +1,7 @@
 package A3_servlets;
 
+import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
+import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +15,13 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
     @EJB
     private RetailProductsAndRawMaterialsPurchasingBeanLocal retailProductsAndRawMaterialsPurchasingBean;
+
+    @EJB
+    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
+
+    @EJB
+    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,6 +34,7 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
             String quantity = request.getParameter("quantity");
             String status1 = request.getParameter("status1");
             String status3 = request.getParameter("status3");
+            String destinationWarehouseID = request.getParameter("destinationWarehouseID");
             if (status1 != null) {
                 boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), "Submitted");
                 if (!canUpdate) {
@@ -36,7 +46,19 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                 }
 
             } else if (status3 != null) {
-                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), status3);
+                if (status3.equals("Completed")) {
+                    if (manufacturingWarehouseManagementBean.getInboundStorageBin(Long.parseLong(destinationWarehouseID)) == null) {
+                        System.out.println("!!!!!!0");
+                        result = "?errMsg=Destination warehouse does not have an inbound storage bin.<br/>Please create one first before marking this order as completed.&id=" + purchaseOrderId;
+                        response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
+                        return;
+                    } else {
+                        System.out.println("!!!!!!1");
+                        manufacturingInventoryControlBean.moveInboundPurchaseOrderItemsToReceivingBin(Long.parseLong(purchaseOrderId));
+                    }
+                }
+                System.out.println("!!!!!!2");
+                retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), status3);
                 result = "?errMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
                 response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
             } else {
@@ -60,7 +82,7 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

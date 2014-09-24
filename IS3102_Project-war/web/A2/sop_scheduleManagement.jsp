@@ -26,10 +26,10 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operation Planning</a>
                                 </li>                             
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="#">Schedule</a>
+                                    <i class="icon icon-calendar"></i>  <a href="#">Schedule Management</a>
                                 </li>
                             </ol>
                         </div>

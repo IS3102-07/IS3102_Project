@@ -18,8 +18,8 @@ public interface ManufacturingInventoryControlBeanLocal {
 //    
 //    
 //    
-    public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID, Long warehouseID);
-    public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID, Long warehouseID);
+    public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID);
+    public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID);
     public boolean addItemToReceivingBin(Long warehouseID, String SKU);
     //if you want to move multiple items, please call this method many times
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination);
