@@ -24,7 +24,7 @@ public class PurchaseOrderLineItemManagement_RemoveServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     retailProductsAndRawMaterialsPurchasingBean.removeLineItemFromPurchaseOrder(Long.parseLong(deleteArr[i]), Long.parseLong(purchaseOrderId));
                 }
-                response.sendRedirect("PurchaseOrderLineItemManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + purchaseOrderId);
+                response.sendRedirect("PurchaseOrderLineItemManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + purchaseOrderId);
             } else {
                 response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?errMsg=Nothing is selected.&id=" + purchaseOrderId);
             }

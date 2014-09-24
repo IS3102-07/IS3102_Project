@@ -32,7 +32,7 @@ public class ShippingOrderLineItemManagement_AddServlet extends HttpServlet {
                     result = "?errMsg=Shipping Order not found.&id=" + shippingOrderId;
                     response.sendRedirect("A3/shippingOrderManagement_AddLineItem.jsp" + result);
                 } else {
-                    result = "?errMsg=Line item added successfully.&id=" + shippingOrderId;
+                    result = "?goodMsg=Line item added successfully.&id=" + shippingOrderId;
                     response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
                 }
             }

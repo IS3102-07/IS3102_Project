@@ -32,7 +32,7 @@ public class PurchaseOrderLineItemManagement_AddServlet extends HttpServlet {
                     result = "?errMsg=Purchase Order not found.&id=" + purchaseOrderId;
                     response.sendRedirect("A3/purchaseOrderManagement_AddLineItem.jsp" + result);
                 } else {
-                    result = "?errMsg=Line item added successfully.&id=" + purchaseOrderId;
+                    result = "?goodMsg=Line item added successfully.&id=" + purchaseOrderId;
                     response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
                 }
             }

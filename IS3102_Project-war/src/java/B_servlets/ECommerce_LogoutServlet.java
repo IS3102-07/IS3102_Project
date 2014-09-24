@@ -17,7 +17,7 @@ public class ECommerce_LogoutServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             session.invalidate();
-            response.sendRedirect("B/memberLogin.jsp?errMsg=Logout Successfully.");
+            response.sendRedirect("B/memberLogin.jsp?goodMsg=Logout Successfully.");
         } finally {
             out.close();
         }

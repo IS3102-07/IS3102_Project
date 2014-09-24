@@ -485,6 +485,18 @@
         <servlet-name>ECommerce_MemberRegisterServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_MemberRegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>A2/SaleForecast_index</servlet-name>
+        <jsp-file>/A2/SaleForecast_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/SaleForecast_main</servlet-name>
+        <jsp-file>/A2/SaleForecast_main.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/SaleForecast_schedule</servlet-name>
+        <jsp-file>/A2/SaleForecast_schedule.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -968,6 +980,18 @@
     <servlet-mapping>
         <servlet-name>ECommerce_MemberRegisterServlet</servlet-name>
         <url-pattern>/ECommerce_MemberRegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/SaleForecast_index</servlet-name>
+        <url-pattern>/A2/SaleForecast_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/SaleForecast_main</servlet-name>
+        <url-pattern>/A2/SaleForecast_main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/SaleForecast_schedule</servlet-name>
+        <url-pattern>/A2/SaleForecast_schedule</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

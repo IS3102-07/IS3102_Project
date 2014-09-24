@@ -17,7 +17,7 @@
                             <h1 class="page-header">Sales And Operation Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/sop_index_GET">Sales And Operation Planning</a>
                                 </li>                                
                             </ol>
                         </div>
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <form action="../SaleAndOperationPlanning_Servlet/sop_index_Post">
+                                    <form action="../SaleForecast_Servlet/SaleForecast_index_POST">
                                         <div class="form-group">
                                             <label for="select_regionalOffice">Regional Office</label>
                                             <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">

@@ -40,7 +40,7 @@ public class BomManagement_AddBomServlet extends HttpServlet {
                 response.sendRedirect(source + result);
             } else {
                 itemManagementBeanLocal.createBOM(name, description);
-                result = "?errMsg= BOM has been added successfully.";
+                result = "?goodMsg= BOM has been added successfully.";
                 response.sendRedirect("BomManagement_BomServlet" + result);
             }
         }

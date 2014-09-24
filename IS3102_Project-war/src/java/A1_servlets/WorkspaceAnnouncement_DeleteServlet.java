@@ -26,7 +26,7 @@ public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
         try {
             String id = request.getParameter("delete");
             if (workspaceBeanLocal.deleteAnnouncement(Long.valueOf(id))) {
-                result = "?errMsg=Announcement deleted.";
+                result = "?goodMsg=Announcement deleted.";
                 //update announcement list
                 List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
                 HttpSession session;

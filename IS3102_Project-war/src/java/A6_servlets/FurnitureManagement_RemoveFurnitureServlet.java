@@ -26,7 +26,7 @@ public class FurnitureManagement_RemoveFurnitureServlet extends HttpServlet {
                     System.out.println(deleteArr1);
                     itemManagementBean.removeFurniture(deleteArr1);
                 }
-                response.sendRedirect("FurnitureManagement_FurnitureServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("FurnitureManagement_FurnitureServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             }
         } catch (Exception ex) {
             out.println(ex);
