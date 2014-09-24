@@ -3,12 +3,30 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
- 
+
         <script>
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
+                }
+            }
+            function removeRegionalOffice() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = false;
+                    document.getElementById("messageBox").innerHTML = "No items selected.";
+                } else {
+                    window.event.returnValue = true;
+
+                    document.regionalOfficeManagement.action = "../FacilityManagement_RegionalOfficeServlet/createRegionalOffice_GET";
+                    document.regionalOfficeManagement.submit();
                 }
             }
         </script>
@@ -44,15 +62,16 @@
 
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <form action="../FacilityManagement_RegionalOfficeServlet/createRegionalOffice_GET">
-                                        <div class="row">
+                                        <form name="regionalOfficeManagement" action="../FacilityManagement_RegionalOfficeServlet/createRegionalOffice_GET">
+                                            <div class="row">
                                                 <div class="col-md-12">
-                                                        <input type="submit" name="submit-btn" value="Add Regional Office" class="btn btn-primary" data-loading-text="Loading...">
-                                                        <input type="submit" name="submit-btn" value="Delete Regional Office" class="btn btn-primary" data-loading-text="Loading..."></div>
+                                                    <input type="submit" name="submit-btn" value="Add Regional Office" class="btn btn-primary" data-loading-text="Loading...">
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Regional Office</button></a>
+                                                </div>
                                             </div>
-                                        <br/>
-                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            
+                                            <br/>
+                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
@@ -76,7 +95,7 @@
                                                             <td><%= regionalOffice.getAddress()%></td>
                                                             <td><%= regionalOffice.getTelephone()%></td>
                                                             <td><%= regionalOffice.getEmail()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= regionalOffice.getId() %>">View</button></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= regionalOffice.getId()%>">View</button></td>
                                                         </tr>
                                                         <%
                                                                 }
@@ -88,49 +107,68 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="submit" name="submit-btn" value="Add Regional Office" class="btn btn-primary" data-loading-text="Loading...">
-                                                        <input type="submit" name="submit-btn" value="Delete Regional Office" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Regional Office</button></a>
                                                     </div>
                                                 </div>
-                                            </form>    
-                                        </div>
+
+                                                <div role="dialog" class="modal fade" id="myModal">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4>Alert</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p id="messageBox">Regional office will be removed. Are you sure?</p>
+                                                            </div>
+                                                            <div class="modal-footer">                                                                                                                                
+                                                                <button class="btn btn-primary" name="submit-btn" value="Delete Regional Office">Confirm</button>
+                                                                <a class="btn btn-default" data-dismiss ="modal">Close</a>                        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                        </form>    
                                     </div>
-                                    <!-- /.table-responsive -->
                                 </div>
-                                <!-- /.panel-body -->
-
+                                <!-- /.table-responsive -->
                             </div>
-                            <!-- /.panel -->
-                        </div>
-                        <!-- /.col-lg-12 -->
-                    </div>
-                    <!-- /.row -->
+                            <!-- /.panel-body -->
 
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /.row -->
 
             </div>
-            <!-- /#page-wrapper -->
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- /#wrapper -->
+        <!-- /#page-wrapper -->
 
-        <%
-            if (request.getAttribute("alertMessage") != null) {
-        %>
-        <script>
+    </div>
+    <!-- /#wrapper -->
+
+    <%
+        if (request.getAttribute("alertMessage") != null) {
+    %>
+    <script>
             alert("<%= request.getAttribute("alertMessage")%>");
-        </script>
-        <%
-            }
-        %>
+    </script>
+    <%
+        }
+    %>
 
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-        </script>
 
-    </body>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function() {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+
+</body>
 
 </html>
