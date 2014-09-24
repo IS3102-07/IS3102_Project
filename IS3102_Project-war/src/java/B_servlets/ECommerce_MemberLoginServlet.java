@@ -28,9 +28,9 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
             if (memberEntity != null) {
                 HttpSession session;
                 session = request.getSession();
-                session.setAttribute("memberEntity", memberEntity);
-                out.println("<h1>" + "can login" + "</h1>");
-                //response.sendRedirect("A1/workspace.jsp");
+                session.setAttribute("member", memberEntity);
+                //out.println("<h1>" + "can login" + "</h1>");
+                response.sendRedirect("B/memberProfile.jsp");
             } else {
                 result = "Login fail. Please try again.";
                 response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
