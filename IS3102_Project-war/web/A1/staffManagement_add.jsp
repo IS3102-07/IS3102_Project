@@ -48,13 +48,13 @@
                                     <label>Phone</label>
                                     <input class="form-control" required="true" type="text" name="phone" >
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" hidden>
                                     <label>Password</label>
-                                    <input class="form-control" type="password" name="password" id="password" required = "true">
+                                    <input class="form-control" type="password" value="a" name="password" id="password" required = "true">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" hidden>
                                     <label>Re-enter Password</label>
-                                    <input class="form-control" type="password" name="repassword" id="repassword" required = "true">
+                                    <input class="form-control" type="password" value="a" name="repassword" id="repassword" required = "true">
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>

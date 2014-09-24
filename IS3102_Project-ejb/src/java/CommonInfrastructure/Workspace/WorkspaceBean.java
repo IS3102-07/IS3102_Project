@@ -129,7 +129,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             for (int i = inboxMessages.size() - 1; i >= 0; i--) {
                 arrList.add(inboxMessages.get(i));
             }
-            
+
             System.out.println("Message list returned.");
             return arrList;
         } catch (Exception ex) {
@@ -167,7 +167,12 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
             List<MessageOutboxEntity> sentMessages = staffEntity.getSentMessages();
             System.out.println("Message list returned.");
-            return sentMessages;
+
+            ArrayList<MessageOutboxEntity> arrList = new ArrayList<>();
+            for (int i = sentMessages.size() - 1; i >= 0; i--) {
+                arrList.add(sentMessages.get(i));
+            }
+            return arrList;
         } catch (Exception ex) {
             System.out.println("\nServer error in listing all sent messages:\n" + ex);
             return null;
