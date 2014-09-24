@@ -15,6 +15,7 @@ import EntityManager.StoreEntity;
 import HelperClasses.StoreHelper;
 import MRP.SalesAndOperationPlanning.SOP_Helper;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
+import MRP.SalesForecast.SalesForecastBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -34,20 +35,20 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleForecast_Servlet extends HttpServlet {
+
+    @EJB
+    private SalesForecastBeanLocal sfBean;
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
     @EJB
     private FacilityManagementBeanLocal fmBean;
     @EJB
     private ItemManagementBeanLocal imBean;
-    
-    
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
+
         String nextPage = "/A2/sop_index";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
@@ -56,7 +57,7 @@ public class SaleForecast_Servlet extends HttpServlet {
         List<MonthScheduleEntity> scheduleList;
         String target = request.getPathInfo();
 
-        switch (target) {            
+        switch (target) {
 
             case "/SaleForecast_index_GET":
                 List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
@@ -116,20 +117,26 @@ public class SaleForecast_Servlet extends HttpServlet {
                 Long productGroupId = Long.parseLong(request.getParameter("productGroupId"));
                 session.setAttribute("productGroupId", productGroupId);
                 nextPage = "/SaleForecast_Servlet/ViewSaleFigure_GET";
-                break;     
-                
+                break;
+
             case "/ViewSaleFigure_GET":
-                
+                productGroupId = (long) session.getAttribute("productGroupId");
+                Long storeId = (long) session.getAttribute("sf_storeId");
+                Long schedulelId = (long) session.getAttribute("scheduleId");
+                MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
+                List<Integer> list1 = sfBean.getYearlySalesFigureList(storeId, productGroupId, 2012);
+                List<Integer> list2 = sfBean.getYearlySalesFigureList(storeId, productGroupId, 2013);
+                List<Integer> list3 = sfBean.getYearlySalesFigureList(storeId, productGroupId, 2014);
+                request.setAttribute("saleDate1", list1);
+                request.setAttribute("saleDate2", list2);
+                request.setAttribute("saleDate3", list3);
                 nextPage = "/A2/ViewSaleFigure";
                 break;
-                
-            
+
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
-        
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

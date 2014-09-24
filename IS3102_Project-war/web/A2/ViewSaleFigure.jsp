@@ -50,15 +50,38 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Area Line Graph Example with Tooltips</h3>
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Year 2012 - Product Group PGA07 Sale Figure </h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div id="morris-area-chart"></div>
+                                    <div id="morris-area-chart1"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-green">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Year 2013 - Product Group PGA07 Sale Figure</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="morris-area-chart2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-green">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Year 2014 - Product Group PGA07 Sale Figure</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="morris-area-chart3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -87,70 +110,150 @@
             }
             );
         </script>
-
+        <%  List<Integer> saleDate1 = (List<Integer>) request.getAttribute("saleDate1");
+            List<Integer> saleDate2 = (List<Integer>) request.getAttribute("saleDate2");
+            List<Integer> saleDate3 = (List<Integer>) request.getAttribute("saleDate3");%>
+            
         <script>
 
             Morris.Area({
-                element: 'morris-area-chart',
-                data: [{
-                        period: '2010 Q1',
-                        iphone: 2666,
-                        ipad: null,
-                        itouch: 2647
+                element: 'morris-area-chart1',
+                data: [
+                    {
+                        period: '2013-01',
+                        PGA07: <%= saleDate1.get(0) %>,
                     }, {
-                        period: '2010 Q2',
-                        iphone: 2778,
-                        ipad: 2294,
-                        itouch: 2441
+                        period: '2013-02',
+                        PGA07: <%= saleDate1.get(1) %>,
                     }, {
-                        period: '2010 Q3',
-                        iphone: 4912,
-                        ipad: 1969,
-                        itouch: 2501
+                        period: '2013-03',
+                        PGA07: <%= saleDate1.get(2) %>,
                     }, {
-                        period: '2010 Q4',
-                        iphone: 3767,
-                        ipad: 3597,
-                        itouch: 5689
+                        period: '2013-04',
+                        PGA07: <%= saleDate1.get(3) %>,
                     }, {
-                        period: '2011 Q1',
-                        iphone: 6810,
-                        ipad: 1914,
-                        itouch: 2293
+                        period: '2013-05',
+                        PGA07: <%= saleDate1.get(4) %>,
                     }, {
-                        period: '2011 Q2',
-                        iphone: 5670,
-                        ipad: 4293,
-                        itouch: 1881
+                        period: '2013-06',
+                        PGA07: <%= saleDate1.get(5) %>,
                     }, {
-                        period: '2011 Q3',
-                        iphone: 4820,
-                        ipad: 3795,
-                        itouch: 1588
+                        period: '2013-07',
+                        PGA07: <%= saleDate1.get(6) %>,
                     }, {
-                        period: '2011 Q4',
-                        iphone: 15073,
-                        ipad: 5967,
-                        itouch: 5175
+                        period: '2013-08',
+                        PGA07: <%= saleDate1.get(7) %>,
                     }, {
-                        period: '2012 Q1',
-                        iphone: 10687,
-                        ipad: 4460,
-                        itouch: 2028
+                        period: '2013-09',
+                        PGA07: <%= saleDate1.get(8) %>,
                     }, {
-                        period: '2012 Q2',
-                        iphone: 8432,
-                        ipad: 5713,
-                        itouch: 1791
-                    }],
+                        period: '2013-10',
+                        PGA07: <%= saleDate1.get(9) %>,
+                    }, {
+                        period: '2013-11',
+                        PGA07: <%= saleDate1.get(10) %>,
+                    }, {
+                        period: '2013-12',
+                        PGA07: <%= saleDate1.get(11) %>,
+                    },
+                ],
                 xkey: 'period',
-                ykeys: ['iphone', 'ipad', 'itouch'],
-                labels: ['iPhone', 'iPad', 'iPod Touch'],
+                ykeys: ['PGA07'],
+                labels: ['PGA07'],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
             });
-
+            
+            Morris.Area({
+                element: 'morris-area-chart2',
+                data: [
+                    {
+                        period: '2013-01',
+                        PGA07: <%= saleDate2.get(0) %>,
+                    }, {
+                        period: '2013-02',
+                        PGA07: <%= saleDate2.get(1) %>,
+                    }, {
+                        period: '2013-03',
+                        PGA07: <%= saleDate2.get(2) %>,
+                    }, {
+                        period: '2013-04',
+                        PGA07: <%= saleDate2.get(3) %>,
+                    }, {
+                        period: '2013-05',
+                        PGA07: <%= saleDate2.get(4) %>,
+                    }, {
+                        period: '2013-06',
+                        PGA07: <%= saleDate2.get(5) %>,
+                    }, {
+                        period: '2013-07',
+                        PGA07: <%= saleDate2.get(6) %>,
+                    }, {
+                        period: '2013-08',
+                        PGA07: <%= saleDate2.get(7) %>,
+                    }, {
+                        period: '2013-09',
+                        PGA07: <%= saleDate2.get(8) %>,
+                    }, {
+                        period: '2013-10',
+                        PGA07: <%= saleDate2.get(9) %>,
+                    }, {
+                        period: '2013-11',
+                        PGA07: <%= saleDate2.get(10) %>,
+                    }, {
+                        period: '2013-12',
+                        PGA07: <%= saleDate2.get(11) %>,
+                    },
+                ],
+                xkey: 'period',
+                ykeys: ['PGA07'],
+                labels: ['PGA07'],
+                pointSize: 2,
+                hideHover: 'auto',
+                resize: true
+            });
+            
+            Morris.Area({
+                element: 'morris-area-chart3',
+                data: [
+                    {
+                        period: '2013-01',
+                        PGA07: <%= saleDate3.get(0) %>,
+                    }, {
+                        period: '2013-02',
+                        PGA07: <%= saleDate3.get(1) %>,
+                    }, {
+                        period: '2013-03',
+                        PGA07: <%= saleDate3.get(2) %>,
+                    }, {
+                        period: '2013-04',
+                        PGA07: <%= saleDate3.get(3) %>,
+                    }, {
+                        period: '2013-05',
+                        PGA07: <%= saleDate3.get(4) %>,
+                    }, {
+                        period: '2013-06',
+                        PGA07: <%= saleDate3.get(5) %>,
+                    }, {
+                        period: '2013-07',
+                        PGA07: <%= saleDate3.get(6) %>,
+                    }, {
+                        period: '2013-08',
+                        PGA07: <%= saleDate3.get(7) %>,
+                    }, {
+                        period: '2013-09',
+                        PGA07: <%= saleDate3.get(8) %>,
+                    }, 
+                ],
+                xkey: 'period',
+                ykeys: ['PGA07'],
+                labels: ['PGA07'],
+                pointSize: 2,
+                hideHover: 'auto',
+                resize: true
+            });
+            
         </script>
 
     </body>
