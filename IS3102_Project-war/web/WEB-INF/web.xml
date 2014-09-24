@@ -477,6 +477,10 @@
         <servlet-name>ECommerce_LogoutServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaleForecast_Servlet</servlet-name>
+        <servlet-class>A2_servlets.SaleForecast_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -952,6 +956,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_LogoutServlet</servlet-name>
         <url-pattern>/ECommerce_LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaleForecast_Servlet</servlet-name>
+        <url-pattern>/SaleForecast_Servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
