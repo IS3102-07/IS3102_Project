@@ -231,7 +231,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 StorageBinEntity targetBin = transferOrder.getTarget();
                 System.out.println("Moving in progress....");
                 System.out.println("SKU number is " + SKU);
-                System.out.println("originBin: " + originBin.getId() + "moving to targetBin: " + targetBin);
+                System.out.println("originBin: " + originBin.getId() + " moving to targetBin: " + targetBin.getId());
 
                 boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
                 if (!isPass) {
