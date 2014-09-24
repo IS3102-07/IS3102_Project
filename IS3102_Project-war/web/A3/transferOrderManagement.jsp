@@ -20,13 +20,19 @@
                 document.transferOrderManagement.submit();
             }
             function removeTO() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = false;
+                } else {
                     window.event.returnValue = true;
                     document.transferOrderManagement.action = "../TransferOrderManagement_RemoveServlet";
                     document.transferOrderManagement.submit();
-                } else {
-                    window.event.returnValue = false;
                 }
             }
             function addTO() {
@@ -86,7 +92,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Transfer Order" onclick="addTO()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Transfer Order" onclick="removeTO()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Transfer Order</button></a>
                                                 </div>
                                             </div>
                                             <br>
@@ -155,7 +161,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Transfer Order" onclick="addTO()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Transfer Order" onclick="removeTO()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Transfer Order</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
@@ -182,6 +188,22 @@
         </div>
         <!-- /#wrapper -->
 
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Transfer order will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeTO()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
