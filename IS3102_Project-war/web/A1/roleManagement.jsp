@@ -13,13 +13,20 @@
                 document.rolesManagement.submit();
             }
             function removeRole() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.rolesManagement.action = "../RoleManagement_RemoveRoleServlet";
-                    document.rolesManagement.submit();
-                } else {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = false;
+                    document.getElementById("messageBox").innerHTML = "No items selected.";
+                } else {
+                    window.event.returnValue = true;
+                    document.announcementsManagement.action = "RoleManagement_RemoveRoleServlet";
+                    document.announcementsManagement.submit();
                 }
             }
             function addRole() {
@@ -74,7 +81,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Role" onclick="removeRole()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Role</button></a>
                                                 </div>
                                             </div>
                                             <br>
@@ -133,7 +140,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Role" onclick="removeRole()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Role</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
@@ -157,11 +164,26 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Staff will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeRole()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>
