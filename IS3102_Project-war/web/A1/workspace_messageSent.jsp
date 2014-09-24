@@ -77,6 +77,14 @@
                                 <form name="messageManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete Selected Message" onclick="deleteMessage()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Message" onclick="sendMessage()"  />
+                                                    <input type="hidden" name="view" value="sentMessages"/>
+                                                    <button type="button" class="btn btn-primary" onclick="javascript:viewInbox()">View Inbox</button>
+                                                </div>
+                                            </div><br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
@@ -118,7 +126,7 @@
                                                                         out.println("-");
                                                                     } else {
                                                                         for (int k = 0; k < receviers.size(); k++) {
-                                                                            out.println(receviers.get(k)+"; ");
+                                                                            out.println(receviers.get(k) + "; ");
                                                                         }
                                                                     }
                                                                 %>
@@ -128,7 +136,7 @@
                                                                     if (sent.get(i).getMessage().length() < 90) {
                                                                         out.print(sent.get(i).getMessage());
                                                                     } else {
-                                                                        out.print(sent.get(i).getMessage().substring(0, 90)+"...");
+                                                                        out.print(sent.get(i).getMessage().substring(0, 90) + "...");
                                                                     }
                                                                 %>
                                                             </td>

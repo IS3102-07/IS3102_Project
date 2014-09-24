@@ -448,7 +448,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
                 em.persist(prouductGroup);
                 return prouductGroup;
             } else {
-                return (ProductGroupEntity) q.getResultList().get(0);
+                return null;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
