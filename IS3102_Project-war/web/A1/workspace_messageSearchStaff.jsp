@@ -15,21 +15,21 @@
             function selectMultipleStaff() {
                 checkboxes = document.getElementsByName('select');
                 var numOfTicks = 0;
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                for (var i = 0, i < checkboxes.length; i++) {
                     if (checkboxes[i].checked) {
                         numOfTicks++;
                     }
                 }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
+                
+                if (checkboxes.length === 0 || numOfTicks === 0) {
                     alert("No items selected.");
                     window.event.returnValue = false;
                 } else {
-
                     var yes = confirm("Are you sure?!");
-                    if (yes == true) {
+                    if (yes === true) {
                         window.event.returnValue = true;
-                        document.announcementsManagement.action = "../WorkspaceMessage_AddServlet";
-                        document.announcementsManagement.submit();
+                        document.selectMessageReceiver.action = "../WorkspaceMessage_AddServlet";
+                        document.selectMessageReceiver.submit();
                     } else {
                         window.event.returnValue = false;
                     }

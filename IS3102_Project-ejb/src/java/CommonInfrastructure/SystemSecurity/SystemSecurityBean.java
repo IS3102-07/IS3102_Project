@@ -80,7 +80,11 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Activation");
-                String messageText = "Greetings from Island Furniture... \n\nHere is your activation code to be keyed in in order to activate your staff account :\n\nEmail: "+ email +"\nActivation Code: " + activationCode;
+                String messageText = "Greetings from Island Furniture... \n\n"
+                        + "Here is your activation code to be keyed in in order to activate your staff account :\n\n"
+                        + "Email: "+ email +"\n\n"
+                        + "Activation Code: " + activationCode + "\n\n"
+                        + "Link to active your staff account: http://localhost:8080/IS3102_Project-war/A1/staffActivateAccount.jsp";
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
@@ -131,7 +135,10 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Activation");
                 String messageText = "Greetings from Island Furniture... \n\n"
-                        + "Here is your activation code to be keyed in in order to activate your member account :\n\n" + activationCode;
+                        + "Here is your activation code to be keyed in in order to activate your staff account :\n\n"
+                        + "Email: "+ email +"\n\n"
+                        + "Activation Code: " + activationCode + "\n\n"
+                        + "Link to active your staff account: http://localhost:8080/IS3102_Project-war/A1/staffActivateAccount.jsp";
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
@@ -180,7 +187,11 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Password Reset");
-                String messageText = "Greetings from Island Furniture... \n\nHere is your reset password to be keyed in in order to reset your staff account password:\n\n" + passwordReset;
+                String messageText = "Greetings from Island Furniture... \n\n"
+                        + "Here is your activation code to be keyed in in order to reset your staff account password :\n\n"
+                        + "Email: "+ email +"\n\n"
+                        + "Activation Code: " + passwordReset + "\n\n"
+                        + "Link to active your staff account: http://localhost:8080/IS3102_Project-war/A1/staffResetPasswordCode.jsp";
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
@@ -229,7 +240,11 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmailAddress, false));
                 msg.setSubject("Island Furniture Staff Account Password Reset");
-                String messageText = "Greetings from Island Furniture... \n\nHere is your reset password to be keyed in in order to activate your member account :\n\n" + passwordReset;
+                String messageText = "Greetings from Island Furniture... \n\n"
+                        + "Here is your activation code to be keyed in in order to reset your staff account password :\n\n"
+                        + "Email: "+ email +"\n\n"
+                        + "Activation Code: " + passwordReset + "\n\n"
+                        + "Link to active your staff account: http://localhost:8080/IS3102_Project-war/A1/staffResetPasswordCode.jsp";
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();

@@ -497,6 +497,10 @@
         <servlet-name>A2/SaleForecast_schedule</servlet-name>
         <jsp-file>/A2/SaleForecast_schedule.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>A2/ViewSaleFigure</servlet-name>
+        <jsp-file>/A2/ViewSaleFigure.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -992,6 +996,10 @@
     <servlet-mapping>
         <servlet-name>A2/SaleForecast_schedule</servlet-name>
         <url-pattern>/A2/SaleForecast_schedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/ViewSaleFigure</servlet-name>
+        <url-pattern>/A2/ViewSaleFigure</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
