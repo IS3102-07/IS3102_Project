@@ -71,7 +71,7 @@ public class SaleForecast_Servlet extends HttpServlet {
                 try {
                     String storeName = request.getParameter("storeName");
                     StoreEntity store = fmBean.getStoreByName(storeName);
-                    session.setAttribute("sop_storeId", store.getId());
+                    session.setAttribute("sf_storeId", store.getId());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -96,7 +96,7 @@ public class SaleForecast_Servlet extends HttpServlet {
 
             case "/SaleForecast_main_GET":
                 try {
-                    Long storeId = (long) session.getAttribute("sop_storeId");
+                    Long storeId = (long) session.getAttribute("sf_storeId");
                     Long schedulelId = (long) session.getAttribute("scheduleId");
                     List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
                     List<SOP_Helper> sopHelperList = sopBean.getSOPHelperList(storeId, schedulelId);
@@ -115,8 +115,14 @@ public class SaleForecast_Servlet extends HttpServlet {
             case "/SaleForecast_main_POST":
                 Long productGroupId = Long.parseLong(request.getParameter("productGroupId"));
                 session.setAttribute("productGroupId", productGroupId);
-                nextPage = "/SaleForecast_Servlet/sop_create_GET";
-                break;            
+                nextPage = "/SaleForecast_Servlet/ViewSaleFigure_GET";
+                break;     
+                
+            case "/ViewSaleFigure_GET":
+                
+                nextPage = "/A2/ViewSaleFigure";
+                break;
+                
             
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
