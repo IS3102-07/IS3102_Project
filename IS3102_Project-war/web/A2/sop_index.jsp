@@ -17,7 +17,7 @@
                             <h1 class="page-header">Sales And Operation Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operation Planning</a>
                                 </li>                                
                             </ol>
                         </div>
@@ -29,8 +29,11 @@
                         select {
                             max-width: 300px;
                         }
-                    </style>
-
+                    </style>                                       
+                    
+                    <a href="../SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET"><button class="btn btn-primary">Schedule Management</button></a>
+                    <br><br>
+                    
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -77,7 +80,7 @@
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
-                    <!-- /.row -->
+                    <!-- /.row -->                    
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -91,7 +94,7 @@
                 $.get('../SOP_ajax_Servlet', {regionalOfficeId: regionalOfficeId}, function (responseText) {
                     var stores = responseText.trim().split(';');
                     var x = document.getElementById("select_store");
-                    while(x.length > 0){
+                    while (x.length > 0) {
                         x.remove(0);
                     }
                     for (var i = 0; i < stores.length - 1; i++) {
