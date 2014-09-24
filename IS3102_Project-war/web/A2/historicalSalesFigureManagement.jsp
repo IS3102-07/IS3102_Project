@@ -1,28 +1,19 @@
-<%@page import="HelperClasses.ItemStorageBinHelper"%>
-<%@page import="EntityManager.WarehouseEntity"%>
-<%@page import="EntityManager.StorageBinEntity"%>
+<%@page import="EntityManager.SalesFigureEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+<%
+    List<SalesFigureEntity> salesFigures = (List<SalesFigureEntity>) (session.getAttribute("salesFigures"));
+    if (salesFigures == null) {
+        response.sendRedirect("../HistoricalSalesFigureManagement_Servlet");
     } else {
 %>
 <html lang="en">
-
     <jsp:include page="../header2.html" />
-
     <body>
         <script>
-            function removeItemFromStorageBin(id) {
-                var yes = confirm("Are you sure you want to delete the all instance of this item in this storage bin?\nThis action cannot be reversed!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.inventoryControl.storageBinID.value=id;
-                    document.inventoryControl.action = "../ManufacturingInventoryControl_RemoveServlet";
-                    document.inventoryControl.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
+            function addSF() {
+                window.event.returnValue = true;
+                document.salesFiguresManagement.action = "historicalSalesFigureManagement_add.jsp";
+                document.salesFiguresManagement.submit();
             }
         </script>
         <div id="wrapper">
@@ -34,16 +25,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Inventory Control</h1>
+                            <h1 class="page-header">Historical Sales Figures Management</h1>
                             <ol class="breadcrumb">
-                                <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
-                                </li>
-                                <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
-                                </li>
                                 <li class="active">
-                                    <i class="icon icon-th"></i> Inventory Control
+                                    <i class="icon icon-archive"></i> Historical Sales Figures Management
                                 </li>
                             </ol>
                         </div>
@@ -58,66 +43,71 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "The following are the list of items in each storage bin";
+                                            errMsg = "Create Sales Figures";
                                         }
                                         out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="inventoryControl">
+                                <form name="salesFiguresManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Sale Forecast Figure" onclick="addSF()"  />
+                                                </div>
+                                            </div>
+                                            <br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
+                                                            <th>Month</th>
+                                                            <th>Quantity</th>
+                                                            <th>Store</th>
                                                             <th>SKU</th>
                                                             <th>Item Name</th>
-                                                            <th>Storage Bin ID</th>
-                                                            <th>Item Quantity</th>
-                                                            <th>Item Type</th>
-                                                            <th>Delete</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<ItemStorageBinHelper> itemStorageBinHelpers = (List<ItemStorageBinHelper>) (session.getAttribute("itemStorageBinHelpers"));
-                                                            if (itemStorageBinHelpers != null) {
-                                                                for (int i = 0; i < itemStorageBinHelpers.size(); i++) {
+                                                            if (salesFigures != null) {
+                                                                for (int i = 0; i < salesFigures.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <%=itemStorageBinHelpers.get(i).getSKU()%>
+                                                                <%=salesFigures.get(i).getMonth()%>
                                                             </td>
                                                             <td>
-                                                                <%=itemStorageBinHelpers.get(i).getItemName()%>
+                                                                <%=salesFigures.get(i).getQuantity()%>
                                                             </td>
                                                             <td>
-                                                                <%=itemStorageBinHelpers.get(i).getStorageBinID()%>
+                                                                <%=salesFigures.get(i).getStore().getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=itemStorageBinHelpers.get(i).getItemQty()%>
+                                                                <%=salesFigures.get(i).getItem().getSKU()%>
                                                             </td>
                                                             <td>
-                                                                <%=itemStorageBinHelpers.get(i).getItemType()%>
-                                                            </td>
-                                                            <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Remove" onclick="removeItemFromStorageBin('<%=itemStorageBinHelpers.get(i).getStorageBinID()%>')"/>
+                                                                <%=salesFigures.get(i).getItem().getName()%>
                                                             </td>
                                                         </tr>
                                                         <%
                                                                     }
                                                                 }
                                                             } catch (Exception ex) {
-                                                                ex.printStackTrace();
-                                                                response.sendRedirect("manufacturingWarehouseManagement.jsp");
+                                                                response.sendRedirect("../A1/workspace.jsp");
                                                             }
                                                         %>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
-                                            <input type="hidden" name="storageBinID" value="">    
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Sale Forecast Figure" onclick="addSF()"  />
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="id" value="">    
                                         </div>
 
                                     </div>
@@ -136,6 +126,8 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
+
+
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function () {

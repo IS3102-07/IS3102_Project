@@ -14,9 +14,17 @@
                 document.bomManagement.submit();
             }
             function linkFurniture(id) {
-                bomManagement.id.value = id;
-                document.bomManagement.action = "../BomManagement_LinkBomServlet";
-                document.bomManagement.submit();
+
+                var yes = confirm("Are you sure?!");
+                if (yes === true) {
+                    window.event.returnValue = true;
+                    bomManagement.id.value = id;
+                    document.bomManagement.action = "../BomManagement_LinkBomServlet";
+                    document.bomManagement.submit();
+                } else {
+                    window.event.returnValue = false;
+                }
+
             }
             function updateBOM(id) {
                 bomManagement.id.value = id;
@@ -77,12 +85,13 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
+                    <jsp:include page="../displayMessage.jsp" />
 
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Add or remove Bill Of Materials
+                                    Add or remove Bill Of Materials.
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="bomManagement">

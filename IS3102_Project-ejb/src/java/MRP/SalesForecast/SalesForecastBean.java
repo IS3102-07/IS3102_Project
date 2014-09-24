@@ -15,54 +15,66 @@ import javax.persistence.TemporalType;
 
 @Stateless
 public class SalesForecastBean implements SalesForecastBeanLocal {
+
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
-    private EntityManager em;  
-    
+    private EntityManager em;
+
     @Override
-    public SalesFigureEntity createSalesFigure(Date month, Integer quantity, StoreEntity store, ItemEntity item){
-        SalesFigureEntity SalesFigure = new SalesFigureEntity(month,quantity,store,item);
-        try{
+    public SalesFigureEntity createSalesFigure(Date month, Integer quantity, Long storeID, Long itemID) {
+
+        try {
+            StoreEntity store = em.getReference(StoreEntity.class, storeID);
+            ItemEntity item = em.getReference(ItemEntity.class, itemID);
+            SalesFigureEntity SalesFigure = new SalesFigureEntity(month, quantity, store, item);
             em.persist(SalesFigure);
             System.out.println("SalesFigure with id: " + SalesFigure.getId() + " is created successfully");
             return SalesFigure;
-        }
-        catch(EntityExistsException ex){
+        } catch (EntityExistsException ex) {
             ex.printStackTrace();
             return null;
-        }        
-    }   
-        
-    @Override
-    public List<SalesFigureEntity> getSalesFigureList(StoreEntity store, Date month){
-        try{
-        Query query = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.month = ?2").setParameter(1,store).setParameter(2, month,TemporalType.DATE);
-        return query.getResultList();
         }
-        catch(Exception ex){
+    }
+
+    @Override
+    public List<SalesFigureEntity> getSalesFigureList(StoreEntity store, Date month) {
+        try {
+            Query query = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.month = ?2").setParameter(1, store).setParameter(2, month, TemporalType.DATE);
+            return query.getResultList();
+        } catch (Exception ex) {
             ex.printStackTrace();
             return new ArrayList<SalesFigureEntity>();
-    } 
-    }
-    
-    @Override
-    public SalesFigureEntity getSalesFigure(StoreEntity store, Date month, ItemEntity item){
-        try{
-        Query query = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.month = ?2 and s.item = ?3").setParameter(1,store).setParameter(2, month,TemporalType.DATE).setParameter(3,item);
-        SalesFigureEntity SalesFigure = (SalesFigureEntity) query.getSingleResult();
-        return SalesFigure;
         }
-        catch(Exception ex){
+    }
+
+    @Override
+    public List<SalesFigureEntity> getAllSalesFigureList() {
+        try {
+            Query query = em.createQuery("select s from SalesFigureEntity s");
+            return query.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ArrayList<SalesFigureEntity>();
+        }
+    }
+
+    @Override
+    public SalesFigureEntity getSalesFigure(StoreEntity store, Date month, ItemEntity item) {
+        try {
+            Query query = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.month = ?2 and s.item = ?3").setParameter(1, store).setParameter(2, month, TemporalType.DATE).setParameter(3, item);
+            SalesFigureEntity SalesFigure = (SalesFigureEntity) query.getSingleResult();
+            return SalesFigure;
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
+        }
     }
-    }
+
     @Override
-    public SalesFigureEntity getSalesFigure(Long id){
-        try{
+    public SalesFigureEntity getSalesFigure(Long id) {
+        try {
             SalesFigureEntity SalesFigure = (SalesFigureEntity) em.find(SalesFigureEntity.class, id);
             return SalesFigure;
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }

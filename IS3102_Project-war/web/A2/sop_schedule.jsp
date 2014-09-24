@@ -22,11 +22,11 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Sale And Operation Planning
+                                Sales And Operation Planning
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sale And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operation Planning</a>
                                 </li>                             
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="#">Schedule</a>

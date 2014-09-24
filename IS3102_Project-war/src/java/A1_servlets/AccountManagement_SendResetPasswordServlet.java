@@ -1,6 +1,12 @@
-package A6_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A1_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -9,37 +15,46 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BomManagement_LinkBomServlet extends HttpServlet {
+/**
+ *
+ * @author yang
+ */
+public class AccountManagement_SendResetPasswordServlet extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
+    private SystemSecurityBeanLocal systemSecurityBean;
     private String result;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         try {
-            String id = request.getParameter("id");
-            String furnitureId = request.getParameter("furnitureId" + id);
-            if (furnitureId.equals("")) {
-                result = "?errMsg=Please try again.";
-                response.sendRedirect("BomManagement_BomServlet" + result);
-            }
-            System.out.println("BOMId: " + id);
-            System.out.println("FurnitureId: " + furnitureId);
+            String email = request.getParameter("email");
 
-            boolean success = itemManagementBean.linkBOMAndFurniture(Long.parseLong(id), Long.parseLong(furnitureId));
-            if (!success) {
-                result = "?errMsg=Please try again.";
-                response.sendRedirect("BomManagement_BomServlet" + result);
+            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
+            if (ifExist) {
+                systemSecurityBean.sendPasswordResetEmailForStaff(email);
+                result = "?errMsg=Send email success. Please enter your activation code to reset your password.";
+                response.sendRedirect("./A1/staffResetPasswordCode.jsp" + result);
             } else {
-                result = "?errMsg=BOM linked successfully.";
-                response.sendRedirect("BomManagement_BomServlet" + result);
+                result = "?errMsg=Staff email does not exist.";
+                response.sendRedirect("./A1/staffForgetPassword.jsp" + result);
             }
         } catch (Exception ex) {
-            out.println(ex);
-
+            System.out.println(ex);
+        } finally {
+            System.out.close();
         }
     }
 

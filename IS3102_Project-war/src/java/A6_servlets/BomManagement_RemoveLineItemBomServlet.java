@@ -9,41 +9,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BomManagement_LinkBomServlet extends HttpServlet {
+public class BomManagement_RemoveLineItemBomServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
-    private String result;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            String id = request.getParameter("id");
-            String furnitureId = request.getParameter("furnitureId" + id);
-            if (furnitureId.equals("")) {
-                result = "?errMsg=Please try again.";
-                response.sendRedirect("BomManagement_BomServlet" + result);
-            }
-            System.out.println("BOMId: " + id);
-            System.out.println("FurnitureId: " + furnitureId);
-
-            boolean success = itemManagementBean.linkBOMAndFurniture(Long.parseLong(id), Long.parseLong(furnitureId));
-            if (!success) {
-                result = "?errMsg=Please try again.";
-                response.sendRedirect("BomManagement_BomServlet" + result);
-            } else {
-                result = "?errMsg=BOM linked successfully.";
-                response.sendRedirect("BomManagement_BomServlet" + result);
+            String[] deleteArr = request.getParameterValues("delete");
+            System.out.println("hello deleteArr + " + deleteArr);
+            Long bomId = Long.parseLong(request.getParameter("bomId"));
+            System.out.println("bomId " + bomId);
+            if (deleteArr != null) {
+                for (String deleteArr1 : deleteArr) {
+                    itemManagementBean.deleteLineItemFromBOM(Long.parseLong(deleteArr1), bomId);
+                }
+                response.sendRedirect("BomManagement_LineItemBomServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + bomId);
             }
         } catch (Exception ex) {
             out.println(ex);
-
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

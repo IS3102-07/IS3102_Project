@@ -18,11 +18,20 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Sale And Operation Planning</h1>
+                            <h1 class="page-header">Sales And Operation Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sale And Operation Planning</a>
-                                </li>                                
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operation Planning</a>
+                                </li>   
+                                <li>
+                                    <i class="icon icon-calendar"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_schedule_GET">Schedule</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-list"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_main_GET">Dashboard</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-pencil"></i>  <a href="#">Create Sale And Operation Plan</a>
+                                </li>
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
@@ -59,17 +68,17 @@
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_create_POST">
                                         <div class="form-group">
                                             <label>Sale Forecast</label>
-                                            <input type="number" class="form-control" name="saleForecast" value="300" required="true" >
+                                            <input type="number" class="form-control" name="saleForecast" value="300" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Production Plan</label>
-                                            <input type="number" class="form-control" name="productionPlan" required="true" >
+                                            <input type="number" class="form-control" name="productionPlan" required="true">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Current Inventory level</label>
-                                            <input type="number" class="form-control" name="currentInventory" value="20" required="true">
+                                            <input type="number" class="form-control" name="currentInventory" value="20" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">

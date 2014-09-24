@@ -12,7 +12,7 @@ import javax.ejb.Local;
 public interface SalesForecastBeanLocal {
         public List<SalesFigureEntity> getSalesFigureList(StoreEntity store, Date month);
         public SalesFigureEntity getSalesFigure(StoreEntity store, Date month, ItemEntity item);
-        public SalesFigureEntity createSalesFigure(Date month, Integer quantity, StoreEntity store, ItemEntity item);
+        public SalesFigureEntity createSalesFigure(Date month, Integer quantity, Long storeID, Long itemID);
         public SalesFigureEntity getSalesFigure(Long id);
-       
+        public List<SalesFigureEntity> getAllSalesFigureList();
 }
