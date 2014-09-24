@@ -87,7 +87,7 @@
                                             <input class="form-control" name="quantity" type="number" value="<%=transferOrder.getLineItem().getQuantity()%>" disabled >
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Remove Line Item" class="btn btn-lg btn-primary btn-block">
+                                            <input type="submit" value="Remove Line Item" <%if (transferOrder.getStatus().equals("Completed") || transferOrder.getStatus().equals("Unfulfillable")) {%>disabled<%}%> class="btn btn-lg btn-primary btn-block">
                                         </div>
                                         <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
                                     </form>
@@ -128,7 +128,7 @@
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select class="form-control" name="status" required="true">
-                                                <option></option>
+                                                <option>Pending</option>
                                                 <option>Completed</option>
                                                 <option>Unfulfillable</option>
                                             </select>

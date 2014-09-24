@@ -34,7 +34,7 @@ public class WorkspaceAnnouncement_UpdateServlet extends HttpServlet {
 
             boolean canUpdate = workspaceBeanLocal.updateAnnouncement(Long.valueOf(announcementId), message, date);
             if (canUpdate) {
-                result = "?id=" + announcementId + "&errMsg=Announcement updated.";
+                result = "?id=" + announcementId + "&goodMsg=Announcement updated.";
                 //update announcement list
                 List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
                 HttpSession session;

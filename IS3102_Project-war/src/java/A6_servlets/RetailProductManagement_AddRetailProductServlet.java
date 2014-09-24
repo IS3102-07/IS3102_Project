@@ -32,7 +32,7 @@ public class RetailProductManagement_AddRetailProductServlet extends HttpServlet
 
             if (!itemManagementBean.checkSKUExists(SKU)) {
                 itemManagementBean.addRetailProduct(SKU, name, category, description, imageURL, _length, width, height);
-                result = "?errMsg=Retail Product with SKU: " + SKU + " has been created successfully.";
+                result = "?goodMsg=Retail Product with SKU: " + SKU + " has been created successfully.";
                 response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
             } else {
                 result = "?errMsg=Failed to add retail product, SKU: " + SKU + " already exist.";

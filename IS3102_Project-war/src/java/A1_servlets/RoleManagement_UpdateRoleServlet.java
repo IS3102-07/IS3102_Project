@@ -27,7 +27,7 @@ public class RoleManagement_UpdateRoleServlet extends HttpServlet {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("roleManagement_update.jsp" + result);
             } else {
-                result = "?errMsg=Role updated successfully.";
+                result = "?goodMsg=Role updated successfully.";
                 response.sendRedirect("RoleManagement_RoleServlet" + result);
             }
 

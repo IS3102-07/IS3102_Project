@@ -33,7 +33,6 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleAndOperationPlanning_Servlet extends HttpServlet {
-
     @EJB
     private ItemManagementBeanLocal imBean;
     @EJB

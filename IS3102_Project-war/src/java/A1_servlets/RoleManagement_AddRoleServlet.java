@@ -28,7 +28,7 @@ public class RoleManagement_AddRoleServlet extends HttpServlet {
                 response.sendRedirect("A1/roleManagement_add.jsp" + result);
             } else {
                 accountManagementBean.createRole(name, accessLevel);
-                result = "?errMsg=Role added successfully.";
+                result = "?goodMsg=Role added successfully.";
                 response.sendRedirect("RoleManagement_RoleServlet" + result);
             }
         } catch (Exception ex) {

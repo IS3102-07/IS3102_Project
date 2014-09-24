@@ -42,9 +42,9 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
                         }
                     }
                     if (view.equals("sentMessages")) {
-                        response.sendRedirect("WorkspaceMessage_Servlet?view=sentMessages&errMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
+                        response.sendRedirect("WorkspaceMessage_Servlet?view=sentMessages&goodMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
                     } else {
-                        response.sendRedirect("WorkspaceMessage_Servlet?view=inbox&errMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
+                        response.sendRedirect("WorkspaceMessage_Servlet?view=inbox&goodMsg=Successfully deleted: " + deleteArr.length + " messages(s).");
                     }
                 } else {
                     if (view.equals("sentMessages")) {
@@ -57,10 +57,10 @@ public class WorkspaceMessage_RemoveServlet extends HttpServlet {
                 System.out.println("Servlet deleting single message.");
                 if (deleteMessageType.equals("inbox")) {
                     workspaceBean.deleteSingleInboxMessage(staffEntity.getId(), Long.parseLong(deleteSingleMessageID));
-                    response.sendRedirect("WorkspaceMessage_Servlet?errMsg=Successfully deleted message.");
+                    response.sendRedirect("WorkspaceMessage_Servlet?goodMsg=Successfully deleted message.");
                 } else { //outbox
                     workspaceBean.deleteSingleOutboxMessage(staffEntity.getId(), Long.parseLong(deleteSingleMessageID));
-                    response.sendRedirect("WorkspaceMessage_Servlet?view=sentMessages&errMsg=Successfully deleted message.");
+                    response.sendRedirect("WorkspaceMessage_Servlet?view=sentMessages&goodMsg=Successfully deleted message.");
                 }
             } else {
                 System.out.println("asd");

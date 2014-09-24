@@ -31,14 +31,14 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
                     result = "?source=isSubmit&errMsg=Failed to submit Shipping Order.&id=" + shippingOrderId + "&lineItemId=" + lineItemId;
                     response.sendRedirect("A3/shippingOrderManagement_UpdateLineItem.jsp" + result);
                 } else {
-                    result = "?errMsg=Shipping Order submitted successfully.&id=" + shippingOrderId;
+                    result = "?goodMsg=Shipping Order submitted successfully.&id=" + shippingOrderId;
                     response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
                 }
 
             } else if (status3 != null) {
 
                 boolean canUpdate = inboundAndOutboundLogisticsBeanLocal.updateShippingOrderStatus(Long.parseLong(shippingOrderId), status3);
-                result = "?errMsg=Shipping Order updated successfully.&id=" + shippingOrderId;
+                result = "?goodMsg=Shipping Order updated successfully.&id=" + shippingOrderId;
                 response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
             } else {
                 if (!inboundAndOutboundLogisticsBeanLocal.checkSKUExists(sku)) {
@@ -50,7 +50,7 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         result = "?errMsg=Shipping Order not found.&id=" + shippingOrderId + "&lineItemId=" + lineItemId;
                         response.sendRedirect("A3/shippingOrderManagement_UpdateLineItem.jsp" + result);
                     } else {
-                        result = "?errMsg=Line Item updated successfully.&id=" + shippingOrderId;
+                        result = "?goodMsg=Line Item updated successfully.&id=" + shippingOrderId;
                         response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
                     }
                 }
