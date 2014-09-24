@@ -24,7 +24,7 @@ public class SupplierManagement_RemoveSupplierServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     supplierManagementBean.deleteSupplier(Long.parseLong(deleteArr[i]));
                 }
-                response.sendRedirect("SupplierManagement_SupplierServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("SupplierManagement_SupplierServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
                 response.sendRedirect("A3/supplierManagement.jsp?errMsg=Nothing is selected.");
             }

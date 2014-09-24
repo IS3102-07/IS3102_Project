@@ -41,7 +41,7 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                     result = "?source=isSubmit&errMsg=Failed to submit Purchase Order.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;
                     response.sendRedirect("A3/purchaseOrderManagement_UpdateLineItem.jsp" + result);
                 } else {
-                    result = "?errMsg=Purchase Order submitted successfully.&id=" + purchaseOrderId;
+                    result = "?goodMsg=Purchase Order submitted successfully.&id=" + purchaseOrderId;
                     response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
                 }
 
@@ -59,7 +59,7 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                 }
                 System.out.println("!!!!!!2");
                 retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), status3);
-                result = "?errMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
+                result = "?goodMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
                 response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
             } else {
                 if (!retailProductsAndRawMaterialsPurchasingBean.checkSKUExists(sku)) {
@@ -71,7 +71,7 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         result = "?errMsg=Purchase Order not found.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;
                         response.sendRedirect("A3/purchaseOrderManagement_UpdateLineItem.jsp" + result);
                     } else {
-                        result = "?errMsg=Line Item updated successfully.&id=" + purchaseOrderId;
+                        result = "?goodMsg=Line Item updated successfully.&id=" + purchaseOrderId;
                         response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
                     }
                 }

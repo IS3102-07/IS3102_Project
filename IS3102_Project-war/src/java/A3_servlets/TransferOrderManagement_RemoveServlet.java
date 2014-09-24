@@ -24,7 +24,7 @@ public class TransferOrderManagement_RemoveServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     manufacturingWarehouseManagementBean.deleteTransferOrder(Long.parseLong(deleteArr[i]));
                 }
-                response.sendRedirect("TransferOrderManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("TransferOrderManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
                 response.sendRedirect("A3/TransferOrderManagement_Servlet.jsp?errMsg=Nothing is selected.");
             }

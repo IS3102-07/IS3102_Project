@@ -25,7 +25,7 @@ public class BomManagement_RemoveBomServlet extends HttpServlet {
                     System.out.println(deleteArr1);
                     itemManagementBean.deleteBOM(Long.parseLong(deleteArr1));
                 }
-                response.sendRedirect("BomManagement_BomServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("BomManagement_BomServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             }
         } catch (Exception ex) {
             out.println(ex);

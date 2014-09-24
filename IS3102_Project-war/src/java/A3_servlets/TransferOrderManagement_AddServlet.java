@@ -36,7 +36,7 @@ public class TransferOrderManagement_AddServlet extends HttpServlet {
                     result = "?errMsg=Ops error, please try again.";
                     response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
                 } else {
-                    result = "?errMsg=Transfer Order created successfully.&id=" + warehouseEntity.getWarehouseName();
+                    result = "?goodMsg=Transfer Order created successfully.&id=" + warehouseEntity.getWarehouseName();
                     response.sendRedirect("TransferOrderManagement_Servlet" + result);
                 }
             }

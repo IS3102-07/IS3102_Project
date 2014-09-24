@@ -26,7 +26,7 @@ public class SupplierManagement_AddSupplierServlet extends HttpServlet {
             String country = request.getParameter("country");
 
             supplierManagementBean.addSupplier(name, phone, email, address, Long.parseLong(country));
-            result = "?errMsg=Supplier added successfully.";
+            result = "?goodMsg=Supplier added successfully.";
             response.sendRedirect("SupplierManagement_SupplierServlet" + result);
 
         } catch (Exception ex) {
