@@ -22,7 +22,6 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = false;
-                    document.getElementById("messageBox").innerHTML = "No items selected.";
                 } else {
                     window.event.returnValue = true;
                     document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
@@ -197,7 +196,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

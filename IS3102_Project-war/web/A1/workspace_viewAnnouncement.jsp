@@ -39,7 +39,6 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = false;
-                    document.getElementById("messageBox").innerHTML = "No items selected.";
                 } else {
                     window.event.returnValue = true;
                     document.announcementsManagement.action = "../WorkspaceAnnouncement_DeleteServlet";

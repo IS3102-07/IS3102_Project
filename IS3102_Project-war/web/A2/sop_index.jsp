@@ -66,7 +66,6 @@
                                         <div class="form-group">
                                             <label for="select_store">Store</label>
                                             <select id="select_store" class="form-control" name="storeName" required="true">
-                                                <option>--Select Store--</option>                                            
                                             </select>
                                         </div>
                                         <input type="submit" class="btn btn-primary" value="Access">

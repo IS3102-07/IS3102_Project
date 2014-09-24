@@ -83,7 +83,7 @@
                                                 <h4><b>Add Schedule:</b></h4>
                                                 <div class="form-group">
                                                     <label><b>Year</b></label>
-                                                    <input type="number" name="year" class="form-control" style="min-width: 200px" required="true">
+                                                    <input type="number" name="year" class="form-control" style="min-width: 200px" min="2014" max="2050" required="true">
                                                 </div>                                                
                                                 <div class="form-group">
                                                     <label><b>Month</b></label>
