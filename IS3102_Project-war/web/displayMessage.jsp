@@ -1,15 +1,20 @@
 <%
     String errMsg = request.getParameter("errMsg");
-    if (errMsg == null || errMsg.equals("")) {
-        errMsg = "";
-    } else {
+    String goodMsg = request.getParameter("goodMsg");
 %>
 <div class="row">
     <div class="col-lg-6">
-        <div class="alert alert-info">
-            <%=errMsg%>
-        </div>
+        <%
+            if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    out.println("<div class='alert alert-warning'>" + errMsg + "</div>");
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    out.println("<div class='alert alert-success'>" + goodMsg + "</div>");
+                }
+            }
+        %>
     </div>
 </div>
-<%}%>
 <!-- /.warning -->

@@ -1,20 +1,29 @@
+<%@page import="EntityManager.MemberEntity"%>
+<%
+    MemberEntity member = (MemberEntity) (session.getAttribute("member"));
+    if (member == null) {
+%>
+<jsp:forward page="memberLogin.jsp?errMsg=Session Expired." />
+<%
+} else {
+%>
 <header id="header">
     <div class="container">
         <h1 class="logo">
-            <a href="B/index.jsp">
+            <a href="index.jsp">
                 <img alt="Island Furniture" width="180" height="80" data-sticky-width="82" data-sticky-height="40" src="../img/logo.png">
             </a>
         </h1>
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
-                    <a href="B/about-us.html"><i class="icon icon-map-marker"></i>Store Location</a>
+                    <a href="about-us.html"><i class="icon icon-map-marker"></i>Store Location</a>
                 </li>
                 <li>
-                    <a href="B/Login.jsp"><i class="icon icon-unlock-alt"></i>Login/Register</a>
+                    <a href="Login.jsp"><i class="icon icon-unlock-alt"></i>Login/Register</a>
                 </li>
                 <li>
-                    <a href="B/contact-us.html"><i class="icon icon-shopping-cart"></i>My Shopping List</a>
+                    <a href="contact-us.html"><i class="icon icon-shopping-cart"></i>My Shopping List</a>
                 </li>
             </ul>
             <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
@@ -122,3 +131,4 @@
         </div>
     </div>
 </header>
+<%}%>
