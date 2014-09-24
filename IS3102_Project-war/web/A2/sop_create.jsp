@@ -68,22 +68,22 @@
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_create_POST">
                                         <div class="form-group">
                                             <label>Sale Forecast</label>
-                                            <input type="number" class="form-control" name="saleForecast" value="300" required="true" readonly="true">
+                                            <input id="input_saleForecast" type="number" class="form-control" name="saleForecast" value="300" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Production Plan</label>
-                                            <input type="number" class="form-control" name="productionPlan" required="true">
+                                            <input id="input_productionPlan" type="number" class="form-control" name="productionPlan" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Current Inventory level</label>
-                                            <input type="number" class="form-control" name="currentInventory" value="20" required="true" readonly="true">
+                                            <input id="input_currentInventory" type="number" class="form-control" name="currentInventory" value="20" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Target Inventory Level</label>
-                                            <input type="number" class="form-control" name="targetInventoty" required="true" >
+                                            <input id="input_targetInventoty" type="number" class="form-control" name="targetInventoty" required="true" >
                                         </div>
 
                                         <input type="submit" class="btn btn-primary" value="Submit">
@@ -106,21 +106,13 @@
         <!-- /#wrapper -->
 
         <script>
-            function getStore() {
-                var regionalOfficeId = $("#select_regionalOffice").find('option:selected').val();
-                $.get('../SOP_ajax_Servlet', {regionalOfficeId: regionalOfficeId}, function (responseText) {
-                    var stores = responseText.trim().split(';');
-                    var x = document.getElementById("select_store");
-                    while (x.length > 0) {
-                        x.remove(0);
-                    }
-                    for (var i = 0; i < stores.length - 1; i++) {
-                        var option = document.createElement("option");
-                        option.text = stores[i];
-                        x.add(option);
-                    }
-                });
-            }
+            $('#input_targetInventoty').change(function(){        
+                var targetInventoty = $('#input_targetInventoty').val();
+                var saleForecast = $('#input_saleForecast').val();
+                var currentInventory = $('#input_currentInventory').val();
+                var productionPlan = parseInt(saleForecast) - parseInt(currentInventory) + parseInt(targetInventoty);                
+                $('#input_productionPlan').val(productionPlan);                
+            });
         </script>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
