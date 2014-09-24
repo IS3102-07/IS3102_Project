@@ -24,7 +24,7 @@ public class StorageBinManagement_RemoveServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     manufacturingWarehouseManagementBean.deleteStorageBin(Long.parseLong(deleteArr[i]));
                 }
-                response.sendRedirect("StorageBinManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("StorageBinManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
                 response.sendRedirect("A3/storageBinManagement.jsp?errMsg=Nothing is selected.");
             }

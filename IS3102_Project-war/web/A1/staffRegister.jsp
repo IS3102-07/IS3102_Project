@@ -18,88 +18,74 @@
                                 <div class="box-content">
                                     <h3>Register An Account</h3>
 
-                                    <div class="row">
-                                        <%
-                                            String errMsg = request.getParameter("errMsg");
-                                            if (errMsg == null || errMsg.equals("")) {
-                                                errMsg = "";
-                                            } else {
-                                        %>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="alert alert-danger ">
-                                                    <%=errMsg%>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <%}%>
-                                        <!-- /.warning -->
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <div class="col-md-6">
-                                                <label>Identification No</label>
-                                                <input type="text" name="identificationNo" class="form-control input-lg" required="true">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label>Name</label>
-                                                <input type="text" value="" name="name" class="form-control input-lg" required="true">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <div class="col-md-6">
-                                                <label>E-mail Address</label>
-                                                <input type="email" value="" name="email" class="form-control input-lg" required="true">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label>Phone</label>
-                                                <input type="text" name="phone" class="form-control input-lg" required="true">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group" hidden>
-                                            <div class="col-md-6">
-                                                <label>Password</label>
-                                                <input id="password" type="password" name="password" class="form-control input-lg" required="true" value="a">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label>Re-enter Password</label>
-                                                <input id="repassword" type="password" name="repassword" class="form-control input-lg" required="true" value="a">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                                <label>Address</label>
-                                                <input type="text" name="address" class="form-control input-lg" required="true">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <jsp:include page="../displayMessageLong.jsp" />
 
-                                    <hr class="tall "/>
-                                    
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-md-offset-3">
-                                                <%
-                                                    ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LdjyvoSAAAAAL2m-7sPPZEtz0BNVRb-A_yY0BB_", "6LdjyvoSAAAAAHnUl50AJU-edkUqFtPQi9gCqDai", false);
-                                                    out.print(c.createRecaptchaHtml(null, null));
-                                                %>
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <label>Identification No</label>
+                                            <input type="text" name="identificationNo" class="form-control input-lg" required="true">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Name</label>
+                                            <input type="text" value="" name="name" class="form-control input-lg" required="true">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-md-offset-3">
-                                                <input type="submit" value="Register" class="btn btn-primary pull-left"  style="width:80%;">
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <label>E-mail Address</label>
+                                            <input type="email" value="" name="email" class="form-control input-lg" required="true">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Phone</label>
+                                            <input type="text" name="phone" class="form-control input-lg" required="true">
                                         </div>
                                     </div>
-                                    <input type="hidden" value="A1/staffLogin.jsp" name="source">
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" hidden>
+                                        <div class="col-md-6">
+                                            <label>Password</label>
+                                            <input id="password" type="password" name="password" class="form-control input-lg" required="true" value="a">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Re-enter Password</label>
+                                            <input id="repassword" type="password" name="repassword" class="form-control input-lg" required="true" value="a">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label>Address</label>
+                                            <input type="text" name="address" class="form-control input-lg" required="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="tall "/>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <%
+                                                ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LdjyvoSAAAAAL2m-7sPPZEtz0BNVRb-A_yY0BB_", "6LdjyvoSAAAAAHnUl50AJU-edkUqFtPQi9gCqDai", false);
+                                                out.print(c.createRecaptchaHtml(null, null));
+                                            %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <input type="submit" value="Register" class="btn btn-primary pull-left"  style="width:318px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="A1/staffLogin.jsp" name="source">
                                 </div>
                             </form>
                         </div>

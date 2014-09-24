@@ -36,7 +36,7 @@ public class ShippingOrderManagement_UpdateServlet extends HttpServlet {
                     result = "?errMsg=One of the selected warehouse no longer exist..";
                     response.sendRedirect("A3/shippingOrderManagement_Add.jsp" + result);
                 } else {
-                    result = "?errMsg=Shipping Order updated successfully";
+                    result = "?goodMsg=Shipping Order updated successfully";
                     response.sendRedirect("ShippingOrderManagement_Servlet" + result);
                 }
             }

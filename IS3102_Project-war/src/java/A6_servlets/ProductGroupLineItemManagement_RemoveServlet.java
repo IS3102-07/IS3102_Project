@@ -26,7 +26,7 @@ public class ProductGroupLineItemManagement_RemoveServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     ItemManagementBean.removeLineItemFromProductGroup(Long.parseLong(productGroupId), Long.parseLong(deleteArr[i]));
                 }
-                response.sendRedirect("ProductGroupLineItemManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + productGroupId);
+                response.sendRedirect("ProductGroupLineItemManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + productGroupId);
             } else {
                 response.sendRedirect("A6/productGroupManagement_Update.jsp?errMsg=Nothing is selected.&id=" + productGroupId);
             }

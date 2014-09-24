@@ -35,7 +35,7 @@ public class HistoricalSalesFigureManagement_AddServlet extends HttpServlet {
                 result = "?errMsg=Failed to add sales figures.";
                 response.sendRedirect("A2/historicalSalesFigureManagement_add.jsp" + result);
             } else {
-                result = "?errMsg=Sales Figures created successfully";
+                result = "?goodMsg=Sales Figures created successfully";
                 response.sendRedirect("HistoricalSalesFigureManagement_Servlet" + result);
             }
 

@@ -42,7 +42,7 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
                 if (source.equals("A1/staffManagement_add.jsp")) {
                     accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
                     systemSecurityBean.sendActivationEmailForStaff(email);
-                    result = "?errMsg=Staff added successfully.";
+                    result = "?goodMsg=Staff added successfully.";
                     response.sendRedirect("StaffManagement_StaffServlet" + result);
                 } else {
                     String remoteAddr = request.getRemoteAddr();
@@ -56,7 +56,7 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
                     if (reCaptchaResponse.isValid()) {
                         accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
                         systemSecurityBean.sendActivationEmailForStaff(email);
-                        result = "?errMsg=Staff added successfully.";
+                        result = "?goodMsg=Staff added successfully.";
                         response.sendRedirect(source+result);
                     } else {
                         result = "?errMsg=You have entered an wrong Captcha code.";

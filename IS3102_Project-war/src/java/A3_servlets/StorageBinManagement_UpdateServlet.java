@@ -35,7 +35,7 @@ public class StorageBinManagement_UpdateServlet extends HttpServlet {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("A3/storageBinManagement_Update.jsp" + result);
             } else {
-                result = "?errMsg=Staff updated successfully.";
+                result = "?goodMsg=Storage bin updated successfully.";
                 response.sendRedirect("StorageBinManagement_Servlet" + result);
             }
 

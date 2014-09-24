@@ -38,7 +38,7 @@ public class TransferOrderLineItemManagement_Servlet extends HttpServlet {
             } else {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
-                result = "?errMsg=Line Item added successfully.&id="+transferOrderId;
+                result = "?goodMsg=Line Item added successfully.&id="+transferOrderId;
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {
