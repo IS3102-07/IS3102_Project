@@ -78,20 +78,8 @@
                     </div>
                     <!-- /.row -->
 
-                    <% //DON"T REMOVE THIS, HARDCODED SPECIAL
-                        String errMsg = request.getParameter("errMsg");
-                        if (errMsg == null || errMsg.equals("")) {
-                            errMsg = "";
-                        } else {
-                    %>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="alert alert-info">
-                                <%=errMsg%>
-                            </div>
-                        </div>
-                    </div>
-                    <%}%>
+
+                    <jsp:include page="../displayMessageLong.jsp" />
 
 
                     <div class="row">

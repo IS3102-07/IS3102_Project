@@ -25,20 +25,8 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    <%
-                        String errMsg = request.getParameter("errMsg");
-                        if (errMsg == null || errMsg.equals("")) {
-                            errMsg = "";
-                        } else {
-                    %>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="alert alert-danger">
-                                <%=errMsg%>
-                            </div>
-                        </div>
-                    </div>
-                    <%}%>
+
+                    <jsp:include page="../displayMessage.jsp" />
                     <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
@@ -86,14 +74,6 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-
-
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-        </script>
 
     </body>
 

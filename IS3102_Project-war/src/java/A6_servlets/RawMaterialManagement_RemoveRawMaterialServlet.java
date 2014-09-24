@@ -25,7 +25,7 @@ public class RawMaterialManagement_RemoveRawMaterialServlet extends HttpServlet 
                 for (String deleteArr1 : deleteArr) {
                     itemManagementBean.removeRawMaterial(deleteArr1);
                 }
-                response.sendRedirect("RawMaterialManagement_RawMaterialServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("RawMaterialManagement_RawMaterialServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             }
         } catch (Exception ex) {
             out.println(ex);

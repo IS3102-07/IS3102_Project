@@ -32,7 +32,7 @@ public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
             Date date = formatter.parse(expiryDate);
             
             if (workspaceBeanLocal.makeAnnouncement(sender, title, message, date)) {
-                result = "?errMsg=Announcement broadcasted.";
+                result = "?goodMsg=Announcement broadcasted.";
                 response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
             } else {
                 result = "?errMsg=Failed to broadcast announcement.";

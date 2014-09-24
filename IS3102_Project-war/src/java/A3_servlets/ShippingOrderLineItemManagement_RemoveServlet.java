@@ -25,7 +25,7 @@ public class ShippingOrderLineItemManagement_RemoveServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     inboundAndOutboundLogisticsBeanLocal.removeLineItemFromShippingOrder(Long.parseLong(purchaseOrderId),Long.parseLong(deleteArr[i]));
                 }
-                response.sendRedirect("ShippingOrderLineItemManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + purchaseOrderId);
+                response.sendRedirect("ShippingOrderLineItemManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + purchaseOrderId);
             } else {
                 response.sendRedirect("A3/shippingOrderManagement_Update.jsp?errMsg=Nothing is selected.&id=" + purchaseOrderId);
             }
