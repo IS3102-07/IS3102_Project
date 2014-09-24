@@ -26,7 +26,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sale Forecast</a>
                                 </li>                             
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="#">Schedule</a>
@@ -46,7 +46,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/sop_schedule_POST">
+                                            <form action="../SaleForecast_Servlet/SaleForecast_main_GET">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>                                                            
