@@ -26,7 +26,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
     }
 
     @Override
-    public Boolean createPurchaseOrder(Long supplierID, Long receivingWarehouseID, Date expectedReceivedDate) {
+    public PurchaseOrderEntity createPurchaseOrder(Long supplierID, Long receivingWarehouseID, Date expectedReceivedDate) {
         System.out.println("createPurchaseOrder() called");
         try {
             SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
@@ -34,11 +34,11 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity(supplierEntity, warehouseEntity, expectedReceivedDate);
             em.persist(purchaseOrder);
             System.out.println("PurchaseOrder with id: " + purchaseOrder.getId() + " is created successfully");
-            return true;
+            return purchaseOrder;
         } catch (EntityExistsException ex) {
             ex.printStackTrace();
             System.out.println("Failed to create purchase order.");
-            return false;
+            return null;
         }
     }
 
@@ -145,7 +145,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
         } catch (NoResultException ex) {
             System.out.println("SKU not found.");
             return false;
-        }  catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             System.out.println("Purchase order not found.");
             return false;
         } catch (Exception ex) {
@@ -169,8 +169,10 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
     public Boolean updatePurchaseOrderStatus(Long id, String status) {
         try {
             PurchaseOrderEntity purchaseOrder = em.find(PurchaseOrderEntity.class, id);
-            purchaseOrder.setStatus(status);
-            em.persist(purchaseOrder);
+            if (!purchaseOrder.getStatus().equals("Completed")) {
+                purchaseOrder.setStatus(status);
+                em.merge(purchaseOrder);
+            }
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -201,7 +203,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             return new ArrayList<>();
         }
     }
-    
+
     @Override
     public boolean checkSKUExists(String SKU) {
         try {

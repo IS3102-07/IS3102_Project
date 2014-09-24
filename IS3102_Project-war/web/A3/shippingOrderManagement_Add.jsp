@@ -43,10 +43,10 @@
                                     <h3 class="panel-title"> Shipping Order</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form role="form" action="../ShippingOrderManagement_AddServlet">
+                                    <form id="myForm" role="form" action="../ShippingOrderManagement_AddServlet">
                                         <div class="form-group">
                                             <label>Source</label>
-                                            <select class="form-control" name="source" required="true">
+                                            <select class="form-control" id="select_source" name="source" required="true">
                                                 <%
                                                     for (int i = 0; i < warehouses.size(); i++) {
                                                         out.println("<option value='" + warehouses.get(i).getId() + "'>" + warehouses.get(i).getWarehouseName() + "</option>");
@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Destination</label>
-                                            <select class="form-control" name="destination" required="true">
+                                            <select class="form-control" id="select_destination" name="destination" required="true">
                                                 <%
                                                     for (int i = 0; i < warehouses.size(); i++) {
                                                         out.println("<option value='" + warehouses.get(i).getId() + "'>" + warehouses.get(i).getWarehouseName() + "</option>");
@@ -84,6 +84,20 @@
         <!-- /#wrapper -->
 
     </body>
+
+    <script>
+        $("#myForm").submit(function (e) {
+            var source = $("#select_source").find(":selected").text();
+            var destination = $("#select_destination").find(":selected").text();
+            if (source === destination) {
+                alert("Source warehouse should not be the same as destination warehouse.");
+                e.preventDefault();
+            }
+            else
+                return true;        
+        });
+
+    </script>
 
 </html>
 <%}%>
