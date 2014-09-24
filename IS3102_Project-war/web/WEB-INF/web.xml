@@ -299,6 +299,7 @@
     <servlet>
         <servlet-name>Workspace_Servlet</servlet-name>
         <servlet-class>A1_servlets.Workspace_Servlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
         <servlet-name>WorkspaceAnnouncement_UpdateServlet</servlet-name>
@@ -987,4 +988,7 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>Workspace_Servlet</welcome-file>
+    </welcome-file-list>
 </web-app>
