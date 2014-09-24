@@ -6,60 +6,18 @@
 <!--[if gt IE 9]><!-->	
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
+    <%
+        List<ArrayList> memberDetails = (List<ArrayList>) session.getAttribute("member");
+        if (memberDetails != null) {
+            response.sendRedirect("index.jsp");
+        } else {
+    %>
     <body>
         <script>
-            function validateForm() {
-                var blnIsError = false;
-                var strErrMsg = "";
 
-                for (var i = 0; i < LoginForm.elements.length; i++) {
-                    var e = LoginForm.elements[i];
-
-                    if (e.name == "txtUsername") {
-                        if (trim(e.value) == "") {
-                            strErrMsg = "\n    - Passport Number is empty";
-                            document.getElementById('txtUsername').style.background = "yellow";
-                            blnIsError = true;
-                        } else {
-                            document.getElementById('txtUsername').style.background = "white";
-                        }
-                    }
-
-                    if (e.name == "txtPassword") {
-                        if (trim(e.value) == "") {
-                            strErrMsg += "\n  - Password is empty";
-                            document.getElementById('txtPassword').style.background = "yellow";
-                            blnIsError = true;
-                        } else {
-                            document.getElementById('txtPassword').style.background = "white";
-                        }
-                    }
-                }
-                if (blnIsError == true) {
-                    window.event.returnValue = false;
-                    document.getElementById('lblMessage').innerText = "The following fields are incorrect:" + strErrMsg;
-                } else {
-                    window.event.returnValue = true;
-                    document.LoginForm.action = "LoginServlet";
-                    document.LoginForm.submit();
-                }
-            }
-
-            function trim(stringToTrim) {
-                return stringToTrim.replace(/^\s+|\s+$/g, "");
-            }
         </script>
         <jsp:include page="menu.html" />
-        <%
-            List<ArrayList> memberDetails = (List<ArrayList>) session.getAttribute("member");
-            if (memberDetails != null) {
-                response.sendRedirect("home.jsp");
-            } else {
-                String errMsg = request.getParameter("errMsg");
-                if (errMsg == null || errMsg.equals("")) {
-                    errMsg = "IM TESTING ";
-                }
-        %>
+
 
         <div role="main" class="main">
 
@@ -74,17 +32,33 @@
             </section>
             <div class="container">
 
+
+
+                <%
+                    String errMsg = request.getParameter("errMsg");
+                    if (errMsg == null || errMsg.equals("")) {
+                        errMsg = "";
+                    } else {
+                %>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="alert alert-warning">
+                            <%=errMsg%>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+                <!-- /.warning -->
+
                 <div class="row">
                     <div class="col-md-12">
-
                         <div class="row featured-boxes login">
-
                             <div class="col-md-6">
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>I'm a Returning Customer</h4>
 
-                                        <form name="LoginForm">
+                                        <form action="../ECommerce_MemberLoginServlet">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">
@@ -146,9 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <label id="lblMessage">test <%=errMsg%></label>
-                        </div>
+
                     </div>
                 </div>
                 <%}%>
@@ -156,14 +128,5 @@
         </div>
         <jsp:include page="footer.html" />
 
-        <!-- Theme Initializer -->
-        <script src="../js/theme.plugins.js"></script>
-        <script src="../js/theme.js"></script>
-
-        <!-- Current Page JS -->
-        <script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-        <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-        <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-        <script src="../js/views/view.home.js"></script>   
     </body>
 </html>
