@@ -7,7 +7,7 @@
         <%
             if ((errMsg != null) && (goodMsg == null)) {
                 if (!errMsg.equals("")) {
-                    out.println("<div class='alert alert-warning'>" + errMsg + "</div>");
+                    out.println("<div class='alert alert-danger'>" + errMsg + "</div>");
                 }
             } else if ((errMsg == null && goodMsg != null)) {
                 if (!goodMsg.equals("")) {

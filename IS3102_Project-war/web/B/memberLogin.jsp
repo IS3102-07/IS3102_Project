@@ -17,7 +17,7 @@
                 </div>
             </section>
             <div class="container">
-                <jsp:include page="../displayMessage.jsp" />
+                <jsp:include page="../displayMessageLong.jsp" />
 
                 <div class="row">
                     <div class="col-md-12">
