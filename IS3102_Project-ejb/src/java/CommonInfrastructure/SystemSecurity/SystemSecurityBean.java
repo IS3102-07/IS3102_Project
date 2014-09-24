@@ -1,5 +1,6 @@
 package CommonInfrastructure.SystemSecurity;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.StaffEntity;
 import EntityManager.MemberEntity;
 import javax.ejb.Stateless;
@@ -14,10 +15,14 @@ import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.ejb.EJB;
 
 @Stateless
 public class SystemSecurityBean implements SystemSecurityBeanLocal {
 
+    @EJB
+    AccountManagementBeanLocal accountManagementBean;
+    
     @PersistenceContext
     private EntityManager em;
     String emailServerName = "mailauth.comp.nus.edu.sg";
@@ -41,10 +46,19 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 StaffEntity i = (StaffEntity) o;
                 if (i.getEmail().equalsIgnoreCase(email)) {
                     activationCode += i.getActivationCode();
-                    staff = i;
+                    staff = em.find(StaffEntity.class, i.getId());
+                    
                     System.out.println("\nServer returns activation code of staff:\n" + activationCode);
+                    
+                    String passwordSalt = accountManagementBean.generatePasswordSalt();
+                    String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, activationCode);
+                    
+                    staff.setPasswordHash(passwordHash);
+                    staff.setPasswordSalt(passwordSalt);
+                    em.merge(staff);
                 }
             }
+            
         } catch (Exception ex) {
             System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
             return false;
