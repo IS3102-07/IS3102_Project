@@ -19,6 +19,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
@@ -180,21 +181,25 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
     @Override
     public StorageBinEntity getInboundStorageBin(Long warehouseID) {
+        System.out.println("getInboundStorageBin() called");
         try {
-            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-            Long id = warehouseEntity.getId();
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.type='Inbound' AND sb.warehouse.id=:id");
-            q.setParameter("id", id);
+            q.setParameter("id", warehouseID);
             storageBin = (StorageBinEntity) q.getSingleResult();
             return storageBin;
+        } catch (NoResultException ex) {
+            System.out.println("No inbound storage found.");
+            return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getInboundStorageBin:\n" + ex);
+            ex.printStackTrace();
             return null;
         }
     }
 
     @Override
     public StorageBinEntity getOutboundStorageBin(Long warehouseID) {
+        System.out.println("getOutboundStorageBin() called");
         try {
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             Long id = warehouseEntity.getId();
@@ -202,6 +207,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             q.setParameter("id", id);
             storageBin = (StorageBinEntity) q.getSingleResult();
             return storageBin;
+        } catch (NoResultException ex) {
+            System.out.println("No outbound storage found.");
+            return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getOutboundStorageBin:\n" + ex);
             return null;
@@ -216,7 +224,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
             Integer numberOfQuantityToMove = transferOrder.getLineItem().getQuantity();
             System.out.println("The number of quantity to move is " + numberOfQuantityToMove);
-            for (int i = 0;i < numberOfQuantityToMove;i++) {
+            for (int i = 0; i < numberOfQuantityToMove; i++) {
                 String SKU = transferOrder.getLineItem().getItem().getSKU();
                 StorageBinEntity originBin = transferOrder.getOrigin();
                 StorageBinEntity targetBin = transferOrder.getTarget();

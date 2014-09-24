@@ -65,10 +65,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     }
 
     @Override
-    public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID, Long warehouseID) {
+    public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID) {
         System.out.println("moveInboundPurchaseOrderItemsToReceivingBin called()");
         try {
             PurchaseOrderEntity purchaseOrderEntity = em.getReference(PurchaseOrderEntity.class, purchaseOrderID);
+            Long warehouseID = purchaseOrderEntity.getReceivedWarehouse().getId();
             List<LineItemEntity> lineItemsInPurchaseOrder = purchaseOrderEntity.getLineItems();
             for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
                 ItemEntity itemEntity = lineItemEntity.getItem();
@@ -91,10 +92,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     }
 
     @Override
-    public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID, Long warehouseID) {
+    public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID) {
         System.out.println("moveInboundShippingOrderItemsToReceivingBin called()");
         try {
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
+            Long warehouseID = shippingOrderEntity.getDestination().getId();
             List<LineItemEntity> lineItemsInPurchaseOrder = shippingOrderEntity.getLineItems();
             for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
                 ItemEntity itemEntity = lineItemEntity.getItem();
@@ -118,7 +120,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
 
     @Override
     public boolean addItemToReceivingBin(Long warehouseID, String SKU) {
-        System.out.println("addItemToStorageBin() called with SKU:" + SKU);
+        System.out.println("addItemToReceivingBin() called with SKU:" + SKU +" & wahouseID:"+warehouseID);
         StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
         if (inboundBin == null) {
             System.out.println("Failed to add item to receiving bin, receiving bin not found.");
@@ -426,10 +428,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     private ItemEntity getItemInsideStorageBin(Long storageBinID) {
         try {
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
-            ItemEntity itemEntity = storageBinEntity.getItems().get(0);
-            if (itemEntity == null) {
+            List<ItemEntity> itemEntitiesInStorageBin = storageBinEntity.getItems();
+            if (itemEntitiesInStorageBin == null || itemEntitiesInStorageBin.size()==0) {
                 return null;
             } else {
+                ItemEntity itemEntity = storageBinEntity.getItems().get(0);
                 return itemEntity;
             }
         } catch (Exception ex) {
