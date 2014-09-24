@@ -79,6 +79,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
         try {
             storageBin = em.getReference(StorageBinEntity.class, storageBinId);
+            System.out.println("Size of storage bin to be updated is " + storageBin.getItems().size());
             if (storageBin == null || !storageBin.getItems().isEmpty()) {
                 System.out.println("Cannot find storage bin or storage bin contains items");
                 return false;
@@ -233,7 +234,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 System.out.println("originBin: " + originBin.getId() + "moving to targetBin: " + targetBin);
 
                 boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
-                if (!isPass) {   
+                if (!isPass) {
                     System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in inbound bin.");
                     throw new Exception();
                 }
