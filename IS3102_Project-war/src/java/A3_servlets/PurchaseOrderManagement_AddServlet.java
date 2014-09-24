@@ -1,5 +1,6 @@
 package A3_servlets;
 
+import EntityManager.PurchaseOrderEntity;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,13 +30,13 @@ public class PurchaseOrderManagement_AddServlet extends HttpServlet {
             Date date = formatter.parse(expectedDate);
 
             if (supplierId != null && destinationId != null) {
-                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.createPurchaseOrder(Long.parseLong(supplierId), Long.parseLong(destinationId), date);
-                if (!canUpdate) {
+                PurchaseOrderEntity purchaseOrder = retailProductsAndRawMaterialsPurchasingBean.createPurchaseOrder(Long.parseLong(supplierId), Long.parseLong(destinationId), date);
+                if (purchaseOrder == null) {
                     result = "?errMsg=Supplier or Warehouse no longer exist / active.";
                     response.sendRedirect("A3/purchaseOrderManagement_Add.jsp" + result);
                 } else {
                     result = "?errMsg=Purchase Order created successfully";
-                    response.sendRedirect("PurchaseOrderManagement_Servlet" + result);
+                    response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result + "&id="+ purchaseOrder.getId());
                 }
             }
         } catch (Exception ex) {
