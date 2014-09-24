@@ -34,10 +34,10 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
             boolean canUpdate = false;
             if (status.equals("Completed")) {
                 canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId));
-                result = "?goodMsg=Purchase order status updated successfully.&id=" + transferOrderId;
+                result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
                 //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Unfulfillable")) {
-                result = "?goodMsg=Purchase order status updated successfully.&id=" + transferOrderId;
+                result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
                 canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
                 //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
