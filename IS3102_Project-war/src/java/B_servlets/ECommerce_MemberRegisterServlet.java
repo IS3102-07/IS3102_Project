@@ -1,25 +1,44 @@
 package B_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class ECommerce_LogoutServlet extends HttpServlet {
+public class ECommerce_MemberRegisterServlet extends HttpServlet {
+
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session;
-            session = request.getSession();
-            session.invalidate();
-            response.sendRedirect("B/memberLogin.jsp?errMsg=Logout Successfully.");
-        } finally {
-            out.close();
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            out.println("<h1>" + "in" + "</h1>");
+            boolean isExist = accountManagementBean.checkMemberEmailExists(email);
+            if (isExist) {
+                result = "Email already exist. Please try again.";
+                response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
+            } else {
+                boolean canUpdate = accountManagementBean.registerMember(null, null, null, email, null, null, null, null, password);
+                if (!canUpdate) {
+                    result = "Register failed. Please try again.";
+                    response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
+                } else {
+                    result = "Account successfully registered.";
+                    response.sendRedirect("B/memberLogin.jsp?goodMsg=" + result);
+                }
+            }
+        } catch (Exception ex) {
+            out.println(ex);
+            ex.printStackTrace();
         }
     }
 
