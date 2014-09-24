@@ -31,7 +31,6 @@ public class ProductGroupManagement_AddServlet extends HttpServlet {
                 result = "?errMsg=Product group created successfully";
                 response.sendRedirect("ProductGroupManagement_Servlet" + result);
             }
-
         } catch (Exception ex) {
             out.println(ex);
         }
