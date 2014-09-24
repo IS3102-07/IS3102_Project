@@ -12,14 +12,10 @@
                 document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
                 document.staffManagement.submit();
             }
-            function removeStaff() {                
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
-                    document.staffManagement.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
+            function removeStaff() {
+                window.event.returnValue = true;
+                document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
+                document.staffManagement.submit();
             }
             function addStaff() {
                 window.event.returnValue = true;
