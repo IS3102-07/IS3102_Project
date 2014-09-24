@@ -12,6 +12,7 @@
                 document.retailProductManagement.submit();
             }
             function removeRetailProduct() {
+                
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -20,18 +21,11 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    alert("No items selected.");
                     window.event.returnValue = false;
                 } else {
-
-                    var yes = confirm("Are you sure?!");
-                    if (yes == true) {
-                        window.event.returnValue = true;
-                        document.retailProductManagement.action = "../RetailProductManagement_RemoveRetailProductServlet";
-                        document.retailProductManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                    window.event.returnValue = true;
+                    document.retailProductManagement.action = "../RetailProductManagement_RemoveRetailProductServlet";
+                    document.retailProductManagement.submit();
                 }
             }
             function addRetailProduct() {
@@ -80,7 +74,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Retail Product" onclick="addRetailProduct()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Retail Product" onclick="removeRetailProduct()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Retail Product</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -154,7 +148,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Retail Product" onclick="addRetailProduct()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Retail Product" onclick="removeRetailProduct()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Retail Product</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
@@ -181,6 +175,22 @@
         </div>
         <!-- /#wrapper -->
 
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Retail Product will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeRetailProduct()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>

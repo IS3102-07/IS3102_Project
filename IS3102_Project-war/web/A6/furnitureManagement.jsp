@@ -20,18 +20,11 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    alert("No items selected.");
                     window.event.returnValue = false;
                 } else {
-
-                    var yes = confirm("Are you sure?!");
-                    if (yes == true) {
-                        window.event.returnValue = true;
-                        document.furnitureManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
-                        document.furnitureManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                    window.event.returnValue = true;
+                    document.furnitureManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
+                    document.furnitureManagement.submit();
                 }
             }
             function addFurniture() {
@@ -80,7 +73,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Furniture" onclick="addFurniture()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Furniture" onclick="removeFurniture()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Furniture</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -154,7 +147,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Furniture" onclick="addFurniture()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Furniture" onclick="removeFurniture()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Furniture</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
@@ -181,6 +174,22 @@
         </div>
         <!-- /#wrapper -->
 
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Furniture will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeFurniture()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
