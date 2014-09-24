@@ -681,18 +681,28 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     public boolean resetStaffPassword(String email, String password) {
+        System.out.println("resetStaffPassword() called with:" + email);
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
-
-        StaffEntity staff = getStaffByEmail(email);
-        
-        staff.setPasswordSalt(passwordSalt);
-        staff.setPasswordHash(passwordHash);
-        
-        em.merge(staff);
-        System.out.println("Staff \"" + email + "\" changed password successful as id:");
-        return true;
-        
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+            for (Object o : q.getResultList()) {
+                StaffEntity i = (StaffEntity) o;
+                if (i.getEmail().equalsIgnoreCase(email)) {
+                    i.setPasswordHash(passwordHash);
+                    i.setPasswordSalt(passwordSalt);
+                    em.merge(i);
+                    System.out.println("Staff \"" + email + "\" changed password successful as id:");
+                    return true;
+                }
+            }
+            System.out.println("Staff \"" + email + "\" failed to change password as id:");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Staff \"" + email + "\" failed to change password as id:");
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     // Uses supplied salt and password to generate a hashed password
