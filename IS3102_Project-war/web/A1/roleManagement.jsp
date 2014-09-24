@@ -99,21 +99,21 @@
                                                         <%
                                                             List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
                                                             if (roles != null) {
-                                                                for (int i = 0; i < roles.size(); i++) {
+                                                                for (RoleEntity role: roles) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <input type="checkbox" name="delete" value="<%=roles.get(i).getId()%>" />
+                                                                <input type="checkbox" name="delete" value="<%=role.getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=roles.get(i).getName()%>
+                                                                <%=role.getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=roles.get(i).getAccessLevel()%>
+                                                                <%=role.getAccessLevel()%>
                                                             </td>
                                                             <td>
                                                                 <%
-                                                                    List<StaffEntity> staffs = (List<StaffEntity>) (roles.get(i).getStaffs());
+                                                                    List<StaffEntity> staffs = (List<StaffEntity>) (role.getStaffs());
                                                                     if (staffs.isEmpty()) {
                                                                         out.println("-");
                                                                     } else {
@@ -124,7 +124,7 @@
                                                                 %>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=roles.get(i).getId()%>" value="Update" onclick="javascript:updateRole('<%=roles.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=role.getId()%>" value="Update" onclick="javascript:updateRole('<%=role.getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
