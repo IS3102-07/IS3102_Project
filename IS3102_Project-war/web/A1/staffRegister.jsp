@@ -60,14 +60,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group">
+                                        <div class="form-group" hidden>
                                             <div class="col-md-6">
                                                 <label>Password</label>
-                                                <input id="password" type="password" name="password" class="form-control input-lg" required="true">
+                                                <input id="password" type="password" name="password" class="form-control input-lg" required="true" value="a">
                                             </div>
                                             <div class="col-md-6">
                                                 <label>Re-enter Password</label>
-                                                <input id="repassword" type="password" name="repassword" class="form-control input-lg" required="true">
+                                                <input id="repassword" type="password" name="repassword" class="form-control input-lg" required="true" value="a">
                                             </div>
                                         </div>
                                     </div>
