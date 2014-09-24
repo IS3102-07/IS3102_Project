@@ -28,7 +28,7 @@ public class ProductGroupManagement_AddServlet extends HttpServlet {
                 result = "?errMsg=Product group name already exist.";
                  response.sendRedirect("A6/productGroupManagement_Add.jsp" + result);
             } else {
-                result = "?errMsg=Product group created successfully";
+                result = "?goodMsg=Product group created successfully";
                 response.sendRedirect("ProductGroupManagement_Servlet" + result);
             }
         } catch (Exception ex) {

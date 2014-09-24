@@ -27,7 +27,7 @@ public class BomManagement_UpdateBomServlet extends HttpServlet {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("bomManagement_update.jsp" + result);
             } else {
-                result = "?errMsg=BOM updated successfully.";
+                result = "?goodMsg=BOM updated successfully.";
                 response.sendRedirect("BomManagement_BomServlet" + result);
             }
         } catch (Exception ex) {

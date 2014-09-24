@@ -24,7 +24,7 @@ public class RoleManagement_RemoveRoleServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     accountManagementBean.deleteRole(Long.parseLong(deleteArr[i]));
                 }
-                response.sendRedirect("RoleManagement_RoleServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("RoleManagement_RoleServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
                 response.sendRedirect("A1/roleManagement.jsp?errMsg=Nothing is selected.");
             }

@@ -45,7 +45,7 @@ public class ProductGroupLineItemManagement_UpdateServlet extends HttpServlet {
                 } else {
                     List<ProductGroupEntity> productGroups = ItemManagementBean.getAllProductGroup();
                     session.setAttribute("productGroups", productGroups);
-                    result = "?errMsg=Item successfully updated.&id=" + productGroupId + "&lineItemId=" + lineitemId;
+                    result = "?goodMsg=Item successfully updated.&id=" + productGroupId + "&lineItemId=" + lineitemId;
                     response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);
                 }
             }

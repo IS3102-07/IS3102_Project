@@ -34,7 +34,7 @@ public class StorageBinManagement_AddServlet extends HttpServlet {
                 result = "?errMsg=The selected storage bin type already exist. Only one inbound and outbound storage bin can exist per warehouse. If the size of the bin was changed, update there the bin details accordingly instead of creating a new one. Alternatively, delete the bin first before trying to create one.";
                 response.sendRedirect("A3/storageBinManagement_Add.jsp" + result);
             } else {
-                result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
+                result = "?goodMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
                 response.sendRedirect("StorageBinManagement_Servlet" + result);
             }
 
