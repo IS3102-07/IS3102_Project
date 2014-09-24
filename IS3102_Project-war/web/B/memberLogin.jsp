@@ -1,26 +1,12 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
 <!--[if gt IE 9]><!-->	
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
-    <%
-        List<ArrayList> memberDetails = (List<ArrayList>) session.getAttribute("member");
-        if (memberDetails != null) {
-            response.sendRedirect("index.jsp");
-        } else {
-    %>
     <body>
-        <script>
-
-        </script>
         <jsp:include page="menu1.html" />
-
-
         <div role="main" class="main">
-
             <section class="page-top">
                 <div class="container">
                     <div class="row">
@@ -31,29 +17,7 @@
                 </div>
             </section>
             <div class="container">
-
-
-                <%
-                    String errMsg = request.getParameter("errMsg");
-                    String goodMsg = request.getParameter("goodMsg");
-                %>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <%
-                            if ((errMsg != null) && (goodMsg == null)) {
-                                if (!errMsg.equals("")) {
-                                    out.println("<div class='alert alert-warning'>" + errMsg + "</div>");
-                                }
-                            } else if ((errMsg == null && goodMsg != null)) {
-                                if (!goodMsg.equals("")) {
-                                    out.println("<div class='alert alert-success'>" + goodMsg + "</div>");
-                                }
-                            }
-                        %>
-                    </div>
-                </div>
-
-                <!-- /.warning -->
+                <jsp:include page="../displayMessageLong.jsp" />
 
                 <div class="row">
                     <div class="col-md-12">
@@ -125,10 +89,8 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-                <%}%>
             </div>
         </div>
         <jsp:include page="footer.html" />
