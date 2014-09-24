@@ -21,7 +21,6 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
         try {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            out.println("<h1>" + "in" + "</h1>");
             boolean isExist = accountManagementBean.checkMemberEmailExists(email);
             if (isExist) {
                 result = "Email already exist. Please try again.";

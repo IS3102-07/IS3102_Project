@@ -37,7 +37,7 @@ public class AccountManagement_ResetPasswordServlet extends HttpServlet {
             
             if (systemSecurityBean.validatePasswordResetForStaff(email, resetCode)) {
                 accountManagementBean.resetStaffPassword(email, password);
-                result = "?goodMsg=Reset Password Successful. Please login with your new password.";
+                result = "?errMsg=Reset Password Successful. Please login with your new password.";
                 response.sendRedirect("./A1/staffLogin.jsp" + result);
             } else {
                 result = "?errMsg=Reset Password Unsuccessful. Please key in the correct reset code.";

@@ -87,7 +87,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-12">
                                                         <label>E-mail Address</label>
-                                                        <input type="email" value="" name="email" class="form-control input-lg" required>
+                                                        <input type="email" name="email" class="form-control input-lg" required>
                                                     </div>
                                                 </div>
                                             </div>
