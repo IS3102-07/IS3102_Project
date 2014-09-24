@@ -6,6 +6,7 @@ import EntityManager.LineItemEntity;
 import EntityManager.RawMaterialEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.StorageBinEntity;
+import EntityManager.StorageBin_ItemEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
@@ -22,7 +23,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.UserTransaction;
 
 @Stateless
 public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal {
@@ -233,11 +233,12 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 System.out.println("originBin: " + originBin.getId() + "moving to targetBin: " + targetBin);
 
                 boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
-                if (!isPass) {
-                    System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in origin bin.");
+                if (!isPass) {   
+                    System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in inbound bin.");
                     throw new Exception();
                 }
             }
+            transferOrder.setStatus("Completed");
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to markTransferOrderAsCompleted:\n" + ex);
@@ -382,7 +383,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         int qtyNeededToTransfer = 0;
         int qtyToTransferOutFromBin = 0;
         String SKUtoFind;
-        ItemEntity currentItem = null;
+        StorageBin_ItemEntity currentItem = null;
         StorageBinEntity outboundStorageBin = getOutboundStorageBin(warehouseID);
         List<TransferOrderEntity> transferOrdersCreated = new ArrayList<>();
         try {
@@ -392,24 +393,26 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 for (StorageBinEntity eachBinThatMatchesSKU : binsThatMatchesSKU) {
                     qtyToTransferOutFromBin = 0;
                     SKUtoFind = lineItem1.getItem().getSKU();
-                    List<ItemEntity> itemsInEachBinThatMatchesSKU = eachBinThatMatchesSKU.getItems();
-                    for (ItemEntity eachItem : itemsInEachBinThatMatchesSKU) {
+                    List<StorageBin_ItemEntity> itemsInEachBinThatMatchesSKU = eachBinThatMatchesSKU.getItems();
+                    for (StorageBin_ItemEntity eachItem : itemsInEachBinThatMatchesSKU) {
                         currentItem = eachItem;
-                        if (currentItem.getSKU().equals(SKUtoFind)) {
-                            qtyNeededToTransfer--;
-                            qtyToTransferOutFromBin++;
+                        for (ItemEntity itemEntity : currentItem.getItem()) {
+                            if (itemEntity.getSKU().equals(SKUtoFind)) {
+                                qtyNeededToTransfer--;
+                                qtyToTransferOutFromBin++;
+                            }
                         }
                         if (qtyNeededToTransfer <= 0) {
                             break;
                         }
                     }
                     if (qtyNeededToTransfer > 0) {
-                        LineItemEntity lineItem = new LineItemEntity(currentItem, qtyToTransferOutFromBin, "");
-                        WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-                        transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, eachBinThatMatchesSKU, outboundStorageBin);
-
-                        em.persist(transferOrder);
-
+                        for (ItemEntity itemEntity : currentItem.getItem()) {
+                            LineItemEntity lineItem = new LineItemEntity(itemEntity, qtyToTransferOutFromBin, "");
+                            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+                            transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, eachBinThatMatchesSKU, outboundStorageBin);
+                            em.persist(transferOrder);
+                        }
                         transferOrdersCreated.add(transferOrder);
                     }
                     if (qtyNeededToTransfer <= 0) {

@@ -29,9 +29,13 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
             String transferOrderId = request.getParameter("id");
             String status = request.getParameter("status");
 
+            result = "?errMsg=Line item added successfully.&id=" + transferOrderId;
+
             boolean canUpdate = false;
             if (status.equals("Completed")) {
                 canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId));
+                result = "?errMsg=Purchase order status updated successfully.&id=" + transferOrderId;
+                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Unfulfillable")) {
                 canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
             }
@@ -41,7 +45,7 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
             } else {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
-                result = "?errMsg=Line item added successfully.&id=" + transferOrderId;
+
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
 

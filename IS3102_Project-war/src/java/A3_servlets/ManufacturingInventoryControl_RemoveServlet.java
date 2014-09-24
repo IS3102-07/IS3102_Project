@@ -1,6 +1,6 @@
 package A3_servlets;
 
-import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
+import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -12,16 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 public class ManufacturingInventoryControl_RemoveServlet extends HttpServlet {
 
     @EJB
-    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         try {
 
+            String storageBin_ItemID = request.getParameter("storageBin_ItemID");
             String storageBinID = request.getParameter("storageBinID");
-            if (storageBinID != null) {
-                manufacturingWarehouseManagementBean.deleteStorageBin(Long.parseLong(storageBinID));
+            
+            if (storageBinID != null && storageBin_ItemID!= null) {
+                manufacturingInventoryControlBeanLocal.emptyStorageBin_ItemEntity(Long.parseLong(storageBin_ItemID), Long.parseLong(storageBinID));
                 response.sendRedirect("ManufacturingInventoryControl_Servlet?errMsg=Successfully removed all instance of the selected item from storage bin.");
             } else {
                 response.sendRedirect("A3/manufacturingInventoryControlManagement.jsp?errMsg=Nothing is selected.");

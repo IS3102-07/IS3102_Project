@@ -1,12 +1,22 @@
 package HelperClasses;
 
 public class ItemStorageBinHelper {
+    private Long storageBin_ItemID;
     private String SKU;
     private String itemName;
     private Long storageBinID;
     private Integer itemQty;
     private String itemType;
 
+    public Long getStorageBin_ItemID() {
+        return storageBin_ItemID;
+    }
+
+    public void setStorageBin_ItemID(Long storageBin_ItemID) {
+        this.storageBin_ItemID = storageBin_ItemID;
+    }
+
+    
     public String getSKU() {
         return SKU;
     }

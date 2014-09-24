@@ -30,8 +30,10 @@ public class ManufacturingInventoryControl_Servlet extends HttpServlet {
             if (warehouseEntity == null) {
                 response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
             } else {
+                System.out.println("!!!!!!!!!!!!!");
                 List<ItemStorageBinHelper> itemStorageBinHelpers = manufacturingInventoryControlBean.getItemList(warehouseEntity.getId());
                 session.setAttribute("itemStorageBinHelpers", itemStorageBinHelpers);
+                System.out.println("???????????");
                 if (errMsg == null || errMsg.equals("")) {
                     response.sendRedirect("A3/manufacturingInventoryControlManagement.jsp");
                 } else {
