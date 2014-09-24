@@ -11,6 +11,23 @@
                     checkboxes[i].checked = source.checked;
                 }
             }
+            function removeWarehouse() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = false;
+                    document.getElementById("messageBox").innerHTML = "No items selected.";
+                } else {
+                    window.event.returnValue = true;
+
+                    document.warehouseManagement.action = "../FacilityManagement_Servlet/createWarehouse_GET";
+                    document.warehouseManagement.submit();
+                }
         </script>
 
         <div id="wrapper">
@@ -44,11 +61,11 @@
 
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <form action="../FacilityManagement_Servlet/createWarehouse_GET">
+                                        <form name="warehouseManagement" action="../FacilityManagement_Servlet/createWarehouse_GET">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="submit" name="submit-btn" value="Add Warehouse" class="btn btn-primary" data-loading-text="Loading...">
-                                                    <input type="submit" name="submit-btn" value="Delete Warehouse" class="btn btn-primary" data-loading-text="Loading...">
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Warehouse</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -89,7 +106,24 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="submit" name="submit-btn" value="Add Warehouse" class="btn btn-primary" data-loading-text="Loading...">
-                                                        <input type="submit" name="submit-btn" value="Delete Warehouse" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Warehouse</button></a>
+                                                    </div>
+                                                </div>
+                                                    
+                                                    <div role="dialog" class="modal fade" id="myModal">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4>Alert</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p id="messageBox">Warehouse will be removed. Are you sure?</p>
+                                                            </div>
+                                                            <div class="modal-footer">                                                                                                                                
+                                                                <button class="btn btn-primary" name="submit-btn" value="Delete Warehouse">Confirm</button>
+                                                                <a class="btn btn-default" data-dismiss ="modal">Close</a>                        
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                         </form>    

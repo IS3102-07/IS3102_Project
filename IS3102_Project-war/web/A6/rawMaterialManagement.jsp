@@ -20,17 +20,12 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    alert("No items selected.");
                     window.event.returnValue = false;
+                    document.getElementById("messageBox").innerHTML = "No items selected.";
                 } else {
-                    var yes = confirm("Are you sure?!");
-                    if (yes == true) {
-                        window.event.returnValue = true;
-                        document.rawMaterialManagement.action = "../RawMaterialManagement_RemoveRawMaterialServlet";
-                        document.rawMaterialManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                    window.event.returnValue = true;
+                    document.rawMaterialManagement.action = "../RawMaterialManagement_RemoveRawMaterialServlet";
+                    document.rawMaterialManagement.submit();
                 }
             }
             function addRawMaterial() {
@@ -79,7 +74,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Raw Material" onclick="addRawMaterial()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Raw Material" onclick="removeRawMaterial()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Raw Material</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -149,7 +144,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Raw Material" onclick="addRawMaterial()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Raw Material" onclick="removeRawMaterial()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Raw Material</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
@@ -177,6 +172,22 @@
         <!-- /#wrapper -->
 
 
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Raw material will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeRawMaterial()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function() {
