@@ -211,11 +211,13 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     public Boolean updateShippingOrderStatus(Long id, String status) {
         try {
             ShippingOrderEntity shippingOrder = em.find(ShippingOrderEntity.class, id);
-            shippingOrder.setStatus(status);
-            if (status.equals("Shipped")) {
-                shippingOrder.setShippedDate(new Date());
-            } else if (status.equals("Completed")) {
-                shippingOrder.setReceivedDate(new Date());
+            if (!shippingOrder.getStatus().equals("Completed")) {
+                shippingOrder.setStatus(status);
+                if (status.equals("Shipped")) {
+                    shippingOrder.setShippedDate(new Date());
+                } else if (status.equals("Completed")) {
+                    shippingOrder.setReceivedDate(new Date());
+                }
             }
             em.persist(shippingOrder);
             return true;
