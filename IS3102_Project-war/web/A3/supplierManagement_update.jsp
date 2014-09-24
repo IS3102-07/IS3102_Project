@@ -69,8 +69,12 @@
                                         <%
                                             List<CountryEntity> countries = (List<CountryEntity>) (session.getAttribute("countries"));
                                             if (countries != null) {
-                                                for (int i = 0; i < countries.size(); i++) {
-                                                    out.println("<option value='" + countries.get(i).getId() + "'>" + countries.get(i).getName() + "</option>");
+                                                for (CountryEntity country : countries) {
+                                                    if (!country.getName().equals(supplier.getCountry().getName())) {
+                                        %>
+                                        <option value="<%= country.getId()%>"> <%= country.getName()%> </option>
+                                        <%
+                                                    }
                                                 }
                                             }
                                         %>
