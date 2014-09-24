@@ -481,6 +481,10 @@
         <servlet-name>SaleForecast_Servlet</servlet-name>
         <servlet-class>A2_servlets.SaleForecast_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_MemberRegisterServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_MemberRegisterServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -960,6 +964,10 @@
     <servlet-mapping>
         <servlet-name>SaleForecast_Servlet</servlet-name>
         <url-pattern>/SaleForecast_Servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_MemberRegisterServlet</servlet-name>
+        <url-pattern>/ECommerce_MemberRegisterServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -16,7 +16,7 @@
         <script>
 
         </script>
-        <jsp:include page="menu.html" />
+        <jsp:include page="menu1.html" />
 
 
         <div role="main" class="main">
@@ -33,21 +33,26 @@
             <div class="container">
 
 
-
                 <%
                     String errMsg = request.getParameter("errMsg");
-                    if (errMsg == null || errMsg.equals("")) {
-                        errMsg = "";
-                    } else {
+                    String goodMsg = request.getParameter("goodMsg");
                 %>
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="alert alert-warning">
-                            <%=errMsg%>
-                        </div>
+                    <div class="col-lg-12">
+                        <%
+                            if ((errMsg != null) && (goodMsg == null)) {
+                                if (!errMsg.equals("")) {
+                                    out.println("<div class='alert alert-warning'>" + errMsg + "</div>");
+                                }
+                            } else if ((errMsg == null && goodMsg != null)) {
+                                if (!goodMsg.equals("")) {
+                                    out.println("<div class='alert alert-success'>" + goodMsg + "</div>");
+                                }
+                            }
+                        %>
                     </div>
                 </div>
-                <%}%>
+
                 <!-- /.warning -->
 
                 <div class="row">
@@ -63,7 +68,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-12">
                                                         <label>E-mail Address</label>
-                                                        <input type="text" name="txtUsername" id="txtUsername" class="form-control input-lg">
+                                                        <input type="email" name="email" class="form-control input-lg" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,13 +77,13 @@
                                                     <div class="col-md-12">
                                                         <a class="pull-right" href="#">(Lost Password?)</a>
                                                         <label>Password</label>
-                                                        <input type="password" name="txtPassword" id="txtPassword" class="form-control input-lg">
+                                                        <input type="password" name="password" class="form-control input-lg" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="submit" onclick="validateForm()" value="Login" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                    <input type="submit" onclick="validateForm()" value="Login" class="btn btn-primary pull-right push-bottom">
                                                 </div>
                                             </div>
                                         </form>
@@ -89,12 +94,12 @@
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Register An Account</h4>
-                                        <form name="RegisterForm">
+                                        <form action="../ECommerce_MemberRegisterServlet">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">
                                                         <label>E-mail Address</label>
-                                                        <input type="text" value="" class="form-control input-lg">
+                                                        <input type="email" value="" name="email" class="form-control input-lg" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,17 +107,17 @@
                                                 <div class="form-group">
                                                     <div class="col-md-6">
                                                         <label>Password</label>
-                                                        <input type="password" value="" class="form-control input-lg">
+                                                        <input type="password" value="" name=password" class="form-control input-lg" required>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label>Re-enter Password</label>
-                                                        <input type="password" value="" class="form-control input-lg">
+                                                        <input type="password" value="" class="form-control input-lg" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="submit" value="Register" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                    <input type="submit" value="Register" class="btn btn-primary pull-right push-bottom">
                                                 </div>
                                             </div>
                                         </form>
