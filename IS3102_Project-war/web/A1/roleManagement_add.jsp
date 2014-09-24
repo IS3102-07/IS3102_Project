@@ -39,11 +39,7 @@
                                 <div class="form-group">
                                     <label>Access Level</label>
                                     <input class="form-control" name="accessLevel" type="text" required="true">
-                                </div>
-                                <div class="form-group">
-                                    <label>Staff</label>
-                                    <input class="form-control" required="true" type="text" name="email" disabled/>
-                                </div>
+                                </div>                                
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>

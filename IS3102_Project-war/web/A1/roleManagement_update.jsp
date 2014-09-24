@@ -47,17 +47,13 @@
 
                             <form role="form" action="../RoleManagement_UpdateRoleServlet">
                                 <div class="form-group">
-                                    <label>Name</label>
+                                    <label>Role Name</label>
                                     <input class="form-control" name="name" type="text" value="<%=role.getName()%>" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label>Access Level</label>
                                     <input class="form-control" name="accessLevel" type="text" value="<%=role.getAccessLevel()%>" required="true">
-                                </div>
-                                <div class="form-group">
-                                    <label>Role</label>
-                                    <input class="form-control" required="true" type="text" name="email" disabled/>
-                                </div>
+                                </div>                                
 
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">

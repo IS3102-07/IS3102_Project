@@ -111,12 +111,8 @@
                                                                     if (staffs.isEmpty()) {
                                                                         out.println("-");
                                                                     } else {
-                                                                        for (int k = 0; k < staffs.size(); k++) {
-                                                                            if (k == (staffs.size() - 1)) {
-                                                                                out.println(staffs.get(k).getName());
-                                                                            } else {
-                                                                                out.println(staffs.get(k).getName() + ", ");
-                                                                            }
+                                                                        for (StaffEntity staff : staffs) {
+                                                                            out.println("<span>" + staff.getName() + "<span>");
                                                                         }
                                                                     }
                                                                 %>
