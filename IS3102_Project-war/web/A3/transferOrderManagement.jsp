@@ -138,7 +138,7 @@
                                                                 <%=warehouseEntity.getWarehouseName()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=transferOrders.get(i).getId()%>" value="View Details" onclick="javascript:updateTO('<%=transferOrders.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" <%if (transferOrders.get(i).getStatus().equals("Completed") || transferOrders.get(i).getStatus().equals("Unfulfillable")) {%>disabled<%}%> id="<%=transferOrders.get(i).getId()%>" value="View Details" onclick="javascript:updateTO('<%=transferOrders.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%

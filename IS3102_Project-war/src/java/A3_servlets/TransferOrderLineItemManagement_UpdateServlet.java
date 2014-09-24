@@ -35,17 +35,18 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
             if (status.equals("Completed")) {
                 canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId));
                 result = "?goodMsg=Purchase order status updated successfully.&id=" + transferOrderId;
-                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
+                //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Unfulfillable")) {
+                result = "?goodMsg=Purchase order status updated successfully.&id=" + transferOrderId;
                 canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
+                //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
             if (!canUpdate) {
-                result = "?errMsg=Please try again.&id=" + transferOrderId;
+                result = "?errMsg=Invalid request.&id=" + transferOrderId;
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
-
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
 

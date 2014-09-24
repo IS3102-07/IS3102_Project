@@ -24,8 +24,8 @@
                     window.event.returnValue = false;
                 } else {
                     window.event.returnValue = true;
-                    document.announcementsManagement.action = "RoleManagement_RemoveRoleServlet";
-                    document.announcementsManagement.submit();
+                    document.rolesManagement.action = "RoleManagement_RemoveRoleServlet";
+                    document.rolesManagement.submit();
                 }
             }
             function addRole() {
