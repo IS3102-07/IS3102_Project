@@ -13,13 +13,19 @@
                 document.supplierManagement.submit();
             }
             function removeSupplier() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = false;
+                } else {
                     window.event.returnValue = true;
                     document.supplierManagement.action = "../SupplierManagement_RemoveSupplierServlet";
                     document.supplierManagement.submit();
-                } else {
-                    window.event.returnValue = false;
                 }
             }
             function addSupplier() {
@@ -70,6 +76,12 @@
                                 <form name="supplierManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Supplier" onclick="addSupplier()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Supplier</button></a>
+                                                </div>
+                                            </div>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
@@ -138,7 +150,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Supplier" onclick="addSupplier()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Supplier" onclick="removeSupplier()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Supplier</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
@@ -165,6 +177,22 @@
         </div>
         <!-- /#wrapper -->
 
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Supplier will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeSupplier()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
