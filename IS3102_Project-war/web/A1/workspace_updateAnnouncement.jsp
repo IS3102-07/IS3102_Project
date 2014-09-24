@@ -64,7 +64,7 @@
                                     <label>Expiry Date</label>
                                     <% DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                                         String formatedExpiryDate = df.format(announcement.getExpiryDate());%>
-                                    <input class="form-control" required="true" type="text" name="expiryDate" value="<%=formatedExpiryDate%>"/>
+                                    <input class="form-control" required="true" type="date" name="expiryDate" value="<%=formatedExpiryDate%>"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
@@ -94,7 +94,10 @@
                 $('#dataTables-example').dataTable();
             });
         </script>
-
+        <script>
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementsByName("expiryDate")[0].setAttribute('min', today);
+        </script>
     </body>
 
 </html>

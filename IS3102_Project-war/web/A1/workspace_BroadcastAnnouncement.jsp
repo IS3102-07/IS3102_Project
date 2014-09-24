@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Expiry Date</label>
-                                    <input class="form-control" required="true" type="Date" name="expiryDate" >
+                                    <input class="form-control" required="true" type="Date" name="expiryDate" min="today">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Broadcast Message" class="btn btn-lg btn-primary btn-block">
@@ -61,6 +61,10 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
+    <script>
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("expiryDate")[0].setAttribute('min', today);
+    </script>
     </body>
-
 </html>
+  
