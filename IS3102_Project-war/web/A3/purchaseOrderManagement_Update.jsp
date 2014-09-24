@@ -78,7 +78,20 @@
                     </div>
                     <!-- /.row -->
 
-                    <jsp:include page="../displayMessage.jsp" />
+                    <% //DON"T REMOVE THIS, HARDCODED SPECIAL
+                        String errMsg = request.getParameter("errMsg");
+                        if (errMsg == null || errMsg.equals("")) {
+                            errMsg = "";
+                        } else {
+                    %>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-info">
+                                <%=errMsg%>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
 
 
                     <div class="row">
@@ -192,7 +205,8 @@
                                             </select>
                                             <br>
                                             <div class="form-group">
-                                                <input type="submit" value="Update Purchase Order Status" class="btn btn-lg btn-primary btn-block <% if (purchaseOrder.getStatus().equals("Pending")){%>disabled<%}%>">
+                                                <input type="hidden" value="<%=purchaseOrder.getReceivedWarehouse().getId()%>" name="destinationWarehouseID">
+                                                <input type="submit" value="Update Purchase Order Status" class="btn btn-lg btn-primary btn-block <% if (purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%>">
                                             </div>
                                         </div>
                                         <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">

@@ -76,7 +76,20 @@
                     </div>
                     <!-- /.row -->
 
-                    <jsp:include page="../displayMessage.jsp" />
+                    <% //DON"T REMOVE THIS, HARDCODED SPECIAL
+                        String errMsg = request.getParameter("errMsg");
+                        if (errMsg == null || errMsg.equals("")) {
+                            errMsg = "";
+                        } else {
+                    %>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-info">
+                                <%=errMsg%>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
 
 
                     <div class="row">
@@ -90,7 +103,7 @@
                                     <form role="form" action="../ShippingOrderManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>Origin</label>
-                                             <select class="form-control" name="origin" required="true" <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
+                                            <select class="form-control" name="origin" required="true" <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                                 <%
                                                     for (int i = 0; i < warehouses.size(); i++) {
                                                         if (warehouses.get(i).getWarehouseName().equals(shippingOrder.getOrigin().getWarehouseName())) {
@@ -193,7 +206,8 @@
                                             </select>
                                             <br>
                                             <div class="form-group">
-                                                <input type="submit" value="Update Shipping Order Status" class="btn btn-lg btn-primary btn-block <% if (shippingOrder.getStatus().equals("Pending")){%>disabled<%}%>">
+                                                <input type="hidden" value="<%=shippingOrder.getDestination().getId()%>" name="destinationWarehouseID">
+                                                <input type="submit" value="Update Shipping Order Status" class="btn btn-lg btn-primary btn-block <% if (shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>">
                                             </div>
                                         </div>
                                         <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
