@@ -8,7 +8,7 @@ package MRP.SalesAndOperationPlanning;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.SaleAndOperationPlanEntity;
-import EntityManager.SaleForcastEntity;
+import EntityManager.SaleForecastEntity;
 import EntityManager.StoreEntity;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -81,7 +81,7 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     }
 
     @Override
-    public SaleAndOperationPlanEntity createSOP(SaleForcastEntity saleForcast, StoreEntity store, Calendar schedule, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel) {
+    public SaleAndOperationPlanEntity createSOP(SaleForecastEntity saleForcast, StoreEntity store, Calendar schedule, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel) {
         try {
             MonthScheduleEntity scheduleEntity = this.createSchedule(schedule);
             SaleAndOperationPlanEntity sop = new SaleAndOperationPlanEntity(saleForcast, store, productionPlan, currentInventoryLevel, targetInventoryLevel, scheduleEntity);

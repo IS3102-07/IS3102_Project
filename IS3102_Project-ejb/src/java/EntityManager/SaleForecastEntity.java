@@ -20,7 +20,7 @@ import javax.persistence.Temporal;
  * @author Administrator
  */
 @Entity
-public class SaleForcastEntity implements Serializable {
+public class SaleForecastEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,9 +33,9 @@ public class SaleForcastEntity implements Serializable {
     @ManyToOne
     private ProductGroupEntity productGroup;
     
-    public SaleForcastEntity(){}
+    public SaleForecastEntity(){}
 
-    public SaleForcastEntity(Date month, Integer quantity, StoreEntity store, ProductGroupEntity productGroup) {
+    public SaleForecastEntity(Date month, Integer quantity, StoreEntity store, ProductGroupEntity productGroup) {
         this.month = month;
         this.quantity = quantity;
         this.store = store;
@@ -92,10 +92,10 @@ public class SaleForcastEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SaleForcastEntity)) {
+        if (!(object instanceof SaleForecastEntity)) {
             return false;
         }
-        SaleForcastEntity other = (SaleForcastEntity) object;
+        SaleForecastEntity other = (SaleForecastEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

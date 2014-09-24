@@ -33,7 +33,7 @@ public class StoreEntity implements Serializable {
     @OneToOne
     private WarehouseEntity warehouse;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
-    private List<SaleForcastEntity> saleForcastList;    
+    private List<SaleForecastEntity> saleForcastList;    
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
     private List<SalesFigureEntity> salesFigureList;    
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
@@ -73,11 +73,11 @@ public class StoreEntity implements Serializable {
         this.regionalOffice = regionalOffice;
     }        
 
-    public List<SaleForcastEntity> getSaleForcastList() {
+    public List<SaleForecastEntity> getSaleForcastList() {
         return saleForcastList;
     }
 
-    public void setSaleForcastList(List<SaleForcastEntity> saleForcastList) {
+    public void setSaleForcastList(List<SaleForecastEntity> saleForcastList) {
         this.saleForcastList = saleForcastList;
     }        
     
