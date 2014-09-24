@@ -13,14 +13,9 @@
                 document.staffManagement.submit();
             }
             function removeStaff() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
-                    document.staffManagement.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
+                window.event.returnValue = true;
+                document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
+                document.staffManagement.submit();
             }
             function addStaff() {
                 window.event.returnValue = true;
@@ -72,7 +67,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Register Staff" onclick="addStaff()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Staff" onclick="removeStaff()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Staff</button></a>
                                                 </div>
                                             </div>
                                             <br>
@@ -144,8 +139,8 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Register Staff" onclick="addStaff()"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Staff" onclick="removeStaff()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Register Staff" onclick="addStaff()"  />                                                    
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Staff</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
@@ -170,6 +165,23 @@
         </div>
         <!-- /#wrapper -->
 
+
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Staff will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStaff()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>

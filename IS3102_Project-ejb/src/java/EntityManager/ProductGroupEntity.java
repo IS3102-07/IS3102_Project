@@ -29,7 +29,7 @@ public class ProductGroupEntity implements Serializable {
     @OneToMany(cascade={CascadeType.ALL}, mappedBy="productGroup")
     List<ProductGroupLineItemEntity> lineItemList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
-    List<SaleForcastEntity> saleForcastEntityList;
+    List<SaleForecastEntity> saleForcastEntityList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
     List<SaleAndOperationPlanEntity> sopList;
     
@@ -83,11 +83,11 @@ public class ProductGroupEntity implements Serializable {
         this.lineItemList = lineItemList;
     }
 
-    public List<SaleForcastEntity> getSaleForcastEntityList() {
+    public List<SaleForecastEntity> getSaleForcastEntityList() {
         return saleForcastEntityList;
     }
 
-    public void setSaleForcastEntityList(List<SaleForcastEntity> saleForcastEntityList) {
+    public void setSaleForcastEntityList(List<SaleForecastEntity> saleForcastEntityList) {
         this.saleForcastEntityList = saleForcastEntityList;
     }
     

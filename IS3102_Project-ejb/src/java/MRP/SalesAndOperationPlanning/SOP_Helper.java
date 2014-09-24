@@ -7,14 +7,14 @@ package MRP.SalesAndOperationPlanning;
 
 import EntityManager.ProductGroupEntity;
 import EntityManager.SaleAndOperationPlanEntity;
-import EntityManager.SaleForcastEntity;
+import EntityManager.SaleForecastEntity;
 
 /**
  *
  * @author Administrator
  */
 public class SOP_Helper {
-    public SaleForcastEntity saleForecast;
+    public SaleForecastEntity saleForecast;
     public SaleAndOperationPlanEntity sop;
     public ProductGroupEntity productGroup;
 }

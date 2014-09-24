@@ -26,7 +26,7 @@ public class SaleAndOperationPlanEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;    
     @OneToOne
-    private SaleForcastEntity saleForcast;
+    private SaleForecastEntity saleForcast;
     @ManyToOne
     private StoreEntity store;
     @ManyToOne
@@ -45,7 +45,7 @@ public class SaleAndOperationPlanEntity implements Serializable {
     
     public SaleAndOperationPlanEntity(){}
 
-    public SaleAndOperationPlanEntity(SaleForcastEntity saleForcast, StoreEntity store, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel, MonthScheduleEntity schedule) {
+    public SaleAndOperationPlanEntity(SaleForecastEntity saleForcast, StoreEntity store, Integer productionPlan, Integer currentInventoryLevel, Integer targetInventoryLevel, MonthScheduleEntity schedule) {
         this.saleForcast = saleForcast;
         this.schedule = schedule;
         this.store = store;        
@@ -128,11 +128,11 @@ public class SaleAndOperationPlanEntity implements Serializable {
         return this.year;
     }
 
-    public SaleForcastEntity getSaleForcast() {
+    public SaleForecastEntity getSaleForcast() {
         return saleForcast;
     }
 
-    public void setSaleForcast(SaleForcastEntity saleForcast) {
+    public void setSaleForcast(SaleForecastEntity saleForcast) {
         this.saleForcast = saleForcast;
     }
 
