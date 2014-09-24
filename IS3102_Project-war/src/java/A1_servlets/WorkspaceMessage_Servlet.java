@@ -1,7 +1,6 @@
 package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
-import EntityManager.MessageEntity;
 import EntityManager.MessageInboxEntity;
 import EntityManager.MessageOutboxEntity;
 import EntityManager.StaffEntity;

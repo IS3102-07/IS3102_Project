@@ -27,7 +27,7 @@
                                     <i class="icon icon-dashboard"></i> <a href="workspace.jsp">Workspace</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-inbox"></i> <a href="workspace_messageInbox.jsp">Messages</a>
+                                    <i class="icon icon-inbox"></i> <a href="workspace_messageInbox.jsp">Inbox</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-envelope"></i> Compose and Send Message
