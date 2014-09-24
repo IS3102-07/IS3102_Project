@@ -16,13 +16,15 @@
             } else {
                 errMsg +="<br/><br/>";
             }
+            String email = request.getParameter("email");
+            
         %>
         <div role="main" class="main">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
                         <div class="panel-body">
-                            <form role="form" name="registrationForm" action="../StaffManagement_AddStaffServlet" onsubmit="return validatePassword()">
+                            <form role="form" name="registrationForm" action="../AccountManagement_ResetPasswordServlet" onsubmit="return validatePassword()">
                                 <div class="box-content">
                                     <h3>Reset Account Password</h3>
                                     <h10 class="text-info"><%=errMsg%></h10>
@@ -30,7 +32,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <label>Email</label>
-                                                <input type="text" name="email" class="form-control input-lg" required="true">
+                                                <input type="text" name="email" class="form-control input-lg" required="true" value="<%=email%>">
                                             </div>
                                         </div>
                                     </div>

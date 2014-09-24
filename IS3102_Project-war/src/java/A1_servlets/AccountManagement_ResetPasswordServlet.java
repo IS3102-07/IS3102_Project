@@ -23,7 +23,8 @@ public class AccountManagement_ResetPasswordServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
     @EJB
     private SystemSecurityBeanLocal systemSecurityBean;
-
+    
+    private String result;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
@@ -36,7 +37,11 @@ public class AccountManagement_ResetPasswordServlet extends HttpServlet {
             
             if (systemSecurityBean.validatePasswordResetForStaff(email, resetCode)) {
                 accountManagementBean.resetStaffPassword(email, password);
-                
+                result = "?errMsg=Reset Password Successful. Please login with your new password.";
+                response.sendRedirect("./A1/staffLogin.jsp" + result);
+            } else {
+                result = "?errMsg=Reset Password Unsuccessful. Please key in the correct reset code.";
+                response.sendRedirect("./A1/staffResetPasswordCode.jsp" + result);
             }
 
         } catch (Exception ex) {

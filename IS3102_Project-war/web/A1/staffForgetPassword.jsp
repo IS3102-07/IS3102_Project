@@ -37,7 +37,7 @@
                                 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <input type="submit" onclick="validateForm()" value="Login" class="btn btn-lg btn-primary btn-block" data-loading-text="Loading...">
+                                        <input type="submit" onclick="validateForm()" value="Send Email" class="btn btn-lg btn-primary btn-block" data-loading-text="Loading...">
                                     </div>
                                 </div>
                             </form>
