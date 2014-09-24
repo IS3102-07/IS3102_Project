@@ -57,11 +57,13 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     String phone = request.getParameter("phone");
 
                     String[] roles = request.getParameterValues("roles");
-
                     List<Long> roleIDs = new ArrayList();
-                    for (int i = 0; i < roles.length; i++) {
-                        roleIDs.add(Long.parseLong(roles[i]));
+                    if (roles != null) {
+                        for (int i = 0; i < roles.length; i++) {
+                            roleIDs.add(Long.parseLong(roles[i]));
+                        }
                     }
+
                     boolean canUpdateRoles = accountManagementBean.editStaffRole(Long.parseLong(staffId), roleIDs);
                     boolean canUpdateInfo = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address);
                     if (!canUpdateInfo) {
