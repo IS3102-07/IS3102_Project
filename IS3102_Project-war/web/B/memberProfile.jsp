@@ -1,23 +1,12 @@
 <%@page import="EntityManager.MemberEntity"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
 <!--[if gt IE 9]><!-->	
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
-    <%
-        List<ArrayList> memberDetails = (List<ArrayList>) session.getAttribute("member");
-        if (memberDetails == null) {
-            response.sendRedirect("index.jsp");
-        } else {
-    %>
     <body>
-
         <jsp:include page="menu2.jsp" />
-
-
         <div role="main" class="main">
             <section class="page-top">
                 <div class="container">
@@ -120,4 +109,3 @@
         <jsp:include page="footer.html" />
     </body>
 </html>
-<%}%>
