@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
+
     @EJB
     private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
 
@@ -43,8 +44,12 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
                 result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
                 canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
                 //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
+            } else if (status.equals("Pending")) {
+                result = "?errMsg=Status not selected.";
+                response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
             if (!canUpdate) {
+
                 result = "?errMsg=Invalid request. Items not found or destination bin cannot contain the item (full or wrong bin type).&id=" + transferOrderId;
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else {
