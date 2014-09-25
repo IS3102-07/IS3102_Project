@@ -4,7 +4,6 @@ import EntityManager.StaffEntity;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import EntityManager.CountryEntity;
-import EntityManager.RoleEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,6 +36,10 @@ public class AccountManagement_LoginServlet extends HttpServlet {
             if (staffEntity == null) {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
+                if (accountManagementBean.checkStaffInvalidLoginAttempts(email) >= 9) {
+                    result = "Login fail. Account is locked. Please reset your password";
+                    response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
+                }
                 staffEntity = accountManagementBean.loginStaff(email, password);
             }
             List<CountryEntity> countries = supplierManagementBean.getListOfCountries();

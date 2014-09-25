@@ -8,7 +8,6 @@
 <%
     List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
     String id = request.getParameter("id");
-    String isSubmit = request.getParameter("source");
     if (shippingOrders == null || id == null) {
         response.sendRedirect("../ShippingOrderManagement_Servlet");
     } else {
@@ -26,17 +25,27 @@
     <jsp:include page="../header2.html" />
     <body>
         <script>
-            function addPOLineItem(id) {
+            function addSOLineItem(id) {
                 shippingOrderManagement.id.value = id;
                 document.shippingOrderManagement.action = "shippingOrderManagement_AddLineItem.jsp";
                 document.shippingOrderManagement.submit();
             }
-            function updatePOLineItem(lineItemId) {
+            function updateSOLineItem(lineItemId) {
                 shippingOrderManagement.lineItemId.value = lineItemId;
                 document.shippingOrderManagement.action = "shippingOrderManagement_UpdateLineItem.jsp";
                 document.shippingOrderManagement.submit();
             }
-            function removePOLineItem() {
+            function submitSOLineItem() {
+                var yes = confirm("Are you sure?!");
+                if (yes == true) {
+                    window.event.returnValue = true;
+                    document.shippingOrderManagement_status.action = "../ShippingOrderLineItemManagement_UpdateServlet";
+                    document.shippingOrderManagement_status.submit();
+                } else {
+                    window.event.returnValue = false;
+                }
+            }
+            function removeSOLineItem() {
                 var yes = confirm("Are you sure?!");
                 if (yes == true) {
                     window.event.returnValue = true;
@@ -89,7 +98,7 @@
                                     <form role="form" action="../ShippingOrderManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>Origin</label>
-                                            <select class="form-control" name="origin" required="true" <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
+                                            <select class="form-control" name="origin" required="true" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                                 <%
                                                     for (int i = 0; i < warehouses.size(); i++) {
                                                         if (warehouses.get(i).getWarehouseName().equals(shippingOrder.getOrigin().getWarehouseName())) {
@@ -106,7 +115,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Destination</label>
-                                            <select class="form-control" name="destination" required="true" <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
+                                            <select class="form-control" name="destination" required="true" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                                 <%
                                                     for (int i = 0; i < warehouses.size(); i++) {
                                                         if (warehouses.get(i).getWarehouseName().equals(shippingOrder.getDestination().getWarehouseName())) {
@@ -123,10 +132,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Expected Receiving Date:</label>
-                                            <input class="form-control" name="expectedDate" type="date" required="true" value="<%=formatedDate%>" <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>/>
+                                            <input class="form-control" name="expectedDate" type="date" required="true" value="<%=formatedDate%>" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>/>
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Update Shipping Order" class="btn btn-lg btn-primary btn-block" <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
+                                            <input type="submit" value="Update Shipping Order" class="btn btn-lg btn-primary btn-block" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                         </div>  
                                         <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
                                     </form>
@@ -138,67 +147,39 @@
                         <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> Shipping Order Status: <%=shippingOrder.getStatus()%></h3>
+                                    <h3 class="panel-title"> Shipping Order Status: <span class="label label-success"><%=shippingOrder.getStatus()%></span></h3>
                                 </div>
                                 <div class="panel-body">
-                                    <%if (isSubmit != null) {%>
-                                    <form role="form" action="../ShippingOrderLineItemManagement_UpdateServlet">
+                                    <form role="form" name="shippingOrderManagement_status" >
                                         <div class="form-group">
+                                            <%
+                                                if (shippingOrder.getStatus().equals("Pending")) {
+                                                    out.println("<input type='hidden' name='status'>");
+                                                } else {
+                                            %>
+
                                             <label>Status</label>
-                                            <select class="form-control" name="status1" disabled>
-                                                <option><%=shippingOrder.getStatus()%></option>
-                                            </select>
-                                            <br>
-                                            <div class="form-group">
-                                                <input type="submit" value="Submit Shipping Order" class="btn btn-lg btn-primary btn-block">
-                                            </div>
-                                            <input type="hidden" name="status1" value="1">
-                                            <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
-                                        </div>
-                                    </form>
-                                    <%
-                                    } else if (shippingOrder.getStatus().equals("Completed") || shippingOrder.getStatus().equals("Unfulfillable")) {
-                                    %>
-                                    <form role="form" >
-                                        <div class="form-group">
-                                            <label>Status</label>
-                                            <select class="form-control" name="status2">
-                                                <option><%=shippingOrder.getStatus()%></option>
-                                            </select>
-                                            <br>
-                                            <div class="form-group">
-                                                <input type="submit" value="Update Shipping Order Status" class="btn btn-lg btn-primary btn-block" disabled>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <%
-                                    } else {
-                                    %>
-                                    <form role="form" action="../ShippingOrderLineItemManagement_UpdateServlet">
-                                        <div class="form-group">
-                                            <label>Status</label>
-                                            <select class="form-control" name="status3" required="true">
-                                                <%
-                                                    if (shippingOrder.getStatus().equals("Pending")) {
-                                                        out.println("<option>Pending</option>");
-                                                    } else if (shippingOrder.getStatus().equals("Submitted")) {
+                                            <select class='form-control' name='status' required="true">
+                                                <%}
+                                                    if (shippingOrder.getStatus().equals("Submitted")) {
                                                         out.println("<option>Shipped</option>");
                                                         out.println("<option>Unfulfillable</option>");
                                                     } else if (shippingOrder.getStatus().equals("Shipped")) {
                                                         out.println("<option>Completed</option>");
                                                         out.println("<option>Unfulfillable</option>");
+                                                    } else if (shippingOrder.getStatus().equals("Unfulfillable")) {
+                                                        out.println("<option>Unfulfillable</option>");
                                                     }
                                                 %>
                                             </select>
-                                            <br>
-                                            <div class="form-group">
-                                                <input type="hidden" value="<%=shippingOrder.getDestination().getId()%>" name="destinationWarehouseID">
-                                                <input type="submit" value="Update Shipping Order Status" class="btn btn-lg btn-primary btn-block <% if (shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>">
-                                            </div>
                                         </div>
-                                        <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
+                                        <div class="form-group">
+                                            <input type="hidden" value="<%=shippingOrder.getDestination().getId()%>" name="destinationWarehouseID">
+                                            <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
+                                            <input type="submit" onclick="javascript:submitSOLineItem()" value="<% if (!shippingOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Shipping Order <% if (!shippingOrder.getStatus().equals("Pending")) {%>Status<%}%>" class="btn btn-lg btn-primary btn-block <% if ((shippingOrder.getStatus().equals("Completed") || (shippingOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>">
+                                        </div>
                                     </form>
-                                    <%}%>
+
                                 </div>
                             </div>
                         </div>
@@ -218,8 +199,8 @@
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <input <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPOLineItem('<%=shippingOrder.getId()%>')"/>
-                                                        <input <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removePOLineItem()"  />
+                                                        <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addSOLineItem('<%=shippingOrder.getId()%>')"/>
+                                                        <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removeSOLineItem()"  />
                                                     </div>
                                                 </div>
                                                 <br>
@@ -242,7 +223,7 @@
 
                                                         <tr>
                                                             <td>
-                                                                <input <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="checkbox" name="delete" value="<%=lineItems.get(i).getId()%>" />
+                                                                <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="checkbox" name="delete" value="<%=lineItems.get(i).getId()%>" />
                                                             </td>
                                                             <td>
                                                                 <%=lineItems.get(i).getItem().getSKU()%>
@@ -254,7 +235,7 @@
                                                                 <%=lineItems.get(i).getQuantity()%>
                                                             </td>
                                                             <td>
-                                                                <input <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePOLineItem('<%=lineItems.get(i).getId()%>')"/>
+                                                                <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updateSOLineItem('<%=lineItems.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%}
@@ -265,8 +246,8 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <input <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPOLineItem('<%=shippingOrder.getId()%>')"/>
-                                                <input <%if (isSubmit != null || !shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removePOLineItem()"  />
+                                                <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addSOLineItem('<%=shippingOrder.getId()%>')"/>
+                                                <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removeSOLineItem()"  />
                                             </div>
                                         </div>
                                     </div>

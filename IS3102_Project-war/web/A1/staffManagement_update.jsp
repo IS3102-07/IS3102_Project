@@ -73,7 +73,7 @@
                                     <input class="form-control" required="true" type="text" name="phone" value="<%=staff.getPhone()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label>New Password (leave blank unless setting a new password)</label>
+                                    <label>New Password (leave blank unless setting a new password).<br/>Password to be at least 8 characters long.</label>
                                     <input class="form-control" type="password" name="password" id="password">
                                 </div>
                                 <div class="form-group">
@@ -146,19 +146,28 @@
         </div>
         <!-- /#wrapper -->
         <script>
-            function validatePassword() {
-                var password = document.getElementById("password").value;
-                var repassword = document.getElementById("repassword").value;
-                var ok = true;
-                if (password != repassword) {
-                    //alert("Passwords Do not match");
-                    document.getElementById("password").style.borderColor = "#E34234";
-                    document.getElementById("repassword").style.borderColor = "#E34234";
-                    alert("Passwords do not match. Please key again.");
-                    ok = false;
+             function validatePassword() {
+                    var password = document.getElementById("password").value;
+                    var repassword = document.getElementById("repassword").value;
+                    var ok = true;
+                    if ((password != null && repassword != null) || (password != "" && repassword != "")) {
+                        if (password != repassword) {
+                            //alert("Passwords Do not match");
+                            document.getElementById("password").style.borderColor = "#E34234";
+                            document.getElementById("repassword").style.borderColor = "#E34234";
+                            alert("Passwords do not match. Please key again.");
+                            ok = false;
+                        } else if (password == repassword) {
+                            if (password.length < 8) {
+                                alert("Passwords too short. At least 8 characters.");
+                                ok = false;
+                            }
+                        }
+                    } else {
+                        return ok;
+                    }
+                    return ok;
                 }
-                return ok;
-            }
         </script>F
     </body>
 

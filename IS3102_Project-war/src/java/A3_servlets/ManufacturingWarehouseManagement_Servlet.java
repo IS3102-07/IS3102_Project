@@ -17,6 +17,7 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    @EJB
     private ManufacturingInventoryControlBeanLocal micbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,21 +35,41 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
 
                 int[] warehousesCapcity = new int[4];
                 System.out.println(warehouseId + "<<<<<<<<<<<<<<");
-//                int totalPallet = micbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
-//                int freePallet = micbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
-//                int totalShelf = micbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
-//                int freeShelf = micbl.getTotalFreeVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
-//                int totalInbound = micbl.getTotalVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
-//                int freeInbound = micbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
-//                int totalOutbound = micbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
-//                int freeOutbound = micbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
-//
-//                warehousesCapcity[0] = ((totalPallet - freePallet) * 100) / totalPallet;
-//                warehousesCapcity[1] = ((totalShelf - freeShelf) * 100) / totalShelf;
-//                warehousesCapcity[2] = ((totalInbound - freeInbound) * 100) / totalInbound;
-//                warehousesCapcity[3] = ((totalOutbound - freeOutbound) * 100) / totalOutbound;
+                int totalPallet = micbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
+                int freePallet = micbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
+                int totalShelf = micbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
+                int freeShelf = micbl.getTotalFreeVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
+                int totalInbound = micbl.getTotalVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
+                int freeInbound = micbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
+                int totalOutbound = micbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+                int freeOutbound = micbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+                
+                System.out.println(totalPallet + " , " + totalShelf + " , " + totalInbound + " , " + totalOutbound);
+                
+                if (totalPallet == 0) {
+                    warehousesCapcity[0] = 0;
+                } else {
+                    warehousesCapcity[0] = ((totalPallet - freePallet) * 100) / totalPallet;
+                }
+                if (totalShelf == 0) {
+                    warehousesCapcity[1] = 0;
+                } else {
+                    warehousesCapcity[1] = ((totalShelf - freeShelf) * 100) / totalShelf;
+                }
+                if (totalInbound == 0) {
+                    warehousesCapcity[2] = 0;
+                } else {
+                    warehousesCapcity[2] = ((totalInbound - freeInbound) * 100) / totalInbound;
+                }
+                if (totalOutbound == 0) {
+                    warehousesCapcity[3] = 0;
+                } else {
+                    warehousesCapcity[3] = ((totalOutbound - freeOutbound) * 100) / totalOutbound;
+                }
 
-                //session.setAttribute("warehousesCapcity", warehousesCapcity);
+                System.out.println(warehousesCapcity[0] + " , " + warehousesCapcity[1] + " , " + warehousesCapcity[2] + " , " + warehousesCapcity[3]);
+
+                session.setAttribute("warehousesCapcity", warehousesCapcity);
 
                 if (destination.equals("manufacturingWarehouseManagement.jsp")) {
                     WarehouseEntity warehouseEntity = facilityManagementBeanLocal.getWarehouseById(Long.parseLong(warehouseId));
