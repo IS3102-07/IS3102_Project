@@ -1,6 +1,7 @@
 package SCM.ManufacturingInventoryControl;
 
 import EntityManager.ItemEntity;
+import EntityManager.LineItemEntity;
 import EntityManager.StorageBinEntity;
 import HelperClasses.ItemStorageBinHelper;
 import java.util.List;
@@ -20,11 +21,10 @@ public interface ManufacturingInventoryControlBeanLocal {
 //    
     public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID);
     public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID);
-    public Boolean removeOutboundBinToShipAShippingOrder(Long shippingOrderID);
+    public Boolean removeItemFromOutboundBinForShipping(Long shippingOrderID);
     public boolean addItemToReceivingBin(Long warehouseID, String SKU);
     //if you want to move multiple items, please call this method many times
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination);
-    public boolean removeSingleItemFromStorageBin(StorageBinEntity source, String SKU);
     
     public Integer checkItemQty(Long warehouseId, String SKU);
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU);
@@ -39,6 +39,8 @@ public interface ManufacturingInventoryControlBeanLocal {
     public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID);
     
     public List<ItemStorageBinHelper> getItemList(Long warehouseID);
-    public Boolean emptyStorageBin_ItemEntity(Long storageBin_ItemID, Long storageBinID);
-    public boolean checkIfItemExistInsideStorageBin(Long storageBinID, String SKU);
+    public Boolean emptyStorageBin(Long storageBin_ItemID, Long storageBinID);
+    public LineItemEntity checkIfItemExistInsideStorageBin(Long storageBinID, String SKU);
+    
+    public Boolean checkIfStorageBinIsOfAppropriateItemType(Long storageBinId, String SKU);
 }

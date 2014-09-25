@@ -103,7 +103,7 @@
                                                             </td>
                                                             <td>
                                                                 <input type="hidden" name="storageBin_ItemID" value ="<%=itemStorageBinHelpers.get(i).getStorageBin_ItemID()%>"/>
-                                                                <input type="hidden" name="storageBinID" value="<%=itemStorageBinHelpers.get(i).getStorageBinID()%>"/>
+                                                                <input type="hidden" name="storageBinID"/>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Remove" onclick="removeItemFromStorageBin('<%=itemStorageBinHelpers.get(i).getStorageBinID()%>')"/>
                                                             </td>
                                                         </tr>
