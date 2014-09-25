@@ -3,10 +3,16 @@ package A1_servlets;
 import EntityManager.StaffEntity;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import EntityManager.AccessRightEntity;
 import EntityManager.CountryEntity;
+import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.RegionalOfficeEntity;
+import EntityManager.StoreEntity;
+import EntityManager.WarehouseEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -49,6 +55,29 @@ public class AccountManagement_LoginServlet extends HttpServlet {
                 result = "Login fail. Please try again.";
                 response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
             } else {
+                List<AccessRightEntity> accessRights = staffEntity.getAccessRightList();
+                List<RegionalOfficeEntity> regionalOfficeList = new ArrayList<>();
+                List<StoreEntity> storeList = new ArrayList<>();
+                List<ManufacturingFacilityEntity> manufacturingFacilityList = new ArrayList<>();
+                List<WarehouseEntity> warehouseList = new ArrayList<>();
+                for (AccessRightEntity access : accessRights) {
+                    if (access.getRegionalOffice() != null) {
+                        regionalOfficeList.add(access.getRegionalOffice());
+                    }
+                    if (access.getStore() != null) {
+                        storeList.add(access.getStore());
+                    }
+                    if (access.getManufacturingFacility() != null) {
+                        manufacturingFacilityList.add(access.getManufacturingFacility());
+                    }
+                    if (access.getWarehouse() != null) {
+                        warehouseList.add(access.getWarehouse());
+                    }
+                }
+                session.setAttribute("access_RO", regionalOfficeList);
+                session.setAttribute("access_S", storeList);
+                session.setAttribute("access_MF", manufacturingFacilityList);
+                session.setAttribute("access_W", warehouseList);
                 session.setAttribute("staffEntity", staffEntity);
                 List<StaffEntity> staffs = accountManagementBean.listAllStaff();
                 session.setAttribute("staffs", staffs);
