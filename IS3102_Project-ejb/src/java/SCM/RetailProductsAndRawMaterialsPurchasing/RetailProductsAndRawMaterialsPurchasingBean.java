@@ -220,4 +220,24 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
         }
     }
 
+    @Override
+    public List<PurchaseOrderEntity> getPurchaseOrderListByWarehouseId(Long warehouseId) {
+        System.out.println("getPurchaseOrderListByWarehouseId() is called.");
+        try {
+            Query q;
+            if (warehouseId == null) {
+                q = em.createQuery("Select p from PurchaseOrderEntity p");
+            } else {
+                q = em.createQuery("Select p from PurchaseOrderEntity p where p.receivedWarehouse.id=:warehouseId");
+                q.setParameter("warehouseId", warehouseId);
+            }
+            List<PurchaseOrderEntity> listOfPurchaseOrders = q.getResultList();
+            System.out.println("getPurchaseOrderListByWarehouseId() is successful.");
+            return listOfPurchaseOrders;
+        } catch (Exception ex) {
+            System.out.println("Unable to getPurchaseOrderListByWarehouseId().");
+            return null;
+        }
+    }
+
 }

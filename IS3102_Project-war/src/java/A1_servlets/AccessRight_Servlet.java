@@ -1,38 +1,37 @@
-package A3_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A1_servlets;
 
-import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ManufacturingInventoryControl_RemoveServlet extends HttpServlet {
+/**
+ *
+ * @author Administrator
+ */
+public class AccessRight_Servlet extends HttpServlet {
 
-    @EJB
-    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBeanLocal;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-
-            String lineItemID = request.getParameter("lineItemID");
-            String storageBinID = request.getParameter("storageBinId");
-            System.out.println("remove servlet storageBinID " + storageBinID);
-            System.out.println("remove servlet lineItemID " + lineItemID);
-
-            if (storageBinID != null && lineItemID != null) {
-                manufacturingInventoryControlBeanLocal.emptyStorageBin(Long.parseLong(lineItemID), Long.parseLong(storageBinID));
-                response.sendRedirect("ManufacturingInventoryControl_Servlet?goodMsg=Successfully removed all instance of the selected item from storage bin.");
-            } else {
-                response.sendRedirect("A3/manufacturingInventoryControlManagement.jsp?errMsg=Nothing is selected.");
-            }
-
-        } catch (Exception ex) {
-            out.println(ex);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AccessRight_Servlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AccessRight_Servlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
