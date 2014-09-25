@@ -148,7 +148,7 @@
                         <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> Purchase Order Status: <%=purchaseOrder.getStatus()%></h3>
+                                    <h3 class="panel-title"> Purchase Order Status: <span class="label label-success"><%=purchaseOrder.getStatus()%></span></h3>
                                 </div>
                                 <div class="panel-body">
                                     <form role="form" name="purchaseOrderManagement_status" >

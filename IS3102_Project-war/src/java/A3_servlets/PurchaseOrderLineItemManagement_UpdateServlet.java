@@ -67,6 +67,7 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         }
                     }
                 } else if (status.equals("Completed")) {
+                    System.out.println("<<<<<<<<<Completed<<<<<<<<<<<");
                     if (manufacturingWarehouseManagementBean.getInboundStorageBin(Long.parseLong(destinationWarehouseID)) == null) {
                         result = "?errMsg=Destination warehouse does not have an inbound storage bin.<br/>Please create one first before marking this order as completed.&id=" + purchaseOrderId;
                         response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
