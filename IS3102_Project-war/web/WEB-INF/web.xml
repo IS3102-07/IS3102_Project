@@ -501,6 +501,14 @@
         <servlet-name>A2/ViewSaleFigure</servlet-name>
         <jsp-file>/A2/ViewSaleFigure.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>AccessRight_Servlet</servlet-name>
+        <servlet-class>A1_servlets.AccessRight_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A1/AccessRight</servlet-name>
+        <jsp-file>/A1/AccessRight.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1000,6 +1008,14 @@
     <servlet-mapping>
         <servlet-name>A2/ViewSaleFigure</servlet-name>
         <url-pattern>/A2/ViewSaleFigure</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccessRight_Servlet</servlet-name>
+        <url-pattern>/AccessRight_Servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A1/AccessRight</servlet-name>
+        <url-pattern>/A1/AccessRight</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -1,16 +1,18 @@
 package A3_servlets;
 
+import EntityManager.ShippingOrderEntity;
 import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
-import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ShippingOrderManagement_UpdateServlet extends HttpServlet {
 
@@ -33,11 +35,17 @@ public class ShippingOrderManagement_UpdateServlet extends HttpServlet {
             if (sourceId != null && destinationId != null) {
                 boolean canUpdate = inboundAndOutboundLogisticsBeanLocal.updateShippingOrder(Long.parseLong(shippingOrderId), Long.parseLong(sourceId), Long.parseLong(destinationId), date);
                 if (!canUpdate) {
-                    result = "?errMsg=One of the selected warehouse no longer exist..";
-                    response.sendRedirect("A3/shippingOrderManagement_Add.jsp" + result);
+                    result = "?errMsg=One of the selected warehouse no longer exist..&id=" + shippingOrderId;
+                    response.sendRedirect("A3/shippingOrderManagement_Update.jsp" + result);
                 } else {
-                    result = "?goodMsg=Shipping Order updated successfully";
-                    response.sendRedirect("ShippingOrderManagement_Servlet" + result);
+                    HttpSession session;
+                    session = request.getSession();
+
+                    List<ShippingOrderEntity> shippingOrders = inboundAndOutboundLogisticsBeanLocal.getShippingOrderList();
+                    session.setAttribute("shippingOrders", shippingOrders);
+
+                    result = "?goodMsg=Shipping Order updated successfully&id=" + shippingOrderId;
+                    response.sendRedirect("A3/shippingOrderManagement_Update.jsp" + result);
                 }
             }
 

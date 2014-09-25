@@ -3,12 +3,14 @@ package EntityManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class RoleEntity implements Serializable {
@@ -23,11 +25,22 @@ public class RoleEntity implements Serializable {
     private String accessLevel;
     @ManyToMany(mappedBy = "roles")
     private List<StaffEntity> staffs;
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="role")
+    private List<AccessRightEntity> accessRightList;
+
+    public RoleEntity() {}
+    
+    public RoleEntity(String name) {
+        this.name = name;
+        this.staffs = new ArrayList<>();
+        this.accessRightList = new ArrayList<>();
+    }        
 
     public void create(String name, String accessLevel) {
         this.setName(name);
         this.setAccessLevel(accessLevel);
-        staffs = new ArrayList();
+        this.staffs = new ArrayList<>();
+        this.accessRightList = new ArrayList<>();
     }
 
     public Long getId() {
@@ -37,6 +50,14 @@ public class RoleEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<AccessRightEntity> getAccessRightList() {
+        return accessRightList;
+    }
+
+    public void setAccessRightList(List<AccessRightEntity> accessRightList) {
+        this.accessRightList = accessRightList;
+    }        
 
     @Override
     public int hashCode() {
