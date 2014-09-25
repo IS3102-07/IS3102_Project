@@ -17,6 +17,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
@@ -198,6 +199,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
             q.setParameter("SKU", SKU);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
 
             //Check if storage bin have that type of item before
@@ -254,6 +256,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     System.out.println("SKU item: " + SKU + " is not found in destination bin. Adding new line item.");
                     Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
                     q.setParameter("SKU", SKU);
+                    q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
                     ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
                     LineItemEntity newLineItem = new LineItemEntity(itemEntity, 1, "");
                     em.persist(newLineItem);
@@ -267,8 +270,8 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     lineItem.setQuantity(lineItem.getQuantity() + 1);
                     em.merge(lineItem);
                 }
-                 System.out.println("Setting free volume of destination bin...");
-                System.out.println("Free volume of destination = destination.getFreeVolume() - lineItem.getItem().getVolume(): " + destination.getFreeVolume() + " + " + lineItem.getItem().getVolume());
+                System.out.println("Setting free volume of destination bin...");
+                System.out.println("Free volume of destination = destination.getFreeVolume() - lineItem.getItem().getVolume(): " + destination.getFreeVolume() + " - " + lineItem.getItem().getVolume());
                 destination.setFreeVolume(destination.getFreeVolume() - lineItem.getItem().getVolume());
                 if (destination.getFreeVolume() < 0) {
                     System.out.println("Destination bin ran out of storage space.");
@@ -298,6 +301,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseId);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             for (StorageBinEntity currentBin : storageBins) {
                 for (int i = 0; i < currentBin.getListOfLineItems().size(); i++) {
@@ -326,6 +330,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.items.SKU=:SKU");
             q.setParameter("id", warehouseId);
             q.setParameter("SKU", SKU);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             return storageBins;
         } catch (EntityNotFoundException ex) {
@@ -345,6 +350,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
@@ -371,6 +377,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
@@ -397,6 +404,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
@@ -423,6 +431,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
@@ -449,6 +458,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
@@ -475,6 +485,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
@@ -501,6 +512,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
@@ -527,6 +539,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
@@ -640,6 +653,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
             q.setParameter("SKU", SKU);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
             StorageBinEntity storageBin = em.getReference(StorageBinEntity.class, storageBinId);
             if (storageBin.getType().equals("Shelf")) {
