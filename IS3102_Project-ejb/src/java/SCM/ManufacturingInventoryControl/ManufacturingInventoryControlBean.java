@@ -196,6 +196,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             //Check if storage bin have that type of item before
             LineItemEntity lineItem = checkIfItemExistInsideStorageBin(inboundBin.getId(), SKU);
             inboundBin.setFreeVolume(inboundBin.getFreeVolume() - itemEntity.getVolume());
+            em.merge(inboundBin);
             if (lineItem != null) {
                 em.refresh(lineItem);
                 lineItem.setQuantity(lineItem.getQuantity() + 1);
