@@ -50,7 +50,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @Override
     public boolean registerMember(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String password) {
-        System.out.println("registerMember() called with name:" + name);
+        System.out.println("registerMember() called with email:" + email);
         Long memberID;
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
@@ -59,7 +59,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             memberEntity.create(name, address, DOB, email, phone, country, city, zipCode, passwordHash, passwordSalt);
             em.persist(memberEntity);
             memberID = memberEntity.getMemberID();
-            System.out.println("Member \"" + name + "\" registered successfully as id:" + memberID);
+            System.out.println("Email \"" + email + "\" registered successfully as id:" + memberID);
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register member:\n" + ex);
@@ -467,8 +467,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM RoleEntity t");
             roleEntities = q.getResultList();
             for (RoleEntity roleEntity : roleEntities) {
+                em.refresh(roleEntity);
                 result++;
-            }
+            }                                                            
             System.out.println("Returned " + result + " roles.");
             return roleEntities;
         } catch (NoResultException ex) {
@@ -644,7 +645,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
             }
             staffEntity.setRoles(roles);
-            em.merge(staffEntity);
+            em.merge(staffEntity);            
+            em.flush();
             System.out.println("Roles successfully updated for staff id:" + staffID);
             return true;
         } catch (Exception ex) {

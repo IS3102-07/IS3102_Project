@@ -59,7 +59,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-exchange"></i> <a href="productGroupManagement.jsp">Product Group Management</a>
+                                    <i class="icon icon-exchange"></i> <a href="../ProductGroupManagement_Servlet">Product Group Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Product Group - Update

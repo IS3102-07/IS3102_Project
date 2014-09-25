@@ -15,7 +15,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-sitemap"></i><a href="bomManagement.jsp"> BOM Management</a>
+                                    <i class="icon icon-sitemap"></i><a href="../BomManagement_BomServlet"> BOM Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Add BOM
