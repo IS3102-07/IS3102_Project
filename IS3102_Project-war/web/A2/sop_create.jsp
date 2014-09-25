@@ -67,7 +67,7 @@
 
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_create_POST">
                                         <div class="form-group">
-                                            <label>Sale Forecast</label>
+                                            <label>Sales Forecast</label>
                                             <input id="input_saleForecast" type="number" class="form-control" name="saleForecast" value="300" required="true" readonly="true">
                                         </div>
 
@@ -77,7 +77,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Current Inventory level</label>
+                                            <label>Current Inventory leveL</label>
                                             <input id="input_currentInventory" type="number" class="form-control" name="currentInventory" value="20" required="true" readonly="true">
                                         </div>
 
@@ -107,10 +107,22 @@
 
         <script>
             $('#input_targetInventoty').change(function(){        
-                var targetInventoty = $('#input_targetInventoty').val();
-                var saleForecast = $('#input_saleForecast').val();
-                var currentInventory = $('#input_currentInventory').val();
-                var productionPlan = parseInt(saleForecast) - parseInt(currentInventory) + parseInt(targetInventoty);                
+                var targetInventoty = parseInt($('#input_targetInventoty').val());
+                var saleForecast = parseInt($('#input_saleForecast').val());
+                var currentInventory = parseInt($('#input_currentInventory').val());                
+                
+                if(targetInventoty < currentInventory - saleForecast){
+                    targetInventoty = currentInventory - saleForecast;
+                    $('#input_targetInventoty').val(targetInventoty);
+                    alert("Target Inventory Level cannot be less than ( current inventory level - sales forecast ).");
+                }
+                if(targetInventoty < 0){
+                    targetInventoty = 0;
+                    $('#input_targetInventoty').val(0);
+                    alert("Target Inventory Level cannot be less than zero.");
+                }
+                                
+                var productionPlan = saleForecast - currentInventory + targetInventoty;                
                 $('#input_productionPlan').val(productionPlan);                
             });
         </script>
