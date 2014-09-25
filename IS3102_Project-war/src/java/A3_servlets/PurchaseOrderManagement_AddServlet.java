@@ -35,7 +35,7 @@ public class PurchaseOrderManagement_AddServlet extends HttpServlet {
                     result = "?errMsg=Supplier or Warehouse no longer exist / active.";
                     response.sendRedirect("A3/purchaseOrderManagement_Add.jsp" + result);
                 } else {
-                    result = "?goodMsg=Purchase Order created successfully";
+                    result = "?goodMsg=Purchase Order created successfully.";
                     response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result + "&id="+ purchaseOrder.getId());
                 }
             }

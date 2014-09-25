@@ -35,9 +35,8 @@ public class ShippingOrderManagement_AddServlet extends HttpServlet {
                     result = "?errMsg=One or both of the warehouse selected could not be found.";
                     response.sendRedirect("A3/shippingOrderManagement_Add.jsp" + result);
                 } else {
-                    result = "&goodMsg=Shipping Order created successfully";
+                    result = "&goodMsg=Shipping Order created successfully.";
                     response.sendRedirect("ShippingOrderLineItemManagement_Servlet?id=" + shippingOrderEntity.getId() + result);
-                    // ../ShippingOrderLineItemManagement_Servlet
                 }
             }
         } catch (Exception ex) {

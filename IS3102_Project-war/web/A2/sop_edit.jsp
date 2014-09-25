@@ -106,14 +106,26 @@
             </div>
             <!-- /#page-wrapper -->
         </div>
-        <!-- /#wrapper -->
-
+        <!-- /#wrapper -->        
+        
         <script>
             $('#input_targetInventoty').change(function(){        
-                var targetInventoty = $('#input_targetInventoty').val();                
-                var saleForecast = $('#input_saleForecast').val();                
-                var currentInventory = $('#input_currentInventory').val();                
-                var productionPlan = parseInt(saleForecast) - parseInt(currentInventory) + parseInt(targetInventoty);                                
+                var targetInventoty = parseInt($('#input_targetInventoty').val());
+                var saleForecast = parseInt($('#input_saleForecast').val());
+                var currentInventory = parseInt($('#input_currentInventory').val());                
+                
+                if(targetInventoty < currentInventory - saleForecast){
+                    targetInventoty = currentInventory - saleForecast;
+                    $('#input_targetInventoty').val(targetInventoty);
+                    alert("Target Inventory Level cannot be less than ( current inventory level - sales forecast ).");
+                }
+                if(targetInventoty < 0){
+                    targetInventoty = 0;
+                    $('#input_targetInventoty').val(0);
+                    alert("Target Inventory Level cannot be less than zero.");
+                }
+                                
+                var productionPlan = saleForecast - currentInventory + targetInventoty;                
                 $('#input_productionPlan').val(productionPlan);                
             });
         </script>

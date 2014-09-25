@@ -27,13 +27,18 @@ public class ShippingOrderLineItemManagement_Servlet extends HttpServlet {
             String purchaseOrderId = request.getParameter("id");
             String errMsg = request.getParameter("errMsg");
             String source = request.getParameter("source");
+            String goodMsg = request.getParameter("goodMsg");
 
-            if (source!=null && source.equals("submit")) {
+            if (source != null && source.equals("submit")) {
                 List<ShippingOrderEntity> shippingOrders = inboundAndOutboundLogisticsBeanLocal.getShippingOrderList();
                 session.setAttribute("shippingOrders", shippingOrders);
 
-                if (errMsg != null && purchaseOrderId != null) {
-                    response.sendRedirect("A3/shippingOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId + "&errMsg=" + errMsg);
+                if (purchaseOrderId != null) {
+                    if (errMsg != null) {
+                        response.sendRedirect("A3/shippingOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId + "&errMsg=" + errMsg);
+                    } else if (goodMsg != null) {
+                        response.sendRedirect("A3/shippingOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
+                    }
                 } else {
                     response.sendRedirect("A3/shippingOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId);
                 }
@@ -41,8 +46,12 @@ public class ShippingOrderLineItemManagement_Servlet extends HttpServlet {
                 List<ShippingOrderEntity> shippingOrders = inboundAndOutboundLogisticsBeanLocal.getShippingOrderList();
                 session.setAttribute("shippingOrders", shippingOrders);
 
-                if (errMsg != null && purchaseOrderId != null) {
-                    response.sendRedirect("A3/shippingOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
+                if (purchaseOrderId != null) {
+                    if (errMsg != null) {
+                        response.sendRedirect("A3/shippingOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
+                    } else if (goodMsg != null) {
+                        response.sendRedirect("A3/shippingOrderManagement_Update.jsp?id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
+                    }
                 } else {
                     response.sendRedirect("A3/shippingOrderManagement_Update.jsp?id=" + purchaseOrderId);
                 }

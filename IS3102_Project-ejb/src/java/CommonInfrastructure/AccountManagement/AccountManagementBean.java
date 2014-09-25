@@ -642,11 +642,13 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             List<RoleEntity> roles = new ArrayList<RoleEntity>();
             for (int i = 0; i < roleIDs.size(); i++) {
                 roles.add(em.getReference(RoleEntity.class, roleIDs.get(i)));
-
             }
             staffEntity.setRoles(roles);
             em.merge(staffEntity);            
             em.flush();
+            for(RoleEntity role: roles){
+                em.refresh(role);
+            }
             System.out.println("Roles successfully updated for staff id:" + staffID);
             return true;
         } catch (Exception ex) {
