@@ -469,7 +469,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             for (RoleEntity roleEntity : roleEntities) {
                 em.refresh(roleEntity);
                 result++;
-            }                                                            
+            }
             System.out.println("Returned " + result + " roles.");
             return roleEntities;
         } catch (NoResultException ex) {
@@ -644,9 +644,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 roles.add(em.getReference(RoleEntity.class, roleIDs.get(i)));
             }
             staffEntity.setRoles(roles);
-            em.merge(staffEntity);            
+            em.merge(staffEntity);
             em.flush();
-            for(RoleEntity role: roles){
+            for (RoleEntity role : roles) {
                 em.refresh(role);
             }
             System.out.println("Roles successfully updated for staff id:" + staffID);
@@ -727,5 +727,21 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             System.out.println("\nServer failed to hash password.\n" + ex);
         }
         return passwordHash;
+    }
+
+    public Integer checkStaffInvalidLoginAttempts(String email) {
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
+
+            q.setParameter("email", email);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            if (staffEntity != null) {
+                return staffEntity.getInvalidLoginAttempt();
+            } else {
+                return 0;
+            }
+        } catch (Exception ex) {
+            return 0;
+        }
     }
 }
