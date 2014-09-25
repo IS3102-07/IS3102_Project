@@ -70,8 +70,8 @@
                                             <span>Pallet</span>
                                         </div>
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="20" aria-valuemax="100" style="width: 60%;">
-                                                <%//warehousesCapcity[0]%>
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="20" aria-valuemax="100" style="width: <%=warehousesCapcity[0]%>%;">
+                                                <%=warehousesCapcity[0]%>
                                             </div>
                                         </div>
                                         <div class="progress-label">
@@ -80,7 +80,7 @@
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-primary" data-appear-progress-animation="85%" data-appear-animation-delay="300">
                                                 <span class="progress-bar-tooltip">
-                                                    <%//warehousesCapcity[1]%>
+                                                    <%=warehousesCapcity[1]%>
                                                 </span>
                                             </div>
                                         </div>
@@ -90,7 +90,7 @@
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-primary" data-appear-progress-animation="75%" data-appear-animation-delay="600">
                                                 <span class="progress-bar-tooltip">
-                                                    <%//warehousesCapcity[2]%>
+                                                    <%=warehousesCapcity[2]%>
                                                 </span>
                                             </div>
                                         </div>
@@ -100,7 +100,7 @@
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-primary" data-appear-progress-animation="85%" data-appear-animation-delay="900">
                                                 <span class="progress-bar-tooltip">
-                                                    <%//warehousesCapcity[3]%>
+                                                    <%=warehousesCapcity[3]%>
                                                 </span>
                                             </div>
                                         </div>

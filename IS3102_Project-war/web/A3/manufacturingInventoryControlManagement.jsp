@@ -13,12 +13,12 @@
 
     <body>
         <script>
-            function removeItemFromStorageBin(id,storageBinId) {
+            function removeItemFromStorageBin(id, storageBinId) {
                 var yes = confirm("Are you sure you want to delete the all instance of this item in this storage bin?\nThis action cannot be reversed!");
                 if (yes == true) {
                     window.event.returnValue = true;
-                    document.inventoryControl.lineItemID.value=id;
-                    document.inventoryControl.storageBinId.value=storageBinId;
+                    document.inventoryControl.lineItemID.value = id;
+                    document.inventoryControl.storageBinId.value = storageBinId;
                     document.inventoryControl.action = "../ManufacturingInventoryControl_RemoveServlet";
                     document.inventoryControl.submit();
                 } else {
@@ -41,7 +41,7 @@
                                     <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-th"></i> Inventory Control
@@ -103,7 +103,7 @@
                                                                 <%=itemStorageBinHelpers.get(i).getItemType()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Remove" onclick="removeItemFromStorageBin('<%=itemStorageBinHelpers.get(i).getLineItemID()%>','<%=itemStorageBinHelpers.get(i).getStorageBinID()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Remove" onclick="removeItemFromStorageBin('<%=itemStorageBinHelpers.get(i).getLineItemID()%>', '<%=itemStorageBinHelpers.get(i).getStorageBinID()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -118,7 +118,7 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
-                                            
+
                                         </div>
 
                                     </div>
