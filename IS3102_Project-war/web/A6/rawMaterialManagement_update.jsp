@@ -31,7 +31,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-user"></i><a href="rawMaterialManagement.jsp"> Raw Material Management</a>
+                                    <i class="icon icon-user"></i><a href="../RawMaterialManagement_RawMaterialServlet"> Raw Material Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i>  Raw Material Details Update
