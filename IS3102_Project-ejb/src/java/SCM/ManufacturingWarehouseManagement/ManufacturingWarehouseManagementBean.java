@@ -1,12 +1,12 @@
 package SCM.ManufacturingWarehouseManagement;
 
-import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -249,6 +249,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 }
             }
             transferOrder.setStatus("Completed");
+            transferOrder.setDateTransferred(new Date());
+            em.merge(transferOrder);
+            em.flush();
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to markTransferOrderAsCompleted:\n" + ex);
