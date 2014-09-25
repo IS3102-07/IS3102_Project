@@ -82,6 +82,7 @@
                                                     <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Supplier</button></a>
                                                 </div>
                                             </div>
+                                            <br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
