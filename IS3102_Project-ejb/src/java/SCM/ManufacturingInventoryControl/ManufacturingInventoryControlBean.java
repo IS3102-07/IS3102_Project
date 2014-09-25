@@ -244,6 +244,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     lineItem.setQuantity(lineItem.getQuantity() - 1);
                     em.merge(lineItem);
                 }
+                em.flush();
                 System.out.println("Setting free volume of source bin...");
                 System.out.println("Free volume of source = source.getFreeVolume() + lineItem.getItem().getVolume(): " + source.getFreeVolume() + " + " + lineItem.getItem().getVolume());
                 source.setFreeVolume(source.getFreeVolume() + lineItem.getItem().getVolume());
@@ -265,19 +266,23 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     destination.getListOfLineItems().add(newLineItem);
                     em.merge(destination);
                     lineItem = newLineItem;
+                    em.flush();
                 } else {
                     em.refresh(lineItem);
                     lineItem.setQuantity(lineItem.getQuantity() + 1);
                     em.merge(lineItem);
+                    em.flush();
                 }
                 System.out.println("Setting free volume of destination bin...");
                 System.out.println("Free volume of destination = destination.getFreeVolume() - lineItem.getItem().getVolume(): " + destination.getFreeVolume() + " - " + lineItem.getItem().getVolume());
+                
                 destination.setFreeVolume(destination.getFreeVolume() - lineItem.getItem().getVolume());
+                em.merge(destination);
+                em.flush();
                 if (destination.getFreeVolume() < 0) {
                     System.out.println("Destination bin ran out of storage space.");
                     throw new Exception();
                 }
-                em.merge(destination);
                 return true;
             } else {
                 System.out.println("Failed to move single item between storage bins!");
