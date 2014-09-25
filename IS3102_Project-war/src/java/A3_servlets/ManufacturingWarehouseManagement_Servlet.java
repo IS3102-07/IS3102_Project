@@ -17,6 +17,7 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    @EJB
     private ManufacturingInventoryControlBeanLocal micbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,23 +33,56 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
 
             if (destination != null && warehouseId != null) {
 
-                int[] warehousesCapcity = new int[4];
+                double[] warehousesCapacity = new double[4];
                 System.out.println(warehouseId + "<<<<<<<<<<<<<<");
-//                int totalPallet = micbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
-//                int freePallet = micbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
-//                int totalShelf = micbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
-//                int freeShelf = micbl.getTotalFreeVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
-//                int totalInbound = micbl.getTotalVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
-//                int freeInbound = micbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
-//                int totalOutbound = micbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
-//                int freeOutbound = micbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
-//
-//                warehousesCapcity[0] = ((totalPallet - freePallet) * 100) / totalPallet;
-//                warehousesCapcity[1] = ((totalShelf - freeShelf) * 100) / totalShelf;
-//                warehousesCapcity[2] = ((totalInbound - freeInbound) * 100) / totalInbound;
-//                warehousesCapcity[3] = ((totalOutbound - freeOutbound) * 100) / totalOutbound;
+                double totalPallet = micbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
+                double freePallet = micbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
+                double totalShelf = micbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
+                double freeShelf = micbl.getTotalFreeVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
+                double totalInbound = micbl.getTotalVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
+                double freeInbound = micbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
+                double totalOutbound = micbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+                double freeOutbound = micbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
 
-                //session.setAttribute("warehousesCapcity", warehousesCapcity);
+                System.out.println("Checking total at start");
+                System.out.println(totalPallet + " , " + totalShelf + " , " + totalInbound + " , " + totalOutbound);
+
+                System.out.println("Checking free at start");
+                System.out.println(freePallet + " , " + freeShelf + " , " + freeInbound + " , " + freeOutbound);
+
+                if (totalPallet == 0) {
+                    warehousesCapacity[0] = 0;
+                } else {
+                    warehousesCapacity[0] = ((totalPallet - freePallet) * 100) / totalPallet;
+                    warehousesCapacity[0] = Math.round(warehousesCapacity[0] * 100);
+                    warehousesCapacity[0] = warehousesCapacity[0] / 100;
+                }
+                if (totalShelf == 0) {
+                    warehousesCapacity[1] = 0;
+                } else {
+                    warehousesCapacity[1] = ((totalShelf - freeShelf) * 100) / totalShelf;
+                    warehousesCapacity[1] = Math.round(warehousesCapacity[1] * 100);
+                    warehousesCapacity[1] = warehousesCapacity[1] / 100;
+                }
+                if (totalInbound == 0) {
+                    warehousesCapacity[2] = 0;
+                } else {
+                    warehousesCapacity[2] = ((totalInbound - freeInbound) * 100) / totalInbound;
+                    warehousesCapacity[2] = Math.round(warehousesCapacity[2] * 100);
+                    warehousesCapacity[2] = warehousesCapacity[2] / 100;
+                }
+                if (totalOutbound == 0) {
+                    warehousesCapacity[3] = 0;
+                } else {
+                    warehousesCapacity[3] = ((totalOutbound - freeOutbound) * 100) / totalOutbound;
+                    warehousesCapacity[3] = Math.round(warehousesCapacity[3] * 100);
+                    warehousesCapacity[3] = warehousesCapacity[3] / 100;
+                }
+
+                System.out.println("final free space in %");
+                System.out.println(warehousesCapacity[0] + " , " + warehousesCapacity[1] + " , " + warehousesCapacity[2] + " , " + warehousesCapacity[3]);
+
+                session.setAttribute("warehousesCapacity", warehousesCapacity);
 
                 if (destination.equals("manufacturingWarehouseManagement.jsp")) {
                     WarehouseEntity warehouseEntity = facilityManagementBeanLocal.getWarehouseById(Long.parseLong(warehouseId));

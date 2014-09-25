@@ -40,7 +40,9 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.bomManagement.action = "../BomManagement_BomServlet";
+                    document.bomManagement.submit();
                 } else {
                     window.event.returnValue = true;
                     document.bomManagement.action = "../BomManagement_RemoveBomServlet";

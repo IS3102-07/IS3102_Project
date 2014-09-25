@@ -26,7 +26,9 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.storagebinManagement.action = "../StorageBinManagement_Servlet";
+                    document.storagebinManagement.submit();
                 } else {
                     window.event.returnValue = true;
                     document.storagebinManagement.action = "../StorageBinManagement_RemoveServlet";
@@ -60,7 +62,7 @@
                                     <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-archive"></i> Storage Bin Management
@@ -211,7 +213,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
