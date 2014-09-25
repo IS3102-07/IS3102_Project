@@ -21,7 +21,9 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.staffManagement.action = "../StaffManagement_StaffServlet";
+                    document.staffManagement.submit();
                 } else {
                     window.event.returnValue = true;
                     document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
