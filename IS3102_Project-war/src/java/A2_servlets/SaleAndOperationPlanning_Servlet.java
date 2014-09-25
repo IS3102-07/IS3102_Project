@@ -169,13 +169,13 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 Integer saleForecast = Integer.parseInt(request.getParameter("saleForecast"));
                 Integer productionPlan = Integer.parseInt(request.getParameter("productionPlan"));
                 Integer currentInventory = Integer.parseInt(request.getParameter("currentInventory"));
-                Integer targetInventoty = Integer.parseInt(request.getParameter("targetInventoty"));
+                Integer targetInventory = Integer.parseInt(request.getParameter("targetInventory"));
 
                 storeId = (long) session.getAttribute("sop_storeId");
                 productGroupId = (long) session.getAttribute("productGroupId");
                 schedulelId = (long) session.getAttribute("scheduleId");
 
-                SaleAndOperationPlanEntity sop = sopBean.createSOP(storeId, schedulelId, productGroupId, saleForecast, productionPlan, currentInventory, targetInventoty);
+                SaleAndOperationPlanEntity sop = sopBean.createSOP(storeId, schedulelId, productGroupId, saleForecast, productionPlan, currentInventory, targetInventory);
                 if (sop != null) {
                     request.setAttribute("alertMessage", "Sale and Operation Plan is created.");
                 } else {
@@ -222,13 +222,13 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sop_edit_POST":
                 productionPlan = Integer.parseInt(request.getParameter("productionPlan"));
                 currentInventory = Integer.parseInt(request.getParameter("currentInventory"));
-                targetInventoty = Integer.parseInt(request.getParameter("targetInventoty"));
+                targetInventory = Integer.parseInt(request.getParameter("targetInventory"));
                 sopId = Long.parseLong(request.getParameter("sopId"));
 
-                if (sopBean.editSOP(sopId, productionPlan, currentInventory, targetInventoty)) {
-                    request.setAttribute("alertMessage", "Sale and Operation Plan is saved.");
+                if (sopBean.editSOP(sopId, productionPlan, currentInventory, targetInventory)) {
+                    request.setAttribute("alertMessage", "Sales and Operations Plan is saved.");
                 } else {
-                    request.setAttribute("alertMessage", "Failed to edit Sale and Operation Plan.");
+                    request.setAttribute("alertMessage", "Failed to edit Sales and Operations Plan.");
                 }
 
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";

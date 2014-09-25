@@ -26,7 +26,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales Forecast</a>
+                                    <i class="icon icon-dashboard"></i>   <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
                                 </li>                             
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="#">Schedule</a>

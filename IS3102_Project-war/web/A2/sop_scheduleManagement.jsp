@@ -22,7 +22,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Sales And Operation Planning
+                                Sales And Operations Planning
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
