@@ -18,7 +18,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-sitemap"></i><a href="bomManagement.jsp"> Bill of Material Management</a>
+                                    <i class="icon icon-sitemap"></i><a href="../BomManagement_BomServlet"> Bill of Material Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i>  Bill of Material Details Update
