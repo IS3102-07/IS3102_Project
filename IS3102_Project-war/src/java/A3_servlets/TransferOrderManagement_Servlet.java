@@ -27,6 +27,7 @@ public class TransferOrderManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
 
             if (warehouseEntity == null) {
@@ -38,10 +39,16 @@ public class TransferOrderManagement_Servlet extends HttpServlet {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
 
-                if (errMsg == null || errMsg.equals("")) {
+                if (errMsg == null && goodMsg == null) {
                     response.sendRedirect("A3/transferOrderManagement.jsp");
-                } else {
-                    response.sendRedirect("A3/transferOrderManagement.jsp?errMsg=" + errMsg);
+                } else if ((errMsg != null) && (goodMsg == null)) {
+                    if (!errMsg.equals("")) {
+                        response.sendRedirect("A3/transferOrderManagement.jsp?errMsg=" + errMsg);
+                    }
+                } else if ((errMsg == null && goodMsg != null)) {
+                    if (!goodMsg.equals("")) {
+                        response.sendRedirect("A3/transferOrderManagement.jsp?goodMsg=" + goodMsg);
+                    }
                 }
             }
         } catch (Exception ex) {
