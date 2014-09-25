@@ -31,16 +31,12 @@ public class PurchaseOrderLineItemManagement_Servlet extends HttpServlet {
 
             List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
             session.setAttribute("purchaseOrders", purchaseOrders);
-            System.out.println("1");
             if (purchaseOrderId != null) {
                 if (errMsg != null) {
-                    System.out.println("2");
                     response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
                 } else if (goodMsg != null) {
-                    System.out.println("3");
                     response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
                 } else {
-                    System.out.println("4");
                     response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId);
                 }
             }

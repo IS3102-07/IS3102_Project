@@ -54,17 +54,14 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                     }
 
                     if (purchaseOrder.getLineItems() == null || purchaseOrder.getLineItems().isEmpty()) {
-                        System.out.println("a");
                         result = "?errMsg=Empty purchase order cannot be submitted.&id=" + purchaseOrderId;
                         response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
                     } else {
                         boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), "Submitted");
                         if (!canUpdate) {
-                            System.out.println("b");
                             result = "?errMsg=Failed to submit Purchase Order.&id=" + purchaseOrderId;
                             response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
                         } else {
-                            System.out.println("c");
                             result = "?goodMsg=Purchase Order submitted successfully.&id=" + purchaseOrderId;
                             response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
                         }
