@@ -2,10 +2,14 @@ package CommonInfrastructure.AccountManagement;
 
 import EntityManager.CountryEntity;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import EntityManager.AccessRightEntity;
+import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MemberEntity;
+import EntityManager.RegionalOfficeEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
-import java.lang.reflect.Array;
+import EntityManager.StoreEntity;
+import EntityManager.WarehouseEntity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -729,6 +733,57 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         return passwordHash;
     }
 
+    @Override
+    public StaffEntity getStaffById(Long id) {
+        try {
+            return em.find(StaffEntity.class, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public RoleEntity getRoleById(Long id) {
+        try {
+            return em.find(RoleEntity.class, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId) {
+        try {
+            StaffEntity staff = em.find(StaffEntity.class, staffId);
+            RoleEntity role = em.find(RoleEntity.class, roleId);
+
+            AccessRightEntity a = new AccessRightEntity();
+            if (regionalOfficeId != -1) {
+                RegionalOfficeEntity ro = em.find(RegionalOfficeEntity.class, regionalOfficeId);
+                a.setRegionalOffice(ro);
+            }
+            if (storeId != -1) {
+                StoreEntity s = em.find(StoreEntity.class, storeId);
+                a.setStore(s);
+            }
+            if (warehouseId != -1) {
+                WarehouseEntity warehouse = em.find(WarehouseEntity.class, warehouseId);
+                a.setWarehouse(warehouse);
+            }
+            if (mfId != -1) {
+                ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, mfId);
+                a.setManufacturingFacility(mf);
+            }            
+            em.persist(a);            
+            return a;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
     public Integer checkStaffInvalidLoginAttempts(String email) {
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
