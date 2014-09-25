@@ -26,7 +26,9 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.storagebinManagement.action = "../StorageBinManagement_Servlet";
+                    document.storagebinManagement.submit();
                 } else {
                     window.event.returnValue = true;
                     document.storagebinManagement.action = "../StorageBinManagement_RemoveServlet";

@@ -22,7 +22,9 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.messageManagement.action = "../WorkspaceMessage_Servlet";
+                    document.messageManagement.submit();
                 } else {
                     window.event.returnValue = true;
                     document.messageManagement.action = "../WorkspaceMessage_RemoveServlet";
