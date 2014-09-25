@@ -25,14 +25,9 @@
                     alert("No items selected.");
                     window.event.returnValue = false;
                 } else {
-                    var yes = confirm("Are you sure?!");
-                    if (yes === true) {
-                        window.event.returnValue = true;
-                        document.selectMessageReceiver.action = "../WorkspaceMessage_AddServlet";
-                        document.selectMessageReceiver.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                    window.event.returnValue = true;
+                    document.selectMessageReceiver.action = "../WorkspaceMessage_AddServlet";
+                    document.selectMessageReceiver.submit();
                 }
             }
             function checkAll(source) {
@@ -51,10 +46,10 @@
                             <h1 class="page-header">Select Message Recipients</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="workspace.jsp">Workspace</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../Workspace_Servlet">Workspace</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-inbox"></i> <a href="workspace_messageInbox.jsp">Messages</a>
+                                    <i class="icon icon-inbox"></i> <a href="../WorkspaceMessage_Servlet">Messages</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-envelope"></i> <a href="workspace_messageAdd.jsp">Compose and Send Message</a>
@@ -144,7 +139,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnMultiple" type="submit" value="Select Multiple Staff" onclick="selectMultipleStaff()"  />
-                                                    
+
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
