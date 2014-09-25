@@ -34,7 +34,6 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
             if (destination != null && warehouseId != null) {
 
                 double[] warehousesCapacity = new double[4];
-                System.out.println(warehouseId + "<<<<<<<<<<<<<<");
                 double totalPallet = micbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
                 double freePallet = micbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
                 double totalShelf = micbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
@@ -45,10 +44,10 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
                 double freeOutbound = micbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
 
                 System.out.println("Checking total at start");
-                System.out.println(totalPallet + " , " + totalShelf + " , " + totalInbound + " , " + totalOutbound);
+                System.out.println("Total Pallet: "+totalPallet + " , Total Shelf: " + totalShelf + " , Total Inbound: " + totalInbound + " , Total Outbound: " + totalOutbound);
 
                 System.out.println("Checking free at start");
-                System.out.println(freePallet + " , " + freeShelf + " , " + freeInbound + " , " + freeOutbound);
+                System.out.println("Free Pallet: " + freePallet + " , Free Shelf: " + freeShelf + " , Free Inbound: " + freeInbound + " , Free Outbound: " + freeOutbound);
 
                 if (totalPallet == 0) {
                     warehousesCapacity[0] = 0;
@@ -80,7 +79,7 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
                 }
 
                 System.out.println("final free space in %");
-                System.out.println(warehousesCapacity[0] + " , " + warehousesCapacity[1] + " , " + warehousesCapacity[2] + " , " + warehousesCapacity[3]);
+                System.out.println("Warehouse Capactiy[0]: " + warehousesCapacity[0] + " , Warehouse Capactiy[1]: " + warehousesCapacity[1] + " , Warehouse Capactiy[2]: " + warehousesCapacity[2] + " , Warehouse Capactiy[3]: " + warehousesCapacity[3]);
 
                 session.setAttribute("warehousesCapacity", warehousesCapacity);
 
