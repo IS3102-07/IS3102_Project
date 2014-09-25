@@ -24,15 +24,9 @@
                     alert("No items selected.");
                     window.event.returnValue = false;
                 } else {
-
-                    var yes = confirm("Are you sure?!");
-                    if (yes == true) {
-                        window.event.returnValue = true;
-                        document.announcementsManagement.action = "../WorkspaceMessage_AddServlet";
-                        document.announcementsManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                    window.event.returnValue = true;
+                    document.selectMessageReceiver.action = "../WorkspaceMessage_AddServlet";
+                    document.selectMessageReceiver.submit();
                 }
             }
             function checkAll(source) {
@@ -144,7 +138,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnMultiple" type="submit" value="Select Multiple Staff" onclick="selectMultipleStaff()"  />
-                                                    
+
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
