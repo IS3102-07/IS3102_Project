@@ -1,15 +1,18 @@
 package A3_servlets;
 
+import EntityManager.PurchaseOrderEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
@@ -27,37 +30,59 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
             String purchaseOrderId = request.getParameter("id");
             String lineItemId = request.getParameter("lineitemId");
             String sku = request.getParameter("sku");
             String quantity = request.getParameter("quantity");
-            String status1 = request.getParameter("status1");
-            String status3 = request.getParameter("status3");
+            String status = request.getParameter("status");
             String destinationWarehouseID = request.getParameter("destinationWarehouseID");
-            if (status1 != null) {
-                boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), "Submitted");
-                if (!canUpdate) {
-                    result = "?source=isSubmit&errMsg=Failed to submit Purchase Order.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;
-                    response.sendRedirect("A3/purchaseOrderManagement_UpdateLineItem.jsp" + result);
-                } else {
-                    result = "?goodMsg=Purchase Order submitted successfully.&id=" + purchaseOrderId;
-                    response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
-                }
+            PurchaseOrderEntity purchaseOrderEntity = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderById(Long.parseLong(purchaseOrderId));
 
-            } else if (status3 != null) {
-                if (status3.equals("Completed")) {
+            if (status != null) {
+                if (purchaseOrderEntity.getStatus().equals("Pending")) {
+                    //get purchase order
+                    HttpSession session;
+                    session = request.getSession();
+                    List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
+                    PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
+                    for (int i = 0; i < purchaseOrders.size(); i++) {
+                        if (purchaseOrders.get(i).getId() == Integer.parseInt(purchaseOrderId)) {
+                            purchaseOrder = purchaseOrders.get(i);
+                        }
+                    }
+
+                    if (purchaseOrder.getLineItems() == null || purchaseOrder.getLineItems().isEmpty()) {
+                        System.out.println("a");
+                        result = "?errMsg=Empty purchase order cannot be submitted.&id=" + purchaseOrderId;
+                        response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
+                    } else {
+                        boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), "Submitted");
+                        if (!canUpdate) {
+                            System.out.println("b");
+                            result = "?errMsg=Failed to submit Purchase Order.&id=" + purchaseOrderId;
+                            response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
+                        } else {
+                            System.out.println("c");
+                            result = "?goodMsg=Purchase Order submitted successfully.&id=" + purchaseOrderId;
+                            response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
+                        }
+                    }
+                } else if (status.equals("Completed")) {
                     if (manufacturingWarehouseManagementBean.getInboundStorageBin(Long.parseLong(destinationWarehouseID)) == null) {
                         result = "?errMsg=Destination warehouse does not have an inbound storage bin.<br/>Please create one first before marking this order as completed.&id=" + purchaseOrderId;
                         response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
-                        return;
                     } else {
                         manufacturingInventoryControlBean.moveInboundPurchaseOrderItemsToReceivingBin(Long.parseLong(purchaseOrderId));
+                        result = "?goodMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
+                        response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
                     }
+                } else {
+                    retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), status);
+                    result = "?goodMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
+                    response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
                 }
-                retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), status3);
-                result = "?goodMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
-                response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
             } else {
                 if (!retailProductsAndRawMaterialsPurchasingBean.checkSKUExists(sku)) {
                     result = "?errMsg=SKU not found.&id=" + purchaseOrderId + "&lineItemId=" + lineItemId;

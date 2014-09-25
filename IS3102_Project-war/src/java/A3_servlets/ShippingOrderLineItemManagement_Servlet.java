@@ -51,9 +51,9 @@ public class ShippingOrderLineItemManagement_Servlet extends HttpServlet {
                         response.sendRedirect("A3/shippingOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
                     } else if (goodMsg != null) {
                         response.sendRedirect("A3/shippingOrderManagement_Update.jsp?id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
+                    } else {
+                        response.sendRedirect("A3/shippingOrderManagement_Update.jsp?id=" + purchaseOrderId);
                     }
-                } else {
-                    response.sendRedirect("A3/shippingOrderManagement_Update.jsp?id=" + purchaseOrderId);
                 }
             }
         } catch (Exception ex) {
