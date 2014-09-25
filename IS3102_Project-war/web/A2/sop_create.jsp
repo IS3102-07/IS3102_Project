@@ -18,7 +18,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Sales And Operation Planning</h1>
+                            <h1 class="page-header">Sales And Operations Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operations Planning</a>

@@ -107,7 +107,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><b>Sales And Operation Plans</b></h4>
+                                    <h4><b>Sales And Operations Plans</b></h4>
                                 </div>
                                 <!-- /.panel-heading -->
 

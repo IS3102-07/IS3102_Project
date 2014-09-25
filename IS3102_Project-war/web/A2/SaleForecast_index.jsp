@@ -30,10 +30,7 @@
                             max-width: 300px;
                         }
                     </style>                                       
-                    
-                    <a href="../SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET"><button class="btn btn-primary">Schedule Management</button></a>
-                    <br><br>
-                    
+               
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
