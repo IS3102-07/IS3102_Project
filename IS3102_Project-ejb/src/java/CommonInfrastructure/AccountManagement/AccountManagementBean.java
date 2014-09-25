@@ -783,4 +783,20 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return null;
     }
+    
+    public Integer checkStaffInvalidLoginAttempts(String email) {
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
+
+            q.setParameter("email", email);
+            StaffEntity staffEntity = (StaffEntity) q.getSingleResult();
+            if (staffEntity != null) {
+                return staffEntity.getInvalidLoginAttempt();
+            } else {
+                return 0;
+            }
+        } catch (Exception ex) {
+            return 0;
+        }
+    }
 }

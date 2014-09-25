@@ -78,6 +78,8 @@ public interface AccountManagementBeanLocal {
 
     public String generatePasswordHash(String salt, String password);
     
+    public Integer checkStaffInvalidLoginAttempts(String email);
+    
     public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
 
 }
