@@ -590,11 +590,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     public List<ItemStorageBinHelper> getItemList(Long warehouseID) {
         System.out.println("getItemList() called");
         try {
-            List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<ItemStorageBinHelper>();
+            List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<>();
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
 
-            ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
+            ItemStorageBinHelper itemStorageBinHelper;
             //For each bin in the warehouse
             for (StorageBinEntity storageBin : storageBins) {
                 //Get all their contents
@@ -608,6 +608,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                         itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
                         itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
                         itemStorageBinHelper.setStorageBinID(storageBin.getId());
+                        itemStorageBinHelper.setStorageBinType(storageBin.getType());
                         itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
                         itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());
                         itemStorageBinHelperList.add(itemStorageBinHelper);
