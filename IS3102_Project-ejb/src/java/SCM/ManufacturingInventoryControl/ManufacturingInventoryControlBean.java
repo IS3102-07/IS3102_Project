@@ -276,7 +276,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 }
                 System.out.println("Setting free volume of destination bin...");
                 System.out.println("Free volume of destination = destination.getFreeVolume() - lineItem.getItem().getVolume(): " + destination.getFreeVolume() + " - " + lineItem.getItem().getVolume());
-                
+
                 destination.setFreeVolume(destination.getFreeVolume() - lineItem.getItem().getVolume());
                 em.merge(destination);
                 em.flush();
@@ -594,14 +594,17 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
 
-            ItemStorageBinHelper itemStorageBinHelper;
+            ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
+            System.out.println("Number of storage bins in warehouse id "+ warehouseID + ": " + storageBins.size());
             //For each bin in the warehouse
             for (StorageBinEntity storageBin : storageBins) {
                 //Get all their contents
                 List<LineItemEntity> listOfLineItemEntities = getItemInsideStorageBin(storageBin.getId());
+                System.out.println("Retrieving line items of storage bin id " + storageBin.getId() + "...");
                 //If the bin is not empty
                 if (listOfLineItemEntities != null && listOfLineItemEntities.size() > 0) {
                     //Add all the entries inside the bin to helper list
+                    System.out.println("getItemList(): Size of listOfLineItemEntities inside the storage bin id " + storageBin.getId() + ": " + listOfLineItemEntities.size());
                     for (int i = 0; i < listOfLineItemEntities.size(); i++) {
                         itemStorageBinHelper = new ItemStorageBinHelper();
                         itemStorageBinHelper.setLineItemID(listOfLineItemEntities.get(i).getId());
