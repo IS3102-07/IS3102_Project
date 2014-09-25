@@ -56,21 +56,21 @@
                                                 <label>Phone</label>
                                                 <input class="form-control" required="true" type="text" name="phone" value="<%=staffEntity.getPhone()%>">
                                             </div>
-
+                                            <div class="form-group">
+                                                <label>Address</label>
+                                                <input class="form-control" type="text" required="true" name="address" value="<%=staffEntity.getAddress()%>">
+                                            </div>
                                             <hr class="more-spaced "/>
                                             <h4>Change Password</h4>
                                             <div class="form-group">
-                                                <label>New Password (leave blank unless setting a new password).<br/>Password to be at least 8 characters long.</label>
+                                                <label>New Password (leave blank unless setting a new password).</label>
                                                 <input class="form-control" type="password" name="password" id="password">
                                             </div>
                                             <div class="form-group">
                                                 <label>Re-enter New Password</label>
                                                 <input class="form-control" type="password"  name="repassword" id="repassword">
                                             </div>
-                                            <div class="form-group">
-                                                <label>Address</label>
-                                                <input class="form-control" type="text" required="true" name="address" value="<%=staffEntity.getAddress()%>">
-                                            </div>
+
                                             <div class="panel-footer" style="padding-bottom: 0px;">
                                                 <div class="row">
                                                     <div class="form-group">
@@ -119,12 +119,7 @@
                             document.getElementById("repassword").style.borderColor = "#E34234";
                             alert("Passwords do not match. Please key again.");
                             ok = false;
-                        } else if (password == repassword) {
-                            if (password.length < 8) {
-                                alert("Passwords too short. At least 8 characters.");
-                                ok = false;
-                            }
-                        }
+                        } 
                     } else {
                         return ok;
                     }

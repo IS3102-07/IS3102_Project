@@ -148,30 +148,17 @@
             </ul>
         </li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-bell"></i> <b class="caret"></b></a>
-            <ul class="dropdown-menu alert-dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-group"></i> My Roles <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <%
+                    for (RoleEntity role : roles) {
+                %>
                 <li>
-                    <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                </li>
-                <li>
-                    <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                </li>
-                <li>
-                    <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                </li>
-                <li>
-                    <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                </li>
-                <li>
-                    <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                </li>
-                <li>
-                    <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">View All</a>
-                </li>
+                    <a href="#"><i class="icon icon-user"></i> <%= role.getName()%></a>
+                </li>    
+                <%
+                    }
+                %>                       
             </ul>
         </li>
         <li class="dropdown">
@@ -220,9 +207,6 @@
                     <li>
                         <a href="../A1/accountManagement.jsp">Account Management</a>
                     </li>
-                    <li>
-                        <a href="../A1/workspace.jsp">Workspace</a>
-                    </li>
                 </ul>
             </li>
             <%}
@@ -247,7 +231,7 @@
                 </a>
                 <ul id="MRP" class="collapse">
                     <li>
-                        <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Historical Sales Figures</a>
+                        <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
                     </li>
                     <li>
                         <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales and Operations Planning</a>

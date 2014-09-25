@@ -8,7 +8,7 @@
             <%
                 try {
                     WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-                    int[] warehousesCapcity = (int[]) (session.getAttribute("warehousesCapcity"));
+                    double[] warehousesCapacity = (double[]) (session.getAttribute("warehousesCapacity"));
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -69,41 +69,83 @@
                                         <div class="progress-label">
                                             <span>Pallet</span>
                                         </div>
+                                        <%
+                                            if (warehousesCapacity[0] < 10 && warehousesCapacity[0] > 0) {
+                                        %>
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="20" aria-valuemax="100" style="width: <%=warehousesCapcity[0]%>%;">
-                                                <%=warehousesCapcity[0]%>
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[0]%>%;">
+                                                <%=warehousesCapacity[0]%>%
                                             </div>
                                         </div>
+                                        <% } else {%>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[0]%>%;">
+                                                <%=warehousesCapacity[0]%>%
+                                            </div>
+                                        </div>
+                                        <% }%>
+
+
                                         <div class="progress-label">
                                             <span>Shelf</span>
                                         </div>
+                                        <%
+                                            if (warehousesCapacity[1] < 10 && warehousesCapacity[1] > 0) {
+                                        %>
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-primary" data-appear-progress-animation="85%" data-appear-animation-delay="300">
-                                                <span class="progress-bar-tooltip">
-                                                    <%=warehousesCapcity[1]%>
-                                                </span>
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[1]%>%;">
+                                                <%=warehousesCapacity[1]%>%
                                             </div>
                                         </div>
+                                        <% } else {%>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[1]%>%;">
+                                                <%=warehousesCapacity[1]%>%
+                                            </div>
+                                        </div>
+                                        <% }%>
+
+
+
                                         <div class="progress-label">
                                             <span>Inbound</span>
                                         </div>
+                                        <%
+                                            if (warehousesCapacity[2] < 10 && warehousesCapacity[2] > 0) {
+                                        %>
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-primary" data-appear-progress-animation="75%" data-appear-animation-delay="600">
-                                                <span class="progress-bar-tooltip">
-                                                    <%=warehousesCapcity[2]%>
-                                                </span>
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[2]%>%;">
+                                                <%=warehousesCapacity[2]%>%
                                             </div>
                                         </div>
+                                        <% } else {%>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[2]%>%;">
+                                                <%=warehousesCapacity[2]%>%
+                                            </div>
+                                        </div>
+                                        <% }%>
+
+
                                         <div class="progress-label">
                                             <span>Outbound</span>
                                         </div>
+                                        <%
+                                            if (warehousesCapacity[3] < 10 && warehousesCapacity[0] > 0) {
+                                        %>
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-primary" data-appear-progress-animation="85%" data-appear-animation-delay="900">
-                                                <span class="progress-bar-tooltip">
-                                                    <%=warehousesCapcity[3]%>
-                                                </span>
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[3]%>%;">
+                                                <%=warehousesCapacity[3]%>%
                                             </div>
                                         </div>
+                                        <% } else {%>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[3]%>%;">
+                                                <%=warehousesCapacity[3]%>%
+                                            </div>
+                                        </div>
+                                        <% }%>
+
                                     </div>
                                     <div class="text-right">
                                         <a href="#">View Details <i class="icon icon-arrow-circle-right"></i></a>

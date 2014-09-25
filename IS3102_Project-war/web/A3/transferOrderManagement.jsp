@@ -28,7 +28,9 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.transferOrderManagement.action = "../TransferOrderManagement_Servlet";
+                    document.transferOrderManagement.submit();
                 } else {
                     window.event.returnValue = true;
                     document.transferOrderManagement.action = "../TransferOrderManagement_RemoveServlet";

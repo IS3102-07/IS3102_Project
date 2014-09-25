@@ -73,17 +73,18 @@
                                     <input class="form-control" required="true" type="text" name="phone" value="<%=staff.getPhone()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label>New Password (leave blank unless setting a new password).<br/>Password to be at least 8 characters long.</label>
+                                    <label>Address</label>
+                                    <input class="form-control" type="text" required="true" name="address" value="<%=staff.getAddress()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password (leave blank unless setting a new password).</label>
                                     <input class="form-control" type="password" name="password" id="password">
                                 </div>
                                 <div class="form-group">
                                     <label>Re-enter New Password</label>
                                     <input class="form-control" type="password" name="repassword" id="repassword">
                                 </div>
-                                <div class="form-group">
-                                    <label>Address</label>
-                                    <input class="form-control" type="text" required="true" name="address" value="<%=staff.getAddress()%>">
-                                </div>
+                                
                                 <div class="form-group">
                                     <label>Roles Assignment</label><br/>
                                     <%
@@ -111,34 +112,17 @@
                                         }
                                     %>
                                     <table class="table table-hover">
+                                        <%
+                                            List<RoleEntity> roleList = (List<RoleEntity>) session.getAttribute("allRoles");
+                                            for (RoleEntity role : roleList) {
+                                        %>
                                         <tr>
-                                            <td><input type="checkbox" name="roles" value="1" <%if (role1) {%>checked<%}%>/> Administrator</td>                                            
-                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
+                                            <td><input type="checkbox" name="roles" value="<%= role.getId() %>" <%if (roles.contains(role)) {%>checked<%}%>/> <%= role.getName() %> </td>
+                                            <td><Button class="btn btn-default"><a href="../AccessRight_Servlet/AccessRight_GET?staffId=<%= staff.getId() %>&roleId=<%= role.getId() %>">Customize Access Right</a></Button></td>
                                         </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="roles" value="2" <%if (role2) {%>checked<%}%>/> Regional Manager</td>
-                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="roles" value="3" <%if (role3) {%>checked<%}%>/> Warehouse Manager </td>
-                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="roles" value="4" <%if (role4) {%>checked<%}%>/> Store Manager </td>
-                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="roles" value="5" <%if (role5) {%>checked<%}%>/> Marketing Director </td>
-                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="roles" value="6" <%if (role6) {%>checked<%}%>/> Product Development Engineer </td>
-                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="roles" value="7" <%if (role7) {%>checked<%}%>/> Purchasing Manager </td>
-                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
-                                        </tr>
+                                        <%
+                                            }
+                                        %>                                        
                                     </table>
                                 </div>
                                 <div class="form-group">
@@ -174,12 +158,7 @@
                             document.getElementById("repassword").style.borderColor = "#E34234";
                             alert("Passwords do not match. Please key again.");
                             ok = false;
-                        } else if (password == repassword) {
-                            if (password.length < 8) {
-                                alert("Passwords too short. At least 8 characters.");
-                                ok = false;
-                            }
-                        }
+                        } 
                     } else {
                         return ok;
                     }

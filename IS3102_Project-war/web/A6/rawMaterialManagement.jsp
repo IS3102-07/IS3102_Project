@@ -20,7 +20,9 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.rawMaterialManagement.action = "../RawMaterialManagement_RawMaterialServlet";
+                    document.rawMaterialManagement.submit();
                 } else {
                     window.event.returnValue = true;
                     document.rawMaterialManagement.action = "../RawMaterialManagement_RemoveRawMaterialServlet";

@@ -53,7 +53,7 @@
 
                                 <div class="form-group">
                                     <label for="input_telephone">Telephone</label>
-                                    <input type="number" class="form-control" id="input_telephone"  name="telephone" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;">
+                                     <input type="text" class="form-control" id="input_telephone"  name="telephone">
                                 </div>
 
                                 <div class="form-group">
