@@ -29,6 +29,8 @@ public class LineItemEntity implements Serializable {
     private ItemEntity item;
     private Integer quantity;
     private String packType;
+    @ManyToOne
+    private StorageBinEntity storageBin;
     
     public LineItemEntity(){
     }
@@ -60,6 +62,14 @@ public class LineItemEntity implements Serializable {
 
     public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
         this.purchaseOrder = purchaseOrder;
+    }
+
+    public StorageBinEntity getStorageBin() {
+        return storageBin;
+    }
+
+    public void setStorageBin(StorageBinEntity storageBin) {
+        this.storageBin = storageBin;
     }
     
     public ItemEntity getItem() {

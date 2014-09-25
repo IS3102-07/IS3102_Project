@@ -50,7 +50,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Year 2012 - Product Group PGA07 Sale Figure </h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2012 - Product Group PGA07 Sale Figure </h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart1"></div>
@@ -62,7 +62,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Year 2013 - Product Group PGA07 Sale Figure</h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2013 - Product Group PGA07 Sale Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart2"></div>
@@ -74,7 +74,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Year 2014 - Product Group PGA07 Sale Figure</h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2014 - Product Group PGA07 Sale Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart3"></div>
