@@ -107,7 +107,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><b>Sales And Operation Plans</b></h4>
+                                    <h4><b>Sales And Operations Plans</b></h4>
                                 </div>
                                 <!-- /.panel-heading -->
 
@@ -151,7 +151,7 @@
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-12">                                                        
-                                                        <input type="submit" name="submit-btn" value="Delete Sales And Operation Plan" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <input type="submit" name="submit-btn" value="Delete Sales And Operations Plan" class="btn btn-primary" data-loading-text="Loading...">
                                                     </div>
                                                 </div>
                                             </form>                                              

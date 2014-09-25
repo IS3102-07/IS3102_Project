@@ -14,10 +14,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Sales And Operation Planning</h1>
+                            <h1 class="page-header">Sales Forecast</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/sop_index_GET">Sales And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales Forecast</a>
                                 </li>                                
                             </ol>
                         </div>
@@ -30,10 +30,7 @@
                             max-width: 300px;
                         }
                     </style>                                       
-                    
-                    <a href="../SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET"><button class="btn btn-primary">Schedule Management</button></a>
-                    <br><br>
-                    
+               
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">

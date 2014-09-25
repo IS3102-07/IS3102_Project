@@ -109,8 +109,9 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
+                                                             <% if (roleCanEditAnnouncement) {%>
                                                             <th><input type="checkbox" onclick="checkAll(this)" /></th>
-                                                            <th>ID</th>
+                                                       <%}%>
                                                             <th>Sender</th>
                                                             <th>Title</th>
                                                             <th>Message</th>
@@ -128,19 +129,18 @@
                                                                 for (int i = 0; i < listOfAnnouncements.size(); i++) {
                                                         %>
                                                         <tr>
+                                                            <% if (roleCanEditAnnouncement) {%>
                                                             <td>
                                                                 <input type="checkbox" name="delete" value="<%=listOfAnnouncements.get(i).getId()%>" />
                                                             </td>
-                                                            <td>
-                                                                <%=listOfAnnouncements.get(i).getId()%>
-                                                            </td>
+                                                            <%}%>
                                                             <td>
                                                                 <%=listOfAnnouncements.get(i).getSender()%>
                                                             </td>
                                                             <td>
                                                                 <%=listOfAnnouncements.get(i).getTitle()%>
                                                             </td>
-                                                            <td style="width: 20px">
+                                                            <td style="width: 300px">
                                                                 <%=listOfAnnouncements.get(i).getMessage()%>
                                                             </td>
                                                             <td>      
