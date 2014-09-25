@@ -83,7 +83,7 @@
 
                                         <div class="form-group">
                                             <label>Target Inventory Level</label>
-                                            <input id="input_targetInventoty" type="number" class="form-control" name="targetInventoty" required="true" >
+                                            <input id="input_targetInventoty" type="number" class="form-control" name="targetInventory" required="true" >
                                         </div>
 
                                         <input type="submit" class="btn btn-primary" value="Submit">

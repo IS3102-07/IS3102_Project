@@ -171,6 +171,16 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 Integer currentInventory = Integer.parseInt(request.getParameter("currentInventory"));
                 Integer targetInventory = Integer.parseInt(request.getParameter("targetInventory"));
 
+                if (session.getAttribute("sop_storeId") == null) {
+                    System.err.println("session.getAttribute(\"sop_storeId\") == null");
+                }
+                if (session.getAttribute("productGroupId") == null) {
+                    System.err.println("session.getAttribute(\"productGroupId\") == null");
+                }
+                if (session.getAttribute("scheduleId") == null) {
+                    System.err.println("session.getAttribute(\"scheduleId\") == null");
+                }
+
                 storeId = (long) session.getAttribute("sop_storeId");
                 productGroupId = (long) session.getAttribute("productGroupId");
                 schedulelId = (long) session.getAttribute("scheduleId");
