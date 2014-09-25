@@ -413,7 +413,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             List<StorageBinEntity> storageBins = q.getResultList();
             Integer volume = 0;
             for (StorageBinEntity storageBinEntity : storageBins) {
-                if (storageBinEntity.getType().equals("Shelf")) {
+                if (storageBinEntity.getType().equals("Pallet")) {
                     volume += storageBinEntity.getVolume();
                 }
             }
