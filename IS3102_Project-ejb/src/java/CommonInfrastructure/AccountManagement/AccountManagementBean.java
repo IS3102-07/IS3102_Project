@@ -50,7 +50,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @Override
     public boolean registerMember(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String password) {
-        System.out.println("registerMember() called with name:" + name);
+        System.out.println("registerMember() called with email:" + email);
         Long memberID;
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
@@ -59,7 +59,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             memberEntity.create(name, address, DOB, email, phone, country, city, zipCode, passwordHash, passwordSalt);
             em.persist(memberEntity);
             memberID = memberEntity.getMemberID();
-            System.out.println("Member \"" + name + "\" registered successfully as id:" + memberID);
+            System.out.println("Email \"" + email + "\" registered successfully as id:" + memberID);
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register member:\n" + ex);
