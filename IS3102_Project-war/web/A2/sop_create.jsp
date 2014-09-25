@@ -21,7 +21,7 @@
                             <h1 class="page-header">Sales And Operation Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operation Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operations Planning</a>
                                 </li>   
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_schedule_GET">Schedule</a>
@@ -30,7 +30,7 @@
                                     <i class="icon icon-list"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_main_GET">Dashboard</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-pencil"></i>  <a href="#">Create Sales And Operation Plan</a>
+                                    <i class="icon icon-pencil"></i>  <a href="#">Create Sales And Operations Plan</a>
                                 </li>
                             </ol>
                         </div>
