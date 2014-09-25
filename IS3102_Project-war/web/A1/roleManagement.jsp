@@ -22,7 +22,7 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.rolesManagement.action = "RoleManagement_RoleServlet";
+                    document.rolesManagement.action = "../RoleManagement_RoleServlet";
                     document.rolesManagement.submit();
                 } else {
                     window.event.returnValue = true;

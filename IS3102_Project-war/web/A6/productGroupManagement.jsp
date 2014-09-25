@@ -43,7 +43,9 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.productGroupManagement.action = "../ProductGroupManagement_Servlet";
+                    document.productGroupManagement.submit();
                 } else {
                     window.event.returnValue = true;
                     document.productGroupManagement.action = "../ProductGroupManagement_RemoveServlet";
