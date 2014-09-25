@@ -95,6 +95,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
     @Override
     public boolean deleteStorageBin(Long id) {
+        System.out.println("deleteStorageBin() called.");
         try {
             storageBin = em.find(StorageBinEntity.class, id);
             if (storageBin == null || !storageBin.getListOfLineItems().isEmpty()) {
@@ -103,10 +104,12 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             } else {
                 em.merge(storageBin);
                 em.remove(storageBin);
+                System.out.println("deleteStorageBin() bin removed");
                 return true;
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to deleteStorageBin:\n" + ex);
+            ex.printStackTrace();
             return false;
         }
     }

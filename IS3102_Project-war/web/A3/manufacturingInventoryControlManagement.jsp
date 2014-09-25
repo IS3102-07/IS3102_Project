@@ -126,7 +126,6 @@
                                     <input type="hidden" name="storageBinId">
                                     <input type="hidden" name="lineItemID">
                                 </form>
-=
                             </div>
                             <!-- /.panel -->
                         </div>
