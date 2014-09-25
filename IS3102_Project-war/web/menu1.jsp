@@ -250,7 +250,7 @@
                         <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Historical Sales Figures</a>
                     </li>
                     <li>
-                        <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales and Operation Planning</a>
+                        <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales and Operations Planning</a>
                     </li>
                     <li>
                         <a href="#">Production Plan Distribution</a>
