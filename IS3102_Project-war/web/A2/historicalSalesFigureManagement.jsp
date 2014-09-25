@@ -104,7 +104,7 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Sale Forecast Figure" onclick="addSF()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Sales Forecast Figure" onclick="addSF()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    

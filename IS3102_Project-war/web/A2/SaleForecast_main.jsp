@@ -70,7 +70,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Product Group Name</th>
-                                                            <th>Sale Forecast</th>
+                                                            <th>Sales Forecast</th>
                                                             <th>Action</th>                                                                                                                        
                                                         </tr>
                                                     </thead>
