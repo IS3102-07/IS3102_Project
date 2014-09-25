@@ -165,7 +165,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 int quantity = lineItemEntity.getQuantity();
                 for (int i = 0; i < quantity; i++) {
                     if (!addItemToReceivingBin(warehouseID, itemEntity.getSKU())) {
-                        System.out.println("Failed to add into inbound bin: item SKU "+itemEntity.getSKU());
+                        System.out.println("Failed to add into inbound bin: item SKU " + itemEntity.getSKU());
                         return false;
                     }
                 }
@@ -242,6 +242,8 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     lineItem.setQuantity(lineItem.getQuantity() - 1);
                     em.merge(lineItem);
                 }
+                System.out.println("Setting free volume of source bin...");
+                System.out.println("Free volume of source = source.getFreeVolume() + lineItem.getItem().getVolume(): " + source.getFreeVolume() + " + " + lineItem.getItem().getVolume());
                 source.setFreeVolume(source.getFreeVolume() + lineItem.getItem().getVolume());
                 em.merge(source);
 
@@ -265,6 +267,8 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     lineItem.setQuantity(lineItem.getQuantity() + 1);
                     em.merge(lineItem);
                 }
+                 System.out.println("Setting free volume of destination bin...");
+                System.out.println("Free volume of destination = destination.getFreeVolume() - lineItem.getItem().getVolume(): " + destination.getFreeVolume() + " + " + lineItem.getItem().getVolume());
                 destination.setFreeVolume(destination.getFreeVolume() - lineItem.getItem().getVolume());
                 if (destination.getFreeVolume() < 0) {
                     System.out.println("Destination bin ran out of storage space.");
@@ -549,7 +553,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
             List<LineItemEntity> listOfLineItems = storageBinEntity.getListOfLineItems();
-            if (listOfLineItems== null || listOfLineItems.size() == 0) {
+            if (listOfLineItems == null || listOfLineItems.size() == 0) {
                 System.out.println("No items");
                 return null;
             } else {
@@ -580,14 +584,14 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 if (listOfLineItemEntities != null && listOfLineItemEntities.size() > 0) {
                     //Add all the entries inside the bin to helper list
                     for (int i = 0; i < listOfLineItemEntities.size(); i++) {
-                            itemStorageBinHelper = new ItemStorageBinHelper();
-                            itemStorageBinHelper.setLineItemID(listOfLineItemEntities.get(i).getId());
-                            itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
-                            itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
-                            itemStorageBinHelper.setStorageBinID(storageBin.getId());
-                            itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
-                            itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());
-                            itemStorageBinHelperList.add(itemStorageBinHelper);
+                        itemStorageBinHelper = new ItemStorageBinHelper();
+                        itemStorageBinHelper.setLineItemID(listOfLineItemEntities.get(i).getId());
+                        itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
+                        itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
+                        itemStorageBinHelper.setStorageBinID(storageBin.getId());
+                        itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
+                        itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());
+                        itemStorageBinHelperList.add(itemStorageBinHelper);
                     }
                 }
             }

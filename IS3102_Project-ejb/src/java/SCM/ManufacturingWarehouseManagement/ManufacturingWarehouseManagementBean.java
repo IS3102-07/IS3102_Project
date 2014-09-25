@@ -329,13 +329,10 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         System.out.println("addLineItemToTransferOrder() called.");
         try {
             ItemEntity itemEntity = searchItemBySKU(SKU);
-            System.out.println("asdad");
             if (itemEntity == null) {
-                System.out.println("444s");
                 return false;//cannot find item
             }
             LineItemEntity lineItem = new LineItemEntity(itemEntity, quantity, "");
-            System.out.println("2");
             TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, transferOrderID);
             transferOrderEntity.setLineItem(lineItem);
             em.merge(transferOrderEntity);
