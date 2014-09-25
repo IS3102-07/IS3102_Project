@@ -66,7 +66,7 @@
                                     <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-exchange"></i> Product Group Management
+                                    <i class="icon icon-cogs"></i> Product Group Management
                                 </li>
                             </ol>
                         </div>

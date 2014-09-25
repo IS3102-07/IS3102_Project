@@ -15,7 +15,10 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-exchange"></i> <a href="../ProductGroupManagement_Servlet">Product Group Management</a>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-cogs"></i> <a href="../ProductGroupManagement_Servlet">Product Group Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Create Product Group
