@@ -27,8 +27,8 @@ public class RoleManagement_RoleServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
 
-            List<RoleEntity> roles = accountManagementBean.listAllRoles();
-            session.setAttribute("roles", roles);
+            List<RoleEntity> roles = accountManagementBean.listAllRoles();            
+            session.setAttribute("roles", roles);                                    
             List<StaffEntity> staffs = accountManagementBean.listAllStaff();
             session.setAttribute("staffs", staffs);
 
