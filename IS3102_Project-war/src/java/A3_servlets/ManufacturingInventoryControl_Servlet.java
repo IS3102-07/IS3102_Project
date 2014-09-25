@@ -28,9 +28,11 @@ public class ManufacturingInventoryControl_Servlet extends HttpServlet {
             String errMsg = request.getParameter("errMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
             if (warehouseEntity == null) {
-                response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
+                response.sendRedirect("ManufacturingWarehouseManagement_Servlet");
             } else {
                 List<ItemStorageBinHelper> itemStorageBinHelpers = manufacturingInventoryControlBean.getItemList(warehouseEntity.getId());
+                System.out.println("Retrieving itemStorageBinHelpers list...");
+                System.out.println("Size of itemStorageBinHelpers: " + itemStorageBinHelpers.size());
                 session.setAttribute("itemStorageBinHelpers", itemStorageBinHelpers);
                 if (errMsg == null || errMsg.equals("")) {
                     response.sendRedirect("A3/manufacturingInventoryControlManagement.jsp");
