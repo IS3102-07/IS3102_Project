@@ -52,7 +52,7 @@
                             <h1 class="page-header">Line Item Management for <%=request.getParameter("bomName")%></h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-sitemap"></i>  <a href="bomManagement.jsp">Bill of Material Management</a>
+                                    <i class="icon icon-sitemap"></i>  <a href="../BomManagement_BomServlet">Bill of Material Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-calendar"></i> Line Item Management for <%=request.getParameter("bomName")%>

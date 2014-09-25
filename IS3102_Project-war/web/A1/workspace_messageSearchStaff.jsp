@@ -15,7 +15,7 @@
             function selectMultipleStaff() {
                 checkboxes = document.getElementsByName('select');
                 var numOfTicks = 0;
-                for (var i = 0, i < checkboxes.length; i++) {
+                for (var i = 0; i < checkboxes.length; i++) {
                     if (checkboxes[i].checked) {
                         numOfTicks++;
                     }

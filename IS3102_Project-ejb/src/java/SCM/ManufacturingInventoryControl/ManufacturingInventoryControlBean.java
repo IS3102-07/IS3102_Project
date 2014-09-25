@@ -343,11 +343,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalVolumeOfInboundStorageBin, warehouse not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalVolumeOfInboundStorageBin:\n" + ex);
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
 
@@ -369,11 +369,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalVolumeOfOutboundStorageBin, warehouse not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalVolumeOfOutboundStorageBin:\n" + ex);
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
 
@@ -395,11 +395,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalVolumeOfShelfStorageBin, warehouse not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalVolumeOfShelfStorageBin:\n" + ex);
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
 
@@ -421,11 +421,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalVolumeOfPalletStorageBin, warehouse not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalVolumeOfPalletStorageBin:\n" + ex);
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
 
@@ -447,11 +447,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalFreeVolumeOfInboundStorageBin, warehouse not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalFreeVolumeOfInboundStorageBin:\n" + ex);
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
 
@@ -473,11 +473,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalFreeVolumeOfOutboundStorageBin, warehouse not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalFreeVolumeOfOutboundStorageBin:\n" + ex);
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
 
@@ -499,11 +499,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalFreeVolumeOfShelfStorageBin, warehouse not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalFreeVolumeOfShelfStorageBin:\n" + ex);
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
 
@@ -525,11 +525,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalFreeVolumeOfPalletStorageBin, warehouse not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalFreeVolumeOfPalletStorageBin:\n" + ex);
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
 
