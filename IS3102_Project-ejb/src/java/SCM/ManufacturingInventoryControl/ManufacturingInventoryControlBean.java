@@ -348,7 +348,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     volume += storageBinEntity.getVolume();
                 }
             }
-            System.out.println("Returned volume.");
+            System.out.println("getTotalVolumeOfInboundStorageBin(): Returned volume.");
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalVolumeOfInboundStorageBin, warehouse not found.");
@@ -374,7 +374,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     volume += storageBinEntity.getVolume();
                 }
             }
-            System.out.println("Returned volume.");
+            System.out.println("getTotalVolumeOfOutboundStorageBin(): Returned volume.");
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalVolumeOfOutboundStorageBin, warehouse not found.");
@@ -400,7 +400,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     volume += storageBinEntity.getVolume();
                 }
             }
-            System.out.println("Returned volume.");
+            System.out.println("getTotalVolumeOfShelfStorageBin(): Returned volume.");
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalVolumeOfShelfStorageBin, warehouse not found.");
@@ -426,7 +426,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     volume += storageBinEntity.getVolume();
                 }
             }
-            System.out.println("Returned volume.");
+            System.out.println("getTotalVolumeOfPalletStorageBin(): Returned volume.");
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalVolumeOfPalletStorageBin, warehouse not found.");
@@ -452,7 +452,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     volume += storageBinEntity.getFreeVolume();
                 }
             }
-            System.out.println("Returned volume.");
+            System.out.println("getTotalFreeVolumeOfInboundStorageBin(): Returned volume.");
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalFreeVolumeOfInboundStorageBin, warehouse not found.");
@@ -478,7 +478,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     volume += storageBinEntity.getFreeVolume();
                 }
             }
-            System.out.println("Returned volume.");
+            System.out.println("getTotalFreeVolumeOfOutboundStorageBin(): Returned volume.");
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalFreeVolumeOfOutboundStorageBin, warehouse not found.");
@@ -504,7 +504,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     volume += storageBinEntity.getFreeVolume();
                 }
             }
-            System.out.println("Returned volume.");
+            System.out.println("getTotalFreeVolumeOfShelfStorageBin(): Returned volume.");
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalFreeVolumeOfShelfStorageBin, warehouse not found.");
@@ -530,7 +530,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     volume += storageBinEntity.getFreeVolume();
                 }
             }
-            System.out.println("Returned volume.");
+            System.out.println("getTotalFreeVolumeOfPalletStorageBin(): Returned volume.");
             return volume;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed getTotalFreeVolumeOfPalletStorageBin, warehouse not found.");

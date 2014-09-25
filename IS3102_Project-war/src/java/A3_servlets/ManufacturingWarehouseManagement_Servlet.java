@@ -34,7 +34,6 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
             if (destination != null && warehouseId != null) {
 
                 double[] warehousesCapacity = new double[4];
-                System.out.println(warehouseId + "<<<<<<<<<<<<<<");
                 double totalPallet = micbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
                 double freePallet = micbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
                 double totalShelf = micbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
