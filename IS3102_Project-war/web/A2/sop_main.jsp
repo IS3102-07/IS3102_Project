@@ -151,7 +151,7 @@
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-12">                                                        
-                                                        <input type="submit" name="submit-btn" value="Delete Sales And Operation Plan" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <input type="submit" name="submit-btn" value="Delete Sales And Operations Plan" class="btn btn-primary" data-loading-text="Loading...">
                                                     </div>
                                                 </div>
                                             </form>                                              
