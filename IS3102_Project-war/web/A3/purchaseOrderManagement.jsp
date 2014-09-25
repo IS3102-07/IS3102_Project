@@ -19,12 +19,6 @@
                 document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_Servlet";
                 document.purchaseOrderManagement.submit();
             }
-            function submitPO(id) {
-                purchaseOrderManagement.id.value = id;
-                purchaseOrderManagement.source.value = "submit";
-                document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_Servlet";
-                document.purchaseOrderManagement.submit();
-            }
             function addPO() {
                 window.event.returnValue = true;
                 document.purchaseOrderManagement.action = "purchaseOrderManagement_Add.jsp";
@@ -109,8 +103,7 @@
                                                                 <%=purchaseOrders.get(i).getStatus()%>
                                                             </td>
                                                             <td style="width:200px">
-                                                                <input <%if (purchaseOrders.get(i).getStatus().equals("Completed") || purchaseOrders.get(i).getStatus().equals("Unfulfillable")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary"  value="Update" onclick="javascript:updatePO('<%=purchaseOrders.get(i).getId()%>')"/>
-                                                                <input <%if (purchaseOrders.get(i).getStatus().equals("Submitted") || purchaseOrders.get(i).getStatus().equals("Shipped") || purchaseOrders.get(i).getStatus().equals("Completed") || purchaseOrders.get(i).getStatus().equals("Unfulfillable")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary"  value="Submit" onclick="javascript:submitPO('<%=purchaseOrders.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updatePO('<%=purchaseOrders.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
