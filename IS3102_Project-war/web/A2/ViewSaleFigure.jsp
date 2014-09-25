@@ -17,14 +17,14 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Sales And Operations Planning
+                                Sales Forecast
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operations Planning</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
                                 </li>   
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_schedule_GET">Schedule</a>
+                                    <i class="icon icon-calendar"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_POST">Schedule</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-list"></i>  <a href="#">Dashboard</a>
@@ -120,40 +120,40 @@
                 element: 'morris-area-chart1',
                 data: [
                     {
-                        period: '2013-01',
+                        period: '2012-01',
                         PGA07: <%= saleDate1.get(0) %>,
                     }, {
-                        period: '2013-02',
+                        period: '2012-02',
                         PGA07: <%= saleDate1.get(1) %>,
                     }, {
-                        period: '2013-03',
+                        period: '2012-03',
                         PGA07: <%= saleDate1.get(2) %>,
                     }, {
-                        period: '2013-04',
+                        period: '2012-04',
                         PGA07: <%= saleDate1.get(3) %>,
                     }, {
-                        period: '2013-05',
+                        period: '2012-05',
                         PGA07: <%= saleDate1.get(4) %>,
                     }, {
-                        period: '2013-06',
+                        period: '2012-06',
                         PGA07: <%= saleDate1.get(5) %>,
                     }, {
-                        period: '2013-07',
+                        period: '2012-07',
                         PGA07: <%= saleDate1.get(6) %>,
                     }, {
-                        period: '2013-08',
+                        period: '2012-08',
                         PGA07: <%= saleDate1.get(7) %>,
                     }, {
-                        period: '2013-09',
+                        period: '2012-09',
                         PGA07: <%= saleDate1.get(8) %>,
                     }, {
-                        period: '2013-10',
+                        period: '2012-10',
                         PGA07: <%= saleDate1.get(9) %>,
                     }, {
-                        period: '2013-11',
+                        period: '2012-11',
                         PGA07: <%= saleDate1.get(10) %>,
                     }, {
-                        period: '2013-12',
+                        period: '2012-12',
                         PGA07: <%= saleDate1.get(11) %>,
                     },
                 ],
@@ -218,31 +218,31 @@
                 element: 'morris-area-chart3',
                 data: [
                     {
-                        period: '2013-01',
+                        period: '2014-01',
                         PGA07: <%= saleDate3.get(0) %>,
                     }, {
-                        period: '2013-02',
+                        period: '2014-02',
                         PGA07: <%= saleDate3.get(1) %>,
                     }, {
-                        period: '2013-03',
+                        period: '2014-03',
                         PGA07: <%= saleDate3.get(2) %>,
                     }, {
-                        period: '2013-04',
+                        period: '2014-04',
                         PGA07: <%= saleDate3.get(3) %>,
                     }, {
-                        period: '2013-05',
+                        period: '2014-05',
                         PGA07: <%= saleDate3.get(4) %>,
                     }, {
-                        period: '2013-06',
+                        period: '2014-06',
                         PGA07: <%= saleDate3.get(5) %>,
                     }, {
-                        period: '2013-07',
+                        period: '2014-07',
                         PGA07: <%= saleDate3.get(6) %>,
                     }, {
-                        period: '2013-08',
+                        period: '2014-08',
                         PGA07: <%= saleDate3.get(7) %>,
                     }, {
-                        period: '2013-09',
+                        period: '2014-09',
                         PGA07: <%= saleDate3.get(8) %>,
                     }, 
                 ],
