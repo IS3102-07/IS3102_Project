@@ -19,11 +19,13 @@ public class ManufacturingInventoryControl_RemoveServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
 
-            String storageBin_ItemID = request.getParameter("storageBin_ItemID");
-            String storageBinID = request.getParameter("storageBinID");
-            
-            if (storageBinID != null && storageBin_ItemID!= null) {
-                manufacturingInventoryControlBeanLocal.emptyStorageBin(Long.parseLong(storageBin_ItemID), Long.parseLong(storageBinID));
+            String lineItemID = request.getParameter("lineItemID");
+            String storageBinID = request.getParameter("storageBinId");
+            System.out.println("remove servlet storageBinID " + storageBinID);
+            System.out.println("remove servlet lineItemID " + lineItemID);
+
+            if (storageBinID != null && lineItemID != null) {
+                manufacturingInventoryControlBeanLocal.emptyStorageBin(Long.parseLong(lineItemID), Long.parseLong(storageBinID));
                 response.sendRedirect("ManufacturingInventoryControl_Servlet?goodMsg=Successfully removed all instance of the selected item from storage bin.");
             } else {
                 response.sendRedirect("A3/manufacturingInventoryControlManagement.jsp?errMsg=Nothing is selected.");

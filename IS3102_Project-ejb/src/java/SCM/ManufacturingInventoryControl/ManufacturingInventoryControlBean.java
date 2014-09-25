@@ -572,7 +572,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     //Add all the entries inside the bin to helper list
                     for (int i = 0; i < listOfLineItemEntities.size(); i++) {
                             itemStorageBinHelper = new ItemStorageBinHelper();
-                            itemStorageBinHelper.setStorageBin_ItemID(listOfLineItemEntities.get(i).getId());
+                            itemStorageBinHelper.setLineItemID(listOfLineItemEntities.get(i).getId());
                             itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
                             itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
                             itemStorageBinHelper.setStorageBinID(storageBin.getId());
