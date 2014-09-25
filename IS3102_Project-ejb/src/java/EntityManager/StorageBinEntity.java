@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class StorageBinEntity implements Serializable {
@@ -24,8 +24,8 @@ public class StorageBinEntity implements Serializable {
     private Integer height;
     private Integer volume;
     private Integer freeVolume;
-    @ManyToMany(mappedBy="storageBinWithThisItem",cascade = CascadeType.ALL)
-    private List<StorageBin_ItemEntity> itemsInBin;
+    @OneToMany(mappedBy = "storageBin",cascade = (CascadeType.ALL))
+    private List<LineItemEntity> listOfLineItems;
     @ManyToOne
     private WarehouseEntity warehouse;
 
@@ -41,15 +41,7 @@ public class StorageBinEntity implements Serializable {
         this.height = height;
         this.volume = _length * width * height;
         this.freeVolume = volume;
-        this.itemsInBin = new ArrayList();
-    }
-
-    public List<StorageBin_ItemEntity> getItems() {
-        return itemsInBin;
-    }
-
-    public void setItems(List<StorageBin_ItemEntity> items) {
-        this.itemsInBin = items;
+        this.listOfLineItems = new ArrayList();
     }
 
 
@@ -98,6 +90,14 @@ public class StorageBinEntity implements Serializable {
 
     public void setFreeVolume(Integer freeVolume) {
         this.freeVolume = freeVolume;
+    }
+
+    public List<LineItemEntity> getListOfLineItems() {
+        return listOfLineItems;
+    }
+
+    public void setListOfLineItems(List<LineItemEntity> listOfLineItems) {
+        this.listOfLineItems = listOfLineItems;
     }
 
     public Long getId() {

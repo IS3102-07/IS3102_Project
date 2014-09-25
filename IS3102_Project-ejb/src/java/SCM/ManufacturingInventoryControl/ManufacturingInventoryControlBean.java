@@ -8,7 +8,6 @@ import EntityManager.RawMaterialEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.ShippingOrderEntity;
 import EntityManager.StorageBinEntity;
-import EntityManager.StorageBin_ItemEntity;
 import EntityManager.WarehouseEntity;
 import HelperClasses.ItemStorageBinHelper;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
@@ -25,19 +24,19 @@ import javax.persistence.Query;
 
 @Stateless
 public class ManufacturingInventoryControlBean implements ManufacturingInventoryControlBeanLocal {
-    
+
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public List<StorageBinEntity> getEmptyStorageBins(Long warehouseID, ItemEntity itemEntity) {
         System.out.println("getEmptyStorageBins() called with ItemEntity:" + itemEntity);
-        
+
         WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-        
+
         List<StorageBinEntity> listOfAppropriateEmptyStorageBins = new ArrayList<>();
         String storageBinType = "";
         if (itemEntity instanceof FurnitureEntity) {
@@ -52,7 +51,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             List<StorageBinEntity> storageBinEntities = warehouseEntity.getStorageBins();
             for (StorageBinEntity binEntity : storageBinEntities) {
-                if (binEntity.getItems().size() == 0 && binEntity.getType().equals(storageBinType)) {
+                if (binEntity.getFreeVolume().equals(binEntity.getVolume())) {
                     listOfAppropriateEmptyStorageBins.add(binEntity);
                 }
             }
@@ -66,44 +65,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
-    @Override
-    public boolean removeSingleItemFromStorageBin(StorageBinEntity source, String SKU) {
-        System.out.println("removeSingleItemFromStorageBin() called");
-        try {
-            em.refresh(source);
-            boolean stop = false;
-            //Get all the list of item in the storage bin
-            List<StorageBin_ItemEntity> storageBin_ItemEntities = source.getItems();
-            //For each storage bin-item relationship list
-            for (StorageBin_ItemEntity storageBin_ItemEntity : storageBin_ItemEntities) {
-                //For each item
-                for (ItemEntity itemEntity : storageBin_ItemEntity.getItem()) {
-                    if (itemEntity.getSKU().equals(SKU)) {
-                        storageBin_ItemEntity.setQuantity(storageBin_ItemEntity.getQuantity() - 1);
-                        if (storageBin_ItemEntity.getQuantity() == 0) {
-                            storageBin_ItemEntities.remove(storageBin_ItemEntity);
-                        }
-                        stop = true;
-                        break;
-                    }
-                    
-                }
-                if (stop) {
-                    break;
-                }
-            }
-            System.out.println("removeSingleItemFromStorageBin(): Item removed");
-            return true;
-        } catch (Exception ex) {
-            System.out.println("Failed to removeSingleItemFromStorageBin()");
-            return false;
-        }
-    }
-    
+
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Boolean removeOutboundBinToShipAShippingOrder(Long shippingOrderID) {
+    public Boolean removeItemFromOutboundBinForShipping(Long shippingOrderID) {
         System.out.println("removeOutboundBinToShipAShippingOrder called()");
         try {
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
@@ -113,35 +78,28 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             //For each item in shipping order
             for (LineItemEntity lineItemEntity : itemsInShippingOrder) {
                 //Check if it's in outbound bin
-                if (checkIfItemExistInsideStorageBin(outbound.getId(), lineItemEntity.getItem().getSKU())) {
-                    //Check qty sufficient first before removing
-                    List<StorageBin_ItemEntity> itemsInOutbound = outbound.getItems();
-                    for (StorageBin_ItemEntity storageBin_ItemEntity : itemsInOutbound) {
-                        //Find matching item
-                        for (ItemEntity itemEntity : storageBin_ItemEntity.getItem()) {
-                            if (itemEntity.getSKU().equals(lineItemEntity.getItem().getSKU())) {
-                                //check quantity   
-                                if (storageBin_ItemEntity.getQuantity() < lineItemEntity.getQuantity()) {
-                                    System.out.println("Outbound bin does not have sufficient quantity to ship the order.");
-                                    throw new Exception();
-                                } else {
-                                    //Actual removing
-                                    for (int i = 0; i < lineItemEntity.getQuantity(); i++) {
-                                        removeSingleItemFromStorageBin(outbound, lineItemEntity.getItem().getSKU());
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    System.out.println("Item was not found in outbound bin.");
+                LineItemEntity lineItemInOutboundBin = checkIfItemExistInsideStorageBin(outbound.getId(), lineItemEntity.getItem().getSKU());
+                //Line item does not exist 
+                if (lineItemInOutboundBin == null) {
+                    System.out.println("Outbound bin does not have sufficient quantity to ship the order.");
                     throw new Exception();
+                } else {            //line item exist
+                    em.refresh(lineItemInOutboundBin);
+                    //if it is the last item
+                    if (lineItemInOutboundBin.getQuantity() == 1) {
+                        outbound.getListOfLineItems().remove(lineItemInOutboundBin);
+                        em.remove(lineItemInOutboundBin);
+                    } else {
+                        lineItemInOutboundBin.setQuantity(lineItemInOutboundBin.getQuantity() - 1);
+                        em.merge(lineItemInOutboundBin);
+                    }
+                    outbound.setFreeVolume(outbound.getFreeVolume() + lineItemInOutboundBin.getItem().getVolume());
+                    em.merge(outbound);
                 }
-                
             }
             return true;
         } catch (EntityNotFoundException ex) {
-            System.out.println("Could not find either shipping order.");
+            System.out.println("Could not find either shipping order or outbound bin!");
             return false;
         } catch (Exception ex) {
             System.out.println("Failed to removeOutboundBinToShipAShippingOrder()");
@@ -149,35 +107,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
-    @Override
-    public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID
-    ) {
-        System.out.println("moveInboundPurchaseOrderItemsToReceivingBin called()");
-        try {
-            PurchaseOrderEntity purchaseOrderEntity = em.getReference(PurchaseOrderEntity.class, purchaseOrderID);
-            Long warehouseID = purchaseOrderEntity.getReceivedWarehouse().getId();
-            List<LineItemEntity> lineItemsInPurchaseOrder = purchaseOrderEntity.getLineItems();
-            for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
-                ItemEntity itemEntity = lineItemEntity.getItem();
-                int quantity = lineItemEntity.getQuantity();
-                for (int i = 0; i < quantity; i++) {
-                    if (!addItemToReceivingBin(warehouseID, itemEntity.getSKU())) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        } catch (EntityNotFoundException ex) {
-            System.out.println("Could not find either purchase order or the warehouse.");
-            return false;
-        } catch (Exception ex) {
-            System.out.println("Failed to moveInboundPurchaseOrderItemsToReceivingBin()");
-            ex.printStackTrace();
-            return false;
-        }
-    }
-    
+
     @Override
     public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID
     ) {
@@ -205,25 +135,52 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
-    public boolean checkIfItemExistInsideStorageBin(Long storageBinID, String SKU
+    public LineItemEntity checkIfItemExistInsideStorageBin(Long storageBinID, String SKU
     ) {
         StorageBinEntity storageBin = em.getReference(StorageBinEntity.class, storageBinID);
-        List<StorageBin_ItemEntity> storageBin_ItemEntities = storageBin.getItems();
-        for (StorageBin_ItemEntity storageBin_ItemEntity : storageBin_ItemEntities) {
-            for (ItemEntity itemEntity : storageBin_ItemEntity.getItem()) {
-                if (itemEntity.getSKU().equals(SKU)) {
-                    return true;
-                }
+        List<LineItemEntity> listOfLineItems = storageBin.getListOfLineItems();
+        for (LineItemEntity lineItem : listOfLineItems) {
+            if (lineItem.getItem().getSKU().equals(SKU)) {
+                return lineItem;
             }
         }
-        return false;
+        return null;
     }
-    
+
+    @Override
+    public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID
+    ) {
+        System.out.println("moveInboundPurchaseOrderItemsToReceivingBin called()");
+        try {
+            PurchaseOrderEntity purchaseOrderEntity = em.getReference(PurchaseOrderEntity.class, purchaseOrderID);
+            Long warehouseID = purchaseOrderEntity.getReceivedWarehouse().getId();
+            List<LineItemEntity> lineItemsInPurchaseOrder = purchaseOrderEntity.getLineItems();
+            for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
+                ItemEntity itemEntity = lineItemEntity.getItem();
+                int quantity = lineItemEntity.getQuantity();
+                for (int i = 0; i < quantity; i++) {
+                    if (!addItemToReceivingBin(warehouseID, itemEntity.getSKU())) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Could not find either purchase order or the warehouse.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Failed to moveInboundPurchaseOrderItemsToReceivingBin()");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     @Override
     public boolean addItemToReceivingBin(Long warehouseID, String SKU
     ) {
+
         System.out.println("addItemToReceivingBin() called with SKU:" + SKU + " & wahouseID:" + warehouseID);
         StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
         em.refresh(inboundBin);
@@ -235,28 +192,20 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
             q.setParameter("SKU", SKU);
             ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
+
             //Check if storage bin have that type of item before
-            if (checkIfItemExistInsideStorageBin(inboundBin.getId(), SKU)) {
-                //If got, find that entry and update quantity
-                List<StorageBin_ItemEntity> storageBin_ItemEntities = inboundBin.getItems();
-                for (StorageBin_ItemEntity storageBin_ItemEntity : storageBin_ItemEntities) {
-                    for (ItemEntity itemEntity1 : storageBin_ItemEntity.getItem()) {
-                        if (itemEntity1.getSKU().equals(SKU)) {
-                            storageBin_ItemEntity.setQuantity(storageBin_ItemEntity.getQuantity() + 1);
-                            inboundBin.setFreeVolume(inboundBin.getFreeVolume() - itemEntity1.getVolume());
-                            em.merge(storageBin_ItemEntity);
-                            break;
-                        }
-                    }
-                }
+            LineItemEntity lineItem = checkIfItemExistInsideStorageBin(inboundBin.getId(), SKU);
+            inboundBin.setFreeVolume(inboundBin.getFreeVolume() - itemEntity.getVolume());
+            if (lineItem != null) {
+                em.refresh(lineItem);
+                lineItem.setQuantity(lineItem.getQuantity() + 1);
             } else {
-                //If not, just add new item
-                StorageBin_ItemEntity storageBin_ItemEntity = new StorageBin_ItemEntity(itemEntity, inboundBin, 1);
-                inboundBin.getItems().add(storageBin_ItemEntity);
+                lineItem = new LineItemEntity(itemEntity, 1, "");
+                lineItem.setStorageBin(inboundBin);
+                em.persist(lineItem);
+                inboundBin.getListOfLineItems().add(lineItem);
                 em.merge(inboundBin);
-                em.persist(storageBin_ItemEntity);
             }
-            
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed to add item to receiving bin, item not found.");
@@ -266,58 +215,58 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination
     ) {
-        System.out.println("moveSingleItemBetweenStorageBins() called with SKU:" + SKU);
-        em.refresh(source);
-        em.refresh(destination);
-        List<StorageBin_ItemEntity> itemsInSourceBin = source.getItems();
-        List<StorageBin_ItemEntity> itemsInDestinationBin = destination.getItems();
-        ItemEntity itemEntity = null;
-        boolean itemRemoved = false;
         try {
-            //Search through the souce bin to see if it exist
-            for (int i = 0; i < itemsInSourceBin.size(); i++) {
-                for (ItemEntity itemEntity1 : itemsInSourceBin.get(i).getItem()) {
-                    if (itemEntity1.getSKU().equals(SKU)) {
-                        itemEntity = itemEntity1;
-                        //update the quantity of source bin
-                        itemsInSourceBin.get(i).setQuantity(itemsInSourceBin.get(i).getQuantity() - 1);
-                        System.out.println("Free volume of source bin before transfer: " + source.getFreeVolume());
-                        source.setFreeVolume(source.getFreeVolume() + itemEntity1.getVolume());
-                        System.out.println("Item entity volume to be transferred: " + itemEntity1.getVolume());
-                        System.out.println("Free volume of source bin:" + source.getFreeVolume());
-                        //if last time, remove the row
-                        if (itemsInSourceBin.get(i).getQuantity() == 0) {
-                            itemsInSourceBin.remove(i);
-                        }
-                        itemRemoved = true;
-                    }
+            System.out.println("moveSingleItemBetweenStorageBins() called with SKU:" + SKU);
+            em.refresh(source);
+            em.refresh(destination);
+            //remove one item from source
+            if (checkIfStorageBinIsOfAppropriateItemType(destination.getId(), SKU)) {
+                LineItemEntity lineItem = checkIfItemExistInsideStorageBin(source.getId(), SKU);
+                em.refresh(lineItem);
+                //if it is the last item
+                if (lineItem.getQuantity() == 1) {
+                    source.getListOfLineItems().remove(lineItem);
+                    em.remove(lineItem);
+                } else {
+                    lineItem.setQuantity(lineItem.getQuantity() - 1);
+                    em.merge(lineItem);
                 }
-            }
-            if (!itemRemoved) {
-                System.out.println("Item was not moved. Item was not found in the source bin.");
+                source.setFreeVolume(source.getFreeVolume() + lineItem.getItem().getVolume());
+                em.merge(source);
+
+                //add one item to destination
+                lineItem = checkIfItemExistInsideStorageBin(destination.getId(), SKU);
+                //if it does not exist
+                if (lineItem == null) {
+                    Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
+                    q.setParameter("SKU", SKU);
+                    ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
+                    LineItemEntity newLineItem = new LineItemEntity(itemEntity, 1, "");
+                    newLineItem.setStorageBin(destination);
+                    em.persist(newLineItem);
+                    destination.getListOfLineItems().add(newLineItem);
+                    em.merge(destination);
+                    lineItem = newLineItem;
+                } else {
+                    em.refresh(lineItem);
+                    lineItem.setQuantity(lineItem.getQuantity() + 1);
+                    em.merge(lineItem);
+                }
+                destination.setFreeVolume(destination.getFreeVolume() - lineItem.getItem().getVolume());
+                if (destination.getFreeVolume() < 0) {
+                    System.out.println("Destination bin ran out of storage space.");
+                    throw new Exception();
+                }
+                em.merge(destination);
+                return true;
+            } else {
+                System.out.println("Failed to move single item between storage bins!");
                 return false;
             }
-            //check if destination already has the item
-            List<StorageBin_ItemEntity> storageBin_ItemEntities = destination.getItems();
-            for (StorageBin_ItemEntity storageBin_ItemEntity : storageBin_ItemEntities) {
-                for (ItemEntity itemEntity1 : storageBin_ItemEntity.getItem()) {
-                    if (itemEntity1.getSKU().equals(SKU)) {
-                        //update quantity if got
-                        storageBin_ItemEntity.setQuantity(storageBin_ItemEntity.getQuantity() + 1);
-                        destination.setFreeVolume(destination.getFreeVolume() - itemEntity1.getVolume());
-                        break;
-                    } else {//else create a new entity
-                        itemsInDestinationBin.add(new StorageBin_ItemEntity(itemEntity, destination, 1));
-                        em.merge(itemsInDestinationBin);
-                    }
-                }
-            }
-            System.out.println("The item is moved successfully between bins.");
-            return itemRemoved;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed to move the item between bins, item not found.");
             return false;
@@ -327,7 +276,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public Integer checkItemQty(Long warehouseId, String SKU
     ) {
@@ -338,11 +287,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             q.setParameter("id", warehouseId);
             List<StorageBinEntity> storageBins = q.getResultList();
             for (StorageBinEntity currentBin : storageBins) {
-                for (int i = 0; i < currentBin.getItems().size(); i++) {
-                    for (ItemEntity itemEntity : currentBin.getItems().get(i).getItem()) {
-                        if (itemEntity.getSKU().equals(SKU)) {
-                            qty++;
-                        }
+                for (int i = 0; i < currentBin.getListOfLineItems().size(); i++) {
+                    ItemEntity itemEntity = currentBin.getListOfLineItems().get(i).getItem();
+                    if (itemEntity.getSKU().equals(SKU)) {
+                        qty++;
                     }
                 }
             }
@@ -356,7 +304,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU
     ) {
@@ -376,7 +324,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfInboundStorageBin(Long warehouseID
     ) {
@@ -402,7 +350,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfOutboundStorageBin(Long warehouseID
     ) {
@@ -428,7 +376,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfShelfStorageBin(Long warehouseID
     ) {
@@ -454,7 +402,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfPalletStorageBin(Long warehouseID
     ) {
@@ -480,7 +428,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfInboundStorageBin(Long warehouseID
     ) {
@@ -506,7 +454,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfOutboundStorageBin(Long warehouseID
     ) {
@@ -532,7 +480,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID
     ) {
@@ -558,7 +506,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID
     ) {
@@ -586,20 +534,18 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     }
 
     //Assumes one type of item is in each storage bin, so just return the first one
-    private List<StorageBin_ItemEntity> getItemInsideStorageBin(Long storageBinID) {
+    private List<LineItemEntity> getItemInsideStorageBin(Long storageBinID) {
         System.out.println("getItemInsideStorageBin() called");
-        
+
         try {
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
-            List<StorageBin_ItemEntity> itemEntitiesInStorageBin = storageBinEntity.getItems();
-            if (itemEntitiesInStorageBin
-                    == null || itemEntitiesInStorageBin.size()
-                    == 0) {
+            List<LineItemEntity> listOfLineItems = storageBinEntity.getListOfLineItems();
+            if (listOfLineItems== null || listOfLineItems.size() == 0) {
                 System.out.println("No items");
                 return null;
             } else {
                 System.out.println("Returned list of items & their quantity");
-                return itemEntitiesInStorageBin;
+                return listOfLineItems;
             }
         } catch (Exception ex) {
             System.out.println("Failed to getItemInsideStorageBin()");
@@ -607,7 +553,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<ItemStorageBinHelper> getItemList(Long warehouseID) {
         System.out.println("getItemList() called");
@@ -615,30 +561,28 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<ItemStorageBinHelper>();
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
-            
+
             ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
             //For each bin in the warehouse
             for (StorageBinEntity storageBin : storageBins) {
                 //Get all their contents
-                List<StorageBin_ItemEntity> storageBin_ItemEntities = getItemInsideStorageBin(storageBin.getId());
+                List<LineItemEntity> listOfLineItemEntities = getItemInsideStorageBin(storageBin.getId());
                 //If the bin is not empty
-                if (storageBin_ItemEntities != null && storageBin_ItemEntities.size() > 0) {
+                if (listOfLineItemEntities != null && listOfLineItemEntities.size() > 0) {
                     //Add all the entries inside the bin to helper list
-                    for (int i = 0; i < storageBin_ItemEntities.size(); i++) {
-                        for (ItemEntity itemEntity : storageBin_ItemEntities.get(i).getItem()) {
+                    for (int i = 0; i < listOfLineItemEntities.size(); i++) {
                             itemStorageBinHelper = new ItemStorageBinHelper();
-                            itemStorageBinHelper.setStorageBin_ItemID(storageBin_ItemEntities.get(i).getId());
-                            itemStorageBinHelper.setSKU(itemEntity.getSKU());
-                            itemStorageBinHelper.setItemName(itemEntity.getName());
+                            itemStorageBinHelper.setStorageBin_ItemID(listOfLineItemEntities.get(i).getId());
+                            itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
+                            itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
                             itemStorageBinHelper.setStorageBinID(storageBin.getId());
-                            itemStorageBinHelper.setItemQty(storageBin_ItemEntities.get(i).getQuantity());
-                            itemStorageBinHelper.setItemType(itemEntity.getType());
+                            itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
+                            itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());
                             itemStorageBinHelperList.add(itemStorageBinHelper);
-                        }
                     }
                 }
             }
-            
+
             return itemStorageBinHelperList;
         } catch (EntityNotFoundException ex) {
             System.out.println("Warehouse could not be found.");
@@ -649,31 +593,57 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
-    public Boolean emptyStorageBin_ItemEntity(Long storageBin_ItemID, Long storageBinID) {
+    public Boolean emptyStorageBin(Long lineItemID, Long storageBinID) {
         System.out.println("emptyStorageBin_ItemEntity() called");
-        
+
         try {
-            StorageBin_ItemEntity storageBin_ItemEntity = em.getReference(StorageBin_ItemEntity.class, storageBin_ItemID);
-            
+            LineItemEntity lineItemEntity = em.getReference(LineItemEntity.class, lineItemID);
+
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
-            
-            List<ItemEntity> itemsDeleted = storageBin_ItemEntity.getItem();
+            em.refresh(storageBinEntity);
+            ItemEntity itemsDeleted = lineItemEntity.getItem();
             int totalVolumeDeleted = 0;
-            
-            for (ItemEntity itemEntity : itemsDeleted) {
-                totalVolumeDeleted += itemEntity.getVolume() * storageBin_ItemEntity.getQuantity();
-            }
+            totalVolumeDeleted += itemsDeleted.getVolume() * lineItemEntity.getQuantity();
             storageBinEntity.setFreeVolume(storageBinEntity.getFreeVolume() + totalVolumeDeleted);
-            em.remove(storageBin_ItemEntity);
-            
+            em.remove(lineItemEntity);
+            storageBinEntity.getListOfLineItems().remove(lineItemEntity);
+            em.merge(storageBinEntity);
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("Storage Bin could not be found.");
             return false;
         } catch (Exception ex) {
             System.out.println("Failed to emptyStorageBin_ItemEntity()");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStorageBinIsOfAppropriateItemType(Long storageBinId, String SKU) {
+        System.out.println("checkIfStorageBinIsOfAppropriateItemType() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
+            StorageBinEntity storageBin = em.getReference(StorageBinEntity.class, storageBinId);
+            if (storageBin.getType().equals("Shelf")) {
+                if (itemEntity.getType().equals("Furniture")) {
+                    System.out.println("Incorrect bin.");
+                    return false;
+                }
+            } else if (storageBin.getType().equals("Pallet")) {
+                if (!itemEntity.getType().equals("Furniture")) {
+                    System.out.println("Incorrect bin.");
+                    return false;
+                }
+            }
+            System.out.println("Correct bin.");
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to perform checkIfStorageBinIsOfAppropriateItemType().");
             ex.printStackTrace();
             return false;
         }

@@ -3,14 +3,10 @@ package SCM.ManufacturingWarehouseManagement;
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
-import EntityManager.RawMaterialEntity;
-import EntityManager.RetailProductEntity;
 import EntityManager.StorageBinEntity;
-import EntityManager.StorageBin_ItemEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -79,8 +75,8 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
         try {
             storageBin = em.getReference(StorageBinEntity.class, storageBinId);
-            System.out.println("Size of storage bin to be updated is " + storageBin.getItems().size());
-            if (storageBin == null || !storageBin.getItems().isEmpty()) {
+            System.out.println("Size of storage bin to be updated is " + storageBin.getListOfLineItems().size());
+            if (storageBin == null || !storageBin.getListOfLineItems().isEmpty()) {
                 System.out.println("Cannot find storage bin or storage bin contains items");
                 return false;
             }
@@ -98,12 +94,10 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public
-            boolean deleteStorageBin(Long id) {
-
+    public boolean deleteStorageBin(Long id) {
         try {
             storageBin = em.find(StorageBinEntity.class, id);
-            if (storageBin == null || !storageBin.getItems().isEmpty()) {
+            if (storageBin == null || !storageBin.getListOfLineItems().isEmpty()) {
                 System.out.println("Unable to delete. Storage bin either not found or not empty.");
                 return false;
             } else {
@@ -231,11 +225,11 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 StorageBinEntity targetBin = transferOrder.getTarget();
                 System.out.println("Moving in progress....");
                 System.out.println("SKU number is " + SKU);
-                System.out.println("originBin: " + originBin.getId() + "moving to targetBin: " + targetBin);
+                System.out.println("originBin: " + originBin.getId() + " moving to targetBin: " + targetBin.getId());
 
                 boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
                 if (!isPass) {
-                    System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in inbound bin.");
+                    System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in source bin or volume of destination bin is insufficient.");
                     throw new Exception();
                 }
             }
@@ -311,29 +305,12 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     @Override
     public ItemEntity searchItemBySKU(String SKU) {
         try {
-            ItemEntity itemEntity = new FurnitureEntity();
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.SKU=:SKU");
+            Query q = em.createQuery("SELECT t FROM ItemEntity t where t.SKU=:SKU");
             q.setParameter("SKU", SKU);
-            itemEntity = (ItemEntity) q.getSingleResult();
+            ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
             return itemEntity;
-        } catch (EntityNotFoundException ex1) {
-            try {
-                ItemEntity itemEntity = new RawMaterialEntity();
-                Query q = em.createQuery("SELECT t FROM RawMaterialEntity t where t.SKU=:SKU");
-                q.setParameter("SKU", SKU);
-                itemEntity = (ItemEntity) q.getSingleResult();
-                return itemEntity;
-            } catch (EntityNotFoundException ex2) {
-                try {
-                    ItemEntity itemEntity = new RetailProductEntity();
-                    Query q = em.createQuery("SELECT t FROM RetailProductEntity t where t.SKU=:SKU");
-                    q.setParameter("SKU", SKU);
-                    itemEntity = (ItemEntity) q.getSingleResult();
-                    return itemEntity;
-                } catch (EntityNotFoundException ex3) {
-                    return null;
-                }
-            }
+        } catch (EntityNotFoundException ex) {
+            return null;
         }
     }
 
@@ -356,6 +333,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to addLineItemToTransferOrder:\n" + ex);
+            ex.printStackTrace();
             return false;
         }
 
@@ -377,56 +355,55 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return false;
         }
     }
-//TODO NEED TO TEST
+////TODO NEED TO TEST
+//
+//    @Override
+//    public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems) {
+//        int qtyNeededToTransfer = 0;
+//        int qtyToTransferOutFromBin = 0;
+//        String SKUtoFind;
+//        LineItemEntity currentItem = null;
+//        StorageBinEntity outboundStorageBin = getOutboundStorageBin(warehouseID);
+//        List<TransferOrderEntity> transferOrdersCreated = new ArrayList<>();
+//        try {
+//            for (LineItemEntity lineItem1 : lineItems) {
+//                qtyNeededToTransfer = lineItem1.getQuantity();
+//                List<StorageBinEntity> binsThatMatchesSKU = manufacturingInventoryControlBean.findStorageBinsThatContainsItem(outboundStorageBin.getWarehouse().getId(), lineItem1.getItem().getSKU());
+//                for (StorageBinEntity eachBinThatMatchesSKU : binsThatMatchesSKU) {
+//                    qtyToTransferOutFromBin = 0;
+//                    SKUtoFind = lineItem1.getItem().getSKU();
+//                    List<StorageBin_ItemEntity> itemsInEachBinThatMatchesSKU = eachBinThatMatchesSKU.getItems();
+//                    for (StorageBin_ItemEntity eachItem : itemsInEachBinThatMatchesSKU) {
+//                        currentItem = eachItem;
+//                        for (ItemEntity itemEntity : currentItem.getItem()) {
+//                            if (itemEntity.getSKU().equals(SKUtoFind)) {
+//                                qtyNeededToTransfer--;
+//                                qtyToTransferOutFromBin++;
+//                            }
+//                        }
+//                        if (qtyNeededToTransfer <= 0) {
+//                            break;
+//                        }
+//                    }
+//                    if (qtyNeededToTransfer > 0) {
+//                        for (ItemEntity itemEntity : currentItem.getItem()) {
+//                            LineItemEntity lineItem = new LineItemEntity(itemEntity, qtyToTransferOutFromBin, "");
+//                            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+//                            transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, eachBinThatMatchesSKU, outboundStorageBin);
+//                            em.persist(transferOrder);
+//                        }
+//                        transferOrdersCreated.add(transferOrder);
+//                    }
+//                    if (qtyNeededToTransfer <= 0) {
+//                        break;
+//                    }
+//                }
+//            }
+//            return transferOrdersCreated;
+//        } catch (Exception ex) {
+//            System.out.println("\nServer failed to createOutboundTransferOrder:\n" + ex);
+//            return null;
+//        }
 
-    @Override
-    public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems) {
-        int qtyNeededToTransfer = 0;
-        int qtyToTransferOutFromBin = 0;
-        String SKUtoFind;
-        StorageBin_ItemEntity currentItem = null;
-        StorageBinEntity outboundStorageBin = getOutboundStorageBin(warehouseID);
-        List<TransferOrderEntity> transferOrdersCreated = new ArrayList<>();
-        try {
-            for (LineItemEntity lineItem1 : lineItems) {
-                qtyNeededToTransfer = lineItem1.getQuantity();
-                List<StorageBinEntity> binsThatMatchesSKU = manufacturingInventoryControlBean.findStorageBinsThatContainsItem(outboundStorageBin.getWarehouse().getId(), lineItem1.getItem().getSKU());
-                for (StorageBinEntity eachBinThatMatchesSKU : binsThatMatchesSKU) {
-                    qtyToTransferOutFromBin = 0;
-                    SKUtoFind = lineItem1.getItem().getSKU();
-                    List<StorageBin_ItemEntity> itemsInEachBinThatMatchesSKU = eachBinThatMatchesSKU.getItems();
-                    for (StorageBin_ItemEntity eachItem : itemsInEachBinThatMatchesSKU) {
-                        currentItem = eachItem;
-                        for (ItemEntity itemEntity : currentItem.getItem()) {
-                            if (itemEntity.getSKU().equals(SKUtoFind)) {
-                                qtyNeededToTransfer--;
-                                qtyToTransferOutFromBin++;
-                            }
-                        }
-                        if (qtyNeededToTransfer <= 0) {
-                            break;
-                        }
-                    }
-                    if (qtyNeededToTransfer > 0) {
-                        for (ItemEntity itemEntity : currentItem.getItem()) {
-                            LineItemEntity lineItem = new LineItemEntity(itemEntity, qtyToTransferOutFromBin, "");
-                            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-                            transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, eachBinThatMatchesSKU, outboundStorageBin);
-                            em.persist(transferOrder);
-                        }
-                        transferOrdersCreated.add(transferOrder);
-                    }
-                    if (qtyNeededToTransfer <= 0) {
-                        break;
-                    }
-                }
-            }
-            return transferOrdersCreated;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to createOutboundTransferOrder:\n" + ex);
-            return null;
-        }
-
-    }
-
+//    }
 }

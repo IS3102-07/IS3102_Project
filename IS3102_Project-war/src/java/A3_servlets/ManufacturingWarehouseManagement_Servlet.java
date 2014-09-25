@@ -2,6 +2,7 @@ package A3_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.WarehouseEntity;
+import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,6 +17,7 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    private ManufacturingInventoryControlBeanLocal micbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -29,6 +31,25 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
             String warehouseId = request.getParameter("id");
 
             if (destination != null && warehouseId != null) {
+
+                int[] warehousesCapcity = new int[4];
+                System.out.println(warehouseId + "<<<<<<<<<<<<<<");
+//                int totalPallet = micbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
+//                int freePallet = micbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
+//                int totalShelf = micbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
+//                int freeShelf = micbl.getTotalFreeVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
+//                int totalInbound = micbl.getTotalVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
+//                int freeInbound = micbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
+//                int totalOutbound = micbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+//                int freeOutbound = micbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+//
+//                warehousesCapcity[0] = ((totalPallet - freePallet) * 100) / totalPallet;
+//                warehousesCapcity[1] = ((totalShelf - freeShelf) * 100) / totalShelf;
+//                warehousesCapcity[2] = ((totalInbound - freeInbound) * 100) / totalInbound;
+//                warehousesCapcity[3] = ((totalOutbound - freeOutbound) * 100) / totalOutbound;
+
+                //session.setAttribute("warehousesCapcity", warehousesCapcity);
+
                 if (destination.equals("manufacturingWarehouseManagement.jsp")) {
                     WarehouseEntity warehouseEntity = facilityManagementBeanLocal.getWarehouseById(Long.parseLong(warehouseId));
                     session.setAttribute("warehouseEntity", warehouseEntity);
@@ -37,6 +58,7 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
             } else {
                 List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
                 session.setAttribute("warehouses", warehouses);
+
                 if (errMsg == null || errMsg.equals("")) {
                     response.sendRedirect("A3/manufacturingWarehouseManagement_view.jsp");
                 } else {
@@ -45,6 +67,7 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

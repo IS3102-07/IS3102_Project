@@ -15,12 +15,13 @@
             function selectMultipleStaff() {
                 checkboxes = document.getElementsByName('select');
                 var numOfTicks = 0;
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                for (var i = 0, i < checkboxes.length; i++) {
                     if (checkboxes[i].checked) {
                         numOfTicks++;
                     }
                 }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
+                
+                if (checkboxes.length === 0 || numOfTicks === 0) {
                     alert("No items selected.");
                     window.event.returnValue = false;
                 } else {

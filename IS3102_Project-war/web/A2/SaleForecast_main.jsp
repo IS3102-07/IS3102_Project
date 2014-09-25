@@ -65,7 +65,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/sop_main_POST">
+                                            <form action="../SaleForecast_Servlet/SaleForecast_main_POST">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable1">
                                                     <thead>
                                                         <tr>

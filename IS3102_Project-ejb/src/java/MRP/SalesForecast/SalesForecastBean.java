@@ -79,4 +79,52 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
             return null;
         }
     }
+
+    // as no crm yet, return simulated data
+    @Override
+    public List<Integer> getYearlySalesFigureList(Long StoreId, Long productGroupId, Integer year) {
+        List<Integer> simulatedData = new ArrayList<>();
+        if (year == 2012) {
+            simulatedData.add(302);
+            simulatedData.add(224);
+            simulatedData.add(201);
+            simulatedData.add(192);
+            simulatedData.add(182);
+            simulatedData.add(222);
+            simulatedData.add(252);
+            simulatedData.add(238);
+            simulatedData.add(202);
+            simulatedData.add(222);
+            simulatedData.add(302);
+            simulatedData.add(362);
+        } else if (year == 2013) {
+            simulatedData.add(322);
+            simulatedData.add(264);
+            simulatedData.add(231);
+            simulatedData.add(182);
+            simulatedData.add(182);
+            simulatedData.add(222);
+            simulatedData.add(272);
+            simulatedData.add(258);
+            simulatedData.add(222);
+            simulatedData.add(282);
+            simulatedData.add(332);
+            simulatedData.add(352);
+        } else {
+            simulatedData.add(282);
+            simulatedData.add(224);
+            simulatedData.add(201);
+            simulatedData.add(182);
+            simulatedData.add(222);
+            simulatedData.add(222);
+            simulatedData.add(252);
+            simulatedData.add(238);
+            simulatedData.add(232);
+            simulatedData.add(222);
+            simulatedData.add(332);
+            simulatedData.add(382);
+        }
+        return simulatedData;
+    }
+
 }

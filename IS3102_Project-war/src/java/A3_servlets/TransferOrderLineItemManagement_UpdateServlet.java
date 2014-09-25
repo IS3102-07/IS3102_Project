@@ -2,6 +2,7 @@ package A3_servlets;
 
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
+import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
+    @EJB
+    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
 
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
@@ -42,7 +45,7 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
                 //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }
             if (!canUpdate) {
-                result = "?errMsg=Invalid request.&id=" + transferOrderId;
+                result = "?errMsg=Invalid request. Items not found or destination bin cannot contain the item (full or wrong bin type).&id=" + transferOrderId;
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else {
                 List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());

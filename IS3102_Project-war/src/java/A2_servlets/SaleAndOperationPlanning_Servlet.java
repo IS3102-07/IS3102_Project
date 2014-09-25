@@ -33,6 +33,7 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleAndOperationPlanning_Servlet extends HttpServlet {
+
     @EJB
     private ItemManagementBeanLocal imBean;
     @EJB
@@ -186,7 +187,8 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sopManagement":
                 String submit_btn = request.getParameter("submit-btn");
                 System.out.println("submit_btn: " + submit_btn);
-                if (submit_btn.equals("Delete Sale And Operation Plan")) {
+                if (submit_btn.equals("Delete Sales And Operation Plan")) {
+                    System.out.println(" redirect to deleteSOP");
                     nextPage = "/SaleAndOperationPlanning_Servlet/deleteSOP";
                 } else {
                     String sopIdStr = request.getParameter("submit-btn");

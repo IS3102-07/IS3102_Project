@@ -15,4 +15,6 @@ public interface SalesForecastBeanLocal {
         public SalesFigureEntity createSalesFigure(Date month, Integer quantity, Long storeID, Long itemID);
         public SalesFigureEntity getSalesFigure(Long id);
         public List<SalesFigureEntity> getAllSalesFigureList();
+        
+        public List<Integer> getYearlySalesFigureList(Long StoreId, Long productGroupId, Integer year);
 }
