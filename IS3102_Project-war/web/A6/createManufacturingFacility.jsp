@@ -33,7 +33,7 @@
                                     <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../A6/manufacturingFacilityManagement.jsp">Manufacturing Facility Management</a>
+                                    <i class="icon icon-cogs"></i>  <a href="../A6/manufacturingFacilityManagement.jsp">Manufacturing Facility Management</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-edit"></i> Add New Manufacturing Facility

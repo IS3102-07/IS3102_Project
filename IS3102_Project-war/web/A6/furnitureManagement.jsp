@@ -51,7 +51,7 @@
                                     <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i> Furniture Management
+                                    <i class="icon icon-archive"></i> Furniture Management
                                 </li>
                             </ol>
                         </div>

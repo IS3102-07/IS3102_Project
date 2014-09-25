@@ -28,35 +28,20 @@ public class PurchaseOrderLineItemManagement_Servlet extends HttpServlet {
             String purchaseOrderId = request.getParameter("id");
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
-            String source = request.getParameter("source");
 
-            if (source != null && source.equals("submit")) {
-                List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
-                session.setAttribute("purchaseOrders", purchaseOrders);
-
-                if (purchaseOrderId != null) {
-                    if (errMsg != null) {
-                        response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId + "&errMsg=" + errMsg);
-                    } else if (goodMsg != null) {
-                        response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
-                    }
-                } else {
-                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?source=submit&id=" + purchaseOrderId);
+            List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
+            session.setAttribute("purchaseOrders", purchaseOrders);
+            System.out.println("id " + purchaseOrderId);
+            if (purchaseOrderId != null) {
+                if (errMsg != null) {
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
+                } else if (goodMsg != null) {
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
                 }
             } else {
-                List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
-                session.setAttribute("purchaseOrders", purchaseOrders);
-
-                if (purchaseOrderId != null) {
-                    if (errMsg != null) {
-                        response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
-                    } else if (goodMsg != null) {
-                        response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
-                    }
-                } else {
-                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId);
-                }
+                response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId);
             }
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
             ex.printStackTrace();

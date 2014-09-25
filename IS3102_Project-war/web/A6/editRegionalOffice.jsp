@@ -29,7 +29,7 @@
                                     <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index">Regional Office Management</a>
+                                    <i class="icon icon-globe"></i>  <a href="../FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index">Regional Office Management</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-edit"></i>  Edit Regional Office

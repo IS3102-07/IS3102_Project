@@ -14,6 +14,9 @@
                                 Add Bill of Material
                             </h1>
                             <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
+                                </li>
                                 <li class="active">
                                     <i class="icon icon-sitemap"></i><a href="../BomManagement_BomServlet"> BOM Management</a>
                                 </li>

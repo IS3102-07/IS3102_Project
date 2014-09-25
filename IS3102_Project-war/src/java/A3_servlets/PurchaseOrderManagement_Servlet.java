@@ -33,6 +33,7 @@ public class PurchaseOrderManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
             List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
             session.setAttribute("purchaseOrders", purchaseOrders);
 
@@ -42,11 +43,18 @@ public class PurchaseOrderManagement_Servlet extends HttpServlet {
             List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
             session.setAttribute("warehouses", warehouses);
 
-            if (errMsg == null || errMsg.equals("")) {
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A3/purchaseOrderManagement.jsp");
-            } else {
-                response.sendRedirect("A3/purchaseOrderManagement.jsp?errMsg=" + errMsg);
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A3/purchaseOrderManagement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A3/purchaseOrderManagement.jsp?goodMsg=" + goodMsg);
+                }
             }
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

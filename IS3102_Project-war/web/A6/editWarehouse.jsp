@@ -29,10 +29,10 @@
                                     <i class="icon icon-home"></i>  <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                                                             
                                 <li>
-                                    <i class="icon icon-home"></i>  <a href="../FacilityManagement_Servlet/warehouseManagement_index">Warehouse Management</a>
+                                    <i class="icon icon-archive"></i>  <a href="../FacilityManagement_Servlet/warehouseManagement_index">Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-edit"></i> Edit New Warehouse</a>
+                                    <i class="icon icon-edit"></i> Edit Warehouse</a>
                                 </li>
                             </ol>
                         </div>
