@@ -52,7 +52,7 @@
                                     <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i> Retail Product Management
+                                    <i class="icon icon-coffee"></i> Retail Product Management
                                 </li>
                             </ol>
                         </div>

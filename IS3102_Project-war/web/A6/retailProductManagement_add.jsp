@@ -15,8 +15,11 @@
                                 Add Retail Product
                             </h1>
                             <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
+                                </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i><a href="../RetailProductManagement_RetailProductServlet"> Retail Product Management</a>
+                                    <i class="icon icon-coffee"></i><a href="../RetailProductManagement_RetailProductServlet"> Retail Product Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Add Retail Product
