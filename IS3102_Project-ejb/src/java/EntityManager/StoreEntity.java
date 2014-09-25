@@ -44,6 +44,8 @@ public class StoreEntity implements Serializable {
     @ManyToOne
     private RegionalOfficeEntity regionalOffice;
     
+    
+    
     public StoreEntity(){
         this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();

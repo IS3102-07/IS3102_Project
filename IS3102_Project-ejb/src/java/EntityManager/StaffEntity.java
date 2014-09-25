@@ -56,6 +56,9 @@ public class StaffEntity implements Serializable {
     private Integer invalidLoginAttempt;
     @OneToOne
     private CountryEntity country;
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="staff")
+    private List<AccessRightEntity> accessRightList;
+    
 
     @ManyToMany
     private List<RoleEntity> roles;
@@ -91,8 +94,17 @@ public class StaffEntity implements Serializable {
         this.inboxMessages = new ArrayList<>();
         this.sentMessages = new ArrayList<>();
         this.toDoList = new ArrayList<>();
+        this.accessRightList = new ArrayList<>();
     }
 
+    public List<AccessRightEntity> getAccessRightList() {
+        return accessRightList;
+    }
+
+    public void setAccessRightList(List<AccessRightEntity> accessRightList) {
+        this.accessRightList = accessRightList;
+    }        
+    
     public String getPasswordReset() {
         return passwordReset;
     }
