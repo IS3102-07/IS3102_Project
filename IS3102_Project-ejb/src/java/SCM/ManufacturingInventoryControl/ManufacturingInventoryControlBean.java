@@ -570,6 +570,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         System.out.println("getItemInsideStorageBin() called");
 
         try {
+            em.flush();
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
             List<LineItemEntity> listOfLineItems = storageBinEntity.getListOfLineItems();
             if (listOfLineItems == null || listOfLineItems.size() == 0) {
@@ -590,6 +591,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     public List<ItemStorageBinHelper> getItemList(Long warehouseID) {
         System.out.println("getItemList() called");
         try {
+            em.flush();
             List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<>();
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
