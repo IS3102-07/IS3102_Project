@@ -29,16 +29,23 @@ public class ShippingOrderManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
             List<ShippingOrderEntity> shippingOrders = inboundAndOutboundLogisticsBeanLocal.getShippingOrderList();
             session.setAttribute("shippingOrders", shippingOrders);
 
             List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
             session.setAttribute("warehouses", warehouses);
 
-            if (errMsg == null || errMsg.equals("")) {
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A3/shippingOrderManagement.jsp");
-            } else {
-                response.sendRedirect("A3/shippingOrderManagement.jsp?errMsg=" + errMsg);
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A3/shippingOrderManagement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A3/shippingOrderManagement.jsp?goodMsg=" + goodMsg);
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
