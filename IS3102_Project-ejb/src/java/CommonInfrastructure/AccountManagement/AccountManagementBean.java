@@ -756,10 +756,16 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     @Override
     public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId) {
         try {
+            System.out.println("staffId: "+ staffId + " roleId: " + roleId + " regionalOfficeId: " + regionalOfficeId + " storeId: " + storeId + " warehouseId: " + warehouseId + " mfId: " + mfId);
+            
             StaffEntity staff = em.find(StaffEntity.class, staffId);
             RoleEntity role = em.find(RoleEntity.class, roleId);
 
             AccessRightEntity a = new AccessRightEntity();
+            
+            a.setStaff(staff);
+            a.setRole(role);
+            
             if (regionalOfficeId != -1) {
                 RegionalOfficeEntity ro = em.find(RegionalOfficeEntity.class, regionalOfficeId);
                 a.setRegionalOffice(ro);
@@ -777,6 +783,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 a.setManufacturingFacility(mf);
             }            
             em.persist(a);            
+            System.out.println("em.persist();");
             return a;
         } catch (Exception ex) {
             ex.printStackTrace();

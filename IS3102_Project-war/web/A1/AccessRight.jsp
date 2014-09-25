@@ -56,6 +56,7 @@
                                         <div class="form-group">
                                             <label for="">Regional Office</label>
                                             <select id="" class="form-control" name="regionalOffice">
+                                                <option></option>
                                                 <%
                                                     for (RegionalOfficeEntity ro : regionalOfficeList) {
                                                 %>
@@ -68,6 +69,7 @@
                                         <div class="form-group">
                                             <label for="">Store</label>
                                             <select id="" class="form-control" name="store">
+                                                <option></option>
                                                 <%
                                                     for (StoreEntity s : storeList) {
                                                 %>
@@ -80,6 +82,7 @@
                                         <div class="form-group">
                                             <label for="">Manufacturing Facility</label>
                                             <select id="" class="form-control" name="manufacturingFacility">
+                                                <option></option>
                                                 <%
                                                     for (ManufacturingFacilityEntity m : manufacturingFacilityList) {
                                                 %>
@@ -92,6 +95,7 @@
                                         <div class="form-group">
                                             <label for="">Warehouse</label>
                                             <select id="" class="form-control" name="warehouse">
+                                                <option></option>
                                                 <%
                                                     for (WarehouseEntity w : warehouseList) {
                                                 %>

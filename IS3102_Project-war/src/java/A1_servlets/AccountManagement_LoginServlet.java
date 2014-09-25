@@ -50,6 +50,8 @@ public class AccountManagement_LoginServlet extends HttpServlet {
                 response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
             } else {
                 session.setAttribute("staffEntity", staffEntity);
+                List<StaffEntity> staffs = accountManagementBean.listAllStaff();
+                session.setAttribute("staffs", staffs);
                 session.setAttribute("staffRoles", accountManagementBean.listRolesHeldByStaff(staffEntity.getId()));
                 session.setAttribute("listOfAnnouncements", workspaceBean.getListOfAllNotExpiredAnnouncement());
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));

@@ -45,19 +45,21 @@ public class AccessRight_Servlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String nextPage = "/A2/sop_index";
+        String nextPage = "/A1/AccessRight";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         HttpSession session = request.getSession();
         String target = request.getPathInfo();
+        Long staffId = (long) -1;
+        Long roleId = (long) -1;
 
         switch (target) {
 
             case "/AccessRight_GET":
 
-                Long staffId = Long.parseLong(request.getParameter("staffId"));
-                Long roleId = Long.parseLong(request.getParameter("roleId"));
+                staffId = Long.parseLong(request.getParameter("staffId"));
+                roleId = Long.parseLong(request.getParameter("roleId"));
 
                 session.setAttribute("AR_staffId", staffId);
                 session.setAttribute("AR_roleId", roleId);
@@ -80,52 +82,57 @@ public class AccessRight_Servlet extends HttpServlet {
                 break;
 
             case "/AccessRight_POST":
+                try {
+                    String regionalOffice = request.getParameter("regionalOffice");
+                    Long regionalOfficeId;
+                    if (regionalOffice != null) {
+                        regionalOfficeId = Long.parseLong(regionalOffice);
+                    } else {
+                        regionalOfficeId = (long) -1;
+                    }
 
-                String regionalOffice = request.getParameter("regionalOffice");
-                Long regionalOfficeId;
-                if (regionalOffice != null) {
-                    regionalOfficeId = Long.parseLong(regionalOffice);
-                } else {
-                    regionalOfficeId = (long) -1;
+                    String store = request.getParameter("store");
+                    Long storeId;
+                    if (store != null) {
+                        storeId = Long.parseLong(store);
+                    } else {
+                        storeId = (long) -1;
+                    }
+
+                    String warehouse = request.getParameter("warehouse");
+                    Long warehouseId;
+                    if (warehouse != null) {
+                        warehouseId = Long.parseLong(warehouse);
+                    } else {
+                        warehouseId = (long) -1;
+                    }
+
+                    String manufacturingFacility = request.getParameter("manufacturingFacility");
+                    Long manufacturingFacilityId;
+                    if (manufacturingFacility != null) {
+                        manufacturingFacilityId = Long.parseLong(manufacturingFacility);
+                    } else {
+                        manufacturingFacilityId = (long) -1;
+                    }
+
+                    staffId = (long) session.getAttribute("AR_staffId");
+                    roleId = (long) session.getAttribute("AR_roleId");
+
+                    AccessRightEntity accessRight = amBean.createAccessRight(staffId, roleId, regionalOfficeId, storeId, warehouseId, manufacturingFacilityId);
+                    if (accessRight != null) {
+                        request.setAttribute("alertMessage", "Custom access right has been set for the staff.");
+                    } else {
+                        request.setAttribute("alertMessage", "Failed to customize access right for the staff.");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-
-                String store = request.getParameter("store");
-                Long storeId;
-                if (store != null) {
-                    storeId = Long.parseLong(store);
-                } else {
-                    storeId = (long) -1;
-                }
-
-                String warehouse = request.getParameter("warehouse");
-                Long warehouseId;
-                if (warehouse != null) {
-                    warehouseId = Long.parseLong(warehouse);
-                } else {
-                    warehouseId = (long) -1;
-                }
-
-                String manufacturingFacility = request.getParameter("manufacturingFacility");
-                Long manufacturingFacilityId;
-                if (manufacturingFacility != null) {
-                    manufacturingFacilityId = Long.parseLong(manufacturingFacility);
-                } else {
-                    manufacturingFacilityId = (long) -1;
-                }
-
-                staffId = (long) session.getAttribute("AR_staffId");
-                roleId = (long) session.getAttribute("AR_roleId");
-
-                AccessRightEntity accessRight = amBean.createAccessRight(staffId, roleId, regionalOfficeId, storeId, warehouseId, manufacturingFacilityId);
-                if (accessRight != null) {
-                    request.setAttribute("alertMessage", "Custom access right has been set for the staff.");
-                } else {
-                    request.setAttribute("alertMessage", "Failed to customize access right for the staff.");
-                }
-                nextPage = "/StaffManagement_UpdateStaffServlet?id="+staffId;
-                break;
+                nextPage = "/StaffManagement_UpdateStaffServlet?id=" + (long) session.getAttribute("AR_staffId");
+                response.sendRedirect(".." + nextPage);
+                return;
 
         }
+        System.out.println(nextPage);
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
     }

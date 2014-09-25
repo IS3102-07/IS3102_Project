@@ -81,10 +81,10 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                 } else {
                     List<RoleEntity> allRoles = accountManagementBean.listAllRoles();
                     session.setAttribute("allRoles", allRoles);    
-                    response.sendRedirect("A1/staffManagement_update.jsp");
                     session.setAttribute("staffUpdateId", request.getParameter("id"));
                     List<RoleEntity> staffUpdateRoles = (List<RoleEntity>) accountManagementBean.listRolesHeldByStaff(Long.parseLong(request.getParameter("id")));
                     session.setAttribute("staffUpdateRoles", staffUpdateRoles);
+                    response.sendRedirect("A1/staffManagement_update.jsp");
                 }
             }
         } catch (Exception ex) {

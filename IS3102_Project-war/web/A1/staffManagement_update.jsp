@@ -116,7 +116,7 @@
                                             for (RoleEntity role : roleList) {
                                         %>
                                         <tr>
-                                            <td><input type="checkbox" name="roles" value="<%= role.getId() %>" <%if (role2) {%>checked<%}%>/> <%= role.getName() %> </td>
+                                            <td><input type="checkbox" name="roles" value="<%= role.getId() %>" <%if (roles.contains(role)) {%>checked<%}%>/> <%= role.getName() %> </td>
                                             <td><Button class="btn btn-default"><a href="../AccessRight_Servlet/AccessRight_GET?staffId=<%= staff.getId() %>&roleId=<%= role.getId() %>">Customize Access Right</a></Button></td>
                                         </tr>
                                         <%
