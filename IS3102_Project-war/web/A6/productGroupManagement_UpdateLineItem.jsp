@@ -42,10 +42,13 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-exchange"></i> <a href="productGroupManagement.jsp">Product Group Management</a>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-exchange"></i> <a href="productGroupManagement_Update.jsp?id=<%=productGroup.getId()%>">Purchase Order ID: <%=productGroup.getId()%></a>
+                                    <i class="icon icon-cogs"></i> <a href="productGroupManagement.jsp">Product Group Management</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-cogs"></i> <a href="productGroupManagement_Update.jsp?id=<%=productGroup.getId()%>">Purchase Order ID: <%=productGroup.getId()%></a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Update Line Item

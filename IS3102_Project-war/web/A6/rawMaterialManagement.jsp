@@ -51,7 +51,7 @@
                                     <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i> Raw Material Management
+                                    <i class="icon icon-align-center"></i> Raw Material Management
                                 </li>
                             </ol>
                         </div>

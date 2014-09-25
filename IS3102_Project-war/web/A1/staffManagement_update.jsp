@@ -5,7 +5,11 @@
 
     <jsp:include page="../header2.html" />
     <body>
-
+        <style>
+            label{
+                font-size: 18px;
+            }
+        </style>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
@@ -69,7 +73,7 @@
                                     <input class="form-control" required="true" type="text" name="phone" value="<%=staff.getPhone()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label>New Password (leave blank unless setting a new password)</label>
+                                    <label>New Password (leave blank unless setting a new password).<br/>Password to be at least 8 characters long.</label>
                                     <input class="form-control" type="password" name="password" id="password">
                                 </div>
                                 <div class="form-group">
@@ -81,7 +85,7 @@
                                     <input class="form-control" type="text" required="true" name="address" value="<%=staff.getAddress()%>">
                                 </div>
                                 <div class="form-group">
-                                    <label>Roles</label><br/>
+                                    <label>Roles Assignment</label><br/>
                                     <%
                                         List<RoleEntity> roles = (List<RoleEntity>) session.getAttribute("staffUpdateRoles");
                                         boolean role1, role2, role3, role4, role5, role6, role7;
@@ -106,13 +110,36 @@
                                             }
                                         }
                                     %>
-                                    <input type="checkbox" name="roles" value="1" <%if (role1) {%>checked<%}%>/> Administrator &nbsp; &nbsp; &nbsp;<br/>
-                                    <input type="checkbox" name="roles" value="2" <%if (role2) {%>checked<%}%>/> Regional Manager &nbsp; &nbsp; &nbsp;<br/>
-                                    <input type="checkbox" name="roles" value="3" <%if (role3) {%>checked<%}%>/> Warehouse Manager &nbsp; &nbsp; &nbsp;<br/>
-                                    <input type="checkbox" name="roles" value="4" <%if (role4) {%>checked<%}%>/> Store Manager &nbsp; &nbsp; &nbsp;<br/>
-                                    <input type="checkbox" name="roles" value="5" <%if (role5) {%>checked<%}%>/> Marketing Director &nbsp; &nbsp; &nbsp;<br/>
-                                    <input type="checkbox" name="roles" value="6" <%if (role6) {%>checked<%}%>/> Product Development Engineer &nbsp; &nbsp; &nbsp;<br/>
-                                    <input type="checkbox" name="roles" value="7" <%if (role7) {%>checked<%}%>/> Purchasing Manager &nbsp; &nbsp; &nbsp;<br/>
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <td><input type="checkbox" name="roles" value="1" <%if (role1) {%>checked<%}%>/> Administrator</td>                                            
+                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="roles" value="2" <%if (role2) {%>checked<%}%>/> Regional Manager</td>
+                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="roles" value="3" <%if (role3) {%>checked<%}%>/> Warehouse Manager </td>
+                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="roles" value="4" <%if (role4) {%>checked<%}%>/> Store Manager </td>
+                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="roles" value="5" <%if (role5) {%>checked<%}%>/> Marketing Director </td>
+                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="roles" value="6" <%if (role6) {%>checked<%}%>/> Product Development Engineer </td>
+                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="roles" value="7" <%if (role7) {%>checked<%}%>/> Purchasing Manager </td>
+                                            <td><Button class="btn btn-default">Customize Access Right</Button></td>
+                                        </tr>
+                                    </table>
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" name="update" value="yes"/>
@@ -136,19 +163,28 @@
         </div>
         <!-- /#wrapper -->
         <script>
-            function validatePassword() {
-                var password = document.getElementById("password").value;
-                var repassword = document.getElementById("repassword").value;
-                var ok = true;
-                if (password != repassword) {
-                    //alert("Passwords Do not match");
-                    document.getElementById("password").style.borderColor = "#E34234";
-                    document.getElementById("repassword").style.borderColor = "#E34234";
-                    alert("Passwords do not match. Please key again.");
-                    ok = false;
+             function validatePassword() {
+                    var password = document.getElementById("password").value;
+                    var repassword = document.getElementById("repassword").value;
+                    var ok = true;
+                    if ((password != null && repassword != null) || (password != "" && repassword != "")) {
+                        if (password != repassword) {
+                            //alert("Passwords Do not match");
+                            document.getElementById("password").style.borderColor = "#E34234";
+                            document.getElementById("repassword").style.borderColor = "#E34234";
+                            alert("Passwords do not match. Please key again.");
+                            ok = false;
+                        } else if (password == repassword) {
+                            if (password.length < 8) {
+                                alert("Passwords too short. At least 8 characters.");
+                                ok = false;
+                            }
+                        }
+                    } else {
+                        return ok;
+                    }
+                    return ok;
                 }
-                return ok;
-            }
         </script>F
     </body>
 

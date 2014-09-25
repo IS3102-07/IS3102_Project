@@ -32,7 +32,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <label>Email</label>
-                                                <input type="text" name="email" class="form-control input-lg" required="true" value="<%=email%>">
+                                                <input type="text" name="email" class="form-control input-lg" required="true">
                                             </div>
                                         </div>
                                     </div>
@@ -47,16 +47,16 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-12">
-                                                <label>Password</label>
-                                                <input type="password" name="password" class="form-control input-lg" required="true">
+                                                <label>Password (At least 8 characters)</label>
+                                                <input type="password" name="password" class="form-control input-lg" id="password" required="true">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-12">
-                                                <label>Re-Password</label>
-                                                <input type="password" name="repassword" class="form-control input-lg" required="true">
+                                                <label>Re-enter New Password</label>
+                                                <input type="password" name="repassword" class="form-control input-lg" id="repassword" required="true">
                                             </div>
                                         </div>
                                     </div>
@@ -76,18 +76,27 @@
 
         <script>
             function validatePassword() {
-                var password = document.getElementById("password").value;
-                var repassword = document.getElementById("repassword").value;
-                var ok = true;
-                if (password != repassword) {
-                    //alert("Passwords Do not match");
-                    document.getElementById("password").style.borderColor = "#E34234";
-                    document.getElementById("repassword").style.borderColor = "#E34234";
-                    alert("Passwords do not match. Please key again.");
-                    ok = false;
+                    var password = document.getElementById("password").value;
+                    var repassword = document.getElementById("repassword").value;
+                    var ok = true;
+                    if ((password != null && repassword != null) || (password != "" && repassword != "")) {
+                        if (password != repassword) {
+                            //alert("Passwords Do not match");
+                            document.getElementById("password").style.borderColor = "#E34234";
+                            document.getElementById("repassword").style.borderColor = "#E34234";
+                            alert("Passwords do not match. Please key again.");
+                            ok = false;
+                        } else if (password == repassword) {
+                            if (password.length < 8) {
+                                alert("Passwords too short. At least 8 characters.");
+                                ok = false;
+                            }
+                        }
+                    } else {
+                        return ok;
+                    }
+                    return ok;
                 }
-                return ok;
-            }
         </script>
 
     </body>

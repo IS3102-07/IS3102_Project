@@ -46,7 +46,7 @@
                                     <i class="icon icon-home"></i> <a href="../A6/facilityManagement.jsp">Facility Management</a>
                                 </li>                             
                                 <li>
-                                    <i class="icon icon-home"></i> Regional Office Management
+                                    <i class="icon icon-globe"></i> Regional Office Management
                                 </li>
                             </ol>
                         </div>

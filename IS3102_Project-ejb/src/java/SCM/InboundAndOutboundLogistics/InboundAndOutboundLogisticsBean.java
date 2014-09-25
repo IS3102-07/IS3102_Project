@@ -286,4 +286,25 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
         System.out.println("Inbound and outbound logistics bean has bean removed.");
     }
 
+    @Override
+    public List<ShippingOrderEntity> getShippingOrderListByWarehouseId(Long warehouseId) {
+        System.out.println("getShippingOrderListByWarehouseId() is called.");
+        try {
+            Query q;
+            if (warehouseId == null) {
+                q = em.createQuery("Select s from ShippingOrderEntity s");
+            } else {
+                q = em.createQuery("Select s from ShippingOrderEntity s where s.origin.id=:warehouseId or s.destination.id=:wId");
+                q.setParameter("warehouseId", warehouseId);
+                q.setParameter("wId", warehouseId);
+            }
+            List<ShippingOrderEntity> listOfShippingOrders = q.getResultList();
+            System.out.println("getShippingOrderListByWarehouseId() is successful.");
+            return listOfShippingOrders;
+        } catch (Exception ex) {
+            System.out.println("Unable to getShippingOrderListByWarehouseId().");
+            return null;
+        }
+    }
+
 }

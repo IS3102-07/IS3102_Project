@@ -31,8 +31,11 @@ a<%@page import="EntityManager.CountryEntity"%>
                                 Furniture Details Update
                             </h1>
                             <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
+                                </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i><a href="../FurnitureManagement_FurnitureServlet"> Furniture Management</a>
+                                    <i class="icon icon-archive"></i><a href="../FurnitureManagement_FurnitureServlet"> Furniture Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i>  Furniture Details Update

@@ -62,7 +62,7 @@
                                     <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-exchange"></i> Transfer Order Management
@@ -144,7 +144,7 @@
                                                                 <%=warehouseEntity.getWarehouseName()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" <%if (transferOrders.get(i).getStatus().equals("Completed") || transferOrders.get(i).getStatus().equals("Unfulfillable")) {%>disabled<%}%> id="<%=transferOrders.get(i).getId()%>" value="View Details" onclick="javascript:updateTO('<%=transferOrders.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=transferOrders.get(i).getId()%>" value="View Details" onclick="javascript:updateTO('<%=transferOrders.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%

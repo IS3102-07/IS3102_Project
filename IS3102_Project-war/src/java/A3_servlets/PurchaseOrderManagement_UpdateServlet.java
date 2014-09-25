@@ -1,15 +1,19 @@
 package A3_servlets;
 
+import EntityManager.PurchaseOrderEntity;
+import EntityManager.ShippingOrderEntity;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class PurchaseOrderManagement_UpdateServlet extends HttpServlet {
 
@@ -32,11 +36,17 @@ public class PurchaseOrderManagement_UpdateServlet extends HttpServlet {
             if (supplierId != null && destinationId != null) {
                 boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrder(Long.parseLong(purchaseOrderId), Long.parseLong(supplierId), Long.parseLong(destinationId), date);
                 if (!canUpdate) {
-                    result = "?errMsg=Supplier or Warehouse no longer exist / active.";
-                    response.sendRedirect("A3/purchaseOrderManagement_Add.jsp" + result);
+                    result = "?errMsg=Supplier or Warehouse no longer exist / active.&id=" + purchaseOrderId;
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
                 } else {
-                    result = "?goodMsg=Purchase Order updated successfully";
-                    response.sendRedirect("PurchaseOrderManagement_Servlet" + result);
+                    HttpSession session;
+                    session = request.getSession();
+
+                    List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
+                    session.setAttribute("purchaseOrders", purchaseOrders);
+
+                    result = "?goodMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
                 }
             }
 

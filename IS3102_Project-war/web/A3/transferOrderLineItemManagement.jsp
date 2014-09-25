@@ -103,7 +103,7 @@
                         <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> Transfer Order Status</h3>
+                                    <h3 class="panel-title"> Transfer Order Status: <span class="label label-success"><%=transferOrder.getStatus()%></span></h3>
                                 </div>
                                 <div class="panel-body">
                                     <%

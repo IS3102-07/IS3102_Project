@@ -139,13 +139,16 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     @Override
     public LineItemEntity checkIfItemExistInsideStorageBin(Long storageBinID, String SKU
     ) {
+        System.out.println("checkIfItemExistInsideStorageBin() called");
         StorageBinEntity storageBin = em.getReference(StorageBinEntity.class, storageBinID);
         List<LineItemEntity> listOfLineItems = storageBin.getListOfLineItems();
         for (LineItemEntity lineItem : listOfLineItems) {
             if (lineItem.getItem().getSKU().equals(SKU)) {
+                System.out.println("checkIfItemExistInsideStorageBin(): SKU found, returned line item.");
                 return lineItem;
             }
         }
+        System.out.println("checkIfItemExistInsideStorageBin(): SKU not found.");
         return null;
     }
 
@@ -162,10 +165,14 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 int quantity = lineItemEntity.getQuantity();
                 for (int i = 0; i < quantity; i++) {
                     if (!addItemToReceivingBin(warehouseID, itemEntity.getSKU())) {
+                        System.out.println("Failed to add into inbound bin: item SKU "+itemEntity.getSKU());
                         return false;
                     }
                 }
             }
+            purchaseOrderEntity.setStatus("Completed");
+            em.merge(purchaseOrderEntity);
+            System.out.println("All purchase order items moved into inbound bin successfully.");
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("Could not find either purchase order or the warehouse.");
@@ -243,12 +250,14 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 lineItem = checkIfItemExistInsideStorageBin(destination.getId(), SKU);
                 //if it does not exist
                 if (lineItem == null) {
+                    System.out.println("SKU item: " + SKU + " is not found in destination bin. Adding new line item.");
                     Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
                     q.setParameter("SKU", SKU);
                     ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
                     LineItemEntity newLineItem = new LineItemEntity(itemEntity, 1, "");
-                    newLineItem.setStorageBin(destination);
                     em.persist(newLineItem);
+                    newLineItem.setStorageBin(destination);
+                    em.merge(newLineItem);
                     destination.getListOfLineItems().add(newLineItem);
                     em.merge(destination);
                     lineItem = newLineItem;
@@ -573,7 +582,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     //Add all the entries inside the bin to helper list
                     for (int i = 0; i < listOfLineItemEntities.size(); i++) {
                             itemStorageBinHelper = new ItemStorageBinHelper();
-                            itemStorageBinHelper.setStorageBin_ItemID(listOfLineItemEntities.get(i).getId());
+                            itemStorageBinHelper.setLineItemID(listOfLineItemEntities.get(i).getId());
                             itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
                             itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
                             itemStorageBinHelper.setStorageBinID(storageBin.getId());
