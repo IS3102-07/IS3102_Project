@@ -1,5 +1,6 @@
 package CommonInfrastructure.AccountManagement;
 
+import EntityManager.AccessRightEntity;
 import EntityManager.CountryEntity;
 import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
@@ -26,7 +27,11 @@ public interface AccountManagementBeanLocal {
     public StaffEntity registerStaff(String identificationNo, String name, String phone, String email, String address, String password);
     
     public StaffEntity getStaffByEmail(String email);
+    
+    public StaffEntity getStaffById(Long id);
 
+    public RoleEntity getRoleById(Long id);
+    
     public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address);
 
     public boolean editStaff(Long staffID, String phone, String password, String address);
@@ -72,5 +77,7 @@ public interface AccountManagementBeanLocal {
     public String generatePasswordSalt();
 
     public String generatePasswordHash(String salt, String password);
+    
+    public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
 
 }

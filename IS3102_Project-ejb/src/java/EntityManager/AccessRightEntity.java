@@ -28,6 +28,8 @@ public class AccessRightEntity implements Serializable {
     @ManyToOne
     private StaffEntity staff;
     @OneToOne
+    private RegionalOfficeEntity regionalOffice;
+    @OneToOne
     private WarehouseEntity warehouse;
     @OneToOne
     private ManufacturingFacilityEntity manufacturingFacility;
@@ -35,8 +37,15 @@ public class AccessRightEntity implements Serializable {
     private StoreEntity store;
     
     public AccessRightEntity(){}
-    
 
+    public RegionalOfficeEntity getRegionalOffice() {
+        return regionalOffice;
+    }
+
+    public void setRegionalOffice(RegionalOfficeEntity regionalOffice) {
+        this.regionalOffice = regionalOffice;
+    }            
+    
     public WarehouseEntity getWarehouse() {
         return warehouse;
     }
