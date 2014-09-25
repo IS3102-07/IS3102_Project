@@ -22,7 +22,7 @@ import javax.persistence.Query;
 
 @Stateless
 public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal {
-
+    
     @EJB
     private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
     @Resource
@@ -33,7 +33,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     WarehouseEntity warehouse;
     TransferOrderEntity transferOrder;
     List<LineItemEntity> lineItems;
-
+    
     @Override
     public boolean createStorageBin(Long warehouseID, String type, Integer _length, Integer width, Integer height) {
         try {
@@ -64,7 +64,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return false;
         }
     }
-
+    
     @Override
     public
             boolean updateStorageBin(Long storageBinId, Integer length, Integer width, Integer height) {
@@ -72,7 +72,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         System.out.println("length: " + length);
         System.out.println("width: " + width);
         System.out.println("height: " + height);
-
+        
         try {
             storageBin = em.getReference(StorageBinEntity.class, storageBinId);
             System.out.println("Size of storage bin to be updated is " + storageBin.getListOfLineItems().size());
@@ -92,7 +92,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return false;
         }
     }
-
+    
     @Override
     public boolean deleteStorageBin(Long id) {
         System.out.println("deleteStorageBin() called.");
@@ -102,6 +102,13 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 System.out.println("Unable to delete. Storage bin either not found or not empty.");
                 return false;
             } else {
+                Query q = em.createQuery("Select t from TransferOrderEntity t where t.origin.id=:oid or t.target.id=:tid");
+                q.setParameter("oid", id);
+                 q.setParameter("tid", id);
+                List<TransferOrderEntity> listOfTransferOrders = q.getResultList();
+                for (TransferOrderEntity t : listOfTransferOrders) {
+                    em.remove(t);
+                }
                 em.merge(storageBin);
                 em.remove(storageBin);
                 System.out.println("deleteStorageBin() bin removed");
@@ -113,23 +120,23 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return false;
         }
     }
-
+    
     @Override
     public StorageBinEntity
             viewStorageBin(Long id) {
         try {
             if (em.getReference(StorageBinEntity.class, id) == null) {
-
+                
                 return null;
             }
-
+            
             return em.getReference(StorageBinEntity.class, id);
         } catch (Exception ex) {
             System.out.println("\nServer failed to viewStorageBin:\n" + ex);
             return null;
         }
     }
-
+    
     @Override
     public List<StorageBinEntity> viewAllStorageBin(Long warehouseID) {
         try {
@@ -142,41 +149,41 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return null;
         }
     }
-
+    
     @Override
     public TransferOrderEntity
             viewTransferOrder(Long id) {
         try {
             if (em.getReference(TransferOrderEntity.class, id) == null) {
-
+                
                 return null;
             }
-
+            
             return em.getReference(TransferOrderEntity.class, id);
         } catch (Exception ex) {
             System.out.println("\nServer failed to viewTransferOrder:\n" + ex);
             return null;
         }
     }
-
+    
     @Override
     public
             boolean deleteTransferOrder(Long id) {
         try {
             if (em.getReference(TransferOrderEntity.class, id) == null) {
-
+                
                 return false;
             }
             em
                     .remove(em.getReference(TransferOrderEntity.class, id));
-
+            
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to deleteTransferOrder:\n" + ex);
             return false;
         }
     }
-
+    
     @Override
     public StorageBinEntity getInboundStorageBin(Long warehouseID) {
         System.out.println("getInboundStorageBin() called");
@@ -194,7 +201,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return null;
         }
     }
-
+    
     @Override
     public StorageBinEntity getOutboundStorageBin(Long warehouseID) {
         System.out.println("getOutboundStorageBin() called");
@@ -213,7 +220,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return null;
         }
     }
-
+    
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean markTransferOrderAsCompleted(Long transferOrderId) {
@@ -229,7 +236,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 System.out.println("Moving in progress....");
                 System.out.println("SKU number is " + SKU);
                 System.out.println("originBin: " + originBin.getId() + " moving to targetBin: " + targetBin.getId());
-
+                
                 boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
                 if (!isPass) {
                     System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in source bin or volume of destination bin is insufficient.");
@@ -243,7 +250,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return false;
         }
     }
-
+    
     @Override
     public
             boolean cancelTransferOrder(Long transferOrderId) {
@@ -251,14 +258,14 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
             transferOrder.setStatus(
                     "Cancelled");
-
+            
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to cancelTransferOrder:\n" + ex);
             return false;
         }
     }
-
+    
     @Override
     public List<TransferOrderEntity> viewAllTransferOrderByWarehouseId(Long warehouseId) {
         System.out.println("viewAllTransferOrderByWarehouseId() called.");
@@ -272,7 +279,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return null;
         }
     }
-
+    
     @Override
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId) {
         System.out.println("markTransferOrderAsUnfulfilled() called.");
@@ -280,21 +287,21 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
             transferOrder.setStatus(
                     "Unfulfillable");
-
+            
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to markTransferOrderAsUnfulfilled:\n" + ex);
             return false;
         }
     }
-
+    
     @Override
     public boolean createTransferOrder(Long warehouseID, Long originStorageBinID, Long targetStorageBinID, LineItemEntity lineItem) {
         System.out.println("createTransferOrder() called.");
         try {
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             StorageBinEntity originStorageBin = em.getReference(StorageBinEntity.class, originStorageBinID);
-
+            
             StorageBinEntity target = em.getReference(StorageBinEntity.class, targetStorageBinID);
             transferOrder = new TransferOrderEntity(warehouseEntity, lineItem, originStorageBin, target);
             em.persist(transferOrder);
@@ -304,7 +311,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return false;
         }
     }
-
+    
     @Override
     public ItemEntity searchItemBySKU(String SKU) {
         try {
@@ -316,7 +323,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return null;
         }
     }
-
+    
     @Override
     public Boolean addLineItemToTransferOrder(Long transferOrderID, String SKU, Integer quantity) {
         System.out.println("addLineItemToTransferOrder() called.");
@@ -339,9 +346,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             ex.printStackTrace();
             return false;
         }
-
+        
     }
-
+    
     @Override
     public Boolean removeLineItemFromTransferOrder(Long transferOrderID) {
         System.out.println("removeLineItemFromTransferOrder() called.");
