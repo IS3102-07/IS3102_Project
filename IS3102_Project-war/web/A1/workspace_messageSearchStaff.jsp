@@ -45,10 +45,10 @@
                             <h1 class="page-header">Select Message Recipients</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="workspace.jsp">Workspace</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../Workspace_Servlet">Workspace</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-inbox"></i> <a href="workspace_messageInbox.jsp">Messages</a>
+                                    <i class="icon icon-inbox"></i> <a href="../WorkspaceMessage_Servlet">Messages</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-envelope"></i> <a href="workspace_messageAdd.jsp">Compose and Send Message</a>
