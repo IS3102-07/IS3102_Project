@@ -167,6 +167,8 @@
                                                         out.println("<option>Unfulfillable</option>");
                                                     } else if (purchaseOrder.getStatus().equals("Unfulfillable")) {
                                                         out.println("<option>Unfulfillable</option>");
+                                                    } else if (purchaseOrder.getStatus().equals("Completed")) {
+                                                        out.println("<option>Completed</option>");
                                                     }
                                                 %>
                                             </select>
@@ -174,7 +176,7 @@
                                         <div class="form-group">
                                             <input type="hidden" value="<%=purchaseOrder.getReceivedWarehouse().getId()%>" name="destinationWarehouseID">
                                             <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">
-                                            <a href="#submitConfirmation" data-toggle="modal"><button class="btn btn-lg btn-primary btn-block" <% if ((purchaseOrder.getStatus().equals("Completed") || (purchaseOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>><% if (!purchaseOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Purchase Order</button></a>
+                                            <a <% if ((purchaseOrder.getStatus().equals("Completed") || (purchaseOrder.getStatus().equals("Unfulfillable")))) {%>href="#"<%} else {%>href="#submitConfirmation"<%}%>  data-toggle="modal"><button class="btn btn-lg btn-primary btn-block" <% if ((purchaseOrder.getStatus().equals("Completed") || (purchaseOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>><% if (!purchaseOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Purchase Order</button></a>
                                         </div>
                                     </form>
                                 </div>

@@ -166,6 +166,8 @@
                                                         out.println("<option>Unfulfillable</option>");
                                                     } else if (shippingOrder.getStatus().equals("Unfulfillable")) {
                                                         out.println("<option>Unfulfillable</option>");
+                                                    } else if (shippingOrder.getStatus().equals("Completed")) {
+                                                        out.println("<option>Completed</option>");
                                                     }
                                                 %>
                                             </select>
@@ -173,7 +175,7 @@
                                         <div class="form-group">
                                             <input type="hidden" value="<%=shippingOrder.getDestination().getId()%>" name="destinationWarehouseID">
                                             <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
-                                            <a href="#submitConfirmation" data-toggle="modal"><button class="btn btn-lg btn-primary btn-block" <% if ((shippingOrder.getStatus().equals("Completed") || (shippingOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>><% if (!shippingOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Purchase Order</button></a>
+                                            <a <% if ((shippingOrder.getStatus().equals("Completed") || (shippingOrder.getStatus().equals("Unfulfillable")))) {%>href="#"<%} else {%>href="#submitConfirmation"<%}%>  data-toggle="modal"><button class="btn btn-lg btn-primary btn-block" <% if ((shippingOrder.getStatus().equals("Completed") || (shippingOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>><% if (!shippingOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Shipping Order</button></a>
                                         </div>
                                     </form>
 
