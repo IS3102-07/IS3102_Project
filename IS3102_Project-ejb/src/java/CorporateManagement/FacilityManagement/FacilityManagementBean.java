@@ -105,7 +105,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             System.out.println("\nServer failed to remove regional office:\n" + ex);
             return false;
         }
-        
+
     }
 
     @Override
@@ -660,6 +660,19 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public boolean checkIfWarehouseContainsItem(Long id) {
+        try {
+            WarehouseEntity we = em.find(WarehouseEntity.class, id);
+            if (we.getStorageBins().isEmpty())
+            return false;
+            else return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }
