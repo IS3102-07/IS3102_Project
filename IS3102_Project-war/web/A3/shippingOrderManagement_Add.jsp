@@ -96,7 +96,6 @@
             else
                 return true;
         });
-
     </script>
     <script>
         var today = new Date().toISOString().split('T')[0];
