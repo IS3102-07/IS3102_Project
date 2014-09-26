@@ -411,7 +411,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
 
     public boolean checkNameExistsOfWarehouse(String name) {
         try {
-            Query q = em.createQuery("Select i from WarehouseEntity i where i.warehouseName:name");
+            Query q = em.createQuery("Select i from WarehouseEntity i where i.warehouseName=:name");
             q.setParameter("name", name);
             q.getSingleResult();
             return true;
