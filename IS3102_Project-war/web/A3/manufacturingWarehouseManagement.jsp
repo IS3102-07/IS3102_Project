@@ -131,7 +131,7 @@
                                             <span>Outbound</span>
                                         </div>
                                         <%
-                                            if (warehousesCapacity[3] < 10 && warehousesCapacity[0] > 0) {
+                                            if (warehousesCapacity[3] < 10 && warehousesCapacity[3] > 0) {
                                         %>
                                         <div class="progress">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: <%=warehousesCapacity[3]%>%;">

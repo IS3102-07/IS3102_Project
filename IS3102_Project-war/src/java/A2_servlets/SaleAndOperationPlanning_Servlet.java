@@ -209,7 +209,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sopManagement":
                 String submit_btn = request.getParameter("submit-btn");
                 System.out.println("submit_btn: " + submit_btn);
-                if (submit_btn.equals("Delete Sales And Operation Plan")) {
+                if (submit_btn.equals("Delete Sales And Operations Plan")) {
                     System.out.println(" redirect to deleteSOP");
                     nextPage = "/SaleAndOperationPlanning_Servlet/deleteSOP";
                 } else {
