@@ -30,7 +30,7 @@
                             max-width: 300px;
                         }
                     </style>                                       
-               
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -83,6 +83,16 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
+
+        <%
+            if (request.getAttribute("alertMessage") != null) {
+        %>
+        <script>
+            alert("<%= request.getAttribute("alertMessage")%>");
+        </script>
+        <%
+            }
+        %>
 
         <script>
             function getStore() {

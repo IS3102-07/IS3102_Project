@@ -515,12 +515,28 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         try {
             Query q = em.createQuery("SELECT t FROM RoleEntity t where t.name=:name AND t.accessLevel=:accessLevel");
             q.setParameter("name", name);
-            q.setParameter("accessLevel", name);
+            q.setParameter("accessLevel", accessLevel);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
             System.out.println("Role:" + name + " ,Access level:" + accessLevel + " found.");
             return roleEntity;
         } catch (NoResultException ex) {
             System.out.println("Role:" + name + " ,Access level:" + accessLevel + " not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to search for role:\n" + ex);
+            return null;
+        }
+    }
+
+    @Override
+    public RoleEntity searchRole(String name) {
+        System.out.println("searchRole() called with name:" + name);
+        try {
+            Query q = em.createQuery("SELECT t FROM RoleEntity t where t.name=:name");
+            q.setParameter("name", name);
+            RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
+            return roleEntity;
+        } catch (NoResultException ex) {
             return null;
         } catch (Exception ex) {
             System.out.println("\nServer failed to search for role:\n" + ex);
@@ -756,16 +772,16 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     @Override
     public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId) {
         try {
-            System.out.println("staffId: "+ staffId + " roleId: " + roleId + " regionalOfficeId: " + regionalOfficeId + " storeId: " + storeId + " warehouseId: " + warehouseId + " mfId: " + mfId);
-            
+            System.out.println("staffId: " + staffId + " roleId: " + roleId + " regionalOfficeId: " + regionalOfficeId + " storeId: " + storeId + " warehouseId: " + warehouseId + " mfId: " + mfId);
+
             StaffEntity staff = em.find(StaffEntity.class, staffId);
             RoleEntity role = em.find(RoleEntity.class, roleId);
 
             AccessRightEntity a = new AccessRightEntity();
-            
+
             a.setStaff(staff);
             a.setRole(role);
-            
+
             if (regionalOfficeId != -1) {
                 RegionalOfficeEntity ro = em.find(RegionalOfficeEntity.class, regionalOfficeId);
                 a.setRegionalOffice(ro);
@@ -781,8 +797,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             if (mfId != -1) {
                 ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, mfId);
                 a.setManufacturingFacility(mf);
-            }            
-            em.persist(a);            
+            }
+            em.persist(a);
             System.out.println("em.persist();");
             return a;
         } catch (Exception ex) {
@@ -790,7 +806,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return null;
     }
-    
+
     public Integer checkStaffInvalidLoginAttempts(String email) {
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.email=:email");
@@ -805,5 +821,94 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         } catch (Exception ex) {
             return 0;
         }
+    }
+
+    @Override
+    public Boolean canStaffAccessToTheRegionalOffice(Long StaffId, Long RegionalOfficeId) {
+        try {
+            StaffEntity staff = em.find(StaffEntity.class, StaffId);
+            List<RoleEntity> roles = staff.getRoles();
+            RoleEntity admin = this.searchRole("Administrator", "System");
+            RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
+            RoleEntity purchasingManager = this.searchRole("Purchasing Manager", "Region");
+            if (roles.contains(admin)) {
+                return true;
+            } else if (roles.contains(regionalManager)) {
+                Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
+                        .setParameter(1, StaffId)
+                        .setParameter(2, regionalManager.getId());
+                AccessRightEntity access = (AccessRightEntity) q.getSingleResult();
+                if (access.getRegionalOffice().getId().equals(RegionalOfficeId)) {
+                    return true;
+                }
+            } else if (roles.contains(purchasingManager)) {
+                Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
+                        .setParameter(1, StaffId)
+                        .setParameter(2, purchasingManager.getId());
+                AccessRightEntity access = (AccessRightEntity) q.getSingleResult();
+                if (access.getRegionalOffice().getId().equals(RegionalOfficeId)) {
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean canStaffAccessToTheStore(Long StaffId, Long StoreId) {
+        try {
+            StaffEntity staff = em.find(StaffEntity.class, StaffId);
+            StoreEntity store = em.find(StoreEntity.class, StoreId);
+            List<RoleEntity> roles = staff.getRoles();
+            RoleEntity admin = this.searchRole("Administrator", "System");
+            RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
+            RoleEntity storeManager = this.searchRole("Store Manager", "Facility");
+            if (roles.contains(admin)) {
+                System.out.println("current user in role: " + admin.getName());
+                return true;
+            } else if (roles.contains(regionalManager)) {
+                System.out.println("current user in role: " + regionalManager.getName());
+                Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
+                        .setParameter(1, StaffId)
+                        .setParameter(2, regionalManager.getId());
+                AccessRightEntity access = (AccessRightEntity) q.getSingleResult();
+                if (access.getRegionalOffice().getId().equals(store.getRegionalOffice().getId())) {
+                    return true;
+                }
+            } else if (roles.contains(storeManager)) {
+                System.out.println("current user in role: " + storeManager.getName());
+                Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
+                        .setParameter(1, StaffId)
+                        .setParameter(2, storeManager.getId());
+                AccessRightEntity accessRight = (AccessRightEntity) q.getSingleResult();
+                if (accessRight.getStore().getId().equals(StoreId)) {
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean canStaffAccessToTheManufacturingFacility(Long StaffId, Long MfId) {
+        try {
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean canStaffAccessToTheWarehouse(Long StaffId, Long warehouseId) {
+        try {
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }
