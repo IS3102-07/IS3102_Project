@@ -85,7 +85,8 @@ public class AccessRight_Servlet extends HttpServlet {
                 try {
                     String regionalOffice = request.getParameter("regionalOffice");
                     Long regionalOfficeId;
-                    if (regionalOffice != null) {
+                    if (!regionalOffice.equals("")) {
+                        System.out.println("regionalOffice: " + regionalOffice);
                         regionalOfficeId = Long.parseLong(regionalOffice);
                     } else {
                         regionalOfficeId = (long) -1;
@@ -93,7 +94,7 @@ public class AccessRight_Servlet extends HttpServlet {
 
                     String store = request.getParameter("store");
                     Long storeId;
-                    if (store != null) {
+                    if (!store.equals("")) {
                         storeId = Long.parseLong(store);
                     } else {
                         storeId = (long) -1;
@@ -101,7 +102,7 @@ public class AccessRight_Servlet extends HttpServlet {
 
                     String warehouse = request.getParameter("warehouse");
                     Long warehouseId;
-                    if (warehouse != null) {
+                    if (!warehouse.equals("")) {
                         warehouseId = Long.parseLong(warehouse);
                     } else {
                         warehouseId = (long) -1;
@@ -109,7 +110,7 @@ public class AccessRight_Servlet extends HttpServlet {
 
                     String manufacturingFacility = request.getParameter("manufacturingFacility");
                     Long manufacturingFacilityId;
-                    if (manufacturingFacility != null) {
+                    if (!manufacturingFacility.equals("")) {
                         manufacturingFacilityId = Long.parseLong(manufacturingFacility);
                     } else {
                         manufacturingFacilityId = (long) -1;
