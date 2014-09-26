@@ -410,13 +410,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     public boolean checkNameExistsOfWarehouse(String name) {
+        System.out.println("checkNameExistsOfWarehouse() called.");
         try {
             Query q = em.createQuery("Select i from WarehouseEntity i where i.warehouseName=:name");
             q.setParameter("name", name);
             q.getSingleResult();
             return true;
         } catch (NoResultException n) {
-            System.out.println("\nServer return no result:\n" + n);
+            System.out.println("\ncheckNameExistsOfWarehouse(): No warehouse of that name exist.");
             return false;
         } catch (Exception ex) {
             System.out.println("\nServer failed to perform name check of warehouse:\n" + ex);
