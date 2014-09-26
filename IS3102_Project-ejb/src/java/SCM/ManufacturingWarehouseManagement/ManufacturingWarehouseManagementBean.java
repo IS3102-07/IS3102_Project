@@ -55,6 +55,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             storageBin = new StorageBinEntity(warehouseEntity, type, _length, width, height);
             em.persist(storageBin);
+            warehouseEntity.getStorageBins().add(storageBin);
+            em.merge(warehouseEntity);
+            em.flush();
             System.out.println("Created storage bin successfully.");
             return true;
         } catch (EntityNotFoundException ex) {
