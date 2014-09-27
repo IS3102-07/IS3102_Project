@@ -9,9 +9,11 @@ import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.ShippingOrderEntity;
 import EntityManager.WarehouseEntity;
+import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
@@ -24,9 +26,12 @@ import javax.persistence.TemporalType;
 
 @Stateless
 public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogisticsBeanLocal {
+    @EJB
+    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
+    
 
     @Override
     public ShippingOrderEntity createShippingOrderBasicInfo(Date expectedReceivedDate, Long sourceWarehouseID, Long destinationWarehouseID) {
@@ -215,8 +220,10 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
                 shippingOrder.setStatus(status);
                 if (status.equals("Shipped")) {
                     shippingOrder.setShippedDate(new Date());
+                    manufacturingInventoryControlBean.removeItemFromOutboundBinForShipping(id);
                 } else if (status.equals("Completed")) {
                     shippingOrder.setReceivedDate(new Date());
+                    manufacturingInventoryControlBean.moveInboundShippingOrderItemsToReceivingBin(id);
                 }
             }
             em.persist(shippingOrder);
