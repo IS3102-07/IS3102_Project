@@ -75,31 +75,34 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
             WarehouseEntity warehouse = shippingOrderEntity.getOrigin();
             StorageBinEntity outbound = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouse.getId());
+            
             List<LineItemEntity> itemsInShippingOrder = shippingOrderEntity.getLineItems();
             //For each item in shipping order
             for (LineItemEntity lineItemEntity : itemsInShippingOrder) {
                 //Check if it's in outbound bin
+                em.merge(outbound);
                 LineItemEntity lineItemInOutboundBin = checkIfItemExistInsideStorageBin(outbound.getId(), lineItemEntity.getItem().getSKU());
                 //Line item does not exist 
                 if (lineItemInOutboundBin == null) {
                     System.out.println("Outbound bin does not have sufficient quantity to ship the order.");
                     throw new Exception();
                 } else {            //line item exist
-                    em.refresh(lineItemInOutboundBin);
+                    em.merge(lineItemInOutboundBin);
                     //if it is the last item
                     if (lineItemInOutboundBin.getQuantity() == 1) {
                         outbound.getListOfLineItems().remove(lineItemInOutboundBin);
                         em.remove(lineItemInOutboundBin);
+                        em.flush();
                     } else {
                         if(lineItemInOutboundBin.getQuantity() == 0){
                             System.out.println("Outbound bin has insufficient quantity to be removed. Please try again.");
                             throw new Exception();
                         }
                         lineItemInOutboundBin.setQuantity(lineItemInOutboundBin.getQuantity() - 1);
-                        em.merge(lineItemInOutboundBin);
+                        em.flush();
                     }
                     outbound.setFreeVolume(outbound.getFreeVolume() + lineItemInOutboundBin.getItem().getVolume());
-                    em.merge(outbound);
+                    em.flush();
                 }
             }
             return true;
@@ -195,7 +198,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
 
         System.out.println("addItemToReceivingBin() called with SKU:" + SKU + " & wahouseID:" + warehouseID);
         StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
-        em.refresh(inboundBin);
+        em.merge(inboundBin);
         if (inboundBin == null) {
             System.out.println("Failed to add item to receiving bin, receiving bin not found.");
             return false;
@@ -211,7 +214,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             inboundBin.setFreeVolume(inboundBin.getFreeVolume() - itemEntity.getVolume());
             em.merge(inboundBin);
             if (lineItem != null) {
-                em.refresh(lineItem);
+                em.merge(lineItem);
                 lineItem.setQuantity(lineItem.getQuantity() + 1);
             } else {
                 lineItem = new LineItemEntity(itemEntity, 1, "");
@@ -220,6 +223,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 inboundBin.getListOfLineItems().add(lineItem);
                 em.merge(inboundBin);
             }
+            em.flush();
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed to add item to receiving bin, item not found.");
@@ -235,25 +239,24 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     ) {
         try {
             System.out.println("moveSingleItemBetweenStorageBins() called with SKU:" + SKU);
-            em.refresh(source);
-            em.refresh(destination);
+            em.merge(source);
+            em.merge(destination);
             //remove one item from source
             if (checkIfStorageBinIsOfAppropriateItemType(destination.getId(), SKU)) {
                 LineItemEntity lineItem = checkIfItemExistInsideStorageBin(source.getId(), SKU);
-                em.refresh(lineItem);
+                em.merge(lineItem);
                 //if it is the last item
                 if (lineItem.getQuantity() == 1) {
                     source.getListOfLineItems().remove(lineItem);
                     em.remove(lineItem);
                 } else {
                     lineItem.setQuantity(lineItem.getQuantity() - 1);
-                    em.merge(lineItem);
                 }
                 em.flush();
                 System.out.println("Setting free volume of source bin...");
                 System.out.println("Free volume of source = source.getFreeVolume() + lineItem.getItem().getVolume(): " + source.getFreeVolume() + " + " + lineItem.getItem().getVolume());
                 source.setFreeVolume(source.getFreeVolume() + lineItem.getItem().getVolume());
-                em.merge(source);
+                em.flush();
 
                 //add one item to destination
                 lineItem = checkIfItemExistInsideStorageBin(destination.getId(), SKU);
@@ -266,23 +269,21 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
                     LineItemEntity newLineItem = new LineItemEntity(itemEntity, 1, "");
                     em.persist(newLineItem);
+                    em.flush();
+                    em.refresh(newLineItem);
                     newLineItem.setStorageBin(destination);
-                    em.merge(newLineItem);
                     destination.getListOfLineItems().add(newLineItem);
-                    em.merge(destination);
                     lineItem = newLineItem;
                     em.flush();
                 } else {
-                    em.refresh(lineItem);
-                    lineItem.setQuantity(lineItem.getQuantity() + 1);
                     em.merge(lineItem);
+                    lineItem.setQuantity(lineItem.getQuantity() + 1);
                     em.flush();
                 }
                 System.out.println("Setting free volume of destination bin...");
                 System.out.println("Free volume of destination = destination.getFreeVolume() - lineItem.getItem().getVolume(): " + destination.getFreeVolume() + " - " + lineItem.getItem().getVolume());
 
                 destination.setFreeVolume(destination.getFreeVolume() - lineItem.getItem().getVolume());
-                em.merge(destination);
                 em.flush();
                 if (destination.getFreeVolume() < 0) {
                     System.out.println("Destination bin ran out of storage space.");

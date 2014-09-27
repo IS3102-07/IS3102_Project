@@ -471,7 +471,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM RoleEntity t");
             roleEntities = q.getResultList();
             for (RoleEntity roleEntity : roleEntities) {
-                em.refresh(roleEntity);
+                em.merge(roleEntity);
                 result++;
             }
             System.out.println("Returned " + result + " roles.");
@@ -667,7 +667,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             em.merge(staffEntity);
             em.flush();
             for (RoleEntity role : roles) {
-                em.refresh(role);
+                em.merge(role);
             }
             System.out.println("Roles successfully updated for staff id:" + staffID);
             return true;
