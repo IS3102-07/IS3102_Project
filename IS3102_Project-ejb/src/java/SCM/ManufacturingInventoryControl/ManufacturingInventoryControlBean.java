@@ -75,13 +75,15 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
             WarehouseEntity warehouse = shippingOrderEntity.getOrigin();
             StorageBinEntity outbound = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouse.getId());
-            
+
+            em.merge(outbound);
             List<LineItemEntity> itemsInShippingOrder = shippingOrderEntity.getLineItems();
             //For each item in shipping order
             for (LineItemEntity lineItemEntity : itemsInShippingOrder) {
                 //Check if it's in outbound bin
-                em.merge(outbound);
+                em.merge(lineItemEntity);
                 LineItemEntity lineItemInOutboundBin = checkIfItemExistInsideStorageBin(outbound.getId(), lineItemEntity.getItem().getSKU());
+                
                 //Line item does not exist 
                 if (lineItemInOutboundBin == null) {
                     System.out.println("Outbound bin does not have sufficient quantity to ship the order.");
@@ -94,7 +96,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                         em.remove(lineItemInOutboundBin);
                         em.flush();
                     } else {
-                        if(lineItemInOutboundBin.getQuantity() == 0){
+                        if (lineItemInOutboundBin.getQuantity() == 0) {
                             System.out.println("Outbound bin has insufficient quantity to be removed. Please try again.");
                             throw new Exception();
                         }
@@ -125,6 +127,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             Long warehouseID = shippingOrderEntity.getDestination().getId();
             List<LineItemEntity> lineItemsInPurchaseOrder = shippingOrderEntity.getLineItems();
             for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
+                em.merge(lineItemEntity);
                 ItemEntity itemEntity = lineItemEntity.getItem();
                 int quantity = lineItemEntity.getQuantity();
                 for (int i = 0; i < quantity; i++) {
@@ -602,7 +605,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
 
             ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
-            System.out.println("Number of storage bins in warehouse id "+ warehouseID + ": " + storageBins.size());
+            System.out.println("Number of storage bins in warehouse id " + warehouseID + ": " + storageBins.size());
             //For each bin in the warehouse
             for (StorageBinEntity storageBin : storageBins) {
                 //Get all their contents
