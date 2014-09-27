@@ -80,13 +80,16 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                    <jsp:include page="../displayMessage.jsp" />
-
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Add or remove Bill Of Materials.
+                                <div class="panel-heading"> <%
+                                        String errMsg = request.getParameter("errMsg");
+                                        if (errMsg == null || errMsg.equals("")) {
+                                            errMsg = "Add or remove Bill of Materials";
+                                        }
+                                        out.println(errMsg);
+                                    %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="bomManagement">
