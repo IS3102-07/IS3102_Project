@@ -65,8 +65,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Add or remove retail product
+                                <div class="panel-heading"> <%
+                                        String errMsg = request.getParameter("errMsg");
+                                        if (errMsg == null || errMsg.equals("")) {
+                                            errMsg = "Add or remove retail product";
+                                        }
+                                        out.println(errMsg);
+                                    %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="retailProductManagement">
