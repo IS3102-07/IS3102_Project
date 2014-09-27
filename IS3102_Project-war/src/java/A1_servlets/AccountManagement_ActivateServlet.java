@@ -43,15 +43,15 @@ public class AccountManagement_ActivateServlet extends HttpServlet {
             } else {
                 if (accountType.equals("staff")) {
                     if (systemSecurityBean.activateStaffAccount(email, activationCode)) {
-                        response.sendRedirect("A1/staffLogin.jsp?errMsg=Account activated successfully. Please login with your username and activation code.");
+                        response.sendRedirect("A1/staffLogin.jsp?goodMsg=Account activated successfully. Please login with your username and activation code.");
                     } else {
-                        response.sendRedirect("A1/staffActivateAccount.jsp?msg=Activation Failed. Email or activation code is invalid.");
+                        response.sendRedirect("A1/staffActivateAccount.jsp?errMsg=Activation Failed. Email or activation code is invalid.");
                     }
                 } else if (accountType.equals("member")) {
                     if (systemSecurityBean.activateMemberAccount(email, activationCode)) {
-                        response.sendRedirect("A1/memberActivateAccount.jsp?msg=Account activated successfully.");
+                        response.sendRedirect("A1/memberActivateAccount.jsp?goodMsg=Account activated successfully.");
                     } else {
-                        response.sendRedirect("A1/memberActivateAccount.jsp?msg=Activation Failed. Email or activation code is invalid.");
+                        response.sendRedirect("A1/memberActivateAccount.jsp?errMsg=Activation Failed. Email or activation code is invalid.");
                     }
                 }
             }
