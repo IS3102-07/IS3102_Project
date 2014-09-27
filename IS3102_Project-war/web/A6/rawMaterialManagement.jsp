@@ -64,8 +64,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Add or delete raw materials
+                                <div class="panel-heading">                                    <%
+                                        String errMsg = request.getParameter("errMsg");
+                                        if (errMsg == null || errMsg.equals("")) {
+                                            errMsg = "Add or delete raw materials";
+                                        }
+                                        out.println(errMsg);
+                                    %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="rawMaterialManagement">
