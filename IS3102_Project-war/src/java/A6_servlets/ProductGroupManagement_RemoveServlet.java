@@ -26,7 +26,7 @@ public class ProductGroupManagement_RemoveServlet extends HttpServlet {
                     System.out.println(deleteArr1);
                     itemManagementBean.removeProductGroup(Long.valueOf(deleteArr1));
                 }
-                response.sendRedirect("ProductGroupManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("ProductGroupManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             }
         } catch (Exception ex) {
             out.println(ex);

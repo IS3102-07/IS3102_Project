@@ -33,7 +33,7 @@ public class ProductGroupLineItemManagement_AddServlet extends HttpServlet {
                 result = "?errMsg=Product group or SKU not found.&id=" + productGroupId;
                 response.sendRedirect("A6/productGroupManagement_AddLineItem.jsp" + result);
             } else {
-                result = "?goodMsg=Line item added successfully.&id=" + productGroupId;
+                result = "?errMsg=Line item added successfully.&id=" + productGroupId;
                 response.sendRedirect("ProductGroupLineItemManagement_Servlet" + result);
             }
 

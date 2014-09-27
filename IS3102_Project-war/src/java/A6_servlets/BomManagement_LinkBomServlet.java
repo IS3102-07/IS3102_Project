@@ -34,7 +34,7 @@ public class BomManagement_LinkBomServlet extends HttpServlet {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("BomManagement_BomServlet" + result);
             } else {
-                result = "?goodMsg=BOM linked successfully.";
+                result = "?errMsg=BOM linked successfully.";
                 response.sendRedirect("BomManagement_BomServlet" + result);
             }
         } catch (Exception ex) {

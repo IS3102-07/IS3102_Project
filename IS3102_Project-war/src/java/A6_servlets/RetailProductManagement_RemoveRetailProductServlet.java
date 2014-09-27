@@ -26,7 +26,7 @@ public class RetailProductManagement_RemoveRetailProductServlet extends HttpServ
                 for (String deleteArr1 : deleteArr) {
                     itemManagementBean.removeRetailProduct(deleteArr1);
                 }
-                response.sendRedirect("RetailProductManagement_RetailProductServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("RetailProductManagement_RetailProductServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             }
         } catch (Exception ex) {
             out.println(ex);

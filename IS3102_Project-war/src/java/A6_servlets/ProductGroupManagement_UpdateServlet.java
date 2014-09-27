@@ -29,7 +29,7 @@ public class ProductGroupManagement_UpdateServlet extends HttpServlet {
                 result = "?errMsg=Product group name already exist or Product group ID not found.&id=" + productGroupId;
                 response.sendRedirect("A6/productGroupManagement_Update.jsp" + result);
             } else {
-                result = "?goodMsg=Product group updated successfully.&id=" + productGroupId;
+                result = "?errMsg=Product group updated successfully.&id=" + productGroupId;
                 response.sendRedirect("ProductGroupLineItemManagement_Servlet" + result);
             }
         } catch (Exception ex) {

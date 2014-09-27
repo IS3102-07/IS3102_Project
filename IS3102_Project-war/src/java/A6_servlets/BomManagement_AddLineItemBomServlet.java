@@ -35,7 +35,7 @@ public class BomManagement_AddLineItemBomServlet extends HttpServlet {
                 response.sendRedirect("BomManagement_LineItemBomServlet" + result);
             } else {
                 System.out.println("can add line item in servlet");
-                result = "?goodMsg=Line Item added successfully.&id=" + bomId;
+                result = "?errMsg=Line Item added successfully.&id=" + bomId;
                 response.sendRedirect("BomManagement_LineItemBomServlet" + result);
             }
         } catch (Exception ex) {

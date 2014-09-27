@@ -30,7 +30,7 @@ public class RawMaterialManagement_UpdateRawMaterialServlet extends HttpServlet 
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("rawMaterialManagement_update.jsp" + result);
             } else {
-                result = "?goodMsg=Raw Material updated successfully.";
+                result = "?errMsg=Raw Material updated successfully.";
                 response.sendRedirect("RawMaterialManagement_RawMaterialServlet" + result);
             }
         } catch (Exception ex) {

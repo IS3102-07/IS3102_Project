@@ -31,7 +31,7 @@ public class FurnitureManagement_AddFurnitureServlet extends HttpServlet {
 
             if (!itemManagementBean.checkSKUExists(SKU)) {
                 itemManagementBean.addFurniture(SKU, name, category, description, imageURL, _length, width, height);
-                result = "?goodMsg=Furniture with SKU: " + SKU + " has been created successfully.";
+                result = "?errMsg=Furniture with SKU: " + SKU + " has been created successfully.";
                 response.sendRedirect("FurnitureManagement_FurnitureServlet" + result);
             } else {
                 result = "?errMsg=Failed to add furniture, SKU: " + SKU + " already exist.";
