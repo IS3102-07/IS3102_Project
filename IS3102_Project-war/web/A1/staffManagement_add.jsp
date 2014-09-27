@@ -1,6 +1,12 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
+        <script>
+            function addStaff() {
+                document.addStaffForm.action = "../StaffManagement_AddStaffServlet";
+                document.addStaffForm.submit();
+            }
+        </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
@@ -28,10 +34,9 @@
                     <!-- /.row -->
 
                     <jsp:include page="../displayMessage.jsp" />
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <form role="form" action="../StaffManagement_AddStaffServlet">
+                    <form role="form" name="addStaffForm">
+                        <div class="row">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Identification No</label>
                                     <input class="form-control" name="identificationNo" type="text" required="true">
@@ -61,35 +66,20 @@
                                     <input class="form-control" type="text" required="true" name="address" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+                                    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block"  onclick="addStaff()">
                                 </div>
                                 <input type="hidden" value="A1/staffManagement_add.jsp" name="source">
-                            </form>
+                            </div>
                         </div>
-                        <!-- /.row -->
+                    </form>
 
-                    </div>
                 </div>
 
             </div>
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-        <script>
-            function validatePassword() {
-                var password = document.getElementById("password").value;
-                var repassword = document.getElementById("repassword").value;
-                var ok = true;
-                if (password != repassword) {
-                    //alert("Passwords Do not match");
-                    document.getElementById("password").style.borderColor = "#E34234";
-                    document.getElementById("repassword").style.borderColor = "#E34234";
-                    alert("Passwords do not match. Please key again.");
-                    ok = false;
-                }
-                return ok;
-            }
-        </script>
+
     </body>
 
 </html>

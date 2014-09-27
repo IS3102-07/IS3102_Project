@@ -14,12 +14,10 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
                         <div class="panel-body">
-                            <form role="form" name="registrationForm" action="../StaffManagement_AddStaffServlet" onsubmit="return validatePassword()">
+                            <form role="form" name="registrationForm">
                                 <div class="box-content">
                                     <h3>Register An Account</h3>
-
                                     <jsp:include page="../displayMessageLong.jsp" />
-
                                 </div>
                                 <div class="row">
                                     <div class="form-group">
@@ -81,34 +79,26 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
-                                            <input type="submit" value="Register" class="btn btn-primary pull-left"  style="width:318px;">
+                                            <input type="submit" value="Register" class="btn btn-primary pull-left" onclick="validatePassword()" style="width:318px;">
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" value="A1/staffLogin.jsp" name="source">
-                                </div>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            function validatePassword() {
-                var password = document.getElementById("password").value;
-                var repassword = document.getElementById("repassword").value;
-                var ok = true;
-                if (password != repassword) {
-                    //alert("Passwords Do not match");
-                    document.getElementById("password").style.borderColor = "#E34234";
-                    document.getElementById("repassword").style.borderColor = "#E34234";
-                    alert("Passwords do not match. Please key again.");
-                    ok = false;
-                }
-                return ok;
-            }
-        </script>
+    <script>
+        function validatePassword() {
+            document.registrationForm.action = "../StaffManagement_AddStaffServlet";
+            document.registrationForm.submit();
+        }
+    </script>
 
-    </body>
+</body>
 </html>

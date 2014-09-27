@@ -33,7 +33,7 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String source = request.getParameter("source");
-
+            System.out.println("im in");
             boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
             if (ifExist) {
                 result = "?errMsg=Registration fail. Staff email already registered.";
@@ -57,10 +57,10 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
                         accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
                         systemSecurityBean.sendActivationEmailForStaff(email);
                         result = "?goodMsg=Staff added successfully.";
-                        response.sendRedirect(source+result);
+                        response.sendRedirect(source + result);
                     } else {
                         result = "?errMsg=You have entered an wrong Captcha code.";
-                        response.sendRedirect("A1/staffRegister.jsp"+result);
+                        response.sendRedirect("A1/staffRegister.jsp" + result);
                     }
 
                 }

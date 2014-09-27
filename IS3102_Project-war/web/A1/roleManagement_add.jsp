@@ -41,7 +41,7 @@
                                     <input class="form-control" name="accessLevel" type="text" required="true">
                                 </div>                                
                                 <div class="form-group">
-                                    <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
+                                    <input type="submit" value="Add Role" class="btn btn-lg btn-primary btn-block">
                                 </div>
                             </form>
                         </div>
