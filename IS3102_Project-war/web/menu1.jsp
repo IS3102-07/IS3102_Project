@@ -386,20 +386,6 @@
             </li>
             <% }
             %>
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#demo">
-                    <i class="icon icon-arrows-v"></i> Sample <i class="icon icon-caret-down"></i>
-                </a>
-                <ul id="demo" class="collapse">
-                    <li>
-                        <a href="../template/sampleManagement.jsp">Sample Management</a>
-                    </li>
-                    <li>
-                        <a href="../template/sampleManagement_update.jsp">Update Sample Management</a>
-                    </li>
-                </ul>
-
-            </li>
         </ul>
     </div>
     <!-- /.navbar-collapse -->

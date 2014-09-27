@@ -5,12 +5,14 @@
  */
 package A2_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.SaleAndOperationPlanEntity;
+import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.StoreHelper;
 import MRP.SalesAndOperationPlanning.SOP_Helper;
@@ -19,7 +21,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -33,13 +40,15 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleAndOperationPlanning_Servlet extends HttpServlet {
-
+    
+    AccountManagementBeanLocal amBean = lookupAccountManagementBeanLocal();
     @EJB
     private ItemManagementBeanLocal imBean;
     @EJB
     private FacilityManagementBeanLocal fmBean;
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -98,14 +107,17 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 break;
 
             case "/sop_index_Post":
-                try {
-                    String storeName = request.getParameter("storeName");
-                    StoreEntity store = fmBean.getStoreByName(storeName);
+
+                String storeName = request.getParameter("storeName");
+                StoreEntity store = fmBean.getStoreByName(storeName);                                                
+                StaffEntity currentUser = (StaffEntity)session.getAttribute("staffEntity");
+                if (amBean.canStaffAccessToTheStore(currentUser.getId(), store.getId())) {
                     session.setAttribute("sop_storeId", store.getId());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                    nextPage = "/SaleAndOperationPlanning_Servlet/sop_schedule_GET";
+                } else {
+                    request.setAttribute("alertMessage", "You are not allowed to access the store.");
+                    nextPage = "/SaleAndOperationPlanning_Servlet/sop_index_GET";
                 }
-                nextPage = "/SaleAndOperationPlanning_Servlet/sop_schedule_GET";
                 break;
 
             case "/sop_schedule_GET":
@@ -130,7 +142,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                     Long schedulelId = (long) session.getAttribute("scheduleId");
                     List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
                     List<SOP_Helper> sopHelperList = sopBean.getSOPHelperList(storeId, schedulelId);
-                    StoreEntity store = fmBean.viewStoreEntity(storeId);
+                    store = fmBean.viewStoreEntity(storeId);
                     MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
                     request.setAttribute("store", store);
                     request.setAttribute("schedule", schedule);
@@ -197,7 +209,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sopManagement":
                 String submit_btn = request.getParameter("submit-btn");
                 System.out.println("submit_btn: " + submit_btn);
-                if (submit_btn.equals("Delete Sales And Operation Plan")) {
+                if (submit_btn.equals("Delete Sales And Operations Plan")) {
                     System.out.println(" redirect to deleteSOP");
                     nextPage = "/SaleAndOperationPlanning_Servlet/deleteSOP";
                 } else {
@@ -297,5 +309,15 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private AccountManagementBeanLocal lookupAccountManagementBeanLocal() {
+        try {
+            Context c = new InitialContext();
+            return (AccountManagementBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean!CommonInfrastructure.AccountManagement.AccountManagementBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 
 }

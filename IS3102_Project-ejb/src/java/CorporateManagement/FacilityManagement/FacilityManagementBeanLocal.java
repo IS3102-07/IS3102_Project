@@ -62,6 +62,7 @@ public interface FacilityManagementBeanLocal {
     public Boolean deleteWarehouse(Long id);
     public WarehouseEntity getWarehouseByName(String warehouseName);
     public boolean checkNameExistsOfWarehouse(String name);
+    public boolean checkIfWarehouseContainsItem(Long id);
     
     public WarehouseEntity getWarehouseById(Long Id);
     public List<WarehouseEntity> getWarehouseList();

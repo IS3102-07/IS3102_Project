@@ -36,24 +36,21 @@
                 document.shippingOrderManagement.submit();
             }
             function submitSOLineItem() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.shippingOrderManagement_status.action = "../ShippingOrderLineItemManagement_UpdateServlet";
-                    document.shippingOrderManagement_status.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
+                window.event.returnValue = true;
+                document.shippingOrderManagement_status.action = "../ShippingOrderLineItemManagement_UpdateServlet";
+                document.shippingOrderManagement_status.submit();
             }
             function removeSOLineItem() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.shippingOrderManagement.action = "../ShippingOrderLineItemManagement_RemoveServlet";
-                    document.shippingOrderManagement.submit();
-                } else {
-                    window.event.returnValue = false;
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
                 }
+                window.event.returnValue = true;
+                document.shippingOrderManagement.action = "../ShippingOrderLineItemManagement_RemoveServlet";
+                document.shippingOrderManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -95,10 +92,10 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <form role="form" action="../ShippingOrderManagement_UpdateServlet">
+                                    <form role="form" id="myForm" action="../ShippingOrderManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>Origin</label>
-                                            <select class="form-control" name="origin" required="true" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
+                                            <select class="form-control" id="select_source" name="origin" required="true" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                                 <%
                                                     for (int i = 0; i < warehouses.size(); i++) {
                                                         if (warehouses.get(i).getWarehouseName().equals(shippingOrder.getOrigin().getWarehouseName())) {
@@ -115,7 +112,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Destination</label>
-                                            <select class="form-control" name="destination" required="true" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
+                                            <select class="form-control" name="destination" id="select_destination" required="true" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                                 <%
                                                     for (int i = 0; i < warehouses.size(); i++) {
                                                         if (warehouses.get(i).getWarehouseName().equals(shippingOrder.getDestination().getWarehouseName())) {
@@ -169,6 +166,8 @@
                                                         out.println("<option>Unfulfillable</option>");
                                                     } else if (shippingOrder.getStatus().equals("Unfulfillable")) {
                                                         out.println("<option>Unfulfillable</option>");
+                                                    } else if (shippingOrder.getStatus().equals("Completed")) {
+                                                        out.println("<option>Completed</option>");
                                                     }
                                                 %>
                                             </select>
@@ -176,7 +175,7 @@
                                         <div class="form-group">
                                             <input type="hidden" value="<%=shippingOrder.getDestination().getId()%>" name="destinationWarehouseID">
                                             <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
-                                            <input type="submit" onclick="javascript:submitSOLineItem()" value="<% if (!shippingOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Shipping Order <% if (!shippingOrder.getStatus().equals("Pending")) {%>Status<%}%>" class="btn btn-lg btn-primary btn-block <% if ((shippingOrder.getStatus().equals("Completed") || (shippingOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>">
+                                            <a <% if ((shippingOrder.getStatus().equals("Completed") || (shippingOrder.getStatus().equals("Unfulfillable")))) {%>href="#"<%} else {%>href="#submitConfirmation"<%}%>  data-toggle="modal"><button class="btn btn-lg btn-primary btn-block" <% if ((shippingOrder.getStatus().equals("Completed") || (shippingOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>><% if (!shippingOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Shipping Order</button></a>
                                         </div>
                                     </form>
 
@@ -200,7 +199,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addSOLineItem('<%=shippingOrder.getId()%>')"/>
-                                                        <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removeSOLineItem()"  />
+                                                        <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>Remove Line Item</button></a>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -247,7 +246,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addSOLineItem('<%=shippingOrder.getId()%>')"/>
-                                                <input <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%> class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removeSOLineItem()"  />
+                                                <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>Remove Line Item</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -266,11 +265,56 @@
         </div>
         <!-- /#wrapper -->
 
+        <div role="dialog" class="modal fade" id="removeLineItem">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Line Item will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeSOLineItem()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div role="dialog" class="modal fade" id="submitConfirmation">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnSubmit" type="submit" value="Confirm" onclick="submitSOLineItem()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function () {
                 $('#dataTables-example').dataTable();
+            });
+        </script>
+        <script>
+            $("#myForm").submit(function (e) {
+                var source = $("#select_source").find(":selected").text();
+                var destination = $("#select_destination").find(":selected").text();
+                if (source === destination) {
+                    alert("Source warehouse should not be the same as destination warehouse.");
+                    e.preventDefault();
+                }
+                else
+                    return true;
             });
         </script>
         <script>

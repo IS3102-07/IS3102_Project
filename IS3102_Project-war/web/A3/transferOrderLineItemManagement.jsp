@@ -22,7 +22,16 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
-
+        <script>
+            function submitTO() {
+                document.submitTOForm.action = "../TransferOrderLineItemManagement_UpdateServlet";
+                document.submitTOForm.submit();
+            }
+            function removeTOLineItem() {
+                document.removeTOForm.action = "../TransferOrderLineItemManagement_RemoveServlet";
+                document.removeTOForm.submit();
+            }
+        </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
@@ -52,7 +61,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    <jsp:include page="../displayMessage.jsp" />
+                    <jsp:include page="../displayMessageLong.jsp" />
 
                     <div class="row">
                         <div class="col-lg-6">
@@ -77,7 +86,7 @@
                                         <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
                                     </form>
                                     <%} else {%>
-                                    <form role="form" action="../TransferOrderLineItemManagement_RemoveServlet">
+                                    <form role="form" name="removeTOForm">
                                         <div class="form-group">
                                             <label>SKU</label>
                                             <input class="form-control" name="sku" type="text" value="<%=transferOrder.getLineItem().getItem().getSKU()%>" disabled >
@@ -87,7 +96,7 @@
                                             <input class="form-control" name="quantity" type="number" value="<%=transferOrder.getLineItem().getQuantity()%>" disabled >
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Remove Line Item" <%if (transferOrder.getStatus().equals("Completed") || transferOrder.getStatus().equals("Unfulfillable")) {%>disabled<%}%> class="btn btn-lg btn-primary btn-block">
+                                            <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary btn-lg btn-block" <%if (transferOrder.getStatus().equals("Completed") || transferOrder.getStatus().equals("Unfulfillable")) {%>disabled<%}%>>Remove Line Item</button></a>
                                         </div>
                                         <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
                                     </form>
@@ -117,24 +126,23 @@
                                             </select>
                                             <br>
                                             <div class="form-group">
-                                                <input type="submit" value="Update Status" class="btn btn-lg btn-primary btn-block" disabled="">
+                                                <input type="submit" value="Update Transfer Order" class="btn btn-lg btn-primary btn-block" disabled="">
                                             </div>
                                         </div>
                                     </form>
                                     <%
                                     } else {
                                     %>
-                                    <form role="form" action="../TransferOrderLineItemManagement_UpdateServlet">
+                                    <form role="form" name="submitTOForm">
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select class="form-control" name="status" required="true">
-                                                <option>Pending</option>
                                                 <option>Completed</option>
                                                 <option>Unfulfillable</option>
                                             </select>
                                             <br>
                                             <div class="form-group">
-                                                <input type="submit" value="Update Status" class="btn btn-lg btn-primary btn-block">
+                                                <a href="#submitConfirmation" data-toggle="modal"><button class="btn btn-lg btn-primary btn-block">Update Transfer Order</button></a>
                                             </div>
                                         </div>
                                         <input type="hidden" value="<%=transferOrder.getId()%>" name="id">
@@ -157,7 +165,39 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
+        <div role="dialog" class="modal fade" id="removeLineItem">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Line Item will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeTOLineItem()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div role="dialog" class="modal fade" id="submitConfirmation">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnSubmit" type="submit" value="Confirm"  onclick="submitTO()"/>
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 
 </html>

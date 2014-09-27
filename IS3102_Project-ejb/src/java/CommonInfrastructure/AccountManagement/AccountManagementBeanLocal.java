@@ -62,6 +62,8 @@ public interface AccountManagementBeanLocal {
     public List<RoleEntity> listRolesHeldByStaff(Long staffID);
 
     public RoleEntity searchRole(String name, String accessLevel);
+    
+    public RoleEntity searchRole(String name);
 
     public boolean checkIfStaffHasRole(Long staffID, Long roleID);
 
@@ -81,5 +83,12 @@ public interface AccountManagementBeanLocal {
     public Integer checkStaffInvalidLoginAttempts(String email);
     
     public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
-
+    
+    public Boolean canStaffAccessToTheRegionalOffice(Long StaffId, Long RegionalOfficeId);
+    
+    public Boolean canStaffAccessToTheStore(Long StaffId, Long StoreId);
+    
+    public Boolean canStaffAccessToTheManufacturingFacility(Long StaffId, Long MfId);
+    
+    public Boolean canStaffAccessToTheWarehouse(Long StaffId, Long warehouseId);
 }

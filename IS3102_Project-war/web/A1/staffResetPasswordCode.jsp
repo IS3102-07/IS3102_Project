@@ -9,16 +9,6 @@
 
     <body class="dark">
 
-        <%
-            String errMsg = request.getParameter("errMsg");
-            if (errMsg == null || errMsg.equals("")) {
-                errMsg = "";
-            } else {
-                errMsg +="<br/><br/>";
-            }
-            String email = request.getParameter("email");
-            
-        %>
         <div role="main" class="main">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
@@ -27,7 +17,7 @@
                             <form role="form" name="registrationForm" action="../AccountManagement_ResetPasswordServlet" onsubmit="return validatePassword()">
                                 <div class="box-content">
                                     <h3>Reset Account Password</h3>
-                                    <h10 class="text-info"><%=errMsg%></h10>
+                                    <jsp:include page="../displayMessageLong.jsp" />
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-12">
@@ -76,27 +66,27 @@
 
         <script>
             function validatePassword() {
-                    var password = document.getElementById("password").value;
-                    var repassword = document.getElementById("repassword").value;
-                    var ok = true;
-                    if ((password != null && repassword != null) || (password != "" && repassword != "")) {
-                        if (password != repassword) {
-                            //alert("Passwords Do not match");
-                            document.getElementById("password").style.borderColor = "#E34234";
-                            document.getElementById("repassword").style.borderColor = "#E34234";
-                            alert("Passwords do not match. Please key again.");
+                var password = document.getElementById("password").value;
+                var repassword = document.getElementById("repassword").value;
+                var ok = true;
+                if ((password != null && repassword != null) || (password != "" && repassword != "")) {
+                    if (password != repassword) {
+                        //alert("Passwords Do not match");
+                        document.getElementById("password").style.borderColor = "#E34234";
+                        document.getElementById("repassword").style.borderColor = "#E34234";
+                        alert("Passwords do not match. Please key again.");
+                        ok = false;
+                    } else if (password == repassword) {
+                        if (password.length < 8) {
+                            alert("Passwords too short. At least 8 characters.");
                             ok = false;
-                        } else if (password == repassword) {
-                            if (password.length < 8) {
-                                alert("Passwords too short. At least 8 characters.");
-                                ok = false;
-                            }
                         }
-                    } else {
-                        return ok;
                     }
+                } else {
                     return ok;
                 }
+                return ok;
+            }
         </script>
 
     </body>

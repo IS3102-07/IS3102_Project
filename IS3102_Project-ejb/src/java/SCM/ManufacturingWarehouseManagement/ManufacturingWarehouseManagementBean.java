@@ -1,12 +1,12 @@
 package SCM.ManufacturingWarehouseManagement;
 
-import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -55,6 +55,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             storageBin = new StorageBinEntity(warehouseEntity, type, _length, width, height);
             em.persist(storageBin);
+            warehouseEntity.getStorageBins().add(storageBin);
+            em.merge(warehouseEntity);
+            em.flush();
             System.out.println("Created storage bin successfully.");
             return true;
         } catch (EntityNotFoundException ex) {
@@ -249,6 +252,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 }
             }
             transferOrder.setStatus("Completed");
+            transferOrder.setDateTransferred(new Date());
+            em.merge(transferOrder);
+            em.flush();
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to markTransferOrderAsCompleted:\n" + ex);

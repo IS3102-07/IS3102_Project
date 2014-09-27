@@ -105,7 +105,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             System.out.println("\nServer failed to remove regional office:\n" + ex);
             return false;
         }
-        
+
     }
 
     @Override
@@ -410,13 +410,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     public boolean checkNameExistsOfWarehouse(String name) {
+        System.out.println("checkNameExistsOfWarehouse() called.");
         try {
-            Query q = em.createQuery("Select i from WarehouseEntity i where i.warehouseName:name");
+            Query q = em.createQuery("Select i from WarehouseEntity i where i.warehouseName=:name");
             q.setParameter("name", name);
             q.getSingleResult();
             return true;
         } catch (NoResultException n) {
-            System.out.println("\nServer return no result:\n" + n);
+            System.out.println("\ncheckNameExistsOfWarehouse(): No warehouse of that name exist.");
             return false;
         } catch (Exception ex) {
             System.out.println("\nServer failed to perform name check of warehouse:\n" + ex);
@@ -660,6 +661,19 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public boolean checkIfWarehouseContainsItem(Long id) {
+        try {
+            WarehouseEntity we = em.find(WarehouseEntity.class, id);
+            if (we.getStorageBins().isEmpty())
+            return false;
+            else return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }

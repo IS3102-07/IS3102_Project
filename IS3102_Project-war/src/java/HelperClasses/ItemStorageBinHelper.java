@@ -5,6 +5,7 @@ public class ItemStorageBinHelper {
     private String SKU;
     private String itemName;
     private Long storageBinID;
+    private String storageBinType;
     private Integer itemQty;
     private String itemType;
 
@@ -14,6 +15,14 @@ public class ItemStorageBinHelper {
 
     public void setLineItemID(Long lineItemID) {
         this.lineItemID = lineItemID;
+    }
+
+    public String getStorageBinType() {
+        return storageBinType;
+    }
+
+    public void setStorageBinType(String storageBinType) {
+        this.storageBinType = storageBinType;
     }
     
     public String getSKU() {

@@ -209,6 +209,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             //Check if storage bin have that type of item before
             LineItemEntity lineItem = checkIfItemExistInsideStorageBin(inboundBin.getId(), SKU);
             inboundBin.setFreeVolume(inboundBin.getFreeVolume() - itemEntity.getVolume());
+            em.merge(inboundBin);
             if (lineItem != null) {
                 em.refresh(lineItem);
                 lineItem.setQuantity(lineItem.getQuantity() + 1);
@@ -573,6 +574,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         System.out.println("getItemInsideStorageBin() called");
 
         try {
+            em.flush();
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
             List<LineItemEntity> listOfLineItems = storageBinEntity.getListOfLineItems();
             if (listOfLineItems == null || listOfLineItems.size() == 0) {
@@ -593,7 +595,8 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     public List<ItemStorageBinHelper> getItemList(Long warehouseID) {
         System.out.println("getItemList() called");
         try {
-            List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<ItemStorageBinHelper>();
+            em.flush();
+            List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<>();
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
 
@@ -614,6 +617,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                         itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
                         itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
                         itemStorageBinHelper.setStorageBinID(storageBin.getId());
+                        itemStorageBinHelper.setStorageBinType(storageBin.getType());
                         itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
                         itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());
                         itemStorageBinHelperList.add(itemStorageBinHelper);

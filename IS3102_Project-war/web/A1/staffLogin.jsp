@@ -8,13 +8,6 @@
     <jsp:include page="../header1.html" />
     <body class="dark">
 
-        <%
-            String errMsg = request.getParameter("errMsg");
-            if (errMsg == null || errMsg.equals("")) {
-                errMsg = "";
-            }
-        %>
-
         <div role="main" class="main">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">  
@@ -22,8 +15,11 @@
                         <div class="panel-heading"> 
                             <i class="icon-4x icon icon-unlock-alt"  style="margin-top: 10px;"></i><h6 class="panel-title">Sign In</h6>
                         </div>
-                        <h10 class="text-info"><%=errMsg%></h10>
+
                         <div class="panel-body">
+
+                            <jsp:include page="../displayMessageLong.jsp" />
+                            
                             <form role="form" name="LoginForm" action="../AccountManagement_LoginServlet">
 
                                 <div class="row">

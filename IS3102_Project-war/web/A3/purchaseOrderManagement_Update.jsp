@@ -38,24 +38,21 @@
                 document.purchaseOrderManagement.submit();
             }
             function submitPOLineItem() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.purchaseOrderManagement_status.action = "../PurchaseOrderLineItemManagement_UpdateServlet";
-                    document.purchaseOrderManagement_status.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
+                window.event.returnValue = true;
+                document.purchaseOrderManagement_status.action = "../PurchaseOrderLineItemManagement_UpdateServlet";
+                document.purchaseOrderManagement_status.submit();
             }
             function removePOLineItem() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_RemoveServlet";
-                    document.purchaseOrderManagement.submit();
-                } else {
-                    window.event.returnValue = false;
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
                 }
+                window.event.returnValue = true;
+                document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_RemoveServlet";
+                document.purchaseOrderManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -170,6 +167,8 @@
                                                         out.println("<option>Unfulfillable</option>");
                                                     } else if (purchaseOrder.getStatus().equals("Unfulfillable")) {
                                                         out.println("<option>Unfulfillable</option>");
+                                                    } else if (purchaseOrder.getStatus().equals("Completed")) {
+                                                        out.println("<option>Completed</option>");
                                                     }
                                                 %>
                                             </select>
@@ -177,7 +176,7 @@
                                         <div class="form-group">
                                             <input type="hidden" value="<%=purchaseOrder.getReceivedWarehouse().getId()%>" name="destinationWarehouseID">
                                             <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">
-                                            <input type="submit" onclick="javascript:submitPOLineItem()" value="<% if (!purchaseOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Purchase Order <% if (!purchaseOrder.getStatus().equals("Pending")) {%>Status<%}%>" class="btn btn-lg btn-primary btn-block <% if ((purchaseOrder.getStatus().equals("Completed") || (purchaseOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>">
+                                            <a <% if ((purchaseOrder.getStatus().equals("Completed") || (purchaseOrder.getStatus().equals("Unfulfillable")))) {%>href="#"<%} else {%>href="#submitConfirmation"<%}%>  data-toggle="modal"><button class="btn btn-lg btn-primary btn-block" <% if ((purchaseOrder.getStatus().equals("Completed") || (purchaseOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>><% if (!purchaseOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Purchase Order</button></a>
                                         </div>
                                     </form>
                                 </div>
@@ -200,7 +199,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPOLineItem('<%=purchaseOrder.getId()%>')"/>
-                                                        <input <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%> class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removePOLineItem()"  />
+                                                        <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary" <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%>>Remove Line Item</button></a>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -247,7 +246,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPOLineItem('<%=purchaseOrder.getId()%>')"/>
-                                                <input <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%> class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removePOLineItem()"  />
+                                                <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary" <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%>>Remove Line Item</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -266,7 +265,39 @@
         </div>
         <!-- /#wrapper -->
 
+        <div role="dialog" class="modal fade" id="removeLineItem">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Line Item will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removePOLineItem()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div role="dialog" class="modal fade" id="submitConfirmation">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Confirmation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnSubmit" type="submit" value="Confirm" onclick="submitPOLineItem()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function () {

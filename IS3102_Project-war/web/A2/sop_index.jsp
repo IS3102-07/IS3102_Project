@@ -17,7 +17,7 @@
                             <h1 class="page-header">Sales And Operations Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operations Planning</a>
+                                    <i class="icon icon-pencil"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operations Planning</a>
                                 </li>                                
                             </ol>
                         </div>
@@ -30,10 +30,10 @@
                             max-width: 300px;
                         }
                     </style>                                       
-                    
+
                     <a href="../SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET"><button class="btn btn-primary">Schedule Management</button></a>
                     <br><br>
-                    
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -86,6 +86,16 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
+
+        <%
+            if (request.getAttribute("alertMessage") != null) {
+        %>
+        <script>
+            alert("<%= request.getAttribute("alertMessage")%>");
+        </script>
+        <%
+            }
+        %>
 
         <script>
             function getStore() {

@@ -75,6 +75,7 @@
                                                             <th>SKU</th>
                                                             <th>Item Name</th>
                                                             <th>Storage Bin ID</th>
+                                                            <th>Bin Type</th>
                                                             <th>Item Quantity</th>
                                                             <th>Item Type</th>
                                                             <th>Delete</th>
@@ -95,6 +96,9 @@
                                                             </td>
                                                             <td>
                                                                 <%=itemStorageBinHelpers.get(i).getStorageBinID()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=itemStorageBinHelpers.get(i).getStorageBinType()%>
                                                             </td>
                                                             <td>
                                                                 <%=itemStorageBinHelpers.get(i).getItemQty()%>

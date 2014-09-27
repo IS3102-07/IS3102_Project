@@ -5,8 +5,17 @@ public class ItemStorageBinHelper {
     private String SKU;
     private String itemName;
     private Long storageBinID;
+    private String storageBinType;
     private Integer itemQty;
     private String itemType;
+
+    public String getStorageBinType() {
+        return storageBinType;
+    }
+
+    public void setStorageBinType(String storageBinType) {
+        this.storageBinType = storageBinType;
+    }
 
     public Long getLineItemID() {
         return lineItemID;
