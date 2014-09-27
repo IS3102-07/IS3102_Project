@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SCM.InboundAndOutboundLogistics;
 
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.ShippingOrderEntity;
+import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
+import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +25,9 @@ import javax.persistence.TemporalType;
 
 @Stateless
 public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogisticsBeanLocal {
+
+    @EJB
+    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
 
     @EJB
     private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
@@ -217,15 +217,36 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Boolean updateShippingOrderStatus(Long id, String status) {
+        System.out.println("updateShippingOrderStatus() called.");
         try {
             ShippingOrderEntity shippingOrder = em.find(ShippingOrderEntity.class, id);
             if (!shippingOrder.getStatus().equals("Completed")) {
                 shippingOrder.setStatus(status);
-                if (status.equals("Shipped")) {//hello world
+                if (status.equals("Shipped")) {
                     List<LineItemEntity> listOfLineItems = shippingOrder.getLineItems();
                     for (LineItemEntity lineItemInShippingOrder : listOfLineItems) {
                         em.merge(lineItemInShippingOrder);
                         int quantityToMove = lineItemInShippingOrder.getQuantity();
+
+                        //ensure that storage bin can meet shipping order quantity
+                        WarehouseEntity warehouse = shippingOrder.getOrigin();
+                        StorageBinEntity outbound = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouse.getId());
+                        em.merge(outbound);
+                        em.refresh(outbound);
+                        List<LineItemEntity> listOfLineItemsInOutboundBin = outbound.getListOfLineItems();
+                        System.out.println("Size of listOfLineItemsInOutboundBin: " + listOfLineItemsInOutboundBin.size());
+                        for (LineItemEntity lineItemInOutboundBin : listOfLineItemsInOutboundBin) {
+                            if (lineItemInOutboundBin.getItem().getSKU().equals(lineItemInShippingOrder.getItem().getSKU())) {
+                                int quantityInOutboundBin = lineItemInOutboundBin.getQuantity();
+                                System.out.println("updateShippingOrderStatus(): quantityToMove: " + quantityToMove);
+                                System.out.println("updateShippingOrderStatus(): quantityInOutboundBin: " + quantityInOutboundBin);
+                                if (quantityToMove > quantityInOutboundBin) {
+                                    System.out.println("Outbound bin does not have enough quantity to move.");
+                                    throw new Exception();
+                                }
+                            }
+                        }//end of "ensure that storage bin can meet shipping order quantity"
+
                         boolean isRemovedSuccessfully;
                         System.out.println("Quantity to move: " + quantityToMove);
                         for (int i = 0; i < quantityToMove; i++) {
@@ -253,7 +274,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
                         shippingOrder.setStatus("Shipped");
                         return false;
                     }
-                    
+
                     shippingOrder.setReceivedDate(new Date());
                 }
             }
