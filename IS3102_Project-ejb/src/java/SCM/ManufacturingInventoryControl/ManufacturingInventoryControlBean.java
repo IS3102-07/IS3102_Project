@@ -91,6 +91,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                         outbound.getListOfLineItems().remove(lineItemInOutboundBin);
                         em.remove(lineItemInOutboundBin);
                     } else {
+                        if(lineItemInOutboundBin.getQuantity() == 0){
+                            System.out.println("Outbound bin has insufficient quantity to be removed. Please try again.");
+                            throw new Exception();
+                        }
                         lineItemInOutboundBin.setQuantity(lineItemInOutboundBin.getQuantity() - 1);
                         em.merge(lineItemInOutboundBin);
                     }
