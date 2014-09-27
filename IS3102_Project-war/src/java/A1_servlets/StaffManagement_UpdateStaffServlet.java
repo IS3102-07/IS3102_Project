@@ -44,7 +44,7 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                 } else {
                     StaffEntity staffEntity = accountManagementBean.getStaffByEmail(email);
                     session.setAttribute("staffEntity", staffEntity);
-                    result = "?goodMsg=Particulars updated successfully.";
+                    result = "?errMsg=Particulars updated successfully.";
                     response.sendRedirect(source + result);
                 }
             } else {
@@ -75,7 +75,7 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     if (!canUpdateInfo || !canUpdateRoles) {
                         response.sendRedirect("A1/staffManagement_update.jsp?" + result);
                     } else {
-                        result = "?goodMsg=Staff updated successfully.";
+                        result = "?errMsg=Staff updated successfully.";
                         response.sendRedirect("StaffManagement_StaffServlet" + result);
                     }
                 } else {

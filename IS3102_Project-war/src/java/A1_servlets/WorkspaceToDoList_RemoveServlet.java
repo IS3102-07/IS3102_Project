@@ -38,7 +38,7 @@ public class WorkspaceToDoList_RemoveServlet extends HttpServlet {
                 for (String s : deleteArr) {
                     workspaceBean.removeToDoList(staffId, Long.parseLong(s));
                 }
-                response.sendRedirect("WorkspaceToDoList_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("WorkspaceToDoList_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
                 response.sendRedirect("A1/workspace_toDoList.jsp?errMsg=Nothing is selected.");
             }

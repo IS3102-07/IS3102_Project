@@ -40,7 +40,7 @@ public class WorkspaceToDoList_AddServlet extends HttpServlet {
                 result = "?errMsg=Error creating ToDo record. Please try again.";
                 response.sendRedirect("WorkspaceToDoList_Servlet" + result);
             } else {
-                result = "?goodMsg=ToDo record added successfully.";
+                result = "?errMsg=ToDo record added successfully.";
                 response.sendRedirect("WorkspaceToDoList_Servlet" + result);
             }
         } catch (Exception ex) {

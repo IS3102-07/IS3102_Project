@@ -11,15 +11,11 @@
                 document.toDoList.submit();
             }
             function removeToDoList() {
-                var yes = confirm("Are you sure?!");
-                if (yes === true) {
-                    //window.event.returnValue = true;
+                    window.event.returnValue = true;
                     document.toDoList.action = "../WorkspaceToDoList_RemoveServlet";
-                    document.toDoList.submit();
-                } else {
-                    window.event.returnValue = false;
+                    document.toDoList.submit();            
                 }
-            }
+            
             function markDoneOrUndone(id) {
                 toDoList.id.value = id;
                 document.toDoList.action = "../WorkspaceToDoList_UpdateServlet";
@@ -77,7 +73,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add a task"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete task(s)" onclick="removeToDoList()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Delete task(s)</button></a>
                                                 </div>
                                             </div>
                                             <br>
@@ -139,7 +135,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" id="add" name="" type="button" value="Add a task"  />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Delete task(s)" onclick="removeToDoList()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Delete task(s)</button></a>
                                                 </div>
                                             </div>  
                                         </div>
@@ -172,6 +168,22 @@
                 <!-- /.container-fluid -->
             </div>
             <!-- /#page-wrapper -->
+        </div>
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Task will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeToDoList()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /#wrapper -->
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->

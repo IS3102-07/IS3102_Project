@@ -26,7 +26,7 @@ public class ManufacturingInventoryControl_RemoveServlet extends HttpServlet {
 
             if (storageBinID != null && lineItemID != null) {
                 manufacturingInventoryControlBeanLocal.emptyStorageBin(Long.parseLong(lineItemID), Long.parseLong(storageBinID));
-                response.sendRedirect("ManufacturingInventoryControl_Servlet?goodMsg=Successfully removed all instance of the selected item from storage bin.");
+                response.sendRedirect("ManufacturingInventoryControl_Servlet?errMsg=Successfully removed all instance of the selected item from storage bin.");
             } else {
                 response.sendRedirect("A3/manufacturingInventoryControlManagement.jsp?errMsg=Nothing is selected.");
             }
