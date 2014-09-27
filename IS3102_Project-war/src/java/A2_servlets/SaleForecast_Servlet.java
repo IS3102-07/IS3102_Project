@@ -20,12 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -40,7 +35,8 @@ import javax.servlet.http.HttpSession;
  */
 public class SaleForecast_Servlet extends HttpServlet {
 
-    AccountManagementBeanLocal amBean = lookupAccountManagementBeanLocal();
+    @EJB
+    private AccountManagementBeanLocal amBean;
 
     @EJB
     private SalesForecastBeanLocal sfBean;
@@ -185,15 +181,4 @@ public class SaleForecast_Servlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private AccountManagementBeanLocal lookupAccountManagementBeanLocal() {
-        try {
-            Context c = new InitialContext();
-            return (AccountManagementBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean!CommonInfrastructure.AccountManagement.AccountManagementBeanLocal");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
 }
