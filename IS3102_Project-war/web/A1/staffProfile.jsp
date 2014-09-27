@@ -33,7 +33,7 @@
                                         <a href="#overview" data-toggle="tab"><i class="icon icon-user"></i> Overview</a>
                                     </li>
                                     <li>
-                                        <a href="#recent" data-toggle="tab">Recent</a>
+                                        <a href="#roles" data-toggle="tab">Roles</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -85,9 +85,16 @@
                                         </form>
 
                                     </div>
-                                    <div id="recent" class="tab-pane">
-                                        <p>Recent</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+                                    <div id="roles" class="tab-pane">
+                                        <h4>Position held in Island Furniture</h4>
+                                        <ul>
+                                            <%
+                                                List<RoleEntity> roles = staffEntity.getRoles();
+                                                for (int i = 0; i < roles.size(); i++) {
+                                                    out.println("<li>" + roles.get(i).getName() + "</li>");
+                                                }
+                                            %>
+                                        </ul>
                                     </div>
                                 </div>
 
@@ -102,8 +109,7 @@
             </div>
             <!-- /#wrapper -->
 
-            <%
-                } catch (Exception ex) {
+            <%                } catch (Exception ex) {
                     response.sendRedirect("../StaffManagement_StaffServlet");
                     ex.printStackTrace();
                 }%>
@@ -119,7 +125,7 @@
                             document.getElementById("repassword").style.borderColor = "#E34234";
                             alert("Passwords do not match. Please key again.");
                             ok = false;
-                        } 
+                        }
                     } else {
                         return ok;
                     }
