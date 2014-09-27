@@ -21,7 +21,7 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
     @EJB
     private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
-    
+
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
     private String result;
@@ -36,7 +36,6 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
             String quantity = request.getParameter("quantity");
             String status = request.getParameter("status");
             ShippingOrderEntity shippingOrderEntity = inboundAndOutboundLogisticsBean.getShippingOrderById(Long.parseLong(shippingOrderId));
-
             if (status != null) {
                 if (shippingOrderEntity.getStatus().equals("Pending")) {
                     //get shippingOrder
@@ -73,9 +72,14 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
                     }
                 } else {
-                    inboundAndOutboundLogisticsBean.updateShippingOrderStatus(Long.parseLong(shippingOrderId), status);
-                    result = "?goodMsg=Shipping Order updated successfully.&id=" + shippingOrderId;
-                    response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
+                    boolean canUpdate = inboundAndOutboundLogisticsBean.updateShippingOrderStatus(Long.parseLong(shippingOrderId), status);
+                    if (canUpdate) {
+                        result = "?goodMsg=Shipping Order updated successfully.&id=" + shippingOrderId;
+                        response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
+                    } else {
+                        result = "?errMsg=Failed to update shipping order to shipped. Outbound bin not found or no items.&id=" + shippingOrderId;
+                        response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
+                    }
                 }
 
             } else {

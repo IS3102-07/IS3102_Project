@@ -75,7 +75,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
             WarehouseEntity warehouse = shippingOrderEntity.getOrigin();
             StorageBinEntity outbound = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouse.getId());
-
+            if (outbound == null) {
+                System.out.println("removeItemFromOutboundBinForShipping(): Outbound bin does not exist.");
+                return false;
+            }
             em.merge(outbound);
             List<LineItemEntity> itemsInShippingOrder = shippingOrderEntity.getLineItems();
             //For each item in shipping order
@@ -83,7 +86,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 //Check if it's in outbound bin
                 em.merge(lineItemEntity);
                 LineItemEntity lineItemInOutboundBin = checkIfItemExistInsideStorageBin(outbound.getId(), lineItemEntity.getItem().getSKU());
-                
+
                 //Line item does not exist 
                 if (lineItemInOutboundBin == null) {
                     System.out.println("Outbound bin does not have sufficient quantity to ship the order.");
@@ -103,7 +106,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                         lineItemInOutboundBin.setQuantity(lineItemInOutboundBin.getQuantity() - 1);
                         em.flush();
                     }
+                    em.merge(outbound);
                     outbound.setFreeVolume(outbound.getFreeVolume() + lineItemInOutboundBin.getItem().getVolume());
+                    System.out.println("Setting outbound volume...");
+                    System.out.println("Outbound volume = outbound.getFreeVolume() + lineItemInOutboundBin.getItem().getVolume()" + outbound.getFreeVolume() + "+" + lineItemInOutboundBin.getItem().getVolume());
                     em.flush();
                 }
             }
@@ -136,6 +142,9 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     }
                 }
             }
+            em.merge(shippingOrderEntity);
+            shippingOrderEntity.setStatus("Completed");
+            em.flush();
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("Could not find either shipping order or the warehouse.");
