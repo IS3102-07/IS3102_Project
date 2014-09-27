@@ -235,12 +235,23 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         System.out.println("markTransferOrderAsCompleted() called");
         try {
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
-            Integer numberOfQuantityToMove = transferOrder.getLineItem().getQuantity();
-            System.out.println("The number of quantity to move is " + numberOfQuantityToMove);
-            for (int i = 0; i < numberOfQuantityToMove; i++) {
+            Integer quantityToMove = transferOrder.getLineItem().getQuantity();
+            System.out.println("The number of quantity to move is " + quantityToMove);
+            
+            LineItemEntity lineItem = transferOrder.getLineItem();
+            em.merge(lineItem);
+            int itemVolume = lineItem.getItem().getVolume();
+            int totalVolume = itemVolume * quantityToMove;
+            StorageBinEntity targetBin = transferOrder.getTarget();
+            int targetFreeVolume = targetBin.getFreeVolume();
+            if(totalVolume > targetFreeVolume){
+                throw new Exception();
+            }
+            
+            for (int i = 0; i < quantityToMove; i++) {
                 String SKU = transferOrder.getLineItem().getItem().getSKU();
                 StorageBinEntity originBin = transferOrder.getOrigin();
-                StorageBinEntity targetBin = transferOrder.getTarget();
+                targetBin = transferOrder.getTarget();
                 System.out.println("Moving in progress....");
                 System.out.println("SKU number is " + SKU);
                 System.out.println("originBin: " + originBin.getId() + " moving to targetBin: " + targetBin.getId());
