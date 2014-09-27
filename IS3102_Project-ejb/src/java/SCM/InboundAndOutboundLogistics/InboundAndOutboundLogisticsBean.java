@@ -16,6 +16,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -26,12 +28,12 @@ import javax.persistence.TemporalType;
 
 @Stateless
 public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogisticsBeanLocal {
+
     @EJB
     private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
-    
 
     @Override
     public ShippingOrderEntity createShippingOrderBasicInfo(Date expectedReceivedDate, Long sourceWarehouseID, Long destinationWarehouseID) {
@@ -64,7 +66,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
             System.out.println("Lineitem added.");
             return true;
         } catch (NoResultException ex) {
-            System.out.println("Failed to addLineItemToShippingOrder(). Purchase order or SKU not found.");
+            System.out.println("Failed to addLineItemToShippingOrder(). Shipping order or SKU not found.");
             return false;
         } catch (Exception ex) {
             System.out.println("Fail to addLineItemToShippingOrder()");
@@ -89,7 +91,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
             System.out.println("Lineitem added.");
             return true;
         } catch (NoResultException ex) {
-            System.out.println("Failed to addLineItemToShippingOrder(). Purchase order or SKU not found.");
+            System.out.println("Failed to addLineItemToShippingOrder(). Shipping order or SKU not found.");
             return false;
         } catch (Exception ex) {
             System.out.println("Fail to addLineItemToShippingOrder()");
@@ -192,7 +194,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
 
     @Override
     public Boolean updateShippingOrder(Long shippingOrderID, Long sourceWarehouseID, Long destinationWarehouseID, Date expectedReceivedDate) {
-        System.out.println("updatePurchaseOrder() called");
+        System.out.println("updateShippingOrder() called");
         try {
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
             WarehouseEntity sourceWarehouse = em.getReference(WarehouseEntity.class, sourceWarehouseID);
@@ -206,24 +208,53 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
             System.out.println("Shipping order or supplier or warehouse not found.");
             return false;
         } catch (Exception ex) {
-            System.out.println("Failed to updatePurchaseOrder.");
+            System.out.println("Failed to updateShippingOrder.");
             ex.printStackTrace();
             return false;
         }
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Boolean updateShippingOrderStatus(Long id, String status) {
         try {
             ShippingOrderEntity shippingOrder = em.find(ShippingOrderEntity.class, id);
             if (!shippingOrder.getStatus().equals("Completed")) {
                 shippingOrder.setStatus(status);
-                if (status.equals("Shipped")) {
+                if (status.equals("Shipped")) {//hello world
+                    List<LineItemEntity> listOfLineItems = shippingOrder.getLineItems();
+                    for (LineItemEntity lineItemInShippingOrder : listOfLineItems) {
+                        em.merge(lineItemInShippingOrder);
+                        int quantityToMove = lineItemInShippingOrder.getQuantity();
+                        boolean isRemovedSuccessfully;
+                        System.out.println("Quantity to move: " + quantityToMove);
+                        for (int i = 0; i < quantityToMove; i++) {
+                            System.out.println("moving item...");
+                            isRemovedSuccessfully = manufacturingInventoryControlBean.removeItemFromOutboundBinForShipping(id);
+                            em.merge(shippingOrder);
+                            em.flush();
+                            em.refresh(shippingOrder);
+                            if (!isRemovedSuccessfully) {
+                                shippingOrder.setStatus("Submitted");
+                                em.flush();
+                                throw new Exception();
+                            }
+                        }
+                    }
+
                     shippingOrder.setShippedDate(new Date());
-                    manufacturingInventoryControlBean.removeItemFromOutboundBinForShipping(id);
+
                 } else if (status.equals("Completed")) {
+                    boolean isMovedToReceivingBin = manufacturingInventoryControlBean.moveInboundShippingOrderItemsToReceivingBin(id);
+                    em.merge(shippingOrder);
+                    em.refresh(shippingOrder);
+                    System.out.println("Moving items to receiving bin...");
+                    if (!isMovedToReceivingBin) {
+                        shippingOrder.setStatus("Shipped");
+                        return false;
+                    }
+                    
                     shippingOrder.setReceivedDate(new Date());
-                    manufacturingInventoryControlBean.moveInboundShippingOrderItemsToReceivingBin(id);
                 }
             }
             em.persist(shippingOrder);
