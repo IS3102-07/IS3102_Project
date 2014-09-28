@@ -71,7 +71,7 @@ public class StartupBean {
                 StaffEntity staffEntity = new StaffEntity();
                 String passwordSalt = accountManagementBean.generatePasswordSalt();
                 String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "admin");
-                staffEntity.create("S0000000A", "Administrator", "+65 65162727", "admin@IF.com", "Island Furniture", passwordSalt, passwordHash);
+                staffEntity.create("S0000000A", "Administrator", "+65 65162727", "admin@if.com", "Island Furniture", passwordSalt, passwordHash);
                 staffEntity.setAccountActivationStatus(true);
                 List<RoleEntity> roles = new ArrayList();
                 Query e = em.createQuery("SELECT t FROM RoleEntity t where t.name='Administrator'");
@@ -129,11 +129,11 @@ public class StartupBean {
             }
             try {
                 //Create item
-                FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "LiINNMON ADILS", "Tables & Desks", "Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 1, 1, 1);
+                FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "Table 1", "Tables & Desks", "Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 100, 74, 60);
                 em.persist(furnitureEntity);
-                furnitureEntity = new FurnitureEntity("F2", "MOSHULT", "Beds & Mattresses", "Get all-over This mattress is approved for children.Get all-over suppoall-over support and comfort with a resilient foam mattress.", "imageURL", 1, 1, 1);
+                furnitureEntity = new FurnitureEntity("F2", "Bed 1", "Beds & Mattresses", "Get all-over This mattress is approved for children.Get all-over suppoall-over support and comfort with a resilient foam mattress.", "imageURL", 200, 10, 90);
                 em.persist(furnitureEntity);
-                furnitureEntity = new FurnitureEntity("F3", "LiINNMON ADILSs", "Tables & Desks", "Pre-drilled holes for legs, for very easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 1, 1, 1);
+                furnitureEntity = new FurnitureEntity("F3", "Table 2", "Tables & Desks", "The table top in tempered glass is stain resistant and easy to clean. Adjustable feet make the table stand steady also on uneven floors.", "imageURL", 99, 71, 52);
                 em.persist(furnitureEntity);
                 RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
                 em.persist(rawMaterialEntity);
