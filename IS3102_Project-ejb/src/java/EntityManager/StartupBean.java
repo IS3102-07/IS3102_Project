@@ -71,7 +71,7 @@ public class StartupBean {
                 StaffEntity staffEntity = new StaffEntity();
                 String passwordSalt = accountManagementBean.generatePasswordSalt();
                 String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "admin");
-                staffEntity.create("S0000000A", "Administrator", "+65 65162727", "a@a", "Island Furniture", passwordSalt, passwordHash);
+                staffEntity.create("S0000000A", "Administrator", "+65 65162727", "admin@IF.com", "Island Furniture", passwordSalt, passwordHash);
                 staffEntity.setAccountActivationStatus(true);
                 List<RoleEntity> roles = new ArrayList();
                 Query e = em.createQuery("SELECT t FROM RoleEntity t where t.name='Administrator'");

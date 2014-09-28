@@ -66,13 +66,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">View Announcements</h1>
+                            <h1 class="page-header"> Announcements</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-dashboard"></i>  <a href="../Workspace_Servlet">Workspace</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-bell"></i> View Announcements
+                                    <i class="icon icon-bell"></i> Announcements
                                 </li>
                             </ol>
                         </div>
