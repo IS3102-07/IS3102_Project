@@ -107,7 +107,7 @@
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-envelope"></i> <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-envelope"> Inbox</i> <b class="caret"></b></a>
             <ul class="dropdown-menu message-dropdown">
                 <li class="message-preview" id="m1">
                     <a href="../WorkspaceMessage_Servlet">
