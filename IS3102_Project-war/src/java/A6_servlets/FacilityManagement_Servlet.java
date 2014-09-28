@@ -26,6 +26,7 @@ public class FacilityManagement_Servlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal fmBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -67,17 +68,16 @@ public class FacilityManagement_Servlet extends HttpServlet {
                     String email = request.getParameter("email");
 
                     if (fmBean.checkNameExistsOfWarehouse(warehouseName)) {
-                        request.setAttribute("alertMessage", "Fail to create warehouse due to duplicated warehouse name.");
+                        result = "?errMsg=Fail to create warehouse due to duplicated warehouse name.";
                     } else {
                         WarehouseEntity warehouse = fmBean.createWarehouse(warehouseName, address, telephone, email);
                         if (warehouse != null) {
-                            request.setAttribute("alertMessage", "A new warehouse record has been saved.");
+                            result = "?goodMsg=A new warehouse record has been saved.";
                         } else {
-                            request.setAttribute("alertMessage", "Fail to create warehouse due to duplicated warehouse name.");
+                            result = "?errMsg=Fail to create warehouse due to duplicated warehouse name.";
                         }
-                        request.setAttribute("warehouse", warehouse);
                     }
-                    nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
+                    nextPage = "/FacilityManagement_Servlet/warehouseManagement_index" + result;
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -98,14 +98,13 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 String email = request.getParameter("email");
                 Long id = Long.parseLong(request.getParameter("warehouseId"));
 
-                if (fmBean.checkNameExistsOfWarehouse(warehouseName)) {
-                    request.setAttribute("alertMessage", "Fail to edit warehouse due to duplicated warehouse name.");
-                } else if (fmBean.editWarehouse(id, warehouseName, address, telephone, email)) {
-                    request.setAttribute("alertMessage", "The warehouse has been saved.");
+                if (fmBean.editWarehouse(id, warehouseName, address, telephone, email)) {
+                    result = "?goodMsg=The warehouse has been updated.";
+
                 } else {
-                    request.setAttribute("alertMessage", "Fail to edit warehouse.");
+                    result = "?errMsg=Fail to edit warehouse.";
                 }
-                nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
+                nextPage = "/FacilityManagement_Servlet/warehouseManagement_index" + result;
                 break;
 
             case "/deleteWarehouse":
@@ -116,12 +115,15 @@ public class FacilityManagement_Servlet extends HttpServlet {
                         Long warehouse_Id = Long.parseLong(warehouseString);
                         if (!fmBean.checkIfWarehouseContainsItem(warehouse_Id)) {
                             fmBean.deleteWarehouse(warehouse_Id);
+                            result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";
+
                         } else {
-                            request.setAttribute("alertMessage", "Fail to delete warehouse as the warehouse contains storage bins");
+                            result = "?errMsg=Fail to delete warehouse as the warehouse contains storage bins.";
                         }
                     }
                 }
-                nextPage = "/FacilityManagement_Servlet/warehouseManagement_index";
+
+                nextPage = "/FacilityManagement_Servlet/warehouseManagement_index" + result;
                 break;
 
         }

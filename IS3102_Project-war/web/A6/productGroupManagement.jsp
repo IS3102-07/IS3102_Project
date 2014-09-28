@@ -16,7 +16,7 @@
         <script>
             function updatePG(id) {
                 productGroupManagement.id.value = id;
-                document.productGroupManagement.action = "../ProductGroupLineItemManagement_Servlet";
+                document.productGroupManagement.action = "productGroupManagement_Update.jsp";
                 document.productGroupManagement.submit();
             }
             function addPG() {

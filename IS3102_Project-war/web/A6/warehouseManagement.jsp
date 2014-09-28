@@ -109,7 +109,7 @@
                                                             <td><%= warehouse.getAddress()%></td>
                                                             <td><%= warehouse.getTelephone()%></td>
                                                             <td><%= warehouse.getEmail()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= warehouse.getId()%>">View</button></td>                                                            
+                                                            <td><button class="btn btn-primary btn-block" name="submit-btn" value="<%= warehouse.getId()%>">View</button></td>                                                            
                                                         </tr>
                                                         <%
                                                                 }

@@ -44,7 +44,9 @@
                             <form class="myForm" action="../FacilityManagement_Servlet/editWarehouse_POST">
                                 <div class="form-group">
                                     <label for="input_warehouseName">Warehouse Name</label>
-                                    <input type="text" class="form-control" id="input_warehouseName" name="warehouseName" value="<%= warehouse.getWarehouseName()%>" required="true">
+                                    <input type="text" class="form-control" id="input_warehouseName" value="<%= warehouse.getWarehouseName()%>" required="true" disabled/>
+                                    <input type="hidden" name="warehouseName"  value="<%= warehouse.getWarehouseName()%>" >
+
                                 </div>
 
                                 <div class="form-group">
@@ -83,9 +85,9 @@
         <%
             if (request.getAttribute("alertMessage") != null) {
         %><script>
-            alert("<%= request.getAttribute("alertMessage") %>");
+            alert("<%= request.getAttribute("alertMessage")%>");
         </script><%
-        }
+            }
         %>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->

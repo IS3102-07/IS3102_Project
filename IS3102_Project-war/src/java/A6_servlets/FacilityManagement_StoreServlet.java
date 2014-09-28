@@ -28,6 +28,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal fmBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -73,20 +74,23 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
 
                     if (fmBean.checkNameExistsOfStore(storeName)) {
-                        request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
-                        request.setAttribute("regionalOffice", true);
-                        nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
+                        // request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
+                        // request.setAttribute("regionalOffice", true);
+
+                        result = "?errMsg=Fail to create store due to duplicated store name.";
+
+                        nextPage = "/FacilityManagement_StoreServlet/storeManagement_index" + result;
                     } else {
                         System.out.println("Posting from create store :");
                         StoreEntity store = fmBean.createStore(storeName, address, telephone, email);
                         fmBean.addStoreToRegionalOffice(regionalOfficeId, store.getId());
                         if (store != null) {
-                            request.setAttribute("alertMessage", "A new store record has been saved.");
+                            result = "?goodMsg=A new store record has been saved.";
+
                         } else {
-                            request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
+                            result = "?errMsg=Fail to create store due to duplicated store name.";
                         }
-                        request.setAttribute("store", store);
-                        nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
+                        nextPage = "/FacilityManagement_StoreServlet/storeManagement_index" + result;
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -113,11 +117,11 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
 
                 if (fmBean.editStore(id, storeName, address, telephone, email)
                         && fmBean.updateStoreToRegionalOffice(regionalOfficeId, id)) {
-                    request.setAttribute("alertMessage", "The store has been saved.");
+                    result = "?goodMsg=The store has been updated.";
                 } else {
-                    request.setAttribute("alertMessage", "Fail to edit store.");
+                    result = "?errMsg=Fail to edit store.";
                 }
-                nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
+                nextPage = "/FacilityManagement_StoreServlet/storeManagement_index" + result;
                 break;
 
             case "/deleteStore":
@@ -129,7 +133,9 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                         fmBean.removeStore(storeId);
                     }
                 }
-                nextPage = "/FacilityManagement_StoreServlet/storeManagement_index";
+                result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";
+
+                nextPage = "/FacilityManagement_StoreServlet/storeManagement_index" + result;
                 break;
 
         }

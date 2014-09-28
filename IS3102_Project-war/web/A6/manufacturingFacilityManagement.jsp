@@ -115,7 +115,7 @@
                                                             <td><%= helper.manufacturingFacilityEntity.getTelephone()%></td>
                                                             <td><%= helper.manufacturingFacilityEntity.getEmail()%></td>
                                                             <td><%= helper.manufacturingFacilityEntity.getCapacity()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= helper.manufacturingFacilityEntity.getId()%>">View</button></td>
+                                                            <td><button class="btn btn-primary btn-block" name="submit-btn" value="<%= helper.manufacturingFacilityEntity.getId()%>">View</button></td>
                                                         </tr>
                                                         <%
                                                                 }

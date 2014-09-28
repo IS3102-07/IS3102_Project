@@ -113,7 +113,7 @@
                                                             <td><%= model.store.getAddress()%></td>
                                                             <td><%= model.store.getTelephone()%></td>
                                                             <td><%= model.store.getEmail()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= model.store.getId()%>">View</button></a></td>
+                                                            <td><button class="btn btn-primary btn-block" name="submit-btn" value="<%= model.store.getId()%>">View</button></a></td>
                                                         </tr>
                                                         <%
                                                                 }

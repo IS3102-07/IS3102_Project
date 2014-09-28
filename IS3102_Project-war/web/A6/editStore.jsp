@@ -46,11 +46,12 @@
 
                     <div class="row">
                         <div class="col-lg-6">                           
-                            <% StoreHelper storeHelper = (StoreHelper) request.getAttribute("storeHelper"); %>
+                            <% StoreHelper storeHelper = (StoreHelper) request.getAttribute("storeHelper");%>
                             <form class="myForm" action="../FacilityManagement_StoreServlet/editStore_POST">
                                 <div class="form-group">
                                     <label for="input_storeName">Store Name</label>
-                                    <input type="text" class="form-control" id="input_storeName" name="storeName" value="<%= storeHelper.store.getName()%>" required="true">
+                                    <input type="text" class="form-control" id="input_storeName" value="<%= storeHelper.store.getName()%>" required="true" disabled/>
+                                    <input type="hidden" name="storeName" value="<%= storeHelper.store.getName()%>" >
                                 </div>
 
                                 <div class="form-group">
@@ -85,9 +86,9 @@
                                     <label for="input_email">Email</label>
                                     <input type="email" class="form-control" id="input_email"  name="email" value="<%= storeHelper.store.getEmail()%>" >
                                 </div>
-                                
+
                                 <input type="hidden" name="storeId" value="<%= storeHelper.store.getId()%>">
-                                
+
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary" value="Submit">
                                 </div>

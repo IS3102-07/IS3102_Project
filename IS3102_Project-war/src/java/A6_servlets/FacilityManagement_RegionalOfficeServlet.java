@@ -102,12 +102,13 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 Long id = Long.parseLong(request.getParameter("regionalOfficeId"));
 
                 if (fmBean.editRegionalOffice(id, regionalOfficeName, address, telephone, email)) {
-                    result = "?goodMsg=The regional office has been saved.";
+                    result = "?goodMsg=The regional office has been updated.";
                 } else {
                     result = "?errMsg=Fail to edit regional office.";
                 }
                 nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index" + result;
                 break;
+                
             case "/deleteRegionalOffice":
                 String[] deletes = request.getParameterValues("delete");
                 if (deletes != null) {

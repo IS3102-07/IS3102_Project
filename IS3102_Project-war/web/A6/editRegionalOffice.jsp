@@ -2,7 +2,7 @@
 <html lang="en">
 
     <jsp:include page="../header2.html" />
- 
+
     <body>
 
         <div id="wrapper">
@@ -44,7 +44,9 @@
                             <form class="myForm" action="../FacilityManagement_RegionalOfficeServlet/editRegionalOffice_POST">
                                 <div class="form-group">
                                     <label for="input_regionalOfficeName">Regional Office Name</label>
-                                    <input type="text" class="form-control" id="input_regionalOfficeName" name="regionalOfficeName" value="<%= regionalOffice.getName()%>" required="true">
+                                    <input type="text" class="form-control" id="input_regionalOfficeName"  value="<%= regionalOffice.getName()%>" required="true" disabled/>
+                                    <input type="hidden" name="regionalOfficeName" value="<%= regionalOffice.getName()%>" >
+
                                 </div>
 
                                 <div class="form-group">
@@ -83,9 +85,9 @@
         <%
             if (request.getAttribute("alertMessage") != null) {
         %><script>
-            alert("<%= request.getAttribute("alertMessage") %>");
+            alert("<%= request.getAttribute("alertMessage")%>");
         </script><%
-        }
+            }
         %>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->

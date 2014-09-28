@@ -50,9 +50,11 @@
                             <form class="myForm" action="../FacilityManagement_ManufacturingFacilityServlet/editManufacturingFacility_POST">
                                 <div class="form-group">
                                     <label for="input_manufacturingFacilityName">Manufacturing Facility Name</label>
-                                    <input type="text" class="form-control" id="input_manufacturingFacilityName" name="manufacturingFacilityName" value="<%= mfHelper.manufacturingFacilityEntity.getName()%>" required="true">
+                                    <input type="text" class="form-control" id="input_manufacturingFacilityName" value="<%= mfHelper.manufacturingFacilityEntity.getName()%>" required="true" disabled/>
+                                    <input type="hidden" name="manufacturingFacilityName"  value="<%= mfHelper.manufacturingFacilityEntity.getName()%>" >
+
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label>Regional Office</label>                                    
                                     <select name="regionalOfficeId" class="form-control" required="true">
@@ -85,7 +87,7 @@
                                     <label for="input_email">Email</label>
                                     <input type="email" class="form-control" id="input_email"  name="email" value="<%= mfHelper.manufacturingFacilityEntity.getEmail()%>" >
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="input_email">Capacity</label>
                                     <input type="number" class="form-control" id="input_email"  name="capacity" value="<%= mfHelper.manufacturingFacilityEntity.getCapacity()%>" >
@@ -112,9 +114,9 @@
         <%
             if (request.getAttribute("alertMessage") != null) {
         %><script>
-            alert("<%= request.getAttribute("alertMessage") %>");
+            alert("<%= request.getAttribute("alertMessage")%>");
         </script><%
-        }
+            }
         %>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->

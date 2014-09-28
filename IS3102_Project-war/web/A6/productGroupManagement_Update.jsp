@@ -30,14 +30,16 @@
                 document.productGroupManagement.submit();
             }
             function removePGLineItem() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.productGroupManagement.action = "../ProductGroupLineItemManagement_RemoveServlet";
-                    document.productGroupManagement.submit();
-                } else {
-                    window.event.returnValue = false;
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
                 }
+                window.event.returnValue = true;
+                document.productGroupManagement.action = "../ProductGroupLineItemManagement_RemoveServlet";
+                document.productGroupManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -61,7 +63,7 @@
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
-                                
+
                                 <li>
                                     <i class="icon icon-cogs"></i> <a href="../ProductGroupManagement_Servlet">Product Group Management</a>
                                 </li>
@@ -86,7 +88,7 @@
                                     <form role="form" action="../ProductGroupManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>Product Group Name: </label>
-                                            <input class="form-control" name="name" type="text" required="true" value="<%=productGroup.getProductGroupName()%>"/>
+                                            <input class="form-control"  type="text" required="true" value="<%=productGroup.getProductGroupName()%>" disabled/>
                                         </div>
                                         <div class="form-group">
                                             <label>Work Hours: </label>
@@ -96,6 +98,7 @@
                                             <input type="submit" value="Update Product Group" class="btn btn-lg btn-primary btn-block">
                                         </div>  
                                         <input type="hidden" value="<%=productGroup.getId()%>" name="id">
+                                        <input type="hidden" value="<%=productGroup.getProductGroupName()%>" name="name">
                                     </form>
                                 </div>
                             </div>
@@ -116,7 +119,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input  type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPGLineItem('<%=productGroup.getId()%>')"/>
-                                                        <input  class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item" onclick="javascript:removePGLineItem()"  />
+                                                        <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary">Remove Line Item</button></a>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -162,7 +165,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input  type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addPGLineItem('<%=productGroup.getId()%>')"/>
-                                                <input type="submit" name="btnRemove" class="btn btn-primary"  value="Remove Line Item" onclick="javascript:removePGLineItem()"  />
+                                                <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary">Remove Line Item</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -182,6 +185,23 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
+
+        <div role="dialog" class="modal fade" id="removeLineItem">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Line Item will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removePGLineItem()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>

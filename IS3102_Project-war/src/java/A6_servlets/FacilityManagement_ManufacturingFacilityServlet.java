@@ -28,6 +28,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
 
     @EJB
     private FacilityManagementBeanLocal fmBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,19 +76,22 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                     Integer capacity = Integer.valueOf(request.getParameter("capacity"));
 
                     if (fmBean.checkNameExistsOfManufacturingFacility(manufacturingFacilityName)) {
-                        request.setAttribute("alertMessage", "Fail to create manufacturing facility due to duplicated manufacturing facility name.");
-                        request.setAttribute("manufacturingFacility", true);
-                        nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
+                        // request.setAttribute("alertMessage", "Fail to create manufacturing facility due to duplicated manufacturing facility name.");
+                        //request.setAttribute("manufacturingFacility", true);
+
+                        result = "?errMsg=Fail to create manufacturing facility due to duplicated manufacturing facility name.";
+                        nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index" + result;
                     } else {
                         ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(manufacturingFacilityName, address, telephone, email, capacity);
                         fmBean.addManufacturingFacilityToRegionalOffice(regionalOfficeId, manufacturingFacility.getId());
                         if (manufacturingFacility != null) {
-                            request.setAttribute("alertMessage", "A new manufacturing facility record has been saved.");
+                            result = "?goodMsg=A new manufacturing facility record has been saved.";
                         } else {
-                            request.setAttribute("alertMessage", "Fail to create manufacturing facility due to duplicated name.");
+                            result = "?errMsg=Fail to create manufacturing facility due to duplicated name.";
+
                         }
-                        request.setAttribute("manufacturingFacility", manufacturingFacility);
-                        nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
+                        //request.setAttribute("manufacturingFacility", manufacturingFacility);
+                        nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index" + result;
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -117,12 +121,14 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 System.out.println(mfId + " is id");
                 if (fmBean.editManufacturingFacility(mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity))
                         && fmBean.updateManufacturingFacilityToRegionalOffice(regionalOfficeId, mfId)) {
-                    request.setAttribute("alertMessage", "The manufacturing facility has been saved.");
+                    result = "?goodMsg=The manufacturing facility has been updated.";
+
                 } else {
-                    request.setAttribute("alertMessage", "Fail to edit manufacturing facility.");
+                    result = "?errMsg=Fail to edit manufacturing facility.";
                 }
-                nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
+                nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index" + result;
                 break;
+
             case "/deleteManufacturingFacility":
                 String[] deletes = request.getParameterValues("delete");
                 if (deletes != null) {
@@ -132,7 +138,9 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                         fmBean.removeManufacturingFacility(mfId);
                     }
                 }
-                nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index";
+                result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";
+
+                nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index" + result;
                 break;
 
         }

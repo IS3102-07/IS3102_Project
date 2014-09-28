@@ -31,20 +31,18 @@ public class ProductGroupLineItemManagement_Servlet extends HttpServlet {
             List<ProductGroupEntity> productGroups = ItemManagementBean.getAllProductGroup();
             session.setAttribute("productGroups", productGroups);
 
-            
-             if (errMsg == null && goodMsg == null) {
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/productGroupManagement_Update.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {
                 if (!errMsg.equals("")) {
-                    response.sendRedirect("A6/productGroupManagement_Update.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A6/productGroupManagement_Update.jsp?errMsg=" + errMsg + "&id=" + productGroupId);
                 }
             } else if ((errMsg == null && goodMsg != null)) {
                 if (!goodMsg.equals("")) {
-                    response.sendRedirect("A6/productGroupManagement_Update.jsp?goodMsg=" + goodMsg);
-                }           
+                    response.sendRedirect("A6/productGroupManagement_Update.jsp?goodMsg=" + goodMsg + "&id=" + productGroupId);
+                }
             }
-            
-            
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
             ex.printStackTrace();
