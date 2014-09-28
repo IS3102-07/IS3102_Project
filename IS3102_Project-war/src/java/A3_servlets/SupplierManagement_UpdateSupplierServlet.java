@@ -31,7 +31,7 @@ public class SupplierManagement_UpdateSupplierServlet extends HttpServlet {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("supplierManagement_update.jsp" + result);
             } else {
-                result = "?errMsg=Supplier updated successfully.";
+                result = "?goodMsg=Supplier updated successfully.";
                 response.sendRedirect("SupplierManagement_SupplierServlet" + result);
             }
 

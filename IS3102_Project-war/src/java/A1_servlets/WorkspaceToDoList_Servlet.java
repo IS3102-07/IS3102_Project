@@ -24,15 +24,24 @@ public class WorkspaceToDoList_Servlet extends HttpServlet {
 
         try {
             HttpSession session = request.getSession();
-            String errMsg = request.getParameter("errMsg");//
-            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");//
+            String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+
+            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
             List<ToDoEntity> toDoList = workspaceBean.getAllToDoListOfAStaff(staff.getId());
 
             session.setAttribute("toDoList", toDoList);//
-            if (errMsg == null || errMsg.equals("")) {
+
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A1/workspace_toDoList.jsp");
-            } else {
-                response.sendRedirect("A1/workspace_toDoList.jsp?errMsg=" + errMsg);
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A1/workspace_toDoList.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A1/workspace_toDoList.jsp?goodMsg=" + goodMsg);
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

@@ -25,12 +25,21 @@ public class RawMaterialManagement_RawMaterialServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+
             List<RawMaterialEntity> rawMaterialList = itemManagementBean.listAllRawMaterials();
             session.setAttribute("rawMaterialList", rawMaterialList);
-            if (errMsg == null || errMsg.equals("")) {
+
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/rawMaterialManagement.jsp");
-            } else {
-                response.sendRedirect("A6/rawMaterialManagement.jsp?errMsg=" + errMsg);
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A6/rawMaterialManagement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A6/rawMaterialManagement.jsp?goodMsg=" + goodMsg);
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

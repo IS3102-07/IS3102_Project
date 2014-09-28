@@ -31,7 +31,7 @@ public class RetailProductManagement_UpdateRetailProductServlet extends HttpServ
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("retailProductManagement_update.jsp" + result);
             } else {
-                result = "?errMsg=Retail product updated successfully.";
+                result = "?goodMsg=Retail product updated successfully.";
                 response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
             }
         } catch (Exception ex) {

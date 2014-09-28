@@ -20,7 +20,7 @@
                         numOfTicks++;
                     }
                 }
-                
+
                 if (checkboxes.length === 0 || numOfTicks === 0) {
                     alert("No items selected.");
                     window.event.returnValue = false;
@@ -68,10 +68,19 @@
                                 <div class="panel-heading">
                                     <%
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Use the checkbox to select the list of recipients for the message. Click on the button on the right to send the message to one person.";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Use the checkbox to select the list of recipients for the message. Click on the button on the right to send the message to one person.");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
+
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -91,13 +100,12 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%
-                                                            StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+                                                        <%                                                            StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
                                                             List<StaffEntity> staffs = (List<StaffEntity>) (session.getAttribute("staffs"));
                                                             if (staffs != null) {
                                                                 for (int i = 0; i < staffs.size(); i++) {
                                                                     //if (!staffs.get(i).getEmail().equals(staffEntity.getEmail())) {
-                                                        %>
+%>
                                                         <tr>
                                                             <td>
                                                                 <input type="checkbox" name="select" value="<%=staffs.get(i).getId()%>" />

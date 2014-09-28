@@ -1,4 +1,3 @@
-
 package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
@@ -13,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 public class FurnitureManagement_FurnitureServlet extends HttpServlet {
+
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
 
@@ -26,12 +25,21 @@ public class FurnitureManagement_FurnitureServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+
             List<FurnitureEntity> furnitureList = itemManagementBean.listAllFurniture();
             session.setAttribute("furnitureList", furnitureList);
-            if (errMsg == null || errMsg.equals("")) {
+
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/furnitureManagement.jsp");
-            } else {
-                response.sendRedirect("A6/furnitureManagement.jsp?errMsg=" + errMsg);
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A6/furnitureManagement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A6/furnitureManagement.jsp?goodMsg=" + goodMsg);
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

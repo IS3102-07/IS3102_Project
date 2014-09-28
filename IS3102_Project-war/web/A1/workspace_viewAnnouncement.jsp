@@ -86,10 +86,18 @@
                                 <div class="panel-heading">
                                     <%
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "List of announcements and its details.";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("List of announcements and its details.");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -109,9 +117,9 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                             <% if (roleCanEditAnnouncement) {%>
+                                                            <% if (roleCanEditAnnouncement) {%>
                                                             <th><input type="checkbox" onclick="checkAll(this)" /></th>
-                                                       <%}%>
+                                                                <%}%>
                                                             <th>Sender</th>
                                                             <th>Title</th>
                                                             <th>Message</th>
@@ -211,7 +219,7 @@
         </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

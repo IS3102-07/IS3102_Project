@@ -24,15 +24,23 @@ public class HistoricalSalesFigureManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+
             List<SalesFigureEntity> salesFigures = sfbl.getAllSalesFigureList();
             session.setAttribute("salesFigures", salesFigures);
 
-            if (errMsg == null || errMsg.equals("")) {
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A2/historicalSalesFigureManagement.jsp");
-            } else {
-                response.sendRedirect("A2/historicalSalesFigureManagement.jsp?errMsg=" + errMsg);
-            }
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A2/historicalSalesFigureManagement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A2/historicalSalesFigureManagement.jsp?goodMsg=" + goodMsg);
 
+                }
+            }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

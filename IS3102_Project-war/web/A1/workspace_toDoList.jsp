@@ -11,11 +11,11 @@
                 document.toDoList.submit();
             }
             function removeToDoList() {
-                    window.event.returnValue = true;
-                    document.toDoList.action = "../WorkspaceToDoList_RemoveServlet";
-                    document.toDoList.submit();            
-                }
-            
+                window.event.returnValue = true;
+                document.toDoList.action = "../WorkspaceToDoList_RemoveServlet";
+                document.toDoList.submit();
+            }
+
             function markDoneOrUndone(id) {
                 toDoList.id.value = id;
                 document.toDoList.action = "../WorkspaceToDoList_UpdateServlet";
@@ -59,10 +59,18 @@
                                 <div class="panel-heading">
                                     <%
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add or delete tasks";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Add or delete tasks");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->

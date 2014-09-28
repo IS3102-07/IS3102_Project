@@ -25,7 +25,7 @@ public class WorkspaceToDoList_UpdateServlet extends HttpServlet {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("WorkspaceToDoList_Servlet" + result);
             } else {
-                result = "?errMsg=ToDoList updated successfully.";
+                result = "?goodMsg=ToDoList updated successfully.";
                 response.sendRedirect("WorkspaceToDoList_Servlet" + result);
             }
 

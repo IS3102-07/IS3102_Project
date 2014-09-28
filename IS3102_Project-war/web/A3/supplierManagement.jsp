@@ -68,10 +68,18 @@
                                 <div class="panel-heading">
                                     <%
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add or remove suppliers";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Add or remove suppliers");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->

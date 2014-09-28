@@ -58,10 +58,18 @@
                                 <div class="panel-heading">
                                     <%
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "The following are the list of items in each storage bin";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("The following are the list of items in each storage bin");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->

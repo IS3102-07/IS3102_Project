@@ -67,10 +67,18 @@
                                 <div class="panel-heading">
                                     <%
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Register staff account for new employees or remove unused staff accounts below";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Register a new staff or remove an existing staff");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -198,7 +206,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

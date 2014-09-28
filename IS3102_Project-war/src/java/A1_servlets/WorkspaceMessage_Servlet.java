@@ -37,6 +37,7 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
             }
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
 
             // Convert messages into easier to read helpers (for jsp)
             //inbox
@@ -91,24 +92,46 @@ public class WorkspaceMessage_Servlet extends HttpServlet {
             }
             if (view == null || view.equals("inbox")) {
                 session.setAttribute("view", "inbox");
-                if (errMsg == null || errMsg.equals("")) {
+
+                if (errMsg == null && goodMsg == null) {
                     response.sendRedirect("A1/workspace_messageInbox.jsp");
-                } else {
-                    response.sendRedirect("A1/workspace_messageInbox.jsp?errMsg=" + errMsg);
+                } else if ((errMsg != null) && (goodMsg == null)) {
+                    if (!errMsg.equals("")) {
+                        response.sendRedirect("A1/workspace_messageInbox.jsp?errMsg=" + errMsg);
+                    }
+                } else if ((errMsg == null && goodMsg != null)) {
+                    if (!goodMsg.equals("")) {
+                        response.sendRedirect("A1/workspace_messageInbox.jsp?goodMsg=" + goodMsg);
+                    }
                 }
+
             } else if (view.equals("sentMessages")) {
                 session.setAttribute("view", "sentMessages");
-                if (errMsg == null || errMsg.equals("")) {
+
+                if (errMsg == null && goodMsg == null) {
                     response.sendRedirect("A1/workspace_messageSent.jsp");
-                } else {
-                    response.sendRedirect("A1/workspace_messageSent.jsp?errMsg=" + errMsg);
+                } else if ((errMsg != null) && (goodMsg == null)) {
+                    if (!errMsg.equals("")) {
+                        response.sendRedirect("A1/workspace_messageSent.jsp?errMsg=" + errMsg);
+                    }
+                } else if ((errMsg == null && goodMsg != null)) {
+                    if (!goodMsg.equals("")) {
+                        response.sendRedirect("A1/workspace_messageSent.jsp?goodMsg=" + goodMsg);
+                    }
                 }
             } else {
                 session.setAttribute("view", "inbox");
-                if (errMsg == null || errMsg.equals("")) {
+
+                if (errMsg == null && goodMsg == null) {
                     response.sendRedirect("A1/workspace_messageInbox.jsp");
-                } else {
-                    response.sendRedirect("A1/workspace_messageInbox.jsp?errMsg=" + errMsg);
+                } else if ((errMsg != null) && (goodMsg == null)) {
+                    if (!errMsg.equals("")) {
+                        response.sendRedirect("A1/workspace_messageInbox.jsp?errMsg=" + errMsg);
+                    }
+                } else if ((errMsg == null && goodMsg != null)) {
+                    if (!goodMsg.equals("")) {
+                        response.sendRedirect("A1/workspace_messageInbox.jsp?goodMsg=" + goodMsg);
+                    }
                 }
             }
 

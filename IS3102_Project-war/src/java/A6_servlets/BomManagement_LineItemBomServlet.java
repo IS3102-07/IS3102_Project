@@ -24,6 +24,8 @@ public class BomManagement_LineItemBomServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+
             Long bomId = Long.parseLong(request.getParameter("id"));
             BillOfMaterialEntity bom = itemManagementBean.viewSingleBOM(bomId);
             List<LineItemEntity> bomListLineOfItems = bom.getListOfLineItems();
@@ -31,10 +33,18 @@ public class BomManagement_LineItemBomServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("bomListLineOfItems", bomListLineOfItems);
             session.setAttribute("bomId", bomId);
-            if (errMsg == null || errMsg.equals("")) {
+      
+            
+             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?bomName=" + bom.getName());
-            } else {
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
                 response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?errMsg=" + errMsg + "&bomName=" + bom.getName());
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?goodMsg=" + goodMsg + "&bomName=" + bom.getName());
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

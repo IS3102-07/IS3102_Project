@@ -38,15 +38,24 @@ public class WorkspaceAnnouncement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
 
             List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
             session.setAttribute("listOfAnnouncements", listOfAnnouncements);
 
-            if (errMsg == null || errMsg.equals("")) {
+
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A1/workspace_viewAnnouncement.jsp");
-            } else {
-                response.sendRedirect("A1/workspace_viewAnnouncement.jsp?errMsg=" + errMsg);
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A1/workspace_viewAnnouncement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A1/workspace_viewAnnouncement.jsp?goodMsg=" + goodMsg);
+                }
             }
+
         } catch (Exception ex) {
             out.println(ex);
         }

@@ -24,14 +24,21 @@ public class BomManagement_BomServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
             List<BillOfMaterialEntity> listOfBOM = itemManagementBean.listAllBOM();
             session.setAttribute("listOfBOM", listOfBOM);
             session.setAttribute("listOfFurniture", itemManagementBean.listAllFurnitureWithoutBOM());
 
-            if (errMsg == null || errMsg.equals("")) {
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/bomManagement.jsp");
-            } else {
-                response.sendRedirect("A6/bomManagement.jsp?errMsg=" + errMsg);
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A6/bomManagement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A6/bomManagement.jsp?goodMsg=" + goodMsg);
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

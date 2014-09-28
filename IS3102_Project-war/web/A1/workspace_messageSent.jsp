@@ -75,10 +75,18 @@
                                 <div class="panel-heading">
                                     <%
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Create message, delete sent messages and view inbox messages";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Create message, delete sent messages and view inbox messages");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -191,7 +199,7 @@
         </div>
         <!-- /#wrapper -->
 
-<div role="dialog" class="modal fade" id="myModal">
+        <div role="dialog" class="modal fade" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

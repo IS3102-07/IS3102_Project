@@ -25,15 +25,26 @@ public class ProductGroupLineItemManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+
             String productGroupId = request.getParameter("id");
             List<ProductGroupEntity> productGroups = ItemManagementBean.getAllProductGroup();
             session.setAttribute("productGroups", productGroups);
 
-            if (errMsg != null && productGroupId != null) {
-                response.sendRedirect("A6/productGroupManagement_Update.jsp?id=" + productGroupId + "&errMsg=" + errMsg);
-            } else {
-                response.sendRedirect("A6/productGroupManagement_Update.jsp?id=" + productGroupId);
+            
+             if (errMsg == null && goodMsg == null) {
+                response.sendRedirect("A6/productGroupManagement_Update.jsp");
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A6/productGroupManagement_Update.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A6/productGroupManagement_Update.jsp?goodMsg=" + goodMsg);
+                }           
             }
+            
+            
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
             ex.printStackTrace();

@@ -69,10 +69,18 @@
                                 <div class="panel-heading">
                                     <%
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add new roles or remove existing roles";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Add new roles or remove existing roles");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -101,7 +109,7 @@
                                                         <%
                                                             List<RoleEntity> roles = (List<RoleEntity>) (session.getAttribute("roles"));
                                                             if (roles != null) {
-                                                                for (RoleEntity role: roles) {
+                                                                for (RoleEntity role : roles) {
                                                         %>
                                                         <tr>
                                                             <td>
@@ -184,7 +192,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
