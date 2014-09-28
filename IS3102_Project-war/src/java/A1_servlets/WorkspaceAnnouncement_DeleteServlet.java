@@ -24,19 +24,16 @@ public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
         String result;
         PrintWriter out = response.getWriter();
         try {
-            String id = request.getParameter("delete");
-            if (workspaceBeanLocal.deleteAnnouncement(Long.valueOf(id))) {
-                result = "?goodMsg=Announcement deleted.";
-                //update announcement list
-                List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
-                HttpSession session;
-                session = request.getSession();
-                session.setAttribute("listOfAnnouncements", listOfAnnouncements);
-                response.sendRedirect("A1/workspace_viewAnnouncement.jsp" + result);
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null){
+                for (int i = 0; i < deleteArr.length; i++) {                 
+                     workspaceBeanLocal.deleteAnnouncement(Long.parseLong(deleteArr[i]));
+                }
+                response.sendRedirect("WorkspaceAnnouncement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
-                result = "?errMsg=Failed to delete announcement.";
-                response.sendRedirect("A1/workspace_viewAnnouncement.jsp" + result);
+                response.sendRedirect("A1/workspace_viewAnnouncement.jsp?errMsg=Nothing is selected.");
             }
+       
         } catch (Exception ex) {
             out.println(ex);
         }
