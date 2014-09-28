@@ -20,10 +20,13 @@
                     <a href="about-us.html"><i class="icon icon-map-marker"></i>Store Location</a>
                 </li>
                 <li>
-                    <a href="Login.jsp"><i class="icon icon-unlock-alt"></i>Login/Register</a>
+                    <a href="contact-us.html"><i class="icon icon-shopping-cart"></i>My Shopping List</a>
                 </li>
                 <li>
-                    <a href="contact-us.html"><i class="icon icon-shopping-cart"></i>My Shopping List</a>
+                    <a href="memberProfile.jsp"><i class="icon icon-user"></i>Profile</a>
+                </li>
+                <li>
+                    <a href="../ECommerce_LogoutServlet"><i class="icon icon-unlock-alt"></i>Logout</a>
                 </li>
             </ul>
             <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">

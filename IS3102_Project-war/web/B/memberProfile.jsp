@@ -36,7 +36,7 @@
                                     <h4>Personal Information</h4>
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input class="form-control" required="true" name="name" type="text" value="<%=member.getName()%>">
+                                        <input class="form-control" required="true" name="name" type="text" value="<%if (member.getName() == null){out.println("");}%>">
                                     </div>
                                     <div class="form-group">
                                         <label>E-mail Address</label>
@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Phone</label>
-                                        <input class="form-control" required="true" type="text" name="phone" value="<%=member.getPhone()%>">
+                                        <input class="form-control" required="true" type="text" name="phone" value="<%if (member.getPhone() == null){out.println("");}%>">
                                     </div>
                                     <hr class="more-spaced "/>
                                     <h4>Change Password</h4>
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <input class="form-control" type="text" required="true" name="address" value="<%=member.getAddress()%>">
+                                        <input class="form-control" type="text" required="true" name="address" value="<%if (member.getAddress() == null){out.println("");}%>">
                                     </div>
                                     <div class="panel-footer" style="padding-bottom: 0px;">
                                         <div class="row">
