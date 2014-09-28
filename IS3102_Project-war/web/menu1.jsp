@@ -143,7 +143,7 @@
                     </a>
                 </li>
                 <li class="message-footer">
-                    <a href="#">Read All New Messages</a>
+                    <a href="../WorkspaceMessage_Servlet">Read All New Messages</a>
                 </li>
             </ul>
         </li>
