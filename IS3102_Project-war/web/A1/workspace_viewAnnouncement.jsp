@@ -208,7 +208,7 @@
                         <h4>Alert</h4>
                     </div>
                     <div class="modal-body">
-                        <p id="messageBox">Staff will be removed. Are you sure?</p>
+                        <p id="messageBox">Announcement will be removed. Are you sure?</p>
                     </div>
                     <div class="modal-footer">                        
                         <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeAnnouncement()"  />
