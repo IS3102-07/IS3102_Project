@@ -37,7 +37,8 @@ import javax.servlet.http.HttpSession;
  */
 public class AccessRight_Servlet extends HttpServlet {
 
-    AccountManagementBeanLocal amBean = lookupAccountManagementBeanLocal();
+    @EJB
+    AccountManagementBeanLocal amBean;
     @EJB
     private FacilityManagementBeanLocal fmBean;
 
@@ -177,13 +178,4 @@ public class AccessRight_Servlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>   
 
-    private AccountManagementBeanLocal lookupAccountManagementBeanLocal() {
-        try {
-            Context c = new InitialContext();
-            return (AccountManagementBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean!CommonInfrastructure.AccountManagement.AccountManagementBeanLocal");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 }
