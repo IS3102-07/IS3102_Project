@@ -1017,10 +1017,10 @@
         <servlet-name>A1/AccessRight</servlet-name>
         <url-pattern>/A1/AccessRight</url-pattern>
     </servlet-mapping>
-    <session-config>
-        <session-timeout>30</session-timeout>
-    </session-config>
     <welcome-file-list>
         <welcome-file>Workspace_Servlet</welcome-file>
     </welcome-file-list>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 </web-app>
