@@ -109,20 +109,22 @@ public class FacilityManagement_Servlet extends HttpServlet {
 
             case "/deleteWarehouse":
                 String[] deletes = request.getParameterValues("delete");
+                Boolean msg = true;
 
                 if (deletes != null) {
                     for (String warehouseString : deletes) {
                         Long warehouse_Id = Long.parseLong(warehouseString);
                         if (!fmBean.checkIfWarehouseContainsItem(warehouse_Id)) {
                             fmBean.deleteWarehouse(warehouse_Id);
-                            result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";
-
                         } else {
-                            result = "?errMsg=Fail to delete warehouse as the warehouse contains storage bins.";
+                            msg = false;
+                            result = "?errMsg=Fail to delete one or more warehouses as the warehouse contains storage bins.";
                         }
                     }
+                    if (msg) {
+                        result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";
+                    }
                 }
-
                 nextPage = "/FacilityManagement_Servlet/warehouseManagement_index" + result;
                 break;
 
