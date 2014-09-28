@@ -22,11 +22,11 @@ public class StorageBinManagement_RemoveServlet extends HttpServlet {
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    manufacturingWarehouseManagementBean.deleteStorageBin(Long.parseLong(deleteArr[i]));
+                    if (!manufacturingWarehouseManagementBean.deleteStorageBin(Long.parseLong(deleteArr[i]))) {
+                         response.sendRedirect("StorageBinManagement_Servlet?errMsg=Unable to delete one or more storage bins as the storage bin contains items");
+                    }
                 }
-                response.sendRedirect("StorageBinManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
-            } else {
-                response.sendRedirect("A3/storageBinManagement.jsp?errMsg=Nothing is selected.");
+            response.sendRedirect("StorageBinManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");         
             }
 
         } catch (Exception ex) {
