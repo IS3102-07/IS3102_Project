@@ -65,18 +65,27 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading"> <%
-                                        String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add or remove furniture";
+
+                                    String errMsg = request.getParameter("errMsg");
+                                    String goodMsg = request.getParameter("goodMsg");
+                                    if (errMsg == null && goodMsg == null) {
+                                        out.println("Add or remove furniture");
+                                    } else if ((errMsg != null) && (goodMsg == null)) {
+                                        if (!errMsg.equals("")) {
+                                            out.println(errMsg);
                                         }
-                                        out.println(errMsg);
+                                    } else if ((errMsg == null && goodMsg != null)) {
+                                        if (!goodMsg.equals("")) {
+                                            out.println(goodMsg);
+                                        }
+                                    }
                                     %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="furnitureManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            
+
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Furniture" onclick="addFurniture()"  />
@@ -200,7 +209,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

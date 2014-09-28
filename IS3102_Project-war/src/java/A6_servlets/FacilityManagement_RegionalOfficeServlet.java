@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A6_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.ManufacturingFacilityEntity;
-import EntityManager.WarehouseEntity;
-import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -21,14 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Administrator
- */
 public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal fmBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,18 +65,20 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                     String email = request.getParameter("email");
 
                     if (fmBean.checkNameExistsOfRegionalOffice(regionalOfficeName)) {
-                        request.setAttribute("alertMessage", "Fail to create regional office due to duplicated regional office name.");
-                        request.setAttribute("regionalOffice", true);
-                        nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
+                        //  request.setAttribute("alertMessage", "Fail to create regional office due to duplicated regional office name.");
+                        //    request.setAttribute("regionalOffice", true);
+
+                        result = "?errMsg=Fail to create regional office due to duplicated regional office name.";
+                        nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index" + result;
                     } else {
                         boolean regionalOffice = fmBean.addRegionalOffice(regionalOfficeName, address, telephone, email);
                         if (regionalOffice != false) {
-                            request.setAttribute("alertMessage", "A new regional office record has been saved.");
+                            result = "?goodMsg=A new regional office record has been saved";
                         } else {
-                            request.setAttribute("alertMessage", "Fail to create regional office due to duplicated regional office name.");
+                            result = "?errMsg=Fail to create regional office due to duplicated regional office name.";
                         }
-                        request.setAttribute("regionalOffice", regionalOffice);
-                        nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
+                        //request.setAttribute("regionalOffice", regionalOffice);
+                        nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index" + result;
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -110,11 +102,11 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 Long id = Long.parseLong(request.getParameter("regionalOfficeId"));
 
                 if (fmBean.editRegionalOffice(id, regionalOfficeName, address, telephone, email)) {
-                    request.setAttribute("alertMessage", "The regional office has been saved.");
+                    result = "?goodMsg=The regional office has been saved.";
                 } else {
-                    request.setAttribute("alertMessage", "Fail to edit regional office.");
+                    result = "?errMsg=Fail to edit regional office.";
                 }
-                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
+                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index" + result;
                 break;
             case "/deleteRegionalOffice":
                 String[] deletes = request.getParameterValues("delete");
@@ -124,7 +116,8 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                         fmBean.removeRegionalOffice(regionalOffice_Id);
                     }
                 }
-                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index";
+                result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";
+                nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index" + result;
                 break;
 
         }

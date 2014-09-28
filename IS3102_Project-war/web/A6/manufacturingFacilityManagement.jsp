@@ -58,11 +58,20 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <%
+
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add and remove manufacturing facilities";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Add and remove manufacturing facilities");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -101,7 +110,7 @@
                                                         <tr>
                                                             <td><input type="checkbox" name="delete" value="<%= helper.manufacturingFacilityEntity.getId()%>" /></td>
                                                             <td><%= helper.manufacturingFacilityEntity.getName()%></td>
-                                                            <td><%= helper.regionalOffice.getName() %></td>
+                                                            <td><%= helper.regionalOffice.getName()%></td>
                                                             <td><%= helper.manufacturingFacilityEntity.getAddress()%></td>
                                                             <td><%= helper.manufacturingFacilityEntity.getTelephone()%></td>
                                                             <td><%= helper.manufacturingFacilityEntity.getEmail()%></td>
@@ -121,7 +130,7 @@
                                                         <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Manufacturing Facility</button></a>
                                                     </div>
                                                 </div>
-                                                    
+
                                                 <div role="dialog" class="modal fade" id="myModal">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -165,7 +174,7 @@
         if (request.getAttribute("alertMessage") != null) {
     %>
     <script>
-            alert("<%= request.getAttribute("alertMessage")%>");
+        alert("<%= request.getAttribute("alertMessage")%>");
     </script>
     <%
         }
@@ -173,7 +182,7 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#dataTables-example').dataTable();
         });
     </script>

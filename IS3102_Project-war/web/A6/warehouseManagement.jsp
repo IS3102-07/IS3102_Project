@@ -56,11 +56,20 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <%
+
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add and remove warehouses";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Add or remove warehouses");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -100,7 +109,7 @@
                                                             <td><%= warehouse.getAddress()%></td>
                                                             <td><%= warehouse.getTelephone()%></td>
                                                             <td><%= warehouse.getEmail()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= warehouse.getId() %>">View</button></td>                                                            
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= warehouse.getId()%>">View</button></td>                                                            
                                                         </tr>
                                                         <%
                                                                 }
@@ -115,8 +124,8 @@
                                                         <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Warehouse</button></a>
                                                     </div>
                                                 </div>
-                                                    
-                                                    <div role="dialog" class="modal fade" id="myModal">
+
+                                                <div role="dialog" class="modal fade" id="myModal">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -167,9 +176,10 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
-        $(document).ready(function() {
-            $('#dataTables-example').dataTable();
-        });
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+        }
+        );
     </script>
 
 </body>

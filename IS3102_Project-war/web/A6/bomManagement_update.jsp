@@ -64,7 +64,6 @@
                         <!-- /.row -->
                     </div>
                     <%} catch (Exception ex) {
-
                             //response.sendRedirect("../FurnitureManagement_FurnitureServlet");
                         }%>
                 </div>

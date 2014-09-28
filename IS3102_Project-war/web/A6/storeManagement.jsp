@@ -58,11 +58,20 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <%
+
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add and remove stores";
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Add or remove stores");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
                                         }
-                                        out.println(errMsg);
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
@@ -116,7 +125,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="submit" name="submit-btn" value="Add Store" class="btn btn-primary" data-loading-text="Loading...">
-                                                       <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Store</button></a>
+                                                        <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Store</button></a>
                                                     </div>
                                                 </div>
                                                 <div role="dialog" class="modal fade" id="myModal">
@@ -170,7 +179,7 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#dataTables-example').dataTable();
         });
     </script>

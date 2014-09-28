@@ -66,11 +66,20 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading"> <%
+                                                    
                                         String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add or remove retail product";
-                                        }
-                                        out.println(errMsg);
+                                            String goodMsg = request.getParameter("goodMsg");
+                                            if (errMsg == null && goodMsg == null) {
+                                                out.println("Add or remove retail product");
+                                            } else if ((errMsg != null) && (goodMsg == null)) {
+                                                if (!errMsg.equals("")) {
+                                                    out.println(errMsg);
+                                                }
+                                            } else if ((errMsg == null && goodMsg != null)) {
+                                                if (!goodMsg.equals("")) {
+                                                    out.println(goodMsg);
+                                                }
+                                            }
                                     %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
