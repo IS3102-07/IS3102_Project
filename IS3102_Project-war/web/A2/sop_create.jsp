@@ -77,7 +77,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Current Inventory leveL</label>
+                                            <label>Current Inventory Level</label>
                                             <input id="input_currentInventory" type="number" class="form-control" name="currentInventory" value="20" required="true" readonly="true">
                                         </div>
 
