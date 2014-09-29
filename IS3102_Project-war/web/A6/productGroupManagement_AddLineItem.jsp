@@ -36,7 +36,7 @@
                                     <i class="icon icon-cogs"></i> <a href="productGroupManagement.jsp">Product Group Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-cogs"></i> <a href="productGroupManagement_Update.jsp?id=<%=productGroup.getId()%>">Purchase Order ID: <%=productGroup.getId()%></a>
+                                    <i class="icon icon-cogs"></i> <a href="productGroupManagement_Update.jsp?id=<%=productGroup.getId()%>">Product Group ID: <%=productGroup.getId()%></a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Add Line Item

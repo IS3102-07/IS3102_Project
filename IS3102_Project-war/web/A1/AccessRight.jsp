@@ -20,10 +20,10 @@
                             <h1 class="page-header">Access Right</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-users"></i> <a href="#">Account Management</a>
+                                    <i class="icon icon-users"></i> <a href="../A1/accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-users"></i> <a href="#">Staff Management</a>
+                                    <i class="icon icon-users"></i> <a href="../A1/staffManagement.jsp">Staff Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i>  Customize Access Right
