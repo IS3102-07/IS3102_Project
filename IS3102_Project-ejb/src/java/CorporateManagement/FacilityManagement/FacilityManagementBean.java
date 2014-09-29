@@ -112,16 +112,12 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeId) {
         System.out.println("viewRegionalOffice() called with regionalOfficeName:" + regionalOfficeId);
         try {
-            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
-            for (Object o : q.getResultList()) {
-                RegionalOfficeEntity i = (RegionalOfficeEntity) o;
-                System.out.println(" i id is : " + i + " =" + regionalOfficeId);
-                if (i.getId() == Long.valueOf(regionalOfficeId)) {
-                    System.out.println("\nServer returns regional office:\n" + regionalOfficeId);
-                    return i;
-                }
-            }
-            return null; //Could not find the role to remove
+            RegionalOfficeEntity regionalOffice = em.find(RegionalOfficeEntity.class, Long.valueOf(regionalOfficeId));
+
+            System.out.println(" i id is :" + regionalOffice.getId());
+
+            return regionalOffice;
+
         } catch (Exception ex) {
             System.out.println("\nServer failed to return regional office:\n" + ex);
             return null;
@@ -667,9 +663,11 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public boolean checkIfWarehouseContainsItem(Long id) {
         try {
             WarehouseEntity we = em.find(WarehouseEntity.class, id);
-            if (we.getStorageBins().isEmpty())
-            return false;
-            else return true;
+            if (we.getStorageBins().isEmpty()) {
+                return false;
+            } else {
+                return true;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
