@@ -22,12 +22,12 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Sales And Operations Planning
+                                Schedule Management
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-pencil"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operations Planning</a>
-                                </li>                             
+                                    <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
+                                </li>                              
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="#">Schedule Management</a>
                                 </li>

@@ -17,17 +17,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Sales Forecast
+                                Historical Sales Figures
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
                                 </li>   
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_POST">Schedule</a>
+                                    <i class="icon icon-calendar"></i>  <a href="../SaleForecast_Servlet/SaleForecast_schedule_GET">Schedule</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Dashboard</a>
+                                    <i class="icon icon-list"></i>  <a href="../SaleForecast_Servlet/SaleForecast_main_GET">Dashboard</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-list"></i> Historical Sales Figures
                                 </li>
                             </ol>
                         </div>
@@ -50,7 +53,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2012 - Product Group PGA07 Sales Figure </h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2012 - Product Group F001 Sales Figure </h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart1"></div>
@@ -62,7 +65,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2013 - Product Group PGA07 Sales Figure</h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2013 - Product Group F001 Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart2"></div>
@@ -74,7 +77,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2014 - Product Group PGA07 Sales Figure</h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2014 - Product Group F001 Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart3"></div>
@@ -121,45 +124,45 @@
                 data: [
                     {
                         period: '2012-01',
-                        PGA07: <%= saleDate1.get(0) %>,
+                        F001: <%= saleDate1.get(0) %>,
                     }, {
                         period: '2012-02',
-                        PGA07: <%= saleDate1.get(1) %>,
+                        F001: <%= saleDate1.get(1) %>,
                     }, {
                         period: '2012-03',
-                        PGA07: <%= saleDate1.get(2) %>,
+                        F001: <%= saleDate1.get(2) %>,
                     }, {
                         period: '2012-04',
-                        PGA07: <%= saleDate1.get(3) %>,
+                        F001: <%= saleDate1.get(3) %>,
                     }, {
                         period: '2012-05',
-                        PGA07: <%= saleDate1.get(4) %>,
+                        F001: <%= saleDate1.get(4) %>,
                     }, {
                         period: '2012-06',
-                        PGA07: <%= saleDate1.get(5) %>,
+                        F001: <%= saleDate1.get(5) %>,
                     }, {
                         period: '2012-07',
-                        PGA07: <%= saleDate1.get(6) %>,
+                        F001: <%= saleDate1.get(6) %>,
                     }, {
                         period: '2012-08',
-                        PGA07: <%= saleDate1.get(7) %>,
+                        F001: <%= saleDate1.get(7) %>,
                     }, {
                         period: '2012-09',
-                        PGA07: <%= saleDate1.get(8) %>,
+                        F001: <%= saleDate1.get(8) %>,
                     }, {
                         period: '2012-10',
-                        PGA07: <%= saleDate1.get(9) %>,
+                        F001: <%= saleDate1.get(9) %>,
                     }, {
                         period: '2012-11',
-                        PGA07: <%= saleDate1.get(10) %>,
+                        F001: <%= saleDate1.get(10) %>,
                     }, {
                         period: '2012-12',
-                        PGA07: <%= saleDate1.get(11) %>,
+                        F001: <%= saleDate1.get(11) %>,
                     },
                 ],
                 xkey: 'period',
-                ykeys: ['PGA07'],
-                labels: ['PGA07'],
+                ykeys: ['F001'],
+                labels: ['F001'],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
@@ -170,45 +173,45 @@
                 data: [
                     {
                         period: '2013-01',
-                        PGA07: <%= saleDate2.get(0) %>,
+                        F001: <%= saleDate2.get(0) %>,
                     }, {
                         period: '2013-02',
-                        PGA07: <%= saleDate2.get(1) %>,
+                        F001: <%= saleDate2.get(1) %>,
                     }, {
                         period: '2013-03',
-                        PGA07: <%= saleDate2.get(2) %>,
+                        F001: <%= saleDate2.get(2) %>,
                     }, {
                         period: '2013-04',
-                        PGA07: <%= saleDate2.get(3) %>,
+                        F001: <%= saleDate2.get(3) %>,
                     }, {
                         period: '2013-05',
-                        PGA07: <%= saleDate2.get(4) %>,
+                        F001: <%= saleDate2.get(4) %>,
                     }, {
                         period: '2013-06',
-                        PGA07: <%= saleDate2.get(5) %>,
+                        F001: <%= saleDate2.get(5) %>,
                     }, {
                         period: '2013-07',
-                        PGA07: <%= saleDate2.get(6) %>,
+                        F001: <%= saleDate2.get(6) %>,
                     }, {
                         period: '2013-08',
-                        PGA07: <%= saleDate2.get(7) %>,
+                        F001: <%= saleDate2.get(7) %>,
                     }, {
                         period: '2013-09',
-                        PGA07: <%= saleDate2.get(8) %>,
+                        F001: <%= saleDate2.get(8) %>,
                     }, {
                         period: '2013-10',
-                        PGA07: <%= saleDate2.get(9) %>,
+                        F001: <%= saleDate2.get(9) %>,
                     }, {
                         period: '2013-11',
-                        PGA07: <%= saleDate2.get(10) %>,
+                        F001: <%= saleDate2.get(10) %>,
                     }, {
                         period: '2013-12',
-                        PGA07: <%= saleDate2.get(11) %>,
+                        F001: <%= saleDate2.get(11) %>,
                     },
                 ],
                 xkey: 'period',
-                ykeys: ['PGA07'],
-                labels: ['PGA07'],
+                ykeys: ['F001'],
+                labels: ['F001'],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
@@ -219,36 +222,36 @@
                 data: [
                     {
                         period: '2014-01',
-                        PGA07: <%= saleDate3.get(0) %>,
+                        F001: <%= saleDate3.get(0) %>,
                     }, {
                         period: '2014-02',
-                        PGA07: <%= saleDate3.get(1) %>,
+                        F001: <%= saleDate3.get(1) %>,
                     }, {
                         period: '2014-03',
-                        PGA07: <%= saleDate3.get(2) %>,
+                        F001: <%= saleDate3.get(2) %>,
                     }, {
                         period: '2014-04',
-                        PGA07: <%= saleDate3.get(3) %>,
+                        F001: <%= saleDate3.get(3) %>,
                     }, {
                         period: '2014-05',
-                        PGA07: <%= saleDate3.get(4) %>,
+                        F001: <%= saleDate3.get(4) %>,
                     }, {
                         period: '2014-06',
-                        PGA07: <%= saleDate3.get(5) %>,
+                        F001: <%= saleDate3.get(5) %>,
                     }, {
                         period: '2014-07',
-                        PGA07: <%= saleDate3.get(6) %>,
+                        F001: <%= saleDate3.get(6) %>,
                     }, {
                         period: '2014-08',
-                        PGA07: <%= saleDate3.get(7) %>,
+                        F001: <%= saleDate3.get(7) %>,
                     }, {
                         period: '2014-09',
-                        PGA07: <%= saleDate3.get(8) %>,
+                        F001: <%= saleDate3.get(8) %>,
                     }, 
                 ],
                 xkey: 'period',
-                ykeys: ['PGA07'],
-                labels: ['PGA07'],
+                ykeys: ['F001'],
+                labels: ['F001'],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true

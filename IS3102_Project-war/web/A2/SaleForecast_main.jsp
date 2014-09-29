@@ -33,7 +33,7 @@
                                     <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
                                 </li>   
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_POST">Schedule</a>
+                                    <i class="icon icon-calendar"></i>  <a href="../SaleForecast_Servlet/SaleForecast_schedule_GET">Schedule</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-list"></i>  <a href="#">Dashboard</a>
