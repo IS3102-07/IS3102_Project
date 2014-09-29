@@ -28,7 +28,7 @@ public class TransferOrderManagement_AddServlet extends HttpServlet {
             String target = request.getParameter("target");
 
             if (origin.equals(target)) {
-                result = "?errMsg=Invalid movement, Orgin and Target are the same.";
+                result = "?errMsg=Invalid movement, Origin and Target are the same.";
                 response.sendRedirect("A3/transferOrderManagement_Add.jsp" + result);
             } else {
                 boolean canUpdate = manufacturingWarehouseManagementBean.createTransferOrder(warehouseEntity.getId(), Long.parseLong(origin), Long.parseLong(target), null);
