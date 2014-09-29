@@ -128,7 +128,7 @@
                                                                         out.println("-");
                                                                     } else {
                                                                         for (StaffEntity staff : staffs) {
-                                                                            out.println("<span>" + staff.getName() + "<span>");
+                                                                            out.println("<span>" + staff.getName() + ", <span>");
                                                                         }
                                                                     }
                                                                 %>

@@ -471,7 +471,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM RoleEntity t");
             roleEntities = q.getResultList();
             for (RoleEntity roleEntity : roleEntities) {
-                em.merge(roleEntity);
+                em.refresh(roleEntity);
                 result++;
             }
             System.out.println("Returned " + result + " roles.");
