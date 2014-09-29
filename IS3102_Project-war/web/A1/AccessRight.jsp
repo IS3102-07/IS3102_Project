@@ -20,8 +20,14 @@
                             <h1 class="page-header">Access Right</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/sop_index_GET">Sales And Operation Planning</a>
-                                </li>                                
+                                    <i class="icon icon-users"></i> <a href="#">Account Management</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-users"></i> <a href="#">Staff Management</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-edit"></i>  Customize Access Right
+                                </li>
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
