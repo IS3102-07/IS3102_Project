@@ -269,6 +269,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                     if (staffEntity.getActivationCode().equals(code)) {
                         System.out.println("\nServer activation code valid for staff:\n" + email);
                         staffEntity.setAccountActivationStatus(true);
+                        staffEntity.setInvalidLoginAttempt(0);
                         em.merge(staffEntity);
                         return true;
                     } else {

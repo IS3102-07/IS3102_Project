@@ -716,6 +716,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                     i.setPasswordHash(passwordHash);
                     i.setPasswordSalt(passwordSalt);
                     i.setAccountLockStatus(false);
+                    i.setInvalidLoginAttempt(0);
                     em.merge(i);
                     System.out.println("Staff \"" + email + "\" changed password successful as id:");
                     return true;
