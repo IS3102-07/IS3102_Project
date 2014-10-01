@@ -31,17 +31,23 @@ public class ECommerce_PromotionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        
+        PrintWriter out = response.getWriter();
+        try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ECommerce_PromotionServlet</title>");            
+            out.println("<title>Servlet ECommerce_PromotionServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ECommerce_PromotionServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            
+            response.sendRedirect("B/shoppingList.jsp");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
