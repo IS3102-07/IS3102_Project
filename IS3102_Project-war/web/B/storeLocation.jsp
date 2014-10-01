@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
-<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
-<!--[if gt IE 9]><!-->	
+<%@page import="java.util.List"%>
+<%@page import="EntityManager.StoreEntity"%>
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
@@ -194,9 +192,125 @@
 
                     <div class="container">
                         <div class="row">
-                            <hr class="tall" />
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"> <%
+
+                                    String errMsg = request.getParameter("errMsg");
+                                    String goodMsg = request.getParameter("goodMsg");
+                                    if (errMsg == null && goodMsg == null) {
+                                        out.println("Add or remove furniture");
+                                    } else if ((errMsg != null) && (goodMsg == null)) {
+                                        if (!errMsg.equals("")) {
+                                            out.println(errMsg);
+                                        }
+                                    } else if ((errMsg == null && goodMsg != null)) {
+                                        if (!goodMsg.equals("")) {
+                                            out.println(goodMsg);
+                                        }
+                                    }
+                                    %>                                  
+                                </div>
+                                <!-- /.panel-heading -->
+                                <form name="furnitureManagement">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Furniture" onclick="addFurniture()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Furniture</button></a>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th>Name</th>
+                                                            <th>Category</th>
+                                                            <th>Description</th>
+                                                            <th>Image URL</th>
+                                                            <th>SKU</th>
+                                                            <th>Length</th>
+                                                            <th>Width</th>
+                                                            <th>Height</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            List<StoreEntity> stores = (List<StoreEntity>) (session.getAttribute("stores"));
+
+                                                            try {
+                                                                if (stores != null) {
+                                                                    for (int i = 0; i < stores.size(); i++) {
+                                                        %>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="checkbox" name="delete" value="<%=stores.get(i).getId()%>" />
+                                                            </td>
+                                                            <td>
+                                                                <%=stores.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=stores.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=stores.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=stores.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=stores.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=stores.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=stores.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=stores.get(i).getName()%>
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=stores.get(i).getId()%>" value="Update" onclick="javascript:updateFurniture('<%=stores.get(i).getId()%>')"/>
+                                                            </td>
+                                                        </tr>
+                                                        <%
+                                                                    }
+                                                                }
+                                                            } catch (Exception ex) {
+                                                                System.out.println(ex);
+                                                            }
+                                                        %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.table-responsive -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Furniture" onclick="addFurniture()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Furniture</button></a>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="id" value="">    
+                                        </div>
+
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </form>
+
+                            </div>
+                            <!-- /.panel -->
                         </div>
+                        <!-- /.col-lg-12 -->
                     </div>
+                    </div>
+                    
+                    
 
                     <div class="container">
 

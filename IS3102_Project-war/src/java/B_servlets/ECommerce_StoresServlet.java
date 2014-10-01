@@ -6,12 +6,17 @@
 
 package B_servlets;
 
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -19,29 +24,25 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ECommerce_StoresServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @EJB
+    private FacilityManagementBeanLocal faciltyManagementBean;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ECommerce_StoresServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ECommerce_StoresServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        PrintWriter out = response.getWriter();
+        try {
+            
+            HttpSession session;
+            session = request.getSession();
+            
+            List<StoreEntity> stores = faciltyManagementBean.viewListOfStore();
+            session.setAttribute("stores", stores);
+
+            response.sendRedirect("B/storeLocation.jsp");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
