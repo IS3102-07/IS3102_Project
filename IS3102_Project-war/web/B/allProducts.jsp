@@ -68,6 +68,35 @@
                                         }
 
                                     %>
+                                    
+                                    <%
+                                        List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProducts"));
+
+                                        if (furnitures != null) {
+                                            for (int i = 0; i < retailProducts.size(); i++) {
+
+                                    %>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i%>">
+                                                    <i class="icon icon-comment"></i>
+                                                    <%=retailProducts.get(i).getName()%>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse<%=i%>" class="accordion-body collapse">
+                                            <div class="panel-body">
+                                                <%=retailProducts.get(i).getDescription()%>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <%                                            
+                                            }
+                                        }
+
+                                    %>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
