@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
-<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
-<!--[if gt IE 9]><!-->	
+<%@page import="EntityManager.FurnitureEntity"%>
+<%@page import="java.util.List"%>
+<%@page import="EntityManager.RetailProductEntity"%>
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
@@ -11,15 +10,15 @@
 
             <div role="main" class="main">
                 <section class="page-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>All Products</h2>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>All Products</h2>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-                
+                </section>
+
                 <div class="container">                    
                     <div class="container">
                         <div class="row">                            
@@ -40,21 +39,35 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <%
+                                        List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+
+                                        if (furnitures != null) {
+                                            for (int i = 0; i < furnitures.size(); i++) {
+
+                                    %>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i%>">
                                                     <i class="icon icon-comment"></i>
-                                                    Contact Forms
+                                                    <%=furnitures.get(i).getName()%>
                                                 </a>
                                             </h4>
                                         </div>
-                                        <div id="collapseTwo" class="accordion-body collapse">
+                                        <div id="collapse<%=i%>" class="accordion-body collapse">
                                             <div class="panel-body">
-                                                Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+                                                <%=furnitures.get(i).getDescription()%>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <%                                            
+                                            }
+                                        }
+
+                                    %>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -70,6 +83,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
