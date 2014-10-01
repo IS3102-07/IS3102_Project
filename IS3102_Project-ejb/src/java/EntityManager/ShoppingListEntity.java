@@ -29,6 +29,9 @@ public class ShoppingListEntity {
     @ManyToMany(cascade={CascadeType.ALL})
     private List<FurnitureEntity> furnitures;
     
+    @ManyToMany(cascade={CascadeType.ALL})
+    private List<RetailProductEntity> retailProducts;
+    
     public void create() {
         
     }
@@ -43,5 +46,17 @@ public class ShoppingListEntity {
     
     public void setFurnitures(List<FurnitureEntity> furnitures) {
         this.furnitures = furnitures;        
+    }
+    
+    public List<FurnitureEntity> getFurnitures() {
+        return this.furnitures;
+    }
+    
+    public void setRetailProducts(List<RetailProductEntity> retailProducts) {
+        this.retailProducts = retailProducts;        
+    }
+    
+    public List<RetailProductEntity> getRetailProducts() {
+        return this.retailProducts;
     }
 }
