@@ -17,10 +17,10 @@
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
-                    <a href="about-us.html"><i class="icon icon-map-marker"></i>Store Location</a>
+                    <a href="storeLocation.jsp"><i class="icon icon-map-marker"></i>Store Location</a>
                 </li>
                 <li>
-                    <a href="contact-us.html"><i class="icon icon-shopping-cart"></i>My Shopping List</a>
+                    <a href="shoppingList.jsp"><i class="icon icon-shopping-cart"></i>My Shopping List</a>
                 </li>
                 <li>
                     <a href="memberProfile.jsp"><i class="icon icon-user"></i>Profile</a>
