@@ -513,6 +513,10 @@
         <servlet-name>ECommerce_AllProductsServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_AllProductsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_PromotionServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_PromotionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1027,6 +1031,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_AllProductsServlet</servlet-name>
         <url-pattern>/ECommerce_AllProductsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_PromotionServlet</servlet-name>
+        <url-pattern>/ECommerce_PromotionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
