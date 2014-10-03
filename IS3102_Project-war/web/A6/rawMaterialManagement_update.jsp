@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <input class="form-control" required="true" type="text" name="category" value="<%=rawMaterial.getCategory()%>">
+                                    <input class="form-control"  type="text" name="category" value="<%=rawMaterial.getCategory()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
