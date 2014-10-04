@@ -42,7 +42,7 @@
                                             <div class="col-md-4">
                                                 <div class="featured-box featured-box-primary">
                                                     <div class="box-content">
-                                                        <a href="../ECommerce_AllProductsServlet"><i class="icon-featured icon icon-align-center"> </i>
+                                                        <a href="../ECommerce_AllFoodsServlet"><i class="icon-featured icon icon-align-center"> </i>
                                                             <h4>Food</h4>
                                                         </a>
                                                     </div>
@@ -61,7 +61,7 @@
                                             <div class="col-md-4">
                                                 <div class="featured-box featured-box-tertiary">
                                                     <div class="box-content">
-                                                        <a href="../ECommerce_AllProductsServlet"><i class="icon-featured icon icon-coffee"> </i>
+                                                        <a href="../ECommerce_AllRetailProductsServlet"><i class="icon-featured icon icon-coffee"> </i>
                                                             <h4>Retail Products</h4>
                                                         </a>
                                                     </div>
