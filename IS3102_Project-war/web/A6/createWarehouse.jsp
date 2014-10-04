@@ -1,3 +1,7 @@
+<%@page import="EntityManager.ManufacturingFacilityEntity"%>
+<%@page import="EntityManager.StoreEntity"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -13,6 +17,9 @@
                     font-size: 18px;
                 }
                 input{
+                    max-width: 280px;
+                }
+                select{
                     max-width: 280px;
                 }
             </style>
@@ -31,7 +38,7 @@
                                     <i class="icon icon-archive"></i>  <a href="../FacilityManagement_Servlet/warehouseManagement_index">Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-edit"></i> Add New Warehouse</a>
+                                    <i class="icon icon-edit"></i> Add New Warehouse
                                 </li>
                             </ol>
                         </div>
@@ -44,8 +51,38 @@
                                 <div class="form-group">
                                     <label for="input_warehouseName">Warehouse Name</label>
                                     <input type="text" class="form-control" id="input_warehouseName" name="warehouseName" required="true">
+                                </div>                                                                
+                                
+                                <div class="form-group">
+                                    <label for="input_Store">Store</label>
+                                    <select id="input_Store" name="StoreId" class="form-control">
+                                        <option></option>
+                                        <% 
+                                            List<StoreEntity> storeList = (List<StoreEntity>) request.getAttribute("storeList"); 
+                                            for(StoreEntity s: storeList){
+                                        %>
+                                        <option value="<%= s.getId() %>"><%= s.getName() %></option>
+                                        <%
+                                            }
+                                        %>                                        
+                                    </select>
                                 </div>
-
+                                
+                                <div class="form-group">
+                                    <label for="input_manufacturingFacility">Manufacturing Facility</label>
+                                    <select id="input_manufacturingFacility" name="mfId" class="form-control">
+                                        <option></option>
+                                        <% 
+                                            List<ManufacturingFacilityEntity> mfList = (List<ManufacturingFacilityEntity>) request.getAttribute("mfList"); 
+                                            for(ManufacturingFacilityEntity mf: mfList){
+                                        %>
+                                        <option value="<%= mf.getId() %>"><%= mf.getName() %></option>
+                                        <%
+                                            }
+                                        %>                                        
+                                    </select>                                    
+                                </div>
+                                
                                 <div class="form-group">
                                     <label for="input_address">Address</label>
                                     <input type="text" class="form-control" id="input_address"  name="address">

@@ -388,11 +388,22 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email) {
+    public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email, Long storeId, Long mfId) {
         try {
             Query q = em.createQuery("select w from WarehouseEntity w where w.warehouseName = ?1").setParameter(1, warehouseName);
             if (q.getResultList().isEmpty()) {
                 WarehouseEntity warehouse = new WarehouseEntity(warehouseName, address, telephone, email);
+                if (storeId != -1) {
+                    StoreEntity store = em.find(StoreEntity.class, storeId);
+                    warehouse.setStore(store);
+                    store.setWarehouse(warehouse);
+                    em.merge(store);
+                } else if (mfId != -1) {
+                    ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, mfId);
+                    warehouse.setManufaturingFacility(mf);
+                    mf.setWarehouse(warehouse);
+                    em.merge(mf);
+                }
                 em.persist(warehouse);
                 return warehouse;
             } else {
@@ -444,14 +455,21 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public Boolean
-            deleteWarehouse(Long id) {
+    public Boolean deleteWarehouse(Long id) {
         try {
             WarehouseEntity warehouse = em.find(WarehouseEntity.class, id);
+            ManufacturingFacilityEntity mf = warehouse.getManufaturingFacility();
+            if (mf != null) {
+                mf.setWarehouse(null);     
+                em.merge(mf);
+            }
+            StoreEntity store = warehouse.getStore();
+            if (store != null) {
+                store.setWarehouse(null);
+                em.merge(store);
+            }
             em.remove(warehouse);
-
             em.flush();
-
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
