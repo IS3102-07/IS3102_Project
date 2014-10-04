@@ -24,15 +24,12 @@
                 document.productGroupManagement.action = "productGroupManagement_Add.jsp";
                 document.productGroupManagement.submit();
             }
-            function checkAll() {
-                var allRows = document.supplierManagement.getElementsByTagName("delete");
-                for (var i = 0; i < allRows.length; i++) {
-                    if (allRows[i].type == 'checkbox') {
-                        allRows[i].checked = true;
-                    }
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
                 }
             }
-            
             function removePG() {
                 
                 checkboxes = document.getElementsByName('delete');
@@ -111,7 +108,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Product Group</th>
                                                             <th>Work Hours</th>
                                                             <th>Item SKUs</th>
