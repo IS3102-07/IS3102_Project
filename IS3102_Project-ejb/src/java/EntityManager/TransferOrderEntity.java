@@ -31,7 +31,7 @@ public class TransferOrderEntity implements Serializable {
     private String status;
     @ManyToOne
     private WarehouseEntity warehouse;
-    
+    private String submittedBy;
 
     public TransferOrderEntity() {
 
@@ -45,6 +45,7 @@ public class TransferOrderEntity implements Serializable {
         this.dateCreated = Calendar.getInstance().getTime();
         this.dateTransferred = null;
         this.status = "Pending";
+        submittedBy = "N.A.";
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //        Calendar cal = Calendar.getInstance();
 //        dateFormat.format(cal.getTime());
@@ -104,6 +105,14 @@ public class TransferOrderEntity implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public void setSubmittedBy(String submittedBy) {
+        this.submittedBy = submittedBy;
     }
 
     @Override

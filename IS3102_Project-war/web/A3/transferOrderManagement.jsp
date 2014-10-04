@@ -116,6 +116,7 @@
                                                             <th>Origin</th>
                                                             <th>Target</th>
                                                             <th>Status</th>
+                                                            <th>Submitted By</th>
                                                             <th>Warehouse</th>
                                                             <th>Details</th>
                                                         </tr>
@@ -149,6 +150,9 @@
                                                             </td>
                                                             <td>
                                                                 <%=transferOrders.get(i).getStatus()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=transferOrders.get(i).getSubmittedBy()%>
                                                             </td>
                                                             <td>
                                                                 <%=warehouseEntity.getWarehouseName()%>
