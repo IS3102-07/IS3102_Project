@@ -440,11 +440,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public ProductGroupEntity createProductGroup(String name, Integer workhours) {
+    public ProductGroupEntity createProductGroup(String name, Integer workhours, Integer lotSize) {
         try {
             Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
             if (q.getResultList().isEmpty()) {
-                ProductGroupEntity prouductGroup = new ProductGroupEntity(name, workhours);
+                ProductGroupEntity prouductGroup = new ProductGroupEntity(name, workhours, lotSize);
                 em.persist(prouductGroup);
                 return prouductGroup;
             } else {
@@ -457,7 +457,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public Boolean editProductGroup(Long productGroupID, String name, Integer workhours) {
+    public Boolean editProductGroup(Long productGroupID, String name, Integer workhours, Integer lotSize) {
         System.out.println("editProductGroup() called");
         try {
             Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
@@ -466,6 +466,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             if (listOfProductGroupEntity == null || listOfProductGroupEntity.isEmpty() || productGroupEntity.getId().equals(productGroupID)) {
                 productGroupEntity.setName(name);
                 productGroupEntity.setWorkHours(workhours);
+                productGroupEntity.setLotSize(lotSize);
                 em.merge(productGroupEntity);
                 return true;
             } else {

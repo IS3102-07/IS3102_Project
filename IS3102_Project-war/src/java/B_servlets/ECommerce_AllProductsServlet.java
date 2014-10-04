@@ -30,13 +30,9 @@ public class ECommerce_AllProductsServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            String goodMsg = request.getParameter("goodMsg");
             
             List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
             session.setAttribute("furnitures", furnitures);
-            List<RetailProductEntity> retailProducts = itemManagementBean.listAllRetailProduct();
-            session.setAttribute("retailProducts", retailProducts);
             
             response.sendRedirect("B/allProducts.jsp");
             

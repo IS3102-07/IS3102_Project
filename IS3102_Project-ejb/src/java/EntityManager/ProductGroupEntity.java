@@ -26,6 +26,7 @@ public class ProductGroupEntity implements Serializable {
     @Lob
     private String productGroupName;   
     private Integer workHours;
+    private Integer lotSize;
     @OneToMany(cascade={CascadeType.ALL}, mappedBy="productGroup")
     List<ProductGroupLineItemEntity> lineItemList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
@@ -39,9 +40,10 @@ public class ProductGroupEntity implements Serializable {
         this.sopList = new ArrayList<>();
     } 
 
-    public ProductGroupEntity(String productGroupName, Integer workHours) {
+    public ProductGroupEntity(String productGroupName, Integer workHours, Integer lotSize) {
         this.workHours = workHours;
         this.productGroupName = productGroupName;
+        this.lotSize = lotSize;
         this.lineItemList = new ArrayList<>();
         this.saleForcastEntityList = new ArrayList<>();
         this.sopList = new ArrayList<>();
@@ -143,6 +145,14 @@ public class ProductGroupEntity implements Serializable {
     @Override
     public String toString() {
         return "EntityManager.ProductionGroupEntity[ id=" + id + " ]";
+    }
+
+    public Integer getLotSize() {
+        return lotSize;
+    }
+
+    public void setLotSize(Integer lotSize) {
+        this.lotSize = lotSize;
     }
     
 }
