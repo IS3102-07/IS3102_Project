@@ -37,16 +37,15 @@
                         <div class="row">
 
                             <ul class="products product-thumb-info-list" data-plugin-masonry>
-                                
+
                                 <%
-                                    
-                                        List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
-                 
+                                    List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+
                                     try {
                                         if (furnitures != null) {
                                             for (int i = 0; i < furnitures.size(); i++) {
                                 %>
-                                
+
                                 <li class="col-md-3 col-sm-6 col-xs-12 product">
                                     <span class="product-thumb-info">
                                         <a href="shop-cart.html" class="add-to-cart-product">
@@ -56,9 +55,9 @@
                                             <span class="product-thumb-info-image">
                                                 <span class="product-thumb-info-act">
                                                     <span class="product-thumb-info-act-left"><em><%=furnitures.get(i).getDescription()%></em></span>
-                                                    
+
                                                 </span>
-                                                <img alt="" class="img-responsive" src="../img/products/1.JPG">
+                                                <img alt="" class="img-responsive" src="../img/products/<%=i%5%>.JPG">
                                             </span>
                                         </a>
                                         <span class="product-thumb-info-content">
@@ -78,8 +77,8 @@
                                         System.out.println(ex);
                                     }
                                 %>
-                                
-                                
+
+
                             </ul>
                         </div>
 

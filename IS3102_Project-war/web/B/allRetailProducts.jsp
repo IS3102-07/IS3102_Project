@@ -40,7 +40,7 @@
                                 
                                 <%
                                     
-                                        List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProduct"));
+                                        List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProducts"));
                  
                                     try {
                                         if (retailProducts != null) {
@@ -58,7 +58,7 @@
                                                     <span class="product-thumb-info-act-left"><em><%=retailProducts.get(i).getDescription()%></em></span>
                                                     
                                                 </span>
-                                                <img alt="" class="img-responsive" src="../img/products/1.JPG">
+                                                <img alt="" class="img-responsive" src="../img/products/<%=i%5%>.JPG">
                                             </span>
                                         </a>
                                         <span class="product-thumb-info-content">
