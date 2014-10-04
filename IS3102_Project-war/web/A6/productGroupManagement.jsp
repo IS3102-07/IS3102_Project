@@ -115,6 +115,7 @@
                                                             <th>Product Group</th>
                                                             <th>Work Hours</th>
                                                             <th>Item SKUs</th>
+                                                            <th>Lot Size</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -132,7 +133,7 @@
                                                             </td>
                                                             <td>
                                                                 <%=productGroups.get(i).getWorkHours()%>
-                                                            </td>
+                                                            </td>                                                          
                                                             <td>
                                                                 <%
                                                                     List<ProductGroupLineItemEntity> lineItems = productGroups.get(i).getLineItemList();
@@ -144,6 +145,9 @@
                                                                         }
                                                                     }
                                                                 %>
+                                                            </td>
+                                                             <td>
+                                                                <%=productGroups.get(i).getLotSize()%>
                                                             </td>
                                                             <td style="width:200px">
                                                                 <input  type="button" name="btnEdit" class="btn btn-primary btn-block"  value="Update" onclick="javascript:updatePG('<%=productGroups.get(i).getId()%>')"/>

@@ -45,7 +45,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Work Hours: </label>
-                                            <input class="form-control" name="workhours" type="number" min="0" step="1" required="true"/>
+                                            <input class="form-control" name="workhours" type="number" min="1" step="1" required="true"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Lot Size: </label>
+                                            <input class="form-control" name="lotsize" type="number" min="1" step="1" required="true"/>
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" value="Create Product Group" class="btn btn-lg btn-primary btn-block">

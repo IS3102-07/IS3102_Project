@@ -22,7 +22,8 @@ public class ProductGroupManagement_AddServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             String workhours = request.getParameter("workhours");
-            ProductGroupEntity productGroup = ItemManagementBean.createProductGroup(name, Integer.parseInt(workhours));
+            String lotsize = request.getParameter("lotsize");
+            ProductGroupEntity productGroup = ItemManagementBean.createProductGroup(name, Integer.parseInt(workhours), Integer.parseInt(lotsize));
 
             if (productGroup == null) {
                 result = "?errMsg=Product group name already exist.";
