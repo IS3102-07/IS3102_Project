@@ -35,15 +35,13 @@
                 document.supplierManagement.action = "supplierManagement_add.jsp";
                 document.supplierManagement.submit();
             }
-            function checkAll() {
-                alert("Check all the checkboxes...");
-                var allRows = document.supplierManagement.getElementsByTagName("delete");
-                for (var i = 0; i < allRows.length; i++) {
-                    if (allRows[i].type == 'checkbox') {
-                        allRows[i].checked = true;
-                    }
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
                 }
             }
+
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -97,7 +95,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
+                                                            <th><input type="checkbox" onclick="checkAll(this)" /></th>
                                                             <th>Name</th>
                                                             <th>Phone</th>
                                                             <th>Email</th>
