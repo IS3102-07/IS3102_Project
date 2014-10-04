@@ -14,7 +14,7 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
                         <div class="panel-body">
-                            <form role="form" name="registrationForm">
+                            <form role="form" name="registrationForm" onsubmit="validatePassword()">
                                 <div class="box-content">
                                     <h3>Register An Account</h3>
                                     <jsp:include page="../displayMessageLong.jsp" />
@@ -79,7 +79,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
-                                            <input type="submit" value="Register" class="btn btn-primary pull-left" onclick="validatePassword()" style="width:318px;">
+                                            <input type="submit" value="Register" class="btn btn-primary pull-left"  style="width:318px;">
                                         </div>
                                     </div>
                                 </div>

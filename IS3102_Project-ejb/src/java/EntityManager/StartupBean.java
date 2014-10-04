@@ -47,7 +47,7 @@ public class StartupBean {
                 roleEntity.create("Regional Manager", "Region");
                 em.persist(roleEntity);
                 roleEntity = new RoleEntity();
-                roleEntity.create("Warehouse Manager", "Facility");
+                roleEntity.create("Manufacturing Facility Warehouse Manager", "Facility");
                 em.persist(roleEntity);
                 roleEntity = new RoleEntity();
                 roleEntity.create("Store Manager", "Facility");
@@ -63,6 +63,9 @@ public class StartupBean {
                 em.persist(roleEntity);
                 roleEntity = new RoleEntity();
                 roleEntity.create("Purchasing Manager", "Region");
+                em.persist(roleEntity);
+                roleEntity = new RoleEntity();
+                roleEntity.create("Manufacturing Facility Manager", "Facility");
                 em.persist(roleEntity);
                 System.out.println("RolesEntity init success.");
             } catch (Exception ex) {

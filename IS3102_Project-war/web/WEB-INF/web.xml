@@ -521,6 +521,14 @@
         <servlet-name>ECommerce_StoresServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_StoresServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_AllRetailProductsServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_AllRetailProductsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_AllFoodsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1043,6 +1051,14 @@
     <servlet-mapping>
         <servlet-name>ECommerce_StoresServlet</servlet-name>
         <url-pattern>/ECommerce_StoresServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_AllRetailProductsServlet</servlet-name>
+        <url-pattern>/ECommerce_AllRetailProductsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
+        <url-pattern>/ECommerce_AllFoodsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

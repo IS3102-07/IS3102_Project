@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author yang
  */
-public class ECommerce_AllProductsServlet extends HttpServlet {
+public class ECommerce_AllFoodsServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
@@ -31,10 +31,10 @@ public class ECommerce_AllProductsServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             
-            List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
-            session.setAttribute("furnitures", furnitures);
+            List<RetailProductEntity> retailProducts = itemManagementBean.listAllRetailProduct();
+            session.setAttribute("retailProducts", retailProducts);
             
-            response.sendRedirect("B/allProducts.jsp");
+            response.sendRedirect("B/allRetailProducts.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
