@@ -17,6 +17,7 @@
     List<RoleEntity> roles = staffEntity.getRoles();
     Long[] approvedRolesID;
     boolean roleCanView;
+    boolean roleCanView2;
 %>
 
 <%
@@ -251,13 +252,16 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 7L};
+                approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 7L, 8L};
                 roleCanView = false;
+                roleCanView2 = true;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
                             roleCanView = true;
-                            break;
+                        }
+                        if(roleEntity.getId().equals(8L)) {//Manufacturing Facility Manager
+                            roleCanView2 = false;
                         }
                     }
                     if (roleCanView) {
@@ -271,6 +275,7 @@
                     <i class="icon icon-home"></i> SCM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="SCM" class="collapse">
+                    <% if (roleCanView2) { %>
                     <li>
                         <a href="../PurchaseOrderManagement_Servlet">Retail Products and Raw Materials Purchasing</a>
                     </li>
@@ -280,13 +285,14 @@
                     <li>
                         <a href="../ShippingOrderManagement_Servlet">Inbound and Outbound Logistics</a>
                     </li>
+                    <%}%>
                     <li>
                         <a href="../ManufacturingWarehouseManagement_Servlet">Manufacturing's Warehouse Management</a>
                     </li>
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L,2L,4L,5L};
+                approvedRolesID = new Long[]{1L, 2L, 4L, 5L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -356,7 +362,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L,2L,6L};
+                approvedRolesID = new Long[]{1L, 2L, 6L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {

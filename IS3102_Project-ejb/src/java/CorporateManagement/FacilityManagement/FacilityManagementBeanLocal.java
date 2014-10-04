@@ -56,8 +56,8 @@ public interface FacilityManagementBeanLocal {
     public StoreHelper getStoreHelperClass(Long Id);
     public List<StoreHelper> getStoreHelperList();    
     public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId);
-
-    public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email);
+    
+    public WarehouseEntity createWarehouse(String warehouseName, String address, String telephone, String email, Long storeId, Long mfId);
     public Boolean editWarehouse(Long id, String warehouseName, String address, String telephone, String email);
     public Boolean deleteWarehouse(Long id);
     public WarehouseEntity getWarehouseByName(String warehouseName);
