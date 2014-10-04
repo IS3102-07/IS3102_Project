@@ -91,6 +91,8 @@
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Warehouse Name</th>
+                                                            <th>Regional Office</th>    
+                                                            <th>Attached Facility</th>
                                                             <th>Address</th>
                                                             <th>Telephone</th>
                                                             <th>Email Address</th>
@@ -106,6 +108,17 @@
                                                         <tr>
                                                             <td><input type="checkbox" name="delete" value="<%= warehouse.getId()%>" /></td>
                                                             <td><%= warehouse.getWarehouseName()%></td>
+                                                            <%
+                                                                if (warehouse.getStore() != null) {
+                                                            %>
+                                                            <td><%= warehouse.getStore().getRegionalOffice().getName()%></td>
+                                                            <td><%= warehouse.getStore().getName()%></td>                                                            
+                                                            <%
+                                                            } else {
+                                                            %>
+                                                            <td><%= warehouse.getManufaturingFacility().getRegionalOffice().getName() %></td>
+                                                            <td><%= warehouse.getManufaturingFacility().getName() %></td>
+                                                            <% } %>
                                                             <td><%= warehouse.getAddress()%></td>
                                                             <td><%= warehouse.getTelephone()%></td>
                                                             <td><%= warehouse.getEmail()%></td>
@@ -165,7 +178,7 @@
     <!-- /#wrapper -->
 
     <%
-        if (request.getAttribute("alertMessage") != null) {
+    if (request.getAttribute("alertMesage") != null) {
     %>
     <script>
             alert("<%= request.getAttribute("alertMessage")%>");

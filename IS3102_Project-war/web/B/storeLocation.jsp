@@ -8,235 +8,42 @@
             <jsp:include page="menu1.html" />
 
             <div role="main" class="main">
-                <div class="slider-container">
-                    <div class="slider" id="revolutionSlider">
-                        <ul>
-                            <li data-transition="fade" data-slotamount="13" data-masterspeed="300" >
-
-                                <img src="../img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-
-                                <div class="tp-caption sft stb visible-lg"
-                                     data-x="72"
-                                     data-y="180"
-                                     data-speed="300"
-                                     data-start="1000"
-                                     data-easing="easeOutExpo"><img src="../img/slides/slide-title-border.png" alt=""></div>
-
-                                <div class="tp-caption top-label lfl stl"
-                                     data-x="132"
-                                     data-y="180"
-                                     data-speed="300"
-                                     data-start="500"
-                                     data-easing="easeOutExpo">DO YOU NEED NEW</div>
-
-                                <div class="tp-caption sft stb visible-lg"
-                                     data-x="372"
-                                     data-y="180"
-                                     data-speed="300"
-                                     data-start="1000"
-                                     data-easing="easeOutExpo"><img src="../img/slides/slide-title-border.png" alt=""></div>
-
-                                <div class="tp-caption main-label sft stb"
-                                     data-x="30"
-                                     data-y="210"
-                                     data-speed="300"
-                                     data-start="1500"
-                                     data-easing="easeOutExpo">FURNITURE?</div>
-
-                                <div class="tp-caption bottom-label sft stb"
-                                     data-x="80"
-                                     data-y="280"
-                                     data-speed="500"
-                                     data-start="2000"
-                                     data-easing="easeOutExpo">Check out our options and features.</div>
-
-                                <div class="tp-caption randomrotate"
-                                     data-x="800"
-                                     data-y="248"
-                                     data-speed="500"
-                                     data-start="2500"
-                                     data-easing="easeOutBack"><img src="../img/slides/slide-concept-2-1.png" alt=""></div>
-
-                                <div class="tp-caption sfb"
-                                     data-x="850"
-                                     data-y="200"
-                                     data-speed="400"
-                                     data-start="3000"
-                                     data-easing="easeOutBack"><img src="../img/slides/slide-concept-2-2.png" alt=""></div>
-
-                                <div class="tp-caption sfb"
-                                     data-x="820"
-                                     data-y="170"
-                                     data-speed="700"
-                                     data-start="3150"
-                                     data-easing="easeOutBack"><img src="../img/slides/slide-concept-2-3.png" alt=""></div>
-
-                                <div class="tp-caption sfb"
-                                     data-x="770"
-                                     data-y="130"
-                                     data-speed="1000"
-                                     data-start="3250"
-                                     data-easing="easeOutBack"><img src="../img/slides/slide-concept-2-4.png" alt=""></div>
-
-                                <div class="tp-caption sfb"
-                                     data-x="500"
-                                     data-y="80"
-                                     data-speed="600"
-                                     data-start="3450"
-                                     data-easing="easeOutExpo"><img src="../img/slides/slide-concept-2-5.png" alt=""></div>
-
-                                <div class="tp-caption blackboard-text lfb "
-                                     data-x="530"
-                                     data-y="300"
-                                     data-speed="500"
-                                     data-start="3450"
-                                     data-easing="easeOutExpo" style="font-size: 37px;">Build</div>
-
-                                <div class="tp-caption blackboard-text lfb "
-                                     data-x="555"
-                                     data-y="350"
-                                     data-speed="500"
-                                     data-start="3650"
-                                     data-easing="easeOutExpo" style="font-size: 47px;">your</div>
-
-                                <div class="tp-caption blackboard-text lfb "
-                                     data-x="580"
-                                     data-y="400"
-                                     data-speed="500"
-                                     data-start="3850"
-                                     data-easing="easeOutExpo" style="font-size: 32px;">own furniture :)</div>
-                            </li>
-                            <li data-transition="fade" data-slotamount="5" data-masterspeed="1000" >
-
-                                <img src="img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-
-                                <div class="tp-caption fade"
-                                     data-x="50"
-                                     data-y="100"
-                                     data-speed="1500"
-                                     data-start="500"
-                                     data-easing="easeOutExpo"><img src="../img/slides/slide-concept.png" alt=""></div>
-
-                                <div class="tp-caption blackboard-text fade "
-                                     data-x="180"
-                                     data-y="180"
-                                     data-speed="1500"
-                                     data-start="1000"
-                                     data-easing="easeOutExpo" style="font-size: 30px;">Prof Tan</div>
-
-                                <div class="tp-caption blackboard-text fade "
-                                     data-x="180"
-                                     data-y="220"
-                                     data-speed="1500"
-                                     data-start="1200"
-                                     data-easing="easeOutExpo" style="font-size: 40px;">Give me an A+!</div>
-
-                                <div class="tp-caption main-label sft stb"
-                                     data-x="580"
-                                     data-y="190"
-                                     data-speed="300"
-                                     data-start="1500"
-                                     data-easing="easeOutExpo">Island Furniture</div>
-
-                                <div class="tp-caption bottom-label sft stb"
-                                     data-x="580"
-                                     data-y="250"
-                                     data-speed="500"
-                                     data-start="2000"
-                                     data-easing="easeOutExpo">IS3102 IT-07.</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="home-intro">
+                <section class="page-top">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-8">
-                                <p>
-                                    The fastest way to grow your business with the leader in <em>Furniture.</em>
-                                    <span>Check out our options and features included.</span>
-                                </p>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="get-started">
-                                    <a href="#" class="btn btn-lg btn-primary">Get Started Now!</a>
-                                    <div class="learn-more">or <a href="index.html">learn more.</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="container">
-                        <div class="row center">
                             <div class="col-md-12">
-                                <h2 class="short word-rotator-title">
-                                    Porto is
-                                    <strong class="inverted">
-                                        <span class="word-rotate">
-                                            <span class="word-rotate-items">
-                                                <span>incredibly</span>
-                                                <span>especially</span>
-                                                <span>extremely</span>
-                                            </span>
-                                        </span>
-                                    </strong>
-                                    beautiful and fully responsive.
-                                </h2>
-                                <p class="featured lead">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce elementum, nulla vel pellentesque consequat, ante nulla hendrerit arcu, ac tincidunt mauris lacus sed leo. vamus suscipit molestie vestibulum.
-                                </p>
+                                <h2>Store Locations</h2>
                             </div>
                         </div>
                     </div>
+                </section>
+
+                <div class="container">
+
 
                     <div class="container">
                         <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading"> <%
-
-                                    String errMsg = request.getParameter("errMsg");
-                                    String goodMsg = request.getParameter("goodMsg");
-                                    if (errMsg == null && goodMsg == null) {
-                                        out.println("Add or remove furniture");
-                                    } else if ((errMsg != null) && (goodMsg == null)) {
-                                        if (!errMsg.equals("")) {
-                                            out.println(errMsg);
-                                        }
-                                    } else if ((errMsg == null && goodMsg != null)) {
-                                        if (!goodMsg.equals("")) {
-                                            out.println(goodMsg);
-                                        }
-                                    }
-                                    %>                                  
+                                <div class="panel-heading">
+                                    Store Locations
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="furnitureManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Furniture" onclick="addFurniture()"  />
-                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Furniture</button></a>
-                                                </div>
-                                            </div>
+
                                             <br/>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th>Name</th>
-                                                            <th>Category</th>
-                                                            <th>Description</th>
-                                                            <th>Image URL</th>
-                                                            <th>SKU</th>
-                                                            <th>Length</th>
-                                                            <th>Width</th>
-                                                            <th>Height</th>
-                                                            <th>Action</th>
+                                                            
+                                                            <th><h4 class="shorter">Name</h4></th>
+                                                            <th><h4 class="shorter">Address</h4></th>
+                                                            <th><h4 class="shorter">Email</h4></th>
+                                                            <th><h4 class="shorter">Telephone</h4></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -248,35 +55,22 @@
                                                                     for (int i = 0; i < stores.size(); i++) {
                                                         %>
                                                         <tr>
-                                                            <td>
-                                                                <input type="checkbox" name="delete" value="<%=stores.get(i).getId()%>" />
-                                                            </td>
-                                                            <td>
+                                                            
+                                                            <td><p class="tall">
                                                                 <%=stores.get(i).getName()%>
+                                                                </p>
                                                             </td>
-                                                            <td>
-                                                                <%=stores.get(i).getName()%>
+                                                            <td><p class="tall">
+                                                                <%=stores.get(i).getAddress()%>
+                                                                </p>
                                                             </td>
-                                                            <td>
-                                                                <%=stores.get(i).getName()%>
+                                                            <td><p class="tall">
+                                                                <%=stores.get(i).getEmail()%>
+                                                                </p>
                                                             </td>
-                                                            <td>
-                                                                <%=stores.get(i).getName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=stores.get(i).getName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=stores.get(i).getName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=stores.get(i).getName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=stores.get(i).getName()%>
-                                                            </td>
-                                                            <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=stores.get(i).getId()%>" value="Update" onclick="javascript:updateFurniture('<%=stores.get(i).getId()%>')"/>
+                                                            <td><p class="tall">
+                                                                <%=stores.get(i).getTelephone()%>
+                                                                </p>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -290,13 +84,8 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Furniture" onclick="addFurniture()"  />
-                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Furniture</button></a>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="id" value="">    
+                                            
+                                            <input type="hidden" name="id" value="">
                                         </div>
 
                                     </div>
@@ -309,8 +98,8 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     </div>
-                    
-                    
+
+
 
                     <div class="container">
 
@@ -481,7 +270,7 @@
             <script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
             <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
             <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-            <script src="../js/views/view.home.js"></script>   
+            <script src="../js/views/view.home.js"></script>
         </div>
     </body>
 </html>
