@@ -1,3 +1,4 @@
+<%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
@@ -70,8 +71,12 @@
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
                                             <%
-                                                ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LdjyvoSAAAAAL2m-7sPPZEtz0BNVRb-A_yY0BB_", "6LdjyvoSAAAAAHnUl50AJU-edkUqFtPQi9gCqDai", false);
-                                                out.print(c.createRecaptchaHtml(null, null));
+                                                ReCaptchaImpl recaptcha = new ReCaptchaImpl();
+                                                recaptcha.setIncludeNoscript(false);
+                                                recaptcha.setPrivateKey("6LdjyvoSAAAAAHnUl50AJU-edkUqFtPQi9gCqDai");
+                                                recaptcha.setPublicKey("6LdjyvoSAAAAAL2m-7sPPZEtz0BNVRb-A_yY0BB_");
+                                                recaptcha.setRecaptchaServer("https://www.google.com/recaptcha/api");
+                                                out.print(recaptcha.createRecaptchaHtml(null, null));
                                             %>
                                         </div>
                                     </div>
