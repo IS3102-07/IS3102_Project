@@ -1,3 +1,6 @@
+<%@page import="EntityManager.ManufacturingFacilityEntity"%>
+<%@page import="EntityManager.StoreEntity"%>
+<%@page import="java.util.List"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <html lang="en">
 
@@ -46,8 +49,21 @@
                                     <label for="input_warehouseName">Warehouse Name</label>
                                     <input type="text" class="form-control" id="input_warehouseName" value="<%= warehouse.getWarehouseName()%>" required="true" disabled/>
                                     <input type="hidden" name="warehouseName"  value="<%= warehouse.getWarehouseName()%>" >
-
                                 </div>
+
+                                <% if (warehouse.getStore() != null) {  %>                                
+                                <div class="form-group">
+                                    <label for="input_Store">Store</label>
+                                    <input type="text" class="form-control" id="input_Store"  name="store" value="<%= warehouse.getStore().getName() %>" readonly="true" >
+                                </div>
+                                <% } %>
+
+                                <% if (warehouse.getManufaturingFacility() != null) {  %>
+                                <div class="form-group">
+                                    <label for="input_manufacturingFacility">Manufacturing Facility</label>
+                                    <input type="text" class="form-control" id="input_manufacturingFacility"  name="manufacturingFacility" value="<%= warehouse.getManufaturingFacility().getName() %>" readonly="true" >
+                                </div>
+                                <% } %>
 
                                 <div class="form-group">
                                     <label for="input_address">Address</label>

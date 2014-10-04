@@ -6,6 +6,8 @@
 package A6_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -50,6 +52,10 @@ public class FacilityManagement_Servlet extends HttpServlet {
             case "/createWarehouse_GET":
                 String submit_btn = request.getParameter("submit-btn");
                 if (submit_btn.equals("Add Warehouse")) {
+                    List<StoreEntity> storeList = fmBean.viewListOfStore();
+                    List<ManufacturingFacilityEntity> mfList = fmBean.viewListOfManufacturingFacility();
+                    request.setAttribute("storeList", storeList);
+                    request.setAttribute("mfList", mfList);
                     nextPage = "/A6/createWarehouse";
                 } else if (submit_btn.equals("Delete Warehouse")) {
                     nextPage = "/FacilityManagement_Servlet/deleteWarehouse";
@@ -66,11 +72,21 @@ public class FacilityManagement_Servlet extends HttpServlet {
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
-
+                    String StoreIdString = request.getParameter("StoreId");
+                    System.out.print("StoreIdString: " + StoreIdString);
+                    String mfIdString = request.getParameter("mfId");
+                    Long StoreId = (long) -1;
+                    Long mfId = (long) -1;
+                    if (!StoreIdString.equals("")) {
+                        StoreId = Long.parseLong(StoreIdString);
+                    }
+                    if (!mfIdString.equals("")) {
+                        mfId = Long.parseLong(mfIdString);
+                    }
                     if (fmBean.checkNameExistsOfWarehouse(warehouseName)) {
                         result = "?errMsg=Fail to create warehouse due to duplicated warehouse name.";
                     } else {
-                        WarehouseEntity warehouse = fmBean.createWarehouse(warehouseName, address, telephone, email);
+                        WarehouseEntity warehouse = fmBean.createWarehouse(warehouseName, address, telephone, email, StoreId, mfId);
                         if (warehouse != null) {
                             result = "?goodMsg=A new warehouse record has been saved.";
                         } else {
@@ -88,6 +104,12 @@ public class FacilityManagement_Servlet extends HttpServlet {
                 warehouseId = (long) request.getAttribute("warehouseId");
                 WarehouseEntity warehouse = fmBean.getWarehouseById(warehouseId);
                 request.setAttribute("warehouse", warehouse);
+                
+                List<StoreEntity> storeList = fmBean.viewListOfStore();
+                List<ManufacturingFacilityEntity> mfList = fmBean.viewListOfManufacturingFacility();
+                request.setAttribute("storeList", storeList);
+                request.setAttribute("mfList", mfList);
+                
                 nextPage = "/A6/editWarehouse";
                 break;
 
