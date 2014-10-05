@@ -29,7 +29,7 @@ public interface ManufacturingWarehouseManagementBeanLocal {
     public Boolean addLineItemToTransferOrder(Long transferOrderID, String SKU, Integer quantity);
     public Boolean removeLineItemFromTransferOrder(Long transferOrderID);
 
-    public boolean markTransferOrderAsCompleted(Long transferOrderId);
+    public boolean markTransferOrderAsCompleted(Long transferOrderId, String submittedBy);
 
     public boolean cancelTransferOrder(Long transferOrderId);
 

@@ -33,11 +33,13 @@ public class ProductGroupEntity implements Serializable {
     List<SaleForecastEntity> saleForcastEntityList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
     List<SaleAndOperationPlanEntity> sopList;
+    private Boolean isDeleted;
     
     public ProductGroupEntity(){
         this.lineItemList = new ArrayList<>();
         this.saleForcastEntityList = new ArrayList<>();
         this.sopList = new ArrayList<>();
+        this.isDeleted=false;
     } 
 
     public ProductGroupEntity(String productGroupName, Integer workHours, Integer lotSize) {
@@ -47,7 +49,16 @@ public class ProductGroupEntity implements Serializable {
         this.lineItemList = new ArrayList<>();
         this.saleForcastEntityList = new ArrayList<>();
         this.sopList = new ArrayList<>();
+        this.isDeleted = false;
     }        
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
     
     public void create(String name) {
         setName(name);

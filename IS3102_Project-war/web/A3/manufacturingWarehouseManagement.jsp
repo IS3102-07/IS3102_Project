@@ -27,36 +27,38 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                    <div class="row featured-boxes">
-                        <div class="col-md-12">
-                            <div class="col-md-4">
-                                <div class="featured-box featured-box-primary">
-                                    <div class="box-content">
-                                        <a href="../StorageBinManagement_Servlet"><i class="icon-featured icon icon-archive"> </i>
-                                            <h4>Storage Bin Management</h4>
-                                        </a>
+                    <div class="row">
+                        <div class="row featured-boxes">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="featured-box featured-box-primary">
+                                        <div class="box-content">
+                                            <a href="../StorageBinManagement_Servlet"><i class="icon-featured icon icon-archive"> </i>
+                                                <h4>Storage Bin Management</h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="featured-box featured-box-secundary">
+                                        <div class="box-content">
+                                            <a href="../TransferOrderManagement_Servlet"><i class="icon-featured icon icon-exchange"> </i>
+                                                <h4>Transfer Order Management</h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="featured-box featured-box-secundary">
+                                        <div class="box-content">
+                                            <a href="../ManufacturingInventoryControl_Servlet"><i class="icon-featured icon icon-th"> </i>
+                                                <h4>Inventory Control</h4>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="featured-box featured-box-secundary">
-                                    <div class="box-content">
-                                        <a href="../TransferOrderManagement_Servlet"><i class="icon-featured icon icon-exchange"> </i>
-                                            <h4>Transfer Order Management</h4>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="featured-box featured-box-secundary">
-                                    <div class="box-content">
-                                        <a href="../ManufacturingInventoryControl_Servlet"><i class="icon-featured icon icon-th"> </i>
-                                            <h4>Inventory Control</h4>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>    
                     </div>
                     <div class="row">
                         <div class="col-lg-4">
@@ -153,53 +155,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-clock-o icon-fw"></i> Recent Item Movement</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="list-group">
-                                        <a href="#" class="list-group-item">
-                                            <span class="badge">just now</span>
-                                            <i class="icon icon-fw icon-calendar"></i> Calendar updated
-                                        </a>
-                                        <a href="#" class="list-group-item">
-                                            <span class="badge">4 minutes ago</span>
-                                            <i class="icon icon-fw icon-comment"></i> Commented on a post
-                                        </a>
-                                        <a href="#" class="list-group-item">
-                                            <span class="badge">23 minutes ago</span>
-                                            <i class="icon icon-fw icon-truck"></i> Order 392 shipped
-                                        </a>
-                                        <a href="#" class="list-group-item">
-                                            <span class="badge">46 minutes ago</span>
-                                            <i class="icon icon-fw icon-money"></i> Invoice 653 has been paid
-                                        </a>
-                                        <a href="#" class="list-group-item">
-                                            <span class="badge">1 hour ago</span>
-                                            <i class="icon icon-fw icon-user"></i> A new user has been added
-                                        </a>
-                                        <a href="#" class="list-group-item">
-                                            <span class="badge">2 hours ago</span>
-                                            <i class="icon icon-fw icon-check"></i> Completed task: "pick up dry cleaning"
-                                        </a>
-                                        <a href="#" class="list-group-item">
-                                            <span class="badge">yesterday</span>
-                                            <i class="icon icon-fw icon-globe"></i> Saved the world
-                                        </a>
-                                        <a href="#" class="list-group-item">
-                                            <span class="badge">two days ago</span>
-                                            <i class="icon icon-fw icon-check"></i> Completed task: "fix error on sales page"
-                                        </a>
-                                    </div>
-                                    <div class="text-right">
-                                        <a href="../TransferOrderManagement_Servlet">View All Activity <i class="icon icon-arrow-circle-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
+
+                        <div class="col-lg-8">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="icon icon-money icon-fw"></i> Recent Transfer Orders</h3>

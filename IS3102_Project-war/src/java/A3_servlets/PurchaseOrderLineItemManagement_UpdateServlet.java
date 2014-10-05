@@ -1,6 +1,7 @@
 package A3_servlets;
 
 import EntityManager.PurchaseOrderEntity;
+import EntityManager.StaffEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
@@ -39,12 +40,14 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
             String status = request.getParameter("status");
             String destinationWarehouseID = request.getParameter("destinationWarehouseID");
             PurchaseOrderEntity purchaseOrderEntity = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderById(Long.parseLong(purchaseOrderId));
-
+            
+            HttpSession session = request.getSession();
+            StaffEntity staff = ((StaffEntity) session.getAttribute("staffEntity"));
+            String submittedBy =  staff.getName();
             if (status != null) {
                 if (purchaseOrderEntity.getStatus().equals("Pending")) {
                     //get purchase order
-                    HttpSession session;
-                    session = request.getSession();
+
                     List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
                     PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
                     for (int i = 0; i < purchaseOrders.size(); i++) {
@@ -57,7 +60,8 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         result = "?errMsg=Empty purchase order cannot be submitted.&id=" + purchaseOrderId;
                         response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
                     } else {
-                        boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), "Submitted");
+
+                        boolean canUpdate = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), "Submitted", submittedBy);
                         if (!canUpdate) {
                             result = "?errMsg=Failed to submit Purchase Order.&id=" + purchaseOrderId;
                             response.sendRedirect("A3/purchaseOrderManagement_Update.jsp" + result);
@@ -77,7 +81,7 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
                     }
                 } else {
-                    retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), status);
+                    retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(Long.parseLong(purchaseOrderId), status, submittedBy);
                     result = "?goodMsg=Purchase Order updated successfully.&id=" + purchaseOrderId;
                     response.sendRedirect("PurchaseOrderLineItemManagement_Servlet" + result);
                 }

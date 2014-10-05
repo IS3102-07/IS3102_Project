@@ -26,7 +26,7 @@ public class SupplierEntity implements Serializable {
     private String email;
     @Lob
     private String address;
-    private boolean isActive;
+    private Boolean isDeleted;
     @ManyToOne
     private CountryEntity country;
     @OneToMany (mappedBy="supplier")
@@ -45,7 +45,7 @@ public class SupplierEntity implements Serializable {
         this.contactNo = contactNo;
         this.email = email;
         this.address = address;
-        this.isActive = true;
+        this.isDeleted = false;
     }
 
     public Long getId() {
@@ -73,13 +73,14 @@ public class SupplierEntity implements Serializable {
         this.supplierName = supplierName;
     }
 
-    public boolean isIsActive() {
-        return isActive;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
+
 
     public String getContactNo() {
         return contactNo;

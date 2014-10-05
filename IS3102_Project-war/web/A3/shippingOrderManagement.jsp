@@ -82,6 +82,7 @@
                                                             <th>Shipping Origin</th>
                                                             <th>Shipping Destination</th>
                                                             <th>Expected Receiving Date</th>
+                                                            <th>Submitted By</th>
                                                             <th>Status</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -105,6 +106,9 @@
                                                             </td>
                                                             <td>
                                                                 <%=shippingOrders.get(i).getExpectedReceivedDate()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=shippingOrders.get(i).getSubmittedBy()%>
                                                             </td>
                                                             <td>
                                                                 <%=shippingOrders.get(i).getStatus()%>

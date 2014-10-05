@@ -75,6 +75,7 @@
                                                             <th>Supplier</th>
                                                             <th>Shipping Destination</th>
                                                             <th>Expected Receiving Date</th>
+                                                            <th>Submitted By</th>
                                                             <th>Status</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -100,6 +101,9 @@
                                                                 <%=purchaseOrders.get(i).getExpectedReceivedDate()%>
                                                             </td>
                                                             <td>
+                                                                <%=purchaseOrders.get(i).getSubmittedBy()%>
+                                                            </td>
+                                                            <td>
                                                                 <%=purchaseOrders.get(i).getStatus()%>
                                                             </td>
                                                             <td style="width:200px">
@@ -123,7 +127,8 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
-                                            <input type="hidden" name="source" value="">   
+                                            <input type="hidden" name="source" value="">  
+                                            
                                         </div>
 
                                     </div>

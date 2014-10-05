@@ -16,7 +16,7 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy="retailProduct")
+    @OneToMany(mappedBy = "retailProduct")
     private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
     @Lob
     private String name;
@@ -27,8 +27,10 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     @Lob
     private String imageURL;
 
-    public RetailProductEntity(){}
-    public RetailProductEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height){
+    public RetailProductEntity() {
+    }
+
+    public RetailProductEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         super(SKU, _length, width, height);
         this.name = name;
         super.setName(name);
@@ -36,15 +38,24 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
         this.description = description;
         this.imageURL = imageURL;
         super.setType("Retail Product");
+        super.setIsDeleted(false);
     }
-    
+
+    public Boolean getIsDeleted() {
+        return super.getIsDeleted();
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        super.setIsDeleted(isDeleted);
+    }
+
     public List<Supplier_RetailProductEntity> getListOfSupplier_RetailProductInfo() {
         return listOfSupplier_RetailProductInfo;
     }
 
     public void setListOfSupplier_RetailProductInfo(List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo) {
         this.listOfSupplier_RetailProductInfo = listOfSupplier_RetailProductInfo;
-    }    
+    }
 
     public Long getId() {
         return id;
@@ -53,6 +64,7 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }

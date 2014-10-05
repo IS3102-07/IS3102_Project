@@ -529,6 +529,14 @@
         <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_AllFoodsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ShoppingCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_AddFurnitureToListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1059,6 +1067,23 @@
     <servlet-mapping>
         <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
         <url-pattern>/ECommerce_AllFoodsServlet</url-pattern>
+    </servlet-mapping>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Viewpoint Secure URLs</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <servlet-mapping>
+        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
+        <url-pattern>/ECommerce_ShoppingCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>
+        <url-pattern>/ECommerce_AddFurnitureToListServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
