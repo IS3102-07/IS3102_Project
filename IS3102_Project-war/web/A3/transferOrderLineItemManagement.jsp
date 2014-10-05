@@ -1,3 +1,4 @@
+<%@page import="HelperClasses.ItemStorageBinHelper"%>
 <%@page import="EntityManager.LineItemEntity"%>
 <%@page import="EntityManager.TransferOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
@@ -105,7 +106,61 @@
                             </div>
                         </div>
                         <!-- /.row -->
+<div class="col-lg-6">
+                            <div class="panel panel-default">
 
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> Items in Origin Bin Available For Transfer </h3>
+                                </div>
+                                <div class="panel-body" style="">
+                                    <div class="table-responsive">
+                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                            <br>
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SKU</th>
+                                                        <th>Item Name</th>
+                                                        <th>Item Type</th>
+                                                        <th>Quantity</th>
+                                                        <th>Bin Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                        List<ItemStorageBinHelper> listOfLineItems = (List<ItemStorageBinHelper>) session.getAttribute("listOfLineItems");
+                                                        if (listOfLineItems != null) {
+                                                            for (ItemStorageBinHelper item : listOfLineItems) {
+
+                                                    %>
+                                                    <tr>
+                                                        <td>
+                                                            <%=item.getSKU()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getItemName()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getItemType()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getItemQty()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getStorageBinType()%>
+                                                        </td>
+                                                    </tr>
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <%
                             if (lineItem != null) {
                         %>
