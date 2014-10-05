@@ -474,6 +474,10 @@
         <servlet-class>B_servlets.ECommerce_MemberLoginServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_MemberEditProfileServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_MemberEditProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_LogoutServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_LogoutServlet</servlet-class>
     </servlet>
@@ -1008,6 +1012,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_MemberLoginServlet</servlet-name>
         <url-pattern>/ECommerce_MemberLoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_MemberEditProfileServlet</servlet-name>
+        <url-pattern>/ECommerce_MemberEditProfileServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_LogoutServlet</servlet-name>
