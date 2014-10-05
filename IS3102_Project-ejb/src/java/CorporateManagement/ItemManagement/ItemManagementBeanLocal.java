@@ -17,8 +17,8 @@ public interface ItemManagementBeanLocal {
 
     public ItemEntity getItemBySKU(String SKU);
     public boolean checkSKUExists(String SKU);
-    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height);
-    public boolean editRawMaterial(String id, String SKU, String name, String category, String description);
+    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price, Long supplierId);
+    public boolean editRawMaterial(String id, String SKU, String name, String category, String description, Integer lotSize, Integer leadTime, Double price, Long supplierId);
     public boolean removeRawMaterial(String SKU);
     public RawMaterialEntity viewRawMaterial(String SKU);
     public List<RawMaterialEntity> listAllRawMaterials();

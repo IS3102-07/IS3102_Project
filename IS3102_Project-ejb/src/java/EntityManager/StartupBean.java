@@ -133,21 +133,7 @@ public class StartupBean {
                 System.out.println("Skipping creating of warehouse entities:\n" + ex);
                 ex.printStackTrace();
             }
-            try {
-                //Create item
-                FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "Table 1", "Tables & Desks", "Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 100, 74, 60);
-                em.persist(furnitureEntity);
-                furnitureEntity = new FurnitureEntity("F2", "Bed 1", "Beds & Mattresses", "Get all-over This mattress is approved for children.Get all-over suppoall-over support and comfort with a resilient foam mattress.", "imageURL", 200, 10, 90);
-                em.persist(furnitureEntity);
-                furnitureEntity = new FurnitureEntity("F3", "Table 2", "Tables & Desks", "The table top in tempered glass is stain resistant and easy to clean. Adjustable feet make the table stand steady also on uneven floors.", "imageURL", 99, 71, 52);
-                em.persist(furnitureEntity);
-                RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
-                em.persist(rawMaterialEntity);
-                System.out.println("Created item entities.");
-            } catch (Exception ex) {
-                System.out.println("Skipping creating of item entities:\n" + ex);
-                ex.printStackTrace();
-            }
+
             try {
                 ProductGroupEntity productGroup = new ProductGroupEntity("F001", 10, 500);
                 em.persist(productGroup);
@@ -181,6 +167,32 @@ public class StartupBean {
             }
         } catch (Exception ex) {
             System.out.println("Skipped init of database:\n" + ex);
+            ex.printStackTrace();
+        }
+
+        try {
+            //Create item
+            FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "Table 1", "Tables & Desks", "Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 100, 74, 60);
+            em.persist(furnitureEntity);
+            furnitureEntity = new FurnitureEntity("F2", "Bed 1", "Beds & Mattresses", "Get all-over This mattress is approved for children.Get all-over suppoall-over support and comfort with a resilient foam mattress.", "imageURL", 200, 10, 90);
+            em.persist(furnitureEntity);
+            furnitureEntity = new FurnitureEntity("F3", "Table 2", "Tables & Desks", "The table top in tempered glass is stain resistant and easy to clean. Adjustable feet make the table stand steady also on uneven floors.", "imageURL", 99, 71, 52);
+            em.persist(furnitureEntity);
+            RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1, 100, 1, 50.0);
+            SupplierEntity supplierEntity = new SupplierEntity("Supplier 3", "67911433", "supplier3@email.com", "3 Bukit Timah Road");
+            CountryEntity country = new CountryEntity();
+                country.setCountryCode(86);
+                country.setCurrency("CN");
+                country.setExchangeRate(0.16);
+                country.setName("China");
+            em.persist(country);
+            supplierEntity.setCountry(country);
+            em.persist(supplierEntity);
+            rawMaterialEntity.setSupplier(supplierEntity);
+            em.persist(rawMaterialEntity);
+            System.out.println("Created item entities.");
+        } catch (Exception ex) {
+            System.out.println("Skipping creating of item entities:\n" + ex);
             ex.printStackTrace();
         }
     }

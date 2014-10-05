@@ -23,9 +23,13 @@ public class RawMaterialManagement_UpdateRawMaterialServlet extends HttpServlet 
             String name = request.getParameter("name");
             String category = request.getParameter("category");
             String description = request.getParameter("description");
-            String source = request.getParameter("source");
             String id = request.getParameter("id");
-            boolean canUpdate = itemManagementBean.editRawMaterial(id, SKU, name, category, description);
+            Integer lotSize = Integer.parseInt(request.getParameter("lotsize"));
+            Integer leadTime = Integer.parseInt(request.getParameter("leadtime"));
+            Double price = Double.parseDouble(request.getParameter("price"));
+            String supplier= request.getParameter("supplier");
+            
+            boolean canUpdate = itemManagementBean.editRawMaterial(id, SKU, name, category, description, lotSize, leadTime, price, Long.parseLong(supplier));
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("rawMaterialManagement_update.jsp" + result);
