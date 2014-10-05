@@ -36,6 +36,9 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             supplier = em.find(SupplierEntity.class, supplierId);
             rawMaterial.setSupplier(supplier);
             em.persist(rawMaterial);
+            em.flush();
+            em.merge(rawMaterial);
+            supplier.getRawMaterials().add(rawMaterial);
             System.out.println("Raw Material name \"" + name + "\" added successfully.");
             return true;
         } catch (Exception ex) {
@@ -54,8 +57,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setLotSize(lotSize);
             i.setLeadTime(leadTime);
             i.setPrice(price);
-            i.setSupplier(em.getReference(SupplierEntity.class, supplierId));
-            em.merge(i);
+            i.getSupplier().getRawMaterials().remove(i);
+            SupplierEntity supplier1= em.getReference(SupplierEntity.class, supplierId);
+            i.setSupplier(supplier1);
+            supplier1.getRawMaterials().add(i);
+            em.flush();
             System.out.println("\nServer updated raw material:\n" + name);
             return true;
         } catch (Exception ex) {

@@ -142,7 +142,7 @@
                                                                 <%
                                                                     List<RawMaterialEntity> rawMaterials = (List<RawMaterialEntity>) (suppliers.get(i).getRawMaterials());
                                                                     if (rawMaterials.isEmpty()) {
-                                                                        out.println("-");
+                                                                        out.println("");
                                                                     } else {
                                                                         for (RawMaterialEntity rawMaterial : rawMaterials) {
                                                                             if (!rawMaterial.getIsDeleted())
