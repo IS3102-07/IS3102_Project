@@ -15,7 +15,6 @@
 
         <div class="body">
             <jsp:include page="menu1.html" />
-
             <div role="main" class="main">
                 <section class="page-top">
                     <div class="container">

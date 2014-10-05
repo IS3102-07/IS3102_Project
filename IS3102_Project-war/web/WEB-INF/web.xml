@@ -533,6 +533,10 @@
         <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_ShoppingCartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_AddFurnitureToListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1076,6 +1080,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
         <url-pattern>/ECommerce_ShoppingCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>
+        <url-pattern>/ECommerce_AddFurnitureToListServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

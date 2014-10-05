@@ -11,14 +11,20 @@
 
 
             <div role="main" class="main shop">
-
+                <section class="page-top">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>Shopping List</h2>
+                            </div>
+                        </div>
+                    </div>
+                </section> 
+                
                 <div class="container">
-
                     <hr class="tall">
-
                     <div class="row">
                         <div class="col-md-12">
-
                             <div class="row featured-boxes">
                                 <div class="col-md-12">
                                     <div class="featured-box featured-box-secundary featured-box-cart">
@@ -36,7 +42,7 @@
                                                             <th class="product-name" >
                                                                 Product
                                                             </th>
-                                                            
+
                                                             <th class="product-price">
                                                                 Price
                                                             </th>
@@ -70,7 +76,7 @@
                                                             <td class="product-name">
                                                                 <a href="shop-product-sidebar.html"><%=furnitures.get(i).getName()%></a>
                                                             </td>
-                                                            
+
                                                             <td class="product-price">
                                                                 <span class="amount">$299</span>
                                                             </td>
@@ -95,8 +101,8 @@
                                                                 System.out.println(ex);
                                                             }
                                                         %>
-                                                        
-                                                        
+
+
                                                         <tr>
                                                             <td class="actions" colspan="6">
                                                                 <div class="actions-continue">
