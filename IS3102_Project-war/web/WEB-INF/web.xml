@@ -85,6 +85,10 @@
         <servlet-class>A6_servlets.FurnitureManagement_AddFurnitureServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>FurnitureManagement_AddFurnitureToListServlet</servlet-name>
+        <servlet-class>A6_servlets.FurnitureManagement_AddFurnitureToListServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FurnitureManagement_RemoveFurnitureServlet</servlet-name>
         <servlet-class>A6_servlets.FurnitureManagement_RemoveFurnitureServlet</servlet-class>
     </servlet>
@@ -624,6 +628,10 @@
     <servlet-mapping>
         <servlet-name>FurnitureManagement_AddFurnitureServlet</servlet-name>
         <url-pattern>/FurnitureManagement_AddFurnitureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FurnitureManagement_AddFurnitureToListServlet</servlet-name>
+        <url-pattern>/FurnitureManagement_AddFurnitureToListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RawMaterialManagement_AddRawMaterialServlet</servlet-name>
