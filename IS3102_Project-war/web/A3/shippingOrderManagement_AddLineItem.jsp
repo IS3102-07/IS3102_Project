@@ -71,6 +71,49 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> Items in Outbound Bin </h3>
+                                </div>
+                                <div class="panel-body" style="">
+                                    <div class="table-responsive">
+                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                            <br>
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SKU</th>
+                                                        <th>Item Name</th>
+                                                        <th>Item Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                        //                                                            List<LineItemEntity> lineItems = shippingOrder.getLineItems();
+                                                        //                                                            if (lineItems != null) {
+                                                        //                                                                for (int i = 0; i < lineItems.size(); i++) {
+                                                    %>
+                                                    <tr>
+                                                        <td>
+                                                            F1
+                                                        </td>
+                                                        <td>
+                                                            Round Table
+                                                        </td>
+                                                        <td>
+                                                            Furniture
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

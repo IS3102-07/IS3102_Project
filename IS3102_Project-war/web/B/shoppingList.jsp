@@ -5,6 +5,14 @@
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
+        <script>
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+        </script>
 
         <div class="body">
             <jsp:include page="menu1.html" />
@@ -20,7 +28,7 @@
                         </div>
                     </div>
                 </section> 
-                
+
                 <div class="container">
                     <hr class="tall">
                     <div class="row">

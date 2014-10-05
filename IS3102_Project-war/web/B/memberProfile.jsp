@@ -32,11 +32,11 @@
                         %>
                         <div class="tab-content">
                             <div id="overview" class="tab-pane active">
-                                <form role="form" action="#">
+                                <form role="form" action="../ECommerce_MemberEditProfileServlet">
                                     <h4>Personal Information</h4>
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input class="form-control" required="true" name="name" type="text" value="<%if (member.getName() == null){out.println("");}%>">
+                                        <input class="form-control" required="true" name="name" type="text" value="<%if (member.getName() == null){out.println("");} else { out.println(member.getName()); }%>">
                                     </div>
                                     <div class="form-group">
                                         <label>E-mail Address</label>
@@ -44,7 +44,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Phone</label>
-                                        <input class="form-control" required="true" type="text" name="phone" value="<%if (member.getPhone() == null){out.println("");}%>">
+                                        <input class="form-control" required="true" type="text" name="phone" value="<%if (member.getPhone() == null){out.println("");} else { out.println(member.getPhone()); }%>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <input class="form-control" type="text" required="true" name="address" value="<%if (member.getAddress() == null){out.println("");} else { out.println(member.getAddress()); }%>">
                                     </div>
                                     <hr class="more-spaced "/>
                                     <h4>Change Password</h4>
@@ -56,10 +60,7 @@
                                         <label>Re-enter New Password</label>
                                         <input class="form-control" type="password"  name="repassword" id="repassword">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Address</label>
-                                        <input class="form-control" type="text" required="true" name="address" value="<%if (member.getAddress() == null){out.println("");}%>">
-                                    </div>
+                                    
                                     <div class="panel-footer" style="padding-bottom: 0px;">
                                         <div class="row">
                                             <div class="form-group">

@@ -14,7 +14,8 @@
             }
             function addItem() {
                 window.event.returnValue = true;
-                document.allFurnitures.action = "roleManagement_add.jsp";
+                id = document.getElementsByName('item');
+                document.allFurnitures.action = "../ECommerce_AddFurnitureToListServlet?id=" + id;
                 document.allFurnitures.submit();
             }
         </script>
@@ -41,7 +42,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <form name="allFurnitures">
+                            
                                 <ul class="products product-thumb-info-list" data-plugin-masonry>
 
                                     <%
@@ -54,7 +55,7 @@
 
                                     <li class="col-md-3 col-sm-6 col-xs-12 product">
                                         <span class="product-thumb-info">
-                                            <a href="#myModal" data-toggle="modal" class="add-to-cart-product">                                                
+                                            <a href="../ECommerce_AddFurnitureToListServlet?id=<%=furnitures.get(i).getId()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getId()%>" value="Add To Cart"/>
                                             </a>
                                             <a href="shop-product-sidebar.html">
@@ -85,7 +86,7 @@
 
 
                                 </ul>
-                            </form>
+                            
                         </div>
                         <div class="row">
                             <div class="col-md-12">

@@ -53,6 +53,9 @@ public class StartupBean {
                 roleEntity.create("Store Manager", "Facility");
                 em.persist(roleEntity);
                 roleEntity = new RoleEntity();
+                roleEntity.create("Manufacturing Facility Manager", "Facility");
+                em.persist(roleEntity);
+                roleEntity = new RoleEntity();
                 roleEntity.create("Marketing Director", "Organization");
                 em.persist(roleEntity);
                 roleEntity = new RoleEntity();

@@ -1,20 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package OperationalCRM.CustomerInformationManagement;
 
 import javax.ejb.Stateless;
+import EntityManager.ShoppingListEntity;
+import EntityManager.FurnitureEntity;
+import EntityManager.MemberEntity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Jason
- */
 @Stateless
 public class CustomerInformationManagementBean implements CustomerInformationManagementBeanLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @PersistenceContext
+    private EntityManager em;
+
+    public Boolean addFurnitureToList(Integer furnitureId, Integer memberId) {
+        FurnitureEntity furniture = em.find(FurnitureEntity.class, furnitureId);
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        
+        
+        
+        return true;
+    }
 }
