@@ -43,8 +43,7 @@ public interface FacilityManagementBeanLocal {
     public Boolean removeManufacturingFacility(Long Id);
     
     public StoreEntity createStore(String storeName, String address, String telephone, String email);    
-    public Boolean editStore(Long id, String storeName, String address, String telephone, String email);
-    public boolean removeStore(String storeName);    
+    public Boolean editStore(Long id, String storeName, String address, String telephone, String email);  
     public StoreEntity viewStoreEntity(Long storeId);
     public List<StoreEntity> viewListOfStore();
     public boolean checkNameExistsOfStore(String name);
