@@ -351,7 +351,7 @@
                                     </strong>
                                     about Island Furniture...
                                 </h2>
-                                <h4 class="lead tall">5,500 customers in 100 countries use Porto Template. Meet our customers.</h4>
+                                <h4 class="lead tall">5,500 customers in 100 countries use Island Furniture. Meet our customers.</h4>
                             </div>
                         </div>
                     </div>

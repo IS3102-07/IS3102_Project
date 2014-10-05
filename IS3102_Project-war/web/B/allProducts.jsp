@@ -20,6 +20,10 @@
             }
         </script>
 
+        <%
+            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+        %>
+
         <div class="body">
             <jsp:include page="menu1.html" />
             <div class="body">
@@ -38,68 +42,57 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h2 class="shorter"><strong>Shop</strong></h2>
-                                <p>Showing 1–12 of 25 results.</p>
+                                <p>Showing <%=furnitures.size()%> results.</p>
                             </div>
                         </div>
                         <div class="row">
-                            
-                                <ul class="products product-thumb-info-list" data-plugin-masonry>
 
-                                    <%
-                                        List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                            <ul class="products product-thumb-info-list" data-plugin-masonry>
 
-                                        try {
-                                            if (furnitures != null) {
-                                                for (int i = 0; i < furnitures.size(); i++) {
-                                    %>
+                                <%
                                     
-                                    <li class="col-md-3 col-sm-6 col-xs-12 product">
-                                        <span class="product-thumb-info">
-                                            <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getId()%>" value="Add To Cart"/>
-                                            </a>
+                                    try {
+                                        if (furnitures != null) {
+                                            for (int i = 0; i < furnitures.size(); i++) {
+                                %>
+
+                                <li class="col-md-3 col-sm-6 col-xs-12 product">
+                                    <span class="product-thumb-info">
+                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getId()%>" value="Add To Cart"/>
+                                        </a>
+                                        <a href="shop-product-sidebar.html">
+                                            <span class="product-thumb-info-image">
+                                                <span class="product-thumb-info-act">
+                                                    <span class="product-thumb-info-act-left"><em><%=furnitures.get(i).getDescription()%></em></span>
+                                                </span>
+                                                <img alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
+
+                                            </span>
+                                        </a>
+                                        <span class="product-thumb-info-content">
                                             <a href="shop-product-sidebar.html">
-                                                <span class="product-thumb-info-image">
-                                                    <span class="product-thumb-info-act">
-                                                        <span class="product-thumb-info-act-left"><em><%=furnitures.get(i).getDescription()%></em></span>
-                                                    </span>
-                                                    <img alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
-                                                    
+                                                <h4><%=furnitures.get(i).getName()%></h4>
+                                                <span class="price">
+                                                    <span class="amount">$72</span>
                                                 </span>
                                             </a>
-                                            <span class="product-thumb-info-content">
-                                                <a href="shop-product-sidebar.html">
-                                                    <h4><%=furnitures.get(i).getName()%></h4>
-                                                    <span class="price">
-                                                        <span class="amount">$72</span>
-                                                    </span>
-                                                </a>
-                                            </span>
                                         </span>
-                                    </li>
-                                    <%
-                                                }
+                                    </span>
+                                </li>
+                                <%
                                             }
-                                        } catch (Exception ex) {
-                                            System.out.println(ex);
                                         }
-                                    %>
+                                    } catch (Exception ex) {
+                                        System.out.println(ex);
+                                    }
+                                %>
 
 
-                                </ul>
-                            
+                            </ul>
+
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <ul class="pagination pull-right">
-                                    <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
