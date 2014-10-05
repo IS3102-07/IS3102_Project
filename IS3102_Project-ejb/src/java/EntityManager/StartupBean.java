@@ -119,15 +119,26 @@ public class StartupBean {
                 ex.printStackTrace();
             }
             try {
+                //Create regional office
+                RegionalOfficeEntity regionalOfficeEntity;
+                regionalOfficeEntity = new RegionalOfficeEntity();
+                regionalOfficeEntity.create("Asia Pacific Regional Office", "33 Jurong Town Hall Road #05-34", "61234563", "APACRO@if.com");
+                em.persist(regionalOfficeEntity);
                 //Create warehouse
                 WarehouseEntity warehouseEntity;
                 warehouseEntity = new WarehouseEntity("Warehouse SG1", "3 Jurong Industrial Park", "67183645", "MFSG1@islandfurniture.com");
+                warehouseEntity.setRegionalOffice(regionalOfficeEntity);
+                q = em.createQuery("SELECT t FROM CountryEntity t where t.name='Singapore'");
+                CountryEntity countryEntity = (CountryEntity) q.getSingleResult();
+                warehouseEntity.setCountry(countryEntity);
                 em.persist(warehouseEntity);
                 warehouseEntity = new WarehouseEntity("Warehouse SG2", "26 Toh Guan Road", "67183664", "MFSG2@islandfurniture.com");
+                warehouseEntity.setRegionalOffice(regionalOfficeEntity);
+                warehouseEntity.setCountry(countryEntity);
                 em.persist(warehouseEntity);
                 System.out.println("Created warehouse entities.");
             } catch (Exception ex) {
-                System.out.println("Skipping creating of warehouse entities:\n" + ex);
+                System.out.println("Skipping creating of regional & warehouse entities:\n" + ex);
                 ex.printStackTrace();
             }
             try {
