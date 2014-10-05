@@ -557,6 +557,10 @@
         <servlet-name>ECommerce_NewsletterSubscribeServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_NewsletterSubscribeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
+        <servlet-class>A3_servlets.TransferOrderLineItemManagement_OriginBinItemsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1115,6 +1119,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_NewsletterSubscribeServlet</servlet-name>
         <url-pattern>/ECommerce_NewsletterSubscribeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
+        <url-pattern>/TransferOrderLineItemManagement_OriginBinItemsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
