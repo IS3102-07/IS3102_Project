@@ -6,6 +6,7 @@
 
 package EntityManager;
 
+import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,11 +15,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToMany;
-/**
- *
- * @author yang
- */
-public class ShoppingListEntity {
+import javax.persistence.Entity;
+
+@Entity
+public class ShoppingListEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -33,7 +33,7 @@ public class ShoppingListEntity {
     private List<RetailProductEntity> retailProducts;
     
     public void create() {
-        
+
     }
     
     public void setMember(MemberEntity member) {

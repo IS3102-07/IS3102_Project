@@ -29,10 +29,10 @@ public class SupplierEntity implements Serializable {
     private Boolean isDeleted;
     @ManyToOne
     private CountryEntity country;
-    @OneToMany(mappedBy="supplier", cascade={CascadeType.ALL})
-    private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
-    @OneToMany(mappedBy="supplier", cascade={CascadeType.ALL})
-    private List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo;
+    @OneToMany (mappedBy="supplier")
+    private List<RawMaterialEntity> rawMaterials;
+    //@OneToMany (mappedBy="supplier")
+    //private List<RetailProductEntity> retailProducts;
     @OneToMany(mappedBy="supplier")
     private List<PurchaseOrderEntity> purchaseOrders;
             
@@ -82,6 +82,7 @@ public class SupplierEntity implements Serializable {
     }
 
 
+
     public String getContactNo() {
         return contactNo;
     }
@@ -113,24 +114,7 @@ public class SupplierEntity implements Serializable {
     public void setCountry(CountryEntity country) {
         this.country = country;
     }
-
-    public List<Supplier_RawMaterialEntity> getListOfSupplier_RawMaterialInfo() {
-        return listOfSupplier_RawMaterialInfo;
-    }
-
-    public void setListOfSupplier_RawMaterialInfo(List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo) {
-        this.listOfSupplier_RawMaterialInfo = listOfSupplier_RawMaterialInfo;
-    }
-
-    public List<Supplier_RetailProductEntity> getListOfSupplier_RetailProductInfo() {
-        return listOfSupplier_RetailProductInfo;
-    }
-
-    public void setListOfSupplier_RetailProductInfo(List<Supplier_RetailProductEntity> listOfSupplier_RetailProductInfo) {
-        this.listOfSupplier_RetailProductInfo = listOfSupplier_RetailProductInfo;
-    }
-
-    
+ 
     @Override
     public int hashCode() {
         int hash = 0;
@@ -155,5 +139,25 @@ public class SupplierEntity implements Serializable {
     public String toString() {
         return "EntityManager.SupplierEntity[ id=" + id + " ]";
     }
+
+ 
+    public List<RawMaterialEntity> getRawMaterials() {
+        return rawMaterials;
+    }
+  
+    
+    public void setRawMaterials(List<RawMaterialEntity> rawMaterials) {
+        this.rawMaterials = rawMaterials;
+    }
+
+   
+    //public List<RetailProductEntity> getRetailProducts() {
+      //  return retailProducts;
+   // }
+
+  
+    //public void setRetailProducts(List<RetailProductEntity> retailProducts) {
+      //  this.retailProducts = retailProducts;
+    //}
 
 }

@@ -1,43 +1,39 @@
-package B_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+package A3_servlets;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ECommerce_MemberRegisterServlet extends HttpServlet {
-
-    @EJB
-    private AccountManagementBeanLocal accountManagementBean;
-    private String result;
-
+public class ShippingOrderLineItemManagement_DisplayOutboundBinServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            boolean isExist = accountManagementBean.checkMemberEmailExists(email);
-            
-            if (isExist) {
-                result = "Email already exist. Please try again.";
-                response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
-            } else {
-                boolean canUpdate = accountManagementBean.registerMember(null, null, null, email, null, null, null, null, password);
-                if (!canUpdate) {
-                    result = "Register failed. Please try again.";
-                    response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
+            HttpSession session;
+            session = request.getSession();
+            String purchaseOrderId = request.getParameter("id");
+            String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+
+            //List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
+            //session.setAttribute("purchaseOrders", purchaseOrders);
+            if (purchaseOrderId != null) {
+                if (errMsg != null) {
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
+                } else if (goodMsg != null) {
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
                 } else {
-                    result = "Account successfully registered.";
-                    response.sendRedirect("B/memberLogin.jsp?goodMsg=" + result);
+                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId);
                 }
             }
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
             ex.printStackTrace();
         }
     }

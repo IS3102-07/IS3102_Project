@@ -25,7 +25,7 @@
     <jsp:include page="../header2.html" />
     <body>
         <script>
-            function addSOLineItem(id) {
+            function addSOLineItem(id) {//gogo
                 shippingOrderManagement.id.value = id;
                 document.shippingOrderManagement.action = "shippingOrderManagement_AddLineItem.jsp";
                 document.shippingOrderManagement.submit();
