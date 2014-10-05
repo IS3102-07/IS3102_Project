@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package EntityManager;
 
 import java.io.Serializable;
@@ -23,6 +22,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class RegionalOfficeEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,25 +35,36 @@ public class RegionalOfficeEntity implements Serializable {
     private String telephone;
     @Lob
     private String email;
-    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
     List<WarehouseEntity> warehouseList;
-    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
     List<StoreEntity> storeList;
-    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="regionalOffice")
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
     List<ManufacturingFacilityEntity> manufacturingFacilityEntityList;
-    
-    public RegionalOfficeEntity(){
-        this.storeList = new ArrayList<>();        
+    private Boolean isDeleted;
+
+    public RegionalOfficeEntity() {
+        this.storeList = new ArrayList<>();
         this.manufacturingFacilityEntityList = new ArrayList<>();
         this.warehouseList = new ArrayList<>();
-    }        
-    
+        this.isDeleted = false;
+    }
+
     public void create(String name, String address, String telephone, String email) {
         this.setName(name);
         this.setAddress(address);
         this.setTelephone(telephone);
         this.setEmail(email);
-    }        
+        this.isDeleted = false;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 
     public List<WarehouseEntity> getWarehouseList() {
         return warehouseList;
@@ -77,34 +88,40 @@ public class RegionalOfficeEntity implements Serializable {
 
     public void setManufacturingFacilityEntityList(List<ManufacturingFacilityEntity> manufacturingFacilityEntityList) {
         this.manufacturingFacilityEntityList = manufacturingFacilityEntityList;
-    }        
-    
+    }
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
-    
+
     public String getTelephone() {
         return telephone;
     }
+
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getName() {
         return name;
     }
+
     public Long getId() {
         return id;
     }
@@ -137,5 +154,5 @@ public class RegionalOfficeEntity implements Serializable {
     public String toString() {
         return "EntityManager.RegionalOfficeEntity[ id=" + id + " ]";
     }
-    
+
 }

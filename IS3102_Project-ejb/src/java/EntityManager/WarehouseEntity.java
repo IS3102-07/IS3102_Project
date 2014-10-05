@@ -42,10 +42,12 @@ public class WarehouseEntity implements Serializable {
     private CountryEntity country;
     @ManyToOne
     private RegionalOfficeEntity regionalOffice;
+    private Boolean isDeleted;
     
     public WarehouseEntity(){
         this.storageBins = new ArrayList<>();
         this.purchaseOrderEntityList = new ArrayList<>();
+        this.isDeleted=false;
     }    
 
     public WarehouseEntity(String warehouseName, String address, String telephone, String email) {
@@ -55,7 +57,16 @@ public class WarehouseEntity implements Serializable {
         this.telephone = telephone;
         this.storageBins = new ArrayList<>();
         this.purchaseOrderEntityList = new ArrayList<>();
+        this.isDeleted = false;
     }                
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
     
     public String getWarehouseName() {
         return warehouseName;

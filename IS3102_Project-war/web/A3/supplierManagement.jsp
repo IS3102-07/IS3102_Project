@@ -101,7 +101,6 @@
                                                             <th>Email</th>
                                                             <th>Country</th>
                                                             <th>Address</th>
-                                                            <th>Status</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -136,13 +135,6 @@
                                                             </td>
                                                             <td>
                                                                 <%=suppliers.get(i).getAddress()%>
-                                                            </td>
-                                                            <td>
-                                                                <%if (suppliers.get(i).isIsActive()) {
-                                                                        out.println("Active");
-                                                                    } else {
-                                                                        out.println("In Active");
-                                                                    }%>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=suppliers.get(i).getId()%>" value="Update" onclick="javascript:updateSupplier('<%=suppliers.get(i).getId()%>')"/>

@@ -7,7 +7,6 @@ package CorporateManagement.FacilityManagement;
 
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
-import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
 import HelperClasses.ManufacturingFacilityHelper;
@@ -53,10 +52,11 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean checkNameExistsOfRegionalOffice(String name) {
         System.out.println("checkNameExistsOfRegionalOffice() called with name:" + name);
         try {
-            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
+            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t where t.isDeleted=false");
             for (Object o : q.getResultList()) {
                 RegionalOfficeEntity i = (RegionalOfficeEntity) o;
                 System.out.println(" i name is : " + i.getName());
@@ -72,6 +72,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public Boolean editRegionalOffice(Long id, String regionalOfficeName, String address, String telephone, String email) {
         System.out.println("editRegionalOffice() called with ID:" + id + regionalOfficeName + address + telephone + email);
         try {
@@ -93,7 +94,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public boolean removeRegionalOffice(String regionalOfficeName) {
         System.out.println("removeRegionalOffice() called with ID:" + regionalOfficeName);
         try {
-            em.remove(em.getReference(RegionalOfficeEntity.class, Long.valueOf(regionalOfficeName)));
+            RegionalOfficeEntity regionalOfficeEntity = em.getReference(RegionalOfficeEntity.class, Long.valueOf(regionalOfficeName));
+            regionalOfficeEntity.setIsDeleted(true);
+            em.merge(regionalOfficeEntity);
             em.flush();
             System.out.println("Regional office removed succesfully");
             return true;
@@ -129,7 +132,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         System.out.println("viewListOfRegionalOffice() called.");
         List<RegionalOfficeEntity> listOfRegionalOffice = new ArrayList<RegionalOfficeEntity>();
         try {
-            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t");
+            Query q = em.createQuery("SELECT t FROM RegionalOfficeEntity t where t.isDeleted=false");
             for (Object o : q.getResultList()) {
                 RegionalOfficeEntity i = (RegionalOfficeEntity) o;
                 listOfRegionalOffice.add(i);
@@ -160,10 +163,11 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean checkNameExistsOfManufacturingFacility(String name) {
         System.out.println("checkNameExistsOfManufacturingFacility() called with name:" + name);
         try {
-            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
+            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t where t.isDeleted=false");
             for (Object o : q.getResultList()) {
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
                 System.out.println(" i name is : " + i.getName());
@@ -179,6 +183,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity) {
         System.out.println("editManufacturingFacility() called with ID:" + id);
         try {
@@ -198,24 +203,25 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public boolean removeManufacturingFacility(String manufacturingFacility) {
-        System.out.println("removeManufacturingFacility() called with ID:" + manufacturingFacility);
+    public boolean removeManufacturingFacility(String manufacturingFacilityID) {
+        System.out.println("removeManufacturingFacility() called with ID:" + manufacturingFacilityID);
         try {
             Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
 
             for (Object o : q.getResultList()) {
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
-                if (i.getId() == Long.valueOf(manufacturingFacility)) {
+                if (i.getId() == Long.valueOf(manufacturingFacilityID)) {
                     RegionalOfficeEntity regionalOffice = i.getRegionalOffice();
                     regionalOffice.getManufacturingFacilityEntityList().remove(i);
                     em.merge(regionalOffice);
-                    em.remove(i);
+                    i.setIsDeleted(true);
+                    em.merge(i);
                     em.flush();
-                    System.out.println("\nServer removed manufacturing facility:\n" + manufacturingFacility);
+                    System.out.println("\nServer removed manufacturing facility:\n" + manufacturingFacilityID);
                     return true;
                 }
             }
-            return false; //Could not find the role to remove
+            return false;
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove manufacturing facility:\n" + ex);
             return false;
@@ -239,7 +245,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         System.out.println("viewListOfRegionalOffice() called.");
         List<ManufacturingFacilityEntity> listOfManufacturingFacility = new ArrayList<ManufacturingFacilityEntity>();
         try {
-            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
+            Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t where t.isDeleted=false");
             for (Object o : q.getResultList()) {
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
                 listOfManufacturingFacility.add(i);
@@ -267,6 +273,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public StoreEntity createStore(String storeName, String address, String telephone, String email) {
         System.out.println("createStore() called with name:" + storeName);
         String name;
@@ -286,10 +293,11 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean checkNameExistsOfStore(String name) {
         System.out.println("checkNameExistsOfStore() called with name:" + name);
         try {
-            Query q = em.createQuery("SELECT t FROM StoreEntity t");
+            Query q = em.createQuery("SELECT t FROM StoreEntity t where t.isDeleted=false");
             for (Object o : q.getResultList()) {
                 StoreEntity i = (StoreEntity) o;
                 System.out.println(" i name is : " + i.getName());
@@ -305,6 +313,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public Boolean editStore(Long id, String storeName, String address, String telephone, String email) {
         System.out.println("editStore() called with ID:" + id);
         try {
@@ -324,41 +333,25 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
-    public boolean removeStore(String id) {
-        System.out.println("removeStore() called with storeName:" + id);
-        try {
-            Query q = em.createQuery("SELECT t FROM StoreEntity t");
-
-            for (Object o : q.getResultList()) {
-                StoreEntity i = (StoreEntity) o;
-                if (i.getId() == Long.valueOf(id)) {
-                    em.remove(i);
-                    em.flush();
-                    System.out.println("\nServer removed store:\n" + id);
-                    return true;
-                }
-            }
-            return false; //Could not find the role to remove
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to remove store:\n" + ex);
-            return false;
-        }
-    }
-
     @Override
     public Boolean removeStore(Long storeId) {
+        System.out.println("removeStore() called.");
         try {
             Query q = em.createQuery("select s from StoreEntity s where s.id = ?1").setParameter(1, storeId);
             StoreEntity store = (StoreEntity) q.getSingleResult();
             store.getRegionalOffice().getStoreList().remove(store);
-            em.remove(store);
+            store.setIsDeleted(true);
+            em.merge(store);
+            System.out.println("removeStore(): store removed");
             return true;
         } catch (Exception ex) {
+            System.out.println("removeStore(): Failed to remove store:");
             ex.printStackTrace();
         }
         return false;
     }
 
+    @Override
     public StoreEntity viewStoreEntity(Long storeId) {
         System.out.println("viewStoreEntity() called with storeEntity Id:" + storeId);
         try {
@@ -371,11 +364,12 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public List<StoreEntity> viewListOfStore() {
         System.out.println("viewListOfStorey() called.");
         List<StoreEntity> listOfStore = new ArrayList<StoreEntity>();
         try {
-            Query q = em.createQuery("SELECT t FROM StoreEntity t");
+            Query q = em.createQuery("SELECT t FROM StoreEntity t where t.isDeleted=false");
             for (Object o : q.getResultList()) {
                 StoreEntity i = (StoreEntity) o;
                 listOfStore.add(i);
@@ -416,10 +410,11 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
     }
 
+    @Override
     public boolean checkNameExistsOfWarehouse(String name) {
         System.out.println("checkNameExistsOfWarehouse() called.");
         try {
-            Query q = em.createQuery("Select i from WarehouseEntity i where i.warehouseName=:name");
+            Query q = em.createQuery("Select i from WarehouseEntity i where i.warehouseName=:name and i.isDeleted=false");
             q.setParameter("name", name);
             q.getSingleResult();
             return true;
@@ -433,8 +428,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public Boolean
-            editWarehouse(Long Id, String warehouseName, String address, String telephone, String email) {
+    public Boolean editWarehouse(Long Id, String warehouseName, String address, String telephone, String email) {
         try {
             WarehouseEntity warehouse = em.find(WarehouseEntity.class, Id);
             warehouse.setWarehouseName(warehouseName);
@@ -460,7 +454,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             WarehouseEntity warehouse = em.find(WarehouseEntity.class, id);
             ManufacturingFacilityEntity mf = warehouse.getManufaturingFacility();
             if (mf != null) {
-                mf.setWarehouse(null);     
+                mf.setWarehouse(null);
                 em.merge(mf);
             }
             StoreEntity store = warehouse.getStore();
@@ -468,7 +462,8 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
                 store.setWarehouse(null);
                 em.merge(store);
             }
-            em.remove(warehouse);
+            warehouse.setIsDeleted(true);
+            em.merge(warehouse);
             em.flush();
             return true;
         } catch (Exception ex) {
@@ -480,7 +475,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     @Override
     public List<WarehouseEntity> getWarehouseList() {
         try {
-            Query q = em.createQuery("select w from WarehouseEntity w");
+            Query q = em.createQuery("select w from WarehouseEntity w where w.isDeleted=false");
             return q.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -491,7 +486,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     @Override
     public WarehouseEntity getWarehouseByName(String warehouseName) {
         try {
-            Query q = em.createQuery("select w from WarehouseEntity w where w.warehouseName = ?1").setParameter(1, warehouseName);
+            Query q = em.createQuery("select w from WarehouseEntity w where w.isDeleted=false and w.warehouseName = ?1").setParameter(1, warehouseName);
             return (WarehouseEntity) q.getSingleResult();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -530,7 +525,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     @Override
     public StoreEntity getStoreByName(String storeName) {
         try {
-            Query q = em.createQuery("select s from StoreEntity s where s.name = ?1").setParameter(1, storeName);
+            Query q = em.createQuery("select s from StoreEntity s where s.isDeleted=false and s.name = ?1").setParameter(1, storeName);
             return (StoreEntity) q.getSingleResult();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -669,7 +664,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             RegionalOfficeEntity ro = mf.getRegionalOffice();
             ro.getManufacturingFacilityEntityList().remove(mf);
             em.merge(ro);
-            em.remove(mf);
+            mf.setIsDeleted(true);
+            em.merge(mf);
+            em.flush();
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

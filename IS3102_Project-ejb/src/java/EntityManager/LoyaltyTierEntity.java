@@ -13,6 +13,19 @@ public class LoyaltyTierEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     String tier;
+    private Boolean isDeleted;
+
+    public void LoyaltyTierEntity() {
+        this.setIsDeleted(false);
+    }
+    
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
     
     public void setLoyalty(String tier){
         this.tier = tier;

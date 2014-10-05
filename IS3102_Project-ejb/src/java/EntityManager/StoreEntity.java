@@ -43,13 +43,14 @@ public class StoreEntity implements Serializable {
     private List<ManufacturingFacilityEntity> manufacturingFacilityList;
     @ManyToOne
     private RegionalOfficeEntity regionalOffice;
-    
+    private Boolean isDeleted;
     
     
     public StoreEntity(){
         this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();
         this.saleAndOperationPlanList = new ArrayList<>();
+        this.isDeleted=false;
     }
     
     public void create(String name, String address, String telephone, String email) {
@@ -57,8 +58,16 @@ public class StoreEntity implements Serializable {
         this.setAddress(address);
         this.setTelephone(telephone);
         this.setEmail(email);
+        this.isDeleted=false;
     }    
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {
         return saleAndOperationPlanList;
     }

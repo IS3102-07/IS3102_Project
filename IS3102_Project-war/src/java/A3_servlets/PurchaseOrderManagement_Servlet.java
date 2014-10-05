@@ -37,7 +37,7 @@ public class PurchaseOrderManagement_Servlet extends HttpServlet {
             List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
             session.setAttribute("purchaseOrders", purchaseOrders);
 
-            List<SupplierEntity> activeSuppliers = supplierManagementBean.viewActiveSupplierList();
+            List<SupplierEntity> activeSuppliers = supplierManagementBean.viewAllSupplierList();
             session.setAttribute("activeSuppliers", activeSuppliers);
 
             List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();

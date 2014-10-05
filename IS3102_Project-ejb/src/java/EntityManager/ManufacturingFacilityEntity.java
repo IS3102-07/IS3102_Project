@@ -48,6 +48,7 @@ public class ManufacturingFacilityEntity implements Serializable {
     private RegionalOfficeEntity regionalOffice;
     @OneToMany(mappedBy="manufacturingFacility")
     List<SaleAndOperationPlanEntity> SaleAndOperationPlanList;
+    private Boolean isDeleted;
     
     public ManufacturingFacilityEntity() {
         this.storeList = new ArrayList<>();
@@ -60,6 +61,15 @@ public class ManufacturingFacilityEntity implements Serializable {
         this.setTelephone(telephone);
         this.setEmail(email);
         this.setCapacity(capacity);
+        this.isDeleted=false;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {
