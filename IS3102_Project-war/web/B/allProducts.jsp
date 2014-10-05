@@ -52,10 +52,10 @@
                                             if (furnitures != null) {
                                                 for (int i = 0; i < furnitures.size(); i++) {
                                     %>
-
+                                    
                                     <li class="col-md-3 col-sm-6 col-xs-12 product">
                                         <span class="product-thumb-info">
-                                            <a href="../ECommerce_AddFurnitureToListServlet?id=<%=furnitures.get(i).getId()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                            <a href="../ECommerce_AddFurnitureToListServlet" data-toggle="modal" class="add-to-cart-product">                                                
                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getId()%>" value="Add To Cart"/>
                                             </a>
                                             <a href="shop-product-sidebar.html">
@@ -64,6 +64,7 @@
                                                         <span class="product-thumb-info-act-left"><em><%=furnitures.get(i).getDescription()%></em></span>
                                                     </span>
                                                     <img alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
+                                                    
                                                 </span>
                                             </a>
                                             <span class="product-thumb-info-content">

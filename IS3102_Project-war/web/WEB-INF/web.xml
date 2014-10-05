@@ -522,6 +522,10 @@
         <servlet-class>B_servlets.ECommerce_AllProductsServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_AddFurnitureToListServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_PromotionServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_PromotionServlet</servlet-class>
     </servlet>
@@ -1075,6 +1079,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_AllProductsServlet</servlet-name>
         <url-pattern>/ECommerce_AllProductsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>
+        <url-pattern>/ECommerce_AddFurnitureToListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_PromotionServlet</servlet-name>

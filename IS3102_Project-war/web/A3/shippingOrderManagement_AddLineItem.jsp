@@ -1,3 +1,4 @@
+<%@page import="HelperClasses.ItemStorageBinHelper"%>
 <%@page import="EntityManager.ShippingOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
@@ -87,26 +88,34 @@
                                                         <th>SKU</th>
                                                         <th>Item Name</th>
                                                         <th>Item Type</th>
+                                                        <th>Quantity</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <%
-                                                        //                                                            List<LineItemEntity> lineItems = shippingOrder.getLineItems();
-                                                        //                                                            if (lineItems != null) {
-                                                        //                                                                for (int i = 0; i < lineItems.size(); i++) {
+                                                        List<ItemStorageBinHelper> listOfLineItems = (List<ItemStorageBinHelper>) session.getAttribute("listOfLineItems");
+                                                        if (listOfLineItems != null) {
+                                                            for (ItemStorageBinHelper item : listOfLineItems) {
+
                                                     %>
                                                     <tr>
                                                         <td>
-                                                            F1
+                                                            <%=item.getSKU()%>
                                                         </td>
                                                         <td>
-                                                            Round Table
+                                                            <%=item.getItemName()%>
                                                         </td>
                                                         <td>
-                                                            Furniture
+                                                            <%=item.getItemType()%>
                                                         </td>
-                                                        
+                                                        <td>
+                                                            <%=item.getItemQty()%>
+                                                        </td>
                                                     </tr>
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
                                                 </tbody>
                                             </table>
                                         </div>

@@ -246,9 +246,6 @@
                     <li>
                         <a href="#">Manufacturing Requirement Planning</a>
                     </li>
-                    <li>
-                        <a href="#">Material Requirement Fulfilment</a>
-                    </li>
                 </ul>
             </li>
             <% }

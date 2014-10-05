@@ -12,6 +12,21 @@
                     checkboxes[i].checked = source.checked;
                 }
             }
+            function minus(source) {
+                var priceOfProduct = document.getElementById("price" + source).innerHTML;                
+                document.getElementById(source).value--;
+                
+                document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
+                
+            }
+            function plus(source) {
+                var priceOfProduct = document.getElementById("price" + source).innerHTML; 
+                document.getElementById(source).value++;
+                
+                document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
+                              
+            }
+
         </script>
 
         <div class="body">
@@ -78,7 +93,7 @@
                                                             </td>
                                                             <td class="product-thumbnail">
                                                                 <a href="shop-product-sidebar.html">
-                                                                    <img width="100" height="100" alt="" class="img-responsive" src="img/products/product-1.jpg">
+                                                                    <img width="100" height="100" alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
@@ -86,19 +101,20 @@
                                                             </td>
 
                                                             <td class="product-price">
-                                                                <span class="amount">$299</span>
+                                                                $<span class="amount" id="price<%=furnitures.get(i).getId()%>">299</span>
                                                             </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
                                                                     <div class="quantity">
-                                                                        <input type="button" class="minus" value="-">
-                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
-                                                                        <input type="button" class="plus" value="+">
+                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=furnitures.get(i).getId()%>)">
+                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=furnitures.get(i).getId()%>">
+                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=furnitures.get(i).getId()%>)">
                                                                     </div>
                                                                 </form>
                                                             </td>
                                                             <td class="product-subtotal">
-                                                                <span class="amount">$299</span>
+                                                                $<span class="amount" id="totalPrice<%=furnitures.get(i).getId()%>">299</span>
+                                                                
                                                             </td>
                                                         </tr>
 

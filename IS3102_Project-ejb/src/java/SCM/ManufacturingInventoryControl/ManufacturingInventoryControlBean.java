@@ -317,8 +317,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     }
 
     @Override
-    public Integer checkItemQty(Long warehouseId, String SKU
-    ) {
+    public Integer checkItemQty(Long warehouseId, String SKU) {
         System.out.println("checkItemQty() called with SKU:" + SKU);
         Integer qty = 0;
         try {
