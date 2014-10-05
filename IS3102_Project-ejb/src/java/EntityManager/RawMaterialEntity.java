@@ -41,6 +41,7 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
         this.leadTime = leadTime;
         this.price = price;
         super.setType("Raw Material");
+        super.setIsDeleted(false);
     }
 
     public void create(String name) {

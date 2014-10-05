@@ -82,6 +82,7 @@ public class SupplierEntity implements Serializable {
     }
 
 
+
     public String getContactNo() {
         return contactNo;
     }
