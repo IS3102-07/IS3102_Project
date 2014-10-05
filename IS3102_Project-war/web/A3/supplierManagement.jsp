@@ -1,5 +1,6 @@
 <%@page import="EntityManager.CountryEntity"%>
 <%@page import="EntityManager.SupplierEntity"%>
+<%@page import="EntityManager.RawMaterialEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 
@@ -101,6 +102,7 @@
                                                             <th>Email</th>
                                                             <th>Country</th>
                                                             <th>Address</th>
+                                                            <th>Items Supplied</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -135,6 +137,19 @@
                                                             </td>
                                                             <td>
                                                                 <%=suppliers.get(i).getAddress()%>
+                                                            </td>
+                                                            <td>
+                                                                <%
+                                                                    List<RawMaterialEntity> rawMaterials = (List<RawMaterialEntity>) (suppliers.get(i).getRawMaterials());
+                                                                    if (rawMaterials.isEmpty()) {
+                                                                        out.println("-");
+                                                                    } else {
+                                                                        for (RawMaterialEntity rawMaterial : rawMaterials) {
+                                                                            if (!rawMaterial.getIsDeleted())
+                                                                            out.println("<span>" + rawMaterial.getName() + ", <span>");
+                                                                        }
+                                                                    }
+                                                                %>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=suppliers.get(i).getId()%>" value="Update" onclick="javascript:updateSupplier('<%=suppliers.get(i).getId()%>')"/>
