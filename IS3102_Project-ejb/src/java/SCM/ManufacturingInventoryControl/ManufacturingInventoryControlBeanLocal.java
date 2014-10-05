@@ -39,6 +39,8 @@ public interface ManufacturingInventoryControlBeanLocal {
     public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID);
     
     public List<ItemStorageBinHelper> getItemList(Long warehouseID);
+    public List<ItemStorageBinHelper> getOutboundBinItemList(Long warehouseID);
+    public List<ItemStorageBinHelper> getBinItemList(Long storageBinID);
     public Boolean emptyStorageBin(Long storageBin_ItemID, Long storageBinID);
     public LineItemEntity checkIfItemExistInsideStorageBin(Long storageBinID, String SKU);
     
