@@ -85,6 +85,10 @@
         <servlet-class>A6_servlets.FurnitureManagement_AddFurnitureServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>FurnitureManagement_AddFurnitureToListServlet</servlet-name>
+        <servlet-class>A6_servlets.FurnitureManagement_AddFurnitureToListServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FurnitureManagement_RemoveFurnitureServlet</servlet-name>
         <servlet-class>A6_servlets.FurnitureManagement_RemoveFurnitureServlet</servlet-class>
     </servlet>
@@ -474,6 +478,10 @@
         <servlet-class>B_servlets.ECommerce_MemberLoginServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_MemberEditProfileServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_MemberEditProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_LogoutServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_LogoutServlet</servlet-class>
     </servlet>
@@ -522,6 +530,10 @@
         <servlet-class>B_servlets.ECommerce_StoresServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ShoppingCartServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_AllRetailProductsServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_AllRetailProductsServlet</servlet-class>
     </servlet>
@@ -536,6 +548,10 @@
     <servlet>
         <servlet-name>ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-name>
         <servlet-class>A3_servlets.ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_NewsletterSubscribeServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_NewsletterSubscribeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -620,6 +636,10 @@
     <servlet-mapping>
         <servlet-name>FurnitureManagement_AddFurnitureServlet</servlet-name>
         <url-pattern>/FurnitureManagement_AddFurnitureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FurnitureManagement_AddFurnitureToListServlet</servlet-name>
+        <url-pattern>/FurnitureManagement_AddFurnitureToListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RawMaterialManagement_AddRawMaterialServlet</servlet-name>
@@ -1010,6 +1030,10 @@
         <url-pattern>/ECommerce_MemberLoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ECommerce_MemberEditProfileServlet</servlet-name>
+        <url-pattern>/ECommerce_MemberEditProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ECommerce_LogoutServlet</servlet-name>
         <url-pattern>/ECommerce_LogoutServlet</url-pattern>
     </servlet-mapping>
@@ -1065,6 +1089,10 @@
         <url-pattern>/ECommerce_AllRetailProductsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
+        <url-pattern>/ECommerce_ShoppingCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
         <url-pattern>/ECommerce_AllFoodsServlet</url-pattern>
     </servlet-mapping>
@@ -1075,6 +1103,10 @@
     <servlet-mapping>
         <servlet-name>ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-name>
         <url-pattern>/ShippingOrderLineItemManagement_DisplayOutboundBinServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_NewsletterSubscribeServlet</servlet-name>
+        <url-pattern>/ECommerce_NewsletterSubscribeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

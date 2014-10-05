@@ -56,7 +56,6 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <%
-
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
