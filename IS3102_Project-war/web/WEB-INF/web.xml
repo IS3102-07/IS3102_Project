@@ -530,6 +530,10 @@
         <servlet-class>B_servlets.ECommerce_StoresServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ShoppingCartServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_AllRetailProductsServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_AllRetailProductsServlet</servlet-class>
     </servlet>
@@ -544,6 +548,10 @@
     <servlet>
         <servlet-name>ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-name>
         <servlet-class>A3_servlets.ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_NewsletterSubscribeServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_NewsletterSubscribeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -1081,6 +1089,10 @@
         <url-pattern>/ECommerce_AllRetailProductsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
+        <url-pattern>/ECommerce_ShoppingCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
         <url-pattern>/ECommerce_AllFoodsServlet</url-pattern>
     </servlet-mapping>
@@ -1091,6 +1103,10 @@
     <servlet-mapping>
         <servlet-name>ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-name>
         <url-pattern>/ShippingOrderLineItemManagement_DisplayOutboundBinServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_NewsletterSubscribeServlet</servlet-name>
+        <url-pattern>/ECommerce_NewsletterSubscribeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

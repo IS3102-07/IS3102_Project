@@ -124,7 +124,7 @@
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="<%=rawMaterial.getId()%>" name="id">
-                                <input type="hidden" value="<%=rawMaterial.getName()%>" name="rawMaterialName">
+                                 <input type="hidden" value="<%=rawMaterial.getSKU()%>" name="SKU">
                             </form>
                         </div>
                         <!-- /.row -->

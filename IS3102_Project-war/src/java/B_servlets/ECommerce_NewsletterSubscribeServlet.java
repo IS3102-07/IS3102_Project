@@ -1,37 +1,47 @@
-package A3_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-import HelperClasses.ItemStorageBinHelper;
-import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
+package B_servlets;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class ShippingOrderLineItemManagement_DisplayOutboundBinServlet extends HttpServlet {
+/**
+ *
+ * @author yang
+ */
+public class ECommerce_NewsletterSubscribeServlet extends HttpServlet {
 
-    @EJB
-    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        try {
-            HttpSession session = request.getSession();
-            String id = request.getParameter("id");
-            String warehouseId = request.getParameter("originId");
-            List<ItemStorageBinHelper> listOfLineItems = manufacturingInventoryControlBean.getOutboundBinItemList(Long.parseLong(warehouseId));
-            
-            session.setAttribute("listOfLineItems", listOfLineItems);
-            response.sendRedirect("A3/shippingOrderManagement_AddLineItem.jsp?id=" + id);
-        } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
-            ex.printStackTrace();
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ECommerce_NewsletterSubscribeServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ECommerce_NewsletterSubscribeServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
