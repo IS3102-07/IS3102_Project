@@ -39,7 +39,7 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
             boolean canUpdate = false;
             if (status.equals("Completed")) {
-                canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId), staff.getId() + ": " + staff.getName());
+                canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId), staff.getName());
                 result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
                 //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Unfulfillable")) {

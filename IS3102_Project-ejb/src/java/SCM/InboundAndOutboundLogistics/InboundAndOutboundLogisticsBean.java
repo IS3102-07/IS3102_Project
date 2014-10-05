@@ -216,10 +216,15 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Boolean updateShippingOrderStatus(Long id, String status) {
+    public Boolean updateShippingOrderStatus(Long id, String status, String submittedBy) {
         System.out.println("updateShippingOrderStatus() called.");
         try {
             ShippingOrderEntity shippingOrder = em.find(ShippingOrderEntity.class, id);
+            if(status.equals("Submitted")){
+                shippingOrder.setSubmittedBy(submittedBy);
+                em.merge(shippingOrder);
+                em.flush();
+            }
             if (!shippingOrder.getStatus().equals("Completed")) {
                 shippingOrder.setStatus(status);
                 if (status.equals("Shipped")) {
