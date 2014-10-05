@@ -807,6 +807,63 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return null;
     }
+    
+    @Override
+    public Boolean editAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId) {
+        try {
+            System.out.println("staffId: " + staffId + " roleId: " + roleId + " regionalOfficeId: " + regionalOfficeId + " storeId: " + storeId + " warehouseId: " + warehouseId + " mfId: " + mfId);
+
+            StaffEntity staff = em.find(StaffEntity.class, staffId);
+            RoleEntity role = em.find(RoleEntity.class, roleId);
+
+            AccessRightEntity a = new AccessRightEntity();
+
+            a.setStaff(staff);
+            a.setRole(role);
+
+            if (regionalOfficeId != -1) {
+                RegionalOfficeEntity ro = em.find(RegionalOfficeEntity.class, regionalOfficeId);
+                a.setRegionalOffice(ro);
+            }
+            if (storeId != -1) {
+                StoreEntity s = em.find(StoreEntity.class, storeId);
+                a.setStore(s);
+            }
+            if (warehouseId != -1) {
+                WarehouseEntity warehouse = em.find(WarehouseEntity.class, warehouseId);
+                a.setWarehouse(warehouse);
+            }
+            if (mfId != -1) {
+                ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, mfId);
+                a.setManufacturingFacility(mf);
+            }
+            em.merge(a);
+            System.out.println("em.persist();");
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+
+    @Override
+    public AccessRightEntity isAccessRightExist(Long staffId, Long roleId) {
+        try {
+            System.out.println("staffId: " + staffId);
+            System.out.println("roleId: " + roleId);
+            Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
+                    .setParameter(1, staffId)
+                    .setParameter(2, roleId);
+            if (!q.getResultList().isEmpty()) {
+                return (AccessRightEntity) q.getResultList().get(0);
+            }
+            System.out.println("access right not exist");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     public Integer checkStaffInvalidLoginAttempts(String email) {
         try {
@@ -1003,7 +1060,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                         .setParameter(1, StaffId)
                         .setParameter(2, warehouseManager.getId());
                 AccessRightEntity accessRight = (AccessRightEntity) q.getSingleResult();
-                if(accessRight.getWarehouse().equals(warehouseId)){
+                if (accessRight.getWarehouse().equals(warehouseId)) {
                     return true;
                 }
             }
