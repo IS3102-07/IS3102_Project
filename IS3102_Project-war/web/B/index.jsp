@@ -124,14 +124,14 @@
                                      data-y="180"
                                      data-speed="1500"
                                      data-start="1000"
-                                     data-easing="easeOutExpo" style="font-size: 30px;">Prof Tan</div>
+                                     data-easing="easeOutExpo" style="font-size: 30px;">Our Products</div>
 
                                 <div class="tp-caption blackboard-text fade "
                                      data-x="180"
                                      data-y="220"
                                      data-speed="1500"
                                      data-start="1200"
-                                     data-easing="easeOutExpo" style="font-size: 40px;">Give me an A+!</div>
+                                     data-easing="easeOutExpo" style="font-size: 40px;">Are Aesthetically Pleasing!</div>
 
                                 <div class="tp-caption main-label sft stb"
                                      data-x="580"
@@ -145,7 +145,7 @@
                                      data-y="250"
                                      data-speed="500"
                                      data-start="2000"
-                                     data-easing="easeOutExpo">IS3102 IT-07.</div>
+                                     data-easing="easeOutExpo">Find Out More Below!</div>
                             </li>
                         </ul>
                     </div>
@@ -155,14 +155,14 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <p>
-                                    The fastest way to grow your business with the leader in <em>Furniture.</em>
-                                    <span>Check out our options and features included.</span>
+                                    The fastest way to grow your home with the leader in <em>Furniture.</em>
+                                    <span>Check out our furnitures and retail products.</span>
                                 </p>
                             </div>
                             <div class="col-md-4">
                                 <div class="get-started">
-                                    <a href="#" class="btn btn-lg btn-primary">Get Started Now!</a>
-                                    <div class="learn-more">or <a href="index.html">learn more.</a></div>
+                                    <a href="allProductsCatalog.jsp" class="btn btn-lg btn-primary">Get Started Now!</a>
+                                    <div class="learn-more">or <a href="allProductsCatalog.jsp">learn more.</a></div>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +173,7 @@
                         <div class="row center">
                             <div class="col-md-12">
                                 <h2 class="short word-rotator-title">
-                                    Porto is
+                                    Our products are
                                     <strong class="inverted">
                                         <span class="word-rotate">
                                             <span class="word-rotate-items">
@@ -183,10 +183,10 @@
                                             </span>
                                         </span>
                                     </strong>
-                                    beautiful and fully responsive.
+                                    beautiful and fits all design.
                                 </h2>
                                 <p class="featured lead">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce elementum, nulla vel pellentesque consequat, ante nulla hendrerit arcu, ac tincidunt mauris lacus sed leo. vamus suscipit molestie vestibulum.
+                                    Island Furniture is the leading furniture and retail products player in the market. Our novel designs are meant to help transform your home into your ideal design.
                                 </p>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
 
                         <div class="row">
                             <div class="col-md-8">
-                                <h2>Our <strong>Features</strong></h2>
+                                <h2>Our <strong>Services</strong></h2>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="feature-box">
@@ -211,7 +211,7 @@
                                             </div>
                                             <div class="feature-box-info">
                                                 <h4 class="shorter">Customer Support</h4>
-                                                <p class="tall">Lorem ipsum dolor sit amet, consectetur adip.</p>
+                                                <p class="tall">Customers come first.</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -219,8 +219,8 @@
                                                 <i class="icon icon-file"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">HTML5 / CSS3 / JS</h4>
-                                                <p class="tall">Lorem ipsum dolor sit amet, adip.</p>
+                                                <h4 class="shorter">Free Assembly</h4>
+                                                <p class="tall">All products will be assembled free.</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -228,8 +228,8 @@
                                                 <i class="icon icon-google-plus"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">500+ Google Fonts</h4>
-                                                <p class="tall">Lorem ipsum dolor sit amet, consectetur adip.</p>
+                                                <h4 class="shorter">1 Year Warranty</h4>
+                                                <p class="tall">All our products come with 1 year warranty.</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -238,7 +238,7 @@
                                             </div>
                                             <div class="feature-box-info">
                                                 <h4 class="shorter">Colors</h4>
-                                                <p class="tall">Lorem ipsum dolor sit amet, consectetur adip.</p>
+                                                <p class="tall">Furnitures have different colours.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -248,8 +248,8 @@
                                                 <i class="icon icon-film"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Sliders</h4>
-                                                <p class="tall">Lorem ipsum dolor sit amet, consectetur.</p>
+                                                <h4 class="shorter">Professional Design</h4>
+                                                <p class="tall">Designed by state of the art technologies.</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -257,8 +257,8 @@
                                                 <i class="icon icon-user"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Icons</h4>
-                                                <p class="tall">Lorem ipsum dolor sit amet, consectetur adip.</p>
+                                                <h4 class="shorter">Kitchen</h4>
+                                                <p class="tall">We sell top Asian cuisines.</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -266,8 +266,8 @@
                                                 <i class="icon icon-bars"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Buttons</h4>
-                                                <p class="tall">Lorem ipsum dolor sit, consectetur adip.</p>
+                                                <h4 class="shorter">Technology</h4>
+                                                <p class="tall">Download our mobile app now.</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -275,8 +275,8 @@
                                                 <i class="icon icon-desktop"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Lightbox</h4>
-                                                <p class="tall">Lorem sit amet, consectetur adip.</p>
+                                                <h4 class="shorter">High Quality</h4>
+                                                <p class="tall">All products come with qualitative design.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -349,7 +349,7 @@
                                             </span>
                                         </span>
                                     </strong>
-                                    about Porto Template...
+                                    about Island Furniture...
                                 </h2>
                                 <h4 class="lead tall">5,500 customers in 100 countries use Porto Template. Meet our customers.</h4>
                             </div>
