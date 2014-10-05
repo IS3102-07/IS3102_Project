@@ -533,6 +533,10 @@
         <servlet-name>A1/AccessRight_edit</servlet-name>
         <jsp-file>/A1/AccessRight_edit.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-name>
+        <servlet-class>A3_servlets.ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1067,6 +1071,10 @@
     <servlet-mapping>
         <servlet-name>A1/AccessRight_edit</servlet-name>
         <url-pattern>/A1/AccessRight_edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingOrderLineItemManagement_DisplayOutboundBinServlet</servlet-name>
+        <url-pattern>/ShippingOrderLineItemManagement_DisplayOutboundBinServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
