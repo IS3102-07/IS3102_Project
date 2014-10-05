@@ -149,11 +149,11 @@ public class StartupBean {
                 ex.printStackTrace();
             }
             try {
-                ProductGroupEntity productGroup = new ProductGroupEntity("F001", 10);
+                ProductGroupEntity productGroup = new ProductGroupEntity("F001", 10, 500);
                 em.persist(productGroup);
-                productGroup = new ProductGroupEntity("F002", 15);
+                productGroup = new ProductGroupEntity("F002", 15, 1000);
                 em.persist(productGroup);
-                productGroup = new ProductGroupEntity("F003", 20);
+                productGroup = new ProductGroupEntity("F003", 20, 1000);
                 em.persist(productGroup);
                 System.out.println("Created item entities.");
             } catch (Exception ex) {

@@ -95,6 +95,10 @@
                                             <input class="form-control" name="workhours" type="number" min="1" step="1" required="true" value="<%=productGroup.getWorkHours()%>"/>
                                         </div>
                                         <div class="form-group">
+                                            <label>Lot Size: </label>
+                                            <input class="form-control" name="lotsize" type="number" min="1" step="1" required="true" value="<%=productGroup.getLotSize()%>"/>
+                                        </div>
+                                        <div class="form-group">
                                             <input type="submit" value="Update Product Group" class="btn btn-lg btn-primary btn-block">
                                         </div>  
                                         <input type="hidden" value="<%=productGroup.getId()%>" name="id">

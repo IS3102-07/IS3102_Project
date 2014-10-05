@@ -1,39 +1,43 @@
-package A6_servlets;
+package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.ProductGroupEntity;
+import EntityManager.FurnitureEntity;
+import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-public class ProductGroupManagement_AddServlet extends HttpServlet {
+import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+/**
+ *
+ * @author yang
+ */
+public class ECommerce_ShoppingCartServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal ItemManagementBean;
-    private String result;
+    private ItemManagementBeanLocal itemManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            String name = request.getParameter("name");
-            String workhours = request.getParameter("workhours");
-            String lotsize = request.getParameter("lotsize");
-            ProductGroupEntity productGroup = ItemManagementBean.createProductGroup(name, Integer.parseInt(workhours), Integer.parseInt(lotsize));
 
-            if (productGroup == null) {
-                result = "?errMsg=Product group name already exist.";
-                 response.sendRedirect("A6/productGroupManagement_Add.jsp" + result);
-            } else {
-                result = "?goodMsg=Product group created successfully";
-                response.sendRedirect("ProductGroupManagement_Servlet" + result);
-            }
+        try {
+
+            HttpSession session;
+            session = request.getSession();
+            
+            List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
+            session.setAttribute("furnitures", furnitures);
+            
+            response.sendRedirect("B/shoppingList.jsp");
+            
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

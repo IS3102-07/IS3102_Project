@@ -166,9 +166,14 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
     }
 
     @Override
-    public Boolean updatePurchaseOrderStatus(Long id, String status) {
+    public Boolean updatePurchaseOrderStatus(Long id, String status, String submittedBy) {
         try {
             PurchaseOrderEntity purchaseOrder = em.find(PurchaseOrderEntity.class, id);
+            if(status.equals("Submitted")){
+                purchaseOrder.setSubmittedBy(submittedBy);
+                em.merge(purchaseOrder);
+                em.flush();
+            }
             if (!purchaseOrder.getStatus().equals("Completed")) {
                 purchaseOrder.setStatus(status);
                 em.merge(purchaseOrder);

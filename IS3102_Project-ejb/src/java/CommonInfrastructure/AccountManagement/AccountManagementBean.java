@@ -307,7 +307,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             Query q = em.createQuery("SELECT t FROM MemberEntity t where t.id=:id");
             q.setParameter("id", memberID);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-            em.remove(memberEntity);
+            memberEntity.setIsDeleted(true);
+            em.merge(memberEntity);
+            em.flush();
             System.out.println("\nServer removed memberID:\n" + memberID);
             return true;
         } catch (NoResultException ex) {

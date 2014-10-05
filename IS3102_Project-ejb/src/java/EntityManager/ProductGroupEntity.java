@@ -26,26 +26,39 @@ public class ProductGroupEntity implements Serializable {
     @Lob
     private String productGroupName;   
     private Integer workHours;
+    private Integer lotSize;
     @OneToMany(cascade={CascadeType.ALL}, mappedBy="productGroup")
     List<ProductGroupLineItemEntity> lineItemList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
     List<SaleForecastEntity> saleForcastEntityList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
     List<SaleAndOperationPlanEntity> sopList;
+    private Boolean isDeleted;
     
     public ProductGroupEntity(){
         this.lineItemList = new ArrayList<>();
         this.saleForcastEntityList = new ArrayList<>();
         this.sopList = new ArrayList<>();
+        this.isDeleted=false;
     } 
 
-    public ProductGroupEntity(String productGroupName, Integer workHours) {
+    public ProductGroupEntity(String productGroupName, Integer workHours, Integer lotSize) {
         this.workHours = workHours;
         this.productGroupName = productGroupName;
+        this.lotSize = lotSize;
         this.lineItemList = new ArrayList<>();
         this.saleForcastEntityList = new ArrayList<>();
         this.sopList = new ArrayList<>();
+        this.isDeleted = false;
     }        
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
     
     public void create(String name) {
         setName(name);
@@ -143,6 +156,14 @@ public class ProductGroupEntity implements Serializable {
     @Override
     public String toString() {
         return "EntityManager.ProductionGroupEntity[ id=" + id + " ]";
+    }
+
+    public Integer getLotSize() {
+        return lotSize;
+    }
+
+    public void setLotSize(Integer lotSize) {
+        this.lotSize = lotSize;
     }
     
 }

@@ -1,5 +1,6 @@
 package A3_servlets;
 
+import EntityManager.StaffEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
@@ -32,12 +33,13 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
             String transferOrderId = request.getParameter("id");
             String status = request.getParameter("status");
+            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
 
             result = "?goodMsg=Line item added successfully.&id=" + transferOrderId;
 
             boolean canUpdate = false;
             if (status.equals("Completed")) {
-                canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId));
+                canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId), staff.getName());
                 result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
                 //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Unfulfillable")) {

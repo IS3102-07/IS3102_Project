@@ -22,8 +22,9 @@ public class ProductGroupManagement_UpdateServlet extends HttpServlet {
             String productGroupId = request.getParameter("id");
             String name = request.getParameter("name");
             String workhours = request.getParameter("workhours");
+            String lotsize = request.getParameter("lotsize");
 
-            boolean canUpdate = ItemManagementBean.editProductGroup(Long.parseLong(productGroupId), name, Integer.parseInt(workhours));
+            boolean canUpdate = ItemManagementBean.editProductGroup(Long.parseLong(productGroupId), name, Integer.parseInt(workhours), Integer.parseInt(lotsize));
 
             if (!canUpdate) {
                 result = "?errMsg=Product group name already exist or Product group ID not found.&id=" + productGroupId;

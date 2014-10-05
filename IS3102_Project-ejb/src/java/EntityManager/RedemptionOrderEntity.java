@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package EntityManager;
 
 import java.io.Serializable;
@@ -14,10 +13,24 @@ import javax.persistence.Id;
 
 @Entity
 public class RedemptionOrderEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Boolean isDeleted;
+
+    public void RedemptionOrderEntity() {
+        this.isDeleted = false;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 
     public Long getId() {
         return id;
@@ -51,5 +64,5 @@ public class RedemptionOrderEntity implements Serializable {
     public String toString() {
         return "em.RedemptionOrderEntity[ id=" + id + " ]";
     }
-    
+
 }

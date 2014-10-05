@@ -24,15 +24,12 @@
                 document.productGroupManagement.action = "productGroupManagement_Add.jsp";
                 document.productGroupManagement.submit();
             }
-            function checkAll() {
-                var allRows = document.supplierManagement.getElementsByTagName("delete");
-                for (var i = 0; i < allRows.length; i++) {
-                    if (allRows[i].type == 'checkbox') {
-                        allRows[i].checked = true;
-                    }
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
                 }
             }
-            
             function removePG() {
                 
                 checkboxes = document.getElementsByName('delete');
@@ -111,10 +108,11 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll()" /></th>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Product Group</th>
                                                             <th>Work Hours</th>
                                                             <th>Item SKUs</th>
+                                                            <th>Lot Size</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -132,7 +130,7 @@
                                                             </td>
                                                             <td>
                                                                 <%=productGroups.get(i).getWorkHours()%>
-                                                            </td>
+                                                            </td>                                                          
                                                             <td>
                                                                 <%
                                                                     List<ProductGroupLineItemEntity> lineItems = productGroups.get(i).getLineItemList();
@@ -144,6 +142,9 @@
                                                                         }
                                                                     }
                                                                 %>
+                                                            </td>
+                                                             <td>
+                                                                <%=productGroups.get(i).getLotSize()%>
                                                             </td>
                                                             <td style="width:200px">
                                                                 <input  type="button" name="btnEdit" class="btn btn-primary btn-block"  value="Update" onclick="javascript:updatePG('<%=productGroups.get(i).getId()%>')"/>

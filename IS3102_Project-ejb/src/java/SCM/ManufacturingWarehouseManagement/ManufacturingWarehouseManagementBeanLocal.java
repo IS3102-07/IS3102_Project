@@ -29,7 +29,7 @@ public interface ManufacturingWarehouseManagementBeanLocal {
     public Boolean addLineItemToTransferOrder(Long transferOrderID, String SKU, Integer quantity);
     public Boolean removeLineItemFromTransferOrder(Long transferOrderID);
 
-    public boolean markTransferOrderAsCompleted(Long transferOrderId);
+    public boolean markTransferOrderAsCompleted(Long transferOrderId, String submittedBy);
 
     public boolean cancelTransferOrder(Long transferOrderId);
 
@@ -40,8 +40,6 @@ public interface ManufacturingWarehouseManagementBeanLocal {
     public boolean deleteTransferOrder(Long id);
 
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId);
-
-//    public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems);
     
     public ItemEntity searchItemBySKU(String SKU);
 }

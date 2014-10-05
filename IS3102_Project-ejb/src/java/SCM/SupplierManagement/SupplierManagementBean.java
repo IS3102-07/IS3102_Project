@@ -58,7 +58,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     public List<SupplierEntity> viewAllSupplierList() {
         System.out.println("viewAllSupplierList() called.");
         try {
-            Query q = em.createQuery("Select s from SupplierEntity s");
+            Query q = em.createQuery("Select s from SupplierEntity s where s.isDeleted=false");
             List<SupplierEntity> list = q.getResultList();
             return list;
         } catch (Exception ex) {
@@ -67,63 +67,6 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
         }
     }
 
-    @Override
-    public boolean markSupplierAsActive(Long id) {
-        System.out.println("markSupplierAsActive() called.");
-        try {
-            if (checkSupplierExists(id)) {
-                supplier = em.getReference(SupplierEntity.class, id);
-                supplier.setIsActive(true);
-                return true;
-            }
-            return false;
-        } catch (Exception ex) {
-            System.out.println("Failed to markSupplierAsActive: " + ex);
-            return false;
-        }
-    }
-
-    @Override
-    public boolean markSupplierAsInactive(Long id) {
-        System.out.println("markSupplierAsInactive() called.");
-        try {
-            if (checkSupplierExists(id)) {
-                supplier = em.getReference(SupplierEntity.class, id);
-                supplier.setIsActive(false);
-                return true;
-            }
-            return false;
-        } catch (Exception ex) {
-            System.out.println("Failed to markSupplierAsInActive: " + ex);
-            return false;
-        }
-    }
-
-    @Override
-    public List<SupplierEntity> viewActiveSupplierList() {
-        System.out.println("viewActiveSupplierList() called.");
-        try {
-            Query q = em.createQuery("Select s from SupplierEntity s where s.isActive='true'");
-            List<SupplierEntity> list = q.getResultList();
-            return list;
-        } catch (Exception ex) {
-            System.out.println("Failed to viewActiveSupplierList: " + ex);
-            return null;
-        }
-    }
-
-    @Override
-    public List<SupplierEntity> viewInactiveSupplierList() {
-        System.out.println("viewInactiveSupplierList() called.");
-        try {
-            Query q = em.createQuery("Select s from SupplierEntity s where s.isActive='false'");
-            List<SupplierEntity> list = q.getResultList();
-            return list;
-        } catch (Exception ex) {
-            System.out.println("Failed to viewInactiveSupplierList: " + ex);
-            return null;
-        }
-    }
 
     @Override
     public SupplierEntity getSupplier(Long id) {
@@ -143,7 +86,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     public boolean checkSupplierExists(String supplierName) {
         System.out.println("checkSupplierExists() called.");
         try {
-            Query q = em.createQuery("Select s from SupplierEntity s where s.supplierName=:supplierName");
+            Query q = em.createQuery("Select s from SupplierEntity s where s.supplierName=:supplierName and s.isDeleted=false");
             q.setParameter("supplierName", supplierName);
             q.getSingleResult();
             return true;

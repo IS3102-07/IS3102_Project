@@ -40,6 +40,15 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
         this.description = description;
         this.imageURL = imageURL;
         super.setType("Furniture");
+        super.setIsDeleted(false);
+    }
+
+    public Boolean getIsDeleted() {
+        return super.getIsDeleted();
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        super.setIsDeleted(isDeleted);
     }
 
     public ProductGroupLineItemEntity getProductGroupLineItemEntity() {
