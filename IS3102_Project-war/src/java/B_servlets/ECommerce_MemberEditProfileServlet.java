@@ -1,6 +1,7 @@
 package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -8,8 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ECommerce_MemberRegisterServlet extends HttpServlet {
+public class ECommerce_MemberEditProfileServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
@@ -19,22 +21,25 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            System.out.println("ECommerce_MemberEditProfileServlet:");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            boolean isExist = accountManagementBean.checkMemberEmailExists(email);
             
-            if (isExist) {
-                result = "Email already exist. Please try again.";
-                response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
-            } else {
-                boolean canUpdate = accountManagementBean.registerMember(null, null, null, email, null, null, null, null, password);
-                if (!canUpdate) {
-                    result = "Register failed. Please try again.";
-                    response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
-                } else {
-                    result = "Account successfully registered.";
-                    response.sendRedirect("B/memberLogin.jsp?goodMsg=" + result);
-                }
+            String name = request.getParameter("name");
+            String phone = request.getParameter("phone");
+            String id = request.getParameter("id");
+            String address = request.getParameter("address");
+
+            boolean test = accountManagementBean.editMember(Long.valueOf(id), null, name, address, email, phone, null, null, null, password);
+
+            HttpSession session;
+            session = request.getSession();
+            MemberEntity memberEntity = accountManagementBean.getMemberByEmail(email);
+            session.setAttribute("member", memberEntity);
+            
+            if (test) {
+                result = "Account updated successfully.";
+                response.sendRedirect("B/memberProfile.jsp?errMsg=" + result);
             }
         } catch (Exception ex) {
             out.println(ex);
