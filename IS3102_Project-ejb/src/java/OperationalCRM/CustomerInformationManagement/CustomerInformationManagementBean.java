@@ -6,6 +6,7 @@ import EntityManager.FurnitureEntity;
 import EntityManager.MemberEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import EntityManager.SubscriptionEntity;
 
 @Stateless
 public class CustomerInformationManagementBean implements CustomerInformationManagementBeanLocal {
@@ -19,6 +20,15 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
         
         
         
+        return true;
+    }
+    
+    @Override
+    public Boolean addEmailToSubscription(String email) {
+        System.out.println("addEmailToSubscription()");
+        SubscriptionEntity subscription = new SubscriptionEntity();
+        subscription.addToList(email);
+        em.persist(subscription);
         return true;
     }
 }

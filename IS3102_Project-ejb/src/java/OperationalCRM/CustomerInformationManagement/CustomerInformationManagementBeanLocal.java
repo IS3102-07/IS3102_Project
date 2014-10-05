@@ -14,5 +14,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface CustomerInformationManagementBeanLocal {
-    
+    public Boolean addEmailToSubscription(String email);
 }
