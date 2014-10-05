@@ -16,10 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
-/**
- *
- * @author yang
- */
 @Entity
 public class RegionalOfficeEntity implements Serializable {
 

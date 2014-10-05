@@ -5,5 +5,4 @@ function refreshMessages() {
     URL = address;
     xmlHttp.open("GET", URL, false);
     xmlHttp.send();
-    alert("asdasd");
 }
