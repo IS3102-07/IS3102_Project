@@ -533,10 +533,6 @@
         <servlet-name>A1/AccessRight_edit</servlet-name>
         <jsp-file>/A1/AccessRight_edit.jsp</jsp-file>
     </servlet>
-    <servlet>
-        <servlet-name>ECommerce_MemberEditProfileServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_MemberEditProfileServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1071,10 +1067,6 @@
     <servlet-mapping>
         <servlet-name>A1/AccessRight_edit</servlet-name>
         <url-pattern>/A1/AccessRight_edit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_MemberEditProfileServlet</servlet-name>
-        <url-pattern>/ECommerce_MemberEditProfileServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
