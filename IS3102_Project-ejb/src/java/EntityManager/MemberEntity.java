@@ -42,7 +42,8 @@ public class MemberEntity implements Serializable {
     private Boolean accountLockStatus;
     private String unlockCode;
     private String passwordReset;
-    
+    private Boolean isDeleted;
+
     @OneToOne
     CountryEntity country;
 
@@ -72,8 +73,18 @@ public class MemberEntity implements Serializable {
         setAccountLockStatus(false);
         setUnlockCode();
         setPasswordReset();
+        this.isDeleted=false;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    
     public Long getMemberID() {
         return getId();
     }

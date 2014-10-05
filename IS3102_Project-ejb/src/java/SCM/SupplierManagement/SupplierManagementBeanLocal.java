@@ -14,10 +14,6 @@ public interface SupplierManagementBeanLocal {
     public boolean editSupplier(Long supplierId, String name, String phone, String email, String address, Long countryId);//merge the SupplierEntity if exists else returns false
     public SupplierEntity getSupplier(Long id);//returns a SupplierEntity else returns null
     public List<SupplierEntity> viewAllSupplierList();
-    public List<SupplierEntity> viewActiveSupplierList();
-    public List<SupplierEntity> viewInactiveSupplierList();
-    public boolean markSupplierAsActive(Long id);//returns false if supplier not found
-    public boolean markSupplierAsInactive(Long id);//returns false if supplier not found
     public boolean checkSupplierExists(String supplierName);
     public List<CountryEntity> getListOfCountries();
 }

@@ -17,12 +17,7 @@ import EntityManager.WarehouseEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -62,16 +57,50 @@ public class AccessRight_Servlet extends HttpServlet {
                 staffId = Long.parseLong(request.getParameter("staffId"));
                 roleId = Long.parseLong(request.getParameter("roleId"));
 
-                session.setAttribute("AR_staffId", staffId);
-                session.setAttribute("AR_roleId", roleId);
+                if (amBean.isAccessRightExist(staffId, roleId) == null) {
+
+                    session.setAttribute("AR_staffId", staffId);
+                    session.setAttribute("AR_roleId", roleId);
+
+                    StaffEntity staff = amBean.getStaffById(staffId);
+                    RoleEntity role = amBean.getRoleById(roleId);
+                    List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
+                    List<StoreEntity> storeList = fmBean.viewListOfStore();
+                    List<WarehouseEntity> warehouseList = fmBean.getWarehouseList();
+                    List<ManufacturingFacilityEntity> manufacturingFacilityList = fmBean.viewListOfManufacturingFacility();
+
+                    request.setAttribute("staff", staff);
+                    request.setAttribute("role", role);
+                    request.setAttribute("regionalOfficeList", regionalOfficeList);
+                    request.setAttribute("storeList", storeList);
+                    request.setAttribute("warehouseList", warehouseList);
+                    request.setAttribute("manufacturingFacilityList", manufacturingFacilityList);
+
+                    nextPage = "/A1/AccessRight";
+
+                } else {
+                    nextPage = "/AccessRight_Servlet/AccessRight_edit_GET";
+                }
+
+                break;
+
+            case "/AccessRight_edit_GET":
+
+                staffId = Long.parseLong(request.getParameter("staffId"));
+                roleId = Long.parseLong(request.getParameter("roleId"));
 
                 StaffEntity staff = amBean.getStaffById(staffId);
                 RoleEntity role = amBean.getRoleById(roleId);
+                System.out.println("servlet>>> roleId: " + roleId);
                 List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
                 List<StoreEntity> storeList = fmBean.viewListOfStore();
                 List<WarehouseEntity> warehouseList = fmBean.getWarehouseList();
                 List<ManufacturingFacilityEntity> manufacturingFacilityList = fmBean.viewListOfManufacturingFacility();
-
+                AccessRightEntity accessRight = amBean.isAccessRightExist(staffId, roleId);                                
+                if(accessRight == null){
+                    System.out.println("access right is null");
+                }
+                request.setAttribute("accessRight", accessRight);
                 request.setAttribute("staff", staff);
                 request.setAttribute("role", role);
                 request.setAttribute("regionalOfficeList", regionalOfficeList);
@@ -79,8 +108,58 @@ public class AccessRight_Servlet extends HttpServlet {
                 request.setAttribute("warehouseList", warehouseList);
                 request.setAttribute("manufacturingFacilityList", manufacturingFacilityList);
 
-                nextPage = "/A1/AccessRight";
+                nextPage = "/A1/AccessRight_edit";
                 break;
+                
+            case "/AccessRight_edit_POST":
+                try {
+                    String regionalOffice = request.getParameter("regionalOffice");
+                    Long regionalOfficeId;
+                    if (!regionalOffice.equals("")) {
+                        System.out.println("regionalOffice: " + regionalOffice);
+                        regionalOfficeId = Long.parseLong(regionalOffice);
+                    } else {
+                        regionalOfficeId = (long) -1;
+                    }
+
+                    String store = request.getParameter("store");
+                    Long storeId;
+                    if (!store.equals("")) {
+                        storeId = Long.parseLong(store);
+                    } else {
+                        storeId = (long) -1;
+                    }
+
+                    String warehouse = request.getParameter("warehouse");
+                    Long warehouseId;
+                    if (!warehouse.equals("")) {
+                        warehouseId = Long.parseLong(warehouse);
+                    } else {
+                        warehouseId = (long) -1;
+                    }
+
+                    String manufacturingFacility = request.getParameter("manufacturingFacility");
+                    Long manufacturingFacilityId;
+                    if (!manufacturingFacility.equals("")) {
+                        manufacturingFacilityId = Long.parseLong(manufacturingFacility);
+                    } else {
+                        manufacturingFacilityId = (long) -1;
+                    }
+
+                    staffId = (long) session.getAttribute("AR_staffId");
+                    roleId = (long) session.getAttribute("AR_roleId");
+                     
+                    if (amBean.editAccessRight(staffId, roleId, regionalOfficeId, storeId, warehouseId, manufacturingFacilityId)) {
+                        request.setAttribute("alertMessage", "Custom access right has been reset for the staff.");
+                    } else {
+                        request.setAttribute("alertMessage", "Failed to reset access right for the staff.");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                nextPage = "/StaffManagement_UpdateStaffServlet?id=" + (long) session.getAttribute("AR_staffId");
+                response.sendRedirect(".." + nextPage);
+                return;
 
             case "/AccessRight_POST":
                 try {
@@ -120,7 +199,7 @@ public class AccessRight_Servlet extends HttpServlet {
                     staffId = (long) session.getAttribute("AR_staffId");
                     roleId = (long) session.getAttribute("AR_roleId");
 
-                    AccessRightEntity accessRight = amBean.createAccessRight(staffId, roleId, regionalOfficeId, storeId, warehouseId, manufacturingFacilityId);
+                    accessRight = amBean.createAccessRight(staffId, roleId, regionalOfficeId, storeId, warehouseId, manufacturingFacilityId);
                     if (accessRight != null) {
                         request.setAttribute("alertMessage", "Custom access right has been set for the staff.");
                     } else {
@@ -133,7 +212,7 @@ public class AccessRight_Servlet extends HttpServlet {
                 response.sendRedirect(".." + nextPage);
                 return;
 
-        }
+        }        
         System.out.println(nextPage);
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);

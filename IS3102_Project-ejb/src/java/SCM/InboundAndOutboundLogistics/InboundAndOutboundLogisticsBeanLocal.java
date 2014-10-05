@@ -23,7 +23,7 @@ public interface InboundAndOutboundLogisticsBeanLocal {
 
     public Boolean updateShippingOrder(Long shippingOrderID, Long sourceWarehouseID, Long destinationWarehouseID, Date expectedReceivedDate);
 
-    public Boolean updateShippingOrderStatus(Long shippingOrderID, String status);
+    public Boolean updateShippingOrderStatus(Long shippingOrderID, String status, String submittedBy);
 
     public Boolean addLineItemToShippingOrder(Long shippingOrderID, String SKU, Integer qty);
 

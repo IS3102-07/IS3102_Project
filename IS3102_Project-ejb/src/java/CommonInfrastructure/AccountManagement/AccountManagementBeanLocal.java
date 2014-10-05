@@ -84,6 +84,8 @@ public interface AccountManagementBeanLocal {
     
     public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
     
+    public AccessRightEntity isAccessRightExist(Long staffId, Long roleId);
+    
     public Boolean canStaffAccessToTheRegionalOffice(Long StaffId, Long RegionalOfficeId);
     
     public Boolean canStaffAccessToTheStore(Long StaffId, Long StoreId);
@@ -91,4 +93,6 @@ public interface AccountManagementBeanLocal {
     public Boolean canStaffAccessToTheManufacturingFacility(Long StaffId, Long MfId);
     
     public Boolean canStaffAccessToTheWarehouse(Long StaffId, Long warehouseId);
+    
+    public Boolean editAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
 }

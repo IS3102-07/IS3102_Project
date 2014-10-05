@@ -171,15 +171,15 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public
-            boolean deleteTransferOrder(Long id) {
+    public boolean deleteTransferOrder(Long id) {
         try {
             if (em.getReference(TransferOrderEntity.class, id) == null) {
-
                 return false;
             }
-            em.remove(em.getReference(TransferOrderEntity.class, id));
-
+            TransferOrderEntity transferOrderEntity = em.getReference(TransferOrderEntity.class, id);
+            transferOrderEntity.setIsDeleted(true);
+            em.merge(transferOrderEntity);
+            em.flush();
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to deleteTransferOrder:\n" + ex);
@@ -288,7 +288,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     public List<TransferOrderEntity> viewAllTransferOrderByWarehouseId(Long warehouseId) {
         System.out.println("viewAllTransferOrderByWarehouseId() called.");
         try {
-            Query q = em.createQuery("Select t from TransferOrderEntity t where t.warehouse.id=:id");
+            Query q = em.createQuery("Select t from TransferOrderEntity t where t.warehouse.id=:id and t.isDeleted=false");
             q.setParameter("id", warehouseId);
             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             System.out.println("viewAllTransferOrderByWarehouseId() is successful.");

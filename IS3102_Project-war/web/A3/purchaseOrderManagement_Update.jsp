@@ -181,6 +181,11 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> Submitted By: <span class="" style="font-weight: bold;"><%=purchaseOrder.getSubmittedBy()%></span></h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
