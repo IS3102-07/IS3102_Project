@@ -1,7 +1,6 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -19,36 +18,34 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy = "rawMaterial")
-    private List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo;
     @Lob
     private String name;
     private String category;
     private String description;
+    private Integer lotSize;
+    private Integer leadTime;
+    private Double price;
+    @ManyToOne
+    private SupplierEntity supplier;
 
     public RawMaterialEntity() {
     }
 
-    public RawMaterialEntity(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
+    public RawMaterialEntity(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price) {
         super(SKU, _length, width, height);
         this.name = name;
         super.setName(name);
         this.category = category;
         this.description = description;
+        this.lotSize = lotSize;
+        this.leadTime = leadTime;
+        this.price = price;
         super.setType("Raw Material");
     }
 
     public void create(String name) {
         this.name = name;
         super.setName(name);
-    }
-
-    public List<Supplier_RawMaterialEntity> getListOfSupplier_RawMaterialInfo() {
-        return listOfSupplier_RawMaterialInfo;
-    }
-
-    public void setListOfSupplier_RawMaterialInfo(List<Supplier_RawMaterialEntity> listOfSupplier_RawMaterialInfo) {
-        this.listOfSupplier_RawMaterialInfo = listOfSupplier_RawMaterialInfo;
     }
 
     public Long getId() {
@@ -93,32 +90,55 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
         return "entityManagerBean.RawMaterial[ id=" + id + " ]";
     }
 
-    /**
-     * @return the category
-     */
     public String getCategory() {
         return category;
     }
 
-    /**
-     * @param category the category to set
-     */
     public void setCategory(String category) {
         this.category = category;
     }
 
-    /**
-     * @return the description
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * @param description the description to set
-     */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public SupplierEntity getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(SupplierEntity supplier) {
+        this.supplier = supplier;
+    }
+
+    public Integer getLotSize() {
+        return lotSize;
+    }
+
+    public void setLotSize(Integer lotSize) {
+        this.lotSize = lotSize;
+    }
+
+    public Integer getLeadTime() {
+        return leadTime;
+    }
+
+  
+    public void setLeadTime(Integer leadTime) {
+        this.leadTime = leadTime;
+    }
+
+   
+    public Double getPrice() {
+        return price;
+    }
+
+   
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
 }

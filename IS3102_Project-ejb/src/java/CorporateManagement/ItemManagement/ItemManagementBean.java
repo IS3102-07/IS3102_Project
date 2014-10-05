@@ -8,8 +8,8 @@ import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.SupplierEntity;
 import EntityManager.ProductGroupLineItemEntity;
-import EntityManager.StorageBinEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
@@ -25,12 +25,16 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
+    private SupplierEntity supplier;
+    private RawMaterialEntity rawMaterial;
 
-    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
+    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
         System.out.println("addRawMaterial() called with SKU:" + SKU);
         try {
-            RawMaterialEntity rawMaterialEntity = new RawMaterialEntity(SKU, name, category, description, _length, width, height);
-            em.persist(rawMaterialEntity);
+            rawMaterial = new RawMaterialEntity(SKU, name, category, description, _length, width, height, lotSize, leadTime, price);
+            supplier = em.find(SupplierEntity.class, supplierId);
+            rawMaterial.setSupplier(supplier);
+            em.persist(rawMaterial);
             System.out.println("Raw Material name \"" + name + "\" added successfully.");
             return true;
         } catch (Exception ex) {
@@ -39,13 +43,17 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editRawMaterial(String id, String SKU, String name, String category, String description) {
+    public boolean editRawMaterial(String id, String SKU, String name, String category, String description, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
         System.out.println("editRawMaterial() called with SKU:" + SKU);
         try {
             RawMaterialEntity i = em.find(RawMaterialEntity.class, Long.valueOf(id));
             i.setName(name);
             i.setCategory(category);
             i.setDescription(description);
+            i.setLotSize(lotSize);
+            i.setLeadTime(leadTime);
+            i.setPrice(price);
+            rawMaterial.setSupplier(em.getReference(SupplierEntity.class, supplierId));
             em.merge(i);
             em.flush();
             System.out.println("\nServer updated raw material:\n" + name);
@@ -60,7 +68,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         System.out.println("removeRawMaterial() called with SKU:" + SKU);
         try {
             em.remove(em.getReference(RawMaterialEntity.class, Long.valueOf(SKU)));
-            System.out.println("Furniture removed succesfully");
+            System.out.println("Raw material removed succesfully");
             return false; //Could not find to remove
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove raw material:\n" + ex);
