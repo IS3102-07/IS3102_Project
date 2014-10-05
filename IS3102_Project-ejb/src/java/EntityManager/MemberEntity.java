@@ -16,7 +16,7 @@ import javax.persistence.Temporal;
 public class MemberEntity implements Serializable {
 
     private static long serialVersionUID = 1L;
-
+  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -42,7 +42,7 @@ public class MemberEntity implements Serializable {
     private Boolean accountLockStatus;
     private String unlockCode;
     private String passwordReset;
-
+    
     @OneToOne
     CountryEntity country;
 
@@ -81,6 +81,7 @@ public class MemberEntity implements Serializable {
     public void setId(Long id) {
         this.setId((long) id);
     }
+    
 
     @Override
     public int hashCode() {
