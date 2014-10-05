@@ -54,9 +54,8 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setLotSize(lotSize);
             i.setLeadTime(leadTime);
             i.setPrice(price);
-            rawMaterial.setSupplier(em.getReference(SupplierEntity.class, supplierId));
+            i.setSupplier(em.getReference(SupplierEntity.class, supplierId));
             em.merge(i);
-            em.flush();
             System.out.println("\nServer updated raw material:\n" + name);
             return true;
         } catch (Exception ex) {
