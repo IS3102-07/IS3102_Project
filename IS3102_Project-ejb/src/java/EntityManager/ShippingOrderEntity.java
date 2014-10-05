@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package EntityManager;
 
 import java.io.Serializable;
@@ -21,6 +15,7 @@ import javax.persistence.Temporal;
 
 @Entity
 public class ShippingOrderEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,15 +29,17 @@ public class ShippingOrderEntity implements Serializable {
     private Date expectedReceivedDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date receivedDate;
-    @OneToMany(mappedBy="shippingOrder",cascade={CascadeType.ALL})
-    private List<LineItemEntity> lineItems; 
+    @OneToMany(mappedBy = "shippingOrder", cascade = {CascadeType.ALL})
+    private List<LineItemEntity> lineItems;
     @ManyToOne
     private WarehouseEntity origin;
     @ManyToOne
     private WarehouseEntity destination;
-    
-    public ShippingOrderEntity(){
+    private String submittedBy;
+
+    public ShippingOrderEntity() {
         this.lineItems = new ArrayList<>();
+        submittedBy = "N.A.";
     }
 
     public ShippingOrderEntity(Date expectedReceivedDate, WarehouseEntity origin, WarehouseEntity destination) {
@@ -52,8 +49,9 @@ public class ShippingOrderEntity implements Serializable {
         this.origin = origin;
         this.destination = destination;
         this.status = "Pending";
-    }        
-    
+        submittedBy = "N.A.";
+    }
+
     public Long getId() {
         return id;
     }
@@ -124,8 +122,16 @@ public class ShippingOrderEntity implements Serializable {
 
     public void setDestination(WarehouseEntity destination) {
         this.destination = destination;
-    }        
-    
+    }
+
+    public String getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public void setSubmittedBy(String submittedBy) {
+        this.submittedBy = submittedBy;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -150,5 +156,5 @@ public class ShippingOrderEntity implements Serializable {
     public String toString() {
         return "EntityManager.ShippingOrderEntity[ id=" + id + " ]";
     }
-    
+
 }
