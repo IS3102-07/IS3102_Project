@@ -648,6 +648,97 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
+    
+    @Override
+    public List<ItemStorageBinHelper> getOutboundBinItemList(Long warehouseID) {
+        System.out.println("getOutboundBinItemList() called");
+        try {
+            em.flush();
+            List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<>();
+            WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
+            StorageBinEntity storageBinEntity = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouseID);
+            List<StorageBinEntity> storageBins = new ArrayList();
+            storageBins.add(storageBinEntity);
+
+            ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
+            //For each bin in the warehouse
+            for (StorageBinEntity storageBin : storageBins) {
+                //Get all their contents
+                List<LineItemEntity> listOfLineItemEntities = getItemInsideStorageBin(storageBin.getId());
+                System.out.println("Retrieving line items of storage bin id " + storageBin.getId() + "...");
+                //If the bin is not empty
+                if (listOfLineItemEntities != null && listOfLineItemEntities.size() > 0) {
+                    //Add all the entries inside the bin to helper list
+                    System.out.println("getItemList(): Size of listOfLineItemEntities inside the storage bin id " + storageBin.getId() + ": " + listOfLineItemEntities.size());
+                    for (int i = 0; i < listOfLineItemEntities.size(); i++) {
+                        itemStorageBinHelper = new ItemStorageBinHelper();
+                        itemStorageBinHelper.setLineItemID(listOfLineItemEntities.get(i).getId());
+                        itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
+                        itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
+                        itemStorageBinHelper.setStorageBinID(storageBin.getId());
+                        itemStorageBinHelper.setStorageBinType(storageBin.getType());
+                        itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
+                        itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());
+                        itemStorageBinHelperList.add(itemStorageBinHelper);
+                    }
+                }
+            }
+
+            return itemStorageBinHelperList;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Warehouse could not be found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("System failed to getOutboundBinItemList()");
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public List<ItemStorageBinHelper> getBinItemList(Long storageBinID) {
+        System.out.println("getBinItemList() called");
+        try {
+            em.flush();
+            List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<>();
+            StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
+            List<StorageBinEntity> storageBins = new ArrayList();
+            storageBins.add(storageBinEntity);
+
+            ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
+            //For each bin in the warehouse
+            for (StorageBinEntity storageBin : storageBins) {
+                //Get all their contents
+                List<LineItemEntity> listOfLineItemEntities = getItemInsideStorageBin(storageBin.getId());
+                System.out.println("Retrieving line items of storage bin id " + storageBin.getId() + "...");
+                //If the bin is not empty
+                if (listOfLineItemEntities != null && listOfLineItemEntities.size() > 0) {
+                    //Add all the entries inside the bin to helper list
+                    System.out.println("getItemList(): Size of listOfLineItemEntities inside the storage bin id " + storageBin.getId() + ": " + listOfLineItemEntities.size());
+                    for (int i = 0; i < listOfLineItemEntities.size(); i++) {
+                        itemStorageBinHelper = new ItemStorageBinHelper();
+                        itemStorageBinHelper.setLineItemID(listOfLineItemEntities.get(i).getId());
+                        itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
+                        itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
+                        itemStorageBinHelper.setStorageBinID(storageBin.getId());
+                        itemStorageBinHelper.setStorageBinType(storageBin.getType());
+                        itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
+                        itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());
+                        itemStorageBinHelperList.add(itemStorageBinHelper);
+                    }
+                }
+            }
+
+            return itemStorageBinHelperList;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Storage bin could not be found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("System failed to getBinItemList()");
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public Boolean emptyStorageBin(Long lineItemID, Long storageBinID) {

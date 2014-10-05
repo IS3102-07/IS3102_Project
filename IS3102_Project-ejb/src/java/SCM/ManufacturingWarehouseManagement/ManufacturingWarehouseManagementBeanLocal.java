@@ -40,8 +40,6 @@ public interface ManufacturingWarehouseManagementBeanLocal {
     public boolean deleteTransferOrder(Long id);
 
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId);
-
-//    public List<TransferOrderEntity> createOutboundTransferOrder(Long warehouseID, List<LineItemEntity> lineItems);
     
     public ItemEntity searchItemBySKU(String SKU);
 }
