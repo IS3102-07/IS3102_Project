@@ -38,6 +38,7 @@ public abstract class ItemEntity implements Serializable {
     private Integer width;
     private Integer height;
     private Integer volume;
+    private Boolean isDeleted;
 
     public ItemEntity() {
         this.itemCountryList = new ArrayList<>();
@@ -49,6 +50,23 @@ public abstract class ItemEntity implements Serializable {
         this.width = width;
         this.height = height;
         this.volume = _length * width * height;
+        this.isDeleted = false;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public Integer getLength() {

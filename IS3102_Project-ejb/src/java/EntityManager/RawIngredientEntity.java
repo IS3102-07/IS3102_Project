@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package EntityManager;
 
 import java.io.Serializable;
@@ -18,12 +17,24 @@ import javax.persistence.Id;
  */
 @Entity
 public class RawIngredientEntity extends ItemEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    public RawIngredientEntity(){}
+
+    public RawIngredientEntity() {
+        super.setIsDeleted(false);
+    }
+
+    public Boolean getIsDeleted() {
+        return super.getIsDeleted();
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        super.setIsDeleted(isDeleted);
+    }
+
     
     public Long getId() {
         return id;
@@ -57,5 +68,5 @@ public class RawIngredientEntity extends ItemEntity implements Serializable {
     public String toString() {
         return "entityManagerBean.RawIngredient[ id=" + id + " ]";
     }
-    
+
 }

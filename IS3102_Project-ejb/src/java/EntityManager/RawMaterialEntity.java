@@ -36,13 +36,17 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
         this.category = category;
         this.description = description;
         super.setType("Raw Material");
+        super.setIsDeleted(false);
     }
 
-    public void create(String name) {
-        this.name = name;
-        super.setName(name);
+    public Boolean getIsDeleted() {
+        return super.getIsDeleted();
     }
 
+    public void setIsDeleted(Boolean isDeleted) {
+        super.setIsDeleted(isDeleted);
+    }
+    
     public List<Supplier_RawMaterialEntity> getListOfSupplier_RawMaterialInfo() {
         return listOfSupplier_RawMaterialInfo;
     }
