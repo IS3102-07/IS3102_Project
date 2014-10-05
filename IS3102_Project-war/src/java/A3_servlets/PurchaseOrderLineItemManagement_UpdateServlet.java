@@ -43,8 +43,7 @@ public class PurchaseOrderLineItemManagement_UpdateServlet extends HttpServlet {
             
             HttpSession session = request.getSession();
             StaffEntity staff = ((StaffEntity) session.getAttribute("staffEntity"));
-            String submittedBy = staff.getId() + ": " + staff.getName();
-            System.out.println("In servlet submittedBy is " + submittedBy);
+            String submittedBy =  staff.getName();
             if (status != null) {
                 if (purchaseOrderEntity.getStatus().equals("Pending")) {
                     //get purchase order

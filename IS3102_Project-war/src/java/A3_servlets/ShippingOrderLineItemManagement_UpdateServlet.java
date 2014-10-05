@@ -1,6 +1,7 @@
 package A3_servlets;
 
 import EntityManager.ShippingOrderEntity;
+import EntityManager.StaffEntity;
 import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
@@ -36,11 +37,14 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
             String quantity = request.getParameter("quantity");
             String status = request.getParameter("status");
             ShippingOrderEntity shippingOrderEntity = inboundAndOutboundLogisticsBean.getShippingOrderById(Long.parseLong(shippingOrderId));
+           
+            HttpSession session = request.getSession();
+            StaffEntity staff = ((StaffEntity) session.getAttribute("staffEntity"));
+            String submittedBy =  staff.getName();
             if (status != null) {
                 if (shippingOrderEntity.getStatus().equals("Pending")) {
                     //get shippingOrder
-                    HttpSession session;
-                    session = request.getSession();
+
                     List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
                     ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
                     for (int i = 0; i < shippingOrders.size(); i++) {
@@ -53,7 +57,7 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         result = "?errMsg=Empty shipping order cannot be submitted.&id=" + shippingOrderId;
                         response.sendRedirect("A3/shippingOrderManagement_Update.jsp" + result);
                     } else {
-                        boolean canUpdate = inboundAndOutboundLogisticsBean.updateShippingOrderStatus(Long.parseLong(shippingOrderId), "Submitted");
+                        boolean canUpdate = inboundAndOutboundLogisticsBean.updateShippingOrderStatus(Long.parseLong(shippingOrderId), "Submitted", submittedBy);
                         if (!canUpdate) {
                             result = "?source=isSubmit&errMsg=Failed to submit Shipping Order.&id=" + shippingOrderId;
                             response.sendRedirect("A3/shippingOrderManagement_UpdateLineItem.jsp" + result);
@@ -72,7 +76,7 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
                     }
                 } else {
-                    boolean canUpdate = inboundAndOutboundLogisticsBean.updateShippingOrderStatus(Long.parseLong(shippingOrderId), status);
+                    boolean canUpdate = inboundAndOutboundLogisticsBean.updateShippingOrderStatus(Long.parseLong(shippingOrderId), status, submittedBy);
                     if (canUpdate) {
                         result = "?goodMsg=Shipping Order updated successfully.&id=" + shippingOrderId;
                         response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
