@@ -1,6 +1,7 @@
 package B_servlets;
 
-import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
+import EntityManager.FurnitureEntity;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -12,16 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
 
     @EJB
-    private CustomerInformationManagementBeanLocal customerInformationBean;
+    private ItemManagementBeanLocal itemManagementBean;
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String id = request.getParameter("id");
-
-            System.out.println("ECommerce_AddFurnitureToListServlet: " + id);
+            System.out.println("ECommerce_AddFurnitureToListServlet");
+            String sku = request.getParameter("SKU");
+            
+            FurnitureEntity furniture = itemManagementBean.viewFurniture(sku);
+            System.out.println("ECommerce_AddFurnitureToListServlet: SKU is " + sku);
         } catch (Exception ex) {
             out.println(ex);
         }

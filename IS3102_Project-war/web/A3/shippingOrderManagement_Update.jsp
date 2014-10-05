@@ -26,8 +26,11 @@
     <body>
         <script>
             function addSOLineItem(id) {//gogo
+                var originId = $("#select_source").val();
+                shippingOrderManagement.originId.value = originId;
+                
                 shippingOrderManagement.id.value = id;
-                document.shippingOrderManagement.action = "shippingOrderManagement_AddLineItem.jsp";
+                document.shippingOrderManagement.action = "../ShippingOrderLineItemManagement_DisplayOutboundBinServlet";
                 document.shippingOrderManagement.submit();
             }
             function updateSOLineItem(lineItemId) {
@@ -257,6 +260,7 @@
                                     </div>
                                     <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
                                     <input type="hidden" name="lineItemId">
+                                    <input type="hidden" name="originId">
                                 </form>
                             </div>
                         </div>

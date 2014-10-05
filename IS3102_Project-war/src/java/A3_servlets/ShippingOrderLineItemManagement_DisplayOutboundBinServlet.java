@@ -1,8 +1,11 @@
-
 package A3_servlets;
 
+import HelperClasses.ItemStorageBinHelper;
+import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,28 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ShippingOrderLineItemManagement_DisplayOutboundBinServlet extends HttpServlet {
+
+    @EJB
+    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session;
-            session = request.getSession();
-            String purchaseOrderId = request.getParameter("id");
-            String errMsg = request.getParameter("errMsg");
-            String goodMsg = request.getParameter("goodMsg");
-
-            //List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
-            //session.setAttribute("purchaseOrders", purchaseOrders);
-            if (purchaseOrderId != null) {
-                if (errMsg != null) {
-                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&errMsg=" + errMsg);
-                } else if (goodMsg != null) {
-                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId + "&goodMsg=" + goodMsg);
-                } else {
-                    response.sendRedirect("A3/purchaseOrderManagement_Update.jsp?id=" + purchaseOrderId);
-                }
-            }
+            HttpSession session = request.getSession();
+            String id = request.getParameter("id");
+            String warehouseId = request.getParameter("originId");
+            List<ItemStorageBinHelper> listOfLineItems = manufacturingInventoryControlBean.getOutboundBinItemList(Long.parseLong(warehouseId));
+            
+            session.setAttribute("listOfLineItems", listOfLineItems);
+            response.sendRedirect("A3/shippingOrderManagement_AddLineItem.jsp?id=" + id);
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
             ex.printStackTrace();

@@ -17,7 +17,7 @@
                                 Add Raw Material
                             </h1>
                             <ol class="breadcrumb">
-                                 <li>
+                                <li>
                                     <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
                                 </li>
                                 <li class="active">
@@ -64,18 +64,18 @@
                                     <label>Height</label>
                                     <input class="form-control" required="true" type="number" min="1" step="1" name="height">
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label>Lot Size</label>
                                     <input class="form-control" required="true" type="number" min="1" step="1" name="lotsize">
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label>Lead Time</label>
                                     <input class="form-control" required="true" type="number" min="1" step="1" name="leadtime">
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label>Price</label>
                                     <input class="form-control" required="true" type="number" min="1" step="0.1" name="price">
-                                 </div>
+                                </div>
                                 <div class="form-group">
                                     <label>Supplier</label>
                                     <select required="true" name="supplier" class="form-control">
