@@ -32,6 +32,7 @@ public class TransferOrderEntity implements Serializable {
     @ManyToOne
     private WarehouseEntity warehouse;
     private String submittedBy;
+    private Boolean isDeleted;
 
     public TransferOrderEntity() {
 
@@ -46,9 +47,18 @@ public class TransferOrderEntity implements Serializable {
         this.dateTransferred = null;
         this.status = "Pending";
         submittedBy = "N.A.";
+        this.isDeleted = false;
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //        Calendar cal = Calendar.getInstance();
 //        dateFormat.format(cal.getTime());
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public Long getId() {
