@@ -28,10 +28,14 @@ public class RetailProductManagement_AddRetailProductServlet extends HttpServlet
             Integer _length = Integer.parseInt(request.getParameter("length"));
             Integer width = Integer.parseInt(request.getParameter("width"));
             Integer height = Integer.parseInt(request.getParameter("height"));
+            Integer lotSize = Integer.parseInt(request.getParameter("lotsize"));
+            Integer leadTime = Integer.parseInt(request.getParameter("leadtime"));
+            Double price = Double.parseDouble(request.getParameter("price"));
+            String supplier= request.getParameter("supplier");
             String source = request.getParameter("source");
 
             if (!itemManagementBean.checkSKUExists(SKU)) {
-                itemManagementBean.addRetailProduct(SKU, name, category, description, imageURL, _length, width, height);
+                itemManagementBean.addRetailProduct(SKU, name, category, description, imageURL, _length, width, height, lotSize, leadTime, price, Long.parseLong(supplier));
                 result = "?goodMsg=Retail Product with SKU: " + SKU + " has been created successfully.";
                 response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
             } else {

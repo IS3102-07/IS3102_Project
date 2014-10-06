@@ -1,3 +1,4 @@
+<%@page import="EntityManager.SupplierEntity"%>
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -79,6 +80,36 @@
                                 <div class="form-group">
                                     <label>Height</label>
                                     <input class="form-control" type="text" required="true" name="height" value="<%=retailProduct.getWidth()%>" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lot Size</label>
+                                    <input class="form-control" required="true" type="number" min="1" step="1" name="lotsize" value="<%=retailProduct.getLotSize()%>">
+                                </div>
+                                 <div class="form-group">
+                                    <label>Lead Time</label>
+                                    <input class="form-control" required="true" type="number" min="1" step="1" name="leadtime" value="<%=retailProduct.getLeadTime()%>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Purchasing Price</label>
+                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=retailProduct.getPrice()%>">
+                                 </div>
+                                 <div class="form-group">
+                                    <label>Supplier</label>
+                                    <select required="" name="supplier" class="form-control">
+                                        <option value="<%=(retailProduct.getSupplier().getId())%>"><%=retailProduct.getSupplier().getSupplierName()%></option>
+                                        <%
+                                            List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
+                                            if (suppliers != null) {
+                                                for (SupplierEntity supplier : suppliers) {
+                                                    if (!supplier.getSupplierName().equals(retailProduct.getSupplier().getSupplierName())) {
+                                        %>
+                                        <option value="<%= supplier.getId()%>"> <%= supplier.getSupplierName()%> </option>
+                                        <%
+                                                    }
+                                                }
+                                            }
+                                        %>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">

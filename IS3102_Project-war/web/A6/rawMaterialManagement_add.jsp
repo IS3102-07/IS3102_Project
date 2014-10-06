@@ -73,7 +73,7 @@
                                     <input class="form-control" required="true" type="number" min="1" step="1" name="leadtime">
                                 </div>
                                 <div class="form-group">
-                                    <label>Price</label>
+                                    <label>Purchasing Price</label>
                                     <input class="form-control" required="true" type="number" min="1" step="0.1" name="price">
                                 </div>
                                 <div class="form-group">

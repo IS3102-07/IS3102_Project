@@ -188,11 +188,16 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
+    public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
         System.out.println("addRetailProduct() called with SKU:" + SKU);
         try {
-            RetailProductEntity retailProductEntity = new RetailProductEntity(SKU, name, category, description, imageURL, _length, width, height);
+            RetailProductEntity retailProductEntity = new RetailProductEntity(SKU, name, category, description, imageURL, _length, width, height, lotSize, leadTime, price);
+            supplier = em.find(SupplierEntity.class, supplierId);
+            retailProductEntity.setSupplier(supplier);
             em.persist(retailProductEntity);
+            em.flush();
+            em.merge(retailProductEntity);
+            supplier.getItems().add(retailProductEntity);
             System.out.println("Retail product name \"" + name + "\" added successfully.");
             return true;
         } catch (Exception ex) {
@@ -202,7 +207,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL) {
+    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
         System.out.println("editRetailProduct() called with SKU:" + SKU);
         try {
             RetailProductEntity i = em.find(RetailProductEntity.class, Long.valueOf(id));
@@ -210,7 +215,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setCategory(category);
             i.setDescription(description);
             i.setImageURL(imageURL);
-            em.merge(i);
+            i.setLotSize(lotSize);
+            i.setLeadTime(leadTime);
+            i.setPrice(price);
+            i.getSupplier().getItems().remove(i);
+            SupplierEntity supplier1= em.getReference(SupplierEntity.class, supplierId);
+            i.setSupplier(supplier1);
+            supplier1.getItems().add(i);
             em.flush();
             System.out.println("\nServer updated retail product:\n" + name);
             return true;
