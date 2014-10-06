@@ -40,9 +40,9 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
     
     
     public List <String> shoppingList(String email) {
-        System.out.println("listAllRawMaterials() called.");
+        System.out.println("shoppingList() called.");
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.EMAIL=email");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.email=:email");
             q.setParameter("email", email);
             MemberEntity member = (MemberEntity) q.getSingleResult();
             
