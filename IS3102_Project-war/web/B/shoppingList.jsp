@@ -82,11 +82,11 @@
 
                                                             <%
 
-                                                                List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                                                                List<String> shoppingList = (List<String>) (session.getAttribute("shoppingList"));
 
                                                                 try {
-                                                                    if (furnitures != null) {
-                                                                        for (int i = 0; i < furnitures.size(); i++) {
+                                                                    if (shoppingList != null) {
+                                                                        for (int i = 0; i < shoppingList.size(); i++) {
                                                             %>
                                                             <td class="product-remove">
                                                                 <input type="checkbox" name="delete" value="" />
@@ -97,23 +97,23 @@
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a href="shop-product-sidebar.html"><%=furnitures.get(i).getName()%></a>
+                                                                <a href="shop-product-sidebar.html"><%=shoppingList.get(i).toString()%></a>
                                                             </td>
 
                                                             <td class="product-price">
-                                                                $<span class="amount" id="price<%=furnitures.get(i).getId()%>">299</span>
+                                                                $<span class="amount" id="price<%=shoppingList.get(i).toString()%>">299</span>
                                                             </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
                                                                     <div class="quantity">
-                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=furnitures.get(i).getId()%>)">
-                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=furnitures.get(i).getId()%>">
-                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=furnitures.get(i).getId()%>)">
+                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=shoppingList.get(i).toString()%>)">
+                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=shoppingList.get(i).toString()%>">
+                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=shoppingList.get(i).toString()%>)">
                                                                     </div>
                                                                 </form>
                                                             </td>
                                                             <td class="product-subtotal">
-                                                                $<span class="amount" id="totalPrice<%=furnitures.get(i).getId()%>">299</span>
+                                                                $<span class="amount" id="totalPrice<%=shoppingList.get(i).toString()%>">299</span>
                                                                 
                                                             </td>
                                                         </tr>

@@ -1,6 +1,7 @@
 package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
 import EntityManager.FurnitureEntity;
 import EntityManager.RetailProductEntity;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import javax.servlet.http.Cookie;
 /**
  *
  * @author yang
@@ -20,19 +22,33 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
+    
+    @EJB
+    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        System.out.println("ECommerce_ShoppingCartServlet");
         try {
+            
+            Cookie[] cookies = request.getCookies();
+            String email = "";
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("memberId")) {
+                        System.out.println("Cookie value : " + cookie.getValue());
+                        email = cookie.getValue();
+                    }
+                }
+            }
 
             HttpSession session;
             session = request.getSession();
             
-            List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
-            session.setAttribute("furnitures", furnitures);
+            List<String> shoppingList = customerInformationManagementBean.shoppingList(email);
+            session.setAttribute("shoppingList", shoppingList);
             
             response.sendRedirect("B/shoppingList.jsp");
             

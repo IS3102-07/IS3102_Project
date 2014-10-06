@@ -37,4 +37,20 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
         em.persist(subscription);
         return true;
     }
+    
+    
+    public List <String> shoppingList(String email) {
+        System.out.println("listAllRawMaterials() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.EMAIL=email");
+            q.setParameter("email", email);
+            MemberEntity member = (MemberEntity) q.getSingleResult();
+            
+            
+            return member.getShoppingList();
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list shopping list:\n" + ex);
+            return null;
+        }
+    }
 }
