@@ -1,7 +1,10 @@
 package B_servlets;
 
 import EntityManager.FurnitureEntity;
+import EntityManager.MemberEntity;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -9,21 +12,42 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
 
 public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
+    
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+
+    @EJB
+    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
+
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        System.out.println("ECommerce_AddFurnitureToListServlet");
         try {
-            System.out.println("ECommerce_AddFurnitureToListServlet");
-            String sku = request.getParameter("SKU");
+            Cookie[] cookies = request.getCookies();
+            String email = "";
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("memberId")) {
+                        System.out.println("Cookie value : " + cookie.getValue());
+                        email = cookie.getValue();
+                    }
+                }
+            }
             
-            FurnitureEntity furniture = itemManagementBean.viewFurniture(sku);
+            MemberEntity member = accountManagementBean.getMemberByEmail(email);
+            
+            String sku = request.getParameter("SKU");            
+
+            customerInformationManagementBean.addFurnitureToList(sku, member.getId());
             System.out.println("ECommerce_AddFurnitureToListServlet: SKU is " + sku);
         } catch (Exception ex) {
             out.println(ex);

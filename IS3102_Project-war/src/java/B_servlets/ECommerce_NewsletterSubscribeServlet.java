@@ -28,7 +28,7 @@ public class ECommerce_NewsletterSubscribeServlet extends HttpServlet {
             
             Boolean test = customerInformationManagementBean.addEmailToSubscription(email);
             
-            
+            response.sendRedirect("B/index.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

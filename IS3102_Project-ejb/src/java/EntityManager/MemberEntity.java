@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 public class MemberEntity implements Serializable {
@@ -44,6 +47,8 @@ public class MemberEntity implements Serializable {
     private String passwordReset;
     private Boolean isDeleted;
 
+    private List<String> shoppingList;
+
     @OneToOne
     CountryEntity country;
 
@@ -73,7 +78,17 @@ public class MemberEntity implements Serializable {
         setAccountLockStatus(false);
         setUnlockCode();
         setPasswordReset();
-        this.isDeleted=false;
+        this.isDeleted = false;
+        this.shoppingList = new ArrayList();
+        
+    }
+
+    public List<String> getShoppingList() {
+        return shoppingList;
+    }
+
+    public void addToShoppingList(String sku) {
+        this.shoppingList.add(sku);
     }
 
     public Boolean getIsDeleted() {
@@ -84,7 +99,6 @@ public class MemberEntity implements Serializable {
         this.isDeleted = isDeleted;
     }
 
-    
     public Long getMemberID() {
         return getId();
     }
