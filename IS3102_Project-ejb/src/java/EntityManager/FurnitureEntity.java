@@ -27,7 +27,7 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     @OneToOne(cascade = {CascadeType.REMOVE}, mappedBy = "furniture")
     private ProductGroupLineItemEntity productGroupLineItemEntity;
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "furniture")
-    public BillOfMaterialEntity BOM;
+    private BillOfMaterialEntity BOM;
 
     public FurnitureEntity() {
     }
