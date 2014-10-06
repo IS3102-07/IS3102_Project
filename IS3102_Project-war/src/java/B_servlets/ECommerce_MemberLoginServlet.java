@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,10 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
         try {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            
+            Cookie cookie = new Cookie("memberId", email);
+            cookie.setMaxAge(60 * 60); //1 hour
+            response.addCookie(cookie);
 
             MemberEntity memberEntity = accountManagementBean.loginMember(email, password);
             if (memberEntity != null) {

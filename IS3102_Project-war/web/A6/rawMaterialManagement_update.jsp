@@ -99,7 +99,7 @@
                                     <input class="form-control" required="true" type="number" min="1" step="1" name="leadtime" value="<%=rawMaterial.getLeadTime()%>">
                                 </div>
                                  <div class="form-group">
-                                    <label>Price</label>
+                                    <label>Purchasing Price</label>
                                     <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=rawMaterial.getPrice()%>">
                                  </div>
                                  <div class="form-group">

@@ -1,3 +1,4 @@
+<%@page import="EntityManager.SupplierEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.RetailProductEntity"%>
 <html lang="en">
@@ -65,6 +66,32 @@
                                 <div class="form-group">
                                     <label>Height</label>
                                     <input class="form-control" type="number" required="true" min="1" step="1" name="height" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Lot Size</label>
+                                    <input class="form-control" required="true" type="number" min="1" step="1" name="lotsize">
+                                </div>
+                                <div class="form-group">
+                                    <label>Lead Time</label>
+                                    <input class="form-control" required="true" type="number" min="1" step="1" name="leadtime">
+                                </div>
+                                <div class="form-group">
+                                    <label>Purchasing Price</label>
+                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price">
+                                </div>
+                                <div class="form-group">
+                                    <label>Supplier</label>
+                                    <select required="true" name="supplier" class="form-control">
+                                        <option></option>
+                                        <%
+                                            List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
+                                            if (suppliers != null) {
+                                                for (int i = 0; i < suppliers.size(); i++) {
+                                                    out.println("<option value='" + suppliers.get(i).getId() + "'>" + suppliers.get(i).getSupplierName() + "</option>");
+                                                }
+                                            }
+                                        %>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">

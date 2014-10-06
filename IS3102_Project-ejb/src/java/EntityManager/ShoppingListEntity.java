@@ -23,9 +23,6 @@ public class ShoppingListEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToOne
-    private MemberEntity member;
-    
     @ManyToMany(cascade={CascadeType.ALL})
     private List<FurnitureEntity> furnitures;
     
@@ -36,18 +33,15 @@ public class ShoppingListEntity implements Serializable {
 
     }
     
-    public void setMember(MemberEntity member) {
-        this.member = member;
-    }
-    
-    public MemberEntity getMember() {
-        return member;
-    }
+
     
     public void setFurnitures(List<FurnitureEntity> furnitures) {
         this.furnitures = furnitures;        
     }
     
+    public Long getId() {
+        return id;
+    }
     public List<FurnitureEntity> getFurnitures() {
         return this.furnitures;
     }

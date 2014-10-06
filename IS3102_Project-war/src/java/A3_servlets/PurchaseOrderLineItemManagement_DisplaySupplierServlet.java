@@ -1,56 +1,52 @@
-package B_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A3_servlets;
 
-import EntityManager.FurnitureEntity;
-import EntityManager.MemberEntity;
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import HelperClasses.ItemSupplierHelper;
+import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
-public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
-
-    @EJB
-    private ItemManagementBeanLocal itemManagementBean;
-    
-    @EJB
-    private AccountManagementBeanLocal accountManagementBean;
+/**
+ *
+ * @author Peter
+ */
+public class PurchaseOrderLineItemManagement_DisplaySupplierServlet extends HttpServlet {
 
     @EJB
-    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
+    private SupplierManagementBeanLocal supplierManagementBean;
 
-    private String result;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        System.out.println("ECommerce_AddFurnitureToListServlet");
-        try {
-            Cookie[] cookies = request.getCookies();
-            String email = "";
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("memberId")) {
-                        System.out.println("Cookie value : " + cookie.getValue());
-                        email = cookie.getValue();
-                    }
-                }
-            }
-            
-            MemberEntity member = accountManagementBean.getMemberByEmail(email);
-            
-            String sku = request.getParameter("SKU");            
 
-            customerInformationManagementBean.addFurnitureToList(sku, member.getId());
-            System.out.println("ECommerce_AddFurnitureToListServlet: SKU is " + sku);
+        try {
+            HttpSession session = request.getSession();
+            System.out.println("Helllooooo!!!!");
+            String id = request.getParameter("id");
+            String supplierId = request.getParameter("supplierId");
+            System.out.println(id + "purchase order id");
+            System.out.println(supplierId + "supplier id");
+
+            List<ItemSupplierHelper> listOfItems
+                    = supplierManagementBean.getSupplierItemList(Long.parseLong(supplierId));
+
+            session.setAttribute("listOfItems", listOfItems);
+            response.sendRedirect("A3/purchaseOrderManagement_AddLineItem.jsp?id=" + id);
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

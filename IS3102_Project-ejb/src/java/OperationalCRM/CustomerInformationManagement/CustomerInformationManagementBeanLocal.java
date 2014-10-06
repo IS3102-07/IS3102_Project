@@ -6,6 +6,7 @@
 
 package OperationalCRM.CustomerInformationManagement;
 
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface CustomerInformationManagementBeanLocal {
+    public Boolean addFurnitureToList(String sku, Long memberId);
     public Boolean addEmailToSubscription(String email);
+    public List <String> shoppingList(String email);
 }

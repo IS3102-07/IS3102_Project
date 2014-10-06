@@ -3,6 +3,7 @@ package SCM.SupplierManagement;
 
 import EntityManager.CountryEntity;
 import EntityManager.SupplierEntity;
+import HelperClasses.ItemSupplierHelper;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,4 +17,5 @@ public interface SupplierManagementBeanLocal {
     public List<SupplierEntity> viewAllSupplierList();
     public boolean checkSupplierExists(String supplierName);
     public List<CountryEntity> getListOfCountries();
+    public List<ItemSupplierHelper> getSupplierItemList(Long supplierID);
 }

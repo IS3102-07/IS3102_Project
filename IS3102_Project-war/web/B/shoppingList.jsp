@@ -6,6 +6,16 @@
     <jsp:include page="header.html" />
     <body>
         <script>
+            function printDiv(divName) {
+                var printContents = document.getElementById(divName).innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+
+                window.print();
+
+                document.body.innerHTML = originalContents;
+            }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -13,18 +23,18 @@
                 }
             }
             function minus(source) {
-                var priceOfProduct = document.getElementById("price" + source).innerHTML;                
+                var priceOfProduct = document.getElementById("price" + source).innerHTML;
                 document.getElementById(source).value--;
-                
+
                 document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
-                
+
             }
             function plus(source) {
-                var priceOfProduct = document.getElementById("price" + source).innerHTML; 
+                var priceOfProduct = document.getElementById("price" + source).innerHTML;
                 document.getElementById(source).value++;
-                
+
                 document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
-                              
+
             }
 
         </script>
@@ -44,7 +54,7 @@
                     </div>
                 </section> 
 
-                <div class="container">
+                <div class="container" id="printableArea">
                     <hr class="tall">
                     <div class="row">
                         <div class="col-md-12">
@@ -82,11 +92,11 @@
 
                                                             <%
 
-                                                                List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                                                                List<String> shoppingList = (List<String>) (session.getAttribute("shoppingList"));
 
                                                                 try {
-                                                                    if (furnitures != null) {
-                                                                        for (int i = 0; i < furnitures.size(); i++) {
+                                                                    if (shoppingList != null) {
+                                                                        for (int i = 0; i < shoppingList.size(); i++) {
                                                             %>
                                                             <td class="product-remove">
                                                                 <input type="checkbox" name="delete" value="" />
@@ -97,24 +107,24 @@
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a href="shop-product-sidebar.html"><%=furnitures.get(i).getName()%></a>
+                                                                <a href="shop-product-sidebar.html"><%=shoppingList.get(i).toString()%></a>
                                                             </td>
 
                                                             <td class="product-price">
-                                                                $<span class="amount" id="price<%=furnitures.get(i).getId()%>">299</span>
+                                                                $<span class="amount" id="price<%=shoppingList.get(i).toString()%>">299</span>
                                                             </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
                                                                     <div class="quantity">
-                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=furnitures.get(i).getId()%>)">
-                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=furnitures.get(i).getId()%>">
-                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=furnitures.get(i).getId()%>)">
+                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=shoppingList.get(i).toString()%>)">
+                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=shoppingList.get(i).toString()%>">
+                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=shoppingList.get(i).toString()%>)">
                                                                     </div>
                                                                 </form>
                                                             </td>
                                                             <td class="product-subtotal">
-                                                                $<span class="amount" id="totalPrice<%=furnitures.get(i).getId()%>">299</span>
-                                                                
+                                                                $<span class="amount" id="totalPrice<%=shoppingList.get(i).toString()%>">299</span>
+
                                                             </td>
                                                         </tr>
 
@@ -219,7 +229,7 @@
                             <div class="row featured-boxes">
                                 <div class="col-md-12">
                                     <div class="actions-continue">
-                                        <input type="submit" value="Proceed to Checkout →" name="proceed" class="btn btn-lg btn-primary">
+                                        <input type="submit" value="Print" name="proceed" class="btn btn-lg btn-primary" onclick="printDiv('printableArea')">
                                     </div>
                                 </div>
                             </div>

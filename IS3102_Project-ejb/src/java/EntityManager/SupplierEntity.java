@@ -28,10 +28,10 @@ public class SupplierEntity implements Serializable {
     private Boolean isDeleted;
     @ManyToOne
     private CountryEntity country;
+    
     @OneToMany (mappedBy="supplier")
-    private List<RawMaterialEntity> rawMaterials;
-    //@OneToMany (mappedBy="supplier")
-    //private List<RetailProductEntity> retailProducts;
+    private List<ItemEntity> items;
+   
     @OneToMany(mappedBy="supplier")
     private List<PurchaseOrderEntity> purchaseOrders;
             
@@ -139,24 +139,14 @@ public class SupplierEntity implements Serializable {
         return "EntityManager.SupplierEntity[ id=" + id + " ]";
     }
 
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
+    }
+
  
-    public List<RawMaterialEntity> getRawMaterials() {
-        return rawMaterials;
-    }
-  
-    
-    public void setRawMaterials(List<RawMaterialEntity> rawMaterials) {
-        this.rawMaterials = rawMaterials;
-    }
-
-   
-    //public List<RetailProductEntity> getRetailProducts() {
-      //  return retailProducts;
-   // }
-
-  
-    //public void setRetailProducts(List<RetailProductEntity> retailProducts) {
-      //  this.retailProducts = retailProducts;
-    //}
 
 }

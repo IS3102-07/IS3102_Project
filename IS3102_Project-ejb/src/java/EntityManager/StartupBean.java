@@ -67,6 +67,9 @@ public class StartupBean {
                 roleEntity = new RoleEntity();
                 roleEntity.create("Manufacturing Facility Manager", "Facility");
                 em.persist(roleEntity);
+                roleEntity = new RoleEntity();
+                roleEntity.create("Cashier", "Facility");
+                em.persist(roleEntity);
                 System.out.println("RolesEntity init success.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of roles:\n" + ex);

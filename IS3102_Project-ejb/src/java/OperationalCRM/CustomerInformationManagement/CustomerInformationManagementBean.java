@@ -7,22 +7,28 @@ import EntityManager.MemberEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import EntityManager.SubscriptionEntity;
+import javax.persistence.Query;
+import java.util.List;
+import java.util.ArrayList;
+import javax.persistence.NoResultException;
+
 
 @Stateless
 public class CustomerInformationManagementBean implements CustomerInformationManagementBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
+ 
 
-    public Boolean addFurnitureToList(Integer furnitureId, Integer memberId) {
-        FurnitureEntity furniture = em.find(FurnitureEntity.class, furnitureId);
+    public Boolean addFurnitureToList(String sku, Long memberId) {
+        System.out.println("addFurnitureToList() sku is " + sku + " memberId is " + memberId); 
+
         MemberEntity member = em.find(MemberEntity.class, memberId);
-        
-        
-        
+        member.addToShoppingList(sku);
+
         return true;
     }
-    
+
     @Override
     public Boolean addEmailToSubscription(String email) {
         System.out.println("addEmailToSubscription()");
@@ -30,5 +36,21 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
         subscription.addToList(email);
         em.persist(subscription);
         return true;
+    }
+    
+    
+    public List <String> shoppingList(String email) {
+        System.out.println("shoppingList() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.email=:email");
+            q.setParameter("email", email);
+            MemberEntity member = (MemberEntity) q.getSingleResult();
+            
+            
+            return member.getShoppingList();
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list shopping list:\n" + ex);
+            return null;
+        }
     }
 }

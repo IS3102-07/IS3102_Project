@@ -39,11 +39,24 @@ public abstract class ItemEntity implements Serializable {
     private Integer height;
     private Integer volume;
     private Boolean isDeleted;
+    private Double price;
+    @ManyToOne
+    private SupplierEntity supplier;
 
     public ItemEntity() {
         this.itemCountryList = new ArrayList<>();
     }
 
+    public ItemEntity(String SKU, Integer _length, Integer width, Integer height, Double price) {
+        this.SKU = SKU;
+        this._length = _length;
+        this.width = width;
+        this.height = height;
+        this.volume = _length * width * height;
+        this.price = price;
+        this.isDeleted = false;
+    }
+    
     public ItemEntity(String SKU, Integer _length, Integer width, Integer height) {
         this.SKU = SKU;
         this._length = _length;
@@ -167,6 +180,22 @@ public abstract class ItemEntity implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public SupplierEntity getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(SupplierEntity supplier) {
+        this.supplier = supplier;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
     
 }

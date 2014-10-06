@@ -1,6 +1,6 @@
+<%@page import="EntityManager.ItemEntity"%>
 <%@page import="EntityManager.CountryEntity"%>
 <%@page import="EntityManager.SupplierEntity"%>
-<%@page import="EntityManager.RawMaterialEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
 
@@ -140,13 +140,13 @@
                                                             </td>
                                                             <td>
                                                                 <%
-                                                                    List<RawMaterialEntity> rawMaterials = (List<RawMaterialEntity>) (suppliers.get(i).getRawMaterials());
-                                                                    if (rawMaterials.isEmpty()) {
+                                                                    List<ItemEntity> items = (List<ItemEntity>) (suppliers.get(i).getItems());
+                                                                    if (items.isEmpty()) {
                                                                         out.println("");
                                                                     } else {
-                                                                        for (RawMaterialEntity rawMaterial : rawMaterials) {
-                                                                            if (!rawMaterial.getIsDeleted())
-                                                                            out.println("<span>" + rawMaterial.getName() + ", <span>");
+                                                                        for (ItemEntity item : items) {
+                                                                            if (!item.getIsDeleted())
+                                                                            out.println("<span>" + item.getName() + ", <span>");
                                                                         }
                                                                     }
                                                                 %>

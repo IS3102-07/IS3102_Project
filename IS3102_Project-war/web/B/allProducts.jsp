@@ -25,7 +25,7 @@
         %>
 
         <div class="body">
-            <jsp:include page="menu1.html" />
+            <jsp:include page="menu2.jsp" />
             <div class="body">
                 <div role="main" class="main">
                     <section class="page-top">
@@ -58,7 +58,7 @@
 
                                 <li class="col-md-3 col-sm-6 col-xs-12 product">
                                     <span class="product-thumb-info">
-                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getId()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                             <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getId()%>" value="Add To Cart"/>
                                         </a>
                                         <a href="shop-product-sidebar.html">
