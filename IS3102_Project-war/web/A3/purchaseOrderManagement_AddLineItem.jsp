@@ -1,3 +1,4 @@
+<%@page import="HelperClasses.ItemSupplierHelper"%>
 <%@page import="EntityManager.SupplierEntity"%>
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
@@ -72,6 +73,58 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> Items supplied by supplier </h3>
+                                </div>
+                                <div class="panel-body" style="">
+                                    <div class="table-responsive">
+                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                            <br>
+                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SKU</th>
+                                                        <th>Item Name</th>
+                                                        <th>Item Type</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                        List<ItemSupplierHelper> listOfItems = (List<ItemSupplierHelper>) session.getAttribute("listOfItems");
+                                                        if (listOfItems != null) {
+                                                            for (ItemSupplierHelper item : listOfItems) {
+
+                                                    %>
+                                                    <tr>
+                                                        <td>
+                                                            <%=item.getSKU()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getItemName()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getItemType()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getItemPrice()%>
+                                                        </td>
+                                                    </tr>
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
