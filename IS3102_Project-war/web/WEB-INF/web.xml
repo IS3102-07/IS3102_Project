@@ -565,6 +565,66 @@
         <servlet-name>PurchaseOrderLineItemManagement_DisplaySupplierServlet</servlet-name>
         <servlet-class>A3_servlets.PurchaseOrderLineItemManagement_DisplaySupplierServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StoreStorageBinManagement_AddServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreStorageBinManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreStorageBinManagement_RemoveServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreStorageBinManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreStorageBinManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.StoreStorageBinManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreStorageBinManagement_UpdateServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreStorageBinManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetailInventoryControl_RemoveServlet</servlet-name>
+        <servlet-class>A4_servlets.RetailInventoryControl_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetailInventoryControl_Servlet</servlet-name>
+        <servlet-class>A4_servlets.RetailInventoryControl_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetailManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.RetailManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreTransferOrderLineItemManagement_RemoveServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreTransferOrderLineItemManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreTransferOrderLineItemManagement_UpdateServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreTransferOrderManagement_AddServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreTransferOrderManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreTransferOrderManagement_RemoveServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreTransferOrderManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreTransferOrderManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.StoreTransferOrderManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreTransferOrderManagement_UpdateServlet</servlet-name>
+        <servlet-class>A4_servlets.StoreTransferOrderManagement_UpdateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1131,6 +1191,66 @@
     <servlet-mapping>
         <servlet-name>PurchaseOrderLineItemManagement_DisplaySupplierServlet</servlet-name>
         <url-pattern>/PurchaseOrderLineItemManagement_DisplaySupplierServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreStorageBinManagement_AddServlet</servlet-name>
+        <url-pattern>/StoreStorageBinManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreStorageBinManagement_RemoveServlet</servlet-name>
+        <url-pattern>/StoreStorageBinManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreStorageBinManagement_Servlet</servlet-name>
+        <url-pattern>/StoreStorageBinManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreStorageBinManagement_UpdateServlet</servlet-name>
+        <url-pattern>/StoreStorageBinManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetailInventoryControl_RemoveServlet</servlet-name>
+        <url-pattern>/RetailInventoryControl_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetailInventoryControl_Servlet</servlet-name>
+        <url-pattern>/RetailInventoryControl_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetailManagement_Servlet</servlet-name>
+        <url-pattern>/RetailManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
+        <url-pattern>/StoreTransferOrderLineItemManagement_OriginBinItemsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreTransferOrderLineItemManagement_RemoveServlet</servlet-name>
+        <url-pattern>/StoreTransferOrderLineItemManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreTransferOrderLineItemManagement_Servlet</servlet-name>
+        <url-pattern>/StoreTransferOrderLineItemManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreTransferOrderLineItemManagement_UpdateServlet</servlet-name>
+        <url-pattern>/StoreTransferOrderLineItemManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreTransferOrderManagement_AddServlet</servlet-name>
+        <url-pattern>/StoreTransferOrderManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreTransferOrderManagement_RemoveServlet</servlet-name>
+        <url-pattern>/StoreTransferOrderManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreTransferOrderManagement_Servlet</servlet-name>
+        <url-pattern>/StoreTransferOrderManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreTransferOrderManagement_UpdateServlet</servlet-name>
+        <url-pattern>/StoreTransferOrderManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

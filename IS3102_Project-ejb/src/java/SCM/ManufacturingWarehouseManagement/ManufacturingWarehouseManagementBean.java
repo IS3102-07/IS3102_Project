@@ -326,7 +326,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             em.persist(transferOrder);
             return true;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to createStorageBin:\n" + ex);
+            System.out.println("\nServer failed to createTransferOrder:\n" + ex);
             return false;
         }
     }
