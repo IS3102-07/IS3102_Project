@@ -2,6 +2,7 @@ package CommonInfrastructure.AccountManagement;
 
 import EntityManager.CountryEntity;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import Config.Config;
 import EntityManager.AccessRightEntity;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MemberEntity;
@@ -10,6 +11,9 @@ import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -195,7 +199,6 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             em.flush();
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
-
             return staffEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register staff:\n" + ex);
@@ -247,6 +250,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             //staffEntity.setEmail(email);
             em.merge(staffEntity);
             System.out.println("\nServer edited staff succeessfully");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString()+";"+staffID+";Edited staff;"+staffID);
+            out.close();
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to edit staff:\n" + ex);
