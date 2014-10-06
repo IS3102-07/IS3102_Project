@@ -1,4 +1,4 @@
-package OperationalCRM.WebService;
+package Store_InventoryManagement.RetailInventoryControl;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.ItemEntity;
@@ -8,9 +8,9 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService(serviceName = "WebServiceBean")
+@WebService(serviceName = "POSWebServiceBean")
 @Stateless
-public class WebServiceBean{
+public class POSWebServiceBean {
 
     @EJB
     ItemManagementBeanLocal ItemManagementBeanLocal;
