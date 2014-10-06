@@ -4,6 +4,26 @@
     <jsp:include page="header.html" />
     <body>
 
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <script>
+            function initialize() {
+                var mapCanvas = document.getElementById('map_canvas');
+                var mapOptions = {
+                    center: new google.maps.LatLng(1.3003076, 103.8609153),
+                    zoom: 8,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                var map = new google.maps.Map(mapCanvas, mapOptions)
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+        <style>
+            #map_canvas {
+                width: 500px;
+                height: 150px;
+            }
+        </style>
+
         <div class="body">
             <jsp:include page="menu1.html" />
 
@@ -22,7 +42,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            
+
                             <div class="toogle" data-plugin-toggle>
                                 <%
                                     List<StoreEntity> stores = (List<StoreEntity>) (session.getAttribute("stores"));
@@ -35,11 +55,17 @@
                                 <section class="toggle">
                                     <label>Name: <%=stores.get(i).getName()%></label>
                                     <div class="toggle-content">
-                                        <p>
-                                            Address: <%=stores.get(i).getAddress()%><br/>
-                                            Telephone: <%=stores.get(i).getTelephone()%><br/>
-                                            Email: <%=stores.get(i).getEmail()%><br/>
-                                        </p>
+                                        <div class="col-md-6">
+                                            <div id="map_canvas"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>
+                                                Address: <%=stores.get(i).getAddress()%><br/>
+                                                Telephone: <%=stores.get(i).getTelephone()%><br/>
+                                                Email: <%=stores.get(i).getEmail()%><br/>
+                                            </p>
+                                        </div>
+                                        
                                     </div>
                                 </section>
 
