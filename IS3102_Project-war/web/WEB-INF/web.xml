@@ -561,6 +561,10 @@
         <servlet-name>TransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
         <servlet-class>A3_servlets.TransferOrderLineItemManagement_OriginBinItemsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrderLineItemManagement_DisplaySupplierServlet</servlet-name>
+        <servlet-class>A3_servlets.PurchaseOrderLineItemManagement_DisplaySupplierServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1123,6 +1127,10 @@
     <servlet-mapping>
         <servlet-name>TransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
         <url-pattern>/TransferOrderLineItemManagement_OriginBinItemsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PurchaseOrderLineItemManagement_DisplaySupplierServlet</servlet-name>
+        <url-pattern>/PurchaseOrderLineItemManagement_DisplaySupplierServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
