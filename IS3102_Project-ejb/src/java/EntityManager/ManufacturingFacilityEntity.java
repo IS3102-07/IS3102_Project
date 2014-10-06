@@ -47,7 +47,7 @@ public class ManufacturingFacilityEntity implements Serializable {
     @ManyToOne
     private RegionalOfficeEntity regionalOffice;
     @OneToMany(mappedBy="manufacturingFacility")
-    List<SaleAndOperationPlanEntity> SaleAndOperationPlanList;
+    private List<SaleAndOperationPlanEntity> SaleAndOperationPlanList;
     private Boolean isDeleted;
     
     public ManufacturingFacilityEntity() {

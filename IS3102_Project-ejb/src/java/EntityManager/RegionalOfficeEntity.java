@@ -32,11 +32,11 @@ public class RegionalOfficeEntity implements Serializable {
     @Lob
     private String email;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
-    List<WarehouseEntity> warehouseList;
+    private List<WarehouseEntity> warehouseList;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
-    List<StoreEntity> storeList;
+    private List<StoreEntity> storeList;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
-    List<ManufacturingFacilityEntity> manufacturingFacilityEntityList;
+    private List<ManufacturingFacilityEntity> manufacturingFacilityEntityList;
     private Boolean isDeleted;
 
     public RegionalOfficeEntity() {

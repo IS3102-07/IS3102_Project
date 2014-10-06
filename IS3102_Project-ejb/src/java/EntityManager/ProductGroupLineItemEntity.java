@@ -25,7 +25,7 @@ public class ProductGroupLineItemEntity implements Serializable {
     private Long id;
     private double percent;
     @OneToOne
-    FurnitureEntity furniture;
+    private FurnitureEntity furniture;
     @ManyToOne
     private ProductGroupEntity productGroup;
     

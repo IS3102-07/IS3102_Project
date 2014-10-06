@@ -1,47 +1,52 @@
-package A6_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A3_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import HelperClasses.ItemSupplierHelper;
+import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class RetailProductManagement_UpdateRetailProductServlet extends HttpServlet {
+/**
+ *
+ * @author Peter
+ */
+public class PurchaseOrderLineItemManagement_DisplaySupplierServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
-    private String result;
+    private SupplierManagementBeanLocal supplierManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            String SKU = request.getParameter("SKU");
-            String name = request.getParameter("name");
-            String category = request.getParameter("category");
-            String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
-            String source = request.getParameter("source");
-            Integer lotSize = Integer.parseInt(request.getParameter("lotsize"));
-            Integer leadTime = Integer.parseInt(request.getParameter("leadtime"));
-            Double price = Double.parseDouble(request.getParameter("price"));
-            String supplier= request.getParameter("supplier");
-            String id = request.getParameter("id");
-            
-            boolean canUpdate = itemManagementBean.editRetailProduct(id, SKU, name, category, description, imageURL, lotSize, leadTime, price, Long.parseLong(supplier));
-            if (!canUpdate) {
-                result = "?errMsg=Please try again.";
-                response.sendRedirect("retailProductManagement_update.jsp" + result);
-            } else {
-                result = "?goodMsg=Retail product updated successfully.";
-                response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
-            }
-        } catch (Exception ex) {
-            out.println(ex);
 
+        try {
+            HttpSession session = request.getSession();
+            System.out.println("Helllooooo!!!!");
+            String id = request.getParameter("id");
+            String supplierId = request.getParameter("supplierId");
+            System.out.println(id + "purchase order id");
+            System.out.println(supplierId + "supplier id");
+
+            List<ItemSupplierHelper> listOfItems
+                    = supplierManagementBean.getSupplierItemList(Long.parseLong(supplierId));
+
+            session.setAttribute("listOfItems", listOfItems);
+            response.sendRedirect("A3/purchaseOrderManagement_AddLineItem.jsp?id=" + id);
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

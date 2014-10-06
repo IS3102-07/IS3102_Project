@@ -35,7 +35,7 @@ public class WarehouseEntity implements Serializable {
     @OneToOne(mappedBy="warehouse")
     private ManufacturingFacilityEntity manufaturingFacility;
     @OneToMany(mappedBy="receivedWarehouse")
-    List<PurchaseOrderEntity> purchaseOrderEntityList;
+    private List<PurchaseOrderEntity> purchaseOrderEntityList;
     @OneToMany(mappedBy="warehouse")
     private List<TransferOrderEntity> transferOrders;
     @ManyToOne

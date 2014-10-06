@@ -26,12 +26,16 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
-        <script>
+        <script>           
             function addPOLineItem(id) {
+                var supplierId = $("#select_supplier").val();
+                purchaseOrderManagement.supplierId.value = supplierId;
+                
                 purchaseOrderManagement.id.value = id;
-                document.purchaseOrderManagement.action = "purchaseOrderManagement_AddLineItem.jsp";
+                document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_DisplaySupplierServlet";
                 document.purchaseOrderManagement.submit();
-            }
+            }      
+            
             function updatePOLineItem(lineItemId) {
                 purchaseOrderManagement.lineItemId.value = lineItemId;
                 document.purchaseOrderManagement.action = "purchaseOrderManagement_UpdateLineItem.jsp";
@@ -99,7 +103,7 @@
                                     <form role="form" action="../PurchaseOrderManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>Supplier</label>
-                                            <select class="form-control" name="supplier" required="true" <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
+                                            <select class="form-control" id="select_supplier" name="supplier" required="true" <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                                 <%
                                                     for (int i = 0; i < activeSuppliers.size(); i++) {
                                                         if (activeSuppliers.get(i).getSupplierName().equals(purchaseOrder.getSupplier().getSupplierName())) {
@@ -257,6 +261,7 @@
                                     </div>
                                     <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">
                                     <input type="hidden" name="lineItemId">
+                                    <input type="hidden" name="supplierId">
                                 </form>
                             </div>
                         </div>
