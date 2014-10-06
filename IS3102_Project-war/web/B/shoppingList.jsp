@@ -6,6 +6,16 @@
     <jsp:include page="header.html" />
     <body>
         <script>
+            function printDiv(divName) {
+                var printContents = document.getElementById(divName).innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+
+                window.print();
+
+                document.body.innerHTML = originalContents;
+            }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -13,18 +23,18 @@
                 }
             }
             function minus(source) {
-                var priceOfProduct = document.getElementById("price" + source).innerHTML;                
+                var priceOfProduct = document.getElementById("price" + source).innerHTML;
                 document.getElementById(source).value--;
-                
+
                 document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
-                
+
             }
             function plus(source) {
-                var priceOfProduct = document.getElementById("price" + source).innerHTML; 
+                var priceOfProduct = document.getElementById("price" + source).innerHTML;
                 document.getElementById(source).value++;
-                
+
                 document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
-                              
+
             }
 
         </script>
@@ -44,7 +54,7 @@
                     </div>
                 </section> 
 
-                <div class="container">
+                <div class="container" id="printableArea">
                     <hr class="tall">
                     <div class="row">
                         <div class="col-md-12">
@@ -114,7 +124,7 @@
                                                             </td>
                                                             <td class="product-subtotal">
                                                                 $<span class="amount" id="totalPrice<%=shoppingList.get(i).toString()%>">299</span>
-                                                                
+
                                                             </td>
                                                         </tr>
 
@@ -219,7 +229,7 @@
                             <div class="row featured-boxes">
                                 <div class="col-md-12">
                                     <div class="actions-continue">
-                                        <input type="submit" value="Proceed to Checkout →" name="proceed" class="btn btn-lg btn-primary">
+                                        <input type="submit" value="Print" name="proceed" class="btn btn-lg btn-primary" onclick="printDiv('printableArea')">
                                     </div>
                                 </div>
                             </div>
