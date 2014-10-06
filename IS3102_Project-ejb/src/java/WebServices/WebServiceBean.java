@@ -16,9 +16,10 @@ public class WebServiceBean {
     AccountManagementBeanLocal AccountManagementBeanLocal;
 
     @WebMethod
-    public StaffEntity loginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
+    public Long loginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
         StaffEntity staffEntity = AccountManagementBeanLocal.loginStaff(email, password);
-        return staffEntity;
+        Long staffID = staffEntity.getId();
+        return staffID;
     }
 
 }
