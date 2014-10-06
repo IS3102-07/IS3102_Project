@@ -28,11 +28,11 @@ public class ProductGroupEntity implements Serializable {
     private Integer workHours;
     private Integer lotSize;
     @OneToMany(cascade={CascadeType.ALL}, mappedBy="productGroup")
-    List<ProductGroupLineItemEntity> lineItemList;
+    private List<ProductGroupLineItemEntity> lineItemList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
-    List<SaleForecastEntity> saleForcastEntityList;
+    private List<SaleForecastEntity> saleForcastEntityList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
-    List<SaleAndOperationPlanEntity> sopList;
+    private List<SaleAndOperationPlanEntity> sopList;
     private Boolean isDeleted;
     
     public ProductGroupEntity(){

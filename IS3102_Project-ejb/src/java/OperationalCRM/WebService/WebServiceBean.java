@@ -1,7 +1,7 @@
 package OperationalCRM.WebService;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.MessageInboxEntity;
+import EntityManager.ItemEntity;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
@@ -9,16 +9,17 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 @Stateless
-@WebService
+@WebService(serviceName = "WebServiceBean")
 
-public class WebServiceBean implements WebServiceBeanLocal {
+public class WebServiceBean{
 
     @EJB
-    private ItemManagementBeanLocal ItemManagementBean;
+    ItemManagementBeanLocal ItemManagementBeanLocal;
 
-    @WebMethod(operationName = "getItemBySKU")
-    public MessageInboxEntity getItemBySKU(@WebParam(name = "SKU") String SKU) {
-        return new MessageInboxEntity();
+    @WebMethod(operationName = "asdasd")
+    public ItemEntity asdasd(@WebParam(name = "SKU") String SKU) {
+        ItemEntity itemEntity = ItemManagementBeanLocal.getItemBySKU(SKU);
+        return itemEntity;
     }
 
     @WebMethod(operationName = "testMethod")

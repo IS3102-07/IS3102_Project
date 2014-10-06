@@ -24,9 +24,9 @@ public class BillOfMaterialEntity implements Serializable {
     @Lob
     private String description;
     @OneToOne
-    FurnitureEntity furniture;
+    private FurnitureEntity furniture;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH})
-    List<LineItemEntity> listOfLineItems;
+    private List<LineItemEntity> listOfLineItems;
 
     public BillOfMaterialEntity() {
         listOfLineItems = new ArrayList<>();
