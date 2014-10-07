@@ -49,6 +49,7 @@ public interface FacilityManagementBeanLocal {
     public boolean checkNameExistsOfStore(String name);
     
     public StoreEntity getStoreByName(String storeName);
+    public StoreEntity getStoreByID(Long storeID);
     public Boolean removeStore(Long storeId);
     public Boolean addStoreToRegionalOffice(Long regionalOfficeId, Long storeId);
     public Boolean updateStoreToRegionalOffice(Long regionalOfficeId, Long storeId);

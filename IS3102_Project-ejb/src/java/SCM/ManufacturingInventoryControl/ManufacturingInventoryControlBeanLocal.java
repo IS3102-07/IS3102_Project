@@ -11,14 +11,7 @@ import javax.ejb.Local;
 public interface ManufacturingInventoryControlBeanLocal {
 
     //Finds the list of suitable storage bin that can hold the item based on the kind of item passed in
-    public List<StorageBinEntity> getEmptyStorageBins(Long warehouseID, ItemEntity itemEntity); //returns the appropirate type of empty storage bins
-//    public Integer calculateQtyOfItemsStorageBinHolds(StorageBinEntity storageBin, Integer volumeOfItem);
-//    
-//    
-//    public boolean compareStorageBinWithItem(StorageBinEntity storageBin, ItemEntity itemEntity);
-//    
-//    
-//    
+    public List<StorageBinEntity> getEmptyStorageBins(Long warehouseID, ItemEntity itemEntity); //returns the appropirate type of empty storage bins  
     public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID);
     public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID);
     public Boolean removeItemFromOutboundBinForShipping(Long shippingOrderID);

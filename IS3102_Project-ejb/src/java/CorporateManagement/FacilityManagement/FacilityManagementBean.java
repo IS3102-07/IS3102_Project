@@ -532,6 +532,17 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
         return null;
     }
+    
+    @Override
+    public StoreEntity getStoreByID(Long storeID) {
+        try {
+            Query q = em.createQuery("select s from StoreEntity s where s.isDeleted=false and s.id = ?1").setParameter(1, storeID);
+            return (StoreEntity) q.getSingleResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public StoreHelper getStoreHelperClass(Long Id) {
