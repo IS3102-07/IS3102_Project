@@ -1,6 +1,5 @@
-<%@page import="EntityManager.FurnitureEntity"%>
+<%@page import="EntityManager.ItemEntity"%>
 <%@page import="java.util.List"%>
-<%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
@@ -92,7 +91,7 @@
 
                                                             <%
 
-                                                                List<String> shoppingList = (List<String>) (session.getAttribute("shoppingList"));
+                                                                List<ItemEntity> shoppingList = (List<ItemEntity>) (session.getAttribute("shoppingList"));
 
                                                                 try {
                                                                     if (shoppingList != null) {
@@ -107,23 +106,23 @@
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a href="shop-product-sidebar.html"><%=shoppingList.get(i).toString()%></a>
+                                                                <a href="shop-product-sidebar.html"><%=shoppingList.get(i).getName()%></a>
                                                             </td>
 
                                                             <td class="product-price">
-                                                                $<span class="amount" id="price<%=shoppingList.get(i).toString()%>">299</span>
+                                                                $<span class="amount" id="price<%=shoppingList.get(i).getId()%>">299</span>
                                                             </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
                                                                     <div class="quantity">
-                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=shoppingList.get(i).toString()%>)">
-                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=shoppingList.get(i).toString()%>">
-                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=shoppingList.get(i).toString()%>)">
+                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=shoppingList.get(i).getName()%>)">
+                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=shoppingList.get(i).getName()%>">
+                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=shoppingList.get(i).getName()%>)">
                                                                     </div>
                                                                 </form>
                                                             </td>
                                                             <td class="product-subtotal">
-                                                                $<span class="amount" id="totalPrice<%=shoppingList.get(i).toString()%>">299</span>
+                                                                $<span class="amount" id="totalPrice<%=shoppingList.get(i).getName()%>">299</span>
 
                                                             </td>
                                                         </tr>
