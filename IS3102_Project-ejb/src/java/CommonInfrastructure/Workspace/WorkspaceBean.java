@@ -1,10 +1,14 @@
 package CommonInfrastructure.Workspace;
 
+import Config.Config;
 import EntityManager.AnnouncementEntity;
 import EntityManager.MessageInboxEntity;
 import EntityManager.MessageOutboxEntity;
 import EntityManager.StaffEntity;
 import EntityManager.ToDoEntity;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -282,12 +286,15 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate) {
+    public boolean makeAnnouncement(String callerStaffID, String sender, String title, String message, Date expiryDate) {
         System.out.println("makeAnnouncement() called with sender:" + sender);
         try {
             AnnouncementEntity announcement = new AnnouncementEntity(sender, title, message, expiryDate);
             em.persist(announcement);
             System.out.println("Announcement broadcasted.");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";makeAnnouncement();" + announcement.getId() + ";");
+            out.close();
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to broadcast announcement:\n" + ex);
@@ -312,7 +319,7 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public boolean updateAnnouncement(Long announcementId, String message, Date expiryDate) {
+    public boolean updateAnnouncement(String callerStaffID, Long announcementId, String message, Date expiryDate) {
         System.out.println("updateAnnouncement() is called.");
         try {
             AnnouncementEntity announcementEntity = em.find(AnnouncementEntity.class, announcementId);
@@ -320,6 +327,9 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
             announcementEntity.setExpiryDate(expiryDate);
             em.merge(announcementEntity);
             System.out.println("updateAnnouncement() is successful.");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";updateAnnouncement();" + announcementId + ";");
+            out.close();
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("updateAnnouncement() EntityNotFoundException:\n" + ex);
@@ -331,12 +341,15 @@ public class WorkspaceBean implements WorkspaceBeanLocal {
     }
 
     @Override
-    public boolean deleteAnnouncement(Long announcementId) {
+    public boolean deleteAnnouncement(String callerStaffID, Long announcementId) {
         System.out.println("deleteAnnouncement() called.");
         try {
             AnnouncementEntity toDo = em.find(AnnouncementEntity.class, announcementId);
             em.remove(toDo);
             System.out.println("deleteAnnouncement() is successful.");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";deleteAnnouncement();" + announcementId + ";");
+            out.close();
             return true;
         } catch (Exception ex) {
             System.out.println("failed to perform deleteAnnouncement():\n" + ex);

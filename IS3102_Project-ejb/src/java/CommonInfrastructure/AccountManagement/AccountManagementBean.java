@@ -145,6 +145,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             String passwordHash = generatePasswordHash(passwordSalt, password);
             if (passwordHash.equals(memberEntity.getPasswordHash())) {
                 System.out.println("Member with email:" + email + " logged in successfully.");
+                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                out.println(new Date().toString() + ";" + memberEntity.getId() + ";loginMember();");
+                out.close();
                 return memberEntity;
             } else {
                 System.out.println("Login credentials provided were incorrect, password wrong.");
@@ -186,7 +189,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public StaffEntity registerStaff(String identificationNo, String name, String phone, String email, String address, String password) {
+    public StaffEntity registerStaff(String callerStaffID, String identificationNo, String name, String phone, String email, String address, String password) {
         System.out.println("registerStaff() called with name:" + name);
         Long staffID;
         String passwordSalt = generatePasswordSalt();
@@ -199,6 +202,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             em.flush();
             staffID = staffEntity.getId();
             System.out.println("Staff \"" + name + "\" registered successfully as id:" + staffID);
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";registerStaff();" + staffID + ";");
+            out.close();
             return staffEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register staff:\n" + ex);
@@ -227,7 +233,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     //For administrator to edit staff account.
     @Override
-    public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address) {
+    public boolean editStaff(String callerStaffID, Long staffID, String identificationNo, String name, String phone, String password, String address) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
         String passwordSalt = generatePasswordSalt();
@@ -251,7 +257,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             em.merge(staffEntity);
             System.out.println("\nServer edited staff succeessfully");
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
-            out.println(new Date().toString()+";"+staffID+";Edited staff;"+staffID);
+            out.println(new Date().toString() + ";" + callerStaffID + ";editStaff();" + staffID + ";");
             out.close();
             return true;
         } catch (Exception ex) {
@@ -262,7 +268,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     //For staff to edit their own staff account.
     @Override
-    public boolean editStaff(Long staffID, String phone, String password, String address) {
+    public boolean editStaff(String callerStaffID, Long staffID, String phone, String password, String address) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
         String passwordSalt = generatePasswordSalt();
@@ -282,6 +288,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             }
             em.merge(staffEntity);
             System.out.println("\nServer edited staff succeessfully");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";editStaff();" + staffID + ";");
+            out.close();
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to edit staff:\n" + ex);
@@ -290,12 +299,15 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean removeStaff(Long staffID) {
+    public boolean removeStaff(String callerStaffID, Long staffID) {
         System.out.println("removeStaff() called with staffID:" + staffID);
 
         try {
             em.remove(em.getReference(StaffEntity.class, staffID));
             System.out.println("Staff removed succesfully");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";removeStaff();" + staffID + ";");
+            out.close();
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed to remove staff, staff not found.");
@@ -307,7 +319,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean removeMember(Long memberID) {
+    public boolean removeMember(String callerStaffID, Long memberID) {
         System.out.println("removeMember() called with memberID:" + memberID);
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity t where t.id=:id");
@@ -317,6 +329,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             em.merge(memberEntity);
             em.flush();
             System.out.println("\nServer removed memberID:\n" + memberID);
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";removeMember();" + memberID + ";");
+            out.close();
             return true;
         } catch (NoResultException ex) {
             System.out.println("Member not found.");
@@ -345,6 +360,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             if (passwordHash.equals(staffEntity.getPasswordHash())) {
                 System.out.println("Staff with email:" + email + " logged in successfully.");
                 staffEntity.setInvalidLoginAttempt(0);
+                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                out.println(new Date().toString() + ";" + staffEntity.getId() + ";loginStaff();");
+                out.close();
                 return staffEntity;
             } else {
                 System.out.println("Login credentials provided were incorrect, password wrong.");
@@ -382,17 +400,24 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public RoleEntity createRole(String name, String accessLevel) {
-        System.out.println("createRole() called with name: " + name);
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.create(name, accessLevel);
-        em.persist(roleEntity);
-        System.out.println("Role created.");
-        return roleEntity;
+    public RoleEntity createRole(String callerStaffID, String name, String accessLevel) {
+        try {
+            System.out.println("createRole() called with name: " + name);
+            RoleEntity roleEntity = new RoleEntity();
+            roleEntity.create(name, accessLevel);
+            em.persist(roleEntity);
+            System.out.println("Role created.");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";createRole();" + roleEntity.getId() + ";");
+            out.close();
+            return roleEntity;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     @Override
-    public boolean updateRole(Long roleID, String accessLevel) {
+    public boolean updateRole(String callerStaffID, Long roleID, String accessLevel) {
         System.out.println("updateRole() called with roleID:" + roleID);
         RoleEntity roleEntity;
         try {
@@ -403,6 +428,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             roleEntity.setAccessLevel(accessLevel);
             em.merge(roleEntity);
             System.out.println("Roles updated successfully.");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";updateRole();" + roleID + ";");
+            out.close();
         } catch (NoResultException ex) {
             System.out.println("No roles found to be updated.");
             return false;
@@ -414,7 +442,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean deleteRole(Long roleID) {
+    public boolean deleteRole(String callerStaffID, Long roleID) {
         System.out.println("deleteRole() called with roleID:" + roleID);
         RoleEntity roleEntity;
         try {
@@ -422,6 +450,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             q.setParameter("id", roleID);
             roleEntity = (RoleEntity) q.getSingleResult();
             em.remove(roleEntity);
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";deleteRole();" + roleID + ";");
+            out.close();
         } catch (NoResultException ex) {
             System.out.println("No roles found to be deleted.");
             return false;
@@ -578,7 +609,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean addStaffRole(Long staffID, Long roleID) {
+    public boolean addStaffRole(String callerStaffID, Long staffID, Long roleID) {
         System.out.println("addStaffRole() called with staffID:" + staffID + ", roleID:" + roleID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
@@ -596,6 +627,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             em.merge(staffEntity);
             System.out.println("Role:" + roleEntity.getName()
                     + " .Access level:" + roleEntity.getAccessLevel() + " added successfully to staff id:" + staffID);
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";addStaffRole();" + roleID + ";");
+            out.close();
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove role for staff:\n" + ex);
@@ -604,7 +638,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean removeStaffRole(Long staffID, Long roleID) {
+    public boolean removeStaffRole(String callerStaffID, Long staffID, Long roleID) {
         System.out.println("removeStaffRole() called with staffID:" + staffID);
         try {
             Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
@@ -632,6 +666,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                     em.merge(staffEntity);
                     System.out.println("Role:" + currentRole.getName()
                             + " .Access level:" + currentRole.getAccessLevel() + " removed successfully from staff id:" + staffID);
+                    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                    out.println(new Date().toString() + ";" + callerStaffID + ";removeStaffRole();" + roleID + ";");
+                    out.close();
                     return true; //Found the role & removed it
                 }
             }
@@ -642,34 +679,18 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
-    //This will overwrite ALL the current exisiting roles for the staff
-    private boolean assignStaffRoles(Long staffID, List<RoleEntity> roles) {
-        System.out.println("assignStaffRoles() called with staffID:" + staffID);
-        StaffEntity staffEntity = new StaffEntity();
-        Query q = em.createQuery("SELECT t FROM StaffEntity t where t.id=:id");
-        try {
-            q.setParameter("id", staffID);
-            staffEntity = (StaffEntity) q.getSingleResult();
-            staffEntity.setRoles(roles);
-            em.persist(staffEntity);
-            System.out.println("Roles sucessfully added for staff id:" + staffID);
-            return true;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to assign roles for staff:\n" + ex);
-            return false;
-        }
-    }
-
     @Override
-    public boolean editStaffRole(Long staffID, List<Long> roleIDs) {
+    public boolean editStaffRole(String callerStaffID, Long staffID, List<Long> roleIDs) {
         System.out.println("editStaffRole() called with staffID:" + staffID);
         try {
 
             StaffEntity staffEntity = em.find(StaffEntity.class, staffID);
             staffEntity.setRoles(new ArrayList());//blank their roles
             List<RoleEntity> roles = new ArrayList<RoleEntity>();
+            String rolesIdList = "";
             for (int i = 0; i < roleIDs.size(); i++) {
                 roles.add(em.getReference(RoleEntity.class, roleIDs.get(i)));
+                rolesIdList.concat(roleIDs.get(i).toString() + ",");
             }
             staffEntity.setRoles(roles);
             em.merge(staffEntity);
@@ -678,6 +699,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 em.merge(role);
             }
             System.out.println("Roles successfully updated for staff id:" + staffID);
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";editStaffRole();" + rolesIdList + ";");
+            out.close();
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to update roles for staff:\n" + ex);
@@ -779,7 +803,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId) {
+    public AccessRightEntity createAccessRight(String callerStaffID, Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId) {
         try {
             System.out.println("staffId: " + staffId + " roleId: " + roleId + " regionalOfficeId: " + regionalOfficeId + " storeId: " + storeId + " warehouseId: " + warehouseId + " mfId: " + mfId);
 
@@ -808,16 +832,19 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 a.setManufacturingFacility(mf);
             }
             em.persist(a);
-            System.out.println("em.persist();");
+            System.out.println("createAccessRight() success");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";createAccessRight();" + a.getId() + ";");
+            out.close();
             return a;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
     }
-    
+
     @Override
-    public Boolean editAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId) {
+    public Boolean editAccessRight(String callerStaffID, Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId) {
         try {
             System.out.println("staffId: " + staffId + " roleId: " + roleId + " regionalOfficeId: " + regionalOfficeId + " storeId: " + storeId + " warehouseId: " + warehouseId + " mfId: " + mfId);
 
@@ -847,13 +874,15 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             }
             em.merge(a);
             System.out.println("em.persist();");
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + callerStaffID + ";editAccessRight();" + a.getId() + ";");
+            out.close();
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return false;
     }
-    
 
     @Override
     public AccessRightEntity isAccessRightExist(Long staffId, Long roleId) {

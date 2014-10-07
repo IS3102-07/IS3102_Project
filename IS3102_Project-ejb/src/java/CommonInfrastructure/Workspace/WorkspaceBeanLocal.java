@@ -32,13 +32,13 @@ public interface WorkspaceBeanLocal {
 
     public boolean deleteSingleOutboxMessage(Long staffID, Long messageID);
 
-    public boolean makeAnnouncement(String sender, String title, String message, Date expiryDate); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
+    public boolean makeAnnouncement(String callerStaffID, String sender, String title, String message, Date expiryDate); //annoucement is just a message, added to all the staffEntity, with the annoucement flag set
 
     public List<AnnouncementEntity> getListOfAllNotExpiredAnnouncement();
 
-    public boolean updateAnnouncement(Long announcementId, String message, Date expiryDate);
+    public boolean updateAnnouncement(String callerStaffID, Long announcementId, String message, Date expiryDate);
 
-    public boolean deleteAnnouncement(Long announcementId);
+    public boolean deleteAnnouncement(String callerStaffID, Long announcementId);
 
     public boolean addToDoList(Long staffId, String description);
 
