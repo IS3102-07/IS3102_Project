@@ -92,10 +92,13 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public boolean removeRegionalOffice(String regionalOfficeName) {
+    public Boolean removeRegionalOffice(String regionalOfficeName) {
         System.out.println("removeRegionalOffice() called with ID:" + regionalOfficeName);
         try {
             RegionalOfficeEntity regionalOfficeEntity = em.getReference(RegionalOfficeEntity.class, Long.valueOf(regionalOfficeName));
+            if (regionalOfficeEntity.getManufacturingFacilityEntityList().size() > 0 || regionalOfficeEntity.getStoreList().size() > 0) {
+                return false; // Cannot remove if still got other facility using this.
+            }
             regionalOfficeEntity.setIsDeleted(true);
             em.merge(regionalOfficeEntity);
             em.flush();
@@ -204,13 +207,16 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public boolean removeManufacturingFacility(String manufacturingFacilityID) {
+    public Boolean removeManufacturingFacility(String manufacturingFacilityID) {
         System.out.println("removeManufacturingFacility() called with ID:" + manufacturingFacilityID);
         try {
             Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t");
 
             for (Object o : q.getResultList()) {
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
+                if (i.getWarehouse() != null) { //don't delete MF with warehouse
+                    return false;
+                }
                 if (i.getId() == Long.valueOf(manufacturingFacilityID)) {
                     RegionalOfficeEntity regionalOffice = i.getRegionalOffice();
                     regionalOffice.getManufacturingFacilityEntityList().remove(i);
@@ -690,6 +696,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     public Boolean removeManufacturingFacility(Long Id) {
         try {
             ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, Id);
+            if (mf.getWarehouse() != null) { //don't delete MF with warehouse
+                return false;
+            }
             RegionalOfficeEntity ro = mf.getRegionalOffice();
             ro.getManufacturingFacilityEntityList().remove(mf);
             em.merge(ro);

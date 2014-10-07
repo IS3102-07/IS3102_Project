@@ -108,16 +108,30 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 }
                 nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index" + result;
                 break;
-                
+
             case "/deleteRegionalOffice":
                 String[] deletes = request.getParameterValues("delete");
+                int numDeleted = 0;
+                int numOfErrors = 0;
                 if (deletes != null) {
                     for (String regionalOfficeString : deletes) {
                         String regionalOffice_Id = regionalOfficeString;
-                        fmBean.removeRegionalOffice(regionalOffice_Id);
+                        if (fmBean.removeRegionalOffice(regionalOffice_Id)) {
+                            numDeleted++;
+                        } else {
+                            numOfErrors++;
+                        }
                     }
                 }
-                result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";
+                if (numDeleted == 0 && numOfErrors == 0) {
+                    result = "?goodMsg=Nothing selected.";
+                } else if (numOfErrors == 0) {
+                    result = "?goodMsg=Successfully removed: " + numDeleted + " record(s).";
+                } else if (numDeleted == 0) {
+                    result = "?errMsg=Failed to delete: " + numOfErrors + " record(s). There are other facility tied to them.";
+                } else {
+                    result = "?errMsg=" + numDeleted + " of " + deletes.length + " records were deleted. " + numOfErrors + " records not deleted as there are other facility tied to them.";
+                }
                 nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index" + result;
                 break;
 
