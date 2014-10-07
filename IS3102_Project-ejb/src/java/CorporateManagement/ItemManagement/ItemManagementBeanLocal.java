@@ -63,6 +63,7 @@ public interface ItemManagementBeanLocal {
     public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId);
     public boolean removeProductGroup(Long productGroupID);
     public Boolean checkIfSKUIsFurniture(String SKU);
+    
     public ReturnHelper addCountryItemPricing(Long countryId, String SKU, double price);
     public ReturnHelper removeCountryItemPricing(Long countryItemId);
     public ReturnHelper editCountryItemPricing(Long countryItemId, Long countryId, String SKU, double price);
