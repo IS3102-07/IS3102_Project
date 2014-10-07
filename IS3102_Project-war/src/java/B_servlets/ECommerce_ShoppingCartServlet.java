@@ -2,8 +2,7 @@ package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
-import EntityManager.FurnitureEntity;
-import EntityManager.RetailProductEntity;
+import EntityManager.ItemEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -47,7 +46,7 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             
-            List<String> shoppingList = customerInformationManagementBean.shoppingList(email);
+            List<ItemEntity> shoppingList = customerInformationManagementBean.shoppingList(email);
             session.setAttribute("shoppingList", shoppingList);
             
             response.sendRedirect("B/shoppingList.jsp");
