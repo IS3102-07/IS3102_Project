@@ -289,6 +289,34 @@
                 </ul>
             </li>
             <% }
+                approvedRolesID = new Long[]{1L, 2L, 4L};
+                roleCanView = false;
+                for (RoleEntity roleEntity : roles) {
+                    for (Long ID : approvedRolesID) {
+                        if (roleEntity.getId().equals(ID)) {
+                            roleCanView = true;
+                        }
+                    }
+                    if (roleCanView) {
+                        break;
+                    }
+                }
+                if (roleCanView) {
+            %>
+            <li>
+                <a href="javascript:;" data-toggle="collapse" data-target="#store">
+                    <i class="icon icon-home"></i> Store Inventory <i class="icon icon-caret-down"></i>
+                </a>
+                <ul id="store" class="collapse">
+                    <li>
+                        <a href="#">Store's Stock Transfer</a>
+                    </li>
+                    <li>
+                        <a href="#">Store's Inventory Management</a>
+                    </li>
+                </ul>
+            </li>
+            <% }
                 approvedRolesID = new Long[]{1L, 2L, 4L, 5L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
@@ -384,6 +412,9 @@
                     </li>
                     <li>
                         <a href="../A6/itemManagement.jsp">Item Management</a>
+                    </li>
+                    <li>
+                        <a href="../A6/loyaltyTierManagement.jsp">Loyalty Program Management</a>
                     </li>
                 </ul>
             </li>
