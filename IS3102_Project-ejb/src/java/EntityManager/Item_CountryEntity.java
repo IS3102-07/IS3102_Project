@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package EntityManager;
 
@@ -21,13 +16,13 @@ public class Item_CountryEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Integer retailPrice;
+    private Double retailPrice;
     @ManyToOne(cascade={CascadeType.ALL})
     private ItemEntity item;
     @OneToOne(cascade={CascadeType.ALL})
     private CountryEntity country;
 
-    public void create(CountryEntity country, Integer retailPrice){
+    public void create(CountryEntity country, Double retailPrice){
         this.country = country;
         this.retailPrice = retailPrice;
     }
@@ -39,11 +34,11 @@ public class Item_CountryEntity implements Serializable {
         this.id = id;
     }
 
-    public Integer getRetailPrice() {
+    public Double getRetailPrice() {
         return retailPrice;
     }
 
-    public void setRetailPrice(Integer retailPrice) {
+    public void setRetailPrice(Double retailPrice) {
         this.retailPrice = retailPrice;
     }
     

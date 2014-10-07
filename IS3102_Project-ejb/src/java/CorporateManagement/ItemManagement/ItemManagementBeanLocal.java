@@ -3,10 +3,12 @@ package CorporateManagement.ItemManagement;
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.BillOfMaterialEntity;
+import EntityManager.Item_CountryEntity;
 import EntityManager.RawMaterialEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.RetailProductEntity;
+import HelperClasses.ReturnHelper;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Remove;
@@ -61,6 +63,10 @@ public interface ItemManagementBeanLocal {
     public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId);
     public boolean removeProductGroup(Long productGroupID);
     public Boolean checkIfSKUIsFurniture(String SKU);
+    public ReturnHelper addCountryItemPricing(Long countryId, String SKU, double price);
+    public ReturnHelper removeCountryItemPricing(Long countryItemId);
+    public ReturnHelper editCountryItemPricing(Long countryItemId, Long countryId, String SKU, double price);
+    public Item_CountryEntity getCountryItemPricing(Long countryItemId);
 
     @Remove
     public void remove();

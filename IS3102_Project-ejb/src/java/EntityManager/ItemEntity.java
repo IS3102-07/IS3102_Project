@@ -30,7 +30,7 @@ public abstract class ItemEntity implements Serializable {
     private String type;
     @Lob
     private String batch;
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "item", cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
     @ManyToOne
     private WarehouseEntity warehouses;
