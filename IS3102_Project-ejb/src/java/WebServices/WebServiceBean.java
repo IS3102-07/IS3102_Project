@@ -2,8 +2,6 @@ package WebServices;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.ItemEntity;
-import EntityManager.Item_CountryEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
