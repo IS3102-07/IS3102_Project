@@ -532,16 +532,22 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         }
         return null;
     }
-    
+
     @Override
     public StoreEntity getStoreByID(Long storeID) {
+        System.out.println("getStoreByID() called.");
         try {
             Query q = em.createQuery("select s from StoreEntity s where s.isDeleted=false and s.id = ?1").setParameter(1, storeID);
+            System.out.println("getStoreByID(): Store returned.");
             return (StoreEntity) q.getSingleResult();
+        } catch (NoResultException ex) {
+            System.out.println("getStoreByID(): No such store found.");
+            return null;
         } catch (Exception ex) {
+            System.out.println("getStoreByID(): Failed to getStoreByID()");
             ex.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     @Override
