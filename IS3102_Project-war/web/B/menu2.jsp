@@ -44,24 +44,7 @@
                     <li>
                         <a href="shortcodes.html">Promotion</a>
                     </li>
-                    <li>
-                        <a href="shortcodes.html">Living Room</a>
-                    </li>
-                    <li>
-                        <a href="shortcodes.html">Kitchen</a>
-                    </li>
-                    <li>
-                        <a href="shortcodes.html">Cooking</a>
-                    </li>
-                    <li>
-                        <a href="shortcodes.html">Eating</a>
-                    </li>
-                    <li>
-                        <a href="shortcodes.html">Bedroom</a>
-                    </li>
-                    <li>
-                        <a href="shortcodes.html">Children</a>
-                    </li>
+                    
 
                     <li class="dropdown mega-menu-item mega-menu-fullwidth">
                         <a class="dropdown-toggle" href="#">
