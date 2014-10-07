@@ -1,6 +1,7 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -8,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RoleManagement_AddRoleServlet extends HttpServlet {
 
@@ -19,6 +21,14 @@ public class RoleManagement_AddRoleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession();
+            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            String currentLoggedInStaffID;
+            if (currentLoggedInStaffEntity == null) {
+                currentLoggedInStaffID = "System";
+            } else {
+                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+            }
             String name = request.getParameter("name");
             String accessLevel = request.getParameter("accessLevel");
 
@@ -27,7 +37,7 @@ public class RoleManagement_AddRoleServlet extends HttpServlet {
                 result = "?errMsg=Role already registered.";
                 response.sendRedirect("A1/roleManagement_add.jsp" + result);
             } else {
-                accountManagementBean.createRole(name, accessLevel);
+                accountManagementBean.createRole(currentLoggedInStaffID, name, accessLevel);
                 result = "?goodMsg=Role added successfully.";
                 response.sendRedirect("RoleManagement_RoleServlet" + result);
             }

@@ -1,6 +1,7 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -8,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RoleManagement_RemoveRoleServlet extends HttpServlet {
 
@@ -18,11 +20,19 @@ public class RoleManagement_RemoveRoleServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         try {
-
+            HttpSession session = request.getSession();
+            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            String currentLoggedInStaffID;
+            if (currentLoggedInStaffEntity == null) {
+                currentLoggedInStaffID = "System";
+            } else {
+                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+            }
+            
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    accountManagementBean.deleteRole(Long.parseLong(deleteArr[i]));
+                    accountManagementBean.deleteRole(currentLoggedInStaffID, Long.parseLong(deleteArr[i]));
                 }
                 response.sendRedirect("RoleManagement_RoleServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {

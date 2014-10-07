@@ -24,8 +24,14 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session;
-            session = request.getSession();
+            HttpSession session = request.getSession();
+            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            String currentLoggedInStaffID;
+            if (currentLoggedInStaffEntity == null) {
+                currentLoggedInStaffID = "System";
+            } else {
+                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+            }
             String update = request.getParameter("update");
             String source = request.getParameter("source");
             System.out.println("What is update : " + update);
@@ -37,7 +43,7 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                 String password = request.getParameter("password");
                 String address = request.getParameter("address");
                 String phone = request.getParameter("phone");
-                boolean canUpdateInfo = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address);
+                boolean canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address);
                 if (!canUpdateInfo) {
                     result += "?&errMsg=Error updating your particulars.";
                     response.sendRedirect(source + result);
@@ -64,8 +70,8 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                         }
                     }
 
-                    boolean canUpdateRoles = accountManagementBean.editStaffRole(Long.parseLong(staffId), roleIDs);
-                    boolean canUpdateInfo = accountManagementBean.editStaff(Long.parseLong(staffId), identificationNo, name, phone, password, address);
+                    boolean canUpdateRoles = accountManagementBean.editStaffRole(currentLoggedInStaffID, Long.parseLong(staffId), roleIDs);
+                    boolean canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address);
                     if (!canUpdateInfo) {
                         result += "&errMsg=Error updating staff particulars.";
                     }
@@ -80,7 +86,7 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     }
                 } else {
                     List<RoleEntity> allRoles = accountManagementBean.listAllRoles();
-                    session.setAttribute("allRoles", allRoles);    
+                    session.setAttribute("allRoles", allRoles);
                     session.setAttribute("staffUpdateId", request.getParameter("id"));
                     List<RoleEntity> staffUpdateRoles = (List<RoleEntity>) accountManagementBean.listRolesHeldByStaff(Long.parseLong(request.getParameter("id")));
                     session.setAttribute("staffUpdateRoles", staffUpdateRoles);

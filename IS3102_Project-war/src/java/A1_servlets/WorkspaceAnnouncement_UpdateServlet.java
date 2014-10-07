@@ -2,6 +2,7 @@ package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
 import EntityManager.AnnouncementEntity;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,14 @@ public class WorkspaceAnnouncement_UpdateServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String result;
         try {
+            HttpSession session = request.getSession();
+            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            String currentLoggedInStaffID;
+            if (currentLoggedInStaffEntity == null) {
+                currentLoggedInStaffID = "System";
+            } else {
+                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+            }
             String announcementId = request.getParameter("id");
             String message = request.getParameter("message");
             String expiryDate = request.getParameter("expiryDate");
@@ -32,13 +41,11 @@ public class WorkspaceAnnouncement_UpdateServlet extends HttpServlet {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatter.parse(expiryDate);
 
-            boolean canUpdate = workspaceBeanLocal.updateAnnouncement(Long.valueOf(announcementId), message, date);
+            boolean canUpdate = workspaceBeanLocal.updateAnnouncement(currentLoggedInStaffID, Long.valueOf(announcementId), message, date);
             if (canUpdate) {
                 result = "?id=" + announcementId + "&goodMsg=Announcement updated.";
                 //update announcement list
                 List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
-                HttpSession session;
-                session = request.getSession();
                 session.setAttribute("listOfAnnouncements", listOfAnnouncements);
                 response.sendRedirect("A1/workspace_updateAnnouncement.jsp" + result);
             } else {

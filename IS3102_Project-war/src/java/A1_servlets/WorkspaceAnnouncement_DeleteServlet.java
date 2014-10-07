@@ -1,11 +1,9 @@
-
 package A1_servlets;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
-import EntityManager.AnnouncementEntity;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,16 +22,24 @@ public class WorkspaceAnnouncement_DeleteServlet extends HttpServlet {
         String result;
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession();
+            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            String currentLoggedInStaffID;
+            if (currentLoggedInStaffEntity == null) {
+                currentLoggedInStaffID = "System";
+            } else {
+                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+            }
             String[] deleteArr = request.getParameterValues("delete");
-            if (deleteArr != null){
-                for (int i = 0; i < deleteArr.length; i++) {                 
-                     workspaceBeanLocal.deleteAnnouncement(Long.parseLong(deleteArr[i]));
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    workspaceBeanLocal.deleteAnnouncement(currentLoggedInStaffID, Long.parseLong(deleteArr[i]));
                 }
                 response.sendRedirect("WorkspaceAnnouncement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
                 response.sendRedirect("A1/workspace_viewAnnouncement.jsp?errMsg=Nothing is selected.");
             }
-       
+
         } catch (Exception ex) {
             out.println(ex);
         }

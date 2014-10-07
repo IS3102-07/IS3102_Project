@@ -3,6 +3,7 @@ package A6_servlets;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
 
@@ -30,6 +32,15 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         Long regionalOfficeId;
         String target = request.getPathInfo();
+
+        HttpSession session = request.getSession();
+        StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+        String currentLoggedInStaffID;
+        if (currentLoggedInStaffEntity == null) {
+            currentLoggedInStaffID = "System";
+        } else {
+            currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+        }
 
         switch (target) {
 
@@ -71,7 +82,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                         result = "?errMsg=Fail to create regional office due to duplicated regional office name.";
                         nextPage = "/FacilityManagement_RegionalOfficeServlet/regionalOfficeManagement_index" + result;
                     } else {
-                        boolean regionalOffice = fmBean.addRegionalOffice(regionalOfficeName, address, telephone, email);
+                        boolean regionalOffice = fmBean.addRegionalOffice(currentLoggedInStaffID, regionalOfficeName, address, telephone, email);
                         if (regionalOffice != false) {
                             result = "?goodMsg=A new regional office record has been saved";
                         } else {
@@ -101,7 +112,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 Long id = Long.parseLong(request.getParameter("regionalOfficeId"));
 
-                if (fmBean.editRegionalOffice(id, regionalOfficeName, address, telephone, email)) {
+                if (fmBean.editRegionalOffice(currentLoggedInStaffID, id, regionalOfficeName, address, telephone, email)) {
                     result = "?goodMsg=The regional office has been updated.";
                 } else {
                     result = "?errMsg=Fail to edit regional office.";
@@ -116,7 +127,7 @@ public class FacilityManagement_RegionalOfficeServlet extends HttpServlet {
                 if (deletes != null) {
                     for (String regionalOfficeString : deletes) {
                         String regionalOffice_Id = regionalOfficeString;
-                        if (fmBean.removeRegionalOffice(regionalOffice_Id)) {
+                        if (fmBean.removeRegionalOffice(currentLoggedInStaffID, regionalOffice_Id)) {
                             numDeleted++;
                         } else {
                             numOfErrors++;

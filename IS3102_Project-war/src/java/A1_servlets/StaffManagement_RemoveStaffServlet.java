@@ -1,6 +1,7 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -8,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class StaffManagement_RemoveStaffServlet extends HttpServlet {
 
@@ -18,11 +20,18 @@ public class StaffManagement_RemoveStaffServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         try {
-
+            HttpSession session = request.getSession();
+            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            String currentLoggedInStaffID;
+            if (currentLoggedInStaffEntity == null) {
+                currentLoggedInStaffID = "System";
+            } else {
+                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+            }
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    accountManagementBean.removeStaff(Long.parseLong(deleteArr[i]));
+                    accountManagementBean.removeStaff(currentLoggedInStaffID, Long.parseLong(deleteArr[i]));
                 }
                 response.sendRedirect("StaffManagement_StaffServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
