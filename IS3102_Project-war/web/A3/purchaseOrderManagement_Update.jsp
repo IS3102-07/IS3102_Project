@@ -26,16 +26,16 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
-        <script>           
+        <script>
             function addPOLineItem(id) {
                 var supplierId = $("#select_supplier").val();
                 purchaseOrderManagement.supplierId.value = supplierId;
-                
+
                 purchaseOrderManagement.id.value = id;
                 document.purchaseOrderManagement.action = "../PurchaseOrderLineItemManagement_DisplaySupplierServlet";
                 document.purchaseOrderManagement.submit();
-            }      
-            
+            }
+
             function updatePOLineItem(lineItemId) {
                 purchaseOrderManagement.lineItemId.value = lineItemId;
                 document.purchaseOrderManagement.action = "purchaseOrderManagement_UpdateLineItem.jsp";
@@ -188,6 +188,25 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"> Submitted By: <span class="" style="font-weight: bold;"><%=purchaseOrder.getSubmittedBy()%></span></h3>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"> Total Price: <span class="" style="font-weight: bold;"><%
+                                        Double price = 0.0;
+                                        Double price1 = 0.0;
+                                        List<LineItemEntity> lineItems1 = purchaseOrder.getLineItems();
+                                        if (lineItems1 == null)
+                                            out.println(" 0");
+                                        else if (lineItems1 != null) {
+                                            for (int k = 0; k < lineItems1.size(); k++) {
+                                                    price1 = lineItems1.get(k).getItem().getPrice() * lineItems1.get(k).getQuantity();
+                                                    price += price1;
+                                            }
+                                                    out.println(price);
+                                        }
+                                    %>
+                                       </span></h3>
                                 </div>
                             </div>
                         </div>
