@@ -7,9 +7,12 @@ import EntityManager.ProductGroupEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.BillOfMaterialEntity;
+import EntityManager.CountryEntity;
+import EntityManager.Item_CountryEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.SupplierEntity;
 import EntityManager.ProductGroupLineItemEntity;
+import HelperClasses.ReturnHelper;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remove;
@@ -58,7 +61,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setLeadTime(leadTime);
             i.setPrice(price);
             i.getSupplier().getItems().remove(i);
-            SupplierEntity supplier1= em.getReference(SupplierEntity.class, supplierId);
+            SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
             i.setSupplier(supplier1);
             supplier1.getItems().add(i);
             em.flush();
@@ -219,7 +222,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setLeadTime(leadTime);
             i.setPrice(price);
             i.getSupplier().getItems().remove(i);
-            SupplierEntity supplier1= em.getReference(SupplierEntity.class, supplierId);
+            SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
             i.setSupplier(supplier1);
             supplier1.getItems().add(i);
             em.flush();
@@ -661,6 +664,96 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to remove product group:\n" + ex);
             return false;
+        }
+    }
+
+    @Override
+    public ReturnHelper addCountryItemPricing(Long countryId, String SKU, double price) {
+        //can only have one item price per country
+        System.out.println("addCountryItemPricing() called.");
+        ReturnHelper helper = new ReturnHelper();
+        try {
+            Item_CountryEntity itemCountry = new Item_CountryEntity();
+            itemCountry.setCountry(em.find(CountryEntity.class, countryId));
+            itemCountry.setItem(getItemBySKU(SKU));
+            itemCountry.setRetailPrice(price);
+            em.persist(itemCountry);
+            em.flush();
+
+            System.out.println("addCountryItemPricing(): Successfully added.");
+
+            helper.setMessage("Record Added Successfully");
+            helper.setIsSuccess(true);
+            return helper;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("addCountryItemPricing(): Failed to add.");
+            helper.setMessage("Failed to add.");
+            helper.setIsSuccess(false);
+            return helper;
+        }
+    }
+
+    @Override
+    public ReturnHelper removeCountryItemPricing(Long countryItemId) {
+        System.out.println("removeCountryItemPricing() called.");
+        ReturnHelper helper = new ReturnHelper();
+        try {
+            Item_CountryEntity itemCountry = em.find(Item_CountryEntity.class, countryItemId);
+            em.remove(itemCountry);
+            System.out.println("removeCountryItemPricing(): Successful.");
+
+            helper.setMessage("Record removed successfully.");
+            helper.setIsSuccess(true);
+            return helper;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("removeCountryItemPricing(): Failed to remove record.");
+            helper.setMessage("Failed to remove record.");
+            helper.setIsSuccess(false);
+            return helper;
+        }
+    }
+
+    @Override
+    public ReturnHelper editCountryItemPricing(Long countryItemId, Long countryId, String SKU, double price) {
+        System.out.println("editCountryItemPricing() called.");
+        ReturnHelper helper = new ReturnHelper();
+        try {
+            Item_CountryEntity itemCountry = em.find(Item_CountryEntity.class, countryItemId);
+            CountryEntity country = em.find(CountryEntity.class, countryId);
+            itemCountry.setCountry(country);
+            ItemEntity item = getItemBySKU(SKU);
+            itemCountry.setItem(item);
+            itemCountry.setRetailPrice(price);
+            em.merge(itemCountry);
+            em.flush();
+
+            System.out.println("editCountryItemPricing(): Successful.");
+
+            helper.setMessage("Record updated successfully.");
+            helper.setIsSuccess(true);
+            return helper;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("editCountryItemPricing(): Failed to update record.");
+            helper.setMessage("Failed to update record.");
+            helper.setIsSuccess(false);
+            return helper;
+        }
+    }
+
+    @Override
+    public Item_CountryEntity getCountryItemPricing(Long countryItemId) {
+        System.out.println("getCountryItemPricing() called.");
+        try {
+            Item_CountryEntity itemCountry = em.find(Item_CountryEntity.class, countryItemId);
+            System.out.println("getCountryItemPricing(): Successful");
+            return itemCountry;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("getCountryItemPricing(): Failed to retrieve record.");
+            return null;
         }
     }
 }
