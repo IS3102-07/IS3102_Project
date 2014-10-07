@@ -127,21 +127,42 @@ public class StartupBean {
                 regionalOfficeEntity = new RegionalOfficeEntity();
                 regionalOfficeEntity.create("Asia Pacific Regional Office", "33 Jurong Town Hall Road #05-34", "61234563", "APACRO@if.com");
                 em.persist(regionalOfficeEntity);
-                //Create warehouse
+                //Create manufacturing facility & its warehouse
+                ManufacturingFacilityEntity manufacturingFacilityEntity;
                 WarehouseEntity warehouseEntity;
-                warehouseEntity = new WarehouseEntity("Warehouse SG1", "3 Jurong Industrial Park", "67183645", "MFSG1@islandfurniture.com");
-                warehouseEntity.setRegionalOffice(regionalOfficeEntity);
                 q = em.createQuery("SELECT t FROM CountryEntity t where t.name='Singapore'");
                 CountryEntity countryEntity = (CountryEntity) q.getSingleResult();
+                
+                manufacturingFacilityEntity = new ManufacturingFacilityEntity();
+                manufacturingFacilityEntity.create("Manufacturing Facility SG1", "3 Jurong Industrial Park", "67183645", "MFSG1@islandfurniture.com", 10000);
+                manufacturingFacilityEntity.setRegionalOffice(regionalOfficeEntity);
+                em.persist(manufacturingFacilityEntity);
+                warehouseEntity = new WarehouseEntity("Warehouse SG1", "3 Jurong Industrial Park", "67183645", "MFSG1@islandfurniture.com");
+                warehouseEntity.setRegionalOffice(regionalOfficeEntity);
+                warehouseEntity.setManufaturingFacility(manufacturingFacilityEntity);
+                manufacturingFacilityEntity.setWarehouse(warehouseEntity);
+                regionalOfficeEntity.getManufacturingFacilityEntityList().add(manufacturingFacilityEntity);
+                em.merge(manufacturingFacilityEntity);
+                em.merge(regionalOfficeEntity);
                 warehouseEntity.setCountry(countryEntity);
                 em.persist(warehouseEntity);
+                
+                manufacturingFacilityEntity = new ManufacturingFacilityEntity();
+                manufacturingFacilityEntity.create("Manufacturing Facility SG2", "26 Toh Guan Road", "67183664", "MFSG2@islandfurniture.com", 10000);
+                manufacturingFacilityEntity.setRegionalOffice(regionalOfficeEntity);
+                em.persist(manufacturingFacilityEntity);
                 warehouseEntity = new WarehouseEntity("Warehouse SG2", "26 Toh Guan Road", "67183664", "MFSG2@islandfurniture.com");
                 warehouseEntity.setRegionalOffice(regionalOfficeEntity);
+                warehouseEntity.setManufaturingFacility(manufacturingFacilityEntity);
+                manufacturingFacilityEntity.setWarehouse(warehouseEntity);
+                regionalOfficeEntity.getManufacturingFacilityEntityList().add(manufacturingFacilityEntity);
+                em.merge(manufacturingFacilityEntity);
+                em.merge(regionalOfficeEntity);
                 warehouseEntity.setCountry(countryEntity);
                 em.persist(warehouseEntity);
-                System.out.println("Created warehouse entities.");
+                System.out.println("Created manufacturing facility & warehouse entities.");
             } catch (Exception ex) {
-                System.out.println("Skipping creating of regional & warehouse entities:\n" + ex);
+                System.out.println("Skipping creating of regional & manufacturing facilities entities:\n" + ex);
                 ex.printStackTrace();
             }
 
