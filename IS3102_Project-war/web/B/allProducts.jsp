@@ -25,7 +25,7 @@
         %>
 
         <div class="body">
-            <jsp:include page="menu2.jsp" />
+            <jsp:include page="menu1.html" />
             <div class="body">
                 <div role="main" class="main">
                     <section class="page-top">
