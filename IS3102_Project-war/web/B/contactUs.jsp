@@ -3,34 +3,14 @@
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html> <!--<![endif]-->
-    
+
 
     <jsp:include page="header.html" />
     <body>
-
-        <script>
-            function checkAll(source) {
-                checkboxes = document.getElementsByName('delete');
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    checkboxes[i].checked = source.checked;
-                }
-            }
-
-        </script>
-        
-
-
-
-
         <div class="body">
             <jsp:include page="menu1.html" />
-
-
             <div class="body">
-
-
                 <div role="main" class="main">
-
                     <section class="page-top">
                         <div class="container">
                             <div class="row">
@@ -48,35 +28,24 @@
                             </div>
                         </div>
                     </section>
-                    
-                    
-
-
 
                     <div class="container">
+                        <jsp:include page="../displayMessageLong.jsp" />
 
                         <div class="row">
                             <div class="col-md-6">
 
-                                <div class="alert alert-success hidden" id="contactSuccess">
-                                    <strong>Success!</strong> Your message has been sent to us.
-                                </div>
-
-                                <div class="alert alert-danger hidden" id="contactError">
-                                    <strong>Error!</strong> There was an error sending your message.
-                                </div>
-
                                 <h2 class="short"><strong>Contact</strong> Us</h2>
-                                <form id="contactForm" action="php/contact-form.php" method="POST">
+                                <form role="form" action="../ECommerce_ContactUsServlet">
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-6">
                                                 <label>Your name *</label>
-                                                <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="name" id="name" required>
+                                                <input class="form-control" required="true" name="name" type="text">
                                             </div>
                                             <div class="col-md-6">
                                                 <label>Your email address *</label>
-                                                <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" id="email" required>
+                                                <input class="form-control" required="true" name="email" type="email">
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +53,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <label>Subject</label>
-                                                <input type="text" value="" data-msg-required="Please enter the subject." maxlength="100" class="form-control" name="subject" id="subject" required>
+                                                <input class="form-control" required="true" name="subject" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -147,5 +116,11 @@
         <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
         <script src="../js/views/view.home.js"></script>   
     </div>
+
+    <script>
+                                                $(document).ready(function () {
+                                                    $('#dataTables-example').dataTable();
+                                                });
+    </script>
 </body>
 </html>

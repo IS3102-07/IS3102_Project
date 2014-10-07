@@ -625,6 +625,10 @@
         <servlet-name>StoreTransferOrderManagement_UpdateServlet</servlet-name>
         <servlet-class>A4_servlets.StoreTransferOrderManagement_UpdateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_ContactUsServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ContactUsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1251,6 +1255,10 @@
     <servlet-mapping>
         <servlet-name>StoreTransferOrderManagement_UpdateServlet</servlet-name>
         <url-pattern>/StoreTransferOrderManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_ContactUsServlet</servlet-name>
+        <url-pattern>/ECommerce_ContactUsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
