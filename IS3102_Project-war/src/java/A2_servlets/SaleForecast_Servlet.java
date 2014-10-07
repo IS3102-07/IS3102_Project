@@ -11,9 +11,10 @@ import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.RegionalOfficeEntity;
+import EntityManager.SaleForecastEntity;
+import EntityManager.SalesFigureEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
-import MRP.SalesAndOperationPlanning.SOP_Helper;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import MRP.SalesForecast.SalesForecastBeanLocal;
 import java.io.IOException;
@@ -37,7 +38,6 @@ public class SaleForecast_Servlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal amBean;
-
     @EJB
     private SalesForecastBeanLocal sfBean;
     @EJB
@@ -103,14 +103,20 @@ public class SaleForecast_Servlet extends HttpServlet {
                 try {
                     Long storeId = (long) session.getAttribute("sf_storeId");
                     Long schedulelId = (long) session.getAttribute("scheduleId");
-                    List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
-                    List<SOP_Helper> sopHelperList = sopBean.getSOPHelperList(storeId, schedulelId);
+                    List<ProductGroupEntity> productGroupList = imBean.getAllProductGroup();
+                    List<SaleForecastEntity> saleForecastList = new ArrayList<>();
+                    for (ProductGroupEntity productGroup : productGroupList) {
+                        SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
+                        saleForecastList.add(saleForecast);
+                    }
+
                     store = fmBean.viewStoreEntity(storeId);
                     MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
+
                     request.setAttribute("store", store);
                     request.setAttribute("schedule", schedule);
-                    request.setAttribute("unplannedProductGroupList", unplannedProductGroupList);
-                    request.setAttribute("sopHelperList", sopHelperList);
+                    request.setAttribute("saleForecastList", saleForecastList);
+                                        
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -124,13 +130,29 @@ public class SaleForecast_Servlet extends HttpServlet {
                 break;
 
             case "/ViewSaleFigure_GET":
-                productGroupId = (long) session.getAttribute("productGroupId");
+                productGroupId = (long) session.getAttribute("productGroupId");                
                 Long storeId = (long) session.getAttribute("sf_storeId");
                 Long schedulelId = (long) session.getAttribute("scheduleId");
+                
+                ProductGroupEntity productGroup = imBean.getProductGroup(productGroupId);
+                store = fmBean.viewStoreEntity(storeId);                    
                 MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
-                List<Integer> list1 = sfBean.getYearlySalesFigureList(storeId, productGroupId, 2012);
-                List<Integer> list2 = sfBean.getYearlySalesFigureList(storeId, productGroupId, 2013);
-                List<Integer> list3 = sfBean.getYearlySalesFigureList(storeId, productGroupId, 2014);
+                
+                List<SalesFigureEntity> list1;
+                List<SalesFigureEntity> list2;
+                List<SalesFigureEntity> list3;
+                if (schedule.getMonth() != 1) {
+                    list1 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 2);
+                    list2 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 1);
+                    list3 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear());
+                } else {
+                    list1 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 3);
+                    list2 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 2);
+                    list3 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 1);
+                }
+                request.setAttribute("productGroup", productGroup);
+                request.setAttribute("store", store);
+                request.setAttribute("schedule", schedule);
                 request.setAttribute("saleDate1", list1);
                 request.setAttribute("saleDate2", list2);
                 request.setAttribute("saleDate3", list3);

@@ -1,9 +1,7 @@
-<%@page import="MRP.SalesAndOperationPlanning.SOP_Helper"%>
+<%@page import="EntityManager.SalesFigureEntity"%>
 <%@page import="EntityManager.StoreEntity"%>
-<%@page import="EntityManager.SaleAndOperationPlanEntity"%>
 <%@page import="EntityManager.ProductGroupEntity"%>
 <%@page import="EntityManager.MonthScheduleEntity"%>
-<%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
@@ -99,11 +97,10 @@
             if (request.getAttribute("alertMessage") != null) {
         %>
         <script>
-            alert("<%= request.getAttribute("alertMessage")%>");
-        </script>
-        <%
-            }
-        %>
+            alert("<%= request.getAttribute("alertMessage")%>");</script>
+            <%
+                }
+            %>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->        
         <script>
@@ -111,152 +108,87 @@
                 $('#dataTable1').dataTable();
                 $('#dataTable2').dataTable();
             }
-            );
-        </script>
-        <%  List<Integer> saleDate1 = (List<Integer>) request.getAttribute("saleDate1");
-            List<Integer> saleDate2 = (List<Integer>) request.getAttribute("saleDate2");
-            List<Integer> saleDate3 = (List<Integer>) request.getAttribute("saleDate3");%>
-            
-        <script>
+            );</script>
+            <%
+                List<SalesFigureEntity> saleDate1 = (List<SalesFigureEntity>) request.getAttribute("saleDate1");
+                List<SalesFigureEntity> saleDate2 = (List<SalesFigureEntity>) request.getAttribute("saleDate2");
+                List<SalesFigureEntity> saleDate3 = (List<SalesFigureEntity>) request.getAttribute("saleDate3");
+                ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup");
+            %>
 
+        <script>
             Morris.Area({
                 element: 'morris-area-chart1',
                 data: [
-                    {
-                        period: '2012-01',
-                        F001: <%= saleDate1.get(0) %>,
-                    }, {
-                        period: '2012-02',
-                        F001: <%= saleDate1.get(1) %>,
-                    }, {
-                        period: '2012-03',
-                        F001: <%= saleDate1.get(2) %>,
-                    }, {
-                        period: '2012-04',
-                        F001: <%= saleDate1.get(3) %>,
-                    }, {
-                        period: '2012-05',
-                        F001: <%= saleDate1.get(4) %>,
-                    }, {
-                        period: '2012-06',
-                        F001: <%= saleDate1.get(5) %>,
-                    }, {
-                        period: '2012-07',
-                        F001: <%= saleDate1.get(6) %>,
-                    }, {
-                        period: '2012-08',
-                        F001: <%= saleDate1.get(7) %>,
-                    }, {
-                        period: '2012-09',
-                        F001: <%= saleDate1.get(8) %>,
-                    }, {
-                        period: '2012-10',
-                        F001: <%= saleDate1.get(9) %>,
-                    }, {
-                        period: '2012-11',
-                        F001: <%= saleDate1.get(10) %>,
-                    }, {
-                        period: '2012-12',
-                        F001: <%= saleDate1.get(11) %>,
-                    },
+            <%
+            for (SalesFigureEntity s : saleDate1) {
+            %>
+                {
+                period: '<% if(s.getSchedule().getMonth()>=10){ out.print(s.getSchedule().getYear()+"-"+s.getSchedule().getMonth()); }
+                else{ out.print(s.getSchedule().getYear()+"-0"+s.getSchedule().getMonth()); } %>',
+                <%= s.getProductGroup().getName() %>: <%= s.getQuantity() %>,
+                },
+            <%                
+            }
+            %>
                 ],
                 xkey: 'period',
-                ykeys: ['F001'],
-                labels: ['F001'],
+                ykeys: ['<%= productGroup.getName()%>'],
+                labels: ['<%= productGroup.getName()%>'],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
             });
-            
+        </script>
+        
+        <script>
             Morris.Area({
                 element: 'morris-area-chart2',
                 data: [
-                    {
-                        period: '2013-01',
-                        F001: <%= saleDate2.get(0) %>,
-                    }, {
-                        period: '2013-02',
-                        F001: <%= saleDate2.get(1) %>,
-                    }, {
-                        period: '2013-03',
-                        F001: <%= saleDate2.get(2) %>,
-                    }, {
-                        period: '2013-04',
-                        F001: <%= saleDate2.get(3) %>,
-                    }, {
-                        period: '2013-05',
-                        F001: <%= saleDate2.get(4) %>,
-                    }, {
-                        period: '2013-06',
-                        F001: <%= saleDate2.get(5) %>,
-                    }, {
-                        period: '2013-07',
-                        F001: <%= saleDate2.get(6) %>,
-                    }, {
-                        period: '2013-08',
-                        F001: <%= saleDate2.get(7) %>,
-                    }, {
-                        period: '2013-09',
-                        F001: <%= saleDate2.get(8) %>,
-                    }, {
-                        period: '2013-10',
-                        F001: <%= saleDate2.get(9) %>,
-                    }, {
-                        period: '2013-11',
-                        F001: <%= saleDate2.get(10) %>,
-                    }, {
-                        period: '2013-12',
-                        F001: <%= saleDate2.get(11) %>,
-                    },
+            <%
+            for (SalesFigureEntity s : saleDate2) {
+            %>
+                {
+                period: '<% if(s.getSchedule().getMonth()>=10){ out.print(s.getSchedule().getYear()+"-"+s.getSchedule().getMonth()); }
+                else{ out.print(s.getSchedule().getYear()+"-0"+s.getSchedule().getMonth()); } %>',
+                <%= s.getProductGroup().getName() %>: <%= s.getQuantity() %>,
+                },
+            <%                
+            }
+            %>
                 ],
                 xkey: 'period',
-                ykeys: ['F001'],
-                labels: ['F001'],
+                ykeys: ['<%= productGroup.getName()%>'],
+                labels: ['<%= productGroup.getName()%>'],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
             });
-            
+        </script>
+        
+        <script>
             Morris.Area({
                 element: 'morris-area-chart3',
                 data: [
-                    {
-                        period: '2014-01',
-                        F001: <%= saleDate3.get(0) %>,
-                    }, {
-                        period: '2014-02',
-                        F001: <%= saleDate3.get(1) %>,
-                    }, {
-                        period: '2014-03',
-                        F001: <%= saleDate3.get(2) %>,
-                    }, {
-                        period: '2014-04',
-                        F001: <%= saleDate3.get(3) %>,
-                    }, {
-                        period: '2014-05',
-                        F001: <%= saleDate3.get(4) %>,
-                    }, {
-                        period: '2014-06',
-                        F001: <%= saleDate3.get(5) %>,
-                    }, {
-                        period: '2014-07',
-                        F001: <%= saleDate3.get(6) %>,
-                    }, {
-                        period: '2014-08',
-                        F001: <%= saleDate3.get(7) %>,
-                    }, {
-                        period: '2014-09',
-                        F001: <%= saleDate3.get(8) %>,
-                    }, 
+            <%
+            for (SalesFigureEntity s : saleDate3) {
+            %>
+                {
+                period: '<% if(s.getSchedule().getMonth()>=10){ out.print(s.getSchedule().getYear()+"-"+s.getSchedule().getMonth()); }
+                else{ out.print(s.getSchedule().getYear()+"-0"+s.getSchedule().getMonth()); } %>',
+                <%= s.getProductGroup().getName() %>: <%= s.getQuantity() %>,
+                },
+            <%                
+            }
+            %>
                 ],
                 xkey: 'period',
-                ykeys: ['F001'],
-                labels: ['F001'],
+                ykeys: ['<%= productGroup.getName()%>'],
+                labels: ['<%= productGroup.getName()%>'],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
             });
-            
         </script>
 
     </body>

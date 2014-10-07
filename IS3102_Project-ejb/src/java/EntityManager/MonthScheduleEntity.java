@@ -23,6 +23,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class MonthScheduleEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,20 +32,22 @@ public class MonthScheduleEntity implements Serializable {
     private Calendar date;
     private Integer year;
     private Integer month;
-    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="schedule")
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "schedule")
     private List<SaleAndOperationPlanEntity> sopList;
-    
-    public MonthScheduleEntity(){
+
+    public MonthScheduleEntity() {
         this.sopList = new ArrayList<>();
-    };
+    }
+
+    ;
 
     public MonthScheduleEntity(Calendar date) {
         this.date = date;
         this.year = date.get(Calendar.YEAR);
         this.month = date.get(Calendar.MONTH);
         this.sopList = new ArrayList<>();
-    }    
-        
+    }
+
     public Long getId() {
         return id;
     }
@@ -59,7 +62,7 @@ public class MonthScheduleEntity implements Serializable {
 
     public void setDate(Calendar date) {
         this.date = date;
-    }        
+    }
 
     public List<SaleAndOperationPlanEntity> getSopList() {
         return sopList;
@@ -67,8 +70,8 @@ public class MonthScheduleEntity implements Serializable {
 
     public void setSopList(List<SaleAndOperationPlanEntity> sopList) {
         this.sopList = sopList;
-    }        
-    
+    }
+
     public Integer getYear() {
         return year;
     }
@@ -83,7 +86,7 @@ public class MonthScheduleEntity implements Serializable {
 
     public void setMonth(Integer month) {
         this.month = month;
-    }        
+    }
     
     @Override
     public int hashCode() {
@@ -109,5 +112,5 @@ public class MonthScheduleEntity implements Serializable {
     public String toString() {
         return "EntityManager.MonthScheduleEntity[ id=" + id + " ]";
     }
-    
+
 }

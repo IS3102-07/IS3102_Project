@@ -1,13 +1,11 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 
 @Entity
 public class SalesFigureEntity implements Serializable {
@@ -15,22 +13,25 @@ public class SalesFigureEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date month;
+    @ManyToOne
+    private MonthScheduleEntity schedule;    
     private Integer quantity;
     @ManyToOne
-    private StoreEntity store;
+    private StoreEntity store;    
     @ManyToOne
-    private ItemEntity item;
+    private ProductGroupEntity productGroup;
     
     public SalesFigureEntity(){}
-    public SalesFigureEntity(Date month, Integer quantity, StoreEntity store, ItemEntity item) {
-        this.month = month;
-        this.quantity = quantity;
-        this.store = store;
-        this.item = item;
-    }        
+    
+    
+    public MonthScheduleEntity getSchedule() {
+        return schedule;
+    }
 
+    public void setSchedule(MonthScheduleEntity schedule) {
+        this.schedule = schedule;
+    }        
+    
     public Long getId() {
         return id;
     }
@@ -62,21 +63,7 @@ public class SalesFigureEntity implements Serializable {
     @Override
     public String toString() {
         return "EntityManager.SalesFigureEntity[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the month
-     */
-    public Date getMonth() {
-        return month;
-    }
-
-    /**
-     * @param month the month to set
-     */
-    public void setMonth(Date month) {
-        this.month = month;
-    }
+    }    
 
     /**
      * @return the quantity
@@ -106,18 +93,12 @@ public class SalesFigureEntity implements Serializable {
         this.store = store;
     }
 
-    /**
-     * @return the item
-     */
-    public ItemEntity getItem() {
-        return item;
+    public ProductGroupEntity getProductGroup() {
+        return productGroup;
     }
 
-    /**
-     * @param item the item to set
-     */
-    public void setItem(ItemEntity item) {
-        this.item = item;
+    public void setProductGroup(ProductGroupEntity productGroup) {
+        this.productGroup = productGroup;
     }
-    
+        
 }

@@ -1,3 +1,4 @@
+<%@page import="EntityManager.SaleForecastEntity"%>
 <%@page import="MRP.SalesAndOperationPlanning.SOP_Helper"%>
 <%@page import="EntityManager.StoreEntity"%>
 <%@page import="EntityManager.SaleAndOperationPlanEntity"%>
@@ -58,7 +59,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><b>Unplanned Product Groups</b></h4>
+                                    <h4><b>Product Groups</b></h4>
                                 </div>
                                 <!-- /.panel-heading -->
 
@@ -76,15 +77,18 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<ProductGroupEntity> unplannedProductGroupList = (List<ProductGroupEntity>) request.getAttribute("unplannedProductGroupList");
-                                                            for (ProductGroupEntity p : unplannedProductGroupList) {
+                                                            List<SaleForecastEntity> saleForecastList = (List<SaleForecastEntity>) request.getAttribute("saleForecastList");
+
+                                                            for (SaleForecastEntity s : saleForecastList) {
+
                                                         %>
                                                         <tr>
-                                                            <td><%= p.getProductGroupName()%></td>                                                            
-                                                            <td> - </td>
+
+                                                            <td><%= s.getProductGroup().getProductGroupName()%></td>                                                        
+                                                            <td><%= s.getQuantity()%></td>
                                                             <td>
-                                                                <button class="btn btn-primary" name="productGroupId" value="<%= p.getId()%>">View historical data</button>
-                                                            </td>
+                                                                <button class="btn btn-primary" name="productGroupId" value="<%= s.getProductGroup().getId()%>">View historical data</button>
+                                                            </td>                                                   
                                                         </tr>
                                                         <%
                                                             }
@@ -104,7 +108,7 @@
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
-                    
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -114,7 +118,7 @@
         </div>
         <!-- /#wrapper -->
 
-        <%            
+        <%
             if (request.getAttribute("alertMessage") != null) {
         %>
         <script>

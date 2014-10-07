@@ -2,6 +2,7 @@
 package MRP.SalesForecast;
 
 import EntityManager.ItemEntity;
+import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.StoreEntity;
 import java.util.Date;
@@ -9,12 +10,11 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface SalesForecastBeanLocal {
-        public List<SalesFigureEntity> getSalesFigureList(StoreEntity store, Date month);
-        public SalesFigureEntity getSalesFigure(StoreEntity store, Date month, ItemEntity item);
-        public SalesFigureEntity createSalesFigure(Date month, Integer quantity, Long storeID, Long itemID);
-        public SalesFigureEntity getSalesFigure(Long id);
-        public List<SalesFigureEntity> getAllSalesFigureList();
+public interface SalesForecastBeanLocal {           
+    
+        public SaleForecastEntity getSalesForecast(Long storeId, Long productGroupId, Long scheduleId);
+    
+        public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long productGroupId, Integer year);
         
-        public List<Integer> getYearlySalesFigureList(Long StoreId, Long productGroupId, Integer year);
+        
 }

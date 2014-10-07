@@ -1,17 +1,16 @@
 package MRP.SalesForecast;
 
-import EntityManager.ItemEntity;
+import EntityManager.MonthScheduleEntity;
+import EntityManager.ProductGroupEntity;
+import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.StoreEntity;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
 
 @Stateless
 public class SalesForecastBean implements SalesForecastBeanLocal {
@@ -19,112 +18,115 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
-    @Override
-    public SalesFigureEntity createSalesFigure(Date month, Integer quantity, Long storeID, Long itemID) {
-
+    // unsupport now
+    public SalesFigureEntity createSalesFigure(Long productGroupId, Long StoreId, int year, int month) {
         try {
-            StoreEntity store = em.getReference(StoreEntity.class, storeID);
-            ItemEntity item = em.getReference(ItemEntity.class, itemID);
-            SalesFigureEntity SalesFigure = new SalesFigureEntity(month, quantity, store, item);
-            em.persist(SalesFigure);
-            System.out.println("SalesFigure with id: " + SalesFigure.getId() + " is created successfully");
-            return SalesFigure;
-        } catch (EntityExistsException ex) {
+            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+
+        } catch (Exception ex) {
             ex.printStackTrace();
-            return null;
         }
+        return null;
+    }
+
+    public MonthScheduleEntity getTheBeforeOne(MonthScheduleEntity schedule) {
+        try {
+            if (schedule.getMonth() == 1) {
+                Query q = em.createQuery("select s from MonthScheduleEntity s where s.year = ?1 and s.month = ?2")
+                        .setParameter(1, schedule.getYear() - 1)
+                        .setParameter(2, 12);
+                return (MonthScheduleEntity) q.getResultList().get(0);
+            } else {
+                Query q = em.createQuery("select s from MonthScheduleEntity s where s.year = ?1 and s.month = ?2")
+                        .setParameter(1, schedule.getYear())
+                        .setParameter(2, schedule.getMonth() - 1);
+                return (MonthScheduleEntity) q.getResultList().get(0);
+            }
+        } catch (Exception ex) {
+        }
+
+        return null;
     }
 
     @Override
-    public List<SalesFigureEntity> getSalesFigureList(StoreEntity store, Date month) {
+    public SaleForecastEntity getSalesForecast(Long storeId, Long productGroupId, Long scheduleId) {
         try {
-            Query query = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.month = ?2").setParameter(1, store).setParameter(2, month, TemporalType.DATE);
-            return query.getResultList();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ArrayList<SalesFigureEntity>();
-        }
-    }
+            Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                    .setParameter(1, productGroupId)
+                    .setParameter(2, storeId)
+                    .setParameter(3, scheduleId);
 
-    @Override
-    public List<SalesFigureEntity> getAllSalesFigureList() {
-        try {
-            Query query = em.createQuery("select s from SalesFigureEntity s");
-            return query.getResultList();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new ArrayList<SalesFigureEntity>();
-        }
-    }
+            System.out.println("debug......" + "getSalesForecast is called.");
 
-    @Override
-    public SalesFigureEntity getSalesFigure(StoreEntity store, Date month, ItemEntity item) {
-        try {
-            Query query = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.month = ?2 and s.item = ?3").setParameter(1, store).setParameter(2, month, TemporalType.DATE).setParameter(3, item);
-            SalesFigureEntity SalesFigure = (SalesFigureEntity) query.getSingleResult();
-            return SalesFigure;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
+            if (q.getResultList().isEmpty()) {
 
-    @Override
-    public SalesFigureEntity getSalesFigure(Long id) {
-        try {
-            SalesFigureEntity SalesFigure = (SalesFigureEntity) em.find(SalesFigureEntity.class, id);
-            return SalesFigure;
+                System.out.println("debug......" + "q.getResultList().isEmpty()");
+
+                // if not exist, then create it
+                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+                StoreEntity store = em.find(StoreEntity.class, storeId);
+                ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+
+                System.out.println("debug......" + "schedule.getId(): " + schedule.getId());
+                System.out.println("debug......" + "store.getId()" + store.getId());
+                System.out.println("debug......" + "productGroup.getId()" + productGroup.getId());
+
+                try {
+                    int amount = 0;
+                    for (int i = 0; i < 3; i++) {
+
+                        System.out.println("debug...... i=" + i);
+
+                        MonthScheduleEntity lastSchedule = this.getTheBeforeOne(schedule);
+                        
+                        System.out.println("debug...... lastSchedule.getId: " + lastSchedule.getId());
+
+                        Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                                .setParameter(1, productGroupId)
+                                .setParameter(2, storeId)
+                                .setParameter(3, lastSchedule.getId());
+
+                        if (!q2.getResultList().isEmpty()) {
+
+                            System.out.println("debug......" + "q2.getResultList() is not Empty()");
+
+                            SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
+                            amount += salesFigureEntity.getQuantity();
+                        }
+                    }
+
+                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, amount / 3);
+                    System.out.println("debug......" + " saleForecast is returned ");
+                    return saleForecast;
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, 0);
+                    System.out.println("debug......" + " exception is catched");
+                    return saleForecast;
+                }
+
+            } else {
+                return (SaleForecastEntity) q.getResultList().get(0);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     // as no crm yet, return simulated data
     @Override
-    public List<Integer> getYearlySalesFigureList(Long StoreId, Long productGroupId, Integer year) {
-        List<Integer> simulatedData = new ArrayList<>();
-        if (year == 2012) {
-            simulatedData.add(302);
-            simulatedData.add(224);
-            simulatedData.add(201);
-            simulatedData.add(192);
-            simulatedData.add(182);
-            simulatedData.add(222);
-            simulatedData.add(252);
-            simulatedData.add(238);
-            simulatedData.add(202);
-            simulatedData.add(222);
-            simulatedData.add(302);
-            simulatedData.add(362);
-        } else if (year == 2013) {
-            simulatedData.add(322);
-            simulatedData.add(264);
-            simulatedData.add(231);
-            simulatedData.add(182);
-            simulatedData.add(182);
-            simulatedData.add(222);
-            simulatedData.add(272);
-            simulatedData.add(258);
-            simulatedData.add(222);
-            simulatedData.add(282);
-            simulatedData.add(332);
-            simulatedData.add(352);
-        } else {
-            simulatedData.add(282);
-            simulatedData.add(224);
-            simulatedData.add(201);
-            simulatedData.add(182);
-            simulatedData.add(222);
-            simulatedData.add(222);
-            simulatedData.add(252);
-            simulatedData.add(238);
-            simulatedData.add(232);
-            simulatedData.add(222);
-            simulatedData.add(332);
-            simulatedData.add(382);
+    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long productGroupId, Integer year) {
+        try {
+            Query q = em.createQuery("select s from SalesFigureEntity s where s.store.id = ?1 AND s.productGroup.id = ?2 AND s.schedule.year = ?3 ")
+                    .setParameter(1, StoreId)
+                    .setParameter(2, productGroupId)
+                    .setParameter(3, year);
+            return q.getResultList();
+        } catch (Exception ex) {
         }
-        return simulatedData;
+        return new ArrayList<>();
     }
 
 }

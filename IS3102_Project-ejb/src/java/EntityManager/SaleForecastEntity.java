@@ -6,14 +6,11 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -24,32 +21,33 @@ public class SaleForecastEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;    
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date month;
-    private Integer quantity;
+    private Long id;            
     @ManyToOne
     private StoreEntity store;
     @ManyToOne
     private ProductGroupEntity productGroup;
+    @ManyToOne
+    private MonthScheduleEntity schedule;
+            
+    private Integer quantity;
     
-    public SaleForecastEntity(){}
+    public SaleForecastEntity(){}    
 
-    public SaleForecastEntity(Date month, Integer quantity, StoreEntity store, ProductGroupEntity productGroup) {
-        this.month = month;
-        this.quantity = quantity;
+    public SaleForecastEntity(StoreEntity store, ProductGroupEntity productGroup, MonthScheduleEntity schedule, Integer quantity) {
         this.store = store;
         this.productGroup = productGroup;
-    }        
+        this.schedule = schedule;
+        this.quantity = quantity;
+    }            
+
+    public MonthScheduleEntity getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(MonthScheduleEntity schedule) {
+        this.schedule = schedule;
+    }    
     
-    public Date getMonth() {
-        return month;
-    }
-
-    public void setMonth(Date month) {
-        this.month = month;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
