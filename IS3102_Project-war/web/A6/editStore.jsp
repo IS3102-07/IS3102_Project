@@ -1,3 +1,4 @@
+<%@page import="EntityManager.CountryEntity"%>
 <%@page import="HelperClasses.StoreHelper"%>
 <%@page import="EntityManager.RegionalOfficeEntity"%>
 <%@page import="java.util.List"%>
@@ -64,6 +65,24 @@
                                                 if (ro.getId() != storeHelper.regionalOffice.getId()) {
                                         %>
                                         <option value="<%= ro.getId()%>"><%= ro.getName()%></option>
+                                        <%
+                                                }
+                                            }
+                                        %>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="input_address">Country</label>                                    
+                                    <select name="countryID" class="form-control" required="true">
+                                        <option value="<%= storeHelper.country.getId()%>"> <%= storeHelper.country.getName()%> </option>
+
+                                        <% List<CountryEntity> countryList = (List<CountryEntity>) request.getAttribute("countryList");
+                                            for (CountryEntity ce : countryList) {
+                                                if (ce.getId() != storeHelper.country.getId()) {
+                                        %>
+                                        <option value="<%= ce.getId()%>"><%= ce.getName()%></option>
                                         <%
                                                 }
                                             }

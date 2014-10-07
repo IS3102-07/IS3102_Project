@@ -75,7 +75,16 @@
                                     <form role="form" action="../TransferOrderLineItemManagement_Servlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text"  >
+                                            <select required="true" name="sku" class="form-control">
+                                                <%
+                                                    List<ItemStorageBinHelper> listOfItems1 = (List<ItemStorageBinHelper>) session.getAttribute("listOfLineItems");
+                                                    if (listOfItems1 != null) {
+                                                        for (int i=0; i<listOfItems1.size(); i++) {
+                                                            out.println("<option value='" + listOfItems1.get(i).getSKU()+ "'>" + listOfItems1.get(i).getSKU() + "</option>");
+                                                        }
+                                                    }
+                                                %>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Quantity</label>
@@ -106,7 +115,7 @@
                             </div>
                         </div>
                         <!-- /.row -->
-<div class="col-lg-6">
+                        <div class="col-lg-6">
                             <div class="panel panel-default">
 
                                 <div class="panel-heading">

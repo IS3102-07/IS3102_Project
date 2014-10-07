@@ -1,3 +1,4 @@
+<%@page import="EntityManager.CountryEntity"%>
 <%@page import="EntityManager.RegionalOfficeEntity"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -54,11 +55,25 @@
                                 <div class="form-group">
                                     <label for="input_address">Regional Office</label>                                    
                                     <select name="regionalOfficeId" class="form-control" required="true">                                        
-                                        <% List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList"); 
-                                        
+                                        <% List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
+
                                             for (RegionalOfficeEntity ro : regionalOfficeList) {
                                         %>
-                                        <option value="<%= ro.getId() %>"><%= ro.getName() %></option>
+                                        <option value="<%= ro.getId()%>"><%= ro.getName()%></option>
+                                        <%
+                                            }
+                                        %>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input_address">Country</label>                                    
+                                    <select name="countryID" class="form-control" required="true">                                        
+                                        <% List<CountryEntity> countryList = (List<CountryEntity>) request.getAttribute("countryList");
+
+                                            for (CountryEntity ce : countryList) {
+                                        %>
+                                        <option value="<%= ce.getId()%>"><%= ce.getName()%></option>
                                         <%
                                             }
                                         %>

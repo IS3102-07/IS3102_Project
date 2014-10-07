@@ -26,9 +26,19 @@ public class CountryEntity implements Serializable {
     private List<SupplierEntity> suppliers;
     @OneToMany(mappedBy="country")
     private List<WarehouseEntity> warehouses;
+    @OneToMany(mappedBy="country")
+    private List<StoreEntity> stores;
 
     public List<SupplierEntity> getSupplier() {
         return suppliers;
+    }
+
+    public List<StoreEntity> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<StoreEntity> stores) {
+        this.stores = stores;
     }
 
     public void setSupplier(List<SupplierEntity> supplier) {

@@ -8,11 +8,7 @@ package OperationalCRM.LoyaltyAndRewards;
 
 import javax.ejb.Local;
 
-/**
- *
- * @author Jason
- */
 @Local
 public interface LoyaltyAndRewardsBeanLocal {
-    
+    public Integer getMemberLoyaltyPointsAmount(String email);
 }

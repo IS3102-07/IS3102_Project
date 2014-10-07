@@ -5,6 +5,7 @@ import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
+import Store_InventoryManagement.RetailInventoryControl.RetailInventoryControlLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -22,9 +23,15 @@ public class WebServiceBean {
     @EJB
     FacilityManagementBeanLocal FacilityManagementBeanLocal;
 
+    @EJB
+    RetailInventoryControlLocal RetailInventoryControlLocal;
+
     @WebMethod
-    public Long POSloginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
+    public Long posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
         StaffEntity staffEntity = AccountManagementBeanLocal.loginStaff(email, password);
+        if (staffEntity == null) {
+            return null;
+        }
         // Check roles, only admin, cashier or store manager can login into POS
         List<RoleEntity> roles = staffEntity.getRoles();
         for (RoleEntity role : roles) {

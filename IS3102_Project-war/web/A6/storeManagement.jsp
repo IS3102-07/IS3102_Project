@@ -94,6 +94,7 @@
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Store Name</th> 
                                                             <th>Regional Office</th>
+                                                            <th>Country</th>
                                                             <th>Address</th>
                                                             <th>Telephone</th>
                                                             <th>Email Address</th>
@@ -110,6 +111,7 @@
                                                             <td><input type="checkbox" name="delete" value="<%= model.store.getId()%>" /></td>
                                                             <td><%= model.store.getName()%></td>     
                                                             <td><%= model.regionalOffice.getName()%></td>
+                                                            <td><%= model.store.getCountryEntity().getName() %></td>
                                                             <td><%= model.store.getAddress()%></td>
                                                             <td><%= model.store.getTelephone()%></td>
                                                             <td><%= model.store.getEmail()%></td>

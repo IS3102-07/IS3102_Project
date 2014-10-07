@@ -67,7 +67,7 @@
                                     <form role="form" action="../ShippingOrderLineItemManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text"  value="<%=lineItem.getItem().getSKU()%>">
+                                            <input class="form-control" name="sku" type="text"  value="<%=lineItem.getItem().getSKU()%>" disabled/>
                                         </div>
                                         <div class="form-group">
                                             <label>Quantity</label>
@@ -78,10 +78,10 @@
                                         </div>  
                                         <input type="hidden" value="<%=shippingOrder.getId()%>" name="id">
                                         <input type="hidden" value="<%=lineItem.getId()%>" name="lineitemId">
-                                    </form>
+                                        <input type="hidden" value="<%=lineItem.getItem().getSKU()%>" name="sku">                                    </form>
                                 </div>
                             </div>
-                        </div>
+                        </div>                              
                     </div>
 
                 </div>
