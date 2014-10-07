@@ -5,6 +5,7 @@
  */
 package CorporateManagement.FacilityManagement;
 
+import EntityManager.CountryEntity;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
@@ -274,15 +275,18 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public StoreEntity createStore(String storeName, String address, String telephone, String email) {
+    public StoreEntity createStore(String storeName, String address, String telephone, String email, Long countryID) {
         System.out.println("createStore() called with name:" + storeName);
         String name;
         Long id;
         try {
-
             StoreEntity storeEntity = new StoreEntity();
-            storeEntity.create(storeName, address, telephone, email);
+            CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
+            storeEntity.create(storeName, address, telephone, email, countryEntity);
             em.persist(storeEntity);
+            countryEntity.getStores().add(storeEntity);
+            em.merge(countryEntity);
+            em.flush();
             name = storeEntity.getName();
             id = storeEntity.getId();
             System.out.println("Store Name \"" + name + "\" registered successfully as id:" + id);
@@ -314,16 +318,22 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
-    public Boolean editStore(Long id, String storeName, String address, String telephone, String email) {
+    public Boolean editStore(Long id, String storeName, String address, String telephone, String email, Long countryID) {
         System.out.println("editStore() called with ID:" + id);
         try {
             StoreEntity storeEntity = em.find(StoreEntity.class, id);
-
+            //remove from old country side
+            storeEntity.getCountryEntity().getStores().remove(storeEntity);
+            //update store
+            CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
             storeEntity.setName(storeName);
             storeEntity.setAddress(address);
             storeEntity.setTelephone(telephone);
             storeEntity.setEmail(email);
+            storeEntity.setCountryEntity(countryEntity);
             em.merge(storeEntity);
+            //add to new country side
+            countryEntity.getStores().add(storeEntity);
             System.out.println("\nServer edited store:\n" + id);
             return true;
 
@@ -557,6 +567,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             StoreHelper helper = new StoreHelper();
             helper.store = store;
             helper.regionalOffice = store.getRegionalOffice();
+            helper.country = store.getCountryEntity();
             System.out.println("return helper class");
             return helper;
         } catch (Exception ex) {
@@ -574,6 +585,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
                 StoreHelper helper = new StoreHelper();
                 helper.store = s;
                 helper.regionalOffice = s.getRegionalOffice();
+                helper.country = s.getCountryEntity();
                 helperList.add(helper);
             }
             return helperList;
@@ -703,6 +715,18 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public List<CountryEntity> getListOfCountries() {
+        System.out.println("getListOfCountries() called.");
+        try {
+            Query q = em.createQuery("Select c from CountryEntity c");
+            return q.getResultList();
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getListOfCountries:\n" + ex);
+            return null;
         }
     }
 

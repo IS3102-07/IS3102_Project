@@ -5,6 +5,7 @@
  */
 package CorporateManagement.FacilityManagement;
  
+import EntityManager.CountryEntity;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
@@ -42,8 +43,8 @@ public interface FacilityManagementBeanLocal {
     public Boolean updateManufacturingFacilityToRegionalOffice(Long regionalOfficeId, Long MFid);
     public Boolean removeManufacturingFacility(Long Id);
     
-    public StoreEntity createStore(String storeName, String address, String telephone, String email);    
-    public Boolean editStore(Long id, String storeName, String address, String telephone, String email);  
+    public StoreEntity createStore(String storeName, String address, String telephone, String email, Long countryID);    
+    public Boolean editStore(Long id, String storeName, String address, String telephone, String email, Long countryID);  
     public StoreEntity viewStoreEntity(Long storeId);
     public List<StoreEntity> viewListOfStore();
     public boolean checkNameExistsOfStore(String name);
@@ -67,6 +68,7 @@ public interface FacilityManagementBeanLocal {
     public WarehouseEntity getWarehouseById(Long Id);
     public List<WarehouseEntity> getWarehouseList();
     
+    public List<CountryEntity> getListOfCountries();
     
     @Remove
     public void remove();
