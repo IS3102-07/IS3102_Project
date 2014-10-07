@@ -29,6 +29,9 @@ public class WebServiceBean {
     @WebMethod
     public Long posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
         StaffEntity staffEntity = AccountManagementBeanLocal.loginStaff(email, password);
+        if (staffEntity == null) {
+            return null;
+        }
         // Check roles, only admin, cashier or store manager can login into POS
         List<RoleEntity> roles = staffEntity.getRoles();
         for (RoleEntity role : roles) {
