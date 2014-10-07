@@ -59,7 +59,16 @@
                                     <form role="form" action="../PurchaseOrderLineItemManagement_AddServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text"  required="true" >
+                                            <select required="true" name="sku" class="form-control">
+                                                <%
+                                                    List<ItemSupplierHelper> listOfItems1 = (List<ItemSupplierHelper>) session.getAttribute("listOfItems");
+                                                    if (listOfItems1 != null) {
+                                                        for (int i=0; i<listOfItems1.size(); i++) {
+                                                            out.println("<option value='" + listOfItems1.get(i).getSKU()+ "'>" + listOfItems1.get(i).getSKU() + "</option>");
+                                                        }
+                                                    }
+                                                %>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Quantity</label>
