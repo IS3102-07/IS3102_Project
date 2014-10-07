@@ -42,7 +42,21 @@
             </section>
             <div class="container">
                 <jsp:include page="../displayMessageLong.jsp" />
-
+                <%
+                    String errMsg = request.getParameter("errMsg");
+                    String goodMsg = request.getParameter("goodMsg");
+                    if (errMsg == null && goodMsg == null) {
+                        out.println("Add new roles or remove existing roles");
+                    } else if ((errMsg != null) && (goodMsg == null)) {
+                        if (!errMsg.equals("")) {
+                            out.println(errMsg);
+                        }
+                    } else if ((errMsg == null && goodMsg != null)) {
+                        if (!goodMsg.equals("")) {
+                            out.println(goodMsg);
+                        }
+                    }
+                %>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row featured-boxes login">

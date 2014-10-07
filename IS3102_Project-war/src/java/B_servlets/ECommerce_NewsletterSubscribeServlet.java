@@ -22,6 +22,8 @@ public class ECommerce_NewsletterSubscribeServlet extends HttpServlet {
         System.out.println("ECommerce_NewsletterSubscribeServlet");
         
         try {
+            HttpSession session;
+            session = request.getSession();
             
             String email = request.getParameter("email");
             System.out.println(email);
