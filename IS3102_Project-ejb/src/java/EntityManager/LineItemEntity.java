@@ -31,6 +31,8 @@ public class LineItemEntity implements Serializable {
     private String packType;
     @ManyToOne
     private StorageBinEntity storageBin;
+    @ManyToOne
+    private SalesRecordEntity salesRecord;
     
     public LineItemEntity(){
     }
@@ -95,6 +97,14 @@ public class LineItemEntity implements Serializable {
     public void setPackType(String packType) {
         this.packType = packType;
     }        
+
+    public SalesRecordEntity getSalesRecord() {
+        return salesRecord;
+    }
+
+    public void setSalesRecord(SalesRecordEntity salesRecord) {
+        this.salesRecord = salesRecord;
+    }
     
     @Override
     public int hashCode() {

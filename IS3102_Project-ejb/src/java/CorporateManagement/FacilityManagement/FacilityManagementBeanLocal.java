@@ -25,14 +25,14 @@ public interface FacilityManagementBeanLocal {
 
     public boolean addRegionalOffice(String regionalOfficeName, String address, String telephone, String email);
     public Boolean editRegionalOffice(Long id, String regionalOfficeName, String address, String telephone, String email);
-    public boolean removeRegionalOffice(String regionalOfficeName);
+    public Boolean removeRegionalOffice(String regionalOfficeName);
     public RegionalOfficeEntity viewRegionalOffice(String regionalOfficeName);
     public List<RegionalOfficeEntity> viewListOfRegionalOffice();
     public boolean checkNameExistsOfRegionalOffice(String name);
 
     public ManufacturingFacilityEntity createManufacturingFacility(String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
     public Boolean editManufacturingFacility(Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
-    public boolean removeManufacturingFacility(String manufacturingFacilityName);
+    public Boolean removeManufacturingFacility(String manufacturingFacilityName);
     public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityEntityId);
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();    
     public boolean checkNameExistsOfManufacturingFacility(String name);

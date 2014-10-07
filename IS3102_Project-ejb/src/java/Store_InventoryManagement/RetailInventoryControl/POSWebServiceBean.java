@@ -2,11 +2,13 @@ package Store_InventoryManagement.RetailInventoryControl;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.SalesRecordEntity;
 import EntityManager.StoreEntity;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
@@ -54,6 +56,12 @@ public class POSWebServiceBean {
     public Integer getMemberLoyaltyPointsAmount(@WebParam(name = "email") String email) {
         Integer loyaltyPointsAmt = LoyaltyAndRewardsBeanLocal.getMemberLoyaltyPointsAmount(email);
         return loyaltyPointsAmt;
+    }
+    
+    @WebMethod
+    public Boolean createSalesRecord(@WebParam(name="storeID") Long storeID, @WebParam(name="posName") String posName,@WebParam(name="itemsPurchased") List<LineItemEntity> itemsPurchased) {
+        //TODO
+        return true;
     }
 
 }
