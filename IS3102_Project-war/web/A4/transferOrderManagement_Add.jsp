@@ -3,7 +3,7 @@
 <%@page import="java.util.List"%>
 <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+        response.sendRedirect("../RetailWarehouseManagement_Servlet");
     } else {
 %>
 <html lang="en">
@@ -22,10 +22,10 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement_view.jsp">Store Inventory Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li>
                                     <i class="icon icon-exchange"></i> <a href="transferOrderManagement.jsp">Transfer Order Management</a>
@@ -42,7 +42,7 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" action="../TransferOrderManagement_AddServlet">
+                            <form role="form" action="../StoreTransferOrderManagement_AddServlet">
                                 <div class="form-group">
                                     <label>Origin</label>
                                     <select class="form-control" name="origin" required="true">

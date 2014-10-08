@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author -VeRyLuNaTiC
+ * @author Neo
  */
 public class StoreTransferOrderManagement_UpdateServlet extends HttpServlet {
 
@@ -35,10 +35,10 @@ public class StoreTransferOrderManagement_UpdateServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StoreTransferOrderManagement_UpdateServlet</title>");            
+            out.println("<title>Servlet TransferOrderManagement_UpdateServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StoreTransferOrderManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TransferOrderManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

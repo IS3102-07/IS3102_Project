@@ -590,8 +590,8 @@
         <servlet-class>A4_servlets.RetailInventoryControl_Servlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RetailManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.RetailManagement_Servlet</servlet-class>
+        <servlet-name>RetailWarehouseManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.RetailWarehouseManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
@@ -1237,8 +1237,8 @@
         <url-pattern>/RetailInventoryControl_Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RetailManagement_Servlet</servlet-name>
-        <url-pattern>/RetailManagement_Servlet</url-pattern>
+        <servlet-name>RetailWarehouseManagement_Servlet</servlet-name>
+        <url-pattern>/RetailWarehouseManagement_Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>

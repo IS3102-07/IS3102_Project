@@ -11,12 +11,11 @@ import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import HelperClasses.ItemStorageBinHelper;
-import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
-import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -29,12 +28,6 @@ import javax.persistence.Query;
 
 @Stateless
 public class StoreInventoryManagementBean implements StoreInventoryManagementBeanLocal {
-
-    @EJB
-    private SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-    @EJB
-    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
-    @Resource
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     StorageBinEntity storageBin;
@@ -312,7 +305,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                 System.out.println("SKU number is " + SKU);
                 System.out.println("originBin: " + originBin.getId() + " moving to targetBin: " + targetBin.getId());
 
-                boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
+                boolean isPass = moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
                 if (!isPass) {
                     System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in source bin or volume of destination bin is insufficient.");
                     throw new Exception();
@@ -485,7 +478,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
         try {
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
             WarehouseEntity warehouse = shippingOrderEntity.getOrigin();
-            StorageBinEntity outbound = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouse.getId());
+            StorageBinEntity outbound = getOutboundStorageBin(warehouse.getId());
             if (outbound == null) {
                 System.out.println("removeItemFromOutboundBinForShipping(): Outbound bin does not exist.");
                 return false;
@@ -620,7 +613,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
     ) {
 
         System.out.println("addItemToReceivingBin() called with SKU:" + SKU + " & wahouseID:" + warehouseID);
-        StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
+        StorageBinEntity inboundBin = getInboundStorageBin(warehouseID);
         em.merge(inboundBin);
         if (inboundBin == null) {
             System.out.println("Failed to add item to receiving bin, receiving bin not found.");
@@ -1174,7 +1167,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             em.flush();
             List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<>();
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-            StorageBinEntity storageBinEntity = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouseID);
+            StorageBinEntity storageBinEntity = getOutboundStorageBin(warehouseID);
             List<StorageBinEntity> storageBins = new ArrayList();
             storageBins.add(storageBinEntity);
 
