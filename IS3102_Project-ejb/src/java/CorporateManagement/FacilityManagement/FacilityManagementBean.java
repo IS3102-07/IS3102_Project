@@ -541,6 +541,26 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return new ArrayList<WarehouseEntity>();
         }
     }
+    @Override
+    public List<WarehouseEntity> getMFWarehouseList() {
+        try {
+            Query q = em.createQuery("select w from WarehouseEntity w where w.isDeleted=false and w.manufaturingFacility is not null");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ArrayList<WarehouseEntity>();
+        }
+    }
+    @Override
+    public List<WarehouseEntity> getStoreWarehouseList() {
+        try {
+            Query q = em.createQuery("select w from WarehouseEntity w where w.isDeleted=false and w.store is not null");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ArrayList<WarehouseEntity>();
+        }
+    }
 
     @Override
     public WarehouseEntity getWarehouseByName(String warehouseName) {

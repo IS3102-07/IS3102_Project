@@ -1,8 +1,8 @@
-package A3_servlets;
+package A4_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.WarehouseEntity;
-import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
+import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
+public class StoreWarehouseManagement_Servlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
     @EJB
-    private ManufacturingInventoryControlBeanLocal micbl;
+    private StoreInventoryManagementBeanLocal simbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -34,14 +34,14 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
             if (destination != null && warehouseId != null) {
 
                 double[] warehousesCapacity = new double[4];
-                double totalPallet = micbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
-                double freePallet = micbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
-                double totalShelf = micbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
-                double freeShelf = micbl.getTotalFreeVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
-                double totalInbound = micbl.getTotalVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
-                double freeInbound = micbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
-                double totalOutbound = micbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
-                double freeOutbound = micbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+                double totalPallet = simbl.getTotalVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
+                double freePallet = simbl.getTotalFreeVolumeOfPalletStorageBin(Long.parseLong(warehouseId));
+                double totalShelf = simbl.getTotalVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
+                double freeShelf = simbl.getTotalFreeVolumeOfShelfStorageBin(Long.parseLong(warehouseId));
+                double totalInbound = simbl.getTotalVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
+                double freeInbound = simbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
+                double totalOutbound = simbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+                double freeOutbound = simbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
 
                 System.out.println("Checking total at start");
                 System.out.println("Total Pallet: "+totalPallet + " , Total Shelf: " + totalShelf + " , Total Inbound: " + totalInbound + " , Total Outbound: " + totalOutbound);
@@ -89,7 +89,7 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
                     response.sendRedirect("A3/manufacturingWarehouseManagement.jsp");
                 }
             } else {
-                List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getMFWarehouseList();
+                List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getStoreWarehouseList();
                 session.setAttribute("warehouses", warehouses);
 
                 if (errMsg == null || errMsg.equals("")) {

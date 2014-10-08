@@ -43,10 +43,14 @@ public interface StoreInventoryManagementBeanLocal {
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU);
     public Integer getTotalVolumeOfInboundStorageBin(Long warehouseID);
     public Integer getTotalVolumeOfOutboundStorageBin(Long warehouseID);
+    public Integer getTotalVolumeOfShelfStorageBin(Long warehouseID);
+    public Integer getTotalVolumeOfPalletStorageBin(Long warehouseID);
     public Integer getTotalVolumeOfRetailOutlet(Long warehouseID);
     public Integer getTotalVolumeOfFurnitureMarketplace(Long warehouseID);
     public Integer getTotalFreeVolumeOfInboundStorageBin(Long warehouseID);
     public Integer getTotalFreeVolumeOfOutboundStorageBin(Long warehouseID);
+    public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID);
+    public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID);
     public Integer getTotalFreeVolumeOfRetailOutlet(Long warehouseID);
     public Integer getTotalFreeVolumeOfFurnitureMarketplace(Long warehouseID);
     
