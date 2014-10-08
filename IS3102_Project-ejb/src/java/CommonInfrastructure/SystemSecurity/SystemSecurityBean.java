@@ -1,8 +1,12 @@
 package CommonInfrastructure.SystemSecurity;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import Config.Config;
 import EntityManager.StaffEntity;
 import EntityManager.MemberEntity;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.Properties;
@@ -22,7 +26,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
 
     @EJB
     AccountManagementBeanLocal accountManagementBean;
-    
+
     @PersistenceContext
     private EntityManager em;
     String emailServerName = "mailauth.comp.nus.edu.sg";
@@ -47,18 +51,18 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 if (i.getEmail().equalsIgnoreCase(email)) {
                     activationCode += i.getActivationCode();
                     staff = em.find(StaffEntity.class, i.getId());
-                    
+
                     System.out.println("\nServer returns activation code of staff:\n" + activationCode);
-                    
+
                     String passwordSalt = accountManagementBean.generatePasswordSalt();
                     String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, activationCode);
-                    
+
                     staff.setPasswordHash(passwordHash);
                     staff.setPasswordSalt(passwordSalt);
                     em.merge(staff);
                 }
             }
-            
+
         } catch (Exception ex) {
             System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
             return false;
@@ -82,7 +86,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setSubject("Island Furniture Staff Account Activation");
                 String messageText = "Greetings from Island Furniture... \n\n"
                         + "Here is your activation code to be keyed in in order to activate your staff account :\n\n"
-                        + "Email: "+ email +"\n\n"
+                        + "Email: " + email + "\n\n"
                         + "Activation Code: " + activationCode + "\n\n"
                         + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/A1/staffActivateAccount.jsp";
                 msg.setText(messageText);
@@ -93,7 +97,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             }
             return true;
         } catch (Exception e) {
-            
+
             e.printStackTrace();
             staff.setAccountActivationStatus(true);
             return false;
@@ -136,7 +140,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setSubject("Island Furniture Member Account Activation");
                 String messageText = "Greetings from Island Furniture... \n\n"
                         + "Here is your activation code to be keyed in in order to activate your member account :\n\n"
-                        + "Email: "+ email +"\n\n"
+                        + "Email: " + email + "\n\n"
                         + "Activation Code: " + activationCode + "\n\n"
                         + "Link to activate your member account: http://localhost:8080/IS3102_Project-war/A1/staffActivateAccount.jsp";
                 msg.setText(messageText);
@@ -189,7 +193,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setSubject("Island Furniture Staff Account Password Reset");
                 String messageText = "Greetings from Island Furniture... \n\n"
                         + "Here is your activation code to be keyed in in order to reset your staff account password :\n\n"
-                        + "Email: "+ email +"\n\n"
+                        + "Email: " + email + "\n\n"
                         + "Activation Code: " + passwordReset + "\n\n"
                         + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/A1/staffResetPasswordCode.jsp";
                 msg.setText(messageText);
@@ -205,7 +209,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
         }
     }
 
-    
     public Boolean sendPasswordResetEmailForMember(String email) {
         System.out.println("Server called sendPasswordResetEmailForMember():");
         String passwordReset = "";
@@ -242,7 +245,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                 msg.setSubject("Island Furniture Staff Account Password Reset");
                 String messageText = "Greetings from Island Furniture... \n\n"
                         + "Here is your activation code to be keyed in in order to reset your staff account password :\n\n"
-                        + "Email: "+ email +"\n\n"
+                        + "Email: " + email + "\n\n"
                         + "Activation Code: " + passwordReset + "\n\n"
                         + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/A1/staffResetPasswordCode.jsp";
                 msg.setText(messageText);
@@ -271,6 +274,9 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                         staffEntity.setAccountActivationStatus(true);
                         staffEntity.setInvalidLoginAttempt(0);
                         em.merge(staffEntity);
+                        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                        out.println(new Date().toString() + ";" + "System" + ";activateStaffAccount();" + staffEntity.getId() + ";");
+                        out.close();
                         return true;
                     } else {
                         System.out.println("\nServer activation code invalid for staff:\n" + email);
@@ -297,6 +303,9 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                         System.out.println("\nServer activation code valid of member:\n" + username);
                         memberEntity.setAccountActivationStatus(true);
                         em.merge(memberEntity);
+                        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                        out.println(new Date().toString() + ";" + "System" + ";activateStaffAccount();" + memberEntity.getId() + ";");
+                        out.close();
                         return true;
                     } else {
                         System.out.println("\nServer activation code invalid of member:\n" + username);
@@ -310,7 +319,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
         }
         return false;
     }
-    
+
     public Boolean validatePasswordResetForStaff(String email, String code) {
         System.out.println("Server called validatePasswordResetForStaff():");
         try {
@@ -334,7 +343,8 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
         }
         return false;
     }
-public Boolean validatePasswordResetForMember(String email, String code) {
+
+    public Boolean validatePasswordResetForMember(String email, String code) {
         System.out.println("Server called validatePasswordResetForStaff():");
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity t");

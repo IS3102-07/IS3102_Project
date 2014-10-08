@@ -8,6 +8,7 @@ package A6_servlets;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
+import EntityManager.StaffEntity;
 import HelperClasses.ManufacturingFacilityHelper;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,6 +42,15 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         Long manufacturingFacilityId;
         String target = request.getPathInfo();
+
+        HttpSession session = request.getSession();
+        StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+        String currentLoggedInStaffID;
+        if (currentLoggedInStaffEntity == null) {
+            currentLoggedInStaffID = "System";
+        } else {
+            currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+        }
 
         switch (target) {
 
@@ -82,8 +93,8 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                         result = "?errMsg=Fail to create manufacturing facility due to duplicated manufacturing facility name.";
                         nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index" + result;
                     } else {
-                        ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(manufacturingFacilityName, address, telephone, email, capacity);
-                        fmBean.addManufacturingFacilityToRegionalOffice(regionalOfficeId, manufacturingFacility.getId());
+                        ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(currentLoggedInStaffID, manufacturingFacilityName, address, telephone, email, capacity);
+                        fmBean.addManufacturingFacilityToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, manufacturingFacility.getId());
                         if (manufacturingFacility != null) {
                             result = "?goodMsg=A new manufacturing facility record has been saved.";
                         } else {
@@ -119,8 +130,8 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 String capacity = request.getParameter("capacity");
                 Long mfId = Long.parseLong(request.getParameter("manufacturingFacilityId"));
                 System.out.println(mfId + " is id");
-                if (fmBean.editManufacturingFacility(mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity))
-                        && fmBean.updateManufacturingFacilityToRegionalOffice(regionalOfficeId, mfId)) {
+                if (fmBean.editManufacturingFacility(currentLoggedInStaffID, mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity))
+                        && fmBean.updateManufacturingFacilityToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, mfId)) {
                     result = "?goodMsg=The manufacturing facility has been updated.";
 
                 } else {
@@ -131,15 +142,28 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
 
             case "/deleteManufacturingFacility":
                 String[] deletes = request.getParameterValues("delete");
+                int numDeleted = 0;
+                int numOfErrors = 0;
                 if (deletes != null) {
                     for (String manufacturingFacilityString : deletes) {
                         String manufacturingFacility_Id = manufacturingFacilityString;
                         mfId = Long.parseLong(manufacturingFacility_Id);
-                        fmBean.removeManufacturingFacility(mfId);
+                        if (fmBean.removeManufacturingFacility(currentLoggedInStaffID, mfId)) {
+                            numDeleted++;
+                        } else {
+                            numOfErrors++;
+                        }
                     }
                 }
-                result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";
-
+                if (numDeleted == 0 && numOfErrors == 0) {
+                    result = "?goodMsg=Nothing selected.";
+                } else if (numOfErrors == 0) {
+                    result = "?goodMsg=Successfully removed: " + numDeleted + " record(s).";
+                } else if (numDeleted == 0) {
+                    result = "?errMsg=Failed to delete: " + numOfErrors + " record(s). There are warehouse(s) still tied to them.";
+                } else {
+                    result = "?errMsg=" + numDeleted + " of " + deletes.length + " records were deleted. " + numOfErrors + " records not deleted as there are warehouse(s) still tied to them.";
+                }
                 nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index" + result;
                 break;
 

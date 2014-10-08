@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.tanesha.recaptcha.ReCaptchaImpl;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
@@ -26,6 +27,14 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession();
+            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            String currentLoggedInStaffID;
+            if (currentLoggedInStaffEntity == null) {
+                currentLoggedInStaffID = "System";
+            } else {
+                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+            }
             String identificationNo = request.getParameter("identificationNo");
             String name = request.getParameter("name");
             String password = request.getParameter("password");
@@ -33,14 +42,14 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String source = request.getParameter("source");
-            System.out.println("im in");
+
             boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
             if (ifExist) {
                 result = "?errMsg=Registration fail. Staff email already registered.";
                 response.sendRedirect(source + result);
             } else {
                 if (source.equals("A1/staffManagement_add.jsp")) {
-                    accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
+                    accountManagementBean.registerStaff(currentLoggedInStaffID, identificationNo, name, phone, email, address, password);
                     systemSecurityBean.sendActivationEmailForStaff(email);
                     result = "?goodMsg=Staff added successfully.";
                     response.sendRedirect("StaffManagement_StaffServlet" + result);
@@ -54,7 +63,7 @@ public class StaffManagement_AddStaffServlet extends HttpServlet {
                     ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
 
                     if (reCaptchaResponse.isValid()) {
-                        accountManagementBean.registerStaff(identificationNo, name, phone, email, address, password);
+                        accountManagementBean.registerStaff(currentLoggedInStaffID, identificationNo, name, phone, email, address, password);
                         systemSecurityBean.sendActivationEmailForStaff(email);
                         result = "?goodMsg=Staff added successfully.";
                         response.sendRedirect(source + result);

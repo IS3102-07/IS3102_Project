@@ -1,6 +1,7 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -8,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RoleManagement_UpdateRoleServlet extends HttpServlet {
 
@@ -19,10 +21,18 @@ public class RoleManagement_UpdateRoleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession();
+            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            String currentLoggedInStaffID;
+            if (currentLoggedInStaffEntity == null) {
+                currentLoggedInStaffID = "System";
+            } else {
+                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+            }
             String roleId = request.getParameter("id");
             String accessLevel = request.getParameter("accessLevel");
 
-            boolean canUpdate = accountManagementBean.updateRole(Long.parseLong(roleId), accessLevel);
+            boolean canUpdate = accountManagementBean.updateRole(currentLoggedInStaffID, Long.parseLong(roleId), accessLevel);
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("roleManagement_update.jsp" + result);

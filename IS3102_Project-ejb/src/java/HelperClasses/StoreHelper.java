@@ -5,6 +5,7 @@
  */
 package HelperClasses;
 
+import EntityManager.CountryEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
 
@@ -14,5 +15,6 @@ import EntityManager.StoreEntity;
  */
 public class StoreHelper {
     public StoreEntity store;
-    public RegionalOfficeEntity regionalOffice;            
+    public RegionalOfficeEntity regionalOffice;
+    public CountryEntity country;
 }

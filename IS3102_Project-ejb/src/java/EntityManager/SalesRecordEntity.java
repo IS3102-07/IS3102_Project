@@ -2,10 +2,13 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
@@ -19,7 +22,9 @@ public class SalesRecordEntity implements Serializable {
     private Date createdDate;
     private Long paymentAmount;
     private String currency;
-    private Boolean handledByStaff;
+    private String posName;
+    @OneToMany(mappedBy = "salesRecord", cascade = {CascadeType.ALL})
+    private List<LineItemEntity> itemsPurchased;
 
     public SalesRecordEntity() {
     }
@@ -30,6 +35,22 @@ public class SalesRecordEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPosName() {
+        return posName;
+    }
+
+    public void setPosName(String posName) {
+        this.posName = posName;
+    }
+
+    public List<LineItemEntity> getItemsPurchased() {
+        return itemsPurchased;
+    }
+
+    public void setItemsPurchased(List<LineItemEntity> itemsPurchased) {
+        this.itemsPurchased = itemsPurchased;
     }
 
     public Date getCreatedDate() {
@@ -55,13 +76,4 @@ public class SalesRecordEntity implements Serializable {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
-
-    public Boolean getHandledByStaff() {
-        return handledByStaff;
-    }
-
-    public void setHandledByStaff(Boolean handledByStaff) {
-        this.handledByStaff = handledByStaff;
-    }
-
 }

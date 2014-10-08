@@ -13,8 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.OneToOne;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Entity;
 
 @Entity
@@ -23,34 +22,24 @@ public class ShoppingListEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @ManyToMany(cascade={CascadeType.ALL})
-    private List<FurnitureEntity> furnitures;
-    
-    @ManyToMany(cascade={CascadeType.ALL})
-    private List<RetailProductEntity> retailProducts;
+    @OneToMany(cascade={CascadeType.ALL})
+    private List<ItemEntity> items;
+
     
     public void create() {
 
     }
     
-
-    
-    public void setFurnitures(List<FurnitureEntity> furnitures) {
-        this.furnitures = furnitures;        
+    public void addItems(ItemEntity item) {
+        this.items.add(item);
     }
     
     public Long getId() {
         return id;
     }
-    public List<FurnitureEntity> getFurnitures() {
-        return this.furnitures;
+    public List<ItemEntity> getItems() {
+        return this.items;
     }
     
-    public void setRetailProducts(List<RetailProductEntity> retailProducts) {
-        this.retailProducts = retailProducts;        
-    }
-    
-    public List<RetailProductEntity> getRetailProducts() {
-        return this.retailProducts;
-    }
+   
 }

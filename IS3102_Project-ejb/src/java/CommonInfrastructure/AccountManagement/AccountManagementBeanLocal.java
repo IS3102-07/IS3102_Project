@@ -24,7 +24,7 @@ public interface AccountManagementBeanLocal {
 
     public boolean checkStaffEmailExists(String email);
 
-    public StaffEntity registerStaff(String identificationNo, String name, String phone, String email, String address, String password);
+    public StaffEntity registerStaff(String callerStaffID, String identificationNo, String name, String phone, String email, String address, String password);
     
     public StaffEntity getStaffByEmail(String email);
     
@@ -32,26 +32,26 @@ public interface AccountManagementBeanLocal {
 
     public RoleEntity getRoleById(Long id);
     
-    public boolean editStaff(Long staffID, String identificationNo, String name, String phone, String password, String address);
+    public boolean editStaff(String callerStaffID, Long staffID, String identificationNo, String name, String phone, String password, String address);
 
-    public boolean editStaff(Long staffID, String phone, String password, String address);
+    public boolean editStaff(String callerStaffID, Long staffID, String phone, String password, String address);
     
     public boolean resetStaffPassword(String email, String password);
 
-    public boolean removeStaff(Long staffID);
+    public boolean removeStaff(String callerStaffID, Long staffID);
 
-    public boolean removeMember(Long memberID);
+    public boolean removeMember(String callerStaffID, Long memberID);
 
     public StaffEntity loginStaff(String email, String password);
 
     public List<StaffEntity> listAllStaff();
 
     //Creating the types of roles
-    public RoleEntity createRole(String name, String accessLevel);
+    public RoleEntity createRole(String callerStaffID, String name, String accessLevel);
 
-    public boolean updateRole(Long roleID, String accessLevel);
+    public boolean updateRole(String callerStaffID, Long roleID, String accessLevel);
 
-    public boolean deleteRole(Long roleID); //Returns true if role deleted successfully
+    public boolean deleteRole(String callerStaffID, Long roleID); //Returns true if role deleted successfully
 
     public boolean checkIfRoleExists(String name);
 
@@ -68,11 +68,11 @@ public interface AccountManagementBeanLocal {
     public boolean checkIfStaffHasRole(Long staffID, Long roleID);
 
     //Assign role to staffs. Returns true if operation is successful, false means either member have that role or role does not exist.
-    public boolean addStaffRole(Long staffID, Long roleID);
+    public boolean addStaffRole(String callerStaffID, Long staffID, Long roleID);
 
-    public boolean removeStaffRole(Long staffID, Long roleID);
+    public boolean removeStaffRole(String callerStaffID, Long staffID, Long roleID);
 
-    public boolean editStaffRole(Long staffID, List<Long> roleIDs);
+    public boolean editStaffRole(String callerStaffID, Long staffID, List<Long> roleIDs);
 
     public CountryEntity getCountry(String countryName);
 
@@ -82,7 +82,7 @@ public interface AccountManagementBeanLocal {
     
     public Integer checkStaffInvalidLoginAttempts(String email);
     
-    public AccessRightEntity createAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
+    public AccessRightEntity createAccessRight(String callerStaffID, Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
     
     public AccessRightEntity isAccessRightExist(Long staffId, Long roleId);
     
@@ -94,5 +94,5 @@ public interface AccountManagementBeanLocal {
     
     public Boolean canStaffAccessToTheWarehouse(Long StaffId, Long warehouseId);
     
-    public Boolean editAccessRight(Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
+    public Boolean editAccessRight(String callerStaffID, Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
 }

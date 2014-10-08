@@ -1,52 +1,39 @@
-package A1_servlets;
 
-import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
-import EntityManager.StaffEntity;
+package B_servlets;
+
+import ECommerce.ECommerceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import javax.servlet.http.HttpSession;
 
-public class WorkspaceAnnouncement_AddServlet extends HttpServlet {
+
+public class ECommerce_ContactUsServlet extends HttpServlet {
 
     @EJB
-    private WorkspaceBeanLocal workspaceBeanLocal;
+    private ECommerceBeanLocal eCommerceBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String result;
         try {
-            HttpSession session = request.getSession();
-            StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
-            String currentLoggedInStaffID;
-            if (currentLoggedInStaffEntity == null) {
-                currentLoggedInStaffID = "System";
-            } else {
-                currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
-            }
-
-            String sender = request.getParameter("sender");
-            String title = request.getParameter("title");
+            String subject = request.getParameter("subject");
             String message = request.getParameter("message");
-            String expiryDate = request.getParameter("expiryDate");
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(expiryDate);
-
-            if (workspaceBeanLocal.makeAnnouncement(currentLoggedInStaffID, sender, title, message, date)) {
-                result = "?goodMsg=Announcement broadcasted.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+            String email = request.getParameter("email");
+            String name = request.getParameter("name");
+            
+            boolean canCreate = eCommerceBean.addFeedback(subject, name, email, message);
+            if (canCreate) {
+                result = "Your message has been submitted successfully. Thank you for contacting us.";
+                response.sendRedirect("B/contactUs.jsp?goodMsg=" + result);
             } else {
-                result = "?errMsg=Failed to broadcast announcement.";
-                response.sendRedirect("A1/workspace_BroadcastAnnouncement.jsp" + result);
+                result = "Submission failed. Please try again";
+                response.sendRedirect("B/contactUs.jsp?errMsg=" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

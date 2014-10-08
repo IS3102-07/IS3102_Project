@@ -6,7 +6,9 @@
 package A6_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.CountryEntity;
 import EntityManager.RegionalOfficeEntity;
+import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.StoreHelper;
 import java.io.IOException;
@@ -19,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,6 +44,15 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
         Long storeId;
         String target = request.getPathInfo();
 
+        HttpSession session = request.getSession();
+        StaffEntity currentLoggedInStaffEntity = (StaffEntity) session.getAttribute("staffEntity");
+        String currentLoggedInStaffID;
+        if (currentLoggedInStaffEntity == null) {
+            currentLoggedInStaffID = "System";
+        } else {
+            currentLoggedInStaffID = currentLoggedInStaffEntity.getId().toString();
+        }
+
         switch (target) {
 
             case "/storeManagement_index":
@@ -55,6 +67,8 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 if (submit_btn.equals("Add Store")) {
                     List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
                     request.setAttribute("regionalOfficeList", regionalOfficeList);
+                    List<CountryEntity> countryList = fmBean.getListOfCountries();
+                    request.setAttribute("countryList", countryList);
                     nextPage = "/A6/createStore";
                 } else if (submit_btn.equals("Delete Store")) {
                     nextPage = "/FacilityManagement_StoreServlet/deleteStore";
@@ -72,6 +86,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
+                    Long countryID = Long.parseLong(request.getParameter("countryID"));
 
                     if (fmBean.checkNameExistsOfStore(storeName)) {
                         // request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
@@ -82,8 +97,8 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                         nextPage = "/FacilityManagement_StoreServlet/storeManagement_index" + result;
                     } else {
                         System.out.println("Posting from create store :");
-                        StoreEntity store = fmBean.createStore(storeName, address, telephone, email);
-                        fmBean.addStoreToRegionalOffice(regionalOfficeId, store.getId());
+                        StoreEntity store = fmBean.createStore(currentLoggedInStaffID, storeName, address, telephone, email, countryID);
+                        fmBean.addStoreToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, store.getId());
                         if (store != null) {
                             result = "?goodMsg=A new store record has been saved.";
 
@@ -104,6 +119,8 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 request.setAttribute("storeHelper", storeHelper);
                 List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
                 request.setAttribute("regionalOfficeList", regionalOfficeList);
+                List<CountryEntity> countryList = fmBean.getListOfCountries();
+                request.setAttribute("countryList", countryList);
                 nextPage = "/A6/editStore";
                 break;
 
@@ -114,9 +131,10 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 Long id = Long.parseLong(request.getParameter("storeId"));
                 Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
+                Long countryID = Long.parseLong(request.getParameter("countryID"));
 
-                if (fmBean.editStore(id, storeName, address, telephone, email)
-                        && fmBean.updateStoreToRegionalOffice(regionalOfficeId, id)) {
+                if (fmBean.editStore(currentLoggedInStaffID, id, storeName, address, telephone, email, countryID)
+                        && fmBean.updateStoreToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, id)) {
                     result = "?goodMsg=The store has been updated.";
                 } else {
                     result = "?errMsg=Fail to edit store.";
@@ -130,7 +148,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     for (String storeString : deletes) {
                         String store_Id = storeString;
                         storeId = Long.parseLong(store_Id);
-                        fmBean.removeStore(storeId);
+                        fmBean.removeStore(currentLoggedInStaffID, storeId);
                     }
                 }
                 result = "?goodMsg=Successfully removed: " + deletes.length + " record(s).";

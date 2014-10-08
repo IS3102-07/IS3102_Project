@@ -1448,15 +1448,15 @@ body.boxed .pricing-table .plan, body.boxed .pricing-table h3 {
 
 /* 6 */
 .featured-box-sixenary i.icon-featured {
-    background-color: #b8a279;
+    background-color: #cccc00;
 }
 
 .featured-box-sixenary h4 {
-    color: #b8a279;
+    color: #cccc00;
 }
 
 .featured-box-sixenary .box-content {
-    border-top-color: #b8a279;
+    border-top-color: #cccc00;
 }
 
 /* Featured Boxes - Login */

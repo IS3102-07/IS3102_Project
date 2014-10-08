@@ -43,6 +43,8 @@ public class StoreEntity implements Serializable {
     private List<ManufacturingFacilityEntity> manufacturingFacilityList;
     @ManyToOne
     private RegionalOfficeEntity regionalOffice;
+    @ManyToOne
+    private CountryEntity country;
     private Boolean isDeleted;
     
     
@@ -53,13 +55,22 @@ public class StoreEntity implements Serializable {
         this.isDeleted=false;
     }
     
-    public void create(String name, String address, String telephone, String email) {
+    public void create(String name, String address, String telephone, String email, CountryEntity country) {
         this.setName(name);
         this.setAddress(address);
         this.setTelephone(telephone);
         this.setEmail(email);
         this.isDeleted=false;
+        this.country = country;
     }    
+
+    public CountryEntity getCountryEntity() {
+        return country;
+    }
+
+    public void setCountryEntity(CountryEntity countryEntity) {
+        this.country = countryEntity;
+    }
 
     public Boolean getIsDeleted() {
         return isDeleted;

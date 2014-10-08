@@ -8,17 +8,40 @@ import javax.persistence.Id;
 
 @Entity
 public class LoyaltyTierEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    String tier;
+    private String tier;
+    private Double amtRequiredPerAnnum;
     private Boolean isDeleted;
 
-    public void LoyaltyTierEntity() {
+    public LoyaltyTierEntity() {
+    }
+
+    public LoyaltyTierEntity(String tier, Double amtRequiredPerAnnum) {
+        this.tier = tier;
+        this.amtRequiredPerAnnum = amtRequiredPerAnnum;
         this.setIsDeleted(false);
     }
-    
+
+    public String getTier() {
+        return tier;
+    }
+
+    public void setTier(String tier) {
+        this.tier = tier;
+    }
+
+    public Double getAmtRequiredPerAnnum() {
+        return amtRequiredPerAnnum;
+    }
+
+    public void setAmtRequiredPerAnnum(Double amtRequiredPerAnnum) {
+        this.amtRequiredPerAnnum = amtRequiredPerAnnum;
+    }
+
     public Boolean getIsDeleted() {
         return isDeleted;
     }
@@ -26,8 +49,8 @@ public class LoyaltyTierEntity implements Serializable {
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
-    
-    public void setLoyalty(String tier){
+
+    public void setLoyalty(String tier) {
         this.tier = tier;
     }
 
@@ -63,5 +86,5 @@ public class LoyaltyTierEntity implements Serializable {
     public String toString() {
         return "em.LoyaltyTier[ id=" + id + " ]";
     }
-    
+
 }

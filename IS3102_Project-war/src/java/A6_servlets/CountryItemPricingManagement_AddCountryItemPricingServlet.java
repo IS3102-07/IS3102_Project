@@ -1,58 +1,46 @@
-package B_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A6_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
-import EntityManager.ItemEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ejb.EJB;
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import javax.servlet.http.Cookie;
+
 /**
  *
- * @author yang
+ * @author Jason
  */
-public class ECommerce_ShoppingCartServlet extends HttpServlet {
+public class CountryItemPricingManagement_AddCountryItemPricingServlet extends HttpServlet {
 
-    @EJB
-    private ItemManagementBeanLocal itemManagementBean;
-    
-    @EJB
-    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        System.out.println("ECommerce_ShoppingCartServlet");
-        try {
-            
-            Cookie[] cookies = request.getCookies();
-            String email = "";
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("memberId")) {
-                        System.out.println("Cookie value : " + cookie.getValue());
-                        email = cookie.getValue();
-                    }
-                }
-            }
-
-            HttpSession session;
-            session = request.getSession();
-            
-            List<ItemEntity> shoppingList = customerInformationManagementBean.shoppingList(email);
-            session.setAttribute("shoppingList", shoppingList);
-            
-            response.sendRedirect("B/shoppingList.jsp");
-            
-        } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CountryItemPricingManagement_AddCountryItemPricingServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CountryItemPricingManagement_AddCountryItemPricingServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
