@@ -673,18 +673,28 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         System.out.println("addCountryItemPricing() called.");
         ReturnHelper helper = new ReturnHelper();
         try {
-            Item_CountryEntity itemCountry = new Item_CountryEntity();
-            itemCountry.setCountry(em.find(CountryEntity.class, countryId));
-            itemCountry.setItem(getItemBySKU(SKU));
-            itemCountry.setRetailPrice(price);
-            em.persist(itemCountry);
-            em.flush();
+            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.country.id=:countryId and cip.item.SKU=:SKU and cip.isDeleted=false");
+            q.setParameter("countryId", countryId);
+            q.setParameter("SKU", SKU);
+            List<Item_CountryEntity> list = q.getResultList();
+            if (list.isEmpty()) {
+                Item_CountryEntity itemCountry = new Item_CountryEntity();
+                itemCountry.setCountry(em.find(CountryEntity.class, countryId));
+                itemCountry.setItem(getItemBySKU(SKU));
+                itemCountry.setRetailPrice(price);
+                em.persist(itemCountry);
+                em.flush();
 
-            System.out.println("addCountryItemPricing(): Successfully added.");
+                System.out.println("addCountryItemPricing(): Successfully added.");
 
-            helper.setMessage("Record Added Successfully");
-            helper.setIsSuccess(true);
-            return helper;
+                helper.setMessage("Record Added Successfully");
+                helper.setIsSuccess(true);
+                return helper;
+            } else {
+                helper.setMessage("Cannot add duplicate record.");
+                helper.setIsSuccess(false);
+                return helper;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("addCountryItemPricing(): Failed to add.");
@@ -757,7 +767,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public List<Item_CountryEntity> listAllCountryItemPricing() {
         System.out.println("listAllCountryItemPricing() called.");
         try {
-            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.isDeleted=false");
+            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.isDeleted=false order by cip.country.name");
             List<Item_CountryEntity> listOfCountryItemPricing = q.getResultList();
             System.out.println("listAllCountryItemPricing(): Successful");
             return listOfCountryItemPricing;
@@ -772,7 +782,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public List<CountryEntity> listAllCountry() {
         System.out.println("listAllCountry() called.");
         try {
-            Query q = em.createQuery("Select c from CountryEntity c");
+            Query q = em.createQuery("Select c from CountryEntity c order by c.name ASC");
             List<CountryEntity> listOfCountry = q.getResultList();
             System.out.println("listAllCountry(): Successful");
             return listOfCountry;

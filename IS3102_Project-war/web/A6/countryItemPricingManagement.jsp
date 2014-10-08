@@ -18,10 +18,10 @@
                 }
             }
             function add() {
-                document.addItemPricingForm.action = "../CountryItemPricingManagement_AddCountryItemPricingServlet";
-                document.addItemPricingForm.submit();
+                document.itemPricingManagement_Add.action = "../CountryItemPricingManagement_AddCountryItemPricingServlet";
+                document.itemPricingManagement_Add.submit();
             }
-            function remove() {
+            function removeRecord() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -84,7 +84,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Item Pricing" />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Record(s)" onclick="remove()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Record(s)" onclick="removeRecord()"  />
                                                 </div>
                                             </div>
                                             <br/>
@@ -112,7 +112,6 @@
                                                             </td>
                                                             <td>
                                                                 <%=listOfCountryItemPricing.get(i).getCountry().getName()%>
-
                                                             </td>
                                                             <td>
                                                                 <%=listOfCountryItemPricing.get(i).getItem().getSKU()%>
@@ -120,7 +119,7 @@
                                                             <td>
                                                                 <%=listOfCountryItemPricing.get(i).getRetailPrice()%>
                                                             </td>
-                                                            <td><input type="button" value="Update" onclick="<%=listOfCountryItemPricing.get(i).getId()%>"/></td>
+                                                            <td><input class="btn btn-primary" type="button" value="Update" onclick="update(<%=listOfCountryItemPricing.get(i).getId()%>)"/></td>
                                                         </tr>
                                                         <%
                                                                     }
@@ -136,61 +135,61 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Item Pricing"/>
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Record(s)" onclick="remove()"  />
+                                                    <input class="btn btn-primary" name="btnRemove" type="button" value="Remove Record(s)" onclick="removeRecord()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">  
 
                                         </div>
-                                        <input type="hidden" name="bomId" value="<%=session.getAttribute("bomId")%>"/>  
-                                        <div id="addItemPricingForm" hidden>
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-3"><br>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    Country:
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-control" name="country"> 
-                                                                        <%
-                                                                            List<CountryEntity> listOfCountry = (List<CountryEntity>) session.getAttribute("listOfCountry");
-                                                                            for (CountryEntity c : listOfCountry) {
-                                                                                Long countryId = c.getId();
-                                                                                String countryName = c.getName();
-                                                                                out.print("<option value=\"" + countryId + "\">" + countryName + "</option>");
-                                                                            }
-                                                                        %>
-                                                                    </select>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    SKU:
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" name="sku"/>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    Price:
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control" name="price"/>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
 
-
-                                                        <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="add()"  />
-                                                    </div>
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </form>
+                                <form name="itemPricingManagement_Add" onsubmit="add()">
+                                    <div id="addItemPricingForm" hidden>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-3"><br>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                Country:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control" name="country"> 
+                                                                    <%
+                                                                        List<CountryEntity> listOfCountry = (List<CountryEntity>) session.getAttribute("listOfCountry");
+                                                                        for (CountryEntity c : listOfCountry) {
+                                                                            Long countryId = c.getId();
+                                                                            String countryName = c.getName();
+                                                                            out.print("<option value=\"" + countryId + "\">" + countryName + "</option>");
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                SKU:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" name="sku" required/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Price:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" step="any" class="form-control" name="price" required/>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /.panel-body -->
                                 </form>
                             </div>
                             <!-- /.panel -->
