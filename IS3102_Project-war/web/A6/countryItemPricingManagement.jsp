@@ -1,17 +1,228 @@
-<%-- 
-    Document   : countryItemPricingManagement
-    Created on : Oct 8, 2014, 5:23:52 PM
-    Author     : Jason
---%>
+<%@page import="EntityManager.CountryEntity"%>
+<%@page import="EntityManager.Item_CountryEntity"%>
+<%@page import="EntityManager.LineItemEntity"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="EntityManager.FurnitureEntity"%>
+<%@page import="EntityManager.BillOfMaterialEntity"%>
+<%@page import="java.util.List"%>
+<html lang="en">
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+    <jsp:include page="../header2.html" />
+
     <body>
-        <h1>Hello World!</h1>
+        <script>
+            function checkAll(source) {
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+            function add() {
+                document.addItemPricingForm.action = "../CountryItemPricingManagement_AddCountryItemPricingServlet";
+                document.addItemPricingForm.submit();
+            }
+            function remove() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    alert("No record(s) selected.");
+                    window.event.returnValue = false;
+                } else {
+
+                    var yes = confirm("Are you sure?!");
+                    if (yes === true) {
+                        window.event.returnValue = true;
+                        document.itemPricingManagement.action = "../CountryItemPricingManagement_RemoveCountryItemPricingServlet";
+                        document.itemPricingManagement.submit();
+                    } else {
+                        window.event.returnValue = false;
+                    }
+                }
+            }
+        </script>
+        <div id="wrapper">
+            <jsp:include page="../menu1.jsp" />
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Item Pricing Management</h1>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-dollar"></i>&nbsp;Item Pricing Management
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"> <%
+                                    String errMsg = request.getParameter("errMsg");
+                                    if (errMsg == null || errMsg.equals("")) {
+                                        errMsg = "Welcome to Item Pricing Management";
+                                    }
+                                    out.println(errMsg);
+                                    %>                                  
+                                </div>
+                                <!-- /.panel-heading -->
+                                <form name="itemPricingManagement">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Item Pricing" />
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Record(s)" onclick="remove()"  />
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:5%"><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th style="width:20%">Country</th>
+                                                            <th style="width:15%">SKU</th>
+                                                            <th style="width:15%">Price</th>
+                                                            <th style="width:10%">Update</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            List<Item_CountryEntity> listOfCountryItemPricing = (List<Item_CountryEntity>) (session.getAttribute("listOfCountryItemPricing"));
+                                                            try {
+                                                                if (listOfCountryItemPricing != null) {
+                                                                    for (int i = 0; i < listOfCountryItemPricing.size(); i++) {
+                                                        %>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="checkbox" name="delete" value="<%=listOfCountryItemPricing.get(i).getId()%>" />
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfCountryItemPricing.get(i).getCountry().getName()%>
+
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfCountryItemPricing.get(i).getItem().getSKU()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfCountryItemPricing.get(i).getRetailPrice()%>
+                                                            </td>
+                                                            <td><input type="button" value="Update" onclick="<%=listOfCountryItemPricing.get(i).getId()%>"/></td>
+                                                        </tr>
+                                                        <%
+                                                                    }
+                                                                }
+                                                            } catch (Exception ex) {
+                                                                System.out.println(ex);
+                                                            }
+                                                        %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.table-responsive -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Item Pricing"/>
+                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Record(s)" onclick="remove()"  />
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="id" value="">  
+
+                                        </div>
+                                        <input type="hidden" name="bomId" value="<%=session.getAttribute("bomId")%>"/>  
+                                        <div id="addItemPricingForm" hidden>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-3"><br>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    Country:
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control" name="country"> 
+                                                                        <%
+                                                                            List<CountryEntity> listOfCountry = (List<CountryEntity>) session.getAttribute("listOfCountry");
+                                                                            for (CountryEntity c : listOfCountry) {
+                                                                                Long countryId = c.getId();
+                                                                                String countryName = c.getName();
+                                                                                out.print("<option value=\"" + countryId + "\">" + countryName + "</option>");
+                                                                            }
+                                                                        %>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    SKU:
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control" name="sku"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    Price:
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control" name="price"/>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+
+                                                        <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="add()"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </form>
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+            });
+
+            $(".btnAdd").click(function () {
+                $("html, body").animate({scrollTop: $(document).height()}, "slow");
+                $("#addItemPricingForm").show("slow", function () {
+                });
+            });
+        </script>
+
     </body>
+
 </html>

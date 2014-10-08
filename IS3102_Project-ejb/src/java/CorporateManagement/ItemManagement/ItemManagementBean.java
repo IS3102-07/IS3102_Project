@@ -767,4 +767,19 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
+
+    @Override
+    public List<CountryEntity> listAllCountry() {
+        System.out.println("listAllCountry() called.");
+        try {
+            Query q = em.createQuery("Select c from CountryEntity c");
+            List<CountryEntity> listOfCountry = q.getResultList();
+            System.out.println("listAllCountry(): Successful");
+            return listOfCountry;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllCountry(): Failed to retrieve list.");
+            return null;
+        }
+    }
 }

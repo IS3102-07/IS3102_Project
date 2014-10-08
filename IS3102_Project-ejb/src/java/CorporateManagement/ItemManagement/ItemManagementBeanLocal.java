@@ -3,6 +3,7 @@ package CorporateManagement.ItemManagement;
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.BillOfMaterialEntity;
+import EntityManager.CountryEntity;
 import EntityManager.Item_CountryEntity;
 import EntityManager.RawMaterialEntity;
 import EntityManager.ProductGroupEntity;
@@ -69,6 +70,7 @@ public interface ItemManagementBeanLocal {
     public ReturnHelper editCountryItemPricing(Long countryItemId, double price);
     public Item_CountryEntity getCountryItemPricing(Long countryItemId);
     public List<Item_CountryEntity> listAllCountryItemPricing();
+    public List<CountryEntity> listAllCountry();
 
     @Remove
     public void remove();
