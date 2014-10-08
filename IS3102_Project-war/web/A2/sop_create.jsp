@@ -1,3 +1,4 @@
+<%@page import="EntityManager.SaleForecastEntity"%>
 <%@page import="EntityManager.ProductGroupEntity"%>
 <%@page import="HelperClasses.StoreHelper"%>
 <%@page import="EntityManager.MonthScheduleEntity"%>
@@ -12,6 +13,13 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>        
+        
+        <style>
+            select {
+                max-width: 300px;
+            }
+        </style>
+        
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
@@ -36,13 +44,7 @@
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
-                    <!-- /.row -->
-
-                    <style>
-                        select {
-                            max-width: 300px;
-                        }
-                    </style>
+                    <!-- /.row -->                    
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -66,24 +68,26 @@
                                 <div class="panel-body">
 
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_create_POST">
+                                        <% SaleForecastEntity saleForecast = (SaleForecastEntity) request.getAttribute("saleForecast"); %>
                                         <div class="form-group">
                                             <label>Sales Forecast</label>
-                                            <input id="input_saleForecast" type="number" class="form-control" name="saleForecast" value="300" required="true" readonly="true">
+                                            <input id="input_saleForecast" type="number" class="form-control" name="saleForecast" value="<%=saleForecast.getQuantity()%>" readonly>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Production Plan</label>
-                                            <input id="input_productionPlan" type="number" class="form-control" name="productionPlan" required="true" readonly="true">
+                                            <input id="input_productionPlan" type="number" class="form-control" name="productionPlan" readonly>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Current Inventory Level</label>
-                                            <input id="input_currentInventory" type="number" class="form-control" name="currentInventory" value="20" required="true" readonly="true">
+                                            <% Integer currentInventory = (Integer) request.getAttribute("currentInventoryLevel"); %>
+                                            <input id="input_currentInventory" type="number" class="form-control" name="currentInventory" value="<%= currentInventory %>" readonly>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Target Inventory Level</label>
-                                            <input id="input_targetInventoty" type="number" class="form-control" name="targetInventory" required="true" >
+                                            <input id="input_targetInventoty" type="number" class="form-control" name="targetInventory" required>
                                         </div>
 
                                         <input type="submit" class="btn btn-primary" value="Submit">

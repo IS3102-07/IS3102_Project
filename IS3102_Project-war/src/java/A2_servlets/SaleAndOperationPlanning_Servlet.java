@@ -10,13 +10,17 @@ import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
+import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.SaleAndOperationPlanEntity;
+import EntityManager.SaleForecastEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.StoreHelper;
+import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
 import MRP.SalesAndOperationPlanning.SOP_Helper;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
+import MRP.SalesForecast.SalesForecastBeanLocal;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +39,11 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleAndOperationPlanning_Servlet extends HttpServlet {
-    
+
+    @EJB
+    private StoreInventoryManagementBeanLocal simBean;
+    @EJB
+    private SalesForecastBeanLocal sfBean;
     @EJB
     private AccountManagementBeanLocal amBean;
     @EJB
@@ -44,7 +52,6 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
     private FacilityManagementBeanLocal fmBean;
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
-    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -105,8 +112,8 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sop_index_Post":
 
                 String storeName = request.getParameter("storeName");
-                StoreEntity store = fmBean.getStoreByName(storeName);                                                
-                StaffEntity currentUser = (StaffEntity)session.getAttribute("staffEntity");
+                StoreEntity store = fmBean.getStoreByName(storeName);
+                StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
                 if (amBean.canStaffAccessToTheStore(currentUser.getId(), store.getId())) {
                     session.setAttribute("sop_storeId", store.getId());
                     nextPage = "/SaleAndOperationPlanning_Servlet/sop_schedule_GET";
@@ -157,18 +164,30 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 break;
 
             case "/sop_create_GET":
-                Long storeId = (long) session.getAttribute("sop_storeId");
-                StoreHelper storeHelper = fmBean.getStoreHelperClass(storeId);
-                request.setAttribute("storeHelper", storeHelper);
+                try {
+                    Long storeId = (long) session.getAttribute("sop_storeId");
+                    StoreHelper storeHelper = fmBean.getStoreHelperClass(storeId);
+                    request.setAttribute("storeHelper", storeHelper);
 
-                productGroupId = (long) session.getAttribute("productGroupId");
-                ProductGroupEntity productGroup = imBean.getProductGroup(productGroupId);
-                request.setAttribute("productGroup", productGroup);
+                    productGroupId = (long) session.getAttribute("productGroupId");
+                    ProductGroupEntity productGroup = imBean.getProductGroup(productGroupId);
+                    request.setAttribute("productGroup", productGroup);
 
-                Long schedulelId = (long) session.getAttribute("scheduleId");
-                MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
-                request.setAttribute("schedule", schedule);
+                    Long schedulelId = (long) session.getAttribute("scheduleId");
+                    MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
+                    request.setAttribute("schedule", schedule);
 
+                    SaleForecastEntity salesForecast = sfBean.getSalesForecast(storeId, productGroupId, schedulelId);
+                    request.setAttribute("saleForecast", salesForecast);
+
+                    int currentInventoryLevel = 0;
+                    for (ProductGroupLineItemEntity lineitem : productGroup.getLineItemList()) {
+                        currentInventoryLevel += simBean.checkItemQty(storeHelper.store.getWarehouse().getId(), lineitem.getFurniture().getSKU());
+                    }
+                    request.setAttribute("currentInventoryLevel", currentInventoryLevel);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 nextPage = "/A2/sop_create";
                 break;
 
@@ -189,9 +208,9 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                     System.err.println("session.getAttribute(\"scheduleId\") == null");
                 }
 
-                storeId = (long) session.getAttribute("sop_storeId");
+                Long storeId = (long) session.getAttribute("sop_storeId");
                 productGroupId = (long) session.getAttribute("productGroupId");
-                schedulelId = (long) session.getAttribute("scheduleId");
+                Long schedulelId = (long) session.getAttribute("scheduleId");
 
                 SaleAndOperationPlanEntity sop = sopBean.createSOP(storeId, schedulelId, productGroupId, saleForecast, productionPlan, currentInventory, targetInventory);
                 if (sop != null) {
@@ -219,11 +238,11 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/sop_edit_GET":
 
                 storeId = (long) session.getAttribute("sop_storeId");
-                storeHelper = fmBean.getStoreHelperClass(storeId);
+                StoreHelper storeHelper = fmBean.getStoreHelperClass(storeId);
                 request.setAttribute("storeHelper", storeHelper);
 
                 schedulelId = (long) session.getAttribute("scheduleId");
-                schedule = sopBean.getScheduleById(schedulelId);
+                MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
                 request.setAttribute("schedule", schedule);
 
                 Long sopId = Long.parseLong((String) request.getAttribute("sopIdStr"));
@@ -231,7 +250,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 SaleAndOperationPlanEntity sopEntity = sopBean.getSOPbyId(sopId);
                 request.setAttribute("sopEntity", sopEntity);
 
-                productGroup = sopBean.getProductGroupBySOP(sopId);
+                ProductGroupEntity productGroup = sopBean.getProductGroupBySOP(sopId);
                 request.setAttribute("productGroup", productGroup);
 
                 nextPage = "/A2/sop_edit";

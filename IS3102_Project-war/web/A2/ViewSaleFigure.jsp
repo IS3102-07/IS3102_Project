@@ -33,6 +33,9 @@
                             </ol>
                         </div>
                     </div>
+                    <%
+                        ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup");
+                    %>
                     <%--
                     <div class="row">                             
                         <div class="col-lg-4">
@@ -51,7 +54,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2012 - Product Group F001 Sales Figure </h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2012 - Product Group <%= productGroup.getName() %> Sales Figure </h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart1"></div>
@@ -63,7 +66,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2013 - Product Group F001 Sales Figure</h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2013 - Product Group <%= productGroup.getName() %> Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart2"></div>
@@ -75,7 +78,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2014 - Product Group F001 Sales Figure</h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2014 - Product Group <%= productGroup.getName() %> Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart3"></div>
@@ -112,8 +115,7 @@
             <%
                 List<SalesFigureEntity> saleDate1 = (List<SalesFigureEntity>) request.getAttribute("saleDate1");
                 List<SalesFigureEntity> saleDate2 = (List<SalesFigureEntity>) request.getAttribute("saleDate2");
-                List<SalesFigureEntity> saleDate3 = (List<SalesFigureEntity>) request.getAttribute("saleDate3");
-                ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup");
+                List<SalesFigureEntity> saleDate3 = (List<SalesFigureEntity>) request.getAttribute("saleDate3");                
             %>
 
         <script>
