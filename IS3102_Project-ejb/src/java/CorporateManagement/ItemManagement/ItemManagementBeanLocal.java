@@ -66,8 +66,9 @@ public interface ItemManagementBeanLocal {
     
     public ReturnHelper addCountryItemPricing(Long countryId, String SKU, double price);
     public ReturnHelper removeCountryItemPricing(Long countryItemId);
-    public ReturnHelper editCountryItemPricing(Long countryItemId, Long countryId, String SKU, double price);
+    public ReturnHelper editCountryItemPricing(Long countryItemId, double price);
     public Item_CountryEntity getCountryItemPricing(Long countryItemId);
+    public List<Item_CountryEntity> listAllCountryItemPricing();
 
     @Remove
     public void remove();

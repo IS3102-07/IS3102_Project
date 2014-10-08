@@ -700,7 +700,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         ReturnHelper helper = new ReturnHelper();
         try {
             Item_CountryEntity itemCountry = em.find(Item_CountryEntity.class, countryItemId);
-            em.remove(itemCountry);
+            itemCountry.setIsDeleted(true);
             System.out.println("removeCountryItemPricing(): Successful.");
 
             helper.setMessage("Record removed successfully.");
@@ -716,15 +716,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public ReturnHelper editCountryItemPricing(Long countryItemId, Long countryId, String SKU, double price) {
+    public ReturnHelper editCountryItemPricing(Long countryItemId, double price) {
         System.out.println("editCountryItemPricing() called.");
         ReturnHelper helper = new ReturnHelper();
         try {
             Item_CountryEntity itemCountry = em.find(Item_CountryEntity.class, countryItemId);
-            CountryEntity country = em.find(CountryEntity.class, countryId);
-            itemCountry.setCountry(country);
-            ItemEntity item = getItemBySKU(SKU);
-            itemCountry.setItem(item);
             itemCountry.setRetailPrice(price);
             em.merge(itemCountry);
             em.flush();
@@ -753,6 +749,21 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("getCountryItemPricing(): Failed to retrieve record.");
+            return null;
+        }
+    }
+
+    @Override
+    public List<Item_CountryEntity> listAllCountryItemPricing() {
+        System.out.println("listAllCountryItemPricing() called.");
+        try {
+            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.isDeleted=false");
+            List<Item_CountryEntity> listOfCountryItemPricing = q.getResultList();
+            System.out.println("listAllCountryItemPricing(): Successful");
+            return listOfCountryItemPricing;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllCountryItemPricing(): Failed to retrieve list.");
             return null;
         }
     }
