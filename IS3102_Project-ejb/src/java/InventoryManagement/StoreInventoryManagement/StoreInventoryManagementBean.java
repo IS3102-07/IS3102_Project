@@ -733,7 +733,8 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                 for (int i = 0; i < currentBin.getListOfLineItems().size(); i++) {
                     ItemEntity itemEntity = currentBin.getListOfLineItems().get(i).getItem();
                     if (itemEntity.getSKU().equals(SKU)) {
-                        qty++;
+                        //exisiting quantity + those in the bin
+                        qty = qty + currentBin.getListOfLineItems().get(i).getQuantity();
                     }
                 }
             }
