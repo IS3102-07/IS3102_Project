@@ -1,46 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A4_servlets;
 
+import EntityManager.TransferOrderEntity;
+import EntityManager.WarehouseEntity;
+import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author -VeRyLuNaTiC
- */
 public class StoreTransferOrderLineItemManagement_Servlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private StoreInventoryManagementBeanLocal simbl;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet StoreTransferOrderLineItemManagement_Servlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet StoreTransferOrderLineItemManagement_Servlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String transferOrderId = request.getParameter("id");
+            String sku = request.getParameter("sku");
+            String quantity = request.getParameter("quantity");
+
+            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+
+            boolean canUpdate = simbl.addLineItemToTransferOrder(Long.parseLong(transferOrderId), sku, Integer.parseInt(quantity));
+            if (!canUpdate) {
+                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
+                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+            } else {
+                List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                session.setAttribute("transferOrders", transferOrders);
+                result = "?goodMsg=Line Item added successfully.&id="+transferOrderId;
+                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+            }
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

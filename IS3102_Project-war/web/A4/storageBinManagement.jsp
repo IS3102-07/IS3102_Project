@@ -3,7 +3,7 @@
 <%@page import="java.util.List"%>
 <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+        response.sendRedirect("../RetailWarehouseManagement_Servlet");
     } else {
 %>
 <html lang="en">
@@ -27,11 +27,11 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.storagebinManagement.action = "../StorageBinManagement_Servlet";
+                    document.storagebinManagement.action = "../StoreStorageBinManagement_Servlet";
                     document.storagebinManagement.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.storagebinManagement.action = "../StorageBinManagement_RemoveServlet";
+                    document.storagebinManagement.action = "../StoreStorageBinManagement_RemoveServlet";
                     document.storagebinManagement.submit();
                 }
             }
@@ -59,10 +59,10 @@
                             <h1 class="page-header">Storage Bin Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement_view.jsp">Store Inventory Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../RetailWarehouseManagement_Servlet?destination=storeWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-archive"></i> Storage Bin Management
@@ -167,7 +167,7 @@
                                                                     }
                                                                 }
                                                             } catch (Exception ex) {
-                                                                response.sendRedirect("manufacturingWarehouseManagement.jsp");
+                                                                response.sendRedirect("storeWarehouseManagement.jsp");
                                                             }
                                                         %>
                                                     </tbody>

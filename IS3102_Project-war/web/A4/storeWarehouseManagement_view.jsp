@@ -6,8 +6,8 @@
 
     <body>
         <script>
-            function updateManufacturingWarehouse(id, destination) {
-                window.location.href = "../ManufacturingWarehouseManagement_Servlet?id=" + id + "&destination=" + destination;
+            function updateStoreWarehouse(id, destination) {
+                window.location.href = "../RetailWarehouseManagement_Servlet?id=" + id + "&destination=" + destination;
             }
         </script>
         <div id="wrapper">
@@ -16,10 +16,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Manufacturing Warehouse Management</h1>
+                            <h1 class="page-header"> Store Inventory Management</h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-home"></i> Manufacturing Warehouse Management
+                                    <i class="icon icon-home"></i> Store Inventory Management
                                 </li>
                             </ol>
                         </div>
@@ -34,7 +34,7 @@
                                     Select a warehouse
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="manufacturingWarehouseManagement">
+                                <form name="storeWarehouseManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
@@ -76,7 +76,7 @@
                                                                 <%=warehouses.get(i).getTelephone()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', 'manufacturingWarehouseManagement.jsp')"/>
+                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateStoreWarehouse('<%=warehouses.get(i).getId()%>', 'storeWarehouseManagement.jsp')"/>
                                                             </td>
                                                         </tr>
                                                         <%

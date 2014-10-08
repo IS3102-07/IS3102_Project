@@ -6,7 +6,7 @@
 <%@page import="java.util.List"%>
 <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
-        pageContext.forward("manufacturingWarehouseManagement_view.jsp");
+        pageContext.forward("storeWarehouseManagement_view.jsp");
     } else {
         try {
             String transferOrderID = request.getParameter("id");
@@ -25,11 +25,11 @@
     <body>
         <script>
             function submitTO() {
-                document.submitTOForm.action = "../TransferOrderLineItemManagement_UpdateServlet";
+                document.submitTOForm.action = "../StoreTransferOrderLineItemManagement_UpdateServlet";
                 document.submitTOForm.submit();
             }
             function removeTOLineItem() {
-                document.removeTOForm.action = "../TransferOrderLineItemManagement_RemoveServlet";
+                document.removeTOForm.action = "../StoreTransferOrderLineItemManagement_RemoveServlet";
                 document.removeTOForm.submit();
             }
         </script>
@@ -47,10 +47,10 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement_view.jsp">Store Inventory Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li>
                                     <i class="icon icon-exchange"></i><a href="transferOrderManagement.jsp"> Transfer Order Management</a>
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="panel-body">
                                     <%if (lineItem == null) {%>
-                                    <form role="form" action="../TransferOrderLineItemManagement_Servlet">
+                                    <form role="form" action="../StoreTransferOrderLineItemManagement_Servlet">
                                         <div class="form-group">
                                             <label>SKU</label>
                                             <input class="form-control" name="sku" type="text"  >
@@ -209,7 +209,7 @@
                     </div>
                     <%                           }
                             } catch (Exception ex) {
-                                response.sendRedirect("../TransferOrderManagement_Servlet");
+                                response.sendRedirect("../StoreTransferOrderManagement_Servlet");
                                 ex.printStackTrace();
                             }
                         }%>

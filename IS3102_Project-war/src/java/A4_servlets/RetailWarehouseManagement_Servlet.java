@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreWarehouseManagement_Servlet extends HttpServlet {
+public class RetailWarehouseManagement_Servlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
