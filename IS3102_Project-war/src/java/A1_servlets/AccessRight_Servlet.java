@@ -96,6 +96,9 @@ public class AccessRight_Servlet extends HttpServlet {
 
                 staffId = Long.parseLong(request.getParameter("staffId"));
                 roleId = Long.parseLong(request.getParameter("roleId"));
+                
+                session.setAttribute("AR_staffId", staffId);
+                session.setAttribute("AR_roleId", roleId);
 
                 StaffEntity staff = amBean.getStaffById(staffId);
                 RoleEntity role = amBean.getRoleById(roleId);

@@ -1,39 +1,37 @@
 package B_servlets;
 
+import EntityManager.FurnitureEntity;
+import EntityManager.MemberEntity;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
-import EntityManager.ShoppingListEntity;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ejb.EJB;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 import javax.servlet.http.Cookie;
-/**
- *
- * @author yang
- */
-public class ECommerce_ShoppingCartServlet extends HttpServlet {
+
+public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
     
     @EJB
+    private AccountManagementBeanLocal accountManagementBean;
+
+    @EJB
     private CustomerInformationManagementBeanLocal customerInformationManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        System.out.println("ECommerce_ShoppingCartServlet");
+        System.out.println("ECommerce_AddFurnitureToListServlet");
         try {
-            
-            String errMsg = request.getParameter("errMsg");
-            System.out.println("Error message received is " + errMsg);
             Cookie[] cookies = request.getCookies();
             String email = "";
             if (cookies != null) {
@@ -44,17 +42,21 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
                     }
                 }
             }
+            
+            MemberEntity member = accountManagementBean.getMemberByEmail(email);
+            String[] deleteArr = request.getParameterValues("delete");
 
-            HttpSession session;
-            session = request.getSession();
-            
-            ShoppingListEntity shoppingList = customerInformationManagementBean.shoppingList(email);
-            session.setAttribute("shoppingList", shoppingList);
-            
-            response.sendRedirect("B/shoppingList.jsp?errMsg=" + errMsg);
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    customerInformationManagementBean.removeFurnitureToList(deleteArr[i], member.getId());
+                }
+                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            } else {
+                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=Nothing selected.");
+            }
             
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            out.println(ex);
         }
     }
 

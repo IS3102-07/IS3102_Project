@@ -47,8 +47,8 @@ public class MemberEntity implements Serializable {
     private String passwordReset;
     private Boolean isDeleted;
 
-    @OneToOne
-    private List<ItemEntity> shoppingList;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private ShoppingListEntity shoppingList;
 
     @OneToOne
     CountryEntity country;
@@ -80,16 +80,16 @@ public class MemberEntity implements Serializable {
         setUnlockCode();
         setPasswordReset();
         this.isDeleted = false;
-        this.shoppingList = new ArrayList();
+        this.shoppingList = new ShoppingListEntity();
         
     }
 
-    public List<ItemEntity> getShoppingList() {
+    public ShoppingListEntity getShoppingList() {
         return shoppingList;
     }
 
-    public void addToShoppingList(ItemEntity item) {
-        this.shoppingList.add(item);
+    public void setShoppingList(ShoppingListEntity shoppingList) {
+        this.shoppingList = shoppingList;
     }
 
     public Boolean getIsDeleted() {

@@ -1,10 +1,28 @@
-<%@page import="EntityManager.ItemEntity"%>
+<%@page import="EntityManager.ShoppingListEntity"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
         <script>
+            function removeItem() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = true;
+                    document.shoppingList.action = "../ECommerce_ShoppingCartServlet";
+                    document.shoppingList.submit();
+                } else {
+                    window.event.returnValue = true;
+                    document.shoppingList.action = "../ECommerce_RemoveItemFromListServlet";
+                    document.shoppingList.submit();
+                }
+            }
             function printDiv(divName) {
                 var printContents = document.getElementById(divName).innerHTML;
                 var originalContents = document.body.innerHTML;
@@ -39,7 +57,7 @@
         </script>
 
         <div class="body">
-            <jsp:include page="menu1.html" />
+            <jsp:include page="menu2.jsp" />
 
 
             <div role="main" class="main shop">
@@ -61,7 +79,20 @@
                                 <div class="col-md-12">
                                     <div class="featured-box featured-box-secundary featured-box-cart">
                                         <div class="box-content">
-                                            <form method="post" action="">
+                                            <form method="post" action="" name="shoppingList">
+                                                <%
+                                                    String errMsg = request.getParameter("errMsg");
+                                                    if (errMsg == null) {
+                                                        out.println("Successfully added item to cart.");
+                                                    } else if (errMsg != null) {
+                                                        if (!errMsg.equals("")) {
+                                                            out.println(errMsg);
+                                                        }
+                                                    } else if (errMsg == "") {
+                                                        out.println("Successfully added item to cart.");
+                                                    }
+
+                                                %>
                                                 <table cellspacing="0" class="shop_table cart">
                                                     <thead>
                                                         <tr>                                                                
@@ -89,16 +120,14 @@
                                                     <tbody>
                                                         <tr class="cart_table_item">
 
-                                                            <%
-
-                                                                List<ItemEntity> shoppingList = (List<ItemEntity>) (session.getAttribute("shoppingList"));
+                                                            <%                                                                ShoppingListEntity shoppingList = (ShoppingListEntity) (session.getAttribute("shoppingList"));
 
                                                                 try {
                                                                     if (shoppingList != null) {
-                                                                        for (int i = 0; i < shoppingList.size(); i++) {
+                                                                        for (int i = 0; i < shoppingList.getItems().size(); i++) {
                                                             %>
                                                             <td class="product-remove">
-                                                                <input type="checkbox" name="delete" value="" />
+                                                                <input type="checkbox" name="delete" value="<%=shoppingList.getItems().get(i).getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
                                                                 <a href="shop-product-sidebar.html">
@@ -106,23 +135,23 @@
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a href="shop-product-sidebar.html"><%=shoppingList.get(i).getName()%></a>
+                                                                <a href="shop-product-sidebar.html"><%=shoppingList.getItems().get(i).getName()%></a>
                                                             </td>
 
                                                             <td class="product-price">
-                                                                $<span class="amount" id="price<%=shoppingList.get(i).getId()%>">299</span>
+                                                                $<span class="amount" id="price<%=shoppingList.getItems().get(i).getId()%>">299</span>
                                                             </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
                                                                     <div class="quantity">
-                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=shoppingList.get(i).getName()%>)">
-                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=shoppingList.get(i).getName()%>">
-                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=shoppingList.get(i).getName()%>)">
+                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=shoppingList.getItems().get(i).getId()%>)">
+                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=shoppingList.getItems().get(i).getId()%>">
+                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=shoppingList.getItems().get(i).getId()%>)">
                                                                     </div>
                                                                 </form>
                                                             </td>
                                                             <td class="product-subtotal">
-                                                                $<span class="amount" id="totalPrice<%=shoppingList.get(i).getName()%>">299</span>
+                                                                $<span class="amount" id="totalPrice<%=shoppingList.getItems().get(i).getId()%>">299</span>
 
                                                             </td>
                                                         </tr>
@@ -137,6 +166,9 @@
 
 
                                                         <tr>
+                                                            <td>
+                                                                <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Item</button></a>
+                                                            </td>
                                                             <td class="actions" colspan="6">
                                                                 <div class="actions-continue">
                                                                     <input type="submit" value="Update Cart" name="update_cart" class="btn btn-default">
@@ -238,6 +270,23 @@
 
                 </div>
 
+            </div>
+
+            <div role="dialog" class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Alert</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="messageBox">Item will be removed. Are you sure?</p>
+                        </div>
+                        <div class="modal-footer">                        
+                            <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeItem()"  />
+                            <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
