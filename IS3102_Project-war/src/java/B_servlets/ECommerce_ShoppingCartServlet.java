@@ -32,6 +32,8 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
         System.out.println("ECommerce_ShoppingCartServlet");
         try {
             
+            String errMsg = request.getParameter("errMsg");
+            System.out.println("Error message received is " + errMsg);
             Cookie[] cookies = request.getCookies();
             String email = "";
             if (cookies != null) {
@@ -49,7 +51,7 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
             ShoppingListEntity shoppingList = customerInformationManagementBean.shoppingList(email);
             session.setAttribute("shoppingList", shoppingList);
             
-            response.sendRedirect("B/shoppingList.jsp");
+            response.sendRedirect("B/shoppingList.jsp?errMsg=" + errMsg);
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

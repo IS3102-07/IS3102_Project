@@ -22,19 +22,28 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
         System.out.println("addFurnitureToList() sku is " + sku + " memberId is " + memberId);
 
         MemberEntity member = em.find(MemberEntity.class, memberId);
-        
+
         Query q = em.createQuery("SELECT t FROM ItemEntity t where t.SKU=:sku");
         q.setParameter("sku", sku);
         ItemEntity item = (ItemEntity) q.getSingleResult();
-        
+
         System.out.println("addFurnitureToList(): item found SKU is " + item.getSKU());
         ShoppingListEntity shoppingList = member.getShoppingList();
         
-        shoppingList.addItems(item);
-        em.merge(member);
-        //em.merge(shoppingList);
+        Boolean itemExistInShoppingList = false;
+        for (int i = 0; i < shoppingList.getItems().size(); i++) {
+            if (shoppingList.getItems().get(i) == item) {
+                itemExistInShoppingList = true;
+            }
+        }
         
-        return true;
+        if (itemExistInShoppingList == true) {
+            return false;
+        } else {
+            shoppingList.addItems(item);
+            em.merge(member);
+            return true;
+        }
     }
 
     @Override
