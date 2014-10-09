@@ -39,7 +39,7 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
             
             if (test) {
                 result = "Account updated successfully.";
-                response.sendRedirect("B/memberProfile.jsp?errMsg=" + result);
+                response.sendRedirect("B/memberProfile.jsp?goodMsg=" + result);
             }
         } catch (Exception ex) {
             out.println(ex);
