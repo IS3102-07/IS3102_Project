@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input class="form-control" name="quantity" type="number" required="true" >
+                                            <input class="form-control" name="quantity" type="number" min="1" max="9999" required="true" >
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" value="Add Line Item" class="btn btn-lg btn-primary btn-block">
