@@ -70,15 +70,15 @@
                                     <input class="form-control" type="text" required="true" name="SKU" value="<%=retailProduct.getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Length</label>
+                                    <label>Length per item</label>
                                     <input class="form-control" type="text" required="true" name="length" value="<%=retailProduct.getHeight()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Width</label>
+                                    <label>Width per item</label>
                                     <input class="form-control" type="text" required="true" name="width" value="<%=retailProduct.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Height</label>
+                                    <label>Height per item</label>
                                     <input class="form-control" type="text" required="true" name="height" value="<%=retailProduct.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">

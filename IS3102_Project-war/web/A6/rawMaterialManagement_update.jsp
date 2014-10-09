@@ -79,15 +79,15 @@
                                     <input class="form-control" type="text"  name="SKU" required="true" value="<%=rawMaterial.getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Length</label>
+                                    <label>Length per item</label>
                                     <input class="form-control" type="text"  name="length" required="true" value="<%=rawMaterial.getLength()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Width</label>
+                                    <label>Width per item</label>
                                     <input class="form-control" type="text"  name="width" required="true" value="<%=rawMaterial.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Height</label>
+                                    <label>Height per item</label>
                                     <input class="form-control" type="text"  name="height" required="true" value="<%=rawMaterial.getHeight()%>" disabled>
                                 </div>
                                 <div class="form-group">
