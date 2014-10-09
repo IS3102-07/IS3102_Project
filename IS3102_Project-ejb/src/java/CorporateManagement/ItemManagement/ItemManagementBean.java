@@ -59,7 +59,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setDescription(description);
             i.setLotSize(lotSize);
             i.setLeadTime(leadTime);
-            i.setPrice(price);
+            i.setCostPrice(price);
             i.getSupplier().getItems().remove(i);
             SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
             i.setSupplier(supplier1);
@@ -210,7 +210,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
+    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL, Integer lotSize, Integer leadTime, Double costPrice, Long supplierId) {
         System.out.println("editRetailProduct() called with SKU:" + SKU);
         try {
             RetailProductEntity i = em.find(RetailProductEntity.class, Long.valueOf(id));
@@ -220,7 +220,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setImageURL(imageURL);
             i.setLotSize(lotSize);
             i.setLeadTime(leadTime);
-            i.setPrice(price);
+            i.setCostPrice(costPrice);
             i.getSupplier().getItems().remove(i);
             SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
             i.setSupplier(supplier1);

@@ -64,11 +64,11 @@ public class StoreEntity implements Serializable {
         this.country = country;
     }    
 
-    public CountryEntity getCountryEntity() {
+    public CountryEntity getCountry() {
         return country;
     }
 
-    public void setCountryEntity(CountryEntity countryEntity) {
+    public void setCountry(CountryEntity countryEntity) {
         this.country = countryEntity;
     }
 
