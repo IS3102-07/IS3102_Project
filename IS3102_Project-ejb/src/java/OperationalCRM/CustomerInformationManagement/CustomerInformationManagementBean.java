@@ -3,6 +3,7 @@ package OperationalCRM.CustomerInformationManagement;
 import javax.ejb.Stateless;
 import EntityManager.ItemEntity;
 import EntityManager.MemberEntity;
+import EntityManager.ShoppingListEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import EntityManager.SubscriptionEntity;
@@ -21,12 +22,18 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
         System.out.println("addFurnitureToList() sku is " + sku + " memberId is " + memberId);
 
         MemberEntity member = em.find(MemberEntity.class, memberId);
+        
         Query q = em.createQuery("SELECT t FROM ItemEntity t where t.SKU=:sku");
         q.setParameter("sku", sku);
         ItemEntity item = (ItemEntity) q.getSingleResult();
-
-        member.addToShoppingList(item);
-
+        
+        System.out.println("addFurnitureToList(): item found SKU is " + item.getSKU());
+        ShoppingListEntity shoppingList = member.getShoppingList();
+        
+        shoppingList.addItems(item);
+        em.merge(member);
+        //em.merge(shoppingList);
+        
         return true;
     }
 
@@ -39,7 +46,7 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
         return true;
     }
 
-    public List<ItemEntity> shoppingList(String email) {
+    public ShoppingListEntity shoppingList(String email) {
         System.out.println("shoppingList() called.");
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity t where t.email=:email");

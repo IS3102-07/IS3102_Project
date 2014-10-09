@@ -6,7 +6,7 @@
 
 package OperationalCRM.CustomerInformationManagement;
 
-import EntityManager.ItemEntity;
+import EntityManager.ShoppingListEntity;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -18,5 +18,5 @@ import javax.ejb.Local;
 public interface CustomerInformationManagementBeanLocal {
     public Boolean addFurnitureToList(String sku, Long memberId);
     public Boolean addEmailToSubscription(String email);
-    public List <ItemEntity> shoppingList(String email);
+    public ShoppingListEntity shoppingList(String email);
 }
