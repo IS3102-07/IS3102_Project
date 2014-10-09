@@ -71,6 +71,7 @@ public interface ItemManagementBeanLocal {
     public Item_CountryEntity getCountryItemPricing(Long countryItemId);
     public List<Item_CountryEntity> listAllCountryItemPricing();
     public List<CountryEntity> listAllCountry();
+    public List<String> listAllItemsSKU();
 
     @Remove
     public void remove();

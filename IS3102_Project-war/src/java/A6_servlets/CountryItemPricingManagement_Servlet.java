@@ -2,6 +2,7 @@ package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.CountryEntity;
+import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +31,8 @@ public class CountryItemPricingManagement_Servlet extends HttpServlet {
             session.setAttribute("listOfCountryItemPricing", listOfCountryItemPricing);
             List<CountryEntity> listOfCountry = itemManagementBean.listAllCountry();
             session.setAttribute("listOfCountry", listOfCountry);
+            List<String> listOfSKUs = itemManagementBean.listAllItemsSKU();
+            session.setAttribute("listOfSKUs", listOfSKUs);
 
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/countryItemPricingManagement.jsp");

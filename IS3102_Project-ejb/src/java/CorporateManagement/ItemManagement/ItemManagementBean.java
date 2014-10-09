@@ -691,7 +691,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
                 helper.setIsSuccess(true);
                 return helper;
             } else {
-                helper.setMessage("Cannot add duplicate record.");
+                helper.setMessage("The price for this item is already set. Please check the list.");
                 helper.setIsSuccess(false);
                 return helper;
             }
@@ -789,6 +789,21 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("listAllCountry(): Failed to retrieve list.");
+            return null;
+        }
+    }
+
+    @Override
+    public List<String> listAllItemsSKU() {
+        System.out.println("listAllItemsSKU() called.");
+        try {
+            Query q = em.createQuery("Select i.SKU from ItemEntity i where i.isDeleted=false order by i.SKU ASC");
+            List<String> listOfSKUs = q.getResultList();
+            System.out.println("listAllItemsSKU(): Successful.");
+            return listOfSKUs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllItemsSKU(): Failed to retrieve list of SKUs.");
             return null;
         }
     }

@@ -21,6 +21,12 @@
                 document.itemPricingManagement_Add.action = "../CountryItemPricingManagement_AddCountryItemPricingServlet";
                 document.itemPricingManagement_Add.submit();
             }
+            function update(id) {
+                itemPricingManagement.id.value = id;
+                itemPricingManagement.setPrice.value = $("#price" + id).val();
+                document.itemPricingManagement.action = "../CountryItemPricingManagement_UpdateCountryItemPricingServlet";
+                document.itemPricingManagement.submit();
+            }
             function removeRecord() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -118,8 +124,12 @@
                                                             </td>
                                                             <td>
                                                                 <%=listOfCountryItemPricing.get(i).getRetailPrice()%>
+                                                                <div hidden id="updateItemPricing<%=listOfCountryItemPricing.get(i).getId()%>" style="float:right">
+                                                                    <input type="number" step="any" class="form-control" style="width:80px;" id="price<%=listOfCountryItemPricing.get(i).getId()%>" required/>
+                                                                    <input class="btn btn-primary" type="button" value="Submit" onclick="update(<%=listOfCountryItemPricing.get(i).getId()%>)"/>
+                                                                </div>
                                                             </td>
-                                                            <td><input class="btn btn-primary" type="button" value="Update" onclick="update(<%=listOfCountryItemPricing.get(i).getId()%>)"/></td>
+                                                            <td><input class="btn btn-primary" id="btnUpdate" onclick="showEditItemPricing(<%=listOfCountryItemPricing.get(i).getId()%>)" type="button" value="Update"/></td>
                                                         </tr>
                                                         <%
                                                                     }
@@ -139,9 +149,8 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">  
-
+                                            <input type="hidden" name="setPrice" value="">
                                         </div>
-
                                     </div>
                                     <!-- /.panel-body -->
                                 </form>
@@ -149,7 +158,7 @@
                                     <div id="addItemPricingForm" hidden>
                                         <div class="row">
                                             <div class="form-group">
-                                                <div class="col-md-3"><br>
+                                                <div class="col-md-3" style="padding-left: 30px"><br>
                                                     <table>
                                                         <tr>
                                                             <td>
@@ -173,7 +182,14 @@
                                                                 SKU:&nbsp;
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control" name="sku" required/>
+                                                                <select class="form-control" name="sku"> 
+                                                                    <%
+                                                                        List<String> listOfSKUs = (List<String>) session.getAttribute("listOfSKUs");
+                                                                        for (String s : listOfSKUs) {
+                                                                            out.print("<option value=\"" + s + "\">" + s + "</option>");
+                                                                        }
+                                                                    %>
+                                                                </select>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -220,6 +236,11 @@
                 $("#addItemPricingForm").show("slow", function () {
                 });
             });
+            function showEditItemPricing(id) {
+                $("#updateItemPricing" + id).show("fast", function () {
+                });
+            }
+
         </script>
 
     </body>
