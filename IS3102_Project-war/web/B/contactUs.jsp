@@ -8,7 +8,7 @@
     <jsp:include page="header.html" />
     <body>
         <div class="body">
-            <jsp:include page="menu1.html" />
+            <jsp:include page="menu2.jsp" />
             <div class="body">
                 <div role="main" class="main">
                     <section class="page-top">

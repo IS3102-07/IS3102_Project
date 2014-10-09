@@ -39,7 +39,7 @@
         </script>
 
         <div class="body">
-            <jsp:include page="menu1.html" />
+            <jsp:include page="menu2.jsp" />
 
 
             <div role="main" class="main shop">
