@@ -50,10 +50,11 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             Boolean testing = customerInformationManagementBean.addFurnitureToList(sku, member.getId()); //got problem here
             System.out.println("ECommerce_AddFurnitureToListServlet: Ends successfully.");
             
+            result = "Item added successfully.";
             if (testing) {
-                response.sendRedirect("ECommerce_ShoppingCartServlet");
+                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=" + result);
             } else {
-                result = "Item already added to cart";
+                result = "Item already added to cart.";
                 response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=" + result);
             }
         } catch (Exception ex) {

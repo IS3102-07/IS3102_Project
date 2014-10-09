@@ -29,14 +29,14 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
 
         System.out.println("addFurnitureToList(): item found SKU is " + item.getSKU());
         ShoppingListEntity shoppingList = member.getShoppingList();
-        
+
         Boolean itemExistInShoppingList = false;
         for (int i = 0; i < shoppingList.getItems().size(); i++) {
             if (shoppingList.getItems().get(i) == item) {
                 itemExistInShoppingList = true;
             }
         }
-        
+
         if (itemExistInShoppingList == true) {
             return false;
         } else {
@@ -44,6 +44,27 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
             em.merge(member);
             return true;
         }
+    }
+
+    public Boolean removeFurnitureToList(String sku, Long memberId) {
+        System.out.println("removeFurnitureToList() sku is " + sku + " memberId is " + memberId);
+
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+
+        Query q = em.createQuery("SELECT t FROM ItemEntity t where t.SKU=:sku");
+        q.setParameter("sku", sku);
+        ItemEntity item = (ItemEntity) q.getSingleResult();
+
+        System.out.println("addFurnitureToList(): item found SKU is " + item.getSKU());
+        ShoppingListEntity shoppingList = member.getShoppingList();
+
+        for (int i = 0; i < shoppingList.getItems().size(); i++) {
+            if (shoppingList.getItems().get(i) == item) {
+                shoppingList.getItems().remove(i);
+            }
+        }
+        em.merge(member);
+        return true;
     }
 
     @Override

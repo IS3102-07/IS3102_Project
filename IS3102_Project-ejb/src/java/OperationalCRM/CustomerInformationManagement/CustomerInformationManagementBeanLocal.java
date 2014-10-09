@@ -17,6 +17,7 @@ import javax.ejb.Local;
 @Local
 public interface CustomerInformationManagementBeanLocal {
     public Boolean addFurnitureToList(String sku, Long memberId);
+    public Boolean removeFurnitureToList(String sku, Long memberId);
     public Boolean addEmailToSubscription(String email);
     public ShoppingListEntity shoppingList(String email);
 }

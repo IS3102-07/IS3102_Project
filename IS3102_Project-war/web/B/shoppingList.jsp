@@ -5,6 +5,24 @@
     <jsp:include page="header.html" />
     <body>
         <script>
+            function removeItem() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = true;
+                    document.shoppingList.action = "../ECommerce_ShoppingCartServlet";
+                    document.shoppingList.submit();
+                } else {
+                    window.event.returnValue = true;
+                    document.shoppingList.action = "../ECommerce_RemoveItemFromListServlet";
+                    document.shoppingList.submit();
+                }
+            }
             function printDiv(divName) {
                 var printContents = document.getElementById(divName).innerHTML;
                 var originalContents = document.body.innerHTML;
@@ -61,7 +79,7 @@
                                 <div class="col-md-12">
                                     <div class="featured-box featured-box-secundary featured-box-cart">
                                         <div class="box-content">
-                                            <form method="post" action="">
+                                            <form method="post" action="" name="shoppingList">
                                                 <%
                                                     String errMsg = request.getParameter("errMsg");
                                                     if (errMsg == null) {
@@ -109,7 +127,7 @@
                                                                         for (int i = 0; i < shoppingList.getItems().size(); i++) {
                                                             %>
                                                             <td class="product-remove">
-                                                                <input type="checkbox" name="delete" value="" />
+                                                                <input type="checkbox" name="delete" value="<%=shoppingList.getItems().get(i).getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
                                                                 <a href="shop-product-sidebar.html">
@@ -148,6 +166,9 @@
 
 
                                                         <tr>
+                                                            <td>
+                                                                <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Item</button></a>
+                                                            </td>
                                                             <td class="actions" colspan="6">
                                                                 <div class="actions-continue">
                                                                     <input type="submit" value="Update Cart" name="update_cart" class="btn btn-default">
@@ -249,6 +270,23 @@
 
                 </div>
 
+            </div>
+
+            <div role="dialog" class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Alert</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="messageBox">Item will be removed. Are you sure?</p>
+                        </div>
+                        <div class="modal-footer">                        
+                            <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeItem()"  />
+                            <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
