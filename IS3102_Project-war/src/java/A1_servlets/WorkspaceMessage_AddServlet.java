@@ -60,6 +60,8 @@ public class WorkspaceMessage_AddServlet extends HttpServlet {
                 session.setAttribute("unreadMessages", workspaceBean.listAllUnreadInboxMessages(staffEntity.getId()));
                 session.setAttribute("inboxMessages", workspaceBean.listAllInboxMessages(staffEntity.getId()));
                 session.setAttribute("sentMessages", workspaceBean.listAllOutboxMessages(staffEntity.getId()));
+                session.setAttribute("receiversString", null);
+                session.setAttribute("receiversMemberID", null);
                 response.sendRedirect("WorkspaceMessage_Servlet?goodMsg=Message sent.");
             }
         } catch (Exception ex) {
