@@ -807,4 +807,38 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
+
+    @Override
+    public List<Item_CountryEntity> listAllItemsOfCountry(Long countryId) {
+        System.out.println("listAllItemsOfCountry() called.");
+        try {
+            Query q = em.createQuery("Select i from Item_CountryEntity i where i.isDeleted=false and i.country.id=:countryId order by i.item.SKU ASC");
+            q.setParameter("countryId", countryId);
+            List<Item_CountryEntity> listOfItemPricing = q.getResultList();
+            System.out.println("listAllItemsOfCountry(): Successful.");
+            return listOfItemPricing;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllItemsOfCountry(): Failed to retrieve list of item pricing.");
+            return null;
+        }
+    }
+
+    @Override
+    public Item_CountryEntity getItemPricing(Long countryId, String SKU) {
+        System.out.println("getItemPricing() called.");
+        try {
+            Query q = em.createQuery("Select i from Item_CountryEntity i where i.isDeleted=false and i.country.id=:countryId and i.item.SKU=:SKU");
+            q.setParameter("countryId", countryId);
+            q.setParameter("SKU", SKU);
+            Item_CountryEntity itemCountry = (Item_CountryEntity) q.getSingleResult();
+            System.out.println("getItemPricing(): Successful.");
+            return itemCountry;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("getItemPricing(): Failed to retrieve item pricing.");
+            return null;
+        }
+    }
+
 }
