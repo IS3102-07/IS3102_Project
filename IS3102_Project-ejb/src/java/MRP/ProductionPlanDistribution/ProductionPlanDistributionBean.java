@@ -17,7 +17,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -52,14 +51,32 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
     }
 
     @Override
-    public Boolean addStoreToManufacturingFacilityAllocationList(Long storeId, Long manufacturingFacilityId) {
+    public Boolean addStore_ManufacturingFacilityConnection(Long storeId, Long manufacturingFacilityId) {
         try {
             StoreEntity store = em.find(StoreEntity.class, storeId);
             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, manufacturingFacilityId);
             store.getManufacturingFacilityList().add(manufacturingFacility);
+            manufacturingFacility.getStoreList().add(store);
             em.merge(store);
             em.merge(manufacturingFacility);
             em.flush();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean removeStore_ManufacturingFacilityConnection(Long storeId, Long mfId) {
+        try {
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, mfId);
+            store.getManufacturingFacilityList().remove(manufacturingFacility);
+            manufacturingFacility.getStoreList().remove(store);
+            em.merge(store);
+            em.merge(manufacturingFacility);
+            em.flush();
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -82,8 +99,8 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
                 Collections.sort(storeList, new CustomeComparator_Store());
                 for (StoreEntity store : storeList) {
                     Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store = ?1 and sop.month = ?2")
-                                .setParameter(1, store)
-                                .setParameter(2, date.get(Calendar.MONTH));
+                            .setParameter(1, store)
+                            .setParameter(2, date.get(Calendar.MONTH));
                     List<SaleAndOperationPlanEntity> sopList = q.getResultList();
                     for (SaleAndOperationPlanEntity sop : sopList) {
                         if (sop.getManufacturingFacility() == null) {

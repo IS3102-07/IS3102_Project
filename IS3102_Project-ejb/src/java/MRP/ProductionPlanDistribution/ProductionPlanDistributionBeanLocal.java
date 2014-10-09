@@ -24,7 +24,9 @@ public interface ProductionPlanDistributionBeanLocal {
     
     public List<ManufacturingFacilityEntity> getManufacturingFacilityListByRegionalOffice(Long regionalOfficeId);
     
-    public Boolean addStoreToManufacturingFacilityAllocationList(Long storeId, Long manufacturingFacilityId);
+    public Boolean addStore_ManufacturingFacilityConnection(Long storeId, Long manufacturingFacilityId);
+    
+    public Boolean removeStore_ManufacturingFacilityConnection(Long storeId, Long mfId);
         
     public Boolean distributeProductionPlan(Long regionalOfficeId, Calendar month);
     
