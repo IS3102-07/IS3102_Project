@@ -5,7 +5,7 @@ import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
-import StoreTransaction.RetailInventoryControl.RetailInventoryControlLocal;
+import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -24,7 +24,7 @@ public class HQWebServiceBean {
     FacilityManagementBeanLocal FacilityManagementBeanLocal;
 
     @EJB
-    RetailInventoryControlLocal RetailInventoryControlLocal;
+    RetailInventoryControlBeanLocal RetailInventoryControlLocal;
 
     @WebMethod
     public Long posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
