@@ -63,5 +63,11 @@ public class POSWebServiceBean {
         //TODO
         return true;
     }
+    
+    @WebMethod
+    public Boolean callSupervisor(@WebParam(name="contactNo") String contactNo) {
+        //TODO
+        return true;
+    }
 
 }
