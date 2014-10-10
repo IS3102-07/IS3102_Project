@@ -358,14 +358,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         try {
             StoreEntity storeEntity = em.find(StoreEntity.class, storeId);
             //remove from old country side
-            storeEntity.getCountryEntity().getStores().remove(storeEntity);
+            storeEntity.getCountry().getStores().remove(storeEntity);
             //update store
             CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
             storeEntity.setName(storeName);
             storeEntity.setAddress(address);
             storeEntity.setTelephone(telephone);
             storeEntity.setEmail(email);
-            storeEntity.setCountryEntity(countryEntity);
+            storeEntity.setCountry(countryEntity);
             em.merge(storeEntity);
             //add to new country side
             countryEntity.getStores().add(storeEntity);
@@ -636,7 +636,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             StoreHelper helper = new StoreHelper();
             helper.store = store;
             helper.regionalOffice = store.getRegionalOffice();
-            helper.country = store.getCountryEntity();
+            helper.country = store.getCountry();
             System.out.println("return helper class");
             return helper;
         } catch (Exception ex) {
@@ -654,7 +654,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
                 StoreHelper helper = new StoreHelper();
                 helper.store = s;
                 helper.regionalOffice = s.getRegionalOffice();
-                helper.country = s.getCountryEntity();
+                helper.country = s.getCountry();
                 helperList.add(helper);
             }
             return helperList;

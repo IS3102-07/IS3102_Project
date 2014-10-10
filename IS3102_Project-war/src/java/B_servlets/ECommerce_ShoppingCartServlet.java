@@ -2,7 +2,7 @@ package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
-import EntityManager.ItemEntity;
+import EntityManager.ShoppingListEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import javax.servlet.http.Cookie;
+
 /**
  *
  * @author yang
@@ -21,7 +22,7 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
-    
+
     @EJB
     private CustomerInformationManagementBeanLocal customerInformationManagementBean;
 
@@ -31,7 +32,9 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         System.out.println("ECommerce_ShoppingCartServlet");
         try {
-            
+
+            String errMsg = request.getParameter("errMsg");
+            System.out.println("Error message received is " + errMsg);
             Cookie[] cookies = request.getCookies();
             String email = "";
             if (cookies != null) {
@@ -45,12 +48,15 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
-            
-            List<ItemEntity> shoppingList = customerInformationManagementBean.shoppingList(email);
+
+            ShoppingListEntity shoppingList = customerInformationManagementBean.shoppingList(email);
             session.setAttribute("shoppingList", shoppingList);
             
-            response.sendRedirect("B/shoppingList.jsp");
-            
+            if (errMsg == null) {
+                errMsg = "";
+            }
+            response.sendRedirect("B/shoppingList.jsp?errMsg=" + errMsg);
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

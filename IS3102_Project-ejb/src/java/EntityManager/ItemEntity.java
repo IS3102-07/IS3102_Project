@@ -39,7 +39,7 @@ public abstract class ItemEntity implements Serializable {
     private Integer height;
     private Integer volume;
     private Boolean isDeleted;
-    private Double price;
+    private Double costPrice;
     @ManyToOne
     private SupplierEntity supplier;
 
@@ -53,7 +53,7 @@ public abstract class ItemEntity implements Serializable {
         this.width = width;
         this.height = height;
         this.volume = _length * width * height;
-        this.price = price;
+        this.costPrice = price;
         this.isDeleted = false;
     }
     
@@ -190,12 +190,12 @@ public abstract class ItemEntity implements Serializable {
         this.supplier = supplier;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getCostPrice() {
+        return costPrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setCostPrice(Double costPrice) {
+        this.costPrice = costPrice;
     }
     
 }

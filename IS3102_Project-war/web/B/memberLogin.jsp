@@ -29,7 +29,7 @@
                 return ok;
             }
         </script>
-        <jsp:include page="menu1.html" />
+        <jsp:include page="menu2.jsp" />
         <div role="main" class="main">
             <section class="page-top">
                 <div class="container">
@@ -46,7 +46,7 @@
                     String errMsg = request.getParameter("errMsg");
                     String goodMsg = request.getParameter("goodMsg");
                     if (errMsg == null && goodMsg == null) {
-                        out.println("Add new roles or remove existing roles");
+                        out.println("");
                     } else if ((errMsg != null) && (goodMsg == null)) {
                         if (!errMsg.equals("")) {
                             out.println(errMsg);

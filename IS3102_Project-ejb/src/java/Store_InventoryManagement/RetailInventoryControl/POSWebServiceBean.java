@@ -2,10 +2,10 @@ package Store_InventoryManagement.RetailInventoryControl;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
 import EntityManager.LineItemEntity;
-import EntityManager.SalesRecordEntity;
 import EntityManager.StoreEntity;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.util.List;
@@ -36,20 +36,29 @@ public class POSWebServiceBean {
 
     @WebMethod
     public Item_CountryEntity getItemCountryBySKU(@WebParam(name = "SKU") String SKU, @WebParam(name = "storeID") Long storeID) {
-        ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
-        if (itemEntity == null) {
+        System.out.println("getItemCountryBySKU() called.");
+        try {
+            ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
+            if (itemEntity == null) {
+                return null;
+            }
+            // Check the store in which country
+            StoreEntity storeEntity = FacilityManagementBeanLocal.getStoreByID(storeID);
+            if (storeEntity == null) {
+                return null;
+            }
+            CountryEntity countryEntity = storeEntity.getCountry();
+
+            // Retrieve the item_CountryEntity for that country
+            Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
+            item_CountryEntity = ItemManagementBeanLocal.getItemPricing(countryEntity.getId(), SKU);
+            return item_CountryEntity;
+        } catch (Exception ex) {
+            System.out.println("getItemCountryBySKU(): Failed");
+            ex.printStackTrace();
             return null;
         }
-        // Check the store in which country
-        StoreEntity storeEntity = FacilityManagementBeanLocal.getStoreByID(storeID);
-        if (storeEntity == null) {
-            return null;
-        }
-        //CountryEntity countryEntity = storeEntity.getCountry();
-        
-        // Retrieve the item_CountryEntity for that country
-        Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
-        return item_CountryEntity;
+
     }
 
     @WebMethod
@@ -57,9 +66,9 @@ public class POSWebServiceBean {
         Integer loyaltyPointsAmt = LoyaltyAndRewardsBeanLocal.getMemberLoyaltyPointsAmount(email);
         return loyaltyPointsAmt;
     }
-    
+
     @WebMethod
-    public Boolean createSalesRecord(@WebParam(name="storeID") Long storeID, @WebParam(name="posName") String posName,@WebParam(name="itemsPurchased") List<LineItemEntity> itemsPurchased) {
+    public Boolean createSalesRecord(@WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased) {
         //TODO
         return true;
     }
@@ -70,4 +79,13 @@ public class POSWebServiceBean {
         return true;
     }
 
+    @WebMethod
+    public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") Integer telNo) {
+        try {
+            //send SMS code TODO
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }

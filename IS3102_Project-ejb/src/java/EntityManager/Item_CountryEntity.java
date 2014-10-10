@@ -23,9 +23,7 @@ public class Item_CountryEntity implements Serializable {
     private CountryEntity country;
     private Boolean isDeleted;
 
-    public void create(CountryEntity country, Double retailPrice) {
-        this.country = country;
-        this.retailPrice = retailPrice;
+    public Item_CountryEntity(){
         isDeleted = false;
     }
 

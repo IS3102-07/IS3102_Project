@@ -1,7 +1,8 @@
-
 package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.CountryEntity;
+import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,23 +29,29 @@ public class CountryItemPricingManagement_Servlet extends HttpServlet {
             String goodMsg = request.getParameter("goodMsg");
             List<Item_CountryEntity> listOfCountryItemPricing = itemManagementBean.listAllCountryItemPricing();
             session.setAttribute("listOfCountryItemPricing", listOfCountryItemPricing);
+            List<CountryEntity> listOfCountry = itemManagementBean.listAllCountry();
+            session.setAttribute("listOfCountry", listOfCountry);
+            List<String> listOfSKUs = itemManagementBean.listAllItemsSKU();
+            session.setAttribute("listOfSKUs", listOfSKUs);
 
             if (errMsg == null && goodMsg == null) {
-                response.sendRedirect("A6/bomManagement.jsp");
+                response.sendRedirect("A6/countryItemPricingManagement.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {
                 if (!errMsg.equals("")) {
-                    response.sendRedirect("A6/bomManagement.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A6/countryItemPricingManagement.jsp?errMsg=" + errMsg);
                 }
             } else if ((errMsg == null && goodMsg != null)) {
                 if (!goodMsg.equals("")) {
-                    response.sendRedirect("A6/bomManagement.jsp?goodMsg=" + goodMsg);
+                    response.sendRedirect("A6/countryItemPricingManagement.jsp?goodMsg=" + goodMsg);
                 }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

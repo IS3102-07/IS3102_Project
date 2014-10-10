@@ -82,15 +82,15 @@ a<%@page import="EntityManager.CountryEntity"%>
                                     <input class="form-control" type="text" required="true" name="SKU" value="<%=furniture.getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Length</label>
+                                    <label>Length per item</label>
                                     <input class="form-control" type="text" required="true" name="length" value="<%=furniture.getLength()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Width</label>
+                                    <label>Width per item</label>
                                     <input class="form-control" type="text" required="true" name="width" value="<%=furniture.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Height</label>
+                                    <label>Height per item</label>
                                     <input class="form-control" type="text" required="true" name="height" value="<%=furniture.getHeight()%>" disabled>
                                 </div>
                                 <div class="form-group">
