@@ -24,4 +24,8 @@ public class SubscriptionEntity implements Serializable {
         this.email = email;
         return true;
     }
+    
+    public String getEmail() {
+        return email;
+    }
 }
