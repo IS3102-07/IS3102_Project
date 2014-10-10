@@ -70,7 +70,7 @@ public class StoreWebServiceBean {
     }
 
     @WebMethod
-    public ReturnHelper createSalesRecord(@WebParam(name = "email") String email, @WebParam(name = "password") String password, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased, @WebParam(name="amountPaid") Double paymentAmount) {
+    public ReturnHelper createSalesRecord(@WebParam(name = "staffEmail") String staffEmail, @WebParam(name = "password") String staffPasword, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased, @WebParam(name="amountPaid") Double paymentAmount, @WebParam(name="memberEmail") String memberEmail) {
         //TODO
         return new ReturnHelper(true, "Checkout successful.");
     }
