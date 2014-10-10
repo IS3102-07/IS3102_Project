@@ -8,7 +8,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface RetailInventoryControlLocal {
+public interface RetailInventoryControlBeanLocal {
 
     public ItemEntity getItemBySKU(String SKU);
     public boolean checkSKUExists(String SKU);

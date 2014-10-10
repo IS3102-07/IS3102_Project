@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class RetailInventoryControl implements RetailInventoryControlLocal {
+public class RetailInventoryControlBean implements RetailInventoryControlBeanLocal {
 
     @PersistenceContext
     private EntityManager em;

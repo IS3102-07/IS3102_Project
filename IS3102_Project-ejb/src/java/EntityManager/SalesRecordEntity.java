@@ -19,9 +19,9 @@ public class SalesRecordEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdDate;
-    private Long paymentAmount;
+    private Double paymentAmount;
     private String currency;
     private String posName;
     @OneToMany(cascade = {CascadeType.ALL})
@@ -32,12 +32,29 @@ public class SalesRecordEntity implements Serializable {
     public SalesRecordEntity() {
     }
 
+    public SalesRecordEntity(MemberEntity member, Double paymentAmount, String currency, String posName, List<LineItemEntity> itemsPurchased) {
+        this.createdDate = new Date();
+        this.member = member;
+        this.paymentAmount = paymentAmount;
+        this.currency = currency;
+        this.posName = posName;
+        this.itemsPurchased = itemsPurchased;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public MemberEntity getMember() {
+        return member;
+    }
+
+    public void setMember(MemberEntity member) {
+        this.member = member;
     }
 
     public String getPosName() {
@@ -64,11 +81,11 @@ public class SalesRecordEntity implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Long getPaymentAmount() {
+    public Double getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(Long paymentAmount) {
+    public void setPaymentAmount(Double paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 

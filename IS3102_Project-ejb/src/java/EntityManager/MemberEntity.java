@@ -108,6 +108,14 @@ public class MemberEntity implements Serializable {
         return getId();
     }
 
+    public List<SalesRecordEntity> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<SalesRecordEntity> purchases) {
+        this.purchases = purchases;
+    }
+    
     public void setId(Long id) {
         this.setId((long) id);
     }
