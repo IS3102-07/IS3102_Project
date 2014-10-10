@@ -19,7 +19,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     private EntityManager em;
 
     public ReturnHelper createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<LineItemEntity> itemsPurchased, Double paymentAmount, String memberEmail) {
-        System.out.println("submitSalesRecord() called;");
+        System.out.println("createSalesRecord() called;");
         StoreEntity storeEntity = null;
         MemberEntity memberEntity = null;
         String currency = "";
@@ -31,10 +31,10 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                 q.setParameter("email", memberEmail);
                 memberEntity = (MemberEntity) q.getSingleResult();
             } catch (NoResultException ex) {
-                System.out.println("submitSalesRecord(): Member does not exist:");
+                System.out.println("createSalesRecord(): Member does not exist:");
                 return new ReturnHelper(false, "Member details could not be retrieved based on the card provided. Contact customer service.");
             } catch (Exception ex) {
-                System.out.println("submitSalesRecord(): Failed to retrieve member based on email:");
+                System.out.println("createSalesRecord(): Failed to retrieve member based on email:");
                 ex.printStackTrace();
                 return new ReturnHelper(false, "System error in retriving membership information.");
             }
@@ -45,7 +45,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             currency = storeEntity.getCountry().getCurrency();
             loyaltyPaymentAmount = paymentAmount / storeEntity.getCountry().getExchangeRate();
         } catch (Exception ex) {
-            System.out.println("submitSalesRecord(): Error in retriving country");
+            System.out.println("createSalesRecord(): Error in retriving country");
             return new ReturnHelper(false, "System error in retriving country information.");
         }
         try {

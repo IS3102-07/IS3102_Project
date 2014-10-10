@@ -15,7 +15,7 @@ public class SalesReportingBean implements SalesReportingBeanLocal {
 
     public ReturnHelper submitSalesRecord(String email, String password, Long storeID, String posName, List<LineItemEntity> itemsPurchased, Double paymentAmount, String memberEmail) {
         System.out.println("submitSalesRecord() called;");
-        //Call HQ Web service to recordSales
+        //TODO Consume HQ Web service to recordSales
         return new ReturnHelper(true, "Sales record created successfully.");
     }
 }
