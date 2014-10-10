@@ -3,6 +3,7 @@ package EntityManager;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import java.util.List;
-import java.util.ArrayList;
+import javax.persistence.OneToMany;
 
 @Entity
 public class MemberEntity implements Serializable {
@@ -51,7 +52,10 @@ public class MemberEntity implements Serializable {
     private ShoppingListEntity shoppingList;
 
     @OneToOne
-    CountryEntity country;
+    private CountryEntity country;
+    
+    @OneToMany(mappedBy="member")
+    private List<SalesRecordEntity> purchases;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     //private FeedbackEntity feedback;
@@ -81,7 +85,7 @@ public class MemberEntity implements Serializable {
         setPasswordReset();
         this.isDeleted = false;
         this.shoppingList = new ShoppingListEntity();
-        
+        this.purchases = new ArrayList<>();
     }
 
     public ShoppingListEntity getShoppingList() {

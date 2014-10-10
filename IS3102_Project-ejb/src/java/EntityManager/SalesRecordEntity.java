@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -25,6 +26,8 @@ public class SalesRecordEntity implements Serializable {
     private String posName;
     @OneToMany(cascade = {CascadeType.ALL})
     private List<LineItemEntity> itemsPurchased;
+    @ManyToOne
+    private MemberEntity member;
 
     public SalesRecordEntity() {
     }
