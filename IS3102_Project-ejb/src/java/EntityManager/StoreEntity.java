@@ -45,24 +45,31 @@ public class StoreEntity implements Serializable {
     private RegionalOfficeEntity regionalOffice;
     @ManyToOne
     private CountryEntity country;
+    @OneToMany(mappedBy="store")
+    private List<SalesRecordEntity> salesRecords;    
     private Boolean isDeleted;
     
     
-    public StoreEntity(){
+    public StoreEntity(String name, String address, String telephone, String email, CountryEntity country){
         this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();
         this.saleAndOperationPlanList = new ArrayList<>();
         this.isDeleted=false;
-    }
-    
-    public void create(String name, String address, String telephone, String email, CountryEntity country) {
+        this.salesRecords = new ArrayList<>();
         this.setName(name);
         this.setAddress(address);
         this.setTelephone(telephone);
         this.setEmail(email);
-        this.isDeleted=false;
         this.country = country;
-    }    
+    }
+    
+    public List<SalesRecordEntity> getSalesRecords() {
+        return salesRecords;
+    }
+
+    public void setSalesRecords(List<SalesRecordEntity> salesRecords) {
+        this.salesRecords = salesRecords;
+    }
 
     public CountryEntity getCountry() {
         return country;

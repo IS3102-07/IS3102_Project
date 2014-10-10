@@ -191,8 +191,7 @@ public class StartupBean {
                 System.out.println("Created manufacturing facilities & warehouse entities.");
                 
                 StoreEntity storeEntity;
-                storeEntity = new StoreEntity();
-                storeEntity.create("Queenstown Store", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com", countryEntity);
+                storeEntity = new StoreEntity("Queenstown Store", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com", countryEntity);
                 storeEntity.setRegionalOffice(regionalOfficeEntity);
                 warehouseEntity = new WarehouseEntity("Queenstown Store Warehouse", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com");
                 warehouseEntity.setRegionalOffice(regionalOfficeEntity);
@@ -203,8 +202,7 @@ public class StartupBean {
                 em.persist(storeEntity);
                 countryEntity.getStores().add(storeEntity);
                 em.merge(countryEntity);
-                storeEntity = new StoreEntity();
-                storeEntity.create("Tampines Store", "60 Tampines North Drive", "67866868", "tampi@if.com", countryEntity);
+                storeEntity = new StoreEntity("Tampines Store", "60 Tampines North Drive", "67866868", "tampi@if.com", countryEntity);
                 storeEntity.setRegionalOffice(regionalOfficeEntity);
                 warehouseEntity = new WarehouseEntity("Tampines Store Warehouse", "60 Tampines North Drive", "67866868", "tampi@if.com");
                 warehouseEntity.setRegionalOffice(regionalOfficeEntity);

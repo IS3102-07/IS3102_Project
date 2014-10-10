@@ -312,9 +312,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         String name;
         Long storeId;
         try {
-            StoreEntity storeEntity = new StoreEntity();
+            
             CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
-            storeEntity.create(storeName, address, telephone, email, countryEntity);
+            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity);
             em.persist(storeEntity);
             countryEntity.getStores().add(storeEntity);
             em.merge(countryEntity);
