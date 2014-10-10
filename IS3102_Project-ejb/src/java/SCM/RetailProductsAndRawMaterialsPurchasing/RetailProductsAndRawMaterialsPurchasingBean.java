@@ -50,7 +50,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, receivingWarehouseID);
             purchaseOrderEntity.setSupplier(supplierEntity);
-            purchaseOrderEntity.setReceivedWarehouse(warehouseEntity);
+            purchaseOrderEntity.setDestination(warehouseEntity);
             purchaseOrderEntity.setExpectedReceivedDate(expectedReceivedDate);
             System.out.println("PurchaseOrder updated successfully");
             return true;

@@ -23,7 +23,7 @@ public class SalesRecordEntity implements Serializable {
     private Long paymentAmount;
     private String currency;
     private String posName;
-    @OneToMany(mappedBy = "salesRecord", cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<LineItemEntity> itemsPurchased;
 
     public SalesRecordEntity() {

@@ -42,6 +42,10 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
         ShippingOrderEntity shippingOrder = new ShippingOrderEntity(expectedReceivedDate, sourceWarehouse, destinationWarehouse);
         try {
             em.persist(shippingOrder);
+            sourceWarehouse.getOutbound().add(shippingOrder);
+            em.merge(sourceWarehouse);
+            destinationWarehouse.getInbound().add(shippingOrder);
+            em.merge(destinationWarehouse);
             System.out.println("ShippingOrder with id: " + shippingOrder.getId() + " is created successfully");
             return shippingOrder;
         } catch (EntityExistsException ex) {
@@ -236,7 +240,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
                         StorageBinEntity outbound = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouse.getId());
                         em.merge(outbound);
                         em.refresh(outbound);
-                        List<LineItemEntity> listOfLineItemsInOutboundBin = outbound.getListOfLineItems();
+                        List<LineItemEntity> listOfLineItemsInOutboundBin = outbound.getLineItems();
                         System.out.println("Size of listOfLineItemsInOutboundBin: " + listOfLineItemsInOutboundBin.size());
                         for (LineItemEntity lineItemInOutboundBin : listOfLineItemsInOutboundBin) {
                             if (lineItemInOutboundBin.getItem().getSKU().equals(lineItemInShippingOrder.getItem().getSKU())) {

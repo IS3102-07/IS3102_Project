@@ -79,8 +79,8 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
 
         try {
             storageBin = em.getReference(StorageBinEntity.class, storageBinId);
-            System.out.println("Size of storage bin to be updated is " + storageBin.getListOfLineItems().size());
-            if (storageBin == null || !storageBin.getListOfLineItems().isEmpty()) {
+            System.out.println("Size of storage bin to be updated is " + storageBin.getLineItems().size());
+            if (storageBin == null || !storageBin.getLineItems().isEmpty()) {
                 System.out.println("Cannot find storage bin or storage bin contains items");
                 return false;
             }
@@ -102,7 +102,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         System.out.println("deleteStorageBin() called.");
         try {
             storageBin = em.find(StorageBinEntity.class, id);
-            if (storageBin == null || !storageBin.getListOfLineItems().isEmpty()) {
+            if (storageBin == null || !storageBin.getLineItems().isEmpty()) {
                 System.out.println("Unable to delete. Storage bin either not found or not empty.");
                 return false;
             } else {

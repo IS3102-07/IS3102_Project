@@ -95,7 +95,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     em.merge(lineItemInOutboundBin);
                     //if it is the last item
                     if (lineItemInOutboundBin.getQuantity() == 1) {
-                        outbound.getListOfLineItems().remove(lineItemInOutboundBin);
+                        outbound.getLineItems().remove(lineItemInOutboundBin);
                         em.remove(lineItemInOutboundBin);
                         em.flush();
                     } else {
@@ -161,7 +161,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     ) {
         System.out.println("checkIfItemExistInsideStorageBin() called");
         StorageBinEntity storageBin = em.getReference(StorageBinEntity.class, storageBinID);
-        List<LineItemEntity> listOfLineItems = storageBin.getListOfLineItems();
+        List<LineItemEntity> listOfLineItems = storageBin.getLineItems();
         for (LineItemEntity lineItem : listOfLineItems) {
             if (lineItem.getItem().getSKU().equals(SKU)) {
                 System.out.println("checkIfItemExistInsideStorageBin(): SKU found, returned line item.");
@@ -178,7 +178,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         System.out.println("moveInboundPurchaseOrderItemsToReceivingBin called()");
         try {
             PurchaseOrderEntity purchaseOrderEntity = em.getReference(PurchaseOrderEntity.class, purchaseOrderID);
-            Long warehouseID = purchaseOrderEntity.getReceivedWarehouse().getId();
+            Long warehouseID = purchaseOrderEntity.getDestination().getId();
             List<LineItemEntity> lineItemsInPurchaseOrder = purchaseOrderEntity.getLineItems();
             for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
                 ItemEntity itemEntity = lineItemEntity.getItem();
@@ -231,7 +231,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             } else {
                 lineItem = new LineItemEntity(itemEntity, 1, "");
                 em.persist(lineItem);
-                inboundBin.getListOfLineItems().add(lineItem);
+                inboundBin.getLineItems().add(lineItem);
                 em.merge(inboundBin);
             }
             em.flush();
@@ -258,7 +258,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 em.merge(lineItem);
                 //if it is the last item
                 if (lineItem.getQuantity() == 1) {
-                    source.getListOfLineItems().remove(lineItem);
+                    source.getLineItems().remove(lineItem);
                     em.remove(lineItem);
                 } else {
                     lineItem.setQuantity(lineItem.getQuantity() - 1);
@@ -282,7 +282,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     em.persist(newLineItem);
                     em.flush();
                     em.refresh(newLineItem);
-                    destination.getListOfLineItems().add(newLineItem);
+                    destination.getLineItems().add(newLineItem);
                     lineItem = newLineItem;
                     em.flush();
                 } else {
@@ -324,11 +324,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             for (StorageBinEntity currentBin : storageBins) {
-                for (int i = 0; i < currentBin.getListOfLineItems().size(); i++) {
-                    ItemEntity itemEntity = currentBin.getListOfLineItems().get(i).getItem();
+                for (int i = 0; i < currentBin.getLineItems().size(); i++) {
+                    ItemEntity itemEntity = currentBin.getLineItems().get(i).getItem();
                     if (itemEntity.getSKU().equals(SKU)) {
                         //exisiting quantity + those in the bin
-                        qty = qty + currentBin.getListOfLineItems().get(i).getQuantity();
+                        qty = qty + currentBin.getLineItems().get(i).getQuantity();
                     }
                 }
             }
@@ -587,7 +587,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         try {
             em.flush();
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
-            List<LineItemEntity> listOfLineItems = storageBinEntity.getListOfLineItems();
+            List<LineItemEntity> listOfLineItems = storageBinEntity.getLineItems();
             if (listOfLineItems == null || listOfLineItems.size() == 0) {
                 System.out.println("No items");
                 return null;
@@ -752,7 +752,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             totalVolumeDeleted += itemsDeleted.getVolume() * lineItemEntity.getQuantity();
             storageBinEntity.setFreeVolume(storageBinEntity.getFreeVolume() + totalVolumeDeleted);
             em.remove(lineItemEntity);
-            storageBinEntity.getListOfLineItems().remove(lineItemEntity);
+            storageBinEntity.getLineItems().remove(lineItemEntity);
             em.merge(storageBinEntity);
             return true;
         } catch (EntityNotFoundException ex) {
