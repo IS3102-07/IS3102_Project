@@ -7,8 +7,9 @@ import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.StoreEntity;
+import HelperClasses.ReturnHelper;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
-import StoreTransaction.RetailInventoryControl.RetailInventoryControlLocal;
+import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -23,7 +24,7 @@ public class StoreWebServiceBean {
     @EJB
     ItemManagementBeanLocal ItemManagementBeanLocal;
     @EJB
-    RetailInventoryControlLocal RetailInventoryControlLocal;
+    RetailInventoryControlBeanLocal RetailInventoryControlLocal;
     @EJB
     LoyaltyAndRewardsBeanLocal LoyaltyAndRewardsBeanLocal;
     @EJB
@@ -69,13 +70,13 @@ public class StoreWebServiceBean {
     }
 
     @WebMethod
-    public Boolean createSalesRecord(@WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased) {
+    public ReturnHelper createSalesRecord(@WebParam(name = "email") String email, @WebParam(name = "password") String password, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased) {
         //TODO
-        return true;
+        return new ReturnHelper(true, "Checkout successful.");
     }
-    
+
     @WebMethod
-    public Boolean callSupervisor(@WebParam(name="contactNo") String contactNo) {
+    public Boolean callSupervisor(@WebParam(name = "contactNo") String contactNo) {
         //TODO
         return true;
     }
