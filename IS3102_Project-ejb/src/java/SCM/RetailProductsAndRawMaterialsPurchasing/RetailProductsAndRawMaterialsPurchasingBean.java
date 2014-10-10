@@ -73,7 +73,6 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             query = em.createQuery("select p from ItemEntity p where p.SKU = ?1").setParameter(1, SKU);
             ItemEntity itemEntity = (ItemEntity) query.getSingleResult();
             LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, null);
-            lineItem.setPurchaseOrder(purchaseOrder);
             purchaseOrder.getLineItems().add(lineItem);
             em.merge(purchaseOrder);
             em.flush();

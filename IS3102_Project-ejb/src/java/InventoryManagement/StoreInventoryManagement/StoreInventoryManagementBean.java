@@ -14,8 +14,6 @@ import HelperClasses.ItemStorageBinHelper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.Resource;
-import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -634,7 +632,6 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                 lineItem.setQuantity(lineItem.getQuantity() + 1);
             } else {
                 lineItem = new LineItemEntity(itemEntity, 1, "");
-                lineItem.setStorageBin(inboundBin);
                 em.persist(lineItem);
                 inboundBin.getListOfLineItems().add(lineItem);
                 em.merge(inboundBin);
@@ -687,7 +684,6 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                     em.persist(newLineItem);
                     em.flush();
                     em.refresh(newLineItem);
-                    newLineItem.setStorageBin(destination);
                     destination.getListOfLineItems().add(newLineItem);
                     lineItem = newLineItem;
                     em.flush();

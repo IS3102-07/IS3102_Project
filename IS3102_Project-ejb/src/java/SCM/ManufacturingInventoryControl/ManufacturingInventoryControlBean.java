@@ -230,7 +230,6 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 lineItem.setQuantity(lineItem.getQuantity() + 1);
             } else {
                 lineItem = new LineItemEntity(itemEntity, 1, "");
-                lineItem.setStorageBin(inboundBin);
                 em.persist(lineItem);
                 inboundBin.getListOfLineItems().add(lineItem);
                 em.merge(inboundBin);
@@ -283,7 +282,6 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     em.persist(newLineItem);
                     em.flush();
                     em.refresh(newLineItem);
-                    newLineItem.setStorageBin(destination);
                     destination.getListOfLineItems().add(newLineItem);
                     lineItem = newLineItem;
                     em.flush();

@@ -59,7 +59,6 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
             query = em.createQuery("select p from ItemEntity p where p.SKU = ?1").setParameter(1, SKU);
             ItemEntity itemEntity = (ItemEntity) query.getSingleResult();
             LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, null);
-            lineItem.setShippingOrder(shippingOrder);
             shippingOrder.getLineItems().add(lineItem);
             em.merge(shippingOrder);
             em.flush();
@@ -84,7 +83,6 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
             query = em.createQuery("select p from ItemEntity p where p.SKU = ?1").setParameter(1, SKU);
             ItemEntity itemEntity = (ItemEntity) query.getSingleResult();
             LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, packType);
-            lineItem.setShippingOrder(shippingOrder);
             shippingOrder.getLineItems().add(lineItem);
             em.merge(shippingOrder);
             em.flush();
