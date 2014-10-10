@@ -49,7 +49,7 @@ public class StoreEntity implements Serializable {
     private List<SalesRecordEntity> salesRecords;    
     private Boolean isDeleted;
     
-    
+    public StoreEntity() {}
     public StoreEntity(String name, String address, String telephone, String email, CountryEntity country){
         this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();

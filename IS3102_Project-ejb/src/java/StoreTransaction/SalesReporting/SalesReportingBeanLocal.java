@@ -16,5 +16,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface SalesReportingBeanLocal {
-    public ReturnHelper submitSalesRecord(String email, String password, Long storeID, String posName, List<LineItemEntity> itemsPurchased);
+    public ReturnHelper submitSalesRecord(String email, String password, Long storeID, String posName, List<LineItemEntity> itemsPurchased, Double paymentAmount, String memberEmail);
 }
