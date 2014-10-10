@@ -100,7 +100,7 @@
                                 </div>
                                  <div class="form-group">
                                     <label>Purchasing Price</label>
-                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=rawMaterial.getPrice()%>">
+                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=rawMaterial.getCostPrice()%>">
                                  </div>
                                  <div class="form-group">
                                     <label>Supplier</label>

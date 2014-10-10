@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Purchasing Price</label>
-                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=retailProduct.getPrice()%>">
+                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=retailProduct.getCostPrice()%>">
                                  </div>
                                  <div class="form-group">
                                     <label>Supplier</label>

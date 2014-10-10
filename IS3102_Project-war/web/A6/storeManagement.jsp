@@ -111,7 +111,7 @@
                                                             <td><input type="checkbox" name="delete" value="<%= model.store.getId()%>" /></td>
                                                             <td><%= model.store.getName()%></td>     
                                                             <td><%= model.regionalOffice.getName()%></td>
-                                                            <td><%= model.store.getCountryEntity().getName() %></td>
+                                                            <td><%= model.store.getCountry().getName() %></td>
                                                             <td><%= model.store.getAddress()%></td>
                                                             <td><%= model.store.getTelephone()%></td>
                                                             <td><%= model.store.getEmail()%></td>
