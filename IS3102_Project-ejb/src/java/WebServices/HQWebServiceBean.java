@@ -5,7 +5,7 @@ import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
-import Store_InventoryManagement.RetailInventoryControl.RetailInventoryControlLocal;
+import StoreTransaction.RetailInventoryControl.RetailInventoryControlLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -13,9 +13,9 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService(serviceName = "WebServiceBean")
+@WebService(serviceName = "HQWebServiceBean")
 @Stateless
-public class WebServiceBean {
+public class HQWebServiceBean {
 
     @EJB
     AccountManagementBeanLocal AccountManagementBeanLocal;

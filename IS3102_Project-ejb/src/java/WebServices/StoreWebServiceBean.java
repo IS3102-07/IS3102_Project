@@ -1,4 +1,4 @@
-package Store_InventoryManagement.RetailInventoryControl;
+package WebServices;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
@@ -8,6 +8,7 @@ import EntityManager.Item_CountryEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.StoreEntity;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
+import StoreTransaction.RetailInventoryControl.RetailInventoryControlLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -15,9 +16,9 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService(serviceName = "POSWebServiceBean")
+@WebService(serviceName = "StoreWebServiceBean")
 @Stateless
-public class POSWebServiceBean {
+public class StoreWebServiceBean {
 
     @EJB
     ItemManagementBeanLocal ItemManagementBeanLocal;
