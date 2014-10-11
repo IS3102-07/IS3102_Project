@@ -645,6 +645,58 @@
         <servlet-name>CountryItemPricingManagement_RemoveCountryItemPricingServlet</servlet-name>
         <servlet-class>A6_servlets.CountryItemPricingManagement_RemoveCountryItemPricingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>A2/store_MF_connectionManagement</servlet-name>
+        <jsp-file>/A2/store_MF_connectionManagement.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/PPD_index</servlet-name>
+        <jsp-file>/A2/PPD_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>PPD_index_GET</servlet-name>
+        <servlet-class>A2_servlets.PPD_index_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>store_MF_connectionManagement_GET</servlet-name>
+        <servlet-class>A2_servlets.store_MF_connectionManagement_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PPD_index_POST</servlet-name>
+        <servlet-class>A2_servlets.PPD_index_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/PPD_main</servlet-name>
+        <jsp-file>/A2/PPD_main.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>store_MF_connectionManagement_POST</servlet-name>
+        <servlet-class>A2_servlets.store_MF_connectionManagement_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PPD_main_GET</servlet-name>
+        <servlet-class>A2_servlets.PPD_main_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PPD_main_POST</servlet-name>
+        <servlet-class>A2_servlets.PPD_main_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DemandManagement_index_GET</servlet-name>
+        <servlet-class>A2_servlets.DemandManagement_index_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DemandManagement_index_POST</servlet-name>
+        <servlet-class>A2_servlets.DemandManagement_index_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/DemandManagement_index</servlet-name>
+        <jsp-file>/A2/DemandManagement_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>GetMFbyRO_ajax_Servlet</servlet-name>
+        <servlet-class>A2_servlets.GetMFbyRO_ajax_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1291,6 +1343,58 @@
     <servlet-mapping>
         <servlet-name>CountryItemPricingManagement_RemoveCountryItemPricingServlet</servlet-name>
         <url-pattern>/CountryItemPricingManagement_RemoveCountryItemPricingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/store_MF_connectionManagement</servlet-name>
+        <url-pattern>/A2/store_MF_connectionManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/PPD_index</servlet-name>
+        <url-pattern>/A2/PPD_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PPD_index_GET</servlet-name>
+        <url-pattern>/PPD_index_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>store_MF_connectionManagement_GET</servlet-name>
+        <url-pattern>/store_MF_connectionManagement_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PPD_index_POST</servlet-name>
+        <url-pattern>/PPD_index_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/PPD_main</servlet-name>
+        <url-pattern>/A2/PPD_main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>store_MF_connectionManagement_POST</servlet-name>
+        <url-pattern>/store_MF_connectionManagement_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PPD_main_GET</servlet-name>
+        <url-pattern>/PPD_main_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PPD_main_POST</servlet-name>
+        <url-pattern>/PPD_main_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DemandManagement_index_GET</servlet-name>
+        <url-pattern>/DemandManagement_index_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DemandManagement_index_POST</servlet-name>
+        <url-pattern>/DemandManagement_index_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/DemandManagement_index</servlet-name>
+        <url-pattern>/A2/DemandManagement_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetMFbyRO_ajax_Servlet</servlet-name>
+        <url-pattern>/GetMFbyRO_ajax_Servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -36,25 +36,26 @@
                     <%
                         ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup");
                     %>
-                    <%--
+                    
                     <div class="row">                             
                         <div class="col-lg-4">
-                            <%  StoreEntity store = (StoreEntity) request.getAttribute("store");%>
+                            <%
+                                StoreEntity store = (StoreEntity) request.getAttribute("store");
+                                MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule");
+                            %>
                             <h4><b> Store:  </b><%= store.getName()%></h4>
-                        </div>                                                
-                        <div class="col-lg-4">
-                            <% MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule");%>
-                            <h4><b> Period: </b><%= schedule.getYear()%> - <%= schedule.getMonth()%> </h4>
-                        </div>                                      
+                        </div>                                                                                                            
                     </div>
                     <br>
-                    --%>
+                    
 
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2012 - Product Group <%= productGroup.getName() %> Sales Figure </h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 
+                                        <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-3);  }
+                                        else{ out.print(schedule.getYear()-2); } %> - Product Group <%= productGroup.getName() %> Sales Figure </h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart1"></div>
@@ -66,7 +67,8 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2013 - Product Group <%= productGroup.getName() %> Sales Figure</h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-2);  }
+                                        else{ out.print(schedule.getYear()-1); } %> - Product Group <%= productGroup.getName() %> - Product Group <%= productGroup.getName() %> Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart2"></div>
@@ -78,7 +80,8 @@
                         <div class="col-lg-12">
                             <div class="panel panel-green">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 2014 - Product Group <%= productGroup.getName() %> Sales Figure</h3>
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-1);  }
+                                        else{ out.print(schedule.getYear()); } %> - Product Group <%= productGroup.getName() %> - Product Group <%= productGroup.getName() %> Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart3"></div>
@@ -86,7 +89,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 

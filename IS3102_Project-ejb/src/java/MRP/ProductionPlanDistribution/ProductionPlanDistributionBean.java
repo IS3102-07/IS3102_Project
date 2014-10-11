@@ -6,10 +6,10 @@
 package MRP.ProductionPlanDistribution;
 
 import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.MonthScheduleEntity;
 import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.StoreEntity;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -89,28 +89,62 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
     }
 
     @Override
-    public Boolean distributeProductionPlan(Long regionalOfficeId, Calendar date) {
+    public Boolean distributeProductionPlan(Long regionalOfficeId) {
         try {
-            List<ManufacturingFacilityEntity> manufacturingFacilityList = this.getManufacturingFacilityListByRegionalOffice(regionalOfficeId);
-            Collections.sort(manufacturingFacilityList, new CustomeComparator_MF());
-            for (ManufacturingFacilityEntity mf : manufacturingFacilityList) {
-                Integer residueCapacity = mf.getCapacity();
-                List<StoreEntity> storeList = mf.getStoreList();
-                Collections.sort(storeList, new CustomeComparator_Store());
-                for (StoreEntity store : storeList) {
-                    Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store = ?1 and sop.month = ?2")
-                            .setParameter(1, store)
-                            .setParameter(2, date.get(Calendar.MONTH));
-                    List<SaleAndOperationPlanEntity> sopList = q.getResultList();
-                    for (SaleAndOperationPlanEntity sop : sopList) {
-                        if (sop.getManufacturingFacility() == null) {
-                            if (residueCapacity > sop.getProductGroup().getWorkHours()) {
-                                residueCapacity -= sop.getProductGroup().getWorkHours();
-                                sop.setManufacturingFacility(mf);
+            Query q1 = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = q1.getResultList();
+            if (!scheduleList.isEmpty()) {
+                MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
+
+                // clear former distribution
+                try {
+                    List<ManufacturingFacilityEntity> mfList = this.getManufacturingFacilityListByRegionalOffice(regionalOfficeId);
+                    Collections.sort(mfList, new CustomeComparator_MF());
+                    for (ManufacturingFacilityEntity mf : mfList) {                        
+                        List<StoreEntity> storeList = mf.getStoreList();
+                        Collections.sort(storeList, new CustomeComparator_Store());
+                        for (StoreEntity store : storeList) {
+                            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.year = ?2 and sop.schedule.month= ?3")
+                                    .setParameter(1, store.getId())
+                                    .setParameter(2, lastSchedule.getYear())
+                                    .setParameter(3, lastSchedule.getMonth());
+                            List<SaleAndOperationPlanEntity> sopList = q.getResultList();
+                            for (SaleAndOperationPlanEntity sop : sopList) {
+                                sop.setManufacturingFacility(null);
+                                em.merge(sop);
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                // create new distribution plan
+                List<ManufacturingFacilityEntity> manufacturingFacilityList = this.getManufacturingFacilityListByRegionalOffice(regionalOfficeId);
+                Collections.sort(manufacturingFacilityList, new CustomeComparator_MF());
+                for (ManufacturingFacilityEntity mf : manufacturingFacilityList) {
+                    Integer residueCapacity = mf.getCapacity();
+                    List<StoreEntity> storeList = mf.getStoreList();
+                    Collections.sort(storeList, new CustomeComparator_Store());
+                    for (StoreEntity store : storeList) {
+                        Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.year = ?2 and sop.schedule.month= ?3")
+                                .setParameter(1, store.getId())
+                                .setParameter(2, lastSchedule.getYear())
+                                .setParameter(3, lastSchedule.getMonth());
+                        List<SaleAndOperationPlanEntity> sopList = q.getResultList();
+                        for (SaleAndOperationPlanEntity sop : sopList) {
+                            if (sop.getManufacturingFacility() == null) {
+                                if (residueCapacity >= (sop.getProductGroup().getWorkHours() * sop.getProductionPlan())) {
+                                    residueCapacity -= (sop.getProductGroup().getWorkHours() * sop.getProductionPlan());
+                                    sop.setManufacturingFacility(mf);
+                                    em.merge(sop);
+                                    System.out.println(mf.getName()+" - residueCapacity: "+ residueCapacity + " after taking in "  + sop.getProductGroup().getName() + " with quantity " + sop.getProductionPlan());
+                                }
                             }
                         }
                     }
                 }
+                return true;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -144,6 +178,24 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
                 return -1;
             }
         }
+    }
+
+    @Override
+    public List<SaleAndOperationPlanEntity> getDistributedSOPList(Long regionalOfficeId) {
+        try {
+            Query q = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = q.getResultList();
+            if (!scheduleList.isEmpty()) {
+                MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
+                Query q2 = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.regionalOffice.id = ?1 and sop.schedule.id = ?2 and sop.manufacturingFacility is not null")
+                        .setParameter(1, regionalOfficeId)
+                        .setParameter(2, lastSchedule.getId());
+                return q2.getResultList();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
 }

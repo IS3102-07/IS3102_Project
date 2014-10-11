@@ -669,6 +669,17 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
     }
 
     @Override
+    public ManufacturingFacilityEntity getManufacturingFacilityByName(String name) {
+        try {
+            Query q = em.createQuery("select mf from ManufacturingFacilityEntity mf where mf.name = ?1").setParameter(1, name);
+            return (ManufacturingFacilityEntity) q.getResultList().get(0);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public ManufacturingFacilityHelper getManufacturingFacilityHelper(Long manufacturingFacilityId) {
         try {
             ManufacturingFacilityHelper helper = new ManufacturingFacilityHelper();
