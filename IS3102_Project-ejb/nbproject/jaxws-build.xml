@@ -17,7 +17,7 @@
             <classpath path="${j2ee.platform.wsgen.classpath}"/>
         </taskdef>
     </target>
-    <target name="wsgen-compile" depends="wsgen-SalesRecordSubmissionWebService, wsgen-StoreWebServiceBean, wsgen-HQWebServiceBean">
+    <target name="wsgen-compile" depends="wsgen-SalesRecordSubmissionWebService, wsgen-HQWebServiceBean, wsgen-StoreWebServiceBean">
         <ejbjarproject2:javac srcdir="${build.generated.sources.dir}/jax-ws" classpath="${j2ee.platform.wsgen.classpath}:${javac.classpath}" destdir="${classes.dir}"/>
     </target>
     <target name="wsgen-SalesRecordSubmissionWebService" depends="wsgen-init, -do-compile">
@@ -25,13 +25,13 @@
             <classpath path="${java.home}/../lib/tools.jar:${classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </wsgen>
     </target>
-    <target name="wsgen-StoreWebServiceBean" depends="wsgen-init, -do-compile">
-        <wsgen destdir="${build.generated.sources.dir}/jax-ws" sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" verbose="true" xendorsed="true" keep="false" genwsdl="true" sei="WebServices.StoreWebServiceBean">
+    <target name="wsgen-HQWebServiceBean" depends="wsgen-init, -do-compile">
+        <wsgen destdir="${build.generated.sources.dir}/jax-ws" sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" verbose="true" xendorsed="true" keep="false" genwsdl="true" sei="WebServices.HQWebServiceBean">
             <classpath path="${java.home}/../lib/tools.jar:${classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </wsgen>
     </target>
-    <target name="wsgen-HQWebServiceBean" depends="wsgen-init, -do-compile">
-        <wsgen destdir="${build.generated.sources.dir}/jax-ws" sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" verbose="true" xendorsed="true" keep="false" genwsdl="true" sei="WebServices.HQWebServiceBean">
+    <target name="wsgen-StoreWebServiceBean" depends="wsgen-init, -do-compile">
+        <wsgen destdir="${build.generated.sources.dir}/jax-ws" sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" verbose="true" xendorsed="true" keep="false" genwsdl="true" sei="WebServices.StoreWebServiceBean">
             <classpath path="${java.home}/../lib/tools.jar:${classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </wsgen>
     </target>
