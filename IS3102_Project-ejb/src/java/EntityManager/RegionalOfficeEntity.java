@@ -36,12 +36,12 @@ public class RegionalOfficeEntity implements Serializable {
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
     private List<StoreEntity> storeList;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
-    private List<ManufacturingFacilityEntity> manufacturingFacilityEntityList;
+    private List<ManufacturingFacilityEntity> manufacturingFacilityList;
     private Boolean isDeleted;
 
     public RegionalOfficeEntity() {
         this.storeList = new ArrayList<>();
-        this.manufacturingFacilityEntityList = new ArrayList<>();
+        this.manufacturingFacilityList = new ArrayList<>();
         this.warehouseList = new ArrayList<>();
         this.isDeleted = false;
     }
@@ -78,12 +78,12 @@ public class RegionalOfficeEntity implements Serializable {
         this.storeList = storeList;
     }
 
-    public List<ManufacturingFacilityEntity> getManufacturingFacilityEntityList() {
-        return manufacturingFacilityEntityList;
+    public List<ManufacturingFacilityEntity> getManufacturingFacilityList() {
+        return manufacturingFacilityList;
     }
 
-    public void setManufacturingFacilityEntityList(List<ManufacturingFacilityEntity> manufacturingFacilityEntityList) {
-        this.manufacturingFacilityEntityList = manufacturingFacilityEntityList;
+    public void setManufacturingFacilityList(List<ManufacturingFacilityEntity> manufacturingFacilityList) {
+        this.manufacturingFacilityList = manufacturingFacilityList;
     }
 
     public void setName(String name) {

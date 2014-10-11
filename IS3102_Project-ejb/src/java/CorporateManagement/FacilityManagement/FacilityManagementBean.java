@@ -107,7 +107,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         System.out.println("removeRegionalOffice() called with ID:" + regionalOfficeID);
         try {
             RegionalOfficeEntity regionalOfficeEntity = em.getReference(RegionalOfficeEntity.class, Long.valueOf(regionalOfficeID));
-            if (regionalOfficeEntity.getManufacturingFacilityEntityList().size() > 0 || regionalOfficeEntity.getStoreList().size() > 0) {
+            if (regionalOfficeEntity.getManufacturingFacilityList().size() > 0 || regionalOfficeEntity.getStoreList().size() > 0) {
                 return false; // Cannot remove if still got other facility using this.
             }
             regionalOfficeEntity.setIsDeleted(true);
@@ -239,7 +239,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
                 }
                 if (i.getId() == Long.valueOf(manufacturingFacilityID)) {
                     RegionalOfficeEntity regionalOffice = i.getRegionalOffice();
-                    regionalOffice.getManufacturingFacilityEntityList().remove(i);
+                    regionalOffice.getManufacturingFacilityList().remove(i);
                     em.merge(regionalOffice);
                     i.setIsDeleted(true);
                     em.merge(i);
@@ -726,7 +726,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             ManufacturingFacilityEntity MF = em.find(ManufacturingFacilityEntity.class, MFid);
             RegionalOfficeEntity ro = em.find(RegionalOfficeEntity.class, regionalOfficeId);
             MF.setRegionalOffice(ro);
-            ro.getManufacturingFacilityEntityList().add(MF);
+            ro.getManufacturingFacilityList().add(MF);
             em.merge(MF);
             em.merge(ro);
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
@@ -746,9 +746,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             RegionalOfficeEntity newRO = em.find(RegionalOfficeEntity.class, regionalOfficeId);
             RegionalOfficeEntity oldRO = MF.getRegionalOffice();
 
-            oldRO.getManufacturingFacilityEntityList().remove(MF);
+            oldRO.getManufacturingFacilityList().remove(MF);
             MF.setRegionalOffice(newRO);
-            newRO.getManufacturingFacilityEntityList().add(MF);
+            newRO.getManufacturingFacilityList().add(MF);
 
             em.merge(newRO);
             em.merge(MF);
@@ -771,7 +771,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
                 return false;
             }
             RegionalOfficeEntity ro = mf.getRegionalOffice();
-            ro.getManufacturingFacilityEntityList().remove(mf);
+            ro.getManufacturingFacilityList().remove(mf);
             em.merge(ro);
             mf.setIsDeleted(true);
             em.merge(mf);

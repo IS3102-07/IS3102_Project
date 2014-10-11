@@ -20,4 +20,5 @@ public interface CustomerInformationManagementBeanLocal {
     public Boolean removeFurnitureToList(String sku, Long memberId);
     public Boolean addEmailToSubscription(String email);
     public ShoppingListEntity shoppingList(String email);
+    public Boolean removeFromSubscription(String email);
 }

@@ -171,7 +171,7 @@ public class StartupBean {
                 warehouseEntity.setCountry(countryEntity);
                 em.persist(warehouseEntity);
                 manufacturingFacilityEntity.setWarehouse(warehouseEntity);
-                regionalOfficeEntity.getManufacturingFacilityEntityList().add(manufacturingFacilityEntity);
+                regionalOfficeEntity.getManufacturingFacilityList().add(manufacturingFacilityEntity);
                 em.merge(manufacturingFacilityEntity);
                 em.merge(regionalOfficeEntity);
                 
@@ -185,7 +185,7 @@ public class StartupBean {
                 warehouseEntity.setCountry(countryEntity);
                 em.persist(warehouseEntity);
                 manufacturingFacilityEntity.setWarehouse(warehouseEntity);
-                regionalOfficeEntity.getManufacturingFacilityEntityList().add(manufacturingFacilityEntity);
+                regionalOfficeEntity.getManufacturingFacilityList().add(manufacturingFacilityEntity);
                 em.merge(manufacturingFacilityEntity);
                 em.merge(regionalOfficeEntity);                
                 System.out.println("Created manufacturing facilities & warehouse entities.");

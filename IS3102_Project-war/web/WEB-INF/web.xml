@@ -73,6 +73,10 @@
         <servlet-class>A6_servlets.BomManagement_AddBomServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UploadFile</servlet-name>
+        <servlet-class>A6_servlets.UploadFilet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>BomManagement_RemoveBomServlet</servlet-name>
         <servlet-class>A6_servlets.BomManagement_RemoveBomServlet</servlet-class>
     </servlet>
@@ -649,6 +653,10 @@
         <servlet-name>ECommerce_RemoveItemFromListServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_RemoveItemFromListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_UnsubscribeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -720,6 +728,10 @@
     <servlet-mapping>
         <servlet-name>BomManagement_AddBomServlet</servlet-name>
         <url-pattern>/BomManagement_AddBomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFile</servlet-name>
+        <url-pattern>/UploadFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BomManagement_RemoveBomServlet</servlet-name>
@@ -1299,6 +1311,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_RemoveItemFromListServlet</servlet-name>
         <url-pattern>/ECommerce_RemoveItemFromListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
+        <url-pattern>/ECommerce_UnsubscribeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
