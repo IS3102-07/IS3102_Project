@@ -709,6 +709,14 @@
         <servlet-name>GetMFbyRO_ajax_Servlet</servlet-name>
         <servlet-class>A2_servlets.GetMFbyRO_ajax_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DemandManagement_main_GET</servlet-name>
+        <servlet-class>A2_servlets.DemandManagement_main_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DemandManagement_main_POST</servlet-name>
+        <servlet-class>A2_servlets.DemandManagement_main_POST</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1229,9 +1237,6 @@
         <servlet-name>A1/AccessRight</servlet-name>
         <url-pattern>/A1/AccessRight</url-pattern>
     </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>Workspace_Servlet</welcome-file>
-    </welcome-file-list>
     <servlet-mapping>
         <servlet-name>ECommerce_AllProductsServlet</servlet-name>
         <url-pattern>/ECommerce_AllProductsServlet</url-pattern>
@@ -1420,7 +1425,18 @@
         <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
         <url-pattern>/ECommerce_UnsubscribeServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DemandManagement_main_GET</servlet-name>
+        <url-pattern>/DemandManagement_main_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DemandManagement_main_POST</servlet-name>
+        <url-pattern>/DemandManagement_main_POST/*</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>Workspace_Servlet</welcome-file>
+    </welcome-file-list>
 </web-app>

@@ -254,12 +254,6 @@ public class StartupBean {
             ex.printStackTrace();
         }                
 
-        try {
-            StoreEntity store1 = em.find(StoreEntity.class, this);
-            ProductGroupEntity productGroup1 = em.find(ProductGroupEntity.class, store1);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
 
         try {
             //Create item
