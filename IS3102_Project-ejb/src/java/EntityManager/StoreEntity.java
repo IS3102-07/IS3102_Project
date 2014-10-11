@@ -43,7 +43,7 @@ public class StoreEntity implements Serializable {
     private List<ManufacturingFacilityEntity> manufacturingFacilityList;
     @ManyToOne
     private RegionalOfficeEntity regionalOffice;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private CountryEntity country;
     @OneToMany(mappedBy="store")
     private List<SalesRecordEntity> salesRecords;    

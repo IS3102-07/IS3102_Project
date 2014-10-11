@@ -45,7 +45,7 @@ public interface SalesAndOperationPlanningBeanLocal {
     
     public List<SOP_Helper> getSOPHelperList(Long storeId, Long scheduleId);
     
-    public MonthScheduleEntity createSchedule(Integer year, Integer month);
+    public MonthScheduleEntity createSchedule(Integer year, Integer month, Integer workDays_firstWeek, Integer workDays_secondWeek, Integer workDays_thirdWeek, Integer workDays_forthWeek, Integer workDays_fifthWeek);
     
     public MonthScheduleEntity getScheduleById(Long id);
     

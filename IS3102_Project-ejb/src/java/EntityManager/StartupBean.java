@@ -24,7 +24,7 @@ public class StartupBean {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    
+
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
 
@@ -120,30 +120,29 @@ public class StartupBean {
                 country.setExchangeRate(1.0);
                 country.setName("United States");
                 em.persist(country);
-                sopBean.createSchedule(2013, 1);
-                sopBean.createSchedule(2013, 2);
-                sopBean.createSchedule(2013, 3);
-                sopBean.createSchedule(2013, 4);
-                sopBean.createSchedule(2013, 5);
-                sopBean.createSchedule(2013, 6);
-                sopBean.createSchedule(2013, 7);
-                sopBean.createSchedule(2013, 8);
-                sopBean.createSchedule(2013, 9);
-                sopBean.createSchedule(2013, 10);
-                sopBean.createSchedule(2013, 11);
-                sopBean.createSchedule(2013, 12);
-                sopBean.createSchedule(2014, 1);
-                sopBean.createSchedule(2014, 2);
-                sopBean.createSchedule(2014, 3);
-                sopBean.createSchedule(2014, 4);
-                sopBean.createSchedule(2014, 5);
-                sopBean.createSchedule(2014, 6);
-                sopBean.createSchedule(2014, 7);
-                sopBean.createSchedule(2014, 8);
-                sopBean.createSchedule(2014, 9);
-                sopBean.createSchedule(2014, 10);
-                sopBean.createSchedule(2014, 11);
-                
+                sopBean.createSchedule(2013, 1, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 2, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 3, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 4, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 5, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 6, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 7, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 8, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 9, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 10, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 11, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2013, 12, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 1, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 2, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 3, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 4, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 5, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 6, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 7, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 8, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 9, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 10, 5, 5, 5, 5, 0);                
+
                 System.out.println("Created country & schedule entities.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of country & schedule entities:\n" + ex);
@@ -160,7 +159,7 @@ public class StartupBean {
                 WarehouseEntity warehouseEntity;
                 q = em.createQuery("SELECT t FROM CountryEntity t where t.name='Singapore'");
                 CountryEntity countryEntity = (CountryEntity) q.getSingleResult();
-                
+
                 manufacturingFacilityEntity = new ManufacturingFacilityEntity();
                 manufacturingFacilityEntity.create("Manufacturing Facility SG1", "3 Jurong Industrial Park", "67183645", "MFSG1@islandfurniture.com", 10000);
                 manufacturingFacilityEntity.setRegionalOffice(regionalOfficeEntity);
@@ -171,10 +170,10 @@ public class StartupBean {
                 warehouseEntity.setCountry(countryEntity);
                 em.persist(warehouseEntity);
                 manufacturingFacilityEntity.setWarehouse(warehouseEntity);
-                regionalOfficeEntity.getManufacturingFacilityEntityList().add(manufacturingFacilityEntity);
+                regionalOfficeEntity.getManufacturingFacilityList().add(manufacturingFacilityEntity);
                 em.merge(manufacturingFacilityEntity);
                 em.merge(regionalOfficeEntity);
-                
+
                 manufacturingFacilityEntity = new ManufacturingFacilityEntity();
                 manufacturingFacilityEntity.create("Manufacturing Facility SG2", "26 Toh Guan Road", "67183664", "MFSG2@islandfurniture.com", 10000);
                 manufacturingFacilityEntity.setRegionalOffice(regionalOfficeEntity);
@@ -185,11 +184,11 @@ public class StartupBean {
                 warehouseEntity.setCountry(countryEntity);
                 em.persist(warehouseEntity);
                 manufacturingFacilityEntity.setWarehouse(warehouseEntity);
-                regionalOfficeEntity.getManufacturingFacilityEntityList().add(manufacturingFacilityEntity);
+                regionalOfficeEntity.getManufacturingFacilityList().add(manufacturingFacilityEntity);
                 em.merge(manufacturingFacilityEntity);
-                em.merge(regionalOfficeEntity);                
+                em.merge(regionalOfficeEntity);
                 System.out.println("Created manufacturing facilities & warehouse entities.");
-                
+
                 StoreEntity storeEntity;
                 storeEntity = new StoreEntity("Queenstown Store", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com", countryEntity);
                 storeEntity.setRegionalOffice(regionalOfficeEntity);
@@ -253,7 +252,8 @@ public class StartupBean {
         } catch (Exception ex) {
             System.out.println("Skipped init of database:\n" + ex);
             ex.printStackTrace();
-        }
+        }                
+
 
         try {
             //Create item
@@ -266,10 +266,10 @@ public class StartupBean {
             RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1, 100, 1, 50.0);
             SupplierEntity supplierEntity = new SupplierEntity("Supplier 3", "67911433", "supplier3@email.com", "3 Bukit Timah Road");
             CountryEntity country = new CountryEntity();
-                country.setCountryCode(86);
-                country.setCurrency("CN");
-                country.setExchangeRate(0.16);
-                country.setName("China");
+            country.setCountryCode(86);
+            country.setCurrency("CN");
+            country.setExchangeRate(0.16);
+            country.setName("China");
             em.persist(country);
             supplierEntity.setCountry(country);
             em.persist(supplierEntity);

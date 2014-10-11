@@ -851,7 +851,11 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             StaffEntity staff = em.find(StaffEntity.class, staffId);
             RoleEntity role = em.find(RoleEntity.class, roleId);
 
-            AccessRightEntity a = new AccessRightEntity();
+            Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
+                    .setParameter(1, staffId)
+                    .setParameter(2, roleId);
+            
+            AccessRightEntity a = (AccessRightEntity) q.getSingleResult();
 
             a.setStaff(staff);
             a.setRole(role);

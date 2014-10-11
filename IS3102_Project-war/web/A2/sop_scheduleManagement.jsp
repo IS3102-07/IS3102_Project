@@ -14,6 +14,12 @@
             }
         </script>
 
+        <style>
+            input{
+                max-width: 150px;
+            }
+        </style>
+
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
@@ -52,7 +58,12 @@
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Year</th>
-                                                            <th>Month</th>                                                                                                                        
+                                                            <th>Month</th>   
+                                                            <th>Week 1</th>
+                                                            <th>Week 2</th>
+                                                            <th>Week 3</th>
+                                                            <th>Week 4</th>
+                                                            <th>Week 5</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -62,14 +73,19 @@
                                                                 for (MonthScheduleEntity schedule : scheduleList) {
                                                         %>
                                                         <tr>   
-                                                    <td><input type="checkbox" name="delete" value="<%=schedule.getId()%>" /></td>
-                                                    <td><%= schedule.getYear()%></td>
-                                                    <td><%= schedule.getMonth()%></td>                                                            
-                                                    </tr>
-                                                    <%
+                                                            <td><input type="checkbox" name="delete" value="<%=schedule.getId()%>" /></td>
+                                                            <td><%= schedule.getYear()%></td>
+                                                            <td><%= schedule.getMonth()%></td>                                                            
+                                                            <td><%= schedule.getWorkDays_firstWeek()%></td>
+                                                            <td><%= schedule.getWorkDays_secondWeek()%></td>
+                                                            <td><%= schedule.getWorkDays_thirdWeek()%></td>
+                                                            <td><%= schedule.getWorkDays_forthWeek()%></td>
+                                                            <td><%= schedule.getWorkDays_fifthWeek()%></td>
+                                                        </tr>
+                                                        <%
+                                                                }
                                                             }
-                                                        }
-                                                    %>
+                                                        %>
                                                     </tbody>
                                                 </table>    
                                                 <div class="row">
@@ -83,11 +99,11 @@
                                                 <h4><b>Add Schedule:</b></h4>
                                                 <div class="form-group">
                                                     <label><b>Year</b></label>
-                                                    <input type="number" name="year" class="form-control" style="min-width: 200px" min="2014" max="2050" required="true">
+                                                    <input type="number" name="year" class="form-control" min="2014" max="2050" required="true">
                                                 </div>                                                
                                                 <div class="form-group">
                                                     <label><b>Month</b></label>
-                                                    <select class="form-control" style="min-width: 200px" name="month" required="true">
+                                                    <select class="form-control" name="month" required="true">
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -102,6 +118,26 @@
                                                         <option value="12">12</option>
                                                     </select>
                                                 </div>     
+                                                <div class="form-group">
+                                                    <label><b>Week 1</b></label>
+                                                    <input type="number" name="week1" class="form-control"  min="0" max="7" required="true">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Week 2</b></label>
+                                                    <input type="number" name="week2" class="form-control"  min="0" max="7" required="true">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Week 3</b></label>
+                                                    <input type="number" name="week3" class="form-control"  min="0" max="7" required="true">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Week 4</b></label>
+                                                    <input type="number" name="week4" class="form-control"  min="0" max="7" required="true">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><b>Week 5</b></label>
+                                                    <input type="number" name="week5" class="form-control"  min="0" max="7" required="true">
+                                                </div>
                                                 <div class="form-group">
                                                     <input type="submit" name="submit-btn" value="Add Schedule" class="btn btn-primary" data-loading-text="Loading...">
                                                 </div>

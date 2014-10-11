@@ -238,10 +238,10 @@
                         <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales and Operations Planning</a>
                     </li>
                     <li>
-                        <a href="#">Production Plan Distribution</a>
+                        <a href="../PPD_index_GET/*">Production Plan Distribution</a>
                     </li>
                     <li>
-                        <a href="#">Demand Management</a>
+                        <a href="../DemandManagement_index_GET/*">Demand Management</a>
                     </li>
                     <li>
                         <a href="#">Manufacturing Requirement Planning</a>

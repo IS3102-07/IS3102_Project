@@ -6,6 +6,8 @@
 
 package MRP.DemandManagement;
 
+import EntityManager.MasterProductionScheduleEntity;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +16,6 @@ import javax.ejb.Local;
  */
 @Local
 public interface DemandManagementBeanLocal {
-    
+    public List<MasterProductionScheduleEntity> getMasterProductionSchedules(Long MfId);
+    public Boolean generateMasterProductionSchedules(Long MfId);
 }

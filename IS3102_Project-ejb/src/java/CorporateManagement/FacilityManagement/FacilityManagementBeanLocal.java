@@ -33,11 +33,12 @@ public interface FacilityManagementBeanLocal {
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility();    
     public boolean checkNameExistsOfManufacturingFacility(String name);
     
+    public ManufacturingFacilityEntity getManufacturingFacilityByName(String name);
     public ManufacturingFacilityHelper getManufacturingFacilityHelper(Long manufacturingFacilityId);
     public List<ManufacturingFacilityHelper> getManufacturingFacilityHelperList();
     public Boolean addManufacturingFacilityToRegionalOffice(String callerStaffID, Long regionalOfficeId, Long MFid);
     public Boolean updateManufacturingFacilityToRegionalOffice(String callerStaffID, Long regionalOfficeId, Long MFid);
-    public Boolean removeManufacturingFacility(String callerStaffID, Long Id);
+    public Boolean removeManufacturingFacility(String callerStaffID, Long Id);    
     
     public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID);    
     public Boolean editStore(String callerStaffID, Long id, String storeName, String address, String telephone, String email, Long countryID);  

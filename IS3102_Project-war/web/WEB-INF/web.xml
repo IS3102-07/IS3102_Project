@@ -73,6 +73,10 @@
         <servlet-class>A6_servlets.BomManagement_AddBomServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UploadFile</servlet-name>
+        <servlet-class>A6_servlets.UploadFilet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>BomManagement_RemoveBomServlet</servlet-name>
         <servlet-class>A6_servlets.BomManagement_RemoveBomServlet</servlet-class>
     </servlet>
@@ -649,6 +653,70 @@
         <servlet-name>ECommerce_RemoveItemFromListServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_RemoveItemFromListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_UnsubscribeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/store_MF_connectionManagement</servlet-name>
+        <jsp-file>/A2/store_MF_connectionManagement.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/PPD_index</servlet-name>
+        <jsp-file>/A2/PPD_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>PPD_index_GET</servlet-name>
+        <servlet-class>A2_servlets.PPD_index_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>store_MF_connectionManagement_GET</servlet-name>
+        <servlet-class>A2_servlets.store_MF_connectionManagement_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PPD_index_POST</servlet-name>
+        <servlet-class>A2_servlets.PPD_index_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/PPD_main</servlet-name>
+        <jsp-file>/A2/PPD_main.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>store_MF_connectionManagement_POST</servlet-name>
+        <servlet-class>A2_servlets.store_MF_connectionManagement_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PPD_main_GET</servlet-name>
+        <servlet-class>A2_servlets.PPD_main_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PPD_main_POST</servlet-name>
+        <servlet-class>A2_servlets.PPD_main_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DemandManagement_index_GET</servlet-name>
+        <servlet-class>A2_servlets.DemandManagement_index_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DemandManagement_index_POST</servlet-name>
+        <servlet-class>A2_servlets.DemandManagement_index_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/DemandManagement_index</servlet-name>
+        <jsp-file>/A2/DemandManagement_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>GetMFbyRO_ajax_Servlet</servlet-name>
+        <servlet-class>A2_servlets.GetMFbyRO_ajax_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DemandManagement_main_GET</servlet-name>
+        <servlet-class>A2_servlets.DemandManagement_main_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DemandManagement_main_POST</servlet-name>
+        <servlet-class>A2_servlets.DemandManagement_main_POST</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -720,6 +788,10 @@
     <servlet-mapping>
         <servlet-name>BomManagement_AddBomServlet</servlet-name>
         <url-pattern>/BomManagement_AddBomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFile</servlet-name>
+        <url-pattern>/UploadFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BomManagement_RemoveBomServlet</servlet-name>
@@ -1165,9 +1237,6 @@
         <servlet-name>A1/AccessRight</servlet-name>
         <url-pattern>/A1/AccessRight</url-pattern>
     </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>Workspace_Servlet</welcome-file>
-    </welcome-file-list>
     <servlet-mapping>
         <servlet-name>ECommerce_AllProductsServlet</servlet-name>
         <url-pattern>/ECommerce_AllProductsServlet</url-pattern>
@@ -1297,10 +1366,77 @@
         <url-pattern>/CountryItemPricingManagement_RemoveCountryItemPricingServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>A2/store_MF_connectionManagement</servlet-name>
+        <url-pattern>/A2/store_MF_connectionManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/PPD_index</servlet-name>
+        <url-pattern>/A2/PPD_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PPD_index_GET</servlet-name>
+        <url-pattern>/PPD_index_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>store_MF_connectionManagement_GET</servlet-name>
+        <url-pattern>/store_MF_connectionManagement_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PPD_index_POST</servlet-name>
+        <url-pattern>/PPD_index_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/PPD_main</servlet-name>
+        <url-pattern>/A2/PPD_main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>store_MF_connectionManagement_POST</servlet-name>
+        <url-pattern>/store_MF_connectionManagement_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PPD_main_GET</servlet-name>
+        <url-pattern>/PPD_main_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PPD_main_POST</servlet-name>
+        <url-pattern>/PPD_main_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DemandManagement_index_GET</servlet-name>
+        <url-pattern>/DemandManagement_index_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DemandManagement_index_POST</servlet-name>
+        <url-pattern>/DemandManagement_index_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/DemandManagement_index</servlet-name>
+        <url-pattern>/A2/DemandManagement_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetMFbyRO_ajax_Servlet</servlet-name>
+        <url-pattern>/GetMFbyRO_ajax_Servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ECommerce_RemoveItemFromListServlet</servlet-name>
         <url-pattern>/ECommerce_RemoveItemFromListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
+        <url-pattern>/ECommerce_UnsubscribeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DemandManagement_main_GET</servlet-name>
+        <url-pattern>/DemandManagement_main_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DemandManagement_main_POST</servlet-name>
+        <url-pattern>/DemandManagement_main_POST/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>Workspace_Servlet</welcome-file>
+    </welcome-file-list>
 </web-app>
