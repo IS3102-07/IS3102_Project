@@ -50,15 +50,13 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     }
 
     @Override
-    public MonthScheduleEntity createSchedule(Integer year, Integer month) {
+    public MonthScheduleEntity createSchedule(Integer year, Integer month, Integer workDays_firstWeek, Integer workDays_secondWeek, Integer workDays_thirdWeek, Integer workDays_forthWeek, Integer workDays_fifthWeek) {
         try {
             Query q = em.createQuery("select s from MonthScheduleEntity s where s.year = ?1 and s.month = ?2")
                     .setParameter(1, year)
                     .setParameter(2, month);
             if (q.getResultList().isEmpty()) {
-                MonthScheduleEntity scheduleEntity = new MonthScheduleEntity();
-                scheduleEntity.setYear(year);
-                scheduleEntity.setMonth(month);
+                MonthScheduleEntity scheduleEntity = new MonthScheduleEntity(year, month, workDays_firstWeek, workDays_secondWeek, workDays_thirdWeek, workDays_forthWeek, workDays_fifthWeek);                
                 em.persist(scheduleEntity);
                 return scheduleEntity;
             } else {

@@ -32,14 +32,17 @@ public class MonthScheduleEntity implements Serializable {
     private Calendar date;
     private Integer year;
     private Integer month;
+    private Integer workDays_firstWeek;
+    private Integer workDays_secondWeek;
+    private Integer workDays_thirdWeek;
+    private Integer workDays_forthWeek;
+    private Integer workDays_fifthWeek;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "schedule")
     private List<SaleAndOperationPlanEntity> sopList;
 
     public MonthScheduleEntity() {
         this.sopList = new ArrayList<>();
-    }
-
-    ;
+    }    
 
     public MonthScheduleEntity(Calendar date) {
         this.date = date;
@@ -48,6 +51,17 @@ public class MonthScheduleEntity implements Serializable {
         this.sopList = new ArrayList<>();
     }
 
+    public MonthScheduleEntity(Integer year, Integer month, Integer workDays_firstWeek, Integer workDays_secondWeek, Integer workDays_thirdWeek, Integer workDays_forthWeek, Integer workDays_fifthWeek) {
+        this.year = year;
+        this.month = month;
+        this.workDays_firstWeek = workDays_firstWeek;
+        this.workDays_secondWeek = workDays_secondWeek;
+        this.workDays_thirdWeek = workDays_thirdWeek;
+        this.workDays_forthWeek = workDays_forthWeek;
+        this.workDays_fifthWeek = workDays_fifthWeek;
+        this.sopList = new ArrayList<>();
+    }
+        
     public Long getId() {
         return id;
     }
@@ -87,6 +101,46 @@ public class MonthScheduleEntity implements Serializable {
     public void setMonth(Integer month) {
         this.month = month;
     }
+
+    public Integer getWorkDays_firstWeek() {
+        return workDays_firstWeek;
+    }
+
+    public void setWorkDays_firstWeek(Integer workDays_firstWeek) {
+        this.workDays_firstWeek = workDays_firstWeek;
+    }
+
+    public Integer getWorkDays_secondWeek() {
+        return workDays_secondWeek;
+    }
+
+    public void setWorkDays_secondWeek(Integer workDays_secondWeek) {
+        this.workDays_secondWeek = workDays_secondWeek;
+    }
+
+    public Integer getWorkDays_thirdWeek() {
+        return workDays_thirdWeek;
+    }
+
+    public void setWorkDays_thirdWeek(Integer workDays_thirdWeek) {
+        this.workDays_thirdWeek = workDays_thirdWeek;
+    }
+
+    public Integer getWorkDays_forthWeek() {
+        return workDays_forthWeek;
+    }
+
+    public void setWorkDays_forthWeek(Integer workDays_forthWeek) {
+        this.workDays_forthWeek = workDays_forthWeek;
+    }
+
+    public Integer getWorkDays_fifthWeek() {
+        return workDays_fifthWeek;
+    }
+
+    public void setWorkDays_fifthWeek(Integer workDays_fifthWeek) {
+        this.workDays_fifthWeek = workDays_fifthWeek;
+    }        
     
     @Override
     public int hashCode() {
