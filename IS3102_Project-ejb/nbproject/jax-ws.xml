@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
-    <service name="SalesRecordSubmissionWebService">
-      <implementation-class>MRP.SalesForecast.SalesRecordSubmissionWebService</implementation-class>
-    </service>
     <service name="HQWebServiceBean">
       <implementation-class>WebServices.HQWebServiceBean</implementation-class>
     </service>
     <service name="StoreWebServiceBean">
       <implementation-class>WebServices.StoreWebServiceBean</implementation-class>
+    </service>
+    <service name="SalesRecordSubmissionWebService">
+      <implementation-class>MRP.SalesForecast.SalesRecordSubmissionWebService</implementation-class>
     </service>
   </services>
   <clients/>
