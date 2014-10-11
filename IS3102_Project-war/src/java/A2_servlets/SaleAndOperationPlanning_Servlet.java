@@ -85,7 +85,14 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/addSchedule":
                 Integer year = Integer.parseInt(request.getParameter("year"));
                 Integer month = Integer.parseInt(request.getParameter("month"));
-                sopBean.createSchedule(year, month);
+                Integer week1 = Integer.parseInt(request.getParameter("week1"));
+                Integer week2 = Integer.parseInt(request.getParameter("week2"));
+                Integer week3 = Integer.parseInt(request.getParameter("week3"));
+                Integer week4 = Integer.parseInt(request.getParameter("week4"));
+                Integer week5 = Integer.parseInt(request.getParameter("week5"));
+                
+                sopBean.createSchedule(year, month, week1, week2, week3, week4, week5);
+                
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET";
                 break;
 
