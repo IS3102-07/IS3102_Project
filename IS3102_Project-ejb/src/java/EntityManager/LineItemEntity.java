@@ -21,7 +21,7 @@ public class LineItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
+    @ManyToOne
     private ItemEntity item;
     private Integer quantity;
     private String packType;
