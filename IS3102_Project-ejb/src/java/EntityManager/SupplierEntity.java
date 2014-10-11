@@ -2,6 +2,7 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +27,7 @@ public class SupplierEntity implements Serializable {
     @Lob
     private String address;
     private Boolean isDeleted;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private CountryEntity country;
     
     @OneToMany (mappedBy="supplier")
