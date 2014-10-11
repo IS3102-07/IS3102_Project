@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EntityManager;
 
 import java.io.Serializable;
@@ -10,20 +5,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 
-/**
- *
- * @author Administrator
- */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class RawIngredientEntity extends ItemEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Lob
+    private String name;
+    private String description;
+    private Integer lotSize;
+    private Integer leadTime;
 
     public RawIngredientEntity() {
+        super.setIsDeleted(false);
+    }
+
+    public RawIngredientEntity(String SKU, String name, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price) {
+        super(SKU, _length, width, height, price);
+        this.name = name;
+        super.setName(name);
+        this.description = description;
+        this.lotSize = lotSize;
+        this.leadTime = leadTime;
+        super.setType("Raw Ingredient");
         super.setIsDeleted(false);
     }
 
@@ -35,7 +46,6 @@ public class RawIngredientEntity extends ItemEntity implements Serializable {
         super.setIsDeleted(isDeleted);
     }
 
-    
     public Long getId() {
         return id;
     }
@@ -44,29 +54,36 @@ public class RawIngredientEntity extends ItemEntity implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RawIngredientEntity)) {
-            return false;
-        }
-        RawIngredientEntity other = (RawIngredientEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "entityManagerBean.RawIngredient[ id=" + id + " ]";
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getLotSize() {
+        return lotSize;
+    }
+
+    public void setLotSize(Integer lotSize) {
+        this.lotSize = lotSize;
+    }
+
+    public Integer getLeadTime() {
+        return leadTime;
+    }
+
+    public void setLeadTime(Integer leadTime) {
+        this.leadTime = leadTime;
     }
 
 }

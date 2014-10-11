@@ -1,46 +1,66 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A4_servlets;
 
+import EntityManager.StaffEntity;
+import EntityManager.TransferOrderEntity;
+import EntityManager.WarehouseEntity;
+import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author -VeRyLuNaTiC
- */
 public class StoreTransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @EJB
+    private StoreInventoryManagementBeanLocal manufacturingInventoryControlBean;
+
+    @EJB
+    private StoreInventoryManagementBeanLocal simbl;
+    private String result;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet StoreTransferOrderLineItemManagement_UpdateServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet StoreTransferOrderLineItemManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            HttpSession session;
+            session = request.getSession();
+            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+            String transferOrderId = request.getParameter("id");
+            String status = request.getParameter("status");
+            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
+
+            result = "?goodMsg=Line item added successfully.&id=" + transferOrderId;
+
+            boolean canUpdate = false;
+            if (status.equals("Completed")) {
+                canUpdate = simbl.markTransferOrderAsCompleted(Long.parseLong(transferOrderId), staff.getName());
+                result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
+                //response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+            } else if (status.equals("Unfulfillable")) {
+                result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
+                canUpdate = simbl.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
+                //response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+            } else if (status.equals("Pending")) {
+                result = "?errMsg=Status not selected.";
+                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+            }
+            if (!canUpdate) {
+
+                result = "?errMsg=Invalid request. Items not found or destination bin cannot contain the item (full or wrong bin type).&id=" + transferOrderId;
+                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+            } else {
+                List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                session.setAttribute("transferOrders", transferOrders);
+                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+            }
+
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

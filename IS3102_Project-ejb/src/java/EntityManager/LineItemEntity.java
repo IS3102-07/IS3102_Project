@@ -21,18 +21,10 @@ public class LineItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private ShippingOrderEntity shippingOrder;
-    @ManyToOne
-    private PurchaseOrderEntity purchaseOrder;
     @OneToOne
     private ItemEntity item;
     private Integer quantity;
     private String packType;
-    @ManyToOne
-    private StorageBinEntity storageBin;
-    @ManyToOne
-    private SalesRecordEntity salesRecord;
     
     public LineItemEntity(){
     }
@@ -49,29 +41,6 @@ public class LineItemEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ShippingOrderEntity getShippingOrder() {
-        return shippingOrder;
-    }
-
-    public void setShippingOrder(ShippingOrderEntity shippingOrder) {
-        this.shippingOrder = shippingOrder;
-    }
-    public PurchaseOrderEntity getPurchaseOrder() {
-        return purchaseOrder;
-    }
-
-    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
-        this.purchaseOrder = purchaseOrder;
-    }
-
-    public StorageBinEntity getStorageBin() {
-        return storageBin;
-    }
-
-    public void setStorageBin(StorageBinEntity storageBin) {
-        this.storageBin = storageBin;
     }
     
     public ItemEntity getItem() {
@@ -96,14 +65,6 @@ public class LineItemEntity implements Serializable {
 
     public void setPackType(String packType) {
         this.packType = packType;
-    }        
-
-    public SalesRecordEntity getSalesRecord() {
-        return salesRecord;
-    }
-
-    public void setSalesRecord(SalesRecordEntity salesRecord) {
-        this.salesRecord = salesRecord;
     }
     
     @Override

@@ -312,7 +312,7 @@
                         <a href="#">Store's Stock Transfer</a>
                     </li>
                     <li>
-                        <a href="#">Store's Inventory Management</a>
+                        <a href="../RetailWarehouseManagement_Servlet">Store's Inventory Management</a>
                     </li>
                 </ul>
             </li>

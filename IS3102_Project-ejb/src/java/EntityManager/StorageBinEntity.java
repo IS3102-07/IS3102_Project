@@ -24,8 +24,8 @@ public class StorageBinEntity implements Serializable {
     private Integer height;
     private Integer volume;
     private Integer freeVolume;
-    @OneToMany(mappedBy = "storageBin",cascade = (CascadeType.ALL))
-    private List<LineItemEntity> listOfLineItems;
+    @OneToMany(cascade = (CascadeType.ALL))
+    private List<LineItemEntity> lineItems;
     @ManyToOne
     private WarehouseEntity warehouse;
 
@@ -41,7 +41,7 @@ public class StorageBinEntity implements Serializable {
         this.height = height;
         this.volume = _length * width * height;
         this.freeVolume = volume;
-        this.listOfLineItems = new ArrayList();
+        this.lineItems = new ArrayList();
     }
 
 
@@ -92,12 +92,12 @@ public class StorageBinEntity implements Serializable {
         this.freeVolume = freeVolume;
     }
 
-    public List<LineItemEntity> getListOfLineItems() {
-        return listOfLineItems;
+    public List<LineItemEntity> getLineItems() {
+        return lineItems;
     }
 
-    public void setListOfLineItems(List<LineItemEntity> listOfLineItems) {
-        this.listOfLineItems = listOfLineItems;
+    public void setLineItems(List<LineItemEntity> lineItems) {
+        this.lineItems = lineItems;
     }
 
     public Long getId() {

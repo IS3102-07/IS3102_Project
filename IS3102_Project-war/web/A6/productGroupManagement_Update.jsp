@@ -91,7 +91,7 @@
                                             <input class="form-control"  type="text" required="true" value="<%=productGroup.getProductGroupName()%>" disabled/>
                                         </div>
                                         <div class="form-group">
-                                            <label>Work Hours: </label>
+                                            <label>Work hours per lot size: </label>
                                             <input class="form-control" name="workhours" type="number" min="1" step="1" required="true" value="<%=productGroup.getWorkHours()%>"/>
                                         </div>
                                         <div class="form-group">

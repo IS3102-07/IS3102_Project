@@ -85,7 +85,7 @@
                                                             if (purchaseOrders != null) {
                                                                 for (int i = 0; i < purchaseOrders.size(); i++) {
                                                                     SupplierEntity supplier = purchaseOrders.get(i).getSupplier();
-                                                                    WarehouseEntity warehouse = purchaseOrders.get(i).getReceivedWarehouse();
+                                                                    WarehouseEntity warehouse = purchaseOrders.get(i).getDestination();
                                                         %>
                                                         <tr>
                                                             <td>

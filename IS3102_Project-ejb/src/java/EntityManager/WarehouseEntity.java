@@ -34,10 +34,14 @@ public class WarehouseEntity implements Serializable {
     private StoreEntity store;
     @OneToOne(mappedBy="warehouse")
     private ManufacturingFacilityEntity manufaturingFacility;
-    @OneToMany(mappedBy="receivedWarehouse")
-    private List<PurchaseOrderEntity> purchaseOrderEntityList;
+    @OneToMany(mappedBy="destination")
+    private List<PurchaseOrderEntity> purchaseOrders;
     @OneToMany(mappedBy="warehouse")
     private List<TransferOrderEntity> transferOrders;
+    @OneToMany(mappedBy="origin")
+    private List<ShippingOrderEntity> outbound;
+    @OneToMany(mappedBy="destination")
+    private List<ShippingOrderEntity> inbound;
     @ManyToOne
     private CountryEntity country;
     @ManyToOne
@@ -46,7 +50,7 @@ public class WarehouseEntity implements Serializable {
     
     public WarehouseEntity(){
         this.storageBins = new ArrayList<>();
-        this.purchaseOrderEntityList = new ArrayList<>();
+        this.purchaseOrders = new ArrayList<>();
         this.isDeleted=false;
     }    
 
@@ -56,9 +60,25 @@ public class WarehouseEntity implements Serializable {
         this.email = email;
         this.telephone = telephone;
         this.storageBins = new ArrayList<>();
-        this.purchaseOrderEntityList = new ArrayList<>();
+        this.purchaseOrders = new ArrayList<>();
         this.isDeleted = false;
     }                
+
+    public List<ShippingOrderEntity> getOutbound() {
+        return outbound;
+    }
+
+    public void setOutbound(List<ShippingOrderEntity> outbound) {
+        this.outbound = outbound;
+    }
+
+    public List<ShippingOrderEntity> getInbound() {
+        return inbound;
+    }
+
+    public void setInbound(List<ShippingOrderEntity> inbound) {
+        this.inbound = inbound;
+    }
 
     public Boolean getIsDeleted() {
         return isDeleted;
@@ -173,12 +193,12 @@ public class WarehouseEntity implements Serializable {
         this.country = country;
     }
 
-    public List<PurchaseOrderEntity> getPurchaseOrderEntityList() {
-        return purchaseOrderEntityList;
+    public List<PurchaseOrderEntity> getPurchaseOrders() {
+        return purchaseOrders;
     }
 
-    public void setPurchaseOrderEntityList(List<PurchaseOrderEntity> purchaseOrderEntityList) {
-        this.purchaseOrderEntityList = purchaseOrderEntityList;
+    public void setPurchaseOrders(List<PurchaseOrderEntity> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
     }
 
     public List<TransferOrderEntity> getTransferOrders() {

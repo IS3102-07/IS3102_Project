@@ -107,7 +107,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         System.out.println("removeRegionalOffice() called with ID:" + regionalOfficeID);
         try {
             RegionalOfficeEntity regionalOfficeEntity = em.getReference(RegionalOfficeEntity.class, Long.valueOf(regionalOfficeID));
-            if (regionalOfficeEntity.getManufacturingFacilityEntityList().size() > 0 || regionalOfficeEntity.getStoreList().size() > 0) {
+            if (regionalOfficeEntity.getManufacturingFacilityList().size() > 0 || regionalOfficeEntity.getStoreList().size() > 0) {
                 return false; // Cannot remove if still got other facility using this.
             }
             regionalOfficeEntity.setIsDeleted(true);
@@ -239,7 +239,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
                 }
                 if (i.getId() == Long.valueOf(manufacturingFacilityID)) {
                     RegionalOfficeEntity regionalOffice = i.getRegionalOffice();
-                    regionalOffice.getManufacturingFacilityEntityList().remove(i);
+                    regionalOffice.getManufacturingFacilityList().remove(i);
                     em.merge(regionalOffice);
                     i.setIsDeleted(true);
                     em.merge(i);
@@ -312,9 +312,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         String name;
         Long storeId;
         try {
-            StoreEntity storeEntity = new StoreEntity();
+            
             CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
-            storeEntity.create(storeName, address, telephone, email, countryEntity);
+            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity);
             em.persist(storeEntity);
             countryEntity.getStores().add(storeEntity);
             em.merge(countryEntity);
@@ -358,14 +358,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
         try {
             StoreEntity storeEntity = em.find(StoreEntity.class, storeId);
             //remove from old country side
-            storeEntity.getCountryEntity().getStores().remove(storeEntity);
+            storeEntity.getCountry().getStores().remove(storeEntity);
             //update store
             CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
             storeEntity.setName(storeName);
             storeEntity.setAddress(address);
             storeEntity.setTelephone(telephone);
             storeEntity.setEmail(email);
-            storeEntity.setCountryEntity(countryEntity);
+            storeEntity.setCountry(countryEntity);
             em.merge(storeEntity);
             //add to new country side
             countryEntity.getStores().add(storeEntity);
@@ -541,6 +541,26 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             return new ArrayList<WarehouseEntity>();
         }
     }
+    @Override
+    public List<WarehouseEntity> getMFWarehouseList() {
+        try {
+            Query q = em.createQuery("select w from WarehouseEntity w where w.isDeleted=false and w.manufaturingFacility is not null");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ArrayList<WarehouseEntity>();
+        }
+    }
+    @Override
+    public List<WarehouseEntity> getStoreWarehouseList() {
+        try {
+            Query q = em.createQuery("select w from WarehouseEntity w where w.isDeleted=false and w.store is not null");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ArrayList<WarehouseEntity>();
+        }
+    }
 
     @Override
     public WarehouseEntity getWarehouseByName(String warehouseName) {
@@ -616,7 +636,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             StoreHelper helper = new StoreHelper();
             helper.store = store;
             helper.regionalOffice = store.getRegionalOffice();
-            helper.country = store.getCountryEntity();
+            helper.country = store.getCountry();
             System.out.println("return helper class");
             return helper;
         } catch (Exception ex) {
@@ -634,7 +654,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
                 StoreHelper helper = new StoreHelper();
                 helper.store = s;
                 helper.regionalOffice = s.getRegionalOffice();
-                helper.country = s.getCountryEntity();
+                helper.country = s.getCountry();
                 helperList.add(helper);
             }
             return helperList;
@@ -717,7 +737,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             ManufacturingFacilityEntity MF = em.find(ManufacturingFacilityEntity.class, MFid);
             RegionalOfficeEntity ro = em.find(RegionalOfficeEntity.class, regionalOfficeId);
             MF.setRegionalOffice(ro);
-            ro.getManufacturingFacilityEntityList().add(MF);
+            ro.getManufacturingFacilityList().add(MF);
             em.merge(MF);
             em.merge(ro);
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
@@ -737,9 +757,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
             RegionalOfficeEntity newRO = em.find(RegionalOfficeEntity.class, regionalOfficeId);
             RegionalOfficeEntity oldRO = MF.getRegionalOffice();
 
-            oldRO.getManufacturingFacilityEntityList().remove(MF);
+            oldRO.getManufacturingFacilityList().remove(MF);
             MF.setRegionalOffice(newRO);
-            newRO.getManufacturingFacilityEntityList().add(MF);
+            newRO.getManufacturingFacilityList().add(MF);
 
             em.merge(newRO);
             em.merge(MF);
@@ -762,7 +782,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal {
                 return false;
             }
             RegionalOfficeEntity ro = mf.getRegionalOffice();
-            ro.getManufacturingFacilityEntityList().remove(mf);
+            ro.getManufacturingFacilityList().remove(mf);
             em.merge(ro);
             mf.setIsDeleted(true);
             em.merge(mf);

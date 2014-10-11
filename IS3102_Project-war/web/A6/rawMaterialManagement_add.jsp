@@ -53,15 +53,15 @@
                                     <input class="form-control" required="true" type="text" name="SKU">
                                 </div>
                                 <div class="form-group">
-                                    <label>Length</label>
+                                    <label>Length per item</label>
                                     <input class="form-control" required="true" type="number" min="1" step="1" name="length">
                                 </div>
                                 <div class="form-group">
-                                    <label>Width</label>
+                                    <label>Width per item</label>
                                     <input class="form-control" required="true" type="number" min="1" step="1" name="width">
                                 </div>
                                 <div class="form-group">
-                                    <label>Height</label>
+                                    <label>Height per item</label>
                                     <input class="form-control" required="true" type="number" min="1" step="1" name="height">
                                 </div>
                                 <div class="form-group">

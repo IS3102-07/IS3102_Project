@@ -89,7 +89,7 @@ public class ManufacturingWarehouseManagement_Servlet extends HttpServlet {
                     response.sendRedirect("A3/manufacturingWarehouseManagement.jsp");
                 }
             } else {
-                List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
+                List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getMFWarehouseList();
                 session.setAttribute("warehouses", warehouses);
 
                 if (errMsg == null || errMsg.equals("")) {

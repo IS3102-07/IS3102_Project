@@ -11,12 +11,9 @@ import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import HelperClasses.ItemStorageBinHelper;
-import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -29,12 +26,6 @@ import javax.persistence.Query;
 
 @Stateless
 public class StoreInventoryManagementBean implements StoreInventoryManagementBeanLocal {
-
-    @EJB
-    private SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-    @EJB
-    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
-    @Resource
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     StorageBinEntity storageBin;
@@ -98,8 +89,8 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
 
         try {
             storageBin = em.getReference(StorageBinEntity.class, storageBinId);
-            System.out.println("Size of storage bin to be updated is " + storageBin.getListOfLineItems().size());
-            if (storageBin == null || !storageBin.getListOfLineItems().isEmpty()) {
+            System.out.println("Size of storage bin to be updated is " + storageBin.getLineItems().size());
+            if (storageBin == null || !storageBin.getLineItems().isEmpty()) {
                 System.out.println("Cannot find storage bin or storage bin contains items");
                 return false;
             }
@@ -121,7 +112,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
         System.out.println("deleteStorageBin() called.");
         try {
             storageBin = em.find(StorageBinEntity.class, id);
-            if (storageBin == null || !storageBin.getListOfLineItems().isEmpty()) {
+            if (storageBin == null || !storageBin.getLineItems().isEmpty()) {
                 System.out.println("Unable to delete. Storage bin either not found or not empty.");
                 return false;
             } else {
@@ -244,7 +235,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             return null;
         }
     }
-    
+
     @Override
     public StorageBinEntity getRetailOutletBin(Long warehouseID) {
         System.out.println("getRetailOutletBin() called");
@@ -264,7 +255,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             return null;
         }
     }
-    
+
     @Override
     public StorageBinEntity getFurnitureMarketplaceBin(Long warehouseID) {
         System.out.println("getFurnitureMarketplaceBin() called");
@@ -312,7 +303,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                 System.out.println("SKU number is " + SKU);
                 System.out.println("originBin: " + originBin.getId() + " moving to targetBin: " + targetBin.getId());
 
-                boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
+                boolean isPass = moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
                 if (!isPass) {
                     System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in source bin or volume of destination bin is insufficient.");
                     throw new Exception();
@@ -334,7 +325,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
     public boolean cancelTransferOrder(Long transferOrderId) {
         try {
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
-            transferOrder.setStatus( "Cancelled");
+            transferOrder.setStatus("Cancelled");
 
             return true;
         } catch (Exception ex) {
@@ -441,9 +432,9 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             return false;
         }
     }
-    
+
     //Inventory Control==================================================
-      @Override
+    @Override
     public List<StorageBinEntity> getEmptyStorageBins(Long warehouseID, ItemEntity itemEntity) {
         System.out.println("getEmptyStorageBins() called with ItemEntity:" + itemEntity);
 
@@ -485,7 +476,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
         try {
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
             WarehouseEntity warehouse = shippingOrderEntity.getOrigin();
-            StorageBinEntity outbound = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouse.getId());
+            StorageBinEntity outbound = getOutboundStorageBin(warehouse.getId());
             if (outbound == null) {
                 System.out.println("removeItemFromOutboundBinForShipping(): Outbound bin does not exist.");
                 return false;
@@ -506,7 +497,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                     em.merge(lineItemInOutboundBin);
                     //if it is the last item
                     if (lineItemInOutboundBin.getQuantity() == 1) {
-                        outbound.getListOfLineItems().remove(lineItemInOutboundBin);
+                        outbound.getLineItems().remove(lineItemInOutboundBin);
                         em.remove(lineItemInOutboundBin);
                         em.flush();
                     } else {
@@ -572,7 +563,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
     ) {
         System.out.println("checkIfItemExistInsideStorageBin() called");
         StorageBinEntity storageBin = em.getReference(StorageBinEntity.class, storageBinID);
-        List<LineItemEntity> listOfLineItems = storageBin.getListOfLineItems();
+        List<LineItemEntity> listOfLineItems = storageBin.getLineItems();
         for (LineItemEntity lineItem : listOfLineItems) {
             if (lineItem.getItem().getSKU().equals(SKU)) {
                 System.out.println("checkIfItemExistInsideStorageBin(): SKU found, returned line item.");
@@ -589,7 +580,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
         System.out.println("moveInboundPurchaseOrderItemsToReceivingBin called()");
         try {
             PurchaseOrderEntity purchaseOrderEntity = em.getReference(PurchaseOrderEntity.class, purchaseOrderID);
-            Long warehouseID = purchaseOrderEntity.getReceivedWarehouse().getId();
+            Long warehouseID = purchaseOrderEntity.getDestination().getId();
             List<LineItemEntity> lineItemsInPurchaseOrder = purchaseOrderEntity.getLineItems();
             for (LineItemEntity lineItemEntity : lineItemsInPurchaseOrder) {
                 ItemEntity itemEntity = lineItemEntity.getItem();
@@ -620,7 +611,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
     ) {
 
         System.out.println("addItemToReceivingBin() called with SKU:" + SKU + " & wahouseID:" + warehouseID);
-        StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
+        StorageBinEntity inboundBin = getInboundStorageBin(warehouseID);
         em.merge(inboundBin);
         if (inboundBin == null) {
             System.out.println("Failed to add item to receiving bin, receiving bin not found.");
@@ -641,9 +632,8 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                 lineItem.setQuantity(lineItem.getQuantity() + 1);
             } else {
                 lineItem = new LineItemEntity(itemEntity, 1, "");
-                lineItem.setStorageBin(inboundBin);
                 em.persist(lineItem);
-                inboundBin.getListOfLineItems().add(lineItem);
+                inboundBin.getLineItems().add(lineItem);
                 em.merge(inboundBin);
             }
             em.flush();
@@ -670,7 +660,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                 em.merge(lineItem);
                 //if it is the last item
                 if (lineItem.getQuantity() == 1) {
-                    source.getListOfLineItems().remove(lineItem);
+                    source.getLineItems().remove(lineItem);
                     em.remove(lineItem);
                 } else {
                     lineItem.setQuantity(lineItem.getQuantity() - 1);
@@ -694,8 +684,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
                     em.persist(newLineItem);
                     em.flush();
                     em.refresh(newLineItem);
-                    newLineItem.setStorageBin(destination);
-                    destination.getListOfLineItems().add(newLineItem);
+                    destination.getLineItems().add(newLineItem);
                     lineItem = newLineItem;
                     em.flush();
                 } else {
@@ -737,10 +726,11 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             List<StorageBinEntity> storageBins = q.getResultList();
             for (StorageBinEntity currentBin : storageBins) {
-                for (int i = 0; i < currentBin.getListOfLineItems().size(); i++) {
-                    ItemEntity itemEntity = currentBin.getListOfLineItems().get(i).getItem();
+                for (int i = 0; i < currentBin.getLineItems().size(); i++) {
+                    ItemEntity itemEntity = currentBin.getLineItems().get(i).getItem();
                     if (itemEntity.getSKU().equals(SKU)) {
-                        qty++;
+                        //exisiting quantity + those in the bin
+                        qty = qty + currentBin.getLineItems().get(i).getQuantity();
                     }
                 }
             }
@@ -825,6 +815,60 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getTotalVolumeOfOutboundStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer getTotalVolumeOfShelfStorageBin(Long warehouseID
+    ) {
+        System.out.println("getTotalVolumeOfShelfStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Shelf")) {
+                    volume += storageBinEntity.getVolume();
+                }
+            }
+            System.out.println("getTotalVolumeOfShelfStorageBin(): Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalVolumeOfShelfStorageBin, warehouse not found.");
+            return 0;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalVolumeOfShelfStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer getTotalVolumeOfPalletStorageBin(Long warehouseID
+    ) {
+        System.out.println("getTotalVolumeOfPalletStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Pallet")) {
+                    volume += storageBinEntity.getVolume();
+                }
+            }
+            System.out.println("getTotalVolumeOfPalletStorageBin(): Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalVolumeOfPalletStorageBin, warehouse not found.");
+            return 0;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalVolumeOfPalletStorageBin:\n" + ex);
             ex.printStackTrace();
             return 0;
         }
@@ -939,6 +983,60 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
     }
 
     @Override
+    public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID
+    ) {
+        System.out.println("getTotalFreeVolumeOfShelfStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Shelf")) {
+                    volume += storageBinEntity.getFreeVolume();
+                }
+            }
+            System.out.println("getTotalFreeVolumeOfShelfStorageBin(): Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalFreeVolumeOfShelfStorageBin, warehouse not found.");
+            return 0;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalFreeVolumeOfShelfStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
+    public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID
+    ) {
+        System.out.println("getTotalFreeVolumeOfPalletStorageBin() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
+            q.setParameter("id", warehouseID);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            Integer volume = 0;
+            for (StorageBinEntity storageBinEntity : storageBins) {
+                if (storageBinEntity.getType().equals("Pallet")) {
+                    volume += storageBinEntity.getFreeVolume();
+                }
+            }
+            System.out.println("getTotalFreeVolumeOfPalletStorageBin(): Returned volume.");
+            return volume;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed getTotalFreeVolumeOfPalletStorageBin, warehouse not found.");
+            return 0;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getTotalFreeVolumeOfPalletStorageBin:\n" + ex);
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
     public Integer getTotalFreeVolumeOfRetailOutlet(Long warehouseID
     ) {
         System.out.println("getTotalFreeVolumeOfRetailOutlet() called");
@@ -999,7 +1097,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
         try {
             em.flush();
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
-            List<LineItemEntity> listOfLineItems = storageBinEntity.getListOfLineItems();
+            List<LineItemEntity> listOfLineItems = storageBinEntity.getLineItems();
             if (listOfLineItems == null || listOfLineItems.size() == 0) {
                 System.out.println("No items");
                 return null;
@@ -1058,7 +1156,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             return null;
         }
     }
-    
+
     @Override
     public List<ItemStorageBinHelper> getOutboundBinItemList(Long warehouseID) {
         System.out.println("getOutboundBinItemList() called");
@@ -1066,7 +1164,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             em.flush();
             List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<>();
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-            StorageBinEntity storageBinEntity = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouseID);
+            StorageBinEntity storageBinEntity = getOutboundStorageBin(warehouseID);
             List<StorageBinEntity> storageBins = new ArrayList();
             storageBins.add(storageBinEntity);
 
@@ -1104,7 +1202,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             return null;
         }
     }
-    
+
     @Override
     public List<ItemStorageBinHelper> getBinItemList(Long storageBinID) {
         System.out.println("getBinItemList() called");
@@ -1164,7 +1262,7 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             totalVolumeDeleted += itemsDeleted.getVolume() * lineItemEntity.getQuantity();
             storageBinEntity.setFreeVolume(storageBinEntity.getFreeVolume() + totalVolumeDeleted);
             em.remove(lineItemEntity);
-            storageBinEntity.getListOfLineItems().remove(lineItemEntity);
+            storageBinEntity.getLineItems().remove(lineItemEntity);
             em.merge(storageBinEntity);
             return true;
         } catch (EntityNotFoundException ex) {
@@ -1205,5 +1303,5 @@ public class StoreInventoryManagementBean implements StoreInventoryManagementBea
             return false;
         }
     }
-    
+
 }

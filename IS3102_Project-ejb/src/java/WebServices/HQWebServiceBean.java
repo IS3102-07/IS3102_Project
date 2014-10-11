@@ -2,10 +2,13 @@ package WebServices;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.LineItemEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
-import Store_InventoryManagement.RetailInventoryControl.RetailInventoryControlLocal;
+import HelperClasses.ReturnHelper;
+import OperationalCRM.SalesRecording.SalesRecordingBeanLocal;
+import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -13,9 +16,9 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService(serviceName = "WebServiceBean")
+@WebService(serviceName = "HQWebServiceBean")
 @Stateless
-public class WebServiceBean {
+public class HQWebServiceBean {
 
     @EJB
     AccountManagementBeanLocal AccountManagementBeanLocal;
@@ -24,7 +27,10 @@ public class WebServiceBean {
     FacilityManagementBeanLocal FacilityManagementBeanLocal;
 
     @EJB
-    RetailInventoryControlLocal RetailInventoryControlLocal;
+    RetailInventoryControlBeanLocal RetailInventoryControlLocal;
+    
+    @EJB
+    SalesRecordingBeanLocal SalesRecordingBeanLocal;
 
     @WebMethod
     public Long posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
@@ -47,5 +53,10 @@ public class WebServiceBean {
     public StoreEntity getStoreByID(@WebParam(name = "storeID") Long storeID) {
         StoreEntity storeEntity = FacilityManagementBeanLocal.getStoreByID(storeID);
         return storeEntity;
+    }
+    
+    @WebMethod
+    public ReturnHelper createSalesRecord(@WebParam(name = "staffEmail") String staffEmail, @WebParam(name = "password") String staffPasword, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased, @WebParam(name="amountPaid") Double paymentAmount, @WebParam(name="memberEmail") String memberEmail) {
+        return SalesRecordingBeanLocal.createSalesRecord(staffEmail, staffPasword, storeID, posName, itemsPurchased, paymentAmount, memberEmail);
     }
 }

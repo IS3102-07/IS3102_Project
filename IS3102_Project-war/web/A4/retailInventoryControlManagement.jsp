@@ -4,7 +4,7 @@
 <%@page import="java.util.List"%>
 <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+        response.sendRedirect("../RetailWarehouseManagement_Servlet");
     } else {
 %>
 <html lang="en">
@@ -19,7 +19,7 @@
                     window.event.returnValue = true;
                     document.inventoryControl.lineItemID.value = id;
                     document.inventoryControl.storageBinId.value = storageBinId;
-                    document.inventoryControl.action = "../ManufacturingInventoryControl_RemoveServlet";
+                    document.inventoryControl.action = "../RetailInventoryControl_RemoveServlet";
                     document.inventoryControl.submit();
                 } else {
                     window.event.returnValue = false;
@@ -38,10 +38,10 @@
                             <h1 class="page-header">Inventory Control</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement_view.jsp">Store Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../RetailWarehouseManagement_Servlet?destination=storeWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-th"></i> Inventory Control
@@ -123,7 +123,7 @@
                                                                 }
                                                             } catch (Exception ex) {
                                                                 ex.printStackTrace();
-                                                                response.sendRedirect("manufacturingWarehouseManagement.jsp");
+                                                                response.sendRedirect("storeWarehouseManagement.jsp");
                                                             }
                                                         %>
                                                     </tbody>

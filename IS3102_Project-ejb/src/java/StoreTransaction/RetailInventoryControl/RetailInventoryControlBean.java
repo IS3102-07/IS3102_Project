@@ -1,13 +1,10 @@
-package Store_InventoryManagement.RetailInventoryControl;
+package StoreTransaction.RetailInventoryControl;
 
 import javax.ejb.Stateless;
 import EntityManager.ItemEntity;
 import EntityManager.RawMaterialEntity;
-import EntityManager.ProductGroupEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
-import EntityManager.BillOfMaterialEntity;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -15,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class RetailInventoryControl implements RetailInventoryControlLocal {
+public class RetailInventoryControlBean implements RetailInventoryControlBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
@@ -81,19 +78,6 @@ public class RetailInventoryControl implements RetailInventoryControlLocal {
     }
 
     @Override
-    public BillOfMaterialEntity viewSingleBOM(Long BOMId) {
-        System.out.println("viewBillOfMaterial() called with id:" + BOMId);
-        try {
-            BillOfMaterialEntity BOM = em.find(BillOfMaterialEntity.class, BOMId);
-            System.out.println("viewSingleBOM() is successful.");
-            return BOM;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to view bill of material:\n" + ex);
-            return null;
-        }
-    }
-
-    @Override
     public List<RawMaterialEntity> listAllRawMaterials() {
         System.out.println("listAllRawMaterials() called.");
         try {
@@ -133,20 +117,6 @@ public class RetailInventoryControl implements RetailInventoryControlLocal {
     }
 
     @Override
-    public List<BillOfMaterialEntity> listAllBOM() {
-        System.out.println("listAllBOM() called.");
-        try {
-            Query q = em.createQuery("SELECT b FROM BillOfMaterialEntity b");
-            List<BillOfMaterialEntity> billOfMaterialEntity = q.getResultList();
-            System.out.println("listAllBOM() is successful.");
-            return billOfMaterialEntity;
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to list all BOM:\n" + ex);
-            return null;
-        }
-    }
-
-    @Override
     public ItemEntity getItemBySKU(String SKU) {
         System.out.println("getItemBySKU() called with SKU: " + SKU);
         try {
@@ -175,27 +145,6 @@ public class RetailInventoryControl implements RetailInventoryControlLocal {
             System.out.println("\nServer failed to perform checkSKUExists:\n" + ex);
             return false;
         }
-    }
-
-    @Override
-    public ProductGroupEntity getProductGroup(Long id) {
-        try {
-            return em.find(ProductGroupEntity.class, id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public List<ProductGroupEntity> getAllProductGroup() {
-        try {
-            Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.isDeleted=false");
-            return q.getResultList();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return new ArrayList<>();
     }
 
     @Override

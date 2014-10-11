@@ -3,6 +3,7 @@ package EntityManager;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import java.util.List;
-import java.util.ArrayList;
+import javax.persistence.OneToMany;
 
 @Entity
 public class MemberEntity implements Serializable {
@@ -47,11 +48,14 @@ public class MemberEntity implements Serializable {
     private String passwordReset;
     private Boolean isDeleted;
 
-    @OneToOne
-    private List<ItemEntity> shoppingList;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private ShoppingListEntity shoppingList;
 
     @OneToOne
-    CountryEntity country;
+    private CountryEntity country;
+    
+    @OneToMany(mappedBy="member")
+    private List<SalesRecordEntity> purchases;
 
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     //private FeedbackEntity feedback;
@@ -80,16 +84,16 @@ public class MemberEntity implements Serializable {
         setUnlockCode();
         setPasswordReset();
         this.isDeleted = false;
-        this.shoppingList = new ArrayList();
-        
+        this.shoppingList = new ShoppingListEntity();
+        this.purchases = new ArrayList<>();
     }
 
-    public List<ItemEntity> getShoppingList() {
+    public ShoppingListEntity getShoppingList() {
         return shoppingList;
     }
 
-    public void addToShoppingList(ItemEntity item) {
-        this.shoppingList.add(item);
+    public void setShoppingList(ShoppingListEntity shoppingList) {
+        this.shoppingList = shoppingList;
     }
 
     public Boolean getIsDeleted() {
@@ -104,6 +108,14 @@ public class MemberEntity implements Serializable {
         return getId();
     }
 
+    public List<SalesRecordEntity> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<SalesRecordEntity> purchases) {
+        this.purchases = purchases;
+    }
+    
     public void setId(Long id) {
         this.setId((long) id);
     }

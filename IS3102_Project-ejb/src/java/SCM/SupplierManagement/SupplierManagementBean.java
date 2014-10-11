@@ -155,7 +155,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
                         itemSupplierHelper.setSKU(listOfItemEntities.get(i).getSKU());
                         itemSupplierHelper.setItemName(listOfItemEntities.get(i).getName());
                         itemSupplierHelper.setSupplierID(supplierEntity.getId());
-                        itemSupplierHelper.setItemPrice(listOfItemEntities.get(i).getPrice());
+                        itemSupplierHelper.setItemPrice(listOfItemEntities.get(i).getCostPrice());
                         itemSupplierHelper.setItemType(listOfItemEntities.get(i).getType());
                         itemSupplierHelperList.add(itemSupplierHelper);
                     }

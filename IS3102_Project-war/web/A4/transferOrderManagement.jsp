@@ -5,7 +5,7 @@
 
 <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+        response.sendRedirect("../RetailWarehouseManagement_Servlet");
     } else {
 %>
 <html lang="en">
@@ -16,7 +16,7 @@
         <script>
             function updateTO(id) {
                 transferOrderManagement.id.value = id;
-                document.transferOrderManagement.action = "../TransferOrderLineItemManagement_OriginBinItemsServlet";
+                document.transferOrderManagement.action = "../StoreTransferOrderLineItemManagement_OriginBinItemsServlet";
                 
                 document.transferOrderManagement.submit();
             }
@@ -30,11 +30,11 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.transferOrderManagement.action = "../TransferOrderManagement_Servlet";
+                    document.transferOrderManagement.action = "../StoreTransferOrderManagement_Servlet";
                     document.transferOrderManagement.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.transferOrderManagement.action = "../TransferOrderManagement_RemoveServlet";
+                    document.transferOrderManagement.action = "../StoreTransferOrderManagement_RemoveServlet";
                     document.transferOrderManagement.submit();
                 }
             }
@@ -62,10 +62,10 @@
                             <h1 class="page-header">Transfer Order Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement_view.jsp">Store Inventory Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../RetailWarehouseManagement_Servlet?destination=storeWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-exchange"></i> Transfer Order Management
@@ -166,7 +166,7 @@
                                                                     }
                                                                 }
                                                             } catch (Exception ex) {
-                                                                response.sendRedirect("manufacturingWarehouseManagement.jsp");
+                                                                response.sendRedirect("storeWarehouseManagement.jsp");
                                                             }
                                                         %>
                                                     </tbody>

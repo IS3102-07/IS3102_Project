@@ -120,7 +120,7 @@
                                             <select class="form-control" name="destination" required="true" <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                                 <%
                                                     for (int i = 0; i < warehouses.size(); i++) {
-                                                        if (warehouses.get(i).getWarehouseName().equals(purchaseOrder.getReceivedWarehouse().getWarehouseName())) {
+                                                        if (warehouses.get(i).getWarehouseName().equals(purchaseOrder.getDestination().getWarehouseName())) {
                                                             out.println("<option selected value='" + warehouses.get(i).getId() + "'>" + warehouses.get(i).getWarehouseName() + "</option>");
                                                         } else {
                                                             out.println("<option value='" + warehouses.get(i).getId() + "'>" + warehouses.get(i).getWarehouseName() + "</option>");
@@ -178,7 +178,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" value="<%=purchaseOrder.getReceivedWarehouse().getId()%>" name="destinationWarehouseID">
+                                            <input type="hidden" value="<%=purchaseOrder.getDestination().getId()%>" name="destinationWarehouseID">
                                             <input type="hidden" value="<%=purchaseOrder.getId()%>" name="id">
                                             <a <% if ((purchaseOrder.getStatus().equals("Completed") || (purchaseOrder.getStatus().equals("Unfulfillable")))) {%>href="#"<%} else {%>href="#submitConfirmation"<%}%>  data-toggle="modal"><button class="btn btn-lg btn-primary btn-block" <% if ((purchaseOrder.getStatus().equals("Completed") || (purchaseOrder.getStatus().equals("Unfulfillable")))) {%>disabled<%}%>><% if (!purchaseOrder.getStatus().equals("Pending")) {%>Update<%} else {%>Submit<%}%> Purchase Order</button></a>
                                         </div>
@@ -200,7 +200,7 @@
                                             out.println(" 0");
                                         else if (lineItems1 != null) {
                                             for (int k = 0; k < lineItems1.size(); k++) {
-                                                    price1 = lineItems1.get(k).getItem().getPrice() * lineItems1.get(k).getQuantity();
+                                                    price1 = lineItems1.get(k).getItem().getCostPrice()* lineItems1.get(k).getQuantity();
                                                     price += price1;
                                             }
                                                     out.println(price);

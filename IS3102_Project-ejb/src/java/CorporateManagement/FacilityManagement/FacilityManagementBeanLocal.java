@@ -63,6 +63,8 @@ public interface FacilityManagementBeanLocal {
     
     public WarehouseEntity getWarehouseById(Long Id);
     public List<WarehouseEntity> getWarehouseList();
+    public List<WarehouseEntity> getMFWarehouseList();
+    public List<WarehouseEntity> getStoreWarehouseList();
     
     public List<CountryEntity> getListOfCountries();
     

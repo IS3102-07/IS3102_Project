@@ -59,7 +59,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setDescription(description);
             i.setLotSize(lotSize);
             i.setLeadTime(leadTime);
-            i.setPrice(price);
+            i.setCostPrice(price);
             i.getSupplier().getItems().remove(i);
             SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
             i.setSupplier(supplier1);
@@ -210,7 +210,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
+    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL, Integer lotSize, Integer leadTime, Double costPrice, Long supplierId) {
         System.out.println("editRetailProduct() called with SKU:" + SKU);
         try {
             RetailProductEntity i = em.find(RetailProductEntity.class, Long.valueOf(id));
@@ -220,7 +220,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setImageURL(imageURL);
             i.setLotSize(lotSize);
             i.setLeadTime(leadTime);
-            i.setPrice(price);
+            i.setCostPrice(costPrice);
             i.getSupplier().getItems().remove(i);
             SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
             i.setSupplier(supplier1);
@@ -673,18 +673,28 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         System.out.println("addCountryItemPricing() called.");
         ReturnHelper helper = new ReturnHelper();
         try {
-            Item_CountryEntity itemCountry = new Item_CountryEntity();
-            itemCountry.setCountry(em.find(CountryEntity.class, countryId));
-            itemCountry.setItem(getItemBySKU(SKU));
-            itemCountry.setRetailPrice(price);
-            em.persist(itemCountry);
-            em.flush();
+            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.country.id=:countryId and cip.item.SKU=:SKU and cip.isDeleted=false");
+            q.setParameter("countryId", countryId);
+            q.setParameter("SKU", SKU);
+            List<Item_CountryEntity> list = q.getResultList();
+            if (list.isEmpty()) {
+                Item_CountryEntity itemCountry = new Item_CountryEntity();
+                itemCountry.setCountry(em.find(CountryEntity.class, countryId));
+                itemCountry.setItem(getItemBySKU(SKU));
+                itemCountry.setRetailPrice(price);
+                em.persist(itemCountry);
+                em.flush();
 
-            System.out.println("addCountryItemPricing(): Successfully added.");
+                System.out.println("addCountryItemPricing(): Successfully added.");
 
-            helper.setMessage("Record Added Successfully");
-            helper.setIsSuccess(true);
-            return helper;
+                helper.setMessage("Record Added Successfully");
+                helper.setIsSuccess(true);
+                return helper;
+            } else {
+                helper.setMessage("The price for this item is already set. Please check the list.");
+                helper.setIsSuccess(false);
+                return helper;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("addCountryItemPricing(): Failed to add.");
@@ -700,7 +710,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         ReturnHelper helper = new ReturnHelper();
         try {
             Item_CountryEntity itemCountry = em.find(Item_CountryEntity.class, countryItemId);
-            em.remove(itemCountry);
+            itemCountry.setIsDeleted(true);
             System.out.println("removeCountryItemPricing(): Successful.");
 
             helper.setMessage("Record removed successfully.");
@@ -716,15 +726,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public ReturnHelper editCountryItemPricing(Long countryItemId, Long countryId, String SKU, double price) {
+    public ReturnHelper editCountryItemPricing(Long countryItemId, double price) {
         System.out.println("editCountryItemPricing() called.");
         ReturnHelper helper = new ReturnHelper();
         try {
             Item_CountryEntity itemCountry = em.find(Item_CountryEntity.class, countryItemId);
-            CountryEntity country = em.find(CountryEntity.class, countryId);
-            itemCountry.setCountry(country);
-            ItemEntity item = getItemBySKU(SKU);
-            itemCountry.setItem(item);
             itemCountry.setRetailPrice(price);
             em.merge(itemCountry);
             em.flush();
@@ -756,4 +762,83 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             return null;
         }
     }
+
+    @Override
+    public List<Item_CountryEntity> listAllCountryItemPricing() {
+        System.out.println("listAllCountryItemPricing() called.");
+        try {
+            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.isDeleted=false order by cip.country.name");
+            List<Item_CountryEntity> listOfCountryItemPricing = q.getResultList();
+            System.out.println("listAllCountryItemPricing(): Successful");
+            return listOfCountryItemPricing;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllCountryItemPricing(): Failed to retrieve list.");
+            return null;
+        }
+    }
+
+    @Override
+    public List<CountryEntity> listAllCountry() {
+        System.out.println("listAllCountry() called.");
+        try {
+            Query q = em.createQuery("Select c from CountryEntity c order by c.name ASC");
+            List<CountryEntity> listOfCountry = q.getResultList();
+            System.out.println("listAllCountry(): Successful");
+            return listOfCountry;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllCountry(): Failed to retrieve list.");
+            return null;
+        }
+    }
+
+    @Override
+    public List<String> listAllItemsSKU() {
+        System.out.println("listAllItemsSKU() called.");
+        try {
+            Query q = em.createQuery("Select i.SKU from ItemEntity i where i.isDeleted=false order by i.SKU ASC");
+            List<String> listOfSKUs = q.getResultList();
+            System.out.println("listAllItemsSKU(): Successful.");
+            return listOfSKUs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllItemsSKU(): Failed to retrieve list of SKUs.");
+            return null;
+        }
+    }
+
+    @Override
+    public List<Item_CountryEntity> listAllItemsOfCountry(Long countryId) {
+        System.out.println("listAllItemsOfCountry() called.");
+        try {
+            Query q = em.createQuery("Select i from Item_CountryEntity i where i.isDeleted=false and i.country.id=:countryId order by i.item.SKU ASC");
+            q.setParameter("countryId", countryId);
+            List<Item_CountryEntity> listOfItemPricing = q.getResultList();
+            System.out.println("listAllItemsOfCountry(): Successful.");
+            return listOfItemPricing;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllItemsOfCountry(): Failed to retrieve list of item pricing.");
+            return null;
+        }
+    }
+
+    @Override
+    public Item_CountryEntity getItemPricing(Long countryId, String SKU) {
+        System.out.println("getItemPricing() called.");
+        try {
+            Query q = em.createQuery("Select i from Item_CountryEntity i where i.isDeleted=false and i.country.id=:countryId and i.item.SKU=:SKU");
+            q.setParameter("countryId", countryId);
+            q.setParameter("SKU", SKU);
+            Item_CountryEntity itemCountry = (Item_CountryEntity) q.getSingleResult();
+            System.out.println("getItemPricing(): Successful.");
+            return itemCountry;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("getItemPricing(): Failed to retrieve item pricing.");
+            return null;
+        }
+    }
+
 }

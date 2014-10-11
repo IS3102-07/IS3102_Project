@@ -14,10 +14,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Manufacturing Warehouse Management</h1>
+                            <h1 class="page-header">Store Inventory Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
+                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement_view.jsp">Store Inventory Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-home"></i> <%=warehouseEntity.getWarehouseName()%>
@@ -33,7 +33,7 @@
                                 <div class="col-md-4">
                                     <div class="featured-box featured-box-primary">
                                         <div class="box-content">
-                                            <a href="../StorageBinManagement_Servlet"><i class="icon-featured icon icon-archive"> </i>
+                                            <a href="../StoreStorageBinManagement_Servlet"><i class="icon-featured icon icon-archive"> </i>
                                                 <h4>Storage Bin Management</h4>
                                             </a>
                                         </div>
@@ -42,7 +42,7 @@
                                 <div class="col-md-4">
                                     <div class="featured-box featured-box-secundary">
                                         <div class="box-content">
-                                            <a href="../TransferOrderManagement_Servlet"><i class="icon-featured icon icon-exchange"> </i>
+                                            <a href="../StoreTransferOrderManagement_Servlet"><i class="icon-featured icon icon-exchange"> </i>
                                                 <h4>Transfer Order Management</h4>
                                             </a>
                                         </div>
@@ -51,7 +51,7 @@
                                 <div class="col-md-4">
                                     <div class="featured-box featured-box-secundary">
                                         <div class="box-content">
-                                            <a href="../ManufacturingInventoryControl_Servlet"><i class="icon-featured icon icon-th"> </i>
+                                            <a href="../RetailInventoryControl_Servlet"><i class="icon-featured icon icon-th"> </i>
                                                 <h4>Inventory Control</h4>
                                             </a>
                                         </div>
@@ -183,7 +183,7 @@
                                         </table>
                                     </div>
                                     <div class="text-right">
-                                        <a href="../TransferOrderManagement_Servlet">View All Transfer Orders <i class="icon icon-arrow-circle-right"></i></a>
+                                        <a href="../StoreTransferOrderManagement_Servlet">View All Transfer Orders <i class="icon icon-arrow-circle-right"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
 
                     <%
                         } catch (Exception ex) {
-                            response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+                            response.sendRedirect("../RetailWarehouseManagement_Servlet");
                             ex.printStackTrace();
                         }%>
                 </div>

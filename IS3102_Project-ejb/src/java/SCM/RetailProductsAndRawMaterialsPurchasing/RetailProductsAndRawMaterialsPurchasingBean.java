@@ -50,7 +50,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, receivingWarehouseID);
             purchaseOrderEntity.setSupplier(supplierEntity);
-            purchaseOrderEntity.setReceivedWarehouse(warehouseEntity);
+            purchaseOrderEntity.setDestination(warehouseEntity);
             purchaseOrderEntity.setExpectedReceivedDate(expectedReceivedDate);
             System.out.println("PurchaseOrder updated successfully");
             return true;
@@ -73,7 +73,6 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
             query = em.createQuery("select p from ItemEntity p where p.SKU = ?1").setParameter(1, SKU);
             ItemEntity itemEntity = (ItemEntity) query.getSingleResult();
             LineItemEntity lineItem = new LineItemEntity(itemEntity, qty, null);
-            lineItem.setPurchaseOrder(purchaseOrder);
             purchaseOrder.getLineItems().add(lineItem);
             em.merge(purchaseOrder);
             em.flush();

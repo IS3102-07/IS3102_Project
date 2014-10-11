@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input class="form-control" name="quantity" type="number" required="true" value="<%=lineItem.getQuantity()%>">
+                                            <input class="form-control" name="quantity" type="number" required="true"  min="1" max="9999" value="<%=lineItem.getQuantity()%>">
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" value="Update Line Item" class="btn btn-lg btn-primary btn-block">

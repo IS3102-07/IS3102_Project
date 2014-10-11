@@ -24,10 +24,10 @@ public class PurchaseOrderEntity implements Serializable {
 
     @ManyToOne
     private SupplierEntity supplier;
-    @OneToMany(mappedBy = "purchaseOrder", cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<LineItemEntity> lineItems;
     @ManyToOne
-    private WarehouseEntity receivedWarehouse;
+    private WarehouseEntity destination;
     @Temporal(value = TemporalType.DATE)
     private Date expectedReceivedDate;
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -43,7 +43,7 @@ public class PurchaseOrderEntity implements Serializable {
     public PurchaseOrderEntity(SupplierEntity supplier, WarehouseEntity destination, Date expectedReceivedDate) {
         this.createdDate = new Date();
         this.supplier = supplier;
-        this.receivedWarehouse = destination;
+        this.destination = destination;
         this.expectedReceivedDate = expectedReceivedDate;
         this.setStatus("Pending");
         this.lineItems = new ArrayList<>();
@@ -90,12 +90,12 @@ public class PurchaseOrderEntity implements Serializable {
         this.expectedReceivedDate = expectedReceivedDate;
     }
 
-    public WarehouseEntity getReceivedWarehouse() {
-        return receivedWarehouse;
+    public WarehouseEntity getDestination() {
+        return destination;
     }
 
-    public void setReceivedWarehouse(WarehouseEntity destination) {
-        this.receivedWarehouse = destination;
+    public void setDestination(WarehouseEntity destination) {
+        this.destination = destination;
     }
 
     public Date getCreatedDate() {

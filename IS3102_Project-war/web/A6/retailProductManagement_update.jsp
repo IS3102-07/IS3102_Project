@@ -70,15 +70,15 @@
                                     <input class="form-control" type="text" required="true" name="SKU" value="<%=retailProduct.getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Length</label>
+                                    <label>Length per item</label>
                                     <input class="form-control" type="text" required="true" name="length" value="<%=retailProduct.getHeight()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Width</label>
+                                    <label>Width per item</label>
                                     <input class="form-control" type="text" required="true" name="width" value="<%=retailProduct.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Height</label>
+                                    <label>Height per item</label>
                                     <input class="form-control" type="text" required="true" name="height" value="<%=retailProduct.getWidth()%>" disabled>
                                 </div>
                                 <div class="form-group">
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Purchasing Price</label>
-                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=retailProduct.getPrice()%>">
+                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=retailProduct.getCostPrice()%>">
                                  </div>
                                  <div class="form-group">
                                     <label>Supplier</label>

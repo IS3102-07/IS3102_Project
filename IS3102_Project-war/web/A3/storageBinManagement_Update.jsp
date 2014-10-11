@@ -64,15 +64,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>
-                                    <input class="form-control" name="length" type="number" value="<%=storageBin.getLength()%>" required="true" >
+                                    <input class="form-control" name="length" type="number" min="1" max="1200" value="<%=storageBin.getLength()%>" required="true" >
                                 </div>
                                 <div class="form-group">
                                     <label>Width</label>
-                                    <input class="form-control" name="width" type="number" value="<%=storageBin.getWidth()%>" required="true"/>
+                                    <input class="form-control" name="width" type="number" min="1" max="1200" value="<%=storageBin.getWidth()%>" required="true"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Height</label>
-                                    <input class="form-control" name="height" type="number" value="<%=storageBin.getHeight()%>" required="true"/>
+                                    <input class="form-control" name="height" type="number" min="1" max="1200" value="<%=storageBin.getHeight()%>" required="true"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">

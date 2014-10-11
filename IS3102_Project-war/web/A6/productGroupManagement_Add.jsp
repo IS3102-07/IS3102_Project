@@ -44,7 +44,7 @@
                                             <input class="form-control" name="name" type="text" required="true"/>
                                         </div>
                                         <div class="form-group">
-                                            <label>Work Hours: </label>
+                                            <label>Work hours per lot size: </label>
                                             <input class="form-control" name="workhours" type="number" min="1" step="1" required="true"/>
                                         </div>
                                         <div class="form-group">
