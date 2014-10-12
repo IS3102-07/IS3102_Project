@@ -8,6 +8,7 @@ package EntityManager;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -95,6 +96,25 @@ public class StartupBean {
                 roles.add(roleEntity);
                 staffEntity.setRoles(roles);
                 em.persist(staffEntity);
+                System.out.println("Created administrator with ID:a@a and PW:admin.");
+            } catch (Exception ex) {
+                System.out.println("Skipping creating of administrator account:\n" + ex);
+                ex.printStackTrace();
+            }
+            try {
+                //Create member account
+                MemberEntity memberEntity = new MemberEntity();
+                String passwordSalt = accountManagementBean.generatePasswordSalt();
+                String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
+                memberEntity.create(null,null,null,"member@if.com",null,null,null,null,passwordHash,passwordSalt);
+                memberEntity.setAccountActivationStatus(true);
+                em.persist(memberEntity);
+                memberEntity = new MemberEntity();
+                passwordSalt = accountManagementBean.generatePasswordSalt();
+                passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
+                memberEntity.create("Superman", "Block 984 Batman Drive B2-95", new Date(), "superman@if.com", "999", null, "Unknown City", "006120", passwordHash, passwordSalt);
+                memberEntity.setAccountActivationStatus(true);
+                em.persist(memberEntity);
                 System.out.println("Created administrator with ID:a@a and PW:admin.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of administrator account:\n" + ex);
@@ -314,9 +334,9 @@ public class StartupBean {
             em.persist(loyaltyTierEntity);
             loyaltyTierEntity = new LoyaltyTierEntity("Classic", 0.0);
             em.persist(loyaltyTierEntity);
-            
+
         } catch (Exception ex) {
-            System.out.println("Skipping creating of loyalty tiers\n"+ex);
+            System.out.println("Skipping creating of loyalty tiers\n" + ex);
             ex.printStackTrace();
         }
         try {
