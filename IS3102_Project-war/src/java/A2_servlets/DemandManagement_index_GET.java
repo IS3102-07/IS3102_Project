@@ -30,8 +30,7 @@ public class DemandManagement_index_GET extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-    
-    
+        
         System.out.println("servlet DemandManagement_index_GET is called");
         
         String nextPage = "/A2/DemandManagement_index";
