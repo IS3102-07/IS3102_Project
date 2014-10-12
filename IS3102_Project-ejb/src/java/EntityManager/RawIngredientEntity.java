@@ -19,6 +19,7 @@ public class RawIngredientEntity extends ItemEntity implements Serializable {
     private Long id;
     @Lob
     private String name;
+    private String category;
     private String description;
     private Integer lotSize;
     private Integer leadTime;
@@ -27,10 +28,11 @@ public class RawIngredientEntity extends ItemEntity implements Serializable {
         super.setIsDeleted(false);
     }
 
-    public RawIngredientEntity(String SKU, String name, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price) {
+    public RawIngredientEntity(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price) {
         super(SKU, _length, width, height, price);
         this.name = name;
         super.setName(name);
+        this.category = category;
         this.description = description;
         this.lotSize = lotSize;
         this.leadTime = leadTime;
@@ -60,6 +62,14 @@ public class RawIngredientEntity extends ItemEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getDescription() {

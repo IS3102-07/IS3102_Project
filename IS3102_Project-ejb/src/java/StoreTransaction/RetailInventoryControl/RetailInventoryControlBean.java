@@ -146,21 +146,4 @@ public class RetailInventoryControlBean implements RetailInventoryControlBeanLoc
             return false;
         }
     }
-
-    @Override
-    public Boolean checkIfSKUIsFurniture(String SKU) {
-        try {
-            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
-            q.setParameter("SKU", SKU);
-            ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
-            if (itemEntity.getType().equals("Furniture")) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
 }
