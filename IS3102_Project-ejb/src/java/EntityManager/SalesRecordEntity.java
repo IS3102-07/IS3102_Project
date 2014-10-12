@@ -21,9 +21,12 @@ public class SalesRecordEntity implements Serializable {
     private Long id;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdDate;
-    private Double paymentAmount;
-    private Double loyaltyPaymentAmount;
+    private Double amountDue;
+    private Double amountPaid;
+    private Double amountPaidUsingPoints;
+    private Integer loyaltyPointsDeducted;
     private String currency;
+    private String servedByStaff;
     private String posName;
     @OneToMany(cascade = {CascadeType.ALL})
     private List<LineItemEntity> itemsPurchased;
@@ -35,13 +38,16 @@ public class SalesRecordEntity implements Serializable {
     public SalesRecordEntity() {
     }
 
-    public SalesRecordEntity(MemberEntity member, Double paymentAmount, Double loyaltyPaymentAmount, String currency, String posName, List<LineItemEntity> itemsPurchased) {
+    public SalesRecordEntity(MemberEntity member, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String currency, String posName, String staffEntity, List<LineItemEntity> itemsPurchased) {
         this.createdDate = new Date();
         this.member = member;
-        this.paymentAmount = paymentAmount;
-        this.loyaltyPaymentAmount = loyaltyPaymentAmount;
+        this.amountDue = amountDue;
+        this.amountPaid = amountPaid;
+        this.amountPaidUsingPoints = amountPaidUsingPoints;
+        this.loyaltyPointsDeducted = loyaltyPointsDeducted;
         this.currency = currency;
         this.posName = posName;
+        this.servedByStaff = staffEntity;
         this.itemsPurchased = itemsPurchased;
     }
 
@@ -53,6 +59,22 @@ public class SalesRecordEntity implements Serializable {
         this.id = id;
     }
 
+    public Integer getLoyaltyPointsDeducted() {
+        return loyaltyPointsDeducted;
+    }
+
+    public void setLoyaltyPointsDeducted(Integer loyaltyPointsDeducted) {
+        this.loyaltyPointsDeducted = loyaltyPointsDeducted;
+    }
+
+    public String getServedByStaff() {
+        return servedByStaff;
+    }
+
+    public void setServedByStaff(String servedByStaff) {
+        this.servedByStaff = servedByStaff;
+    }
+
     public StoreEntity getStore() {
         return store;
     }
@@ -61,12 +83,12 @@ public class SalesRecordEntity implements Serializable {
         this.store = store;
     }
 
-    public Double getLoyaltyPaymentAmount() {
-        return loyaltyPaymentAmount;
+    public Double getAmountPaidUsingPoints() {
+        return amountPaidUsingPoints;
     }
 
-    public void setLoyaltyPaymentAmount(Double loyaltyPaymentAmount) {
-        this.loyaltyPaymentAmount = loyaltyPaymentAmount;
+    public void setAmountPaidUsingPoints(Double amountPaidUsingPoints) {
+        this.amountPaidUsingPoints = amountPaidUsingPoints;
     }
 
     public MemberEntity getMember() {
@@ -101,12 +123,12 @@ public class SalesRecordEntity implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Double getPaymentAmount() {
-        return paymentAmount;
+    public Double getAmountPaid() {
+        return amountPaid;
     }
 
-    public void setPaymentAmount(Double paymentAmount) {
-        this.paymentAmount = paymentAmount;
+    public void setAmountPaid(Double amountPaid) {
+        this.amountPaid = amountPaid;
     }
 
     public String getCurrency() {
@@ -116,4 +138,13 @@ public class SalesRecordEntity implements Serializable {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    public Double getAmountDue() {
+        return amountDue;
+    }
+
+    public void setAmountDue(Double amountDue) {
+        this.amountDue = amountDue;
+    }
+
 }

@@ -1,11 +1,15 @@
 package OperationalCRM.SalesRecording;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.LineItemEntity;
 import EntityManager.MemberEntity;
 import EntityManager.SalesRecordEntity;
+import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ReturnHelper;
+import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -18,8 +22,15 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     @PersistenceContext
     private EntityManager em;
 
-    public ReturnHelper createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<LineItemEntity> itemsPurchased, Double paymentAmount, String memberEmail) {
+    @EJB
+    AccountManagementBeanLocal accountManagementBean;
+    
+    @EJB
+    LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
+
+    public ReturnHelper createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<LineItemEntity> itemsPurchased, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail) {
         System.out.println("createSalesRecord() called;");
+        ReturnHelper rh = new ReturnHelper(false,"System Error");
         StoreEntity storeEntity = null;
         MemberEntity memberEntity = null;
         String currency = "";
@@ -30,6 +41,13 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                 Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.email=:email");
                 q.setParameter("email", memberEmail);
                 memberEntity = (MemberEntity) q.getSingleResult();
+                //Update the member loyalty points
+                try {
+                    rh = loyaltyAndRewardsBean.updateMemberLoyaltyPointsAndTier(memberEmail, amountPaid, storeID);
+                } catch (Exception ex) {
+                    System.out.println("Error in updating loyalty points");
+                    return new ReturnHelper(false, "System error in updating loyalty points, transaction has been cancelled. Please contact customer service.");
+                }
             } catch (NoResultException ex) {
                 System.out.println("createSalesRecord(): Member does not exist:");
                 return new ReturnHelper(false, "Member details could not be retrieved based on the card provided. Contact customer service.");
@@ -39,17 +57,17 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                 return new ReturnHelper(false, "System error in retriving membership information.");
             }
         }
-        //Retrieve country for currency & exchange rate
+        //Retrieve country for currency & exchange rate to be stored in sales record
         try {
             storeEntity = em.getReference(StoreEntity.class, storeID);
             currency = storeEntity.getCountry().getCurrency();
-            loyaltyPaymentAmount = paymentAmount / storeEntity.getCountry().getExchangeRate();
         } catch (Exception ex) {
             System.out.println("createSalesRecord(): Error in retriving country");
             return new ReturnHelper(false, "System error in retriving country information.");
         }
         try {
-            SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, paymentAmount, loyaltyPaymentAmount, currency, posName, itemsPurchased);
+            StaffEntity staffEntity = accountManagementBean.getStaffByEmail(staffEmail);
+            SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased);
             em.persist(salesRecordEntity);
             storeEntity.getSalesRecords().add(salesRecordEntity);
             em.merge(storeEntity);
@@ -57,6 +75,6 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             ex.printStackTrace();
             return new ReturnHelper(false, "System error in creating sales record.");
         }
-        return new ReturnHelper(true, "Sales record created successfully.");
+        return rh;
     }
 }

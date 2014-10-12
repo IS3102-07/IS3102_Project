@@ -11,6 +11,7 @@ import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
+import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -38,6 +39,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @EJB
     private SystemSecurityBeanLocal systemSecurityBean;
+    
+    @EJB
+    private LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
 
     public AccountManagementBean() {
         System.out.println("\nCommonInfrastructure Server (EJB) created.");
@@ -65,6 +69,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         try {
             MemberEntity memberEntity = new MemberEntity();
             memberEntity.create(name, address, DOB, email, phone, country, city, zipCode, passwordHash, passwordSalt);
+            memberEntity.setLoyaltyTier(loyaltyAndRewardsBean.getLowestLevelTier());
             em.persist(memberEntity);
             memberID = memberEntity.getMemberID();
             System.out.println("Email \"" + email + "\" registered successfully as id:" + memberID);

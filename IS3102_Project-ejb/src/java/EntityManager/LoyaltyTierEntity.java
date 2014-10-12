@@ -14,7 +14,7 @@ public class LoyaltyTierEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String tier;
-    private Double amtRequiredPerAnnum;
+    private Double amtOfSpendingRequired;
     private Boolean isDeleted;
 
     public LoyaltyTierEntity() {
@@ -22,7 +22,7 @@ public class LoyaltyTierEntity implements Serializable {
 
     public LoyaltyTierEntity(String tier, Double amtRequiredPerAnnum) {
         this.tier = tier;
-        this.amtRequiredPerAnnum = amtRequiredPerAnnum;
+        this.amtOfSpendingRequired = amtRequiredPerAnnum;
         this.setIsDeleted(false);
     }
 
@@ -34,12 +34,12 @@ public class LoyaltyTierEntity implements Serializable {
         this.tier = tier;
     }
 
-    public Double getAmtRequiredPerAnnum() {
-        return amtRequiredPerAnnum;
+    public Double getAmtOfSpendingRequired() {
+        return amtOfSpendingRequired;
     }
 
-    public void setAmtRequiredPerAnnum(Double amtRequiredPerAnnum) {
-        this.amtRequiredPerAnnum = amtRequiredPerAnnum;
+    public void setAmtOfSpendingRequired(Double amtOfSpendingRequired) {
+        this.amtOfSpendingRequired = amtOfSpendingRequired;
     }
 
     public Boolean getIsDeleted() {
