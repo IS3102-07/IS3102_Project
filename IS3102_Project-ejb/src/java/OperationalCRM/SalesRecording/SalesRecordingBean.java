@@ -28,13 +28,13 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     @EJB
     LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
 
+    @Override
     public ReturnHelper createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<LineItemEntity> itemsPurchased, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail) {
         System.out.println("createSalesRecord() called;");
         ReturnHelper rh = new ReturnHelper(false,"System Error");
         StoreEntity storeEntity = null;
         MemberEntity memberEntity = null;
         String currency = "";
-        Double loyaltyPaymentAmount = 0.0;
         //Retrieve member
         if (memberEmail != null && memberEmail.length() >= 0) {
             try {
