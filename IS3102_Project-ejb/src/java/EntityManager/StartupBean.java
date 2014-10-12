@@ -184,10 +184,10 @@ public class StartupBean {
                 //Create regional office
                 RegionalOfficeEntity regionalOfficeEntity;
                 regionalOfficeEntity = new RegionalOfficeEntity();
-                regionalOfficeEntity.create("Asia Pacific Regional Office", "33 Jurong Town Hall Road #05-34", "61234563", "APACRO@if.com");
+                regionalOfficeEntity.create("Middle East Regional Office", "33 Dubai Lane", "686351234563", "MERO@if.com");
                 em.persist(regionalOfficeEntity);
                 regionalOfficeEntity = new RegionalOfficeEntity();
-                regionalOfficeEntity.create("Middle East Regional Office", "33 Dubai Lane", "686351234563", "MERO@if.com");
+                regionalOfficeEntity.create("Asia Pacific Regional Office", "33 Jurong Town Hall Road #05-34", "61234563", "APACRO@if.com");
                 em.persist(regionalOfficeEntity);
                 //Create manufacturing facility & its warehouse
                 ManufacturingFacilityEntity manufacturingFacilityEntity;

@@ -7,6 +7,7 @@ import EntityManager.SalesRecordEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ReturnHelper;
+import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -28,6 +29,9 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     @EJB
     LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
 
+    @EJB
+    StoreInventoryManagementBeanLocal storeInventoryManagementBean;
+    
     @Override
     public ReturnHelper createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<LineItemEntity> itemsPurchased, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail) {
         System.out.println("createSalesRecord() called;");
@@ -65,6 +69,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             System.out.println("createSalesRecord(): Error in retriving country");
             return new ReturnHelper(false, "System error in retriving country information.");
         }
+        //Actual creating of sales record
         try {
             StaffEntity staffEntity = accountManagementBean.getStaffByEmail(staffEmail);
             SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased);
@@ -74,6 +79,15 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
         } catch (Exception ex) {
             ex.printStackTrace();
             return new ReturnHelper(false, "System error in creating sales record.");
+        }
+        //Update inventory amount
+        try {
+            //TODO remove from retail outlet or furniture marketplace
+            //storeInventoryManagementBean.
+            //if kitchen just no updating of amount
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //TODO log that inventory cannot be updated, continue to let customer checkout
         }
         return rh;
     }
