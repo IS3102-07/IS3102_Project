@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Administrator
  */
-public class DemandManagement_index_GET extends HttpServlet {
+public class MRP_index_GET extends HttpServlet {
     @EJB
     private FacilityManagementBeanLocal fmBean;
     
@@ -31,9 +31,9 @@ public class DemandManagement_index_GET extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        System.out.println("servlet DemandManagement_index_GET is called");
+        System.out.println("servlet MRP_index_GET is called");
         
-        String nextPage = "/A2/DemandManagement_index";
+        String nextPage = "/A2/MRP_index";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;        
         HttpSession session = request.getSession();

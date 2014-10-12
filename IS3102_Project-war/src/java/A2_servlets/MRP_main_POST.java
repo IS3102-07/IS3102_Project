@@ -5,48 +5,35 @@
  */
 package A2_servlets;
 
-import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.RegionalOfficeEntity;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Administrator
  */
-public class DemandManagement_index_GET extends HttpServlet {
-    @EJB
-    private FacilityManagementBeanLocal fmBean;
+public class MRP_main_POST extends HttpServlet {
+
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        System.out.println("servlet DemandManagement_index_GET is called");
-        
-        String nextPage = "/A2/DemandManagement_index";
-        ServletContext servletContext = getServletContext();
-        RequestDispatcher dispatcher;        
-        HttpSession session = request.getSession();
-        
-        List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
-        if (regionalOfficeList == null) {
-            regionalOfficeList = new ArrayList<>();
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet MRP_main_POST</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet MRP_main_POST at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        request.setAttribute("regionalOfficeList", regionalOfficeList);                                
-        
-        dispatcher = servletContext.getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
