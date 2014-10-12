@@ -23,16 +23,13 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
     private EntityManager em;
 
     @Override
-    public boolean addRawIngredients(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
+    public boolean addRawIngredients(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
         System.out.println("addRawIngredient() called with SKU:" + SKU);
         try {
-            RawIngredientEntity rawIngredient = new RawIngredientEntity(SKU, name, category, description, _length, width, height, lotSize, leadTime, price);
-            SupplierEntity supplier = em.find(SupplierEntity.class, supplierId);
-            rawIngredient.setSupplier(supplier);
+            RawIngredientEntity rawIngredient = new RawIngredientEntity(SKU, name, category, description, _length, width, height);
             em.persist(rawIngredient);
             em.flush();
             em.merge(rawIngredient);
-            supplier.getItems().add(rawIngredient);
             System.out.println("Raw Ingredient name \"" + name + "\" added successfully.");
             return true;
         } catch (Exception ex) {
@@ -42,20 +39,13 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
     }
 
     @Override
-    public boolean editRawIngredients(String id, String SKU, String name, String category, String description, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
+    public boolean editRawIngredients(String id, String SKU, String name, String category, String description) {
         System.out.println("editRawIngredient() called with SKU:" + SKU);
         try {
             RawIngredientEntity i = em.find(RawIngredientEntity.class, Long.valueOf(id));
             i.setName(name);
             i.setCategory(category);
             i.setDescription(description);
-            i.setLotSize(lotSize);
-            i.setLeadTime(leadTime);
-            i.setCostPrice(price);
-            i.getSupplier().getItems().remove(i);
-            SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
-            i.setSupplier(supplier1);
-            supplier1.getItems().add(i);
             em.flush();
             System.out.println("\nServer updated raw ingredient:\n" + name);
             return true;

@@ -1,16 +1,17 @@
 package SCM.SupplierManagement;
 
 import EntityManager.CountryEntity;
-import EntityManager.ItemEntity;
+import EntityManager.RegionalOfficeEntity;
 import EntityManager.SupplierEntity;
+import EntityManager.Supplier_ItemEntity;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import HelperClasses.ItemSupplierHelper;
-import java.util.ArrayList;
 import javax.persistence.EntityNotFoundException;
 
 @Stateless
@@ -30,13 +31,18 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
     }
 
     @Override
-    public void addSupplier(String supplierName, String contactNo, String email, String address, Long countryId) {
+    public void addSupplier(String supplierName, String contactNo, String email, String address, Long countryId, Long roID) {
         System.out.println("addSupplier() called.");
         try {
-            supplier = new SupplierEntity(supplierName, contactNo, email, address);
+            RegionalOfficeEntity regionalOfficeEntity = em.getReference(RegionalOfficeEntity.class, roID);
+            supplier = new SupplierEntity(supplierName, contactNo, email, address, regionalOfficeEntity);
             country = em.find(CountryEntity.class, countryId);
             supplier.setCountry(country);
             em.persist(supplier);
+            em.flush();
+            em.refresh(supplier);
+            regionalOfficeEntity.getSuppliers().add(supplier);
+            em.merge(regionalOfficeEntity);
         } catch (Exception ex) {
             System.out.println("Failed to add supplier: " + ex);
         }
@@ -70,7 +76,6 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
             return null;
         }
     }
-
 
     @Override
     public SupplierEntity getSupplier(Long id) {
@@ -135,60 +140,74 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal {
             return false;
         }
     }
+
     @Override
-    public List<ItemSupplierHelper> getSupplierItemList(Long supplierID) {
+    public List<Supplier_ItemEntity> getSupplierItemList(Long supplierID) {
         System.out.println("getSupplierItemList() called");
         try {
-            em.flush();
-            List<ItemSupplierHelper> itemSupplierHelperList = new ArrayList<>();
-            SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
+            Query q = em.createQuery("Select s from Supplier_ItemEntity s where s.supplier.id =:supplierID and s.isDeleted=false ORDER BY s.item.SKU");
+            q.setParameter("supplierID", supplierID);
+            System.out.println("getSupplierItemList(): Successful");
+            return q.getResultList();
+//            List<Supplier_ItemEntity> supplier_ItemEntities = new ArrayList<>();
+//            SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
 
-            ItemSupplierHelper itemSupplierHelper = new ItemSupplierHelper();
-                List<ItemEntity> listOfItemEntities = getItemSuppliedBySupplier(supplierEntity.getId());
-                System.out.println("Retrieving line items of storage bin id " + supplierEntity.getId() + "...");
-                
-                if (listOfItemEntities != null && listOfItemEntities.size() > 0) {
-                    System.out.println("getItemList(): Size of listOfLineItemEntities inside the supplier id " + supplierEntity.getId() + ": " + listOfItemEntities.size());
-                    for (int i = 0; i < listOfItemEntities.size(); i++) {
-                        itemSupplierHelper = new ItemSupplierHelper();
-                        itemSupplierHelper.setItemID(listOfItemEntities.get(i).getId());
-                        itemSupplierHelper.setSKU(listOfItemEntities.get(i).getSKU());
-                        itemSupplierHelper.setItemName(listOfItemEntities.get(i).getName());
-                        itemSupplierHelper.setSupplierID(supplierEntity.getId());
-                        itemSupplierHelper.setItemPrice(listOfItemEntities.get(i).getCostPrice());
-                        itemSupplierHelper.setItemType(listOfItemEntities.get(i).getType());
-                        itemSupplierHelperList.add(itemSupplierHelper);
-                    }
-                }           
-
-            return itemSupplierHelperList;
+//            ItemSupplierHelper itemSupplierHelper = new ItemSupplierHelper();
+//                List<ItemEntity> listOfItemEntities = getItemSuppliedBySupplier(supplierEntity.getId());
+//                System.out.println("Retrieving line items of storage bin id " + supplierEntity.getId() + "...");
+//                
+//                if (listOfItemEntities != null && listOfItemEntities.size() > 0) {
+//                    System.out.println("getItemList(): Size of listOfLineItemEntities inside the supplier id " + supplierEntity.getId() + ": " + listOfItemEntities.size());
+//                    for (int i = 0; i < listOfItemEntities.size(); i++) {
+//                        itemSupplierHelper = new ItemSupplierHelper();
+//                        itemSupplierHelper.setItemID(listOfItemEntities.get(i).getId());
+//                        itemSupplierHelper.setSKU(listOfItemEntities.get(i).getSKU());
+//                        itemSupplierHelper.setItemName(listOfItemEntities.get(i).getName());
+//                        itemSupplierHelper.setSupplierID(supplierEntity.getId());
+//                        itemSupplierHelper.setItemPrice(listOfItemEntities.get(i).getCostPrice());
+//                        itemSupplierHelper.setItemType(listOfItemEntities.get(i).getType());
+//                        itemSupplierHelperList.add(itemSupplierHelper);
+//                    }
+//                }           
         } catch (EntityNotFoundException ex) {
             System.out.println("Supplier could not be found.");
             return null;
         } catch (Exception ex) {
-            System.out.println("System failed to getOutboundBinItemList()");
+            System.out.println("System failed to getSupplierItemList()");
             ex.printStackTrace();
             return null;
         }
     }
-    
-    private List<ItemEntity> getItemSuppliedBySupplier(Long supplierID) {
-        System.out.println("getItemSuppliedBySupplier() called");
+
+//    private List<ItemEntity> getItemSuppliedBySupplier(Long supplierID) {
+//        System.out.println("getItemSuppliedBySupplier() called");
+//        try {
+//            em.flush();
+//            SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
+//            List<ItemEntity> listOfItems = supplierEntity.getSupplyingItems();
+//            if (listOfItems == null || listOfItems.size() == 0) {
+//                System.out.println("No items");
+//                return null;
+//            } else {
+//                System.out.println("Returned list of items");
+//                return listOfItems;
+//            }
+//        } catch (Exception ex) {
+//            System.out.println("Failed to getItemSuppliedBySupplier()");
+//            ex.printStackTrace();
+//            return null;
+//        }
+//    }
+    public List<SupplierEntity> getSupplierListOfRO(Long roID) {
+        System.out.println("getSupplierListByRO() called");
         try {
-            em.flush();
-            SupplierEntity supplierEntity = em.getReference(SupplierEntity.class, supplierID);
-            List<ItemEntity> listOfItems = supplierEntity.getItems();
-            if (listOfItems == null || listOfItems.size() == 0) {
-                System.out.println("No items");
-                return null;
-            } else {
-                System.out.println("Returned list of items");
-                return listOfItems;
-            }
+            Query q= em.createQuery("SELECT s from SupplierEntity s where s.regionalOffice.id=:roID");
+            q.setParameter("roID", roID);
+            return q.getResultList();
         } catch (Exception ex) {
-            System.out.println("Failed to getItemSuppliedBySupplier()");
+            System.out.println("getSupplierListByRO(): Failed");
             ex.printStackTrace();
-            return null;
+            return new ArrayList<SupplierEntity>();
         }
     }
 }

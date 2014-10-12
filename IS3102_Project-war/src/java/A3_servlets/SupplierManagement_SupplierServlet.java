@@ -1,10 +1,13 @@
 package A3_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.CountryEntity;
+import EntityManager.StaffEntity;
 import EntityManager.SupplierEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,18 +20,27 @@ public class SupplierManagement_SupplierServlet extends HttpServlet {
 
     @EJB
     private SupplierManagementBeanLocal supplierManagementBean;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session;
-            session = request.getSession();
+            HttpSession session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
-
-            List<SupplierEntity> suppliers = supplierManagementBean.viewAllSupplierList();
+            List<SupplierEntity> suppliers = new ArrayList<>();
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            if (accountManagementBean.checkIfStaffIsAdministrator(staffEntity.getId()) || accountManagementBean.checkIfStaffIsGlobalManager(staffEntity.getId())) {
+                suppliers = supplierManagementBean.viewAllSupplierList();
+            } else if (accountManagementBean.checkIfStaffIsRegionalManager(staffEntity.getId()) || accountManagementBean.checkIfStaffIsPurchasingManager(staffEntity.getId())) {
+                Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());
+                if (roID != null) {
+                    suppliers = supplierManagementBean.getSupplierListOfRO(roID);
+                }
+            }
             session.setAttribute("suppliers", suppliers);
 
             if (errMsg == null && goodMsg == null) {

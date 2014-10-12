@@ -10,9 +10,9 @@ import javax.ejb.Local;
 @Local
 public interface RestaurantManagementBeanLocal {
 
-    public boolean addRawIngredients(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price, Long supplierId);
+    public boolean addRawIngredients(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height);
 
-    public boolean editRawIngredients(String id, String SKU, String name, String category, String description, Integer lotSize, Integer leadTime, Double price, Long supplierId);
+    public boolean editRawIngredients(String id, String SKU, String name, String category, String description);
 
     public boolean removeRawIngredients(String SKU);
 

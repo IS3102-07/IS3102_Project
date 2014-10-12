@@ -854,7 +854,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
                     .setParameter(1, staffId)
                     .setParameter(2, roleId);
-            
+
             AccessRightEntity a = (AccessRightEntity) q.getSingleResult();
 
             a.setStaff(staff);
@@ -1110,4 +1110,215 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
         return false;
     }
+
+    @Override
+    public Long getRegionalOfficeIdBasedOnStaffRole(Long staffId) {
+        System.out.println("getRegionalOfficeIDbasedOnStaffRole() called");
+        RoleEntity admin = this.searchRole("Administrator", "System");
+        RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
+        RoleEntity purchasingManager = this.searchRole("Purchasing Manager", "Region");
+        RoleEntity mfManager = this.searchRole("Manufacturing Facility Manager", "Facility");
+        RoleEntity storeManager = this.searchRole("Store Manager", "Facility");
+        RoleEntity warehouseManager = this.searchRole("Warehouse Manager", "Facility");
+        try {
+            StaffEntity staffEntity = em.getReference(StaffEntity.class, staffId);
+            for (RoleEntity role : staffEntity.getRoles()) {
+                if (role.getName().equals("Regional Manager")) {
+                    Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
+                            .setParameter(1, staffId)
+                            .setParameter(2, regionalManager.getId());
+                    AccessRightEntity accessRight = (AccessRightEntity) q.getSingleResult();
+                    return accessRight.getRegionalOffice().getId();
+                } else if (role.getName().equals("Purchasing Manager")) {
+                    Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
+                            .setParameter(1, staffId)
+                            .setParameter(2, purchasingManager.getId());
+                    AccessRightEntity accessRight = (AccessRightEntity) q.getSingleResult();
+                    return accessRight.getRegionalOffice().getId();
+                }
+            }
+            return null;
+        } catch (Exception ex) {
+            System.out.println("getRegionalOfficeIDbasedOnStaffRole():" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsAdministrator(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Administrator")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsRegionalManager(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Regional Manager")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsManufacturingFacilityWarehouseManager(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsStoreManager(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Store Manager")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsMarketingDirector(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Marketing Director")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsProductDevelopmentEngineer(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Product Development Engineer")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsPurchasingManager(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Purchasing Manager")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsManufacturingFacilityManager(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Manufacturing Facility Manager")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsCashier(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Cashier")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsReceptionist(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Receptionist")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfStaffIsGlobalManager(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Global Manager")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
 }

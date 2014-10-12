@@ -91,36 +91,6 @@
                                     <input class="form-control" type="text"  name="height" required="true" value="<%=rawMaterial.getHeight()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Lot Size</label>
-                                    <input class="form-control" required="true" type="number" min="1" step="1" name="lotsize" value="<%=rawMaterial.getLotSize()%>">
-                                </div>
-                                 <div class="form-group">
-                                    <label>Lead Time</label>
-                                    <input class="form-control" required="true" type="number" min="1" step="1" name="leadtime" value="<%=rawMaterial.getLeadTime()%>">
-                                </div>
-                                 <div class="form-group">
-                                    <label>Purchasing Price</label>
-                                    <input class="form-control" required="true" type="number" min="1" step="0.1" name="price" value="<%=rawMaterial.getCostPrice()%>">
-                                 </div>
-                                 <div class="form-group">
-                                    <label>Supplier</label>
-                                    <select required="" name="supplier" class="form-control">
-                                        <option value="<%=(rawMaterial.getSupplier().getId())%>"><%=rawMaterial.getSupplier().getSupplierName()%></option>
-                                        <%
-                                            List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
-                                            if (suppliers != null) {
-                                                for (SupplierEntity supplier : suppliers) {
-                                                    if (!supplier.getSupplierName().equals(rawMaterial.getSupplier().getSupplierName())) {
-                                        %>
-                                        <option value="<%= supplier.getId()%>"> <%= supplier.getSupplierName()%> </option>
-                                        <%
-                                                    }
-                                                }
-                                            }
-                                        %>
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="<%=rawMaterial.getId()%>" name="id">

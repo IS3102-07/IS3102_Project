@@ -37,6 +37,8 @@ public class RegionalOfficeEntity implements Serializable {
     private List<StoreEntity> storeList;
     @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
     private List<ManufacturingFacilityEntity> manufacturingFacilityList;
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "regionalOffice")
+    private List<SupplierEntity> suppliers;
     private Boolean isDeleted;
 
     public RegionalOfficeEntity() {
@@ -52,6 +54,14 @@ public class RegionalOfficeEntity implements Serializable {
         this.setTelephone(telephone);
         this.setEmail(email);
         this.isDeleted = false;
+    }
+
+    public List<SupplierEntity> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(List<SupplierEntity> suppliers) {
+        this.suppliers = suppliers;
     }
 
     public Boolean getIsDeleted() {

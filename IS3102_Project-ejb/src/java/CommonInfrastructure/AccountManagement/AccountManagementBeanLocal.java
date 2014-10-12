@@ -95,4 +95,17 @@ public interface AccountManagementBeanLocal {
     public Boolean canStaffAccessToTheWarehouse(Long StaffId, Long warehouseId);
     
     public Boolean editAccessRight(String callerStaffID, Long staffId, Long roleId, Long regionalOfficeId, Long storeId, Long warehouseId, Long mfId);
+    public Long getRegionalOfficeIdBasedOnStaffRole(Long staffId);
+    public Boolean checkIfStaffIsAdministrator(Long staffId);
+    public Boolean checkIfStaffIsRegionalManager(Long staffId);
+    public Boolean checkIfStaffIsManufacturingFacilityWarehouseManager(Long staffId);
+    public Boolean checkIfStaffIsStoreManager(Long staffId);
+    public Boolean checkIfStaffIsMarketingDirector(Long staffId);
+    public Boolean checkIfStaffIsProductDevelopmentEngineer(Long staffId);
+    public Boolean checkIfStaffIsPurchasingManager(Long staffId);
+    public Boolean checkIfStaffIsManufacturingFacilityManager(Long staffId);
+    public Boolean checkIfStaffIsCashier(Long staffId);
+    public Boolean checkIfStaffIsReceptionist(Long staffId);
+    public Boolean checkIfStaffIsGlobalManager(Long staffId);
+    
 }

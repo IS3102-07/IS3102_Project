@@ -41,7 +41,6 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
         this.imageURL = imageURL;
         super.setType("Furniture");
         super.setIsDeleted(false);
-        super.setCostPrice(0.0);
     }
 
     public Boolean getIsDeleted() {

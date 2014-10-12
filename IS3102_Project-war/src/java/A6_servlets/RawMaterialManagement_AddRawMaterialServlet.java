@@ -26,15 +26,11 @@ public class RawMaterialManagement_AddRawMaterialServlet extends HttpServlet {
             Integer _length = Integer.parseInt(request.getParameter("length"));
             Integer width = Integer.parseInt(request.getParameter("width"));
             Integer height = Integer.parseInt(request.getParameter("height"));
-            Integer lotSize = Integer.parseInt(request.getParameter("lotsize"));
-            Integer leadTime = Integer.parseInt(request.getParameter("leadtime"));
-            Double price = Double.parseDouble(request.getParameter("price"));
-            String supplier= request.getParameter("supplier");
             String source = request.getParameter("source");
             System.out.println("source is " + source);
             
             if (!itemManagementBean.checkSKUExists(SKU)) {
-                itemManagementBean.addRawMaterial(SKU, name, category, description, _length, width, height, lotSize, leadTime, price, Long.parseLong(supplier));
+                itemManagementBean.addRawMaterial(SKU, name, category, description, _length, width, height);
                 result = "?goodMsg=Raw Material with SKU: " + SKU + " has been created successfully.";
                 response.sendRedirect("RawMaterialManagement_RawMaterialServlet" + result);
             } else {

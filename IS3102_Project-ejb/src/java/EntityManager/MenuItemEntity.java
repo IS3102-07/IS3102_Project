@@ -24,9 +24,7 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
     private String description;
     @Lob
     private String imageURL;
-    @OneToOne(cascade = {CascadeType.REMOVE}, mappedBy = "furniture")
-    private ProductGroupLineItemEntity productGroupLineItem;
-    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "furniture")
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "menuItem")
     private RecipeEntity recipe;
 
     public MenuItemEntity() {
@@ -41,7 +39,6 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
         this.imageURL = imageURL;
         super.setType("Furniture");
         super.setIsDeleted(false);
-        super.setCostPrice(0.0);
     }
 
     public Boolean getIsDeleted() {
@@ -58,14 +55,6 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
 
     public void setIsDeleted(Boolean isDeleted) {
         super.setIsDeleted(isDeleted);
-    }
-
-    public ProductGroupLineItemEntity getProductGroupLineItem() {
-        return productGroupLineItem;
-    }
-
-    public void setProductGroupLineItem(ProductGroupLineItemEntity productGroupLineItem) {
-        this.productGroupLineItem = productGroupLineItem;
     }
 
     public Long getId() {
