@@ -23,8 +23,11 @@ public class Supplier_ItemEntity implements Serializable {
     private ItemEntity item;
     @ManyToOne(cascade = {CascadeType.ALL})
     private SupplierEntity supplier;
-    
-    public Supplier_ItemEntity() {}
+
+    public Supplier_ItemEntity() {
+        isDeleted = false;
+    }
+
     public Supplier_ItemEntity(ItemEntity item, SupplierEntity supplier, Double costPrice, Integer lotSize, Integer leadTime) {
         this.item = item;
         this.supplier = supplier;

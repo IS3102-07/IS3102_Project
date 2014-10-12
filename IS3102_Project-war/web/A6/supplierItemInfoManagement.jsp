@@ -1,3 +1,4 @@
+<%@page import="EntityManager.SupplierEntity"%>
 <%@page import="EntityManager.CountryEntity"%>
 <%@page import="EntityManager.Supplier_ItemEntity"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,8 +21,7 @@
             }
             function update(id) {
                 supplierItemInfoManagement.id.value = id;
-                supplierItemInfoManagement.setPrice.value = $("#price" + id).val();
-                document.supplierItemInfoManagement.action = "../SupplierItemInfoManagement_UpdateSupplierItemInfoServlet";
+                document.supplierItemInfoManagement.action = "supplierItemInfoManagement_update.jsp";
                 document.supplierItemInfoManagement.submit();
             }
             function removeRecord() {
@@ -96,12 +96,12 @@
                                                     <thead>
                                                         <tr>
                                                             <th style="width:5%"><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th style="width:10%">Supplier ID</th>
+                                                            <th style="width:15%">Supplier ID</th>
                                                             <th style="width:15%">SKU</th>
                                                             <th style="width:15%">Cost Price</th>
                                                             <th style="width:10%">Lot Size</th>
                                                             <th style="width:15%">Lead Time (weeks)</th>
-                                                            <th style="width:10%">Update</th>
+                                                            <th style="width:8%">Update</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -110,7 +110,7 @@
                                                             try {
                                                                 if (listOfSupplierItemInfo != null) {
                                                                     for (int i = 0; i < listOfSupplierItemInfo.size(); i++) {
-                                                                        
+
                                                         %>
                                                         <tr>
                                                             <td>
@@ -130,12 +130,8 @@
                                                             </td>
                                                             <td>
                                                                 <%=listOfSupplierItemInfo.get(i).getLeadTime()%>
-                                                                <div hidden id="updateItemPricing<%=listOfSupplierItemInfo.get(i).getId()%>" style="float:right">
-                                                                    <input type="number" step="any" class="form-control" style="width:80px;" id="price<%=listOfSupplierItemInfo.get(i).getId()%>" required/>
-                                                                    <input class="btn btn-primary" type="button" value="Submit" onclick="update(<%=listOfSupplierItemInfo.get(i).getId()%>)"/>
-                                                                </div>
                                                             </td>
-                                                            <td><input class="btn btn-primary" id="btnUpdate" onclick="showEditItemPricing(<%=listOfSupplierItemInfo.get(i).getId()%>)" type="button" value="Update"/></td>
+                                                            <td><input class="btn btn-primary" id="btnUpdate" onclick="update(<%=listOfSupplierItemInfo.get(i).getId()%>)" type="button" value="Update"/></td>
                                                         </tr>
                                                         <%
                                                                     }
@@ -168,16 +164,14 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                Country:&nbsp;
+                                                                Supplier ID:&nbsp;
                                                             </td>
                                                             <td>
-                                                                <select class="form-control" name="country"> 
+                                                                <select class="form-control" name="supplierId"> 
                                                                     <%
-                                                                        List<CountryEntity> listOfCountry = (List<CountryEntity>) session.getAttribute("listOfCountry");
-                                                                        for (CountryEntity c : listOfCountry) {
-                                                                            Long countryId = c.getId();
-                                                                            String countryName = c.getName();
-                                                                            out.print("<option value=\"" + countryId + "\">" + countryName + "</option>");
+                                                                        List<SupplierEntity> listOfSuppliers = (List<SupplierEntity>) session.getAttribute("listOfSuppliers");
+                                                                        for(SupplierEntity s : listOfSuppliers){
+                                                                            out.print("<option value=\"" + s.getId() + "\">ID " + s.getId() + ": " + s.getSupplierName() + "</option>");
                                                                         }
                                                                     %>
                                                                 </select>
@@ -189,8 +183,7 @@
                                                             </td>
                                                             <td>
                                                                 <select class="form-control" name="sku"> 
-                                                                    <%
-                                                                        List<String> listOfSKUs = (List<String>) session.getAttribute("listOfSKUs");
+                                                                    <%                                                                        List<String> listOfSKUs = (List<String>) session.getAttribute("listOfSKUs");
                                                                         for (String s : listOfSKUs) {
                                                                             out.print("<option value=\"" + s + "\">" + s + "</option>");
                                                                         }
@@ -200,10 +193,26 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Price:&nbsp;
+                                                                Cost Price:&nbsp;
                                                             </td>
                                                             <td>
-                                                                <input type="number" step="any" class="form-control" name="price" required/>
+                                                                <input type="number" step="any" class="form-control" name="costPrice" required/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Lot Size:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" class="form-control" name="lotSize" required/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Lead Time:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" class="form-control" name="leadTime" required/>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -242,10 +251,6 @@
                 $("#addItemPricingForm").show("slow", function () {
                 });
             });
-            function showEditItemPricing(id) {
-                $("#updateItemPricing" + id).show("fast", function () {
-                });
-            }
 
         </script>
 

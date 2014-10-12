@@ -75,8 +75,8 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-sevenary">
                                     <div class="box-content">
-                                        <a href="../CountryItemPricingManagement_Servlet"><i class="icon-featured icon icon-truck"> </i>
-                                            <h4>Supplying Item Management</h4>
+                                        <a href="../SupplierItemInfoManagement_Servlet"><i class="icon-featured icon icon-truck"> </i>
+                                            <h4>Supplier Item Info Management</h4>
                                         </a>
                                     </div>
                                 </div>
