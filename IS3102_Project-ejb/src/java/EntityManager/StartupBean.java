@@ -305,6 +305,21 @@ public class StartupBean {
         }
 
         try {
+            LoyaltyTierEntity loyaltyTierEntity;
+            loyaltyTierEntity = new LoyaltyTierEntity("Gold", 5000.0);
+            em.persist(loyaltyTierEntity);
+            loyaltyTierEntity = new LoyaltyTierEntity("Silver", 3000.0);
+            em.persist(loyaltyTierEntity);
+            loyaltyTierEntity = new LoyaltyTierEntity("Bronze", 1000.0);
+            em.persist(loyaltyTierEntity);
+            loyaltyTierEntity = new LoyaltyTierEntity("Classic", 0.0);
+            em.persist(loyaltyTierEntity);
+            
+        } catch (Exception ex) {
+            System.out.println("Skipping creating of loyalty tiers\n"+ex);
+            ex.printStackTrace();
+        }
+        try {
             Query q1 = em.createQuery("select s from StoreEntity s");
             List<StoreEntity> storeList = (List<StoreEntity>) q1.getResultList();
             Query q2 = em.createQuery("select pg from ProductGroupEntity pg");

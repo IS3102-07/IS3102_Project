@@ -14,6 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import java.util.List;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -40,7 +41,10 @@ public class MemberEntity implements Serializable {
     private String zipCode;
     private String passwordSalt;
     private String passwordHash;
+    @ManyToOne
+    private LoyaltyTierEntity loyaltyTier;
     private Integer loyaltyPoints;
+    private Double cummulativeSpending;
     private Boolean accountActivationStatus;
     private String activationCode;
     private Boolean accountLockStatus;
@@ -86,6 +90,23 @@ public class MemberEntity implements Serializable {
         this.isDeleted = false;
         this.shoppingList = new ShoppingListEntity();
         this.purchases = new ArrayList<>();
+        this.cummulativeSpending = 0.0;
+    }
+
+    public LoyaltyTierEntity getLoyaltyTier() {
+        return loyaltyTier;
+    }
+
+    public void setLoyaltyTier(LoyaltyTierEntity loyaltyTier) {
+        this.loyaltyTier = loyaltyTier;
+    }
+
+    public Double getCummulativeSpending() {
+        return cummulativeSpending;
+    }
+
+    public void setCummulativeSpending(Double cummulativeSpending) {
+        this.cummulativeSpending = cummulativeSpending;
     }
 
     public ShoppingListEntity getShoppingList() {
