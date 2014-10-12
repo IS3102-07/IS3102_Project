@@ -44,6 +44,7 @@ public class DemandManagement_main_GET extends HttpServlet {
         if(dmBean.generateMasterProductionSchedules(mf.getId())){
             System.out.println("Master Production Schedule is generated.");
             mpsList = dmBean.getMasterProductionSchedules(mf.getId());            
+            System.out.println("mpsList.size(): " + mpsList.size());
         }
         request.setAttribute("mpsList", mpsList);
         
