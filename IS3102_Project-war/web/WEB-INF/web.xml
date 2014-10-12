@@ -757,6 +757,10 @@
         <servlet-name>MRP_main_POST</servlet-name>
         <servlet-class>A2_servlets.MRP_main_POST</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_ResetPasswordServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ResetPasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1512,6 +1516,10 @@
     <servlet-mapping>
         <servlet-name>MRP_main_POST</servlet-name>
         <url-pattern>/MRP_main_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_ResetPasswordServlet</servlet-name>
+        <url-pattern>/ECommerce_ResetPasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

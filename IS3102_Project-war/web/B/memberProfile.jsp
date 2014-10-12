@@ -50,6 +50,15 @@
                                         <label>Address</label>
                                         <input class="form-control" type="text" required="true" name="address" value="<%if (member.getAddress() == null){out.println("");} else { out.println(member.getAddress()); }%>">
                                     </div>
+                                    <div class="form-group">
+                                        <label>Set Challenge Question</label>
+                                        <select name="challenge">
+                                            <option value="1">What is your mother's maiden name?</option>
+                                            <option value="2">What is your first pet's name?</option>
+                                            <option value="1">What is your favourite animal?</option>
+                                        </select>
+                                        <input class="form-control" type="text" required="true" name="address" value="<%if (member.getAddress() == null){out.println("");} else { out.println(member.getAddress()); }%>">
+                                    </div>
                                     <hr class="more-spaced "/>
                                     <h4>Change Password</h4>
                                     <div class="form-group">

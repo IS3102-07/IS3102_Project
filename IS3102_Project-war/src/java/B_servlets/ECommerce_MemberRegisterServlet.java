@@ -1,6 +1,7 @@
 package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -8,12 +9,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 
 public class ECommerce_MemberRegisterServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
     private String result;
+    
+    @EJB
+    private SystemSecurityBeanLocal systemSecurityBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -22,6 +28,7 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             boolean isExist = accountManagementBean.checkMemberEmailExists(email);
+            String source = request.getParameter("source");
             
             if (isExist) {
                 result = "Email already exist. Please try again.";
@@ -34,6 +41,24 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
                 } else {
                     result = "Account successfully registered.";
                     response.sendRedirect("B/memberLogin.jsp?goodMsg=" + result);
+                    
+                    String remoteAddr = request.getRemoteAddr();
+                    ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+                    reCaptcha.setPrivateKey("6LdjyvoSAAAAAHnUl50AJU-edkUqFtPQi9gCqDai");
+
+                    String challenge = request.getParameter("recaptcha_challenge_field");
+                    String uresponse = request.getParameter("recaptcha_response_field");
+                    ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+
+                    if (reCaptchaResponse.isValid()) {
+                        accountManagementBean.registerMember(null, null, null, email, null, null, null, null, password);
+                        systemSecurityBean.sendActivationEmailForMember(email);
+                        result = "?goodMsg=Staff added successfully.";
+                        response.sendRedirect(source + result);
+                    } else {
+                        result = "?errMsg=You have entered an wrong Captcha code.";
+                        response.sendRedirect("A1/staffRegister.jsp" + result);
+                    }
                 }
             }
         } catch (Exception ex) {
