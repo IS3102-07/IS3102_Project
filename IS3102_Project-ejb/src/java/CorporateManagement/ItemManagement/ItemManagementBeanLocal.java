@@ -9,6 +9,7 @@ import EntityManager.RawMaterialEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.RetailProductEntity;
+import EntityManager.Supplier_ItemEntity;
 import HelperClasses.ReturnHelper;
 import java.util.List;
 import javax.ejb.Local;
@@ -19,8 +20,8 @@ public interface ItemManagementBeanLocal {
 
     public ItemEntity getItemBySKU(String SKU);
     public boolean checkSKUExists(String SKU);
-    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double costPrice, Long supplierId);
-    public boolean editRawMaterial(String id, String SKU, String name, String category, String description, Integer lotSize, Integer leadTime, Double costPrice, Long supplierId);
+    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height);
+    public boolean editRawMaterial(String id, String SKU, String name, String category, String description);
     public boolean removeRawMaterial(String SKU);
     public RawMaterialEntity viewRawMaterial(String SKU);
     public List<RawMaterialEntity> listAllRawMaterials();
@@ -31,8 +32,8 @@ public interface ItemManagementBeanLocal {
     public FurnitureEntity viewFurniture(String SKU);
     public List<FurnitureEntity> listAllFurniture();
     
-    public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double costPrice, Long supplierId);
-    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL, Integer lotSize, Integer leadTime, Double costPrice, Long supplierId);
+    public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height);
+    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL);
     public boolean removeRetailProduct(String SKU);
     public RetailProductEntity viewRetailProduct(String SKU);
     public List<RetailProductEntity> listAllRetailProduct();
@@ -75,6 +76,13 @@ public interface ItemManagementBeanLocal {
     
     public List<Item_CountryEntity> listAllItemsOfCountry(Long countryId);
     public Item_CountryEntity getItemPricing(Long countryId, String SKU);
+    
+    
+    public ReturnHelper addSupplierItemInfo(String SKU, Long supplierId, Double costPrice, Integer lotSize, Integer leadTime);
+    public ReturnHelper removeSupplierItemInfo(Long supplierItemId);
+    public ReturnHelper editSupplierItemInfo(Long supplierItemId, Double costPrice, Integer lotSize, Integer leadTime);
+    public Supplier_ItemEntity getSupplierItemInfo(Long supplierItemId);
+    public List<Supplier_ItemEntity> listAllSupplierItemInfo();
 
     @Remove
     public void remove();

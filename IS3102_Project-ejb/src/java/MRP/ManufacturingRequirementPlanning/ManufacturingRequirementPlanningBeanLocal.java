@@ -6,13 +6,13 @@
 
 package MRP.ManufacturingRequirementPlanning;
 
+import EntityManager.MaterialRequirementEntity;
+import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author Jason
- */
+
 @Local
 public interface ManufacturingRequirementPlanningBeanLocal {
-    
+    public Boolean generateMaterialRequirementPlan(Long MfId);
+    public List<MaterialRequirementEntity> getMaterialRequirementEntityList(Long MfId);
 }

@@ -3,6 +3,7 @@ package EntityManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,8 +29,6 @@ public abstract class ItemEntity implements Serializable {
     private String name;
     @Lob
     private String type;
-    @Lob
-    private String batch;
     @OneToMany(mappedBy = "item", cascade = {CascadeType.ALL})
     private Collection<Item_CountryEntity> itemCountryList;
     @ManyToOne
@@ -39,24 +38,13 @@ public abstract class ItemEntity implements Serializable {
     private Integer height;
     private Integer volume;
     private Boolean isDeleted;
-    private Double costPrice;
-    @ManyToOne
-    private SupplierEntity supplier;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    private List<Supplier_ItemEntity> suppliers;
 
     public ItemEntity() {
         this.itemCountryList = new ArrayList<>();
     }
 
-    public ItemEntity(String SKU, Integer _length, Integer width, Integer height, Double price) {
-        this.SKU = SKU;
-        this._length = _length;
-        this.width = width;
-        this.height = height;
-        this.volume = _length * width * height;
-        this.costPrice = price;
-        this.isDeleted = false;
-    }
-    
     public ItemEntity(String SKU, Integer _length, Integer width, Integer height) {
         this.SKU = SKU;
         this._length = _length;
@@ -160,20 +148,6 @@ public abstract class ItemEntity implements Serializable {
         this.warehouses = warehouses;
     }
 
-    /**
-     * @return the batch
-     */
-    public String getBatch() {
-        return batch;
-    }
-
-    /**
-     * @param batch the batch to set
-     */
-    public void setBatch(String batch) {
-        this.batch = batch;
-    }
-
     public String getType() {
         return type;
     }
@@ -182,20 +156,12 @@ public abstract class ItemEntity implements Serializable {
         this.type = type;
     }
 
-    public SupplierEntity getSupplier() {
-        return supplier;
+    public List<Supplier_ItemEntity> getSuppliers() {
+        return suppliers;
     }
 
-    public void setSupplier(SupplierEntity supplier) {
-        this.supplier = supplier;
-    }
-
-    public Double getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(Double costPrice) {
-        this.costPrice = costPrice;
+    public void setSuppliers(List<Supplier_ItemEntity> suppliers) {
+        this.suppliers = suppliers;
     }
     
 }

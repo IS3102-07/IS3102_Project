@@ -1,48 +1,52 @@
-package A6_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A2_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.RegionalOfficeEntity;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class RetailProductManagement_AddRetailProductServlet extends HttpServlet {
-
+/**
+ *
+ * @author Administrator
+ */
+public class MRP_index_GET extends HttpServlet {
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
-    String result;
-
+    private FacilityManagementBeanLocal fmBean;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            String SKU = request.getParameter("SKU");
-            String name = request.getParameter("name");
-            String category = request.getParameter("category");
-            String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
-            Integer _length = Integer.parseInt(request.getParameter("length"));
-            Integer width = Integer.parseInt(request.getParameter("width"));
-            Integer height = Integer.parseInt(request.getParameter("height"));
-            String source = request.getParameter("source");
-
-            if (!itemManagementBean.checkSKUExists(SKU)) {
-                itemManagementBean.addRetailProduct(SKU, name, category, description, imageURL, _length, width, height);
-                result = "?goodMsg=Retail Product with SKU: " + SKU + " has been created successfully.";
-                response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
-            } else {
-                result = "?errMsg=Failed to add retail product, SKU: " + SKU + " already exist.";
-                response.sendRedirect(source + result);
-            }
-        } catch (Exception ex) {
-            out.println(ex);
-        } finally {
-            out.close();
+        
+        System.out.println("servlet MRP_index_GET is called");
+        
+        String nextPage = "/A2/MRP_index";
+        ServletContext servletContext = getServletContext();
+        RequestDispatcher dispatcher;        
+        HttpSession session = request.getSession();
+        
+        List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
+        if (regionalOfficeList == null) {
+            regionalOfficeList = new ArrayList<>();
         }
+        request.setAttribute("regionalOfficeList", regionalOfficeList);                                
+        
+        dispatcher = servletContext.getRequestDispatcher(nextPage);
+        dispatcher.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

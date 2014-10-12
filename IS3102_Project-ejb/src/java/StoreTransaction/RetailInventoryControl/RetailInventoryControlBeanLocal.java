@@ -20,6 +20,4 @@ public interface RetailInventoryControlBeanLocal {
     
     public RetailProductEntity viewRetailProduct(String SKU);
     public List<RetailProductEntity> listAllRetailProduct();
-    
-    public Boolean checkIfSKUIsFurniture(String SKU);
 }

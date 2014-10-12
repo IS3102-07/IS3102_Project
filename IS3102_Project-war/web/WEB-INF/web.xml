@@ -721,6 +721,46 @@
         <servlet-name>A2/DemandManagement_main</servlet-name>
         <jsp-file>/A2/DemandManagement_main.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>MRP_index_GET</servlet-name>
+        <servlet-class>A2_servlets.MRP_index_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MRP_index_POST</servlet-name>
+        <servlet-class>A2_servlets.MRP_index_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/MRP_index</servlet-name>
+        <jsp-file>/A2/MRP_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>SupplierItemInfoManagement_Servlet</servlet-name>
+        <servlet-class>A6_servlets.SupplierItemInfoManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-name>
+        <servlet-class>A6_servlets.SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-name>
+        <servlet-class>A6_servlets.SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-name>
+        <servlet-class>A6_servlets.SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MRP_main_GET</servlet-name>
+        <servlet-class>A2_servlets.MRP_main_GET</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MRP_main_POST</servlet-name>
+        <servlet-class>A2_servlets.MRP_main_POST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A2/MRP_main</servlet-name>
+        <jsp-file>/A2/MRP_main.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1440,6 +1480,46 @@
     <servlet-mapping>
         <servlet-name>A2/DemandManagement_main</servlet-name>
         <url-pattern>/A2/DemandManagement_main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MRP_index_GET</servlet-name>
+        <url-pattern>/MRP_index_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MRP_index_POST</servlet-name>
+        <url-pattern>/MRP_index_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/MRP_index</servlet-name>
+        <url-pattern>/A2/MRP_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SupplierItemInfoManagement_Servlet</servlet-name>
+        <url-pattern>/SupplierItemInfoManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-name>
+        <url-pattern>/SupplierItemInfoManagement_AddSupplierItemInfoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-name>
+        <url-pattern>/SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-name>
+        <url-pattern>/SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MRP_main_GET</servlet-name>
+        <url-pattern>/MRP_main_GET/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MRP_main_POST</servlet-name>
+        <url-pattern>/MRP_main_POST/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A2/MRP_main</servlet-name>
+        <url-pattern>/A2/MRP_main</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

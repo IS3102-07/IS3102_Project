@@ -5,7 +5,7 @@
  */
 package A3_servlets;
 
-import HelperClasses.ItemSupplierHelper;
+import EntityManager.Supplier_ItemEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,14 +33,12 @@ public class PurchaseOrderLineItemManagement_DisplaySupplierServlet extends Http
 
         try {
             HttpSession session = request.getSession();
-            System.out.println("Helllooooo!!!!");
             String id = request.getParameter("id");
             String supplierId = request.getParameter("supplierId");
             System.out.println(id + "purchase order id");
             System.out.println(supplierId + "supplier id");
 
-            List<ItemSupplierHelper> listOfItems
-                    = supplierManagementBean.getSupplierItemList(Long.parseLong(supplierId));
+            List<Supplier_ItemEntity> listOfItems = supplierManagementBean.getSupplierItemList(Long.parseLong(supplierId));
 
             session.setAttribute("listOfItems", listOfItems);
             response.sendRedirect("A3/purchaseOrderManagement_AddLineItem.jsp?id=" + id);

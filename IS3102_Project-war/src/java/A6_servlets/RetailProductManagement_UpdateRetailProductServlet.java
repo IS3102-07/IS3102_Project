@@ -24,14 +24,9 @@ public class RetailProductManagement_UpdateRetailProductServlet extends HttpServ
             String category = request.getParameter("category");
             String description = request.getParameter("description");
             String imageURL = request.getParameter("imageURL");
-            String source = request.getParameter("source");
-            Integer lotSize = Integer.parseInt(request.getParameter("lotsize"));
-            Integer leadTime = Integer.parseInt(request.getParameter("leadtime"));
-            Double price = Double.parseDouble(request.getParameter("price"));
-            String supplier= request.getParameter("supplier");
             String id = request.getParameter("id");
             
-            boolean canUpdate = itemManagementBean.editRetailProduct(id, SKU, name, category, description, imageURL, lotSize, leadTime, price, Long.parseLong(supplier));
+            boolean canUpdate = itemManagementBean.editRetailProduct(id, SKU, name, category, description, imageURL);
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("retailProductManagement_update.jsp" + result);

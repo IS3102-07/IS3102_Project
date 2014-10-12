@@ -1,6 +1,7 @@
 package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import HelperClasses.ReturnHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -9,39 +10,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RetailProductManagement_AddRetailProductServlet extends HttpServlet {
+public class SupplierItemInfoManagement_AddSupplierItemInfoServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
-    String result;
+    private ItemManagementBeanLocal itemManagementBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            String SKU = request.getParameter("SKU");
-            String name = request.getParameter("name");
-            String category = request.getParameter("category");
-            String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
-            Integer _length = Integer.parseInt(request.getParameter("length"));
-            Integer width = Integer.parseInt(request.getParameter("width"));
-            Integer height = Integer.parseInt(request.getParameter("height"));
-            String source = request.getParameter("source");
-
-            if (!itemManagementBean.checkSKUExists(SKU)) {
-                itemManagementBean.addRetailProduct(SKU, name, category, description, imageURL, _length, width, height);
-                result = "?goodMsg=Retail Product with SKU: " + SKU + " has been created successfully.";
-                response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
+        try{
+            String sku = request.getParameter("sku");
+            String supplierId = request.getParameter("supplierId");
+            String costPrice = request.getParameter("costPrice");
+            String lotSize = request.getParameter("lotSize");
+            String leadTime = request.getParameter("leadTime");
+            ReturnHelper helper = itemManagementBeanLocal.addSupplierItemInfo(sku, Long.parseLong(supplierId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
+           
+            if (!helper.getIsSuccess()) {
+                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
             } else {
-                result = "?errMsg=Failed to add retail product, SKU: " + SKU + " already exist.";
-                response.sendRedirect(source + result);
+                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
             }
-        } catch (Exception ex) {
-            out.println(ex);
-        } finally {
-            out.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=An error has occurred. Please try again.");
         }
     }
 

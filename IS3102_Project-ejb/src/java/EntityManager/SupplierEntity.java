@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class SupplierEntity implements Serializable {
@@ -30,22 +31,26 @@ public class SupplierEntity implements Serializable {
     @ManyToOne(cascade = {CascadeType.REMOVE})
     private CountryEntity country;
     
-    @OneToMany (mappedBy="supplier")
-    private List<ItemEntity> items;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="supplier")
+    private List<Supplier_ItemEntity> supplyingItems;
    
     @OneToMany(mappedBy="supplier")
     private List<PurchaseOrderEntity> purchaseOrders;
+    
+    @ManyToOne
+    private RegionalOfficeEntity regionalOffice;
             
     public SupplierEntity() {
 
     }
 
-    public SupplierEntity(String supplierName, String contactNo, String email, String address) {
+    public SupplierEntity(String supplierName, String contactNo, String email, String address, RegionalOfficeEntity regionalOffice) {
         this.supplierName = supplierName;
         this.contactNo = contactNo;
         this.email = email;
         this.address = address;
         this.isDeleted = false;
+        this.regionalOffice = regionalOffice;
     }
 
     public Long getId() {
@@ -54,6 +59,14 @@ public class SupplierEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public RegionalOfficeEntity getRegionalOffice() {
+        return regionalOffice;
+    }
+
+    public void setRegionalOffice(RegionalOfficeEntity regionalOffice) {
+        this.regionalOffice = regionalOffice;
     }
 
     public List<PurchaseOrderEntity> getPurchaseOrders() {
@@ -135,19 +148,16 @@ public class SupplierEntity implements Serializable {
         return true;
     }
 
+    public List<Supplier_ItemEntity> getSupplyingItems() {
+        return supplyingItems;
+    }
+
+    public void setSupplyingItems(List<Supplier_ItemEntity> supplyingItems) {
+        this.supplyingItems = supplyingItems;
+    }
+
     @Override
     public String toString() {
         return "EntityManager.SupplierEntity[ id=" + id + " ]";
     }
-
-    public List<ItemEntity> getItems() {
-        return items;
-    }
-
-    public void setItems(List<ItemEntity> items) {
-        this.items = items;
-    }
-
- 
-
 }

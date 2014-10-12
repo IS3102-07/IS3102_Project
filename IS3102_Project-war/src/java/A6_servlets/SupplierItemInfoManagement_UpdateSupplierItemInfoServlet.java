@@ -1,6 +1,7 @@
 package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import HelperClasses.ReturnHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -9,39 +10,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RetailProductManagement_AddRetailProductServlet extends HttpServlet {
+public class SupplierItemInfoManagement_UpdateSupplierItemInfoServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
-    String result;
+    private ItemManagementBeanLocal ItemManagementBean;
+    private String result;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String SKU = request.getParameter("SKU");
-            String name = request.getParameter("name");
-            String category = request.getParameter("category");
-            String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
-            Integer _length = Integer.parseInt(request.getParameter("length"));
-            Integer width = Integer.parseInt(request.getParameter("width"));
-            Integer height = Integer.parseInt(request.getParameter("height"));
-            String source = request.getParameter("source");
+            String supplierItemId = request.getParameter("id");
+            String costPrice = request.getParameter("costPrice");
+            String lotSize = request.getParameter("lotSize");
+            String leadTime = request.getParameter("leadTime");
+            ReturnHelper rh = ItemManagementBean.editSupplierItemInfo(Long.parseLong(supplierItemId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
 
-            if (!itemManagementBean.checkSKUExists(SKU)) {
-                itemManagementBean.addRetailProduct(SKU, name, category, description, imageURL, _length, width, height);
-                result = "?goodMsg=Retail Product with SKU: " + SKU + " has been created successfully.";
-                response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
+            if (!rh.getIsSuccess()) {
+                result = "?errMsg=" + rh.getMessage() + "&id=" + supplierItemId;
+                response.sendRedirect("A6/supplierItemInfoManagement_update.jsp" + result);
             } else {
-                result = "?errMsg=Failed to add retail product, SKU: " + SKU + " already exist.";
-                response.sendRedirect(source + result);
+                result = "?errMsg=" + rh.getMessage();
+                response.sendRedirect("SupplierItemInfoManagement_Servlet" + result);
             }
         } catch (Exception ex) {
             out.println(ex);
-        } finally {
-            out.close();
         }
     }
 

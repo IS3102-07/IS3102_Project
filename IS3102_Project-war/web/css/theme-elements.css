@@ -1458,6 +1458,18 @@ body.boxed .pricing-table .plan, body.boxed .pricing-table h3 {
 .featured-box-sixenary .box-content {
     border-top-color: #cccc00;
 }
+/* 7 */
+.featured-box-sevenary i.icon-featured {
+    background-color: #ffcc00;
+}
+
+.featured-box-sevenary h4 {
+    color: #ffcc00;
+}
+
+.featured-box-sevenary .box-content {
+    border-top-color: #ffcc00;
+}
 
 /* Featured Boxes - Login */
 .featured-boxes.login {

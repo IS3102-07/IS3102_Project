@@ -102,7 +102,6 @@
                                                             <th>Email</th>
                                                             <th>Country</th>
                                                             <th>Address</th>
-                                                            <th>Items Supplied</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -137,19 +136,6 @@
                                                             </td>
                                                             <td>
                                                                 <%=suppliers.get(i).getAddress()%>
-                                                            </td>
-                                                            <td>
-                                                                <%
-                                                                    List<ItemEntity> items = (List<ItemEntity>) (suppliers.get(i).getItems());
-                                                                    if (items.isEmpty()) {
-                                                                        out.println("");
-                                                                    } else {
-                                                                        for (ItemEntity item : items) {
-                                                                            if (!item.getIsDeleted())
-                                                                            out.println("<span>" + item.getName() + ", <span>");
-                                                                        }
-                                                                    }
-                                                                %>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=suppliers.get(i).getId()%>" value="Update" onclick="javascript:updateSupplier('<%=suppliers.get(i).getId()%>')"/>

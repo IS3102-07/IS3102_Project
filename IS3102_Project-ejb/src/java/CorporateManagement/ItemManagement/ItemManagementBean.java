@@ -10,8 +10,9 @@ import EntityManager.BillOfMaterialEntity;
 import EntityManager.CountryEntity;
 import EntityManager.Item_CountryEntity;
 import EntityManager.LineItemEntity;
-import EntityManager.SupplierEntity;
 import EntityManager.ProductGroupLineItemEntity;
+import EntityManager.SupplierEntity;
+import EntityManager.Supplier_ItemEntity;
 import HelperClasses.ReturnHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,19 +30,15 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
-    private SupplierEntity supplier;
     private RawMaterialEntity rawMaterial;
 
-    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
+    public boolean addRawMaterial(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
         System.out.println("addRawMaterial() called with SKU:" + SKU);
         try {
-            rawMaterial = new RawMaterialEntity(SKU, name, category, description, _length, width, height, lotSize, leadTime, price);
-            supplier = em.find(SupplierEntity.class, supplierId);
-            rawMaterial.setSupplier(supplier);
+            rawMaterial = new RawMaterialEntity(SKU, name, category, description, _length, width, height);
             em.persist(rawMaterial);
             em.flush();
             em.merge(rawMaterial);
-            supplier.getItems().add(rawMaterial);
             System.out.println("Raw Material name \"" + name + "\" added successfully.");
             return true;
         } catch (Exception ex) {
@@ -50,20 +47,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         }
     }
 
-    public boolean editRawMaterial(String id, String SKU, String name, String category, String description, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
+    public boolean editRawMaterial(String id, String SKU, String name, String category, String description) {
         System.out.println("editRawMaterial() called with SKU:" + SKU);
         try {
             RawMaterialEntity i = em.find(RawMaterialEntity.class, Long.valueOf(id));
             i.setName(name);
             i.setCategory(category);
             i.setDescription(description);
-            i.setLotSize(lotSize);
-            i.setLeadTime(leadTime);
-            i.setCostPrice(price);
-            i.getSupplier().getItems().remove(i);
-            SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
-            i.setSupplier(supplier1);
-            supplier1.getItems().add(i);
             em.flush();
             System.out.println("\nServer updated raw material:\n" + name);
             return true;
@@ -191,16 +181,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price, Long supplierId) {
+    public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addRetailProduct() called with SKU:" + SKU);
         try {
-            RetailProductEntity retailProductEntity = new RetailProductEntity(SKU, name, category, description, imageURL, _length, width, height, lotSize, leadTime, price);
-            supplier = em.find(SupplierEntity.class, supplierId);
-            retailProductEntity.setSupplier(supplier);
+            RetailProductEntity retailProductEntity = new RetailProductEntity(SKU, name, category, description, imageURL, _length, width, height);
             em.persist(retailProductEntity);
             em.flush();
             em.merge(retailProductEntity);
-            supplier.getItems().add(retailProductEntity);
             System.out.println("Retail product name \"" + name + "\" added successfully.");
             return true;
         } catch (Exception ex) {
@@ -210,7 +197,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
-    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL, Integer lotSize, Integer leadTime, Double costPrice, Long supplierId) {
+    public boolean editRetailProduct(String id, String SKU, String name, String category, String description, String imageURL) {
         System.out.println("editRetailProduct() called with SKU:" + SKU);
         try {
             RetailProductEntity i = em.find(RetailProductEntity.class, Long.valueOf(id));
@@ -218,13 +205,6 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             i.setCategory(category);
             i.setDescription(description);
             i.setImageURL(imageURL);
-            i.setLotSize(lotSize);
-            i.setLeadTime(leadTime);
-            i.setCostPrice(costPrice);
-            i.getSupplier().getItems().remove(i);
-            SupplierEntity supplier1 = em.getReference(SupplierEntity.class, supplierId);
-            i.setSupplier(supplier1);
-            supplier1.getItems().add(i);
             em.flush();
             System.out.println("\nServer updated retail product:\n" + name);
             return true;
@@ -767,7 +747,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public List<Item_CountryEntity> listAllCountryItemPricing() {
         System.out.println("listAllCountryItemPricing() called.");
         try {
-            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.isDeleted=false order by cip.country.name");
+            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.isDeleted=false order by cip.country.name ASC");
             List<Item_CountryEntity> listOfCountryItemPricing = q.getResultList();
             System.out.println("listAllCountryItemPricing(): Successful");
             return listOfCountryItemPricing;
@@ -837,6 +817,122 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("getItemPricing(): Failed to retrieve item pricing.");
+            return null;
+        }
+    }
+
+    @Override
+    public ReturnHelper addSupplierItemInfo(String SKU, Long supplierId, Double costPrice, Integer lotSize, Integer leadTime) {
+        //can only have one item price per country
+        System.out.println("addSupplierItemInfo() called.");
+        ReturnHelper helper = new ReturnHelper();
+        try {
+            Query q = em.createQuery("Select s from Supplier_ItemEntity s where s.item.SKU=:SKU and s.supplier.id=:supplierId and s.isDeleted=false");
+            q.setParameter("SKU", SKU);
+            q.setParameter("supplierId", supplierId);
+            List<Supplier_ItemEntity> list = q.getResultList();
+            if (list.isEmpty()) {
+                Supplier_ItemEntity supplierItemInfo = new Supplier_ItemEntity();
+                supplierItemInfo.setItem(getItemBySKU(SKU));
+                SupplierEntity supplier = em.find(SupplierEntity.class, supplierId);
+                supplierItemInfo.setSupplier(supplier);
+                supplierItemInfo.setCostPrice(costPrice);
+                supplierItemInfo.setLotSize(lotSize);
+                supplierItemInfo.setLeadTime(leadTime);
+                em.persist(supplierItemInfo);
+                em.flush();
+
+                System.out.println("addSupplierItemInfo(): Successfully added.");
+
+                helper.setMessage("Record Added Successfully");
+                helper.setIsSuccess(true);
+                return helper;
+            } else {
+                helper.setMessage("This record already exists. Please check the list.");
+                helper.setIsSuccess(false);
+                return helper;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("addSupplierItemInfo(): Failed to add.");
+            helper.setMessage("Failed to add.");
+            helper.setIsSuccess(false);
+            return helper;
+        }
+    }
+
+    @Override
+    public ReturnHelper removeSupplierItemInfo(Long supplierItemId) {
+        System.out.println("removeSupplierItemInfo() called.");
+        ReturnHelper helper = new ReturnHelper();
+        try {
+            Supplier_ItemEntity supplierItemInfo = em.find(Supplier_ItemEntity.class, supplierItemId);
+            supplierItemInfo.setIsDeleted(true);
+            System.out.println("removeSupplierItemInfo(): Successful.");
+
+            helper.setMessage("Record removed successfully.");
+            helper.setIsSuccess(true);
+            return helper;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("removeSupplierItemInfo(): Failed to remove record.");
+            helper.setMessage("Failed to remove record.");
+            helper.setIsSuccess(false);
+            return helper;
+        }
+    }
+
+    @Override
+    public ReturnHelper editSupplierItemInfo(Long supplierItemId, Double costPrice, Integer lotSize, Integer leadTime) {
+        System.out.println("editSupplierItemInfo() called.");
+        ReturnHelper helper = new ReturnHelper();
+        try {
+            Supplier_ItemEntity supplierItemInfo = em.find(Supplier_ItemEntity.class, supplierItemId);
+            supplierItemInfo.setCostPrice(costPrice);
+            supplierItemInfo.setLotSize(lotSize);
+            supplierItemInfo.setLeadTime(leadTime);
+            em.merge(supplierItemInfo);
+            em.flush();
+
+            System.out.println("editSupplierItemInfo(): Successful.");
+
+            helper.setMessage("Record updated successfully.");
+            helper.setIsSuccess(true);
+            return helper;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("editSupplierItemInfo(): Failed to update record.");
+            helper.setMessage("Failed to update record.");
+            helper.setIsSuccess(false);
+            return helper;
+        }
+    }
+
+    @Override
+    public Supplier_ItemEntity getSupplierItemInfo(Long supplierItemId) {
+        System.out.println("getSupplierItemInfo() called.");
+        try {
+            Supplier_ItemEntity supplierItemInfo = em.find(Supplier_ItemEntity.class, supplierItemId);
+            System.out.println("getSupplierItemInfo(): Successful");
+            return supplierItemInfo;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("getSupplierItemInfo(): Failed to retrieve record.");
+            return null;
+        }
+    }
+
+    @Override
+    public List<Supplier_ItemEntity> listAllSupplierItemInfo() {
+        System.out.println("listAllSupplierItemInfo() called.");
+        try {
+            Query q = em.createQuery("Select s from Supplier_ItemEntity s where s.isDeleted=false order by s.supplier.id ASC");
+            List<Supplier_ItemEntity> listOfSupplierItemInfo = q.getResultList();
+            System.out.println("listAllSupplierItemInfo(): Successful");
+            return listOfSupplierItemInfo;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllSupplierItemInfo(): Failed to retrieve list.");
             return null;
         }
     }

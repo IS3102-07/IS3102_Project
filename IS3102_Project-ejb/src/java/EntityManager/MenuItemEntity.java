@@ -10,7 +10,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
 @Entity
-public class FurnitureEntity extends ItemEntity implements Serializable {
+public class MenuItemEntity extends ItemEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -24,15 +24,13 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     private String description;
     @Lob
     private String imageURL;
-    @OneToOne(cascade = {CascadeType.REMOVE}, mappedBy = "furniture")
-    private ProductGroupLineItemEntity productGroupLineItem;
-    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "furniture")
-    private BillOfMaterialEntity BOM;
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "menuItem")
+    private RecipeEntity recipe;
 
-    public FurnitureEntity() {
+    public MenuItemEntity() {
     }
 
-    public FurnitureEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
+    public MenuItemEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         super(SKU, _length, width, height);
         this.name = name;
         super.setName(name);
@@ -47,16 +45,16 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
         return super.getIsDeleted();
     }
 
+    public RecipeEntity getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(RecipeEntity recipe) {
+        this.recipe = recipe;
+    }
+
     public void setIsDeleted(Boolean isDeleted) {
         super.setIsDeleted(isDeleted);
-    }
-
-    public ProductGroupLineItemEntity getProductGroupLineItem() {
-        return productGroupLineItem;
-    }
-
-    public void setProductGroupLineItem(ProductGroupLineItemEntity productGroupLineItem) {
-        this.productGroupLineItem = productGroupLineItem;
     }
 
     public Long getId() {
@@ -102,10 +100,10 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FurnitureEntity)) {
+        if (!(object instanceof MenuItemEntity)) {
             return false;
         }
-        FurnitureEntity other = (FurnitureEntity) object;
+        MenuItemEntity other = (MenuItemEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -114,7 +112,7 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "entityManagerBean.Furniture[ id=" + id + " ]";
+        return "entityManagerBean.MenuItem[ id=" + id + " ]";
     }
 
     /**
@@ -129,14 +127,6 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
      */
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public BillOfMaterialEntity getBOM() {
-        return BOM;
-    }
-
-    public void setBOM(BillOfMaterialEntity BOM) {
-        this.BOM = BOM;
     }
 
 }

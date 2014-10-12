@@ -25,21 +25,17 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     private String description;
     @Lob
     private String imageURL;
-    private Integer lotSize;
-    private Integer leadTime;
 
     public RetailProductEntity() {
     }
 
-    public RetailProductEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height, Integer lotSize, Integer leadTime, Double price) {
-        super(SKU, _length, width, height, price);
+    public RetailProductEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
+        super(SKU, _length, width, height);
         this.name = name;
         super.setName(name);
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
-        this.lotSize = lotSize;
-        this.leadTime = leadTime;
         super.setType("Retail Product");
         super.setIsDeleted(false);
     }
@@ -135,33 +131,4 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    /**
-     * @return the lotSize
-     */
-    public Integer getLotSize() {
-        return lotSize;
-    }
-
-    /**
-     * @param lotSize the lotSize to set
-     */
-    public void setLotSize(Integer lotSize) {
-        this.lotSize = lotSize;
-    }
-
-    /**
-     * @return the leadTime
-     */
-    public Integer getLeadTime() {
-        return leadTime;
-    }
-
-    /**
-     * @param leadTime the leadTime to set
-     */
-    public void setLeadTime(Integer leadTime) {
-        this.leadTime = leadTime;
-    }
-
 }

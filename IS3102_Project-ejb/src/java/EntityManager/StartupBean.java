@@ -71,6 +71,12 @@ public class StartupBean {
                 roleEntity = new RoleEntity();
                 roleEntity.create("Cashier", "Facility");
                 em.persist(roleEntity);
+                roleEntity = new RoleEntity();
+                roleEntity.create("Receptionist", "Facility");
+                em.persist(roleEntity);
+                roleEntity = new RoleEntity();
+                roleEntity.create("Global Manager", "Organization");
+                em.persist(roleEntity);
                 System.out.println("RolesEntity init success.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of roles:\n" + ex);
@@ -120,6 +126,12 @@ public class StartupBean {
                 country.setExchangeRate(1.0);
                 country.setName("United States");
                 em.persist(country);
+                country = new CountryEntity();
+                country.setCountryCode(86);
+                country.setCurrency("CN");
+                country.setExchangeRate(0.16);
+                country.setName("China");
+                em.persist(country);
                 sopBean.createSchedule(2013, 1, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2013, 2, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2013, 3, 5, 5, 5, 5, 0);
@@ -153,6 +165,9 @@ public class StartupBean {
                 RegionalOfficeEntity regionalOfficeEntity;
                 regionalOfficeEntity = new RegionalOfficeEntity();
                 regionalOfficeEntity.create("Asia Pacific Regional Office", "33 Jurong Town Hall Road #05-34", "61234563", "APACRO@if.com");
+                em.persist(regionalOfficeEntity);
+                regionalOfficeEntity = new RegionalOfficeEntity();
+                regionalOfficeEntity.create("Middle East Regional Office", "33 Dubai Lane", "686351234563", "MERO@if.com");
                 em.persist(regionalOfficeEntity);
                 //Create manufacturing facility & its warehouse
                 ManufacturingFacilityEntity manufacturingFacilityEntity;
@@ -231,7 +246,9 @@ public class StartupBean {
             }
             try {
                 //Create supplier
-                SupplierEntity supplierEntity = new SupplierEntity("Supplier 1", "67911580", "supplier1@email.com", "231 Bukit Panjang Road");
+                q = em.createQuery("SELECT t FROM RegionalOfficeEntity t where t.name='Asia Pacific Regional Office'");
+                RegionalOfficeEntity regionalOfficeEntity = (RegionalOfficeEntity) q.getSingleResult();
+                SupplierEntity supplierEntity = new SupplierEntity("Supplier 1", "67911580", "supplier1@email.com", "231 Bukit Panjang Road", regionalOfficeEntity);
                 CountryEntity country = new CountryEntity();
                 country.setCountryCode(12);
                 country.setCurrency("BN");
@@ -240,10 +257,20 @@ public class StartupBean {
                 em.persist(country);
                 supplierEntity.setCountry(country);
                 em.persist(supplierEntity);
+                regionalOfficeEntity.getSuppliers().add(supplierEntity);
+                em.merge(regionalOfficeEntity);
 
-                supplierEntity = new SupplierEntity("Supplier 2", "67911432", "supplier2@email.com", "3 Dover Road");
+                supplierEntity = new SupplierEntity("Supplier 2", "67911432", "supplier2@email.com", "3 Dover Road", regionalOfficeEntity);
                 supplierEntity.setCountry(country);
                 em.persist(supplierEntity);
+                regionalOfficeEntity.getSuppliers().add(supplierEntity);
+                em.merge(regionalOfficeEntity);
+
+                supplierEntity = new SupplierEntity("Supplier 3", "67911433", "supplier3@email.com", "3 Bukit Timah Road", regionalOfficeEntity);
+                supplierEntity.setCountry(country);
+                em.persist(supplierEntity);
+                regionalOfficeEntity.getSuppliers().add(supplierEntity);
+                em.merge(regionalOfficeEntity);
                 System.out.println("Created supplierEntity.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of supplierEntity:\n" + ex);
@@ -262,18 +289,15 @@ public class StartupBean {
             em.persist(furnitureEntity);
             furnitureEntity = new FurnitureEntity("F3", "Table 2", "Tables & Desks", "The table top in tempered glass is stain resistant and easy to clean. Adjustable feet make the table stand steady also on uneven floors.", "imageURL", 99, 71, 52);
             em.persist(furnitureEntity);
-            RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1, 100, 1, 50.0);
-            SupplierEntity supplierEntity = new SupplierEntity("Supplier 3", "67911433", "supplier3@email.com", "3 Bukit Timah Road");
-            CountryEntity country = new CountryEntity();
-            country.setCountryCode(86);
-            country.setCurrency("CN");
-            country.setExchangeRate(0.16);
-            country.setName("China");
-            em.persist(country);
-            supplierEntity.setCountry(country);
-            em.persist(supplierEntity);
-            rawMaterialEntity.setSupplier(supplierEntity);
+            RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
             em.persist(rawMaterialEntity);
+            //Set lead time, lot size, price
+            Query q = em.createQuery("select t from SupplierEntity t where t.supplierName='Supplier 1'");
+            SupplierEntity supplierEntity = (SupplierEntity) q.getSingleResult();
+            Supplier_ItemEntity supplier_ItemEntity = new Supplier_ItemEntity(rawMaterialEntity, supplierEntity, 100.0, 1, 1);
+            em.persist(supplier_ItemEntity);
+            //Tie it to a suppliier
+            supplierEntity.getSupplyingItems().add(supplier_ItemEntity);
             System.out.println("Created item entities.");
         } catch (Exception ex) {
             System.out.println("Skipping creating of item entities:\n" + ex);

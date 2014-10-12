@@ -244,7 +244,7 @@
                         <a href="../DemandManagement_index_GET/*">Demand Management</a>
                     </li>
                     <li>
-                        <a href="#">Manufacturing Requirement Planning</a>
+                        <a href="../MRP_index_GET/*">Manufacturing Requirement Planning</a>
                     </li>
                 </ul>
             </li>

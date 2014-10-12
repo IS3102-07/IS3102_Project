@@ -1,3 +1,4 @@
+
 package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
@@ -9,39 +10,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RetailProductManagement_AddRetailProductServlet extends HttpServlet {
-
+public class SupplierItemInfoManagement_RemoveSupplierItemInfoServlet extends HttpServlet {
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
-    String result;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            String SKU = request.getParameter("SKU");
-            String name = request.getParameter("name");
-            String category = request.getParameter("category");
-            String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
-            Integer _length = Integer.parseInt(request.getParameter("length"));
-            Integer width = Integer.parseInt(request.getParameter("width"));
-            Integer height = Integer.parseInt(request.getParameter("height"));
-            String source = request.getParameter("source");
-
-            if (!itemManagementBean.checkSKUExists(SKU)) {
-                itemManagementBean.addRetailProduct(SKU, name, category, description, imageURL, _length, width, height);
-                result = "?goodMsg=Retail Product with SKU: " + SKU + " has been created successfully.";
-                response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
-            } else {
-                result = "?errMsg=Failed to add retail product, SKU: " + SKU + " already exist.";
-                response.sendRedirect(source + result);
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (String deleteArr1 : deleteArr) {
+                    System.out.println(deleteArr1);
+                    itemManagementBean.removeSupplierItemInfo(Long.parseLong(deleteArr1));
+                }
+                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             }
         } catch (Exception ex) {
             out.println(ex);
-        } finally {
-            out.close();
+            response.sendRedirect("A6/supplierItemInfoManagement.jsp?errMsg=An error has occured, please try again.");
         }
     }
 

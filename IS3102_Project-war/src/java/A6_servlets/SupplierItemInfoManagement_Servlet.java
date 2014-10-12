@@ -1,51 +1,60 @@
 package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.SupplierEntity;
+import EntityManager.Supplier_ItemEntity;
+import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class RetailProductManagement_AddRetailProductServlet extends HttpServlet {
+public class SupplierItemInfoManagement_Servlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
-    String result;
+    @EJB
+    private SupplierManagementBeanLocal supplierManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String SKU = request.getParameter("SKU");
-            String name = request.getParameter("name");
-            String category = request.getParameter("category");
-            String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
-            Integer _length = Integer.parseInt(request.getParameter("length"));
-            Integer width = Integer.parseInt(request.getParameter("width"));
-            Integer height = Integer.parseInt(request.getParameter("height"));
-            String source = request.getParameter("source");
+            HttpSession session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+            List<Supplier_ItemEntity> listOfSupplierItemInfo = itemManagementBean.listAllSupplierItemInfo();
+            session.setAttribute("listOfSupplierItemInfo", listOfSupplierItemInfo);
+            List<String> listOfSKUs = itemManagementBean.listAllItemsSKU();
+            session.setAttribute("listOfSKUs", listOfSKUs);
+            List<SupplierEntity> listOfSuppliers =  supplierManagementBean.viewAllSupplierList();
+            session.setAttribute("listOfSuppliers", listOfSuppliers);
 
-            if (!itemManagementBean.checkSKUExists(SKU)) {
-                itemManagementBean.addRetailProduct(SKU, name, category, description, imageURL, _length, width, height);
-                result = "?goodMsg=Retail Product with SKU: " + SKU + " has been created successfully.";
-                response.sendRedirect("RetailProductManagement_RetailProductServlet" + result);
-            } else {
-                result = "?errMsg=Failed to add retail product, SKU: " + SKU + " already exist.";
-                response.sendRedirect(source + result);
+            if (errMsg == null && goodMsg == null) {
+                response.sendRedirect("A6/supplierItemInfoManagement.jsp");
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A6/supplierItemInfoManagement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A6/supplierItemInfoManagement.jsp?goodMsg=" + goodMsg);
+                }
             }
         } catch (Exception ex) {
-            out.println(ex);
-        } finally {
-            out.close();
+            out.println("\n\n " + ex.getMessage());
+            response.sendRedirect("A6/supplierItemInfoManagement.jsp?errMsg=An error has occured, please try again.");
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
