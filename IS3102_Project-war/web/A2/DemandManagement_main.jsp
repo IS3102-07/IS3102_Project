@@ -15,7 +15,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Production Plan Distribution</h1>
+                            <h1 class="page-header">Demand Management</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-dashboard"></i>  <a href="#">Sales Forecast</a>
@@ -30,17 +30,13 @@
                         select {
                             max-width: 300px;
                         }
-                    </style>    
-                                        
-                    <br><br>
+                    </style>                        
 
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-
-                                    <a href="../PPD_main_POST/*"><button class="btn btn-primary">Distribute Production Plan</button></a>
-
+                                <div class="panel-heading">                                    
+                                    <b>Master Production Plan</b>
                                 </div>
                                 <div class="panel-body">
 

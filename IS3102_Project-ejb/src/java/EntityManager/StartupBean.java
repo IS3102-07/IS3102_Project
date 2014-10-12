@@ -141,7 +141,7 @@ public class StartupBean {
                 sopBean.createSchedule(2014, 7, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2014, 8, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2014, 9, 5, 5, 5, 5, 0);
-                sopBean.createSchedule(2014, 10, 5, 5, 5, 5, 0);                
+                sopBean.createSchedule(2014, 10, 5, 5, 5, 5, 0);
 
                 System.out.println("Created country & schedule entities.");
             } catch (Exception ex) {
@@ -252,8 +252,7 @@ public class StartupBean {
         } catch (Exception ex) {
             System.out.println("Skipped init of database:\n" + ex);
             ex.printStackTrace();
-        }                
-
+        }
 
         try {
             //Create item
@@ -278,6 +277,47 @@ public class StartupBean {
             System.out.println("Created item entities.");
         } catch (Exception ex) {
             System.out.println("Skipping creating of item entities:\n" + ex);
+            ex.printStackTrace();
+        }
+
+        try {
+            Query q1 = em.createQuery("select s from StoreEntity s");
+            List<StoreEntity> storeList = (List<StoreEntity>) q1.getResultList();
+            Query q2 = em.createQuery("select pg from ProductGroupEntity pg");
+            List<ProductGroupEntity> productGroupList = (List<ProductGroupEntity>) q2.getResultList();
+            Query q3 = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = (List<MonthScheduleEntity>) q3.getResultList();
+
+            int index = 1;
+            for (StoreEntity store : storeList) {
+                for (ProductGroupEntity productGroup : productGroupList) {
+                    for (MonthScheduleEntity schedule : scheduleList) {
+                        try {
+                            SalesFigureEntity saleFigure = new SalesFigureEntity();
+                            saleFigure.setStore(store);
+                            saleFigure.setProductGroup(productGroup);
+                            saleFigure.setSchedule(schedule);
+
+                            if ((index % 5) == 0) {
+                                saleFigure.setQuantity(20);
+                            } else if ((index % 5) == 1) {
+                                saleFigure.setQuantity(25);
+                            } else if ((index % 5) == 2) {
+                                saleFigure.setQuantity(35);
+                            } else if ((index % 5) == 3) {
+                                saleFigure.setQuantity(40);
+                            } else {
+                                saleFigure.setQuantity(30);
+                            }
+                            index++;
+                            em.persist(saleFigure);
+                        } catch (Exception ex) {
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

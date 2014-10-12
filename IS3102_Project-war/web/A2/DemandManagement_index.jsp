@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <form action="../SaleAndOperationPlanning_Servlet/sop_index_Post">
+                                    <form action="../DemandManagement_index_POST/*">
                                         <div class="form-group">
                                             <label for="select_regionalOffice">Regional Office</label>
                                             <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">

@@ -31,7 +31,7 @@ public class DemandManagement_index_POST extends HttpServlet {
         
         System.out.println("servlet DemandManagement_index_POST is called");
         
-        String nextPage = "/A2/DemandManagement_index";
+        String nextPage = "/DemandManagement_main_GET/*";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;        
         HttpSession session = request.getSession();
