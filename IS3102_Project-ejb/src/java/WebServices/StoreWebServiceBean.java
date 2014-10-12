@@ -38,8 +38,8 @@ public class StoreWebServiceBean {
     }
 
     @WebMethod
-    public Item_CountryEntity getItemCountryBySKU(@WebParam(name = "SKU") String SKU, @WebParam(name = "storeID") Long storeID) {
-        System.out.println("getItemCountryBySKU() called.");
+    public Double getItemCountryPriceBySKU(@WebParam(name = "SKU") String SKU, @WebParam(name = "storeID") Long storeID) {
+        System.out.println("getItemCountryPriceBySKU() called.");
         try {
             ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
             if (itemEntity == null) {
@@ -55,19 +55,16 @@ public class StoreWebServiceBean {
             // Retrieve the item_CountryEntity for that country
             Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
             item_CountryEntity = ItemManagementBeanLocal.getItemPricing(countryEntity.getId(), SKU);
-            return item_CountryEntity;
-        } catch (Exception ex) {
-            System.out.println("getItemCountryBySKU(): Failed");
+            return item_CountryEntity.getRetailPrice();
+        } catch (NullPointerException ex) {
+            System.out.println("getItemCountryPriceBySKU(): Pricing for this item is not available.");
+            return null;
+        }catch (Exception ex) {
+            System.out.println("getItemCountryPriceBySKU(): Failed");
             ex.printStackTrace();
             return null;
         }
 
-    }
-
-    @WebMethod
-    public Integer getMemberLoyaltyPointsAmount(@WebParam(name = "email") String email) {
-        Integer loyaltyPointsAmt = LoyaltyAndRewardsBeanLocal.getMemberLoyaltyPointsAmount(email);
-        return loyaltyPointsAmt;
     }
 
     @WebMethod
