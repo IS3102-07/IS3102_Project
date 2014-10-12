@@ -96,7 +96,7 @@ public class StartupBean {
                 roles.add(roleEntity);
                 staffEntity.setRoles(roles);
                 em.persist(staffEntity);
-                System.out.println("Created administrator with ID:a@a and PW:admin.");
+                System.out.println("Created administrator with ID:admin@if.com and PW:admin.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of administrator account:\n" + ex);
                 ex.printStackTrace();
@@ -115,7 +115,7 @@ public class StartupBean {
                 memberEntity.create("Superman", "Block 984 Batman Drive B2-95", new Date(), "superman@if.com", "999", null, "Unknown City", "006120", passwordHash, passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
                 em.persist(memberEntity);
-                System.out.println("Created administrator with ID:a@a and PW:admin.");
+                System.out.println("Created member with ID:member@if.com and PW:member.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of administrator account:\n" + ex);
                 ex.printStackTrace();
