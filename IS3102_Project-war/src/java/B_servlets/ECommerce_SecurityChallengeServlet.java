@@ -1,6 +1,7 @@
 package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
 import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,41 +12,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ECommerce_MemberEditProfileServlet extends HttpServlet {
+public class ECommerce_SecurityChallengeServlet extends HttpServlet {
 
     @EJB
-    private AccountManagementBeanLocal accountManagementBean;
+    private SystemSecurityBeanLocal systemSecurityBean;
     private String result;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         try {
-            System.out.println("ECommerce_MemberEditProfileServlet:");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            
-            String name = request.getParameter("name");
-            String phone = request.getParameter("phone");
-            String id = request.getParameter("id");
-            String address = request.getParameter("address");
-            String securityQuestion = request.getParameter("securityQuestion");
-            String securityAnswer = request.getParameter("securityAnswer");
-
-            boolean test = accountManagementBean.editMember(Long.valueOf(id), null, name, address, email, phone, null, null, null, password, Integer.valueOf(securityQuestion), securityAnswer);
-
             HttpSession session;
             session = request.getSession();
-            MemberEntity memberEntity = accountManagementBean.getMemberByEmail(email);
-            session.setAttribute("member", memberEntity);
-            
-            if (test) {
-                result = "Account updated successfully.";
-                response.sendRedirect("B/memberProfile.jsp?goodMsg=" + result);
+            String email = request.getParameter("email");
+
+            boolean ifExist = accountManagementBean.checkMemberEmailExists(email);
+            if (ifExist) {                
+                MemberEntity member = accountManagementBean.getMemberByEmail(email);
+                session.setAttribute("member", member);
+                response.sendRedirect("./B/forgotPasswordSecurity.jsp?email=" + result);
+            } else {
+                result = "?errMsg=Staff email does not exist.";
+                response.sendRedirect("./B/forgotPassword.jsp" + result);
             }
         } catch (Exception ex) {
-            out.println(ex);
-            ex.printStackTrace();
+            System.out.println(ex);
+        } finally {
+            System.out.close();
         }
     }
 

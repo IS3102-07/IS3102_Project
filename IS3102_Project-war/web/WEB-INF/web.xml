@@ -530,6 +530,10 @@
         <servlet-class>B_servlets.ECommerce_AddFurnitureToListServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_ActivateMemberServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ActivateMemberServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_PromotionServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_PromotionServlet</servlet-class>
     </servlet>
@@ -654,6 +658,10 @@
         <servlet-class>B_servlets.ECommerce_RemoveItemFromListServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_ResetPasswordServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_UnsubscribeServlet</servlet-class>
     </servlet>
@@ -760,6 +768,18 @@
     <servlet>
         <servlet-name>A2/MRP_main</servlet-name>
         <jsp-file>/A2/MRP_main.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_SendResetPasswordServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_SendResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_SecurityChallengeServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_SecurityChallengeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MRP_purchaseOrder</servlet-name>
+        <servlet-class>A2_servlets.MRP_purchaseOrder</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -1290,6 +1310,10 @@
         <url-pattern>/ECommerce_AddFurnitureToListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ECommerce_ActivateMemberServlet</servlet-name>
+        <url-pattern>/ECommerce_ActivateMemberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ECommerce_PromotionServlet</servlet-name>
         <url-pattern>/ECommerce_PromotionServlet</url-pattern>
     </servlet-mapping>
@@ -1466,6 +1490,10 @@
         <url-pattern>/ECommerce_RemoveItemFromListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ECommerce_ResetPasswordServlet</servlet-name>
+        <url-pattern>/ECommerce_ResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
         <url-pattern>/ECommerce_UnsubscribeServlet</url-pattern>
     </servlet-mapping>
@@ -1520,6 +1548,18 @@
     <servlet-mapping>
         <servlet-name>A2/MRP_main</servlet-name>
         <url-pattern>/A2/MRP_main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_SendResetPasswordServlet</servlet-name>
+        <url-pattern>/ECommerce_SendResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_SecurityChallengeServlet</servlet-name>
+        <url-pattern>/ECommerce_SecurityChallengeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MRP_purchaseOrder</servlet-name>
+        <url-pattern>/MRP_purchaseOrder/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

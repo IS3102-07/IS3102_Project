@@ -1,6 +1,7 @@
 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
+<%@page import="EntityManager.MemberEntity"%>
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
@@ -39,9 +40,13 @@
                     </div>
                 </div>
             </section>
+            <%
+                MemberEntity member = (MemberEntity) (session.getAttribute("member"));
+            %>
             <div class="container">
                 <jsp:include page="../displayMessageLong.jsp" />
                 <%
+                    String email = request.getParameter("email");
                     String errMsg = request.getParameter("errMsg");
                     String goodMsg = request.getParameter("goodMsg");
                     if (errMsg == null && goodMsg == null) {
@@ -63,12 +68,30 @@
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Forgot Password</h4>
-                                        <form action="../ECommerce_SecurityChallengeServlet">
+                                        <h5>Security Challenge Question</h5>
+                                        <form action="../ECommerce_SendResetPasswordServlet">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">
-                                                        <label>Enter your email</label>
-                                                        <input type="email" name="email" class="form-control input-lg" required>
+                                                        <label>Security Question</label>
+                                                        <%
+                                                            if (member.getSecurityQuestion() == 1) {
+                                                                out.println("What is your mother's maiden name?");
+                                                            } else if (member.getSecurityQuestion() == 2) {
+                                                                out.println("What is your first pet's name?");
+                                                            } else if (member.getSecurityQuestion() == 3) {
+                                                                out.println("What is your favourite animal?");
+                                                            }
+
+                                                        %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label>Security Answer</label>
+                                                        <input type="text" name="securityAnswer" class="form-control input-lg" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,6 +99,7 @@
                                                 <div class="col-md-12">
                                                     <input type="submit" value="Submit" class="btn btn-primary pull-right push-bottom">
                                                 </div>
+                                                <input type="hidden" value="<%=member.getEmail()%>" name="email"/>
                                             </div>
                                         </form>
                                     </div>

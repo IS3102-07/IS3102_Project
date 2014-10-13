@@ -18,7 +18,7 @@ public interface AccountManagementBeanLocal {
     
     public MemberEntity getMemberByEmail(String email);
 
-    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password);
+    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password, Integer securityQuestion, String securityAnswer);
 
     public MemberEntity loginMember(String email, String password);
 
@@ -37,6 +37,8 @@ public interface AccountManagementBeanLocal {
     public boolean editStaff(String callerStaffID, Long staffID, String phone, String password, String address);
     
     public boolean resetStaffPassword(String email, String password);
+    
+    public boolean resetMemberPassword(String email, String password);
 
     public boolean removeStaff(String callerStaffID, Long staffID);
 

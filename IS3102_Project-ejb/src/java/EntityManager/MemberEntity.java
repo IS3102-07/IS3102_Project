@@ -51,6 +51,8 @@ public class MemberEntity implements Serializable {
     private String unlockCode;
     private String passwordReset;
     private Boolean isDeleted;
+    private Integer securityQuestion;
+    private String securityAnswer;
 
     @OneToOne(cascade = {CascadeType.ALL})
     private ShoppingListEntity shoppingList;
@@ -357,7 +359,20 @@ public class MemberEntity implements Serializable {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-
+    
+    public void setSecurityQuestion(Integer securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+    public Integer getSecurityQuestion() {
+        return this.securityQuestion;
+    }
+    
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
+    }
+    public String getSecurityAnswer() {
+        return this.securityAnswer;
+    }
     /**
      * @return the feedback
      */

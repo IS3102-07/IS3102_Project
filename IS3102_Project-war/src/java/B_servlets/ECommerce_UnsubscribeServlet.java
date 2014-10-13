@@ -26,7 +26,9 @@ public class ECommerce_UnsubscribeServlet extends HttpServlet {
             Boolean flag = customerInformationManagementBean.removeFromSubscription(email);
             
             if (flag) {
-                
+                response.sendRedirect("B/index.jsp");
+            } else {
+                response.sendRedirect("B/index.jsp");
             }
             
         } catch (Exception ex) {

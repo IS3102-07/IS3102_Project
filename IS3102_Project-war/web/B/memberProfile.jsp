@@ -52,12 +52,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Set Challenge Question</label>
-                                        <select name="challenge">
+                                        <select name="securityQuestion">
                                             <option value="1">What is your mother's maiden name?</option>
                                             <option value="2">What is your first pet's name?</option>
-                                            <option value="1">What is your favourite animal?</option>
+                                            <option value="3">What is your favourite animal?</option>
                                         </select>
-                                        <input class="form-control" type="text" required="true" name="address" value="<%if (member.getAddress() == null){out.println("");} else { out.println(member.getAddress()); }%>">
+                                        <input class="form-control" type="text" required="true" name="securityAnswer" value="<%if (member.getSecurityAnswer() == null){out.println("");} else { out.println(member.getSecurityAnswer()); }%>">
                                     </div>
                                     <hr class="more-spaced "/>
                                     <h4>Change Password</h4>

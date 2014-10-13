@@ -100,7 +100,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password) {
+    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password, Integer securityQuestion, String securityAnswer) {
         System.out.println("editMember() called with memberID:" + memberID);
 
         String passwordSalt = generatePasswordSalt();
@@ -117,6 +117,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 memberEntity.setCountry(country);
                 memberEntity.setCity(city);
                 memberEntity.setZipCode(zipCode);
+                memberEntity.setSecurityQuestion(securityQuestion);
+                memberEntity.setSecurityAnswer(securityAnswer);
                 if (!password.isEmpty()) {
                     memberEntity.setPasswordSalt(passwordSalt);
                 }
@@ -768,6 +770,31 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    public boolean resetMemberPassword(String email, String password) {
+        System.out.println("resetMemberPassword() called with:" + email);
+        String passwordSalt = generatePasswordSalt();
+        String passwordHash = generatePasswordHash(passwordSalt, password);
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            for (Object o : q.getResultList()) {
+                MemberEntity i = (MemberEntity) o;
+                if (i.getEmail().equalsIgnoreCase(email)) {
+                    i.setPasswordHash(passwordHash);
+                    i.setPasswordSalt(passwordSalt);
+                    i.setAccountLockStatus(false);
+                    em.merge(i);
+                    System.out.println("Member \"" + email + "\" changed password successful as id:");
+                    return true;
+                }
+            }
+            System.out.println("MemberEntity \"" + email + "\" failed to change password as id:");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("MemberEntity \"" + email + "\" failed to change password as id:");
+            ex.printStackTrace();
+            return false;
+        }
+    }
     // Uses supplied salt and password to generate a hashed password
     public String generatePasswordHash(String salt, String password) {
         String passwordHash = null;

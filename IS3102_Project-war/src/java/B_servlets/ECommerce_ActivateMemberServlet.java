@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.MemberEntity;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -11,40 +16,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ECommerce_MemberEditProfileServlet extends HttpServlet {
+public class ECommerce_ActivateMemberServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    private String result;
+    @EJB
+    private SystemSecurityBeanLocal systemSecurityBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         try {
-            System.out.println("ECommerce_MemberEditProfileServlet:");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            
-            String name = request.getParameter("name");
-            String phone = request.getParameter("phone");
-            String id = request.getParameter("id");
-            String address = request.getParameter("address");
-            String securityQuestion = request.getParameter("securityQuestion");
-            String securityAnswer = request.getParameter("securityAnswer");
-
-            boolean test = accountManagementBean.editMember(Long.valueOf(id), null, name, address, email, phone, null, null, null, password, Integer.valueOf(securityQuestion), securityAnswer);
-
             HttpSession session;
             session = request.getSession();
-            MemberEntity memberEntity = accountManagementBean.getMemberByEmail(email);
-            session.setAttribute("member", memberEntity);
-            
-            if (test) {
-                result = "Account updated successfully.";
-                response.sendRedirect("B/memberProfile.jsp?goodMsg=" + result);
+
+            String email = request.getParameter("email");
+            String activateCode = request.getParameter("activateCode");
+
+            if (systemSecurityBean.activateMemberAccount(email, activateCode)) {
+                response.sendRedirect("B/memberLogin.jsp?goodMsg=Account activated successfully.");
+            } else {
+                response.sendRedirect("B/memberLogin.jsp?errMsg=Activation Failed. Email or activation code is invalid.");
             }
         } catch (Exception ex) {
-            out.println(ex);
+            response.sendRedirect("A1/error.jsp?errMsg=" + ex);
             ex.printStackTrace();
         }
     }
