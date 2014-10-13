@@ -2,6 +2,7 @@ package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,16 +24,15 @@ public class ECommerce_SendResetPasswordServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String email = request.getParameter("email");
+            String securityAnswer = request.getParameter("securityAnswer");
 
-            boolean ifExist = accountManagementBean.checkMemberEmailExists(email);
-            if (ifExist) {
+            MemberEntity member = accountManagementBean.getMemberByEmail(email);
+            if (securityAnswer == member.getSecurityAnswer()) {
                 systemSecurityBean.sendPasswordResetEmailForMember(email);
-                result = "?goodMsg=Send email successful. Please enter your activation code to reset your password.&email=" + email;
-                response.sendRedirect("./B/memberResetPassword.jsp" + result);
-            } else {
-                result = "?errMsg=Staff email does not exist.";
+                result = "?goodMsg=Send email successful." + email;
                 response.sendRedirect("./B/memberResetPassword.jsp" + result);
             }
+
         } catch (Exception ex) {
             System.out.println(ex);
         } finally {

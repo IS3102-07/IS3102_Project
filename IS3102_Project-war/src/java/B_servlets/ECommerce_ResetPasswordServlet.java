@@ -35,8 +35,8 @@ public class ECommerce_ResetPasswordServlet extends HttpServlet {
             String resetCode = request.getParameter("resetCode");
             String password = request.getParameter("password");
             
-            if (systemSecurityBean.validatePasswordResetForStaff(email, resetCode)) {
-                accountManagementBean.resetStaffPassword(email, password);
+            if (systemSecurityBean.validatePasswordResetForMember(email, resetCode) ) {
+                accountManagementBean.resetMemberPassword(email, password);
                 result = "?goodMsg=Reset Password Successful. Please login with your new password.";
                 response.sendRedirect("./A1/staffLogin.jsp" + result);
             } else {

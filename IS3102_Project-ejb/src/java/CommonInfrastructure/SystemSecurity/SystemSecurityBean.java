@@ -142,7 +142,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                         + "Here is your activation code to be keyed in in order to activate your member account :\n\n"
                         + "Email: " + email + "\n\n"
                         + "Activation Code: " + activationCode + "\n\n"
-                        + "Link to activate your member account: http://localhost:8080/IS3102_Project-war/A1/staffActivateAccount.jsp";
+                        + "Link to activate your member account: http://localhost:8080/IS3102_Project-war/B/memberActivateAccount.jsp";
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
