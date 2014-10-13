@@ -63,6 +63,7 @@
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Forgot Password</h4>
+                                        <h5>Security Challenge Question</h5>
                                         <form action="../ECommerce_SendResetPasswordServlet">
                                             <div class="row">
                                                 <div class="form-group">

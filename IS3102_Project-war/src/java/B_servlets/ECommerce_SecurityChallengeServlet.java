@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ECommerce_SendResetPasswordServlet extends HttpServlet {
+public class ECommerce_SecurityChallengeServlet extends HttpServlet {
 
     @EJB
     private SystemSecurityBeanLocal systemSecurityBean;

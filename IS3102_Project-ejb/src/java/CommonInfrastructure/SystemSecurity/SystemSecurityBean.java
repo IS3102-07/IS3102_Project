@@ -210,21 +210,21 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
     }
 
     public Boolean sendPasswordResetEmailForMember(String email) {
-        System.out.println("Server called sendPasswordResetEmailForMember():");
+        System.out.println("Server called sendPasswordResetEmailForStaff():");
         String passwordReset = "";
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity t");
-
             for (Object o : q.getResultList()) {
                 MemberEntity i = (MemberEntity) o;
                 if (i.getEmail().equalsIgnoreCase(email)) {
                     i.setPasswordReset();
                     em.merge(i);
-                    System.out.println("\nServer returns password reset code of member:\n" + passwordReset);
+                    passwordReset += i.getPasswordReset();
                 }
             }
         } catch (Exception ex) {
-            System.out.println("\nServer failed to update raw material:\n" + ex);
+            System.out.println("\nServer failed to get activation code of staff:\n" + ex);
+            return false;
         }
 
         try {
@@ -241,13 +241,13 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
             Message msg = new MimeMessage(session);
             if (msg != null) {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
-                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmailAddress, false));
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Password Reset");
                 String messageText = "Greetings from Island Furniture... \n\n"
-                        + "Here is your activation code to be keyed in in order to reset your staff account password :\n\n"
+                        + "Here is your activation code to be keyed in in order to reset your member account password :\n\n"
                         + "Email: " + email + "\n\n"
                         + "Activation Code: " + passwordReset + "\n\n"
-                        + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/A1/staffResetPasswordCode.jsp";
+                        + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/B/memberResetPasswordCode.jsp?email=" + email;
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
