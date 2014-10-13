@@ -2,7 +2,6 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ public abstract class ItemEntity implements Serializable {
     @Lob
     private String type;
     @OneToMany(mappedBy = "item", cascade = {CascadeType.ALL})
-    private Collection<Item_CountryEntity> itemCountryList;
+    private List<Item_CountryEntity> itemCountryList;
     @ManyToOne
     private WarehouseEntity warehouses;
     private Integer _length;
@@ -119,11 +118,11 @@ public abstract class ItemEntity implements Serializable {
         return "em.ItemEntity[ id=" + id + " ]";
     }
 
-    public Collection<Item_CountryEntity> getItemCountryList() {
+    public List<Item_CountryEntity> getItemCountryList() {
         return itemCountryList;
     }
 
-    public void setItemCountryList(Collection<Item_CountryEntity> itemCountry) {
+    public void setItemCountryList(List<Item_CountryEntity> itemCountry) {
         this.itemCountryList = itemCountry;
     }
 

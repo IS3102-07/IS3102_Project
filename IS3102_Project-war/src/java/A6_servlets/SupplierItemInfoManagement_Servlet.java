@@ -31,7 +31,7 @@ public class SupplierItemInfoManagement_Servlet extends HttpServlet {
             String goodMsg = request.getParameter("goodMsg");
             List<Supplier_ItemEntity> listOfSupplierItemInfo = itemManagementBean.listAllSupplierItemInfo();
             session.setAttribute("listOfSupplierItemInfo", listOfSupplierItemInfo);
-            List<String> listOfSKUs = itemManagementBean.listAllItemsSKU();
+            List<String> listOfSKUs = itemManagementBean.listAllItemsSKUForSupplier();
             session.setAttribute("listOfSKUs", listOfSKUs);
             List<SupplierEntity> listOfSuppliers =  supplierManagementBean.viewAllSupplierList();
             session.setAttribute("listOfSuppliers", listOfSuppliers);

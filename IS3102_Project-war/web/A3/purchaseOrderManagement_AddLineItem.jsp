@@ -1,4 +1,4 @@
-<%@page import="HelperClasses.ItemSupplierHelper"%>
+<%@page import="EntityManager.Supplier_ItemEntity"%>
 <%@page import="EntityManager.SupplierEntity"%>
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
@@ -61,17 +61,17 @@
                                             <label>SKU</label>
                                             <select required="true" name="sku" class="form-control">
                                                 <%
-                                                    List<ItemSupplierHelper> listOfItems1 = (List<ItemSupplierHelper>) session.getAttribute("listOfItems");
-                                                    if (listOfItems1 != null) {
-                                                        for (int i=0; i<listOfItems1.size(); i++) {
-                                                            out.println("<option value='" + listOfItems1.get(i).getSKU()+ "'>" + listOfItems1.get(i).getSKU() + "</option>");
+                                                    List<Supplier_ItemEntity> listOfItems = (List<Supplier_ItemEntity>) session.getAttribute("listOfItems");
+                                                    if (listOfItems != null) {
+                                                        for (int i = 0; i < listOfItems.size(); i++) {
+                                                            out.println("<option value='" + listOfItems.get(i).getItem().getSKU() + "'>" + listOfItems.get(i).getItem().getSKU() + "</option>");
                                                         }
                                                     }
                                                 %>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Quantity</label>
+                                            <label>Quantity (Per Lot Size)</label>
                                             <input class="form-control" name="quantity" type="number" min="1" max="9999" required="true" >
                                         </div>
                                         <div class="form-group">
@@ -98,28 +98,34 @@
                                                         <th>SKU</th>
                                                         <th>Item Name</th>
                                                         <th>Item Type</th>
-                                                        <th>Price</th>
+                                                        <th>Price (Per <p style="color: black;">Lot Size)</p></th>
+                                                        <th>Lot Size</th>
+                                                        <th>Lead Time</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <%
-                                                        List<ItemSupplierHelper> listOfItems = (List<ItemSupplierHelper>) session.getAttribute("listOfItems");
                                                         if (listOfItems != null) {
-                                                            for (ItemSupplierHelper item : listOfItems) {
-
+                                                            for (Supplier_ItemEntity item : listOfItems) {
                                                     %>
                                                     <tr>
                                                         <td>
-                                                            <%=item.getSKU()%>
+                                                            <%=item.getItem().getSKU()%>
                                                         </td>
                                                         <td>
-                                                            <%=item.getItemName()%>
+                                                            <%=item.getItem().getName()%>
                                                         </td>
                                                         <td>
-                                                            <%=item.getItemType()%>
+                                                            <%=item.getItem().getType()%>
                                                         </td>
                                                         <td>
-                                                            <%=item.getItemPrice()%>
+                                                            <%=item.getCostPrice()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getLotSize()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=item.getLeadTime()%>
                                                         </td>
                                                     </tr>
                                                     <%

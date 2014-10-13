@@ -789,6 +789,21 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     }
 
     @Override
+    public List<String> listAllItemsSKUForSupplier() {
+        System.out.println("listAllItemsSKU() called.");
+        try {
+            Query q = em.createQuery("Select i.SKU from ItemEntity i where i.isDeleted=false and i.type<>'Furniture' and i.type<>'Menu Item' order by i.SKU ASC");
+            List<String> listOfSKUs = q.getResultList();
+            System.out.println("listAllItemsSKU(): Successful.");
+            return listOfSKUs;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllItemsSKU(): Failed to retrieve list of SKUs.");
+            return null;
+        }
+    }
+
+    @Override
     public List<Item_CountryEntity> listAllItemsOfCountry(Long countryId) {
         System.out.println("listAllItemsOfCountry() called.");
         try {
