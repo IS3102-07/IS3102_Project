@@ -1,3 +1,6 @@
+<%@page import="EntityManager.Supplier_ItemEntity"%>
+<%@page import="EntityManager.Item_CountryEntity"%>
+<%@page import="EntityManager.CountryEntity"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -194,19 +197,27 @@
                                 <div class="panel-heading">
                                     <h3 class="panel-title"> Total Price: <span class="" style="font-weight: bold;"><%
                                         Double price = 0.0;
-                                        Double price1 = 0.0;
-                                        List<LineItemEntity> lineItems1 = purchaseOrder.getLineItems();
-                                        if (lineItems1 == null)
+                                        List<LineItemEntity> listOfLineItems = purchaseOrder.getLineItems();
+                                        if (listOfLineItems == null) {
                                             out.println(" 0");
-                                        else if (lineItems1 != null) {
-                                            for (int k = 0; k < lineItems1.size(); k++) {
-                                                    price1 = lineItems1.get(k).getItem().getCostPrice()* lineItems1.get(k).getQuantity();
-                                                    price += price1;
+                                        } else if (listOfLineItems != null) {
+                                            SupplierEntity supplier = purchaseOrder.getSupplier();
+                                            List<Supplier_ItemEntity> listOfSupplierItemInfo = supplier.getSupplyingItems();
+
+                                            for (LineItemEntity lineItem : listOfLineItems) {
+                                                for (Supplier_ItemEntity supplierItemInfo : listOfSupplierItemInfo) {
+                                                    if (lineItem.getItem().getSKU().equals(supplierItemInfo.getItem().getSKU())) {
+                                                        double qty = lineItem.getQuantity();
+                                                        double priceOfOneItem = supplierItemInfo.getCostPrice();
+                                                        double priceOfLineItem = qty * priceOfOneItem;
+                                                        price += priceOfLineItem;
+                                                    }
+                                                }
                                             }
-                                                    out.println(price);
+                                            out.println(price);
                                         }
-                                    %>
-                                       </span></h3>
+                                            %>
+                                        </span></h3>
                                 </div>
                             </div>
                         </div>
@@ -237,36 +248,59 @@
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>SKU</th>
                                                             <th>Item Name</th>
-                                                            <th>Quantity</th>
+                                                            <th>Item Type</th>
+                                                            <th>Price (Per Lot Size)</th>
+                                                            <th>Lot Size</th>
+                                                            <th>Quantity (Per Lot Size)</th>
+                                                            <th>Lead Time</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<LineItemEntity> lineItems = purchaseOrder.getLineItems();
-                                                            if (lineItems != null) {
-                                                                for (int i = 0; i < lineItems.size(); i++) {
+                                                            SupplierEntity supplier = purchaseOrder.getSupplier();
+                                                            List<Supplier_ItemEntity> listOfSupplierItemInfo = supplier.getSupplyingItems();
+
+                                                            for (LineItemEntity lineItem : listOfLineItems) {
+                                                                for (Supplier_ItemEntity supplierItemInfo : listOfSupplierItemInfo) {
+                                                                    if (lineItem.getItem().getSKU().equals(supplierItemInfo.getItem().getSKU())) {
+                                                                        
                                                         %>
 
                                                         <tr>
                                                             <td>
-                                                                <input <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="checkbox" name="delete" value="<%=lineItems.get(i).getId()%>" />
+                                                                <input <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="checkbox" name="delete" value="<%=lineItem.getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=lineItems.get(i).getItem().getSKU()%>
+                                                                <%=lineItem.getItem().getSKU()%>
                                                             </td>
                                                             <td>
-                                                                <%=lineItems.get(i).getItem().getName()%>
+                                                                <%=lineItem.getItem().getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=lineItems.get(i).getQuantity()%>
+                                                                <%=lineItem.getItem().getType()%>
                                                             </td>
                                                             <td>
-                                                                <input <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePOLineItem('<%=lineItems.get(i).getId()%>')"/>
+                                                                <%=supplierItemInfo.getCostPrice()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=supplierItemInfo.getLotSize()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=lineItem.getQuantity()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=supplierItemInfo.getLeadTime()%>
+                                                            </td>
+                                                            <td>
+                                                                <input <%if (!purchaseOrder.getStatus().equals("Pending")) {%>disabled<%}%> type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePOLineItem('<%=lineItem.getId()%>')"/>
                                                             </td>
                                                         </tr>
-                                                        <%}
-                                                            }%>
+                                                        <%
+                                                                    }
+                                                                }
+                                                            }
+                                                        %>
                                                     </tbody>
                                                 </table>
                                             </div>
