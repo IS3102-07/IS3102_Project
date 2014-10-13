@@ -7,7 +7,6 @@ import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.StoreEntity;
-import HelperClasses.ItemCountryHelper;
 import HelperClasses.ItemHelper;
 import HelperClasses.ReturnHelper;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
@@ -61,7 +60,7 @@ public class StoreWebServiceBean {
         } catch (NullPointerException ex) {
             System.out.println("getItemCountryPriceBySKU(): Pricing for this item is not available.");
             return null;
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("getItemCountryPriceBySKU(): Failed");
             ex.printStackTrace();
             return null;
