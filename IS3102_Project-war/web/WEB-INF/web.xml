@@ -774,8 +774,8 @@
         <servlet-class>B_servlets.ECommerce_SecurityChallengeServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_ActivateMemberServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_ActivateMemberServlet</servlet-class>
+        <servlet-name>MRP_purchaseOrder</servlet-name>
+        <servlet-class>A2_servlets.MRP_purchaseOrder</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -1550,8 +1550,8 @@
         <url-pattern>/ECommerce_SecurityChallengeServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_ActivateMemberServlet</servlet-name>
-        <url-pattern>/ECommerce_ActivateMemberServlet</url-pattern>
+        <servlet-name>MRP_purchaseOrder</servlet-name>
+        <url-pattern>/MRP_purchaseOrder/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
