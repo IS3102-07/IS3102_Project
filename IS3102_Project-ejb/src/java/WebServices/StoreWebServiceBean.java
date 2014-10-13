@@ -7,10 +7,11 @@ import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.StoreEntity;
+import HelperClasses.ItemCountryHelper;
+import HelperClasses.ItemHelper;
 import HelperClasses.ReturnHelper;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
-import java.io.OutputStream;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -32,13 +33,14 @@ public class StoreWebServiceBean {
     FacilityManagementBeanLocal FacilityManagementBeanLocal;
 
     @WebMethod(operationName = "getItemBySKU")
-    public ItemEntity getItemBySKU(@WebParam(name = "SKU") String SKU) {
+    public ItemHelper getItemBySKU(@WebParam(name = "SKU") String SKU) {
         ItemEntity itemEntity = ItemManagementBeanLocal.getItemBySKU(SKU);
-        return itemEntity;
+        ItemHelper ih = new ItemHelper(itemEntity.getId(), itemEntity.getSKU(), itemEntity.getName());
+        return ih;
     }
 
     @WebMethod
-    public Item_CountryEntity getItemCountryBySKU(@WebParam(name = "SKU") String SKU, @WebParam(name = "storeID") Long storeID) {
+    public ItemCountryHelper getItemCountryBySKU(@WebParam(name = "SKU") String SKU, @WebParam(name = "storeID") Long storeID) {
         System.out.println("getItemCountryBySKU() called.");
         try {
             ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
@@ -53,15 +55,14 @@ public class StoreWebServiceBean {
             CountryEntity countryEntity = storeEntity.getCountry();
 
             // Retrieve the item_CountryEntity for that country
-            Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
-            item_CountryEntity = ItemManagementBeanLocal.getItemPricing(countryEntity.getId(), SKU);
-            return item_CountryEntity;
+            Item_CountryEntity item_CountryEntity = ItemManagementBeanLocal.getItemPricing(countryEntity.getId(), SKU);
+            ItemCountryHelper ich = new ItemCountryHelper(item_CountryEntity.getId(), item_CountryEntity.getRetailPrice(), item_CountryEntity.getItem().getSKU(), item_CountryEntity.getItem().getName(), item_CountryEntity.getCountry().getId(), item_CountryEntity.getCountry().getName());
+            return ich;
         } catch (Exception ex) {
             System.out.println("getItemCountryBySKU(): Failed");
             ex.printStackTrace();
             return null;
         }
-
     }
 
     @WebMethod
