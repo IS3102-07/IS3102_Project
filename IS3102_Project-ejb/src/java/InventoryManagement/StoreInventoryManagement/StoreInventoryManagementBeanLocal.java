@@ -5,6 +5,7 @@ import EntityManager.LineItemEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import HelperClasses.ItemStorageBinHelper;
+import HelperClasses.ReturnHelper;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -61,4 +62,6 @@ public interface StoreInventoryManagementBeanLocal {
     public LineItemEntity checkIfItemExistInsideStorageBin(Long storageBinID, String SKU);
     
     public Boolean checkIfStorageBinIsOfAppropriateItemType(Long storageBinId, String SKU);
+    public Boolean removeItemFromFurnitureMarketplace(Long storeID, String SKU, Integer qty);
+    public Boolean removeItemFromRetailOutlet(Long storeID, String SKU, Integer qty);
 }

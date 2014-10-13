@@ -40,8 +40,8 @@ public class StoreWebServiceBean {
     }
 
     @WebMethod
-    public ItemCountryHelper getItemCountryBySKU(@WebParam(name = "SKU") String SKU, @WebParam(name = "storeID") Long storeID) {
-        System.out.println("getItemCountryBySKU() called.");
+    public Double getItemCountryPriceBySKU(@WebParam(name = "SKU") String SKU, @WebParam(name = "storeID") Long storeID) {
+        System.out.println("getItemCountryPriceBySKU() called.");
         try {
             ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
             if (itemEntity == null) {
@@ -55,20 +55,18 @@ public class StoreWebServiceBean {
             CountryEntity countryEntity = storeEntity.getCountry();
 
             // Retrieve the item_CountryEntity for that country
-            Item_CountryEntity item_CountryEntity = ItemManagementBeanLocal.getItemPricing(countryEntity.getId(), SKU);
-            ItemCountryHelper ich = new ItemCountryHelper(item_CountryEntity.getId(), item_CountryEntity.getRetailPrice(), item_CountryEntity.getItem().getSKU(), item_CountryEntity.getItem().getName(), item_CountryEntity.getCountry().getId(), item_CountryEntity.getCountry().getName());
-            return ich;
-        } catch (Exception ex) {
-            System.out.println("getItemCountryBySKU(): Failed");
+            Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
+            item_CountryEntity = ItemManagementBeanLocal.getItemPricing(countryEntity.getId(), SKU);
+            return item_CountryEntity.getRetailPrice();
+        } catch (NullPointerException ex) {
+            System.out.println("getItemCountryPriceBySKU(): Pricing for this item is not available.");
+            return null;
+        }catch (Exception ex) {
+            System.out.println("getItemCountryPriceBySKU(): Failed");
             ex.printStackTrace();
             return null;
         }
-    }
 
-    @WebMethod
-    public Integer getMemberLoyaltyPointsAmount(@WebParam(name = "email") String email) {
-        Integer loyaltyPointsAmt = LoyaltyAndRewardsBeanLocal.getMemberLoyaltyPointsAmount(email);
-        return loyaltyPointsAmt;
     }
 
     @WebMethod

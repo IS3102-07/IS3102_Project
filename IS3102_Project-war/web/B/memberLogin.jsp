@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
-<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
-<!--[if gt IE 9]><!-->	
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
+<%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
@@ -77,7 +76,7 @@
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">
-                                                        <a class="pull-right" href="#">(Lost Password?)</a>
+                                                        <a class="pull-right" href="forgotPassword.jsp">(Lost Password?)</a>
                                                         <label>Password</label>
                                                         <input type="password" name="password" class="form-control input-lg" required>
                                                     </div>
@@ -114,6 +113,20 @@
                                                     <div class="col-md-6">
                                                         <label>Re-enter Password</label>
                                                         <input id="repassword" type="password" value="" name="repassword" class="form-control input-lg" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-6 col-md-offset-3">
+                                                        <%
+                                                            ReCaptchaImpl recaptcha = new ReCaptchaImpl();
+                                                            recaptcha.setIncludeNoscript(false);
+                                                            recaptcha.setPrivateKey("6LdjyvoSAAAAAHnUl50AJU-edkUqFtPQi9gCqDai");
+                                                            recaptcha.setPublicKey("6LdjyvoSAAAAAL2m-7sPPZEtz0BNVRb-A_yY0BB_");
+                                                            recaptcha.setRecaptchaServer("https://www.google.com/recaptcha/api");
+                                                            out.print(recaptcha.createRecaptchaHtml(null, null));
+                                                        %>
                                                     </div>
                                                 </div>
                                             </div>
