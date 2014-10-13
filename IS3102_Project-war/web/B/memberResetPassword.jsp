@@ -73,6 +73,30 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label>Enter your activation code</label>
+                                                        <input type="text" name="resetCode" class="form-control input-lg" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label>Enter your new password</label>
+                                                        <input type="password" name="password" class="form-control input-lg" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label>Enter your new password</label>
+                                                        <input type="password" name="repassword" class="form-control input-lg" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="submit" value="Submit" class="btn btn-primary pull-right push-bottom">
                                                 </div>

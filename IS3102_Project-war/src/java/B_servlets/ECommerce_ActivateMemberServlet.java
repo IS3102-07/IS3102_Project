@@ -1,8 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
-import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -12,35 +16,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ECommerce_SecurityChallengeServlet extends HttpServlet {
+public class ECommerce_ActivateMemberServlet extends HttpServlet {
 
-    @EJB
-    private SystemSecurityBeanLocal systemSecurityBean;
-    private String result;
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
+    @EJB
+    private SystemSecurityBeanLocal systemSecurityBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
             HttpSession session;
             session = request.getSession();
-            String email = request.getParameter("email");
 
-            boolean ifExist = accountManagementBean.checkMemberEmailExists(email);
-            if (ifExist) {                
-                MemberEntity member = accountManagementBean.getMemberByEmail(email);
-                session.setAttribute("member", member);
-                response.sendRedirect("./B/forgotPasswordSecurity.jsp?email=" + result);
+            String email = request.getParameter("email");
+            String activateCode = request.getParameter("activateCode");
+
+            if (systemSecurityBean.activateMemberAccount(email, activateCode)) {
+                response.sendRedirect("B/memberLogin.jsp?goodMsg=Account activated successfully.");
             } else {
-                result = "?errMsg=Staff email does not exist.";
-                response.sendRedirect("./B/forgotPassword.jsp" + result);
+                response.sendRedirect("B/memberLogin.jsp?errMsg=Activation Failed. Email or activation code is invalid.");
             }
         } catch (Exception ex) {
-            System.out.println(ex);
-        } finally {
-            System.out.close();
+            response.sendRedirect("A1/error.jsp?errMsg=" + ex);
+            ex.printStackTrace();
         }
     }
 

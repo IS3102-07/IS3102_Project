@@ -37,6 +37,8 @@ public interface AccountManagementBeanLocal {
     public boolean editStaff(String callerStaffID, Long staffID, String phone, String password, String address);
     
     public boolean resetStaffPassword(String email, String password);
+    
+    public boolean resetMemberPassword(String email, String password);
 
     public boolean removeStaff(String callerStaffID, Long staffID);
 

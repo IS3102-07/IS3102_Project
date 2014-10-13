@@ -770,6 +770,31 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         }
     }
 
+    public boolean resetMemberPassword(String email, String password) {
+        System.out.println("resetMemberPassword() called with:" + email);
+        String passwordSalt = generatePasswordSalt();
+        String passwordHash = generatePasswordHash(passwordSalt, password);
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            for (Object o : q.getResultList()) {
+                MemberEntity i = (MemberEntity) o;
+                if (i.getEmail().equalsIgnoreCase(email)) {
+                    i.setPasswordHash(passwordHash);
+                    i.setPasswordSalt(passwordSalt);
+                    i.setAccountLockStatus(false);
+                    em.merge(i);
+                    System.out.println("Member \"" + email + "\" changed password successful as id:");
+                    return true;
+                }
+            }
+            System.out.println("MemberEntity \"" + email + "\" failed to change password as id:");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("MemberEntity \"" + email + "\" failed to change password as id:");
+            ex.printStackTrace();
+            return false;
+        }
+    }
     // Uses supplied salt and password to generate a hashed password
     public String generatePasswordHash(String salt, String password) {
         String passwordHash = null;

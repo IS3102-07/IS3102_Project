@@ -37,7 +37,7 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
         this.category = category;
         this.description = description;
         this.imageURL = imageURL;
-        super.setType("Furniture");
+        super.setType("Menu Item");
         super.setIsDeleted(false);
     }
 
