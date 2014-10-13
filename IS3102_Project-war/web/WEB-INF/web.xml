@@ -765,6 +765,10 @@
         <servlet-name>A2/MRP_main</servlet-name>
         <jsp-file>/A2/MRP_main.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_SendResetPasswordServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_SendResetPasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1528,6 +1532,10 @@
     <servlet-mapping>
         <servlet-name>A2/MRP_main</servlet-name>
         <url-pattern>/A2/MRP_main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_SendResetPasswordServlet</servlet-name>
+        <url-pattern>/ECommerce_SendResetPasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

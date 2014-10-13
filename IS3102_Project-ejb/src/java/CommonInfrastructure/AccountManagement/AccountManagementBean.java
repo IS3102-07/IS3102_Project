@@ -100,7 +100,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password) {
+    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password, Integer securityQuestion, String securityAnswer) {
         System.out.println("editMember() called with memberID:" + memberID);
 
         String passwordSalt = generatePasswordSalt();
@@ -117,6 +117,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
                 memberEntity.setCountry(country);
                 memberEntity.setCity(city);
                 memberEntity.setZipCode(zipCode);
+                memberEntity.setSecurityQuestion(securityQuestion);
+                memberEntity.setSecurityAnswer(securityAnswer);
                 if (!password.isEmpty()) {
                     memberEntity.setPasswordSalt(passwordSalt);
                 }

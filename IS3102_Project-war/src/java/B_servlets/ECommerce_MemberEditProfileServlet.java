@@ -29,8 +29,10 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String id = request.getParameter("id");
             String address = request.getParameter("address");
+            String securityQuestion = request.getParameter("securityQuestion");
+            String securityAnswer = request.getParameter("securityAnswer");
 
-            boolean test = accountManagementBean.editMember(Long.valueOf(id), null, name, address, email, phone, null, null, null, password);
+            boolean test = accountManagementBean.editMember(Long.valueOf(id), null, name, address, email, phone, null, null, null, password, Integer.valueOf(securityQuestion), securityAnswer);
 
             HttpSession session;
             session = request.getSession();

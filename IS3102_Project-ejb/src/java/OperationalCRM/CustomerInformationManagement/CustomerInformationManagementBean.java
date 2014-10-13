@@ -87,7 +87,37 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
         SubscriptionEntity subscription = new SubscriptionEntity();
         subscription.addToList(email);
         em.persist(subscription);
-        return true;
+
+        try {
+            Properties props = new Properties();
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtp.host", emailServerName);
+            props.put("mail.smtp.port", "25");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.debug", "true");
+            javax.mail.Authenticator auth = new CommonInfrastructure.SystemSecurity.SMTPAuthenticator();
+            Session session = Session.getInstance(props, auth);
+            session.setDebug(true);
+            Message msg = new MimeMessage(session);
+            if (msg != null) {
+                msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
+                msg.setSubject("Island Furniture Staff Account Activation");
+                String messageText = "Greetings from Island Furniture... \n\n"
+                        + "You have been successfully added to our monthly newsletter! :\n\n"
+                        + "Click here to unsubscribe: http://localhost:8080/IS3102_Project-war/ECommerce_UnsubscribeServlet?email=" + email;
+                msg.setText(messageText);
+                msg.setHeader("X-Mailer", mailer);
+                Date timeStamp = new Date();
+                msg.setSentDate(timeStamp);
+                Transport.send(msg);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public ShoppingListEntity shoppingList(String email) {
@@ -127,7 +157,7 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
                         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(subscriber.getEmail(), false));
                         msg.setSubject("Island Furniture Staff Account Activation");
                         String messageText = "Greetings from Island Furniture... \n\n"
-                                + "Here is your monthly enewsletter :\n\n"                                
+                                + "Here is your monthly enewsletter :\n\n"
                                 + "Promotion for this week is as follow"
                                 + "Click here to unsubscribe: http://localhost:8080/IS3102_Project-war/ECommerce_UnsubscribeServlet?email=" + subscriber.getEmail();
                         msg.setText(messageText);
@@ -148,17 +178,17 @@ public class CustomerInformationManagementBean implements CustomerInformationMan
         }
         return true;
     }
-    
+
     public Boolean removeFromSubscription(String email) {
         Query q = em.createQuery("SELECT t FROM SubscriptionEntity t");
-            for (Object o : q.getResultList()) {
-                SubscriptionEntity subscriber = (SubscriptionEntity) o;
-                if (subscriber.getEmail().equalsIgnoreCase(email)) {
-                    em.remove(subscriber);
-                    em.flush();
-                    return true;
-                }
+        for (Object o : q.getResultList()) {
+            SubscriptionEntity subscriber = (SubscriptionEntity) o;
+            if (subscriber.getEmail().equalsIgnoreCase(email)) {
+                em.remove(subscriber);
+                em.flush();
+                return true;
             }
+        }
         return false;
     }
 }

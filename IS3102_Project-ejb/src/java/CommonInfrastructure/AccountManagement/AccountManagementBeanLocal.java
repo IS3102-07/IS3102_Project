@@ -18,7 +18,7 @@ public interface AccountManagementBeanLocal {
     
     public MemberEntity getMemberByEmail(String email);
 
-    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password);
+    public boolean editMember(Long memberID, Date DOB, String name, String address, String email, String phone, CountryEntity country, String city, String zipCode, String password, Integer securityQuestion, String securityAnswer);
 
     public MemberEntity loginMember(String email, String password);
 
