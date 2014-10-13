@@ -654,6 +654,10 @@
         <servlet-class>B_servlets.ECommerce_RemoveItemFromListServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_ResetPasswordServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_UnsubscribeServlet</servlet-class>
     </servlet>
@@ -1464,6 +1468,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_RemoveItemFromListServlet</servlet-name>
         <url-pattern>/ECommerce_RemoveItemFromListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_ResetPasswordServlet</servlet-name>
+        <url-pattern>/ECommerce_ResetPasswordServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_UnsubscribeServlet</servlet-name>
