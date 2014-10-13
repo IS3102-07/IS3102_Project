@@ -530,6 +530,10 @@
         <servlet-class>B_servlets.ECommerce_AddFurnitureToListServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ECommerce_ActivateMemberServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ActivateMemberServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ECommerce_PromotionServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_PromotionServlet</servlet-class>
     </servlet>
@@ -1304,6 +1308,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>
         <url-pattern>/ECommerce_AddFurnitureToListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_ActivateMemberServlet</servlet-name>
+        <url-pattern>/ECommerce_ActivateMemberServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_PromotionServlet</servlet-name>
