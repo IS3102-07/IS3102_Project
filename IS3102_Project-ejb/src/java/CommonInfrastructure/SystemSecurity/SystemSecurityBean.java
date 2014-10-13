@@ -20,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ejb.EJB;
+import javax.persistence.NoResultException;
 
 @Stateless
 public class SystemSecurityBean implements SystemSecurityBeanLocal {
@@ -142,7 +143,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
                         + "Here is your activation code to be keyed in in order to activate your member account :\n\n"
                         + "Email: " + email + "\n\n"
                         + "Activation Code: " + activationCode + "\n\n"
-                        + "Link to activate your member account: http://localhost:8080/IS3102_Project-war/ActivateMemberServlet?email=" + email + "&activateCode=" + activationCode;
+                        + "Link to activate your member account: http://localhost:8080/IS3102_Project-war/ECommerce_ActivateMemberServlet?email=" + email + "&activateCode=" + activationCode;
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();
@@ -291,33 +292,34 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal {
         return false;
     }
 
-    public Boolean activateMemberAccount(String username, String code) {
+    public Boolean activateMemberAccount(String email, String code) {
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.email=:email");
+            q.setParameter("email", email);
 
-            for (Object o : q.getResultList()) {
-                MemberEntity memberEntity = (MemberEntity) o;
-                if (memberEntity.getName().equalsIgnoreCase(username)) {
+            MemberEntity memberEntity = null;
+            try {
+                memberEntity = (MemberEntity) q.getSingleResult();
+            } catch (NoResultException ex) {
+                return false;
+            }
 
-                    if (memberEntity.getActivationCode().equals(code)) {
-                        System.out.println("\nServer activation code valid of member:\n" + username);
-                        memberEntity.setAccountActivationStatus(true);
-                        em.merge(memberEntity);
-                        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
-                        out.println(new Date().toString() + ";" + "System" + ";activateStaffAccount();" + memberEntity.getId() + ";");
-                        out.close();
-                        return true;
-                    } else {
-                        System.out.println("\nServer activation code invalid of member:\n" + username);
-                        return false;
-                    }
-                }
+            if (memberEntity.getActivationCode().equals(code)) {
+                System.out.println("\nServer activation code valid of member:\n" + email);
+                memberEntity.setAccountActivationStatus(true);
+                em.merge(memberEntity);
+                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                out.println(new Date().toString() + ";" + "System" + ";activateMemberAccount();" + memberEntity.getId() + ";");
+                out.close();
+                return true;
+            } else {
+                System.out.println("\nServer activation code invalid of member:\n" + email);
+                return false;
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to validate email for member:\n" + ex);
             return false;
         }
-        return false;
     }
 
     public Boolean validatePasswordResetForStaff(String email, String code) {
