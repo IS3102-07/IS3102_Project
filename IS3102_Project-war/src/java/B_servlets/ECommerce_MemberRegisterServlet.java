@@ -46,10 +46,10 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
                     accountManagementBean.registerMember(null, null, null, email, null, null, null, null, password);
                     systemSecurityBean.sendActivationEmailForMember(email);
                     result = "?goodMsg=You have registered successfully.";
-                    response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
+                    response.sendRedirect("B/memberLogin.jsp" + result);
                 } else {
                     result = "?errMsg=You have entered an wrong Captcha code.";
-                    response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
+                    response.sendRedirect("B/memberLogin.jsp" + result);
                 }
             }
         } catch (Exception ex) {
