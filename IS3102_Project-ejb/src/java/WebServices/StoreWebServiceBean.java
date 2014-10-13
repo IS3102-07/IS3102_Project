@@ -1,7 +1,5 @@
 package WebServices;
 
-import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
@@ -9,7 +7,6 @@ import EntityManager.LineItemEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ItemHelper;
 import HelperClasses.ReturnHelper;
-import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,17 +20,11 @@ import javax.jws.WebService;
 public class StoreWebServiceBean {
 
     @EJB
-    ItemManagementBeanLocal ItemManagementBeanLocal;
-    @EJB
     RetailInventoryControlBeanLocal RetailInventoryControlLocal;
-    @EJB
-    LoyaltyAndRewardsBeanLocal LoyaltyAndRewardsBeanLocal;
-    @EJB
-    FacilityManagementBeanLocal FacilityManagementBeanLocal;
 
     @WebMethod(operationName = "getItemBySKU")
     public ItemHelper getItemBySKU(@WebParam(name = "SKU") String SKU) {
-        ItemEntity itemEntity = ItemManagementBeanLocal.getItemBySKU(SKU);
+        ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
         ItemHelper ih = new ItemHelper(itemEntity.getId(), itemEntity.getSKU(), itemEntity.getName());
         return ih;
     }
@@ -47,7 +38,7 @@ public class StoreWebServiceBean {
                 return null;
             }
             // Check the store in which country
-            StoreEntity storeEntity = FacilityManagementBeanLocal.getStoreByID(storeID);
+            StoreEntity storeEntity = RetailInventoryControlLocal.getStoreByID(storeID);
             if (storeEntity == null) {
                 return null;
             }
@@ -55,7 +46,7 @@ public class StoreWebServiceBean {
 
             // Retrieve the item_CountryEntity for that country
             Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
-            item_CountryEntity = ItemManagementBeanLocal.getItemPricing(countryEntity.getId(), SKU);
+            item_CountryEntity = RetailInventoryControlLocal.getItemPricing(countryEntity.getId(), SKU);
             return item_CountryEntity.getRetailPrice();
         } catch (NullPointerException ex) {
             System.out.println("getItemCountryPriceBySKU(): Pricing for this item is not available.");

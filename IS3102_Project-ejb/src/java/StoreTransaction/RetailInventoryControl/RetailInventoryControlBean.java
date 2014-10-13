@@ -5,6 +5,8 @@ import EntityManager.ItemEntity;
 import EntityManager.RawMaterialEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
+import EntityManager.Item_CountryEntity;
+import EntityManager.StoreEntity;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -17,6 +19,22 @@ public class RetailInventoryControlBean implements RetailInventoryControlBeanLoc
     @PersistenceContext
     private EntityManager em;
 
+    @Override
+    public StoreEntity getStoreByID(Long storeID) {
+        System.out.println("getStoreByID() called.");
+        try {
+            Query q = em.createQuery("select s from StoreEntity s where s.isDeleted=false and s.id = ?1").setParameter(1, storeID);
+            System.out.println("getStoreByID(): Store returned.");
+            return (StoreEntity) q.getSingleResult();
+        } catch (NoResultException ex) {
+            System.out.println("getStoreByID(): No such store found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("getStoreByID(): Failed to getStoreByID()");
+            ex.printStackTrace();
+            return null;
+        }
+    }
     @Override
     public RawMaterialEntity viewRawMaterial(String SKU) {
         System.out.println("viewRawMaterial() called with SKU:" + SKU);
@@ -127,6 +145,23 @@ public class RetailInventoryControlBean implements RetailInventoryControlBeanLoc
             return item;
         } catch (Exception ex) {
             System.out.println("\nServer failed to getItemBySKU():\n" + ex);
+            return null;
+        }
+    }
+    
+    @Override
+    public Item_CountryEntity getItemPricing(Long countryId, String SKU) {
+        System.out.println("getItemPricing() called.");
+        try {
+            Query q = em.createQuery("Select i from Item_CountryEntity i where i.isDeleted=false and i.country.id=:countryId and i.item.SKU=:SKU");
+            q.setParameter("countryId", countryId);
+            q.setParameter("SKU", SKU);
+            Item_CountryEntity itemCountry = (Item_CountryEntity) q.getSingleResult();
+            System.out.println("getItemPricing(): Successful.");
+            return itemCountry;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("getItemPricing(): Failed to retrieve item pricing.");
             return null;
         }
     }
