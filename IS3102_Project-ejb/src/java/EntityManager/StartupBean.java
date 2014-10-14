@@ -123,36 +123,17 @@ public class StartupBean {
             }
             try {
                 //Create countries
-                CountryEntity country = new CountryEntity();
-                country.setCountryCode(65);
-                country.setCurrency("SGD");
-                country.setExchangeRate(0.75);
-                country.setName("Singapore");
+                CountryEntity country = new CountryEntity("Singapore", "SGD", 0.75,65);
                 em.persist(country);
-                country = new CountryEntity();
-                country.setCountryCode(60);
-                country.setCurrency("RM");
-                country.setExchangeRate(3.0);
-                country.setName("Malaysia");
+                country = new CountryEntity("Malaysia", "RM", 3.0,60);
                 em.persist(country);
-                country = new CountryEntity();
-                country.setCountryCode(62);
-                country.setCurrency("RUPIAH");
-                country.setExchangeRate(100.0);
-                country.setName("Indonesia");
+                country = new CountryEntity("Indonesia", "RUPIAH", 100.0,62);
                 em.persist(country);
-                country = new CountryEntity();
-                country.setCountryCode(1);
-                country.setCurrency("USD");
-                country.setExchangeRate(1.0);
-                country.setName("United States");
+                country = new CountryEntity("United States", "(\"", 1.0,1);
                 em.persist(country);
-                country = new CountryEntity();
-                country.setCountryCode(86);
-                country.setCurrency("CN");
-                country.setExchangeRate(0.16);
-                country.setName("China");
+                country = new CountryEntity("China", "RMB", 6.13 ,86);
                 em.persist(country);
+                //Create schedule
                 sopBean.createSchedule(2013, 1, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2013, 2, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2013, 3, 5, 5, 5, 5, 0);

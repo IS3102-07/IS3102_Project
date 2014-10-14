@@ -8,9 +8,7 @@ import EntityManager.StoreEntity;
 import HelperClasses.ItemHelper;
 import HelperClasses.ReturnHelper;
 import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -28,7 +26,19 @@ public class StoreWebServiceBean {
     @EJB
     RetailInventoryControlBeanLocal RetailInventoryControlLocal;
 
-    @WebMethod(operationName = "getItemBySKU")
+    @WebMethod
+    public String getCountryCode(@WebParam(name="storeID") Long storeID) {
+         try {
+            StoreEntity storeEntity = RetailInventoryControlLocal.getStoreByID(storeID);
+            if (storeEntity == null) {
+                return null;
+            }
+            return "00"+storeEntity.getCountry().getCountryCode();
+         }catch(Exception ex) {
+             return null;
+         }
+    }
+    @WebMethod
     public ItemHelper getItemBySKU(@WebParam(name = "SKU") String SKU) {
         ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
         ItemHelper ih = new ItemHelper(itemEntity.getId(), itemEntity.getSKU(), itemEntity.getName());
