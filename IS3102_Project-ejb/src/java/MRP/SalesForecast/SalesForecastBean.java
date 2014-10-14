@@ -20,22 +20,40 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
-    // unsupport now
+    @Override
     public Boolean updateSalesFigureBySalesRecord(Long salesRecordId) {
         try {
             SalesRecordEntity saleRecord = em.find(SalesRecordEntity.class, salesRecordId);
+            Query query = em.createQuery("select s from MonthScheduleEntity s where s.year = ?1 and s.month = ?2")
+                    .setParameter(1, saleRecord.getCreatedDate().getYear())
+                    .setParameter(2, saleRecord.getCreatedDate().getMonth());            
+            MonthScheduleEntity schedule = (MonthScheduleEntity)query.getResultList().get(0);
+            
             for (LineItemEntity lineItem : saleRecord.getItemsPurchased()) {
-                if (lineItem.getItem().getType().equals("Furniture")) {
-                    Query q = em.createQuery("select f from");
-                    Query q1 = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.year = ?2 and s.schedule.month =?3 ")
-                            .setParameter(1, saleRecord.getStore())
-                            .setParameter(2, this)
-                            .setParameter(3, this);
-                }
-
-                SalesFigureEntity salesFigure = new SalesFigureEntity();
-                salesFigure.setStore(saleRecord.getStore());
                 
+                Query q = em.createQuery("select l.productGroup from ProductGroupLineItemEntity l where l.item.SKU = ?1")
+                        .setParameter(1, lineItem.getItem().getSKU());
+                if(!q.getResultList().isEmpty()){
+                    ProductGroupEntity productGroup = (ProductGroupEntity)q.getResultList().get(0);
+                    Query q1 = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.id = ?2 and s.productGroup.id = ?3")
+                        .setParameter(1, saleRecord.getStore())
+                        .setParameter(2, schedule.getId())
+                        .setParameter(3, productGroup.getId());
+                    
+                    if(!q1.getResultList().isEmpty()){
+                        SalesFigureEntity saleFigure = (SalesFigureEntity)q1.getResultList().get(0);
+                        saleFigure.setQuantity(saleFigure.getQuantity() + lineItem.getQuantity());
+                        em.merge(saleFigure);
+                    }else{
+                        SalesFigureEntity salesFigure = new SalesFigureEntity();
+                        salesFigure.setStore(saleRecord.getStore());
+                        salesFigure.setProductGroup(productGroup);
+                        salesFigure.setSchedule(schedule);
+                        salesFigure.setQuantity(lineItem.getQuantity());
+                        em.persist(salesFigure);
+                    }                    
+                }    
+                return true;
             }
         } catch (Exception ex) {
             ex.printStackTrace();

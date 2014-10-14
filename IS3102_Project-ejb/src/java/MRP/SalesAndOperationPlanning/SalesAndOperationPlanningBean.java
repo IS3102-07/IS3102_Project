@@ -7,12 +7,18 @@ package MRP.SalesAndOperationPlanning;
 
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
+import EntityManager.ProductGroupLineItemEntity;
+import EntityManager.PurchaseOrderEntity;
 import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.StoreEntity;
+import EntityManager.Supplier_ItemEntity;
+import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,6 +34,9 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
+
+    @EJB
+    private RetailProductsAndRawMaterialsPurchasingBeanLocal purchaseBean;
 
     public MonthScheduleEntity createSchedule(Calendar schedule) {
         try {
@@ -56,7 +65,7 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                     .setParameter(1, year)
                     .setParameter(2, month);
             if (q.getResultList().isEmpty()) {
-                MonthScheduleEntity scheduleEntity = new MonthScheduleEntity(year, month, workDays_firstWeek, workDays_secondWeek, workDays_thirdWeek, workDays_forthWeek, workDays_fifthWeek);                
+                MonthScheduleEntity scheduleEntity = new MonthScheduleEntity(year, month, workDays_firstWeek, workDays_secondWeek, workDays_thirdWeek, workDays_forthWeek, workDays_fifthWeek);
                 em.persist(scheduleEntity);
                 return scheduleEntity;
             } else {
@@ -202,11 +211,26 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     }
 
     @Override
+    public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList_RetailGood(Long storeId, Long scheduleId) {
+        try {
+            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2 and sop.productGroup.type = ?3")
+                    .setParameter(1, storeId)
+                    .setParameter(2, scheduleId)
+                    .setParameter(3, "Retail Product");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
     public List<SOP_Helper> getSOPHelperList(Long storeId, Long scheduleId) {
         try {
-            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2")
+            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2 and sop.productGroup.type = ?3")
                     .setParameter(1, storeId)
-                    .setParameter(2, scheduleId);
+                    .setParameter(2, scheduleId)
+                    .setParameter(3, "Furniture");
             List<SaleAndOperationPlanEntity> sopList = q.getResultList();
             List<SOP_Helper> helperList = new ArrayList<>();
             for (SaleAndOperationPlanEntity sop : sopList) {
@@ -256,5 +280,34 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
             ex.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Boolean generatePurchaseOrdersForRetailProduct(Long storeId, Long scheduleId) {
+        try {
+            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2 and sop.productGroup.type = ?3")
+                    .setParameter(1, storeId)
+                    .setParameter(2, scheduleId)
+                    .setParameter(3, "Retail Product");
+            List<SaleAndOperationPlanEntity> sopList = q.getResultList();
+            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+
+            for (SaleAndOperationPlanEntity sop : sopList) {
+                for (ProductGroupLineItemEntity lineItem : sop.getProductGroup().getLineItemList()) {
+                    Query q3 = em.createQuery("select si from Supplier_ItemEntity si where si.supplier.regionalOffice.id = ?1 and si.item.SKU = ?2")
+                            .setParameter(1, store.getRegionalOffice().getId())
+                            .setParameter(2, lineItem.getItem().getSKU());
+                    Supplier_ItemEntity supplier_ItemEntity = (Supplier_ItemEntity) q3.getSingleResult();
+                    
+                    PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), new Date(schedule.getYear(), schedule.getMonth(), 1));
+                    purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), lineItem.getItem().getSKU(), sop.getProductionPlan());
+                }
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }
