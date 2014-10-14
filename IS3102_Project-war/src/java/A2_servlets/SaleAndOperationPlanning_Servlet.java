@@ -189,7 +189,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
 
                     int currentInventoryLevel = 0;
                     for (ProductGroupLineItemEntity lineitem : productGroup.getLineItemList()) {
-                        currentInventoryLevel += simBean.checkItemQty(storeHelper.store.getWarehouse().getId(), lineitem.getFurniture().getSKU());
+                        currentInventoryLevel += simBean.checkItemQty(storeHelper.store.getWarehouse().getId(), lineitem.getItem().getSKU());
                     }
                     request.setAttribute("currentInventoryLevel", currentInventoryLevel);
                 } catch (Exception ex) {

@@ -5,6 +5,7 @@
  */
 package MRP.DemandManagement;
 
+import EntityManager.FurnitureEntity;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MasterProductionScheduleEntity;
 import EntityManager.MonthScheduleEntity;
@@ -57,7 +58,7 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                         Query q3 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.mf.id = ?1 and mps.schedule.id = ?2 and mps.furniture.SKU = ?3")
                                 .setParameter(1, MfId)
                                 .setParameter(2, lastSchedule.getId())
-                                .setParameter(3, lineitem.getFurniture().getSKU());
+                                .setParameter(3, lineitem.getItem().getSKU());
 
                         MasterProductionScheduleEntity mps;
                         Boolean mpsExits;
@@ -65,7 +66,7 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                             mps = new MasterProductionScheduleEntity();
                             mps.setMf(mf);
                             mps.setSchedule(lastSchedule);
-                            mps.setFurniture(lineitem.getFurniture());
+                            mps.setFurniture((FurnitureEntity)lineitem.getItem());
                             mpsExits = true;                            
                         } else {
                             mps = (MasterProductionScheduleEntity) q3.getResultList().get(0);
