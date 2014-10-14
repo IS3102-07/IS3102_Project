@@ -80,7 +80,7 @@
                                                 <%
                                                     }
                                                     for (RegionalOfficeEntity ro : regionalOfficeList) {
-                                                        if (ro.getId() != accessRight.getRegionalOffice().getId()) {
+                                                        if (accessRight.getRegionalOffice() != null && ro.getId() != accessRight.getRegionalOffice().getId()) {
                                                 %>
                                                 <option value="<%= ro.getId()%>"><%= ro.getName()%></option>
                                                 <%
@@ -103,9 +103,11 @@
                                                 <%
                                                     }
                                                     for (StoreEntity s : storeList) {
+                                                        if (accessRight.getStore() != null && s.getId() != accessRight.getStore().getId()) {
                                                 %>
                                                 <option value="<%= s.getId()%>"><%= s.getName()%></option>
                                                 <%
+                                                        }
                                                     }
                                                 %>
                                             </select>                                            
@@ -124,9 +126,11 @@
                                                 <%
                                                     }
                                                     for (ManufacturingFacilityEntity m : manufacturingFacilityList) {
+                                                        if (accessRight.getManufacturingFacility() != null && m.getId() != accessRight.getManufacturingFacility().getId()) {
                                                 %>
                                                 <option value="<%= m.getId()%>"><%= m.getName()%></option>
                                                 <%
+                                                        }
                                                     }
                                                 %>
                                             </select>                                            
@@ -145,9 +149,11 @@
                                                 <%
                                                     }
                                                     for (WarehouseEntity w : warehouseList) {
+                                                        if (accessRight.getWarehouse() != null && w.getId() != accessRight.getWarehouse().getId()) {
                                                 %>
                                                 <option value="<%= w.getId()%>"><%= w.getWarehouseName()%></option>
                                                 <%
+                                                        }
                                                     }
                                                 %>
                                             </select>                                            
