@@ -82,7 +82,7 @@ public class StoreWebServiceBean {
     }
 
     @WebMethod
-    public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") Integer telNo) {
+    public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") String telNo) {
         try {
             StringBuffer response;
             String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
@@ -93,7 +93,7 @@ public class StoreWebServiceBean {
             String Data = ("AccountId=" + URLEncoder.encode("CI00136959", "UTF-8"));
             Data += ("&Email=" + URLEncoder.encode("lyg@nus.edu.sg", "UTF-8"));
             Data += ("&Password=" + URLEncoder.encode("6nruJnM4", "UTF-8"));
-            Data += ("&Recipient=" + URLEncoder.encode(telNo + "", "UTF-8"));
+            Data += ("&Recipient=" + URLEncoder.encode(telNo, "UTF-8"));
             Data += ("&Message=" + URLEncoder.encode(smsMessage, "UTF-8"));
 
             int Result = -1;
