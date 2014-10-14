@@ -88,13 +88,13 @@ public class StoreWebServiceBean {
             String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
             System.out.println("Sending SMS: " + telNo + ": " + smsMessage);
 
-            String RequestURL = "http://www.redoxygen.net/sms.dll?Action=SendSMS";
+            String RequestURL = "http://smsc.vianett.no/v3/send.ashx?SenderAddress=ISfurniture";
 
             String Data = ("AccountId=" + URLEncoder.encode("CI00136959", "UTF-8"));
-            Data += ("&Email=" + URLEncoder.encode("lyg@nus.edu.sg", "UTF-8"));
-            Data += ("&Password=" + URLEncoder.encode("6nruJnM4", "UTF-8"));
-            Data += ("&Recipient=" + URLEncoder.encode(telNo, "UTF-8"));
-            Data += ("&Message=" + URLEncoder.encode(smsMessage, "UTF-8"));
+            Data += ("&username=" + URLEncoder.encode("lee_yuan_guang@hotmail.com", "UTF-8"));
+            Data += ("&password=" + URLEncoder.encode("r0b16", "UTF-8"));
+            Data += ("&tel=" + URLEncoder.encode(telNo, "UTF-8"));
+            Data += ("&msg=" + URLEncoder.encode(smsMessage, "UTF-8"));
 
             int Result = -1;
             URL Address = new URL(RequestURL);
