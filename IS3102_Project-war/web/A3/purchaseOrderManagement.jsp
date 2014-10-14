@@ -33,7 +33,9 @@
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <%
+                String disable = "";
                 try {
+
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -54,8 +56,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <%
-                                        String errMsg = request.getParameter("errMsg");
+                                    <%                                        String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
                                             errMsg = "Add purchase orders";
                                         }
@@ -68,7 +69,7 @@
                                         <div class="table-responsive">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  <%=disable%>/>
                                                 </div>
                                             </div>
                                             <br>
@@ -87,7 +88,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<PurchaseOrderEntity> finalListOfPO = new ArrayList<PurchaseOrderEntity>(); 
+                                                            List<PurchaseOrderEntity> finalListOfPO = new ArrayList<PurchaseOrderEntity>();
                                                             StaffEntity staff = (StaffEntity) (session.getAttribute("staffEntity"));
                                                             List<RoleEntity> listOfRoles = staff.getRoles();
                                                             boolean isAdmin = false;
@@ -114,6 +115,7 @@
                                                                     }
                                                                 }
                                                                 if (!isRegional) {
+                                                                    disable = "disabled";
                                                                     for (RoleEntity role : listOfRoles) {
                                                                         if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
                                                                             List<AccessRightEntity> accessList = staff.getAccessRightList();
@@ -145,7 +147,7 @@
                                                             </td>
                                                             <td>
                                                                 <% SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-                                                                String date = DATE_FORMAT.format(finalListOfPO.get(i).getExpectedReceivedDate()); %>
+                                                                    String date = DATE_FORMAT.format(finalListOfPO.get(i).getExpectedReceivedDate());%>
                                                                 <%=date%>
                                                             </td>
                                                             <td>
@@ -171,7 +173,7 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  />
+                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  <%=disable%>/>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
