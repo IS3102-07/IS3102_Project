@@ -1,7 +1,5 @@
 package WebServices;
 
-import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
@@ -9,8 +7,13 @@ import EntityManager.LineItemEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ItemHelper;
 import HelperClasses.ReturnHelper;
-import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -23,17 +26,11 @@ import javax.jws.WebService;
 public class StoreWebServiceBean {
 
     @EJB
-    ItemManagementBeanLocal ItemManagementBeanLocal;
-    @EJB
     RetailInventoryControlBeanLocal RetailInventoryControlLocal;
-    @EJB
-    LoyaltyAndRewardsBeanLocal LoyaltyAndRewardsBeanLocal;
-    @EJB
-    FacilityManagementBeanLocal FacilityManagementBeanLocal;
 
     @WebMethod(operationName = "getItemBySKU")
     public ItemHelper getItemBySKU(@WebParam(name = "SKU") String SKU) {
-        ItemEntity itemEntity = ItemManagementBeanLocal.getItemBySKU(SKU);
+        ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
         ItemHelper ih = new ItemHelper(itemEntity.getId(), itemEntity.getSKU(), itemEntity.getName());
         return ih;
     }
@@ -47,7 +44,7 @@ public class StoreWebServiceBean {
                 return null;
             }
             // Check the store in which country
-            StoreEntity storeEntity = FacilityManagementBeanLocal.getStoreByID(storeID);
+            StoreEntity storeEntity = RetailInventoryControlLocal.getStoreByID(storeID);
             if (storeEntity == null) {
                 return null;
             }
@@ -55,7 +52,7 @@ public class StoreWebServiceBean {
 
             // Retrieve the item_CountryEntity for that country
             Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
-            item_CountryEntity = ItemManagementBeanLocal.getItemPricing(countryEntity.getId(), SKU);
+            item_CountryEntity = RetailInventoryControlLocal.getItemPricing(countryEntity.getId(), SKU);
             return item_CountryEntity.getRetailPrice();
         } catch (NullPointerException ex) {
             System.out.println("getItemCountryPriceBySKU(): Pricing for this item is not available.");
@@ -75,41 +72,33 @@ public class StoreWebServiceBean {
     }
 
     @WebMethod
-    public Boolean callSupervisor(@WebParam(name = "contactNo") String contactNo) {
-        //TODO
-        return true;
-    }
-
-    @WebMethod
     public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") Integer telNo) {
         try {
-//            //send SMS code TODO
-//            String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
-//            System.out.println("Sending SMS: " + telNo + ": " + smsMessage);
-//
-//            String initString1 = "AT" + (char) 13;
-//            String initString2 = "AT+CMGF=1" + (char) 13;
-//            String cmdString1 = "AT+CMGS=" + telNo.toString() + (char) 13;
-//            String cmdString2 = smsMessage + (char) 26;
-//
-//            System.out.println("initString1: " + initString1);
-//            System.out.println("initString2: " + initString2);
-//            System.out.println("cmdString1: " + cmdString1);
-//            System.out.println("cmdString2: " + cmdString2);
-//
-//            CommPortIdentifier commPortIdentifier = CommPortIdentifier.getPortIdentifier("COM9");
-//            SerialPort serialPort = (SerialPort) commPortIdentifier.open("SMS", 2000);
-//            serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-//            OutputStream outputStream = serialPort.getOutputStream();
-//
-//            outputStream.write(initString1.getBytes());
-//            outputStream.write(initString2.getBytes());
-//            outputStream.write(cmdString1.getBytes());
-//            outputStream.write(cmdString2.getBytes());
-//
-//            Thread.sleep(2000);
-//
-//            serialPort.close();
+            StringBuffer response;
+            String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
+            System.out.println("Sending SMS: " + telNo + ": " + smsMessage);
+
+            String RequestURL = "http://www.redoxygen.net/sms.dll?Action=SendSMS";
+
+            String Data = ("AccountId=" + URLEncoder.encode("CI00136959", "UTF-8"));
+            Data += ("&Email=" + URLEncoder.encode("lyg@nus.edu.sg", "UTF-8"));
+            Data += ("&Password=" + URLEncoder.encode("6nruJnM4", "UTF-8"));
+            Data += ("&Recipient=" + URLEncoder.encode(telNo + "", "UTF-8"));
+            Data += ("&Message=" + URLEncoder.encode(smsMessage, "UTF-8"));
+
+            int Result = -1;
+            URL Address = new URL(RequestURL);
+
+            HttpURLConnection Connection = (HttpURLConnection) Address.openConnection();
+            Connection.setRequestMethod("POST");
+            Connection.setDoInput(true);
+            Connection.setDoOutput(true);
+
+            DataOutputStream Output;
+            Output = new DataOutputStream(Connection.getOutputStream());
+            Output.writeBytes(Data);
+            Output.flush();
+            Output.close();
             return true;
         } catch (Exception ex) {
             return false;
