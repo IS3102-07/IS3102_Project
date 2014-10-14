@@ -1,3 +1,7 @@
+<%@page import="EntityManager.AccessRightEntity"%>
+<%@page import="EntityManager.RegionalOfficeEntity"%>
+<%@page import="EntityManager.RoleEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.CountryEntity"%>
 <html lang="en">
@@ -59,6 +63,41 @@
                                                     out.println("<option value='" + countries.get(i).getId() + "'>" + countries.get(i).getName() + "</option>");
                                                 }
                                             }
+                                        %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Regional Office</label>
+                                    <select required="true" name="regionalOffice" class="form-control">
+                                        <%
+                                            StaffEntity staff = (StaffEntity) (session.getAttribute("staffEntity"));
+                                            List<RegionalOfficeEntity> listOfRegionalOffice = (List<RegionalOfficeEntity>) session.getAttribute("listOfRegionalOffice");
+
+                                            boolean isAdminLevel = false;
+                                            List<RoleEntity> listOfRoles = staff.getRoles();
+                                            for (RoleEntity role : listOfRoles) {
+                                                if (role.getName().equals("Administrator") || role.getName().equals("Global Manager")) {
+                                                    isAdminLevel = true;
+                                                    if (listOfRegionalOffice != null) {
+                                                        for (int i = 0; i < listOfRegionalOffice.size(); i++) {
+                                                            out.println("<option value='" + listOfRegionalOffice.get(i).getId() + "'>" + listOfRegionalOffice.get(i).getName() + "</option>");
+                                                        }
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                            if (!isAdminLevel) {
+                                                List<AccessRightEntity> listOfAccessRight = staff.getAccessRightList();
+                                                for (AccessRightEntity accessRight : listOfAccessRight) {
+                                                    for (RegionalOfficeEntity RO : listOfRegionalOffice) {
+                                                        if (accessRight.getRegionalOffice().getId().equals(RO.getId())) {
+                                                            out.println("<option value='" + RO.getId() + "'>" + RO.getName() + "</option>");
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+
                                         %>
                                     </select>
                                 </div>

@@ -1,12 +1,10 @@
 package A3_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.AccessRightEntity;
 import EntityManager.StaffEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,14 +29,14 @@ public class SupplierManagement_AddSupplierServlet extends HttpServlet {
             String email = request.getParameter("email");
             String address = request.getParameter("address");
             String country = request.getParameter("country");
+            String roId = request.getParameter("regionalOffice");
             HttpSession session = request.getSession();
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
-            Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());
-            if (roID == null) {
+            if (roId == null) {
                 result = "?errMsg=No access right to create a supplier..";
                 response.sendRedirect("SupplierManagement_SupplierServlet" + result);
             }
-            supplierManagementBean.addSupplier(name, phone, email, address, Long.parseLong(country),roID);
+            supplierManagementBean.addSupplier(name, phone, email, address, Long.parseLong(country),Long.parseLong(roId));
             result = "?goodMsg=Supplier added successfully.";
             response.sendRedirect("SupplierManagement_SupplierServlet" + result);
 

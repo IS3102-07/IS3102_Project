@@ -106,7 +106,7 @@ public class StartupBean {
                 MemberEntity memberEntity = new MemberEntity();
                 String passwordSalt = accountManagementBean.generatePasswordSalt();
                 String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
-                memberEntity.create(null,null,null,"member@if.com",null,null,null,null,passwordHash,passwordSalt);
+                memberEntity.create(null, null, null, "member@if.com", null, null, null, null, passwordHash, passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
                 em.persist(memberEntity);
                 memberEntity = new MemberEntity();
@@ -337,6 +337,35 @@ public class StartupBean {
 
         } catch (Exception ex) {
             System.out.println("Skipping creating of loyalty tiers\n" + ex);
+            ex.printStackTrace();
+        }
+        try {
+            //Item_Country pricing
+            Query q = em.createQuery("Select c from CountryEntity c where c.name='Singapore'");
+            CountryEntity c = (CountryEntity) q.getSingleResult();
+            q = em.createQuery("Select i from ItemEntity i where i.SKU='F1'");
+            ItemEntity i = (ItemEntity) q.getSingleResult();
+            Item_CountryEntity item_country;
+            item_country = new Item_CountryEntity();
+            item_country.setCountry(c);
+            item_country.setIsDeleted(false);
+            item_country.setItem(i);
+            item_country.setRetailPrice(100.0);
+            em.persist(item_country);
+            em.flush();
+
+            q = em.createQuery("Select i from ItemEntity i where i.SKU='F2'");
+            ItemEntity ii = (ItemEntity) q.getSingleResult();
+            item_country = new Item_CountryEntity();
+            item_country.setCountry(c);
+            item_country.setIsDeleted(false);
+            item_country.setItem(ii);
+            item_country.setRetailPrice(200.0);
+            em.persist(item_country);
+            em.flush();
+
+        } catch (Exception ex) {
+            System.out.println("Skipping creating of Item_CountryEntities\n" + ex);
             ex.printStackTrace();
         }
         try {
