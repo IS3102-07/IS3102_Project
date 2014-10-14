@@ -13,13 +13,13 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>        
-        
+
         <style>
             select {
                 max-width: 300px;
             }
         </style>
-        
+
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
@@ -51,24 +51,27 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="row">                             
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <%  StoreHelper storeHelper = (StoreHelper) request.getAttribute("storeHelper");%>
                                             <h4><b> Store:  </b><%= storeHelper.store.getName()%></h4>
                                         </div>                                                
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <% MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule");%>
                                             <h4><b> Period: </b><%= schedule.getYear()%> - <%= schedule.getMonth()%> </h4>
                                         </div>                                      
-                                        <div class="col-lg-4">
-                                            <% ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup"); %>
+                                        <div class="col-lg-3">
+                                            <% ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup");%>
                                             <h4><b> Product Group:  </b><%= productGroup.getName()%></h4>
+                                        </div>
+                                        <div class="col-lg-3">                                            
+                                            <h4><b> Lot Size:  </b><%= productGroup.getLotSize()%></h4>
                                         </div>
                                     </div>                                        
                                 </div>
                                 <div class="panel-body">
 
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_create_POST">
-                                        <% SaleForecastEntity saleForecast = (SaleForecastEntity) request.getAttribute("saleForecast"); %>
+                                        <% SaleForecastEntity saleForecast = (SaleForecastEntity) request.getAttribute("saleForecast");%>
                                         <div class="form-group">
                                             <label>Sales Forecast</label>
                                             <input id="input_saleForecast" type="number" class="form-control" name="saleForecast" value="<%=saleForecast.getQuantity()%>" readonly>
@@ -81,8 +84,8 @@
 
                                         <div class="form-group">
                                             <label>Current Inventory Level</label>
-                                            <% Integer currentInventory = (Integer) request.getAttribute("currentInventoryLevel"); %>
-                                            <input id="input_currentInventory" type="number" class="form-control" name="currentInventory" value="<%= currentInventory %>" readonly>
+                                            <% Integer currentInventory = (Integer) request.getAttribute("currentInventoryLevel");%>
+                                            <input id="input_currentInventory" type="number" class="form-control" name="currentInventory" value="<%= currentInventory%>" readonly>
                                         </div>
 
                                         <div class="form-group">
@@ -110,24 +113,29 @@
         <!-- /#wrapper -->
 
         <script>
-            $('#input_targetInventoty').change(function(){        
+            $('#input_targetInventoty').change(function () {
+                var lotSize = <%= productGroup.getLotSize()%>;
                 var targetInventoty = parseInt($('#input_targetInventoty').val());
                 var saleForecast = parseInt($('#input_saleForecast').val());
-                var currentInventory = parseInt($('#input_currentInventory').val());                
-                
-                if(targetInventoty < currentInventory - saleForecast){
+                var currentInventory = parseInt($('#input_currentInventory').val());
+
+                if (targetInventoty < currentInventory - saleForecast) {
                     targetInventoty = currentInventory - saleForecast;
                     $('#input_targetInventoty').val(targetInventoty);
                     alert("Target Inventory Level cannot be less than ( current inventory level - sales forecast ).");
                 }
-                if(targetInventoty < 0){
+                if (targetInventoty < 0) {
                     targetInventoty = 0;
                     $('#input_targetInventoty').val(0);
                     alert("Target Inventory Level cannot be less than zero.");
                 }
-                                
-                var productionPlan = saleForecast - currentInventory + targetInventoty;                
-                $('#input_productionPlan').val(productionPlan);                
+
+                var productionPlan = saleForecast - currentInventory + targetInventoty;
+                if (productionPlan % lotSize !== 0) {
+                    productionPlan = ( Math.floor(productionPlan / lotSize) + 1) * lotSize;
+                } 
+                $('#input_productionPlan').val(productionPlan);
+                $('#input_targetInventoty').val(productionPlan + currentInventory - saleForecast);
             });
         </script>
 
