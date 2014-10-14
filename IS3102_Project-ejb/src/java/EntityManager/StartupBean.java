@@ -106,8 +106,9 @@ public class StartupBean {
                 MemberEntity memberEntity = new MemberEntity();
                 String passwordSalt = accountManagementBean.generatePasswordSalt();
                 String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
-                memberEntity.create(null,null,null,"member@if.com",null,null,null,null,passwordHash,passwordSalt);
+                memberEntity.create(null,null,null,"a",null,null,null,null,passwordHash,passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
+                memberEntity.setLoyaltyPoints(300);
                 em.persist(memberEntity);
                 memberEntity = new MemberEntity();
                 passwordSalt = accountManagementBean.generatePasswordSalt();
