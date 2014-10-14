@@ -8,6 +8,7 @@ import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ReturnHelper;
 import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
+import MRP.SalesForecast.SalesForecastBeanLocal;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
@@ -19,18 +20,19 @@ import javax.persistence.Query;
 
 @Stateless
 public class SalesRecordingBean implements SalesRecordingBeanLocal {
+    @EJB
+    private SalesForecastBeanLocal salesForecastBean;
 
     @PersistenceContext
     private EntityManager em;
 
     @EJB
-    AccountManagementBeanLocal accountManagementBean;
-    
+    AccountManagementBeanLocal accountManagementBean;    
     @EJB
     LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
-
     @EJB
     StoreInventoryManagementBeanLocal storeInventoryManagementBean;
+    
     
     @Override
     public ReturnHelper createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<LineItemEntity> itemsPurchased, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail) {
@@ -74,6 +76,9 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             StaffEntity staffEntity = accountManagementBean.getStaffByEmail(staffEmail);
             SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased);
             em.persist(salesRecordEntity);
+            // 
+            salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
+            
             storeEntity.getSalesRecords().add(salesRecordEntity);
             em.merge(storeEntity);
         } catch (Exception ex) {

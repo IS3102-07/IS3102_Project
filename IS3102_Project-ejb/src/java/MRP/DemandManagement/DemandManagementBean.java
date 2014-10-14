@@ -72,7 +72,7 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                             mps = (MasterProductionScheduleEntity) q3.getResultList().get(0);
                             mpsExits = false;                            
                         }
-
+                        // total work days in the month
                         int days_month = lastSchedule.getWorkDays_firstWeek() + lastSchedule.getWorkDays_secondWeek() + lastSchedule.getWorkDays_thirdWeek()
                                 + lastSchedule.getWorkDays_forthWeek() + lastSchedule.getWorkDays_fifthWeek();
 

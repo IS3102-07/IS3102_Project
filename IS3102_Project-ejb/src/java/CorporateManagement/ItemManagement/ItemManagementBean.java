@@ -603,6 +603,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
             ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);
             lineItem.setProductGroup(productGroup);
+            productGroup.setType(lineItem.getItem().getType());
             productGroup.getLineItemList().add(lineItem);
             em.merge(productGroup);
             return true;

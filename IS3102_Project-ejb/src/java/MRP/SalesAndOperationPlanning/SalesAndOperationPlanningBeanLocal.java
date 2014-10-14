@@ -43,6 +43,8 @@ public interface SalesAndOperationPlanningBeanLocal {
     
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList(Long storeId, Long scheduleId);
     
+    public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList_RetailGood(Long storeId, Long scheduleId);
+    
     public List<SOP_Helper> getSOPHelperList(Long storeId, Long scheduleId);
     
     public MonthScheduleEntity createSchedule(Integer year, Integer month, Integer workDays_firstWeek, Integer workDays_secondWeek, Integer workDays_thirdWeek, Integer workDays_forthWeek, Integer workDays_fifthWeek);
@@ -52,6 +54,8 @@ public interface SalesAndOperationPlanningBeanLocal {
     public Boolean deleteSchedule(Long id);
     
     public ProductGroupEntity getProductGroupBySOP(Long sopId);
+    
+    public Boolean generatePurchaseOrdersForRetailProduct(Long storeId, Long scheduleId);    
     
     @Remove
     public void remove();

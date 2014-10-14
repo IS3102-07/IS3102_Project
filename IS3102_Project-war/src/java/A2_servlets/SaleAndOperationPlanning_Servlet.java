@@ -90,9 +90,9 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 Integer week3 = Integer.parseInt(request.getParameter("week3"));
                 Integer week4 = Integer.parseInt(request.getParameter("week4"));
                 Integer week5 = Integer.parseInt(request.getParameter("week5"));
-                
+
                 sopBean.createSchedule(year, month, week1, week2, week3, week4, week5);
-                
+
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET";
                 break;
 
@@ -151,6 +151,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                     Long storeId = (long) session.getAttribute("sop_storeId");
                     Long schedulelId = (long) session.getAttribute("scheduleId");
                     List<ProductGroupEntity> unplannedProductGroupList = sopBean.getUnplannedProductGroup(storeId, schedulelId);
+                    List<SaleAndOperationPlanEntity> retailSopList = sopBean.getSaleAndOperationPlanList_RetailGood(storeId, schedulelId);
                     List<SOP_Helper> sopHelperList = sopBean.getSOPHelperList(storeId, schedulelId);
                     store = fmBean.viewStoreEntity(storeId);
                     MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
@@ -158,6 +159,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                     request.setAttribute("schedule", schedule);
                     request.setAttribute("unplannedProductGroupList", unplannedProductGroupList);
                     request.setAttribute("sopHelperList", sopHelperList);
+                    request.setAttribute("retailSopList", retailSopList);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -234,6 +236,15 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 if (submit_btn.equals("Delete Sales And Operations Plan")) {
                     System.out.println(" redirect to deleteSOP");
                     nextPage = "/SaleAndOperationPlanning_Servlet/deleteSOP";
+                } else if (submit_btn.equals("Purchase Order")) {
+                    storeId = (long) session.getAttribute("sop_storeId");
+                    schedulelId = (long) session.getAttribute("scheduleId");
+                    if(sopBean.generatePurchaseOrdersForRetailProduct(storeId, schedulelId)){
+                        request.setAttribute("alertMessage", "Purchase Order has been submitted.");
+                    }else{
+                        request.setAttribute("alertMessage", "Fail to place purchase order.");
+                    }   
+                    nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 } else {
                     String sopIdStr = request.getParameter("submit-btn");
                     request.setAttribute("sopIdStr", sopIdStr);

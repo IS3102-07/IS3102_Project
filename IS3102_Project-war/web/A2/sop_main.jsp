@@ -107,7 +107,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><b>Sales And Operations Plans</b></h4>
+                                    <h4><b>Sales And Operations Plans - Furniture </b></h4>
                                 </div>
                                 <!-- /.panel-heading -->
 
@@ -137,7 +137,7 @@
                                                             <td><input type="checkbox" name="delete" value="<%= model.sop.getId()%>" /></td>
                                                             <td><%= model.productGroup.getProductGroupName()%></td>
                                                             <td><%= model.sop.getSaleForcastdata()%></td>
-                                                            <td><%= model.sop.getProductionPlan() %></td>
+                                                            <td><%= model.sop.getProductionPlan()%></td>
                                                             <td><%= model.sop.getCurrentInventoryLevel()%></td>
                                                             <td><%= model.sop.getTargetInventoryLevel()%></td>
                                                             <td><button class="btn btn-primary" name="submit-btn" value="<%= model.sop.getId()%>">Edit</button></td>
@@ -168,6 +168,92 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4><b>Sales And Operations Plans - Retail Product</b></h4>
+                                </div>
+                                <!-- /.panel-heading -->
+
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                            <form action="../SaleAndOperationPlanning_Servlet/sopManagement">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTable2">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th>Product Group</th>
+                                                            <th>Sale Forecast</th>
+                                                            <th>Production Plan</th>
+                                                            <th>Current Inventory</th>
+                                                            <th>Target Inventory</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%                                                           
+                                                            List<SaleAndOperationPlanEntity> retailSopList = (List<SaleAndOperationPlanEntity>) request.getAttribute("retailSopList");
+                                                            for (SaleAndOperationPlanEntity model : retailSopList) {
+                                                        %>
+                                                        <tr>
+                                                            <td><input type="checkbox" name="delete" value="<%= model.getId()%>" /></td>
+                                                            <td><%= model.getProductGroup().getProductGroupName()%></td>
+                                                            <td><%= model.getSaleForcastdata()%></td>
+                                                            <td><%= model.getProductionPlan()%></td>
+                                                            <td><%= model.getCurrentInventoryLevel()%></td>
+                                                            <td><%= model.getTargetInventoryLevel()%></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= model.getId()%>">Edit</button></td>
+                                                        </tr>
+                                                        <%
+                                                            }
+                                                        %>
+                                                    </tbody>
+                                                </table>    
+                                                <div class="row">
+                                                    <div class="col-md-3">                                                        
+                                                        <input type="submit" name="submit-btn" value="Delete Sales And Operations Plan" class="btn btn-primary" data-loading-text="Loading...">
+                                                    </div>
+
+                                                    <div class="col-md-9">
+                                                        <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Generate Purchase Orders</button></a>
+
+                                                        <div role="dialog" class="modal fade" id="myModal">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4>Alert</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p id="messageBox"><b>Purchase Orders for the retail products will be submitted. Continue?</b></p>
+                                                                    </div>
+                                                                    <div class="modal-footer">                                                                                                                                
+                                                                        <button class="btn btn-primary" name="submit-btn" value="Purchase Order">Confirm</button>
+                                                                        <a class="btn btn-default" data-dismiss ="modal">Close</a>                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </form>                                              
+
+                                        </div>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.panel-body -->
+
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -177,7 +263,7 @@
         </div>
         <!-- /#wrapper -->
 
-        <%            
+        <%
             if (request.getAttribute("alertMessage") != null) {
         %>
         <script>
