@@ -148,10 +148,10 @@
                                                                 <input type="checkbox" name="delete" value="<%=lineItems.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=lineItems.get(i).getFurniture().getSKU()%>
+                                                                <%=lineItems.get(i).getItem().getSKU() %>
                                                             </td>
                                                             <td>
-                                                                <%=lineItems.get(i).getFurniture().getName()%>
+                                                                <%=lineItems.get(i).getItem().getName()%>
                                                             </td>
                                                             <td>
                                                                 <%=lineItems.get(i).getPercent()%>
