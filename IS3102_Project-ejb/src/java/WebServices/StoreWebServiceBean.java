@@ -86,8 +86,8 @@ public class StoreWebServiceBean {
             String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
             System.out.println("Sending SMS: " + telNo + ": " + smsMessage);
 
-            String requestURL = "http://smsc.vianett.no/v3/send.ashx?SenderAddress=ISfurniture";
-            requestURL += ("&username=" + "lee_yuan_guang@hotmail.com");
+            String requestURL = "http://smsc.vianett.no/v3/send.ashx?";
+            requestURL += ("username=" + "lee_yuan_guang@hotmail.com");
             requestURL += ("&password=" + "r0b16");
             requestURL += ("&tel=" + telNo);
             requestURL += ("&msg=" + smsMessage);
@@ -100,8 +100,12 @@ public class StoreWebServiceBean {
             connection.setRequestProperty("Content-Type", "text/plain");
             connection.setRequestProperty("charset", "utf-8");
             connection.connect();
+            connection.getInputStream();
+            connection.disconnect();
+            System.out.println("?????????");
             return true;
         } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         }
     }
