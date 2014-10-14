@@ -1,7 +1,8 @@
 package A3_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.CountryEntity;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.RegionalOfficeEntity;
 import EntityManager.StaffEntity;
 import EntityManager.SupplierEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
@@ -22,7 +23,9 @@ public class SupplierManagement_SupplierServlet extends HttpServlet {
     private SupplierManagementBeanLocal supplierManagementBean;
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-
+    @EJB
+    private FacilityManagementBeanLocal facilityManagementBean;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -33,6 +36,8 @@ public class SupplierManagement_SupplierServlet extends HttpServlet {
             String goodMsg = request.getParameter("goodMsg");
             List<SupplierEntity> suppliers = new ArrayList<>();
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            List<RegionalOfficeEntity>  listOfRegionalOffice = facilityManagementBean.viewListOfRegionalOffice();
+            session.setAttribute("listOfRegionalOffice", listOfRegionalOffice);
             if (accountManagementBean.checkIfStaffIsAdministrator(staffEntity.getId()) || accountManagementBean.checkIfStaffIsGlobalManager(staffEntity.getId())) {
                 suppliers = supplierManagementBean.viewAllSupplierList();
             } else if (accountManagementBean.checkIfStaffIsRegionalManager(staffEntity.getId()) || accountManagementBean.checkIfStaffIsPurchasingManager(staffEntity.getId())) {

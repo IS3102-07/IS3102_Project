@@ -23,6 +23,16 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     private EntityManager em;
 
     @Override
+    public MemberEntity getMember(String email) {
+        MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
+        if (memberEntity == null) {
+            return null;
+        } else {
+            return memberEntity;
+        }
+    }
+    
+    @Override
     public Integer getMemberLoyaltyPointsAmount(String email) {
         MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
         if (memberEntity == null) {
@@ -91,7 +101,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             try {
                 storeEntity = em.getReference(StoreEntity.class, storeID);
                 int loyaltyPointsEarned = (int) Math.round(amountPaid / storeEntity.getCountry().getExchangeRate());
-                memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints()+loyaltyPointsEarned);
+                memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints() + loyaltyPointsEarned);
             } catch (Exception ex) {
                 System.out.println("createSalesRecord(): Error in retriving country");
                 return new ReturnHelper(false, "System error in retriving country information.");

@@ -322,6 +322,35 @@ public class StartupBean {
             ex.printStackTrace();
         }
         try {
+            //Item_Country pricing
+            Query q = em.createQuery("Select c from CountryEntity c where c.name='Singapore'");
+            CountryEntity c = (CountryEntity) q.getSingleResult();
+            q = em.createQuery("Select i from ItemEntity i where i.SKU='F1'");
+            ItemEntity i = (ItemEntity) q.getSingleResult();
+            Item_CountryEntity item_country;
+            item_country = new Item_CountryEntity();
+            item_country.setCountry(c);
+            item_country.setIsDeleted(false);
+            item_country.setItem(i);
+            item_country.setRetailPrice(100.0);
+            em.persist(item_country);
+            em.flush();
+
+            q = em.createQuery("Select i from ItemEntity i where i.SKU='F2'");
+            ItemEntity ii = (ItemEntity) q.getSingleResult();
+            item_country = new Item_CountryEntity();
+            item_country.setCountry(c);
+            item_country.setIsDeleted(false);
+            item_country.setItem(ii);
+            item_country.setRetailPrice(200.0);
+            em.persist(item_country);
+            em.flush();
+
+        } catch (Exception ex) {
+            System.out.println("Skipping creating of Item_CountryEntities\n" + ex);
+            ex.printStackTrace();
+        }
+        try {
             Query q1 = em.createQuery("select s from StoreEntity s");
             List<StoreEntity> storeList = (List<StoreEntity>) q1.getResultList();
             Query q2 = em.createQuery("select pg from ProductGroupEntity pg");
