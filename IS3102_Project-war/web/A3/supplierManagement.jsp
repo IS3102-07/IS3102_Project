@@ -97,6 +97,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox" onclick="checkAll(this)" /></th>
+                                                            <th>Managed By</th>
                                                             <th>Name</th>
                                                             <th>Phone</th>
                                                             <th>Email</th>
@@ -115,6 +116,9 @@
                                                         <tr>
                                                             <td>
                                                                 <input type="checkbox" name="delete" value="<%=suppliers.get(i).getId()%>" />
+                                                            </td>
+                                                            <td>
+                                                                <%=suppliers.get(i).getRegionalOffice().getName()%>
                                                             </td>
                                                             <td>
                                                                 <%=suppliers.get(i).getSupplierName()%>
