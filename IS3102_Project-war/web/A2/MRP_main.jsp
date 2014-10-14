@@ -64,7 +64,29 @@
                                                 }
                                             %>                                                                                                                                                                                                                                                                                                
                                         </tbody>
-                                    </table>                                                    
+                                    </table> 
+
+                                    <form role="form" action="../MRP_purchaseOrder/*">
+
+                                        <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Generate Purchase Orders</button></a>
+                                        
+                                        <div role="dialog" class="modal fade" id="myModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4>Alert</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p id="messageBox"><b>Purchase Orders for all Material Requirements in this month will be submitted. Continue?</b></p>
+                                                    </div>
+                                                    <div class="modal-footer">                                                                                                                                
+                                                        <button class="btn btn-primary" name="submit-btn" value="Delete Warehouse">Confirm</button>
+                                                        <a class="btn btn-default" data-dismiss ="modal">Close</a>                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
 
                                 </div>                               
 

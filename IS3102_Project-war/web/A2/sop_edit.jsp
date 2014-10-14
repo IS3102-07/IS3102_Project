@@ -50,17 +50,20 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="row">                             
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <%  StoreHelper storeHelper = (StoreHelper) request.getAttribute("storeHelper");%>
                                             <h4><b> Store:  </b><%= storeHelper.store.getName()%></h4>
                                         </div>                                                
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <% MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule");%>
                                             <h4><b> Period: </b><%= schedule.getYear()%> - <%= schedule.getMonth()%> </h4>
                                         </div>                                      
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <% ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup"); %>
                                             <h4><b> Product Group:  </b><%= productGroup.getName()%></h4>
+                                        </div>
+                                        <div class="col-lg-3">                                            
+                                            <h4><b> Lot Size:  </b><%= productGroup.getLotSize()%></h4>
                                         </div>
                                     </div>                                        
                                 </div>
@@ -109,7 +112,8 @@
         <!-- /#wrapper -->        
         
         <script>
-            $('#input_targetInventory').change(function(){        
+            $('#input_targetInventory').change(function(){     
+                var lotSize = <%= productGroup.getLotSize()%>;
                 var targetInventory = parseInt($('#input_targetInventory').val());
                 var saleForecast = parseInt($('#input_saleForecast').val());
                 var currentInventory = parseInt($('#input_currentInventory').val());                
@@ -125,8 +129,12 @@
                     alert("Target Inventory Level cannot be less than zero.");
                 }
                                 
-                var productionPlan = saleForecast - currentInventory + targetInventory;                
-                $('#input_productionPlan').val(productionPlan);                
+                var productionPlan = saleForecast - currentInventory + targetInventory;
+                if (productionPlan % lotSize !== 0) {
+                    productionPlan = ( Math.floor(productionPlan / lotSize) + 1) * lotSize;
+                } 
+                $('#input_productionPlan').val(productionPlan);
+                $('#input_targetInventoty').val(productionPlan + currentInventory - saleForecast);
             });
         </script>
 

@@ -6,11 +6,15 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -27,6 +31,8 @@ public class MasterProductionScheduleEntity implements Serializable {
     private MonthScheduleEntity schedule;
     @ManyToOne
     private ManufacturingFacilityEntity mf;
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="mps")
+    private List<MaterialRequirementEntity> materialRequirementList;
     @OneToOne
     private FurnitureEntity furniture;
     private Integer amount_month;
@@ -43,6 +49,7 @@ public class MasterProductionScheduleEntity implements Serializable {
         this.amount_week3 = 0;
         this.amount_week4 = 0;
         this.amount_week5 = 0;
+        this.materialRequirementList = new ArrayList<>();
     }
         
     public Long getId() {
@@ -52,6 +59,14 @@ public class MasterProductionScheduleEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<MaterialRequirementEntity> getMaterialRequirementList() {
+        return materialRequirementList;
+    }
+
+    public void setMaterialRequirementList(List<MaterialRequirementEntity> materialRequirementList) {
+        this.materialRequirementList = materialRequirementList;
+    }     
 
     public Integer getAmount_month() {
         return amount_month;

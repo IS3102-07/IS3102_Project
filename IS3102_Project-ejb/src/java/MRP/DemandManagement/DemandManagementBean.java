@@ -84,9 +84,9 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                         }
                                                 
                         int amount_week1 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_firstWeek() / days_month);
-                        int amount_week2 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_firstWeek() / days_month);
-                        int amount_week3 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_firstWeek() / days_month);
-                        int amount_week4 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_firstWeek() / days_month);
+                        int amount_week2 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_secondWeek() / days_month);
+                        int amount_week3 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_thirdWeek() / days_month);
+                        int amount_week4 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_forthWeek() / days_month);
 
                         mps.setAmount_month(mps.getAmount_month() + amount);
                         mps.setAmount_week1(mps.getAmount_week1() + amount_week1);

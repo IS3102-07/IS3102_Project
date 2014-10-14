@@ -8,11 +8,7 @@ package MRP.MaterialRequirementFulfilment;
 
 import javax.ejb.Local;
 
-/**
- *
- * @author Jason
- */
 @Local
 public interface MaterialRequirementFulfilmentBeanLocal {
-    
+    public Boolean generatePurchaseOrderFromMaterialRequirement(Long MfId);
 }
