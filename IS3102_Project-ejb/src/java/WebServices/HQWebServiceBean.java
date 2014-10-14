@@ -3,6 +3,7 @@ package WebServices;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.LineItemEntity;
+import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
@@ -29,10 +30,10 @@ public class HQWebServiceBean {
 
     @EJB
     RetailInventoryControlBeanLocal RetailInventoryControlLocal;
-    
+
     @EJB
     SalesRecordingBeanLocal SalesRecordingBeanLocal;
-    
+
     @EJB
     LoyaltyAndRewardsBeanLocal LoyaltyAndRewardsBeanLocal;
 
@@ -58,13 +59,19 @@ public class HQWebServiceBean {
         StoreEntity storeEntity = FacilityManagementBeanLocal.getStoreByID(storeID);
         return storeEntity;
     }
+
     @WebMethod
-    public Integer getMemberLoyaltyPoints(@WebParam(name="memberEmail") String memberEmail) {
+    public Integer getMemberLoyaltyPoints(@WebParam(name = "memberEmail") String memberEmail) {
         return LoyaltyAndRewardsBeanLocal.getMemberLoyaltyPointsAmount(memberEmail);
     }
     
     @WebMethod
-    public ReturnHelper createSalesRecord(@WebParam(name = "staffEmail") String staffEmail, @WebParam(name = "password") String staffPasword, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased,@WebParam(name="amountDue") Double amountDue, @WebParam(name="amountPaid") Double amountPaid,@WebParam(name="amountPaidUsingPoints") Double amountPaidUsingPoints,@WebParam(name="loyaltyPointsDeducted") Integer loyaltyPointsDeducted, @WebParam(name="memberEmail") String memberEmail) {
-        return SalesRecordingBeanLocal.createSalesRecord(staffEmail, staffPasword, storeID, posName, itemsPurchased, amountDue, amountPaid,amountPaidUsingPoints,loyaltyPointsDeducted, memberEmail);
+    public MemberEntity getMember(@WebParam(name = "memberEmail") String memberEmail) {
+        return LoyaltyAndRewardsBeanLocal.getMember(memberEmail);
+    }
+
+    @WebMethod
+    public ReturnHelper createSalesRecord(@WebParam(name = "staffEmail") String staffEmail, @WebParam(name = "password") String staffPasword, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased, @WebParam(name = "amountDue") Double amountDue, @WebParam(name = "amountPaid") Double amountPaid, @WebParam(name = "amountPaidUsingPoints") Double amountPaidUsingPoints, @WebParam(name = "loyaltyPointsDeducted") Integer loyaltyPointsDeducted, @WebParam(name = "memberEmail") String memberEmail) {
+        return SalesRecordingBeanLocal.createSalesRecord(staffEmail, staffPasword, storeID, posName, itemsPurchased, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail);
     }
 }
