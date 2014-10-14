@@ -29,6 +29,8 @@ public class CountryEntity implements Serializable {
     @OneToMany(mappedBy = "country")
     private List<StoreEntity> stores;
 
+    public CountryEntity() {}
+    
     public CountryEntity(String name, String currency, Double exchangeRate, Integer countryCode) {
         this.setName(name);
         this.setCurrency(currency);
