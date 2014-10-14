@@ -1,4 +1,3 @@
-
 package EntityManager;
 
 import java.io.Serializable;
@@ -12,6 +11,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class CountryEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,12 +22,21 @@ public class CountryEntity implements Serializable {
     private String currency;
     private Double exchangeRate;
     private Integer countryCode;
-    @OneToMany(mappedBy="country")
+    @OneToMany(mappedBy = "country")
     private List<SupplierEntity> suppliers;
-    @OneToMany(mappedBy="country")
+    @OneToMany(mappedBy = "country")
     private List<WarehouseEntity> warehouses;
-    @OneToMany(mappedBy="country")
+    @OneToMany(mappedBy = "country")
     private List<StoreEntity> stores;
+
+    public CountryEntity() {}
+    
+    public CountryEntity(String name, String currency, Double exchangeRate, Integer countryCode) {
+        this.setName(name);
+        this.setCurrency(currency);
+        this.setExchangeRate(exchangeRate);
+        this.countryCode = countryCode;
+    }
 
     public List<SupplierEntity> getSupplier() {
         return suppliers;
@@ -59,13 +68,6 @@ public class CountryEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-    
-    public void create(Long id, String name, String currency, Double exchangeRate){
-        this.setId(id);
-        this.setName(name);
-        this.setCurrency(currency);
-        this.setExchangeRate(exchangeRate);
     }
 
     @Override
@@ -150,5 +152,5 @@ public class CountryEntity implements Serializable {
     public void setWarehouses(List<WarehouseEntity> warehouses) {
         this.warehouses = warehouses;
     }
-    
+
 }

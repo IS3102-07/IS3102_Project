@@ -8,12 +8,8 @@ import EntityManager.StoreEntity;
 import HelperClasses.ItemHelper;
 import HelperClasses.ReturnHelper;
 import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -28,7 +24,20 @@ public class StoreWebServiceBean {
     @EJB
     RetailInventoryControlBeanLocal RetailInventoryControlLocal;
 
-    @WebMethod(operationName = "getItemBySKU")
+    @WebMethod
+    public String getCountryCode(@WebParam(name = "storeID") Long storeID) {
+        try {
+            StoreEntity storeEntity = RetailInventoryControlLocal.getStoreByID(storeID);
+            if (storeEntity == null) {
+                return null;
+            }
+            return "00" + storeEntity.getCountry().getCountryCode();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @WebMethod
     public ItemHelper getItemBySKU(@WebParam(name = "SKU") String SKU) {
         ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
         ItemHelper ih = new ItemHelper(itemEntity.getId(), itemEntity.getSKU(), itemEntity.getName());
@@ -72,33 +81,25 @@ public class StoreWebServiceBean {
     }
 
     @WebMethod
-    public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") Integer telNo) {
+    public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") String telNo) {
         try {
-            StringBuffer response;
             String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
             System.out.println("Sending SMS: " + telNo + ": " + smsMessage);
 
-            String RequestURL = "http://www.redoxygen.net/sms.dll?Action=SendSMS";
+            String requestURL = "http://smsc.vianett.no/v3/send.ashx?SenderAddress=ISfurniture";
+            requestURL += ("&username=" + "lee_yuan_guang@hotmail.com");
+            requestURL += ("&password=" + "r0b16");
+            requestURL += ("&tel=" + telNo);
+            requestURL += ("&msg=" + smsMessage);
 
-            String Data = ("AccountId=" + URLEncoder.encode("CI00136959", "UTF-8"));
-            Data += ("&Email=" + URLEncoder.encode("lyg@nus.edu.sg", "UTF-8"));
-            Data += ("&Password=" + URLEncoder.encode("6nruJnM4", "UTF-8"));
-            Data += ("&Recipient=" + URLEncoder.encode(telNo + "", "UTF-8"));
-            Data += ("&Message=" + URLEncoder.encode(smsMessage, "UTF-8"));
-
-            int Result = -1;
-            URL Address = new URL(RequestURL);
-
-            HttpURLConnection Connection = (HttpURLConnection) Address.openConnection();
-            Connection.setRequestMethod("POST");
-            Connection.setDoInput(true);
-            Connection.setDoOutput(true);
-
-            DataOutputStream Output;
-            Output = new DataOutputStream(Connection.getOutputStream());
-            Output.writeBytes(Data);
-            Output.flush();
-            Output.close();
+            URL url = new URL(requestURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setInstanceFollowRedirects(false);
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "text/plain");
+            connection.setRequestProperty("charset", "utf-8");
+            connection.connect();
             return true;
         } catch (Exception ex) {
             return false;

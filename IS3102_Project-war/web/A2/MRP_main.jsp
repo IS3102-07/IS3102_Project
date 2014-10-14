@@ -18,8 +18,11 @@
                             <h1 class="page-header">Material Requirement Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales Forecast</a>
-                                </li>                                
+                                    <i class="icon icon-credit-card"></i>  <a href="../MRP_index_GET/*">Material Requirement Planning</a>
+                                </li>                                                               
+                                <li>
+                                    <i class="icon icon-list-ul"></i>  <a href="#">Material Requirement List</a>
+                                </li>   
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
@@ -64,7 +67,29 @@
                                                 }
                                             %>                                                                                                                                                                                                                                                                                                
                                         </tbody>
-                                    </table>                                                    
+                                    </table> 
+
+                                    <form role="form" action="../MRP_purchaseOrder/*">
+
+                                        <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Generate Purchase Orders</button></a>
+                                        
+                                        <div role="dialog" class="modal fade" id="myModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4>Alert</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p id="messageBox"><b>Purchase Orders for all Material Requirements in this month will be submitted. Continue?</b></p>
+                                                    </div>
+                                                    <div class="modal-footer">                                                                                                                                
+                                                        <button class="btn btn-primary" name="submit-btn" value="Delete Warehouse">Confirm</button>
+                                                        <a class="btn btn-default" data-dismiss ="modal">Close</a>                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
 
                                 </div>                               
 

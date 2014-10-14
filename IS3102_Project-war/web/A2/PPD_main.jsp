@@ -18,8 +18,11 @@
                             <h1 class="page-header">Production Plan Distribution</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales Forecast</a>
-                                </li>                                
+                                    <i class="icon icon-dashboard"></i>  <a href="../PPD_index_GET/*">Production Plan Distribution</a>
+                                </li>
+                                <li>
+                                    <i class="icon icon-list"></i>  <a href="#">Distribution Result List</a>
+                                </li>
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->

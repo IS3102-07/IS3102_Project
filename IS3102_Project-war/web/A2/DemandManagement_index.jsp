@@ -17,7 +17,7 @@
                             <h1 class="page-header">Demand Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-pencil"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operations Planning</a>
+                                    <i class="icon icon-crop"></i><a href="#"> Demand Management</a>
                                 </li>                                
                             </ol>
                         </div>
