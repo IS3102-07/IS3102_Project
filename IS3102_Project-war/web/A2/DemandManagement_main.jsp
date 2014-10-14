@@ -18,8 +18,11 @@
                             <h1 class="page-header">Demand Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales Forecast</a>
+                                    <i class="icon icon-crop"></i><a href="../DemandManagement_index_GET/*"> Demand Management</a>
                                 </li>                                
+                                <li>
+                                    <i class="icon icon-calendar"></i><a href="#"> Master Production Schedule List</a>
+                                </li>
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->

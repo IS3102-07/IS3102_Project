@@ -19,10 +19,10 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
-                                </li>                              
+                                    <i class="icon icon-dashboard"></i>  <a href="../PPD_index_GET/*">Production Plan Distribution</a>
+                                </li>
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="#">Schedule Management</a>
+                                    <i class="icon icon-list"></i>  <a href="#">Distribution Schema List</a>
                                 </li>
                             </ol>
                         </div>
