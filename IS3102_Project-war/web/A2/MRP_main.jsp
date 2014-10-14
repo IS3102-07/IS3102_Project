@@ -18,8 +18,11 @@
                             <h1 class="page-header">Material Requirement Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales Forecast</a>
-                                </li>                                
+                                    <i class="icon icon-credit-card"></i>  <a href="../MRP_index_GET/*">Material Requirement Planning</a>
+                                </li>                                                               
+                                <li>
+                                    <i class="icon icon-list-ul"></i>  <a href="#">Material Requirement List</a>
+                                </li>   
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
