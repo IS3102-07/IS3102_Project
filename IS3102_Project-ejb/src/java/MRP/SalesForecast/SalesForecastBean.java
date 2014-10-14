@@ -1,9 +1,11 @@
 package MRP.SalesForecast;
 
+import EntityManager.LineItemEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
+import EntityManager.SalesRecordEntity;
 import EntityManager.StoreEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +21,26 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
     private EntityManager em;
 
     // unsupport now
-    public SalesFigureEntity createSalesFigure(Long productGroupId, Long StoreId, int year, int month) {
+    public Boolean updateSalesFigureBySalesRecord(Long salesRecordId) {
         try {
-            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+            SalesRecordEntity saleRecord = em.find(SalesRecordEntity.class, salesRecordId);
+            for (LineItemEntity lineItem : saleRecord.getItemsPurchased()) {
+                if (lineItem.getItem().getType().equals("Furniture")) {
+                    Query q = em.createQuery("select f from");
+                    Query q1 = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.year = ?2 and s.schedule.month =?3 ")
+                            .setParameter(1, saleRecord.getStore())
+                            .setParameter(2, this)
+                            .setParameter(3, this);
+                }
 
+                SalesFigureEntity salesFigure = new SalesFigureEntity();
+                salesFigure.setStore(saleRecord.getStore());
+                
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;
+        return false;
     }
 
     public MonthScheduleEntity getTheBeforeOne(MonthScheduleEntity schedule) {
@@ -78,7 +92,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                         System.out.println("debug...... i=" + i);
 
                         MonthScheduleEntity lastSchedule = this.getTheBeforeOne(schedule);
-                        
+
                         System.out.println("debug...... lastSchedule.getId: " + lastSchedule.getId());
 
                         Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")

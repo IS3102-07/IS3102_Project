@@ -87,17 +87,27 @@
                                                 }
                                             }
                                             if (!isAdminLevel) {
-                                                List<AccessRightEntity> listOfAccessRight = staff.getAccessRightList();
-                                                for (AccessRightEntity accessRight : listOfAccessRight) {
-                                                    for (RegionalOfficeEntity RO : listOfRegionalOffice) {
-                                                        if (accessRight.getRegionalOffice().getId().equals(RO.getId())) {
-                                                            out.println("<option value='" + RO.getId() + "'>" + RO.getName() + "</option>");
+                                                for (RoleEntity role : listOfRoles) {
+                                                    List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                    for (AccessRightEntity accessRight : accessList) {
+                                                        for (RegionalOfficeEntity RO : listOfRegionalOffice) {
+                                                            if (accessRight.getRegionalOffice().getId().equals(RO.getId())) {
+                                                                out.println("<option value='" + RO.getId() + "'>" + RO.getName() + "</option>");
+                                                            }
                                                         }
                                                     }
                                                 }
+//
+//                                                List<AccessRightEntity> listOfAccessRight = staff.getAccessRightList();
+//                                                for (AccessRightEntity accessRight : listOfAccessRight) {
+//                                                    for (RegionalOfficeEntity RO : listOfRegionalOffice) {
+//                                                        if (accessRight.getRegionalOffice() != null && accessRight.getRegionalOffice().getId().equals(RO.getId())) {
+//
+//                                                            out.println("<option value='" + RO.getId() + "'>" + RO.getName() + "</option>");
+//                                                        }
+//                                                    }
+//                                                }
                                             }
-
-
                                         %>
                                     </select>
                                 </div>

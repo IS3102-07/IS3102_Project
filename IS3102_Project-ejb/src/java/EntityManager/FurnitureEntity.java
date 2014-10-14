@@ -23,9 +23,7 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     @Lob
     private String description;
     @Lob
-    private String imageURL;
-    @OneToOne(cascade = {CascadeType.REMOVE}, mappedBy = "furniture")
-    private ProductGroupLineItemEntity productGroupLineItem;
+    private String imageURL;    
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "furniture")
     private BillOfMaterialEntity BOM;
 
@@ -49,14 +47,6 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
 
     public void setIsDeleted(Boolean isDeleted) {
         super.setIsDeleted(isDeleted);
-    }
-
-    public ProductGroupLineItemEntity getProductGroupLineItem() {
-        return productGroupLineItem;
-    }
-
-    public void setProductGroupLineItem(ProductGroupLineItemEntity productGroupLineItem) {
-        this.productGroupLineItem = productGroupLineItem;
     }
 
     public Long getId() {

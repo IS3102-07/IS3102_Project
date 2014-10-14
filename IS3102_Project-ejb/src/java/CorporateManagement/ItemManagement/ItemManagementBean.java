@@ -536,11 +536,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
     public ProductGroupLineItemEntity createProductGroupLineItem(String SKU, double percent) {
         System.out.println("createProductGroupLineItem() called");
         try {
-            Query q = em.createQuery("Select f from FurnitureEntity f where f.SKU=:SKU");
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
             q.setParameter("SKU", SKU);
-            FurnitureEntity furniture = (FurnitureEntity) q.getSingleResult();
+            ItemEntity item = (ItemEntity) q.getSingleResult();
             ProductGroupLineItemEntity lineItem = new ProductGroupLineItemEntity();
-            lineItem.setFurniture(furniture);
+            lineItem.setItem(item);
             lineItem.setPercent(percent);
             em.persist(lineItem);
             return lineItem;
@@ -585,10 +585,10 @@ public class ItemManagementBean implements ItemManagementBeanLocal {
         try {
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, productGroupLineItemID);
             lineItem.setPercent(percent);
-            Query q = em.createQuery("Select i from FurnitureEntity i where i.SKU=:SKU");
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
             q.setParameter("SKU", SKU);
-            FurnitureEntity furnitureEntity = (FurnitureEntity) q.getSingleResult();
-            lineItem.setFurniture(furnitureEntity);
+            ItemEntity item = (ItemEntity) q.getSingleResult();
+            lineItem.setItem(item);
             em.merge(lineItem);
             return true;
         } catch (Exception ex) {

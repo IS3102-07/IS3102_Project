@@ -1,4 +1,7 @@
-<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="EntityManager.AccessRightEntity"%>
+<%@page import="EntityManager.RoleEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.SupplierEntity"%>
 <%@page import="EntityManager.PurchaseOrderEntity"%>
@@ -83,14 +86,55 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            if (purchaseOrders != null) {
-                                                                for (int i = 0; i < purchaseOrders.size(); i++) {
-                                                                    SupplierEntity supplier = purchaseOrders.get(i).getSupplier();
-                                                                    WarehouseEntity warehouse = purchaseOrders.get(i).getDestination();
+                                                            List<PurchaseOrderEntity> finalListOfPO = new ArrayList<PurchaseOrderEntity>(); 
+                                                            StaffEntity staff = (StaffEntity) (session.getAttribute("staffEntity"));
+                                                            List<RoleEntity> listOfRoles = staff.getRoles();
+                                                            boolean isAdmin = false;
+                                                            for (RoleEntity role : listOfRoles) {
+                                                                if (role.getName().equals("Administrator") || role.getName().equals("Global Manager")) {
+                                                                    isAdmin = true;
+                                                                    finalListOfPO = purchaseOrders;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            boolean isRegional = false;
+                                                            if (!isAdmin) {
+                                                                for (RoleEntity role : listOfRoles) {
+                                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Purchasing Manager")) {
+                                                                        isRegional = true;
+                                                                        List<AccessRightEntity> accessList = staff.getAccessRightList();
+                                                                        for (AccessRightEntity accessRight : accessList) {
+                                                                            for (PurchaseOrderEntity PO : purchaseOrders) {
+                                                                                if (accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
+                                                                                    finalListOfPO.add(PO);
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                if (!isRegional) {
+                                                                    for (RoleEntity role : listOfRoles) {
+                                                                        if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
+                                                                            List<AccessRightEntity> accessList = staff.getAccessRightList();
+                                                                            for (AccessRightEntity accessRight : accessList) {
+                                                                                for (PurchaseOrderEntity PO : purchaseOrders) {
+                                                                                    if (accessRight.getWarehouse().getId().equals(PO.getDestination().getId())) {
+                                                                                        finalListOfPO.add(PO);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            if (finalListOfPO != null) {
+                                                                for (int i = 0; i < finalListOfPO.size(); i++) {
+                                                                    SupplierEntity supplier = finalListOfPO.get(i).getSupplier();
+                                                                    WarehouseEntity warehouse = finalListOfPO.get(i).getDestination();
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <%=purchaseOrders.get(i).getId()%>
+                                                                <%=finalListOfPO.get(i).getId()%>
                                                             </td>
                                                             <td>
                                                                 <%=supplier.getSupplierName()%>
@@ -99,18 +143,16 @@
                                                                 <%=warehouse.getWarehouseName()%>
                                                             </td>
                                                             <td>
-                                                                <% SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-                                                                String date = DATE_FORMAT.format(purchaseOrders.get(i).getExpectedReceivedDate()); %>
-                                                                <%=date%>
+                                                                <%=finalListOfPO.get(i).getExpectedReceivedDate()%>
                                                             </td>
                                                             <td>
-                                                                <%=purchaseOrders.get(i).getSubmittedBy()%>
+                                                                <%=finalListOfPO.get(i).getSubmittedBy()%>
                                                             </td>
                                                             <td>
-                                                                <%=purchaseOrders.get(i).getStatus()%>
+                                                                <%=finalListOfPO.get(i).getStatus()%>
                                                             </td>
                                                             <td style="width:200px">
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updatePO('<%=purchaseOrders.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updatePO('<%=finalListOfPO.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -131,7 +173,7 @@
                                             </div>
                                             <input type="hidden" name="id" value="">    
                                             <input type="hidden" name="source" value="">  
-                                            
+
                                         </div>
 
                                     </div>

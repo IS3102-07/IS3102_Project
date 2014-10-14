@@ -38,7 +38,7 @@ public abstract class ItemEntity implements Serializable {
     private Integer volume;
     private Boolean isDeleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
-    private List<Supplier_ItemEntity> suppliers;
+    private List<Supplier_ItemEntity> suppliers;    
 
     public ItemEntity() {
         this.itemCountryList = new ArrayList<>();

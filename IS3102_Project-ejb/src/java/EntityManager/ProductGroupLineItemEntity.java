@@ -24,8 +24,8 @@ public class ProductGroupLineItemEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private double percent;
-    @OneToOne
-    private FurnitureEntity furniture;
+    @ManyToOne
+    private ItemEntity item;
     @ManyToOne
     private ProductGroupEntity productGroup;
     
@@ -55,13 +55,13 @@ public class ProductGroupLineItemEntity implements Serializable {
         this.percent = percent;
     }
 
-    public FurnitureEntity getFurniture() {
-        return furniture;
+    public ItemEntity getItem() {
+        return item;
     }
 
-    public void setFurniture(FurnitureEntity furniture) {
-        this.furniture = furniture;
-    }        
+    public void setItem(ItemEntity item) {
+        this.item = item;
+    }    
     
     @Override
     public int hashCode() {

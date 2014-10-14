@@ -80,9 +80,11 @@
                                                 <%
                                                     }
                                                     for (RegionalOfficeEntity ro : regionalOfficeList) {
+                                                        if (ro.getId() != accessRight.getRegionalOffice().getId()) {
                                                 %>
                                                 <option value="<%= ro.getId()%>"><%= ro.getName()%></option>
                                                 <%
+                                                        }
                                                     }
                                                 %>
                                             </select>                                            
