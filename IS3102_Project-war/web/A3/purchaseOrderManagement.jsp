@@ -114,7 +114,7 @@
                                                                 }
                                                                 if (!isRegional) {
                                                                     for (RoleEntity role : listOfRoles) {
-                                                                        if (role.getName().equals("Warehouse Manager")) {
+                                                                        if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
                                                                             List<AccessRightEntity> accessList = staff.getAccessRightList();
                                                                             for (AccessRightEntity accessRight : accessList) {
                                                                                 for (PurchaseOrderEntity PO : purchaseOrders) {
