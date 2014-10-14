@@ -33,6 +33,7 @@ public class ProductGroupEntity implements Serializable {
     private List<SaleForecastEntity> saleForcastEntityList;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="productGroup")
     private List<SaleAndOperationPlanEntity> sopList;
+    private String type;
     private Boolean isDeleted;
     
     public ProductGroupEntity(){
@@ -52,6 +53,14 @@ public class ProductGroupEntity implements Serializable {
         this.isDeleted = false;
     }        
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }        
+    
     public Boolean getIsDeleted() {
         return isDeleted;
     }

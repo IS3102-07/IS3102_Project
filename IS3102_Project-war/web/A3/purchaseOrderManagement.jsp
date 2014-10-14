@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.AccessRightEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
@@ -143,7 +144,9 @@
                                                                 <%=warehouse.getWarehouseName()%>
                                                             </td>
                                                             <td>
-                                                                <%=finalListOfPO.get(i).getExpectedReceivedDate()%>
+                                                                <% SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+                                                                String date = DATE_FORMAT.format(finalListOfPO.get(i).getExpectedReceivedDate()); %>
+                                                                <%=date%>
                                                             </td>
                                                             <td>
                                                                 <%=finalListOfPO.get(i).getSubmittedBy()%>

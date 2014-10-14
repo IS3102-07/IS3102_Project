@@ -25,7 +25,6 @@ import javax.persistence.Query;
 public class MaterialRequirementFulfilmentBean implements MaterialRequirementFulfilmentBeanLocal {
     @EJB
     private RetailProductsAndRawMaterialsPurchasingBeanLocal purchaseBean;
-
     @EJB
     private ManufacturingInventoryControlBeanLocal micBean;
         
