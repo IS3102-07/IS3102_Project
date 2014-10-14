@@ -105,7 +105,7 @@
                                                                         List<AccessRightEntity> accessList = staff.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                if (accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
+                                                                                if (accessRight.getRegionalOffice()!= null && accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
                                                                                     finalListOfPO.add(PO);
                                                                                 }
                                                                             }
@@ -118,7 +118,7 @@
                                                                             List<AccessRightEntity> accessList = staff.getAccessRightList();
                                                                             for (AccessRightEntity accessRight : accessList) {
                                                                                 for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                    if (accessRight.getWarehouse().getId().equals(PO.getDestination().getId())) {
+                                                                                    if (accessRight.getWarehouse()!=null && accessRight.getWarehouse().getId().equals(PO.getDestination().getId())) {
                                                                                         finalListOfPO.add(PO);
                                                                                     }
                                                                                 }

@@ -70,21 +70,14 @@
                                             <label for="">Regional Office</label>
                                             <select id="" class="form-control" name="regionalOffice">
                                                 <%
-                                                    if (accessRight.getRegionalOffice() != null) {
-                                                %>
-                                                <option value="<%= accessRight.getRegionalOffice().getId()%>" ><%= accessRight.getRegionalOffice().getName()%></option>
-                                                <%
-                                                } else {
-                                                %>
-                                                <option></option>
-                                                <%
-                                                    }
+                                                    String select = "";
+                                                    out.print("<option value=''></option>");
                                                     for (RegionalOfficeEntity ro : regionalOfficeList) {
-                                                        if (accessRight.getRegionalOffice() != null && ro.getId() != accessRight.getRegionalOffice().getId()) {
-                                                %>
-                                                <option value="<%= ro.getId()%>"><%= ro.getName()%></option>
-                                                <%
+                                                        if (accessRight.getRegionalOffice() != null && ro.getId() == accessRight.getRegionalOffice().getId()) {
+                                                            select = "selected";
                                                         }
+                                                        out.print("<option value='" + ro.getId() + "' " + select + ">" + ro.getName() + "</option>");
+                                                        select = "";
                                                     }
                                                 %>
                                             </select>                                            
@@ -93,21 +86,15 @@
                                             <label for="">Store</label>
                                             <select id="" class="form-control" name="store">
                                                 <%
-                                                    if (accessRight.getStore() != null) {
-                                                %>
-                                                <option value="<%= accessRight.getStore().getId()%>"><%= accessRight.getStore().getName()%></option>
-                                                <%
-                                                } else {
-                                                %>
-                                                <option></option>
-                                                <%
-                                                    }
+                                                    select = "";
+                                                    out.print("<option value=''></option>");
+
                                                     for (StoreEntity s : storeList) {
-                                                        if (accessRight.getStore() != null && s.getId() != accessRight.getStore().getId()) {
-                                                %>
-                                                <option value="<%= s.getId()%>"><%= s.getName()%></option>
-                                                <%
+                                                        if (accessRight.getStore() != null && s.getId() == accessRight.getStore().getId()) {
+                                                            select = "selected";
                                                         }
+                                                        out.print("<option value='" + s.getId() + "' " + select + ">" + s.getName() + "</option>");
+                                                        select = "";
                                                     }
                                                 %>
                                             </select>                                            
@@ -116,21 +103,15 @@
                                             <label for="">Manufacturing Facility</label>
                                             <select id="" class="form-control" name="manufacturingFacility">
                                                 <%
-                                                    if (accessRight.getManufacturingFacility() != null) {
-                                                %>
-                                                <option value="<%= accessRight.getManufacturingFacility().getId()%>"><%= accessRight.getManufacturingFacility().getName()%></option>
-                                                <%
-                                                } else {
-                                                %>
-                                                <option></option>
-                                                <%
-                                                    }
+                                                    select = "";
+                                                    out.print("<option value=''></option>");
+
                                                     for (ManufacturingFacilityEntity m : manufacturingFacilityList) {
-                                                        if (accessRight.getManufacturingFacility() != null && m.getId() != accessRight.getManufacturingFacility().getId()) {
-                                                %>
-                                                <option value="<%= m.getId()%>"><%= m.getName()%></option>
-                                                <%
+                                                        if (accessRight.getManufacturingFacility() != null && m.getId() == accessRight.getManufacturingFacility().getId()) {
+                                                            select = "selected";
                                                         }
+                                                        out.print("<option value='" + m.getId() + "' " + select + ">" + m.getName() + "</option>");
+                                                        select = "";
                                                     }
                                                 %>
                                             </select>                                            
@@ -139,21 +120,15 @@
                                             <label for="">Warehouse</label>
                                             <select id="" class="form-control" name="warehouse">
                                                 <%
-                                                    if (accessRight.getWarehouse() != null) {
-                                                %>
-                                                <option value="<%= accessRight.getWarehouse().getId()%>" > <%= accessRight.getWarehouse().getWarehouseName()%> </option>
-                                                <%
-                                                } else {
-                                                %>
-                                                <option></option>
-                                                <%
-                                                    }
+                                                    select = "";
+                                                    out.print("<option value=''></option>");
+
                                                     for (WarehouseEntity w : warehouseList) {
-                                                        if (accessRight.getWarehouse() != null && w.getId() != accessRight.getWarehouse().getId()) {
-                                                %>
-                                                <option value="<%= w.getId()%>"><%= w.getWarehouseName()%></option>
-                                                <%
+                                                        if (accessRight.getWarehouse() != null && w.getId() == accessRight.getWarehouse().getId()) {
+                                                            select = "selected";
                                                         }
+                                                        out.print("<option value='" + w.getId() + "' " + select + ">" + w.getWarehouseName() + "</option>");
+                                                        select = "";
                                                     }
                                                 %>
                                             </select>                                            
