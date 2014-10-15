@@ -17,9 +17,9 @@ public class Item_CountryEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Double retailPrice;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     private ItemEntity item;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private CountryEntity country;
     private Boolean isDeleted;
 
