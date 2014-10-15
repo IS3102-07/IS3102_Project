@@ -35,7 +35,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     @Override
     public MemberEntity getMemberViaCard(String memberCard) {
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.loyaltyCardId:memberCard");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.loyaltyCardId=:memberCard");
             q.setParameter("memberCard", memberCard);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             return memberEntity;
