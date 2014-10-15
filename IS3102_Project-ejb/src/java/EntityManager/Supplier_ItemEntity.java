@@ -1,7 +1,6 @@
 package EntityManager;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,9 +18,9 @@ public class Supplier_ItemEntity implements Serializable {
     private Integer lotSize;
     private Integer leadTime;
     private Boolean isDeleted;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     private ItemEntity item;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     private SupplierEntity supplier;
 
     public Supplier_ItemEntity() {
