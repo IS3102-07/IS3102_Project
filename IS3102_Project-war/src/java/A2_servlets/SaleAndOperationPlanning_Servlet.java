@@ -17,7 +17,7 @@ import EntityManager.SaleForecastEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.StoreHelper;
-import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
+import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import MRP.SalesAndOperationPlanning.SOP_Helper;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import MRP.SalesForecast.SalesForecastBeanLocal;
@@ -41,7 +41,7 @@ import javax.servlet.http.HttpSession;
 public class SaleAndOperationPlanning_Servlet extends HttpServlet {
 
     @EJB
-    private StoreInventoryManagementBeanLocal simBean;
+    private StoreAndKitchenInventoryManagementBeanLocal simBean;
     @EJB
     private SalesForecastBeanLocal sfBean;
     @EJB

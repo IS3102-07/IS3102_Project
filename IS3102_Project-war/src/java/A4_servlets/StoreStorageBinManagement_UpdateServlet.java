@@ -1,6 +1,6 @@
 package A4_servlets;
 
-import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
+import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 public class StoreStorageBinManagement_UpdateServlet extends HttpServlet {
 
     @EJB
-    private StoreInventoryManagementBeanLocal simbl;
+    private StoreAndKitchenInventoryManagementBeanLocal simbl;
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -2,7 +2,7 @@ package A4_servlets;
 
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
-import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
+import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class StoreTransferOrderLineItemManagement_Servlet extends HttpServlet {
 
     @EJB
-    private StoreInventoryManagementBeanLocal simbl;
+    private StoreAndKitchenInventoryManagementBeanLocal simbl;
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

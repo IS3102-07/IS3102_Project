@@ -2,7 +2,7 @@ package A4_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.WarehouseEntity;
-import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
+import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -18,7 +18,7 @@ public class StoreWarehouseManagement_Servlet extends HttpServlet {
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
     @EJB
-    private StoreInventoryManagementBeanLocal simbl;
+    private StoreAndKitchenInventoryManagementBeanLocal simbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
