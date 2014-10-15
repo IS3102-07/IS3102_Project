@@ -1,6 +1,7 @@
 package OperationalCRM.SalesRecording;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.CountryEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.MemberEntity;
 import EntityManager.SalesRecordEntity;
@@ -66,7 +67,8 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
         //Retrieve country for currency & exchange rate to be stored in sales record
         try {
             storeEntity = em.getReference(StoreEntity.class, storeID);
-            currency = storeEntity.getCountry().getCurrency();
+            CountryEntity countryEntity = storeEntity.getCountry();
+            currency = countryEntity.getCurrency();
         } catch (Exception ex) {
             System.out.println("createSalesRecord(): Error in retriving country");
             return new ReturnHelper(false, "System error in retriving country information.");
