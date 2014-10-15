@@ -1403,5 +1403,12 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
             return false;
         }
     }
+    
+    @Override
+    public Boolean removeItemFromInventory(String SKU, Integer qty){
+        //TODO
+        return false;
+    }
+    
 
 }
