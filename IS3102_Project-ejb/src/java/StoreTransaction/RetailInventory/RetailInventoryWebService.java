@@ -1,25 +1,19 @@
-package WebServices;
+package StoreTransaction.RetailInventory;
 
 import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
-import EntityManager.LineItemEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ItemHelper;
-import HelperClasses.ReturnHelper;
-import StoreTransaction.RetailInventory.RetailInventoryBeanLocal;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService(serviceName = "StoreWebServiceBean")
+@WebService(serviceName = "RetailInventoryWebService")
 @Stateless
-public class StoreWebServiceBean {
+public class RetailInventoryWebService {
 
     @EJB
     RetailInventoryBeanLocal RetailInventoryControlLocal;
@@ -72,41 +66,5 @@ public class StoreWebServiceBean {
             return null;
         }
 
-    }
-
-    @WebMethod
-    public ReturnHelper submitSalesRecord(@WebParam(name = "staffEmail") String staffEmail, @WebParam(name = "password") String staffPasword, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchased") List<LineItemEntity> itemsPurchased, @WebParam(name = "amountPaid") Double paymentAmount, @WebParam(name = "memberEmail") String memberEmail) {
-        //TODO
-        return new ReturnHelper(true, "Checkout successful.");
-    }
-
-    @WebMethod
-    public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") String telNo) {
-        try {
-            String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
-            System.out.println("Sending SMS: " + telNo + ": " + smsMessage);
-
-            String requestURL = "http://smsc.vianett.no/v3/send.ashx?";
-            requestURL += ("username=" + "lee_yuan_guang@hotmail.com");
-            requestURL += ("&password=" + "r0b16");
-            requestURL += ("&tel=" + telNo);
-            requestURL += ("&msg=" + smsMessage);
-
-            URL url = new URL(requestURL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setInstanceFollowRedirects(false);
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "text/plain");
-            connection.setRequestProperty("charset", "utf-8");
-            connection.connect();
-            connection.getInputStream();
-            connection.disconnect();
-            System.out.println("?????????");
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
     }
 }
