@@ -21,8 +21,13 @@ public class LoyaltyAndRewardsWebService {
     }
     
     @WebMethod
-    public MemberEntity getMember(@WebParam(name = "memberEmail") String memberEmail) {
-        return LoyaltyAndRewardsBeanLocal.getMember(memberEmail);
+    public MemberEntity getMemberViaEmail(@WebParam(name = "memberEmail") String memberEmail) {
+        return LoyaltyAndRewardsBeanLocal.getMemberViaEmail(memberEmail);
+    }
+    
+    @WebMethod
+    public MemberEntity getMemberViaCard(@WebParam(name = "memberCard") String memberCard) {
+        return LoyaltyAndRewardsBeanLocal.getMemberViaCard(memberCard);
     }
 
 }

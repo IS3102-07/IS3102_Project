@@ -8,7 +8,8 @@ import javax.ejb.Local;
 
 @Local
 public interface LoyaltyAndRewardsBeanLocal {
-    public MemberEntity getMember(String email);
+    public MemberEntity getMemberViaEmail(String email);
+    public MemberEntity getMemberViaCard(String memberCard);
     public Integer getMemberLoyaltyPointsAmount(String email);
     public LoyaltyTierEntity getLowestLevelTier();
     public LoyaltyTierEntity getMemberLoyaltyTier(String email);
