@@ -7,7 +7,7 @@ import EntityManager.LineItemEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ItemHelper;
 import HelperClasses.ReturnHelper;
-import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
+import StoreTransaction.RetailInventory.RetailInventoryBeanLocal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -22,7 +22,7 @@ import javax.jws.WebService;
 public class StoreWebServiceBean {
 
     @EJB
-    RetailInventoryControlBeanLocal RetailInventoryControlLocal;
+    RetailInventoryBeanLocal RetailInventoryControlLocal;
 
     @WebMethod
     public String getCountryCode(@WebParam(name = "storeID") Long storeID) {

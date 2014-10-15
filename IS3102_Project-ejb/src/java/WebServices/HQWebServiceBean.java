@@ -10,7 +10,7 @@ import EntityManager.StoreEntity;
 import HelperClasses.ReturnHelper;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import OperationalCRM.SalesRecording.SalesRecordingBeanLocal;
-import StoreTransaction.RetailInventoryControl.RetailInventoryControlBeanLocal;
+import StoreTransaction.RetailInventory.RetailInventoryBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -29,7 +29,7 @@ public class HQWebServiceBean {
     FacilityManagementBeanLocal FacilityManagementBeanLocal;
 
     @EJB
-    RetailInventoryControlBeanLocal RetailInventoryControlLocal;
+    RetailInventoryBeanLocal RetailInventoryControlLocal;
 
     @EJB
     SalesRecordingBeanLocal SalesRecordingBeanLocal;
