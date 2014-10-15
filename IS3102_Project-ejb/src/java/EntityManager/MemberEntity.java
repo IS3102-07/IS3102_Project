@@ -43,6 +43,7 @@ public class MemberEntity implements Serializable {
     private String passwordHash;
     @ManyToOne
     private LoyaltyTierEntity loyaltyTier;
+    private String loyaltyCardId;
     private Integer loyaltyPoints;
     private Double cummulativeSpending;
     private Boolean accountActivationStatus;
@@ -93,6 +94,14 @@ public class MemberEntity implements Serializable {
         this.shoppingList = new ShoppingListEntity();
         this.purchases = new ArrayList<>();
         this.cummulativeSpending = 0.0;
+    }
+
+    public String getLoyaltyCardId() {
+        return loyaltyCardId;
+    }
+
+    public void setLoyaltyCardId(String loyaltyCardId) {
+        this.loyaltyCardId = loyaltyCardId;
     }
 
     public LoyaltyTierEntity getLoyaltyTier() {

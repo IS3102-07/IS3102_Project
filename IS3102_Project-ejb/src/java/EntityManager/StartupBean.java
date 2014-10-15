@@ -108,13 +108,16 @@ public class StartupBean {
                 String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
                 memberEntity.create(null,null,null,"a",null,null,null,null,passwordHash,passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
-                memberEntity.setLoyaltyPoints(300);
+                memberEntity.setLoyaltyPoints(150);
+                memberEntity.setLoyaltyCardId("F2E5A75D9000");
                 em.persist(memberEntity);
                 memberEntity = new MemberEntity();
                 passwordSalt = accountManagementBean.generatePasswordSalt();
                 passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
-                memberEntity.create("Superman", "Block 984 Batman Drive B2-95", new Date(), "superman@if.com", "999", null, "Unknown City", "006120", passwordHash, passwordSalt);
+                memberEntity.create("Superman", "Block 984 Batman Drive B2-95", new Date(), "b", "999", null, "Unknown City", "006120", passwordHash, passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
+                memberEntity.setLoyaltyPoints(500);
+                memberEntity.setLoyaltyCardId("32D3A75D9000");
                 em.persist(memberEntity);
                 System.out.println("Created member with ID:member@if.com and PW:member.");
             } catch (Exception ex) {
