@@ -1,5 +1,6 @@
 package StoreTransaction.RetailInventory;
 
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
@@ -20,6 +21,12 @@ public class RetailInventoryWebService {
     @EJB
     RetailInventoryBeanLocal RetailInventoryControlLocal;
 
+    @WebMethod
+    public StoreEntity getStoreByID(@WebParam(name = "storeID") Long storeID) {
+        StoreEntity storeEntity = RetailInventoryControlLocal.getStoreByID(storeID);
+        return storeEntity;
+    }
+    
     @WebMethod
     public String getCountryCode(@WebParam(name = "storeID") Long storeID) {
         try {
