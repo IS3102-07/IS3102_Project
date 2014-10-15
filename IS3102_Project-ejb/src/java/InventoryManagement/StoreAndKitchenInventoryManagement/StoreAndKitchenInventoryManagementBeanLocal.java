@@ -1,4 +1,4 @@
-package InventoryManagement.StoreInventoryManagement;
+package InventoryManagement.StoreAndKitchenInventoryManagement;
 
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
@@ -10,7 +10,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface StoreInventoryManagementBeanLocal {
+public interface StoreAndKitchenInventoryManagementBeanLocal {
     //Warehouse Management
     public boolean createStorageBin(Long warehouseID, String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
     public boolean updateStorageBin(Long storageBinId, Integer length, Integer width, Integer height);

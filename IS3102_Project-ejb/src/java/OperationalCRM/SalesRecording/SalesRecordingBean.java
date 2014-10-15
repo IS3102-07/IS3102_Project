@@ -7,7 +7,7 @@ import EntityManager.SalesRecordEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ReturnHelper;
-import InventoryManagement.StoreInventoryManagement.StoreInventoryManagementBeanLocal;
+import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import MRP.SalesForecast.SalesForecastBeanLocal;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.util.List;
@@ -31,7 +31,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     @EJB
     LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
     @EJB
-    StoreInventoryManagementBeanLocal storeInventoryManagementBean;
+    StoreAndKitchenInventoryManagementBeanLocal storeInventoryManagementBean;
     
     
     @Override

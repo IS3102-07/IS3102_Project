@@ -2,16 +2,12 @@ package OperationalCRM.CustomerInformationManagement;
 
 import javax.ejb.Stateless;
 import EntityManager.ItemEntity;
-import EntityManager.SubscriptionEntity;
 import EntityManager.MemberEntity;
 import EntityManager.ShoppingListEntity;
-import EntityManager.StaffEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import EntityManager.SubscriptionEntity;
 import javax.persistence.Query;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 import javax.mail.Message;
@@ -19,7 +15,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.persistence.NoResultException;
 
 @Stateless
 public class CustomerInformationManagementBean implements CustomerInformationManagementBeanLocal {

@@ -7,7 +7,6 @@
 package OperationalCRM.CustomerInformationManagement;
 
 import EntityManager.ShoppingListEntity;
-import java.util.List;
 import javax.ejb.Local;
 
 /**

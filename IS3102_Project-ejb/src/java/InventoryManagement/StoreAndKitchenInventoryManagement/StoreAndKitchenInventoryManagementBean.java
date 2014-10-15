@@ -1,4 +1,4 @@
-package InventoryManagement.StoreInventoryManagement;
+package InventoryManagement.StoreAndKitchenInventoryManagement;
 
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
@@ -26,7 +26,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class StoreInventoryManagementBean implements StoreInventoryManagementBeanLocal {
+public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenInventoryManagementBeanLocal {
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
