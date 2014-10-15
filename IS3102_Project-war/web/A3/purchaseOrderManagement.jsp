@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.AccessRightEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
@@ -32,7 +33,9 @@
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <%
+                String disable = "";
                 try {
+
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -53,8 +56,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <%
-                                        String errMsg = request.getParameter("errMsg");
+                                    <%                                        String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
                                             errMsg = "Add purchase orders";
                                         }
@@ -67,7 +69,7 @@
                                         <div class="table-responsive">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  />
+                                                    <input class="btn btn-primary btnCreate" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"/>
                                                 </div>
                                             </div>
                                             <br>
@@ -86,7 +88,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            List<PurchaseOrderEntity> finalListOfPO = new ArrayList<PurchaseOrderEntity>(); 
+                                                            List<PurchaseOrderEntity> finalListOfPO = new ArrayList<PurchaseOrderEntity>();
                                                             StaffEntity staff = (StaffEntity) (session.getAttribute("staffEntity"));
                                                             List<RoleEntity> listOfRoles = staff.getRoles();
                                                             boolean isAdmin = false;
@@ -105,7 +107,7 @@
                                                                         List<AccessRightEntity> accessList = staff.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                if (accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
+                                                                                if (accessRight.getRegionalOffice() != null && accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
                                                                                     finalListOfPO.add(PO);
                                                                                 }
                                                                             }
@@ -113,62 +115,70 @@
                                                                     }
                                                                 }
                                                                 if (!isRegional) {
-                                                                    for (RoleEntity role : listOfRoles) {
-                                                                        if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
-                                                                            List<AccessRightEntity> accessList = staff.getAccessRightList();
-                                                                            for (AccessRightEntity accessRight : accessList) {
-                                                                                for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                    if (accessRight.getWarehouse().getId().equals(PO.getDestination().getId())) {
-                                                                                        finalListOfPO.add(PO);
-                                                                                    }
+                                                                    disable = "disabled";
+                                                        %>
+                                                    <script>
+                                                        $(".btnCreate").attr('disabled', 'disabled');
+                                                    </script>
+                                                    <%
+                                                                for (RoleEntity role : listOfRoles) {
+                                                                    if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
+                                                                        List<AccessRightEntity> accessList = staff.getAccessRightList();
+                                                                        for (AccessRightEntity accessRight : accessList) {
+                                                                            for (PurchaseOrderEntity PO : purchaseOrders) {
+                                                                                if (accessRight.getWarehouse() != null && accessRight.getWarehouse().getId().equals(PO.getDestination().getId())) {
+                                                                                    finalListOfPO.add(PO);
                                                                                 }
                                                                             }
                                                                         }
                                                                     }
                                                                 }
                                                             }
-                                                            if (finalListOfPO != null) {
-                                                                for (int i = 0; i < finalListOfPO.size(); i++) {
-                                                                    SupplierEntity supplier = finalListOfPO.get(i).getSupplier();
-                                                                    WarehouseEntity warehouse = finalListOfPO.get(i).getDestination();
-                                                        %>
-                                                        <tr>
-                                                            <td>
-                                                                <%=finalListOfPO.get(i).getId()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=supplier.getSupplierName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=warehouse.getWarehouseName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=finalListOfPO.get(i).getExpectedReceivedDate()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=finalListOfPO.get(i).getSubmittedBy()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=finalListOfPO.get(i).getStatus()%>
-                                                            </td>
-                                                            <td style="width:200px">
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updatePO('<%=finalListOfPO.get(i).getId()%>')"/>
-                                                            </td>
-                                                        </tr>
-                                                        <%
-                                                                    }
+                                                        }
+                                                        if (finalListOfPO != null) {
+                                                            for (int i = 0; i < finalListOfPO.size(); i++) {
+                                                                SupplierEntity supplier = finalListOfPO.get(i).getSupplier();
+                                                                WarehouseEntity warehouse = finalListOfPO.get(i).getDestination();
+                                                    %>
+                                                    <tr>
+                                                        <td>
+                                                            <%=finalListOfPO.get(i).getId()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=supplier.getSupplierName()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=warehouse.getWarehouseName()%>
+                                                        </td>
+                                                        <td>
+                                                            <% SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+                                                                String date = DATE_FORMAT.format(finalListOfPO.get(i).getExpectedReceivedDate());%>
+                                                            <%=date%>
+                                                        </td>
+                                                        <td>
+                                                            <%=finalListOfPO.get(i).getSubmittedBy()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=finalListOfPO.get(i).getStatus()%>
+                                                        </td>
+                                                        <td style="width:200px">
+                                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updatePO('<%=finalListOfPO.get(i).getId()%>')"/>
+                                                        </td>
+                                                    </tr>
+                                                    <%
                                                                 }
-                                                            } catch (Exception ex) {
-                                                                response.sendRedirect("../A1/workspace.jsp");
                                                             }
-                                                        %>
+                                                        } catch (Exception ex) {
+                                                            response.sendRedirect("../A1/workspace.jsp");
+                                                        }
+                                                    %>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  />
+                                                    <input class="btn btn-primary btnCreate" name="btnAdd" type="submit" value="Create Purchase Order" onclick="addPO()"  <%=disable%>/>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
