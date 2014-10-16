@@ -103,13 +103,15 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 System.out.println("debug......" + "store.getId()" + store.getId());
                 System.out.println("debug......" + "productGroup.getId()" + productGroup.getId());
 
+                MonthScheduleEntity lastSchedule = schedule;
+                
                 try {
                     int amount = 0;
                     for (int i = 0; i < 3; i++) {
 
                         System.out.println("debug...... i=" + i);
 
-                        MonthScheduleEntity lastSchedule = this.getTheBeforeOne(schedule);
+                        lastSchedule = this.getTheBeforeOne(lastSchedule);
 
                         System.out.println("debug...... lastSchedule.getId: " + lastSchedule.getId());
 

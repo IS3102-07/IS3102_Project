@@ -90,7 +90,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
         //Update inventory amount
         try {
             //TODO remove from retail outlet or furniture marketplace
-            //storeInventoryManagementBean.
+            //storeInventoryManagementBean.removeItemFromInventory(SKU, quantity);
             //if kitchen just no updating of amount
         } catch (Exception ex) {
             ex.printStackTrace();

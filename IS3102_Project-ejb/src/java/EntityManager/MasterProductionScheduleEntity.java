@@ -31,7 +31,7 @@ public class MasterProductionScheduleEntity implements Serializable {
     private MonthScheduleEntity schedule;
     @ManyToOne
     private ManufacturingFacilityEntity mf;
-    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="mps")
+    @OneToMany(mappedBy="mps")
     private List<MaterialRequirementEntity> materialRequirementList;
     @OneToOne
     private FurnitureEntity furniture;
