@@ -20,9 +20,9 @@ public class SalesReportingBean implements SalesReportingBeanLocal {
     private EntityManager em;
 
     @Override
-    public Boolean submitSalesRecord(String email, String password, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints,Integer loyaltyPointsDeducted, String memberEmail) {
+    public Boolean submitSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints,Integer loyaltyPointsDeducted, String memberEmail) {
         System.out.println("submitSalesRecord() called;");
-        return createSalesRecord(memberEmail, password, storeID, posName, itemsPurchasedSKU, itemsPurchasedQty, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail);
+        return createSalesRecord(staffEmail, staffPassword, storeID, posName, itemsPurchasedSKU, itemsPurchasedQty, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail);
         //return true;
     }
 
