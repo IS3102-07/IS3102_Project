@@ -1,3 +1,7 @@
+<%@page import="EntityManager.AccessRightEntity"%>
+<%@page import="EntityManager.RoleEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.ShippingOrderEntity"%>
 <%@page import="java.util.List"%>
@@ -70,7 +74,7 @@
                                         <div class="table-responsive">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Shipping Order" onclick="addSO()"  />
+                                                    <input class="btn btn-primary btnCreate" name="btnAdd" type="submit" value="Create Shipping Order" onclick="addSO()"  />
                                                 </div>
                                             </div>
                                             <br>
@@ -88,49 +92,99 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+
                                                         <%
-                                                            if (shippingOrders != null) {
-                                                                for (int i = 0; i < shippingOrders.size(); i++) {
-                                                                    WarehouseEntity source = shippingOrders.get(i).getOrigin();
-                                                                    WarehouseEntity destination = shippingOrders.get(i).getDestination();
-                                                        %>
-                                                        <tr>
-                                                            <td>
-                                                                <%=shippingOrders.get(i).getId()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=source.getWarehouseName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=destination.getWarehouseName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=shippingOrders.get(i).getExpectedReceivedDate()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=shippingOrders.get(i).getSubmittedBy()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=shippingOrders.get(i).getStatus()%>
-                                                            </td>
-                                                            <td style="width:200px">
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updateSO('<%=shippingOrders.get(i).getId()%>')"/>
-                                                            </td>
-                                                        </tr>
-                                                        <%
+                                                            List<ShippingOrderEntity> finalListOfSO = new ArrayList<ShippingOrderEntity>();
+                                                            StaffEntity staff = (StaffEntity) (session.getAttribute("staffEntity"));
+                                                            List<RoleEntity> listOfRoles = staff.getRoles();
+                                                            boolean isAdmin = false;
+                                                            for (RoleEntity role : listOfRoles) {
+                                                                if (role.getName().equals("Administrator") || role.getName().equals("Global Manager")) {
+                                                                    isAdmin = true;
+                                                                    finalListOfSO = shippingOrders;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            boolean isRegional = false;
+                                                            if (!isAdmin) {
+                                                                for (RoleEntity role : listOfRoles) {
+                                                                    if (role.getName().equals("Regional Manager")) {
+                                                                        isRegional = true;
+                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                        for (AccessRightEntity accessRight : accessList) {
+                                                                            for (ShippingOrderEntity SO : shippingOrders) {
+                                                                                if (accessRight.getRegionalOffice() != null && (accessRight.getRegionalOffice().getId().equals(SO.getOrigin().getRegionalOffice().getId()) || accessRight.getRegionalOffice().getId().equals(SO.getDestination().getRegionalOffice().getId()))) {
+                                                                                    if (!finalListOfSO.contains(SO)) {
+                                                                                        finalListOfSO.add(SO);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
                                                                     }
                                                                 }
-                                                            } catch (Exception ex) {
-                                                                response.sendRedirect("../A1/workspace.jsp");
-                                                            }
+                                                                if (!isRegional) {
                                                         %>
+                                                    <script>
+                                                        $(".btnCreate").attr('disabled', 'disabled');
+                                                    </script>
+                                                    <%           for (RoleEntity role : listOfRoles) {
+                                                                    if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
+                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                        for (AccessRightEntity accessRight : accessList) {
+                                                                            for (ShippingOrderEntity SO : shippingOrders) {
+                                                                                if (accessRight.getWarehouse() != null && (accessRight.getWarehouse().getId().equals(SO.getDestination().getId()) || accessRight.getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                    if (!finalListOfSO.contains(SO)) {
+                                                                                        finalListOfSO.add(SO);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        if (finalListOfSO != null) {
+                                                            for (int i = 0; i < finalListOfSO.size(); i++) {
+                                                                WarehouseEntity source = finalListOfSO.get(i).getOrigin();
+                                                                WarehouseEntity destination = finalListOfSO.get(i).getDestination();
+                                                    %>
+                                                    <tr>
+                                                        <td>
+                                                            <%=finalListOfSO.get(i).getId()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=source.getWarehouseName()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=destination.getWarehouseName()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=finalListOfSO.get(i).getExpectedReceivedDate()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=finalListOfSO.get(i).getSubmittedBy()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=finalListOfSO.get(i).getStatus()%>
+                                                        </td>
+                                                        <td style="width:200px">
+                                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updateSO('<%=finalListOfSO.get(i).getId()%>')"/>
+                                                        </td>
+                                                    </tr>
+                                                    <%
+                                                                }
+                                                            }
+                                                        } catch (Exception ex) {
+                                                            response.sendRedirect("../A1/workspace.jsp");
+                                                        }
+                                                    %>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Create Shipping Order" onclick="addSO()"  />
+                                                    <input class="btn btn-primary btnCreate" name="btnAdd" type="submit" value="Create Shipping Order" onclick="addSO()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
