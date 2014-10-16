@@ -75,7 +75,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-exchange"></i> <a href="shippingOrderManagement.jsp">Shipping Order Management</a>
+                                    <i class="icon icon-exchange"></i> <a href="../ShippingOrderManagement_Servlet">Shipping Order Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Shipping Order - Update

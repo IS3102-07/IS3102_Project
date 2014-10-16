@@ -104,11 +104,13 @@
                                                                 for (RoleEntity role : listOfRoles) {
                                                                     if (role.getName().equals("Regional Manager") || role.getName().equals("Purchasing Manager")) {
                                                                         isRegional = true;
-                                                                        List<AccessRightEntity> accessList = staff.getAccessRightList();
+                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
                                                                                 if (accessRight.getRegionalOffice() != null && accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
-                                                                                    finalListOfPO.add(PO);
+                                                                                    if (!finalListOfPO.contains(PO)) {
+                                                                                        finalListOfPO.add(PO);
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -123,11 +125,13 @@
                                                     <%
                                                                 for (RoleEntity role : listOfRoles) {
                                                                     if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
-                                                                        List<AccessRightEntity> accessList = staff.getAccessRightList();
+                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
                                                                                 if (accessRight.getWarehouse() != null && accessRight.getWarehouse().getId().equals(PO.getDestination().getId())) {
-                                                                                    finalListOfPO.add(PO);
+                                                                                    if (!finalListOfPO.contains(PO)) {
+                                                                                        finalListOfPO.add(PO);
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
