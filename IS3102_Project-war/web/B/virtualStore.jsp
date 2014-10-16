@@ -59,82 +59,19 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row featured-boxes login">
-                            <div class="col-md-6">
+
+                            <div class="col-md-12">
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
-                                        <h4>I'm a Returning Customer</h4>
+                                        <h4>Virtual Store</h4>
+                                        <img src="../img/islandFurnitureStoreMap.jpg" alt="Mountain View" style="width:100%;height:100%" usemap="#storemap">
 
-                                        <form action="../ECommerce_MemberLoginServlet">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <label>E-mail Address</label>
-                                                        <input type="email" name="email" class="form-control input-lg" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <a class="pull-right" href="forgotPassword.jsp">(Lost Password?)</a>
-                                                        <label>Password</label>
-                                                        <input type="password" name="password" class="form-control input-lg" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="submit" onclick="validateForm()" value="Login" class="btn btn-primary pull-right push-bottom">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="featured-box featured-box-secundary default info-content">
-                                    <div class="box-content">
-                                        <h4>Register An Account</h4>
-                                        <form action="../ECommerce_MemberRegisterServlet" onsubmit="return validatePassword()">
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <label>E-mail Address</label>
-                                                        <input type="email" name="email" class="form-control input-lg" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-6">
-                                                        <label>Password</label>
-                                                        <input id="password" type="password" value="" name="password" class="form-control input-lg" required>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label>Re-enter Password</label>
-                                                        <input id="repassword" type="password" value="" name="repassword" class="form-control input-lg" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-3">
-                                                        <%
-                                                            ReCaptchaImpl recaptcha = new ReCaptchaImpl();
-                                                            recaptcha.setIncludeNoscript(false);
-                                                            recaptcha.setPrivateKey("6LdjyvoSAAAAAHnUl50AJU-edkUqFtPQi9gCqDai");
-                                                            recaptcha.setPublicKey("6LdjyvoSAAAAAL2m-7sPPZEtz0BNVRb-A_yY0BB_");
-                                                            recaptcha.setRecaptchaServer("https://www.google.com/recaptcha/api");
-                                                            out.print(recaptcha.createRecaptchaHtml(null, null));
-                                                        %>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="submit" value="Register" class="btn btn-primary">
-                                                </div>
-                                            </div>
+                                        <map name="storemap">
+                                            <area shape="rect" coords="0,0,50%,50%" alt="Sun" href="sun.htm">
+                                            <area shape="rect" coords="90,58,3" alt="Mercury" href="mercur.htm">
+                                            <area shape="rect" coords="124,58,8" alt="Venus" href="venus.htm">
+                                        </map>
 
-                                        </form>
                                     </div>
                                 </div>
                             </div>
