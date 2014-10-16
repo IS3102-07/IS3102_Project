@@ -118,7 +118,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group">
-                                                    <div class="col-md-6 col-md-offset-3">
+                                                    <div class="col-md-3">
                                                         <%
                                                             ReCaptchaImpl recaptcha = new ReCaptchaImpl();
                                                             recaptcha.setIncludeNoscript(false);
@@ -129,12 +129,11 @@
                                                         %>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="submit" value="Register" class="btn btn-primary pull-right push-bottom">
+                                                <div class="col-md-3">
+                                                    <input type="submit" value="Register" class="btn btn-primary">
                                                 </div>
                                             </div>
+
                                         </form>
                                     </div>
                                 </div>

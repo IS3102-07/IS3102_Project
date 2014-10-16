@@ -124,7 +124,7 @@
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
-                    Welcome <%=member.getName()%>!
+                    <a>Welcome <%=member.getName()%>!</a>
                 </li>
                 <li>
                     <a href="../ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
