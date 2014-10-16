@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
-    <service name="HQWebServiceBean">
-      <implementation-class>WebServices.HQWebServiceBean</implementation-class>
+    <service name="LoyaltyAndRewardsWebService">
+      <implementation-class>OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsWebService</implementation-class>
     </service>
-    <service name="StoreWebServiceBean">
-      <implementation-class>WebServices.StoreWebServiceBean</implementation-class>
+    <service name="SalesReportingWebService">
+      <implementation-class>StoreTransaction.SalesReporting.SalesReportingWebService</implementation-class>
     </service>
-    <service name="SalesRecordSubmissionWebService">
-      <implementation-class>MRP.SalesForecast.SalesRecordSubmissionWebService</implementation-class>
+    <service name="AccountManagementWebService">
+      <implementation-class>CommonInfrastructure.AccountManagement.AccountManagementWebService</implementation-class>
+    </service>
+    <service name="SalesRecordingWebService">
+      <implementation-class>OperationalCRM.SalesRecording.SalesRecordingWebService</implementation-class>
+    </service>
+    <service name="RetailInventoryWebService">
+      <implementation-class>StoreTransaction.RetailInventory.RetailInventoryWebService</implementation-class>
     </service>
   </services>
   <clients/>
