@@ -471,7 +471,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
     }
 
     @Override
-    public boolean checkIfRoleExists(String name) {
+    public Boolean checkIfRoleExists(String name) {
         System.out.println("checkRoleExists() called with:" + name);
         Query q = em.createQuery("SELECT t FROM RoleEntity t WHERE t.name=:name");
         q.setParameter("name", name);

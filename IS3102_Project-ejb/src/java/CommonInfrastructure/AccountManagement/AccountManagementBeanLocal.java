@@ -55,7 +55,7 @@ public interface AccountManagementBeanLocal {
 
     public boolean deleteRole(String callerStaffID, Long roleID); //Returns true if role deleted successfully
 
-    public boolean checkIfRoleExists(String name);
+    public Boolean checkIfRoleExists(String name);
 
     public boolean roleHasMembersAssigned(Long roleID);
 

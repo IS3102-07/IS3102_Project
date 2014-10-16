@@ -1,5 +1,6 @@
 package JUnit_Testing;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.AccessRightEntity;
 import EntityManager.CountryEntity;
 import EntityManager.MemberEntity;
@@ -7,6 +8,12 @@ import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,6 +22,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
+    AccountManagementBeanLocal accountManagementBean = lookupAccountManagementBeanLocal();
+    
 
     public CommonInfrastructure_AccountManagementBeanLocal_JUnit() {
     }
@@ -97,10 +106,19 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
 
     @Test
     public void loginStaff() {
+        System.out.println("loginStaff");        
+        StaffEntity result = accountManagementBean.loginStaff("admin@if.com", "admin");
+        System.out.println(result.getId());
+        assertFalse(result.equals(null));
+        assertEquals(new Long(12L), result.getId());
     }
 
     @Test
     public void listAllStaff() {
+        System.out.println("listAllStaff");        
+        List result = accountManagementBean.listAllStaff();
+        assertFalse(result.isEmpty());
+        assertEquals(result.size(), result.size());
     }
 
     @Test
@@ -117,6 +135,10 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
 
     @Test
     public void checkIfRoleExists() {
+        System.out.println("checkIfRoleExists");
+        Boolean result = accountManagementBean.checkIfRoleExists("Administrator");
+        assertFalse(result == false);
+        assertTrue(result);
     }
 
     @Test
@@ -190,5 +212,16 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
     @Test
     public void canStaffAccessToTheWarehouse() {
     }
+
+    private AccountManagementBeanLocal lookupAccountManagementBeanLocal() {
+        try {
+            Context c = new InitialContext();
+            return (AccountManagementBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean!CommonInfrastructure.AccountManagement.AccountManagementBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
 
 }
