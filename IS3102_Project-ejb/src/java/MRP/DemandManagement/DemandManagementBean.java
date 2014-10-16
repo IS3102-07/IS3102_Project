@@ -8,6 +8,7 @@ package MRP.DemandManagement;
 import EntityManager.FurnitureEntity;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MasterProductionScheduleEntity;
+import EntityManager.MaterialRequirementEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.SaleAndOperationPlanEntity;
@@ -33,24 +34,30 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
             if (!scheduleList.isEmpty()) {
                 ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, MfId);
                 MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
-                
+
                 // clear former MPSs
                 Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.mf.id = ?1 and mps.schedule.id = ?2")
-                                .setParameter(1, MfId)
-                                .setParameter(2, lastSchedule.getId());
+                        .setParameter(1, MfId)
+                        .setParameter(2, lastSchedule.getId());
                 List<MasterProductionScheduleEntity> formerMPSs = (List<MasterProductionScheduleEntity>) q1.getResultList();
-                for(MasterProductionScheduleEntity mps: formerMPSs){
-                    em.remove(mps);                    
+                for (MasterProductionScheduleEntity mps : formerMPSs) {
+//                    MaterialRequirementEntity[] mrArray = (MaterialRequirementEntity[]) mps.getMaterialRequirementList().toArray();
+//                    for (MaterialRequirementEntity mr : mrArray) {
+//                        mps.getMaterialRequirementList().remove(mr);
+//                        em.remove(mr);
+//                        em.flush();
+//                    }
+                    em.remove(mps);
                 }
                 em.flush();
-                
+
                 // generate MPSs
                 Query q2 = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.schedule.id = ?1 and sop.manufacturingFacility.id = ?2")
                         .setParameter(1, lastSchedule.getId())
                         .setParameter(2, MfId);
-                List<SaleAndOperationPlanEntity> sopList = (List<SaleAndOperationPlanEntity>) q2.getResultList();                
+                List<SaleAndOperationPlanEntity> sopList = (List<SaleAndOperationPlanEntity>) q2.getResultList();
                 System.out.println("sopList.size(): " + sopList.size());
-                
+
                 for (SaleAndOperationPlanEntity sop : sopList) {
                     int residualMonthlyProductAmount = sop.getProductionPlan();
                     List<ProductGroupLineItemEntity> lineItemList = sop.getProductGroup().getLineItemList();
@@ -66,11 +73,11 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                             mps = new MasterProductionScheduleEntity();
                             mps.setMf(mf);
                             mps.setSchedule(lastSchedule);
-                            mps.setFurniture((FurnitureEntity)lineitem.getItem());
-                            mpsExits = true;                            
+                            mps.setFurniture((FurnitureEntity) lineitem.getItem());
+                            mpsExits = true;
                         } else {
                             mps = (MasterProductionScheduleEntity) q3.getResultList().get(0);
-                            mpsExits = false;                            
+                            mpsExits = false;
                         }
                         // total work days in the month
                         int days_month = lastSchedule.getWorkDays_firstWeek() + lastSchedule.getWorkDays_secondWeek() + lastSchedule.getWorkDays_thirdWeek()
@@ -80,10 +87,10 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                         if (!lineitem.getId().equals(lineItemList.get(lineItemList.size() - 1).getId())) {
                             amount = (int) Math.round(sop.getProductionPlan() * lineitem.getPercent());
                             residualMonthlyProductAmount -= amount;
-                        }else{
+                        } else {
                             amount = residualMonthlyProductAmount;
                         }
-                                                
+
                         int amount_week1 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_firstWeek() / days_month);
                         int amount_week2 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_secondWeek() / days_month);
                         int amount_week3 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_thirdWeek() / days_month);
