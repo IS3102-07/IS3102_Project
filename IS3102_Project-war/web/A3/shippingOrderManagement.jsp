@@ -132,7 +132,7 @@
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {
-                                                                                if (accessRight.getWarehouse() != null && (accessRight.getWarehouse().getId().equals(SO.getDestination().getId()) || accessRight.getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                if (accessRight.getWarehouse() != null && ((accessRight.getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getWarehouse().getId().equals(SO.getOrigin().getId()))) {
                                                                                     if (!finalListOfSO.contains(SO)) {
                                                                                         finalListOfSO.add(SO);
                                                                                     }
