@@ -64,12 +64,39 @@
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Virtual Store</h4>
-                                        <img src="../img/islandFurnitureStoreMap.jpg" alt="Mountain View" style="width:100%;height:100%" usemap="#storemap">
+                                        <img src="../img/islandFurnitureStoreMap.jpg" alt="Store Map" usemap="#storeMap" width="1050" height="768" id="storeMap">
 
-                                        <map name="storemap">
-                                            <area shape="rect" coords="0,0,50%,50%" alt="Sun" href="sun.htm">
-                                            <area shape="rect" coords="90,58,3" alt="Mercury" href="mercur.htm">
-                                            <area shape="rect" coords="124,58,8" alt="Venus" href="venus.htm">
+                                        <map name="storeMap">
+                                            <area  alt="" title="tablesdesks" href="../ECommerce_TablesDesksServlet" shape="rect" coords="284,197,488,247" style="outline:none;" target="_self" onclick="../ECommerce_TablesDesksServlet" onmouseover="if (document.images)
+                                                                document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                            document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area  alt="" title="retailproducts" href="../ECommerce_RetailProductsServlet" shape="rect" coords="159,20,557,73" style="outline:none;" target="_self" onclick="../ECommerce_RetailProductsServlet" onmouseover="if (document.images)
+                                                                document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                            document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area  alt="" title="bathroom" href="../ECommerce_BathroomServlet" shape="rect" coords="121,167,183,289" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                                        document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                    document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area  alt="" title="bedsmattresses" href="../ECommerce_BedsMattressesServlet" shape="rect" coords="123,329,182,546" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                                        document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                    document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area  alt="" title="lightings" href="../ECommerce_LightingsServlet" shape="rect" coords="250,447,393,491" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                                        document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                    document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area  alt="" title="sofaschair" href="../ECommerce_SofasChairServlet" shape="rect" coords="258,313,419,358" style="outline:none;" target="_self"     />
+                                            <area  alt="" title="cabinetsStorage" href="../ECommerce_CabinetsStorageServlet" shape="rect" coords="508,368,622,546" style="outline:none;" target="_self"     />
+                                            <area  alt="" title="children" href="../ECommerce_ChildrenServlet" shape="rect" coords="636,75,891,229" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                                        document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                    document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area  alt="" title="study" href="../ECommerce_StudyServlet" shape="rect" coords="585,77,628,220" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                                        document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                    document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area  alt="" title="restaurant" href="../ECommerce_RestaurantServlet" shape="rect" coords="709,268,925,531" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                                        document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                    document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area  alt="" title="pointOfSales" href="../ECommerce_PointOfSalesServlet" shape="rect" coords="351,557,986,751" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                                        document.getElementById('storeMap').src = '';" onmouseout="if (document.images)
+                                                                    document.getElementById('storeMap').src = '../img/islandFurnitureStoreMap.jpg';"  />
+                                            <area shape="rect" coords="1048,766,1050,768" alt="Image Map" style="outline:none;" title="Image Map" href="http://www.image-maps.com/index.php?aff=mapped_users_0" />
                                         </map>
 
                                     </div>
