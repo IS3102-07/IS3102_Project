@@ -7,5 +7,5 @@ import javax.ejb.Local;
 
 @Local
 public interface SalesReportingBeanLocal {
-    public ReturnHelper submitSalesRecord(String email, String password, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double paymentAmount, String memberEmail);
+    public Boolean submitSalesRecord(String email, String password, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail);
 }
