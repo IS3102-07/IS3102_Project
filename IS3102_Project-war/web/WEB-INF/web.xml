@@ -781,6 +781,10 @@
         <servlet-name>MRP_purchaseOrder</servlet-name>
         <servlet-class>A2_servlets.MRP_purchaseOrder</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_TablesDesksServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1560,6 +1564,10 @@
     <servlet-mapping>
         <servlet-name>MRP_purchaseOrder</servlet-name>
         <url-pattern>/MRP_purchaseOrder/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
+        <url-pattern>/ECommerce_TablesDesksServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
