@@ -18,6 +18,7 @@ public class StorageBinEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
     private String type;
     private Integer _length;
     private Integer width;
@@ -35,6 +36,7 @@ public class StorageBinEntity implements Serializable {
 
     public StorageBinEntity(WarehouseEntity warehouseEntity, String type, Integer _length, Integer width, Integer height) {
         this.warehouse = warehouseEntity;
+        this.name="";
         this.type = type;
         this._length = _length;
         this.width = width;
@@ -42,6 +44,14 @@ public class StorageBinEntity implements Serializable {
         this.volume = _length * width * height;
         this.freeVolume = volume;
         this.lineItems = new ArrayList();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 
