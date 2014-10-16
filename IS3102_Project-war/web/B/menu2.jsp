@@ -37,6 +37,9 @@
                     <li>
                         <a href="promotion.jsp">Promotion</a>
                     </li>
+                    <li>
+                        <a href="virtualStore.jsp">Virtual Store</a>
+                    </li>
                     
 
                     <li class="dropdown mega-menu-item mega-menu-fullwidth">
@@ -156,6 +159,9 @@
                     </li>
                     <li>
                         <a href="promotion.jsp">Promotion</a>
+                    </li>
+                    <li>
+                        <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
                     
 
