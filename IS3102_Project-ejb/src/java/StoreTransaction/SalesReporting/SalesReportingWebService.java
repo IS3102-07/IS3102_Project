@@ -5,6 +5,7 @@ import EntityManager.LineItemEntity;
 import HelperClasses.ReturnHelper;
 import StoreTransaction.RetailInventory.RetailInventoryBeanLocal;
 import StoreTransaction.SalesRecordingWebService_Service;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -23,14 +24,17 @@ public class SalesReportingWebService {
     RetailInventoryBeanLocal inventoryBean;
 
     @WebMethod
-    public ReturnHelper submitSalesRecord(@WebParam(name = "staffEmail") String staffEmail, @WebParam(name = "password") char[] staffPasword, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchasedSKU") List<String> itemsPurchasedSKU, @WebParam(name = "itemsPurchasedQty") List<Integer> itemsPurchasedQty, @WebParam(name = "amountPaid") Double paymentAmount, @WebParam(name = "memberEmail") String memberEmail) {
+    public ReturnHelper submitSalesRecord(@WebParam(name = "staffEmail") String staffEmail, @WebParam(name = "password") String staffPassword, @WebParam(name = "storeID") Long storeID, @WebParam(name = "posName") String posName, @WebParam(name = "itemsPurchasedSKU") List<String> itemsPurchasedSKU, @WebParam(name = "itemsPurchasedQty") List<Integer> itemsPurchasedQty, @WebParam(name = "amountDue") Double amountDue,@WebParam(name = "amountPaid") Double amountPaid,@WebParam(name = "amountPaidUsingPoints") Double amountPaidUsingPoints,@WebParam(name = "loyaltyPointsDeducted") Integer loyaltyPointsDeducted, @WebParam(name = "memberEmail") String memberEmail) {
         //TODO
         //Convert into itementiy andd then into line item entity
-        List<LineItemEntity> itemsPurchased;
-        for(String SKU:itemsPurchasedSKU){
+        List<LineItemEntity> itemsPurchased = new ArrayList();
+        for(int i=0;i<itemsPurchasedSKU.size();i++){
+            String SKU = itemsPurchasedSKU.get(i);
             ItemEntity itemEntity = inventoryBean.getItemBySKU(SKU);
+            LineItemEntity lineItemEntity = new LineItemEntity(itemEntity, itemsPurchasedQty.get(i), "");
+            itemsPurchased.add(lineItemEntity);
         }
-        String staffPasswordString = new String(staffPasword);
+        //createSalesRecord(staffEmail,staffPassword,storeID,posName,itemsPurchased,amountDue,)
         return new ReturnHelper(true, "Checkout successful.");
     }
 
