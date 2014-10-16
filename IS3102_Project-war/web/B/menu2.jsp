@@ -37,6 +37,9 @@
                     <li>
                         <a href="promotion.jsp">Promotion</a>
                     </li>
+                    <li>
+                        <a href="virtualStore.jsp">Virtual Store</a>
+                    </li>
                     
 
                     <li class="dropdown mega-menu-item mega-menu-fullwidth">
@@ -124,7 +127,7 @@
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
-                    Welcome <%=member.getName()%>!
+                    <a>Welcome <%=member.getName()%>!</a>
                 </li>
                 <li>
                     <a href="../ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
@@ -156,6 +159,9 @@
                     </li>
                     <li>
                         <a href="promotion.jsp">Promotion</a>
+                    </li>
+                    <li>
+                        <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
                     
 
