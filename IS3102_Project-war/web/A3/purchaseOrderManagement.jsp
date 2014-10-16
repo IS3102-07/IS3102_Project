@@ -128,7 +128,7 @@
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                if (accessRight.getWarehouse() != null && accessRight.getWarehouse().getId().equals(PO.getDestination().getId())) {
+                                                                                if (accessRight.getWarehouse() != null && (accessRight.getWarehouse().getId().equals(PO.getDestination().getId()) && !PO.getStatus().equals("Pending"))) {
                                                                                     if (!finalListOfPO.contains(PO)) {
                                                                                         finalListOfPO.add(PO);
                                                                                     }
