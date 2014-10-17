@@ -108,6 +108,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         ReturnHelper rh = new ReturnHelper(false, "Loyalty tier not updated");
         try {
             Query q = em.createQuery("select m from MemberEntity m where m.email=:email and m.isDeleted=false");
+            q.setParameter("email", email);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             memberEntity.setCummulativeSpending(memberEntity.getCummulativeSpending() + amountPaid);
             //Retrieve country for currency & exchange rate

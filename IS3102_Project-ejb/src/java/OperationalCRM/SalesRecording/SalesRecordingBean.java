@@ -48,7 +48,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
         MemberEntity memberEntity = null;
         String currency = "";
         //Retrieve member
-        if (memberEmail != null && memberEmail.length() >= 0) {
+        if (memberEmail != null && memberEmail.length() > 0) {
             try {
                 Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.email=:email");
                 q.setParameter("email", memberEmail);
