@@ -31,11 +31,6 @@
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"> 
-                                        List of all products
-                                    </div>
-                                    <!-- /.panel-heading -->
                                     <div class="row featured-boxes">
                                         <div class="col-md-12">
                                             
@@ -72,8 +67,6 @@
                                         
                                     </div>
 
-                                </div>
-                                <!-- /.panel -->
                             </div>
                             <!-- /.col-lg-12 -->
                         </div>
