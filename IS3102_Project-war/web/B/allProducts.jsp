@@ -49,7 +49,7 @@
                         </div>
                     </section>
                     <div class="container">
-                        <hr class="tall">
+
                         <div class="row">
                             <div class="col-md-6">
                                 <h2 class="shorter"><strong>Shop</strong></h2>
@@ -88,14 +88,14 @@
                                         </span>
 
                                         <span class="product-thumb-info-content">
-                                            
-                                                <h4><%=furnitures.get(i).getName()%></h4>
-                                                <span class="price">
-                                                    <span class="amount">$72</span>
-                                                </span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Height: <%=furnitures.get(i).getHeight() %></em></span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Length: <%=furnitures.get(i).getLength() %></em></span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Width: <%=furnitures.get(i).getWidth() %></em></span>                                            
+
+                                            <h4><%=furnitures.get(i).getName()%></h4>
+                                            <span class="price">
+                                                <span class="amount">$72</span>
+                                            </span><br/>
+                                            <span class="product-thumb-info-act-left"><em>Height: <%=furnitures.get(i).getHeight()%></em></span><br/>
+                                            <span class="product-thumb-info-act-left"><em>Length: <%=furnitures.get(i).getLength()%></em></span><br/>
+                                            <span class="product-thumb-info-act-left"><em>Width: <%=furnitures.get(i).getWidth()%></em></span>                                            
                                         </span>
                                     </span>
                                 </li>
@@ -111,6 +111,7 @@
                             </ul>
 
                         </div>
+                        <hr class="tall">
 
                     </div>
                 </div>
