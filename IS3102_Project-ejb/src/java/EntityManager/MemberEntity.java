@@ -53,6 +53,7 @@ public class MemberEntity implements Serializable {
     private String passwordReset;
     private Boolean isDeleted;
     private Integer securityQuestion;
+    @Lob
     private String securityAnswer;
 
     @OneToOne(cascade = {CascadeType.ALL})
