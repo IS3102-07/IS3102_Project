@@ -37,6 +37,8 @@ public abstract class ItemEntity implements Serializable {
     private Integer height;
     private Integer volume;
     private Boolean isDeleted;
+    private String description;
+    private String category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     private List<Supplier_ItemEntity> suppliers;    
 
