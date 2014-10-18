@@ -26,7 +26,7 @@ public interface RestaurantManagementBeanLocal {
 
     public MenuItemEntity viewMenuItem(String SKU);
 
-    public List<RawIngredientEntity> listAllRawIngridients();
+    public List<RawIngredientEntity> listAllRawIngredients();
 
     public List<MenuItemEntity> listAllMenuItem();
 
