@@ -67,8 +67,6 @@ public class MemberEntity implements Serializable {
     @OneToMany(mappedBy="member")
     private List<SalesRecordEntity> purchases;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
-    //private FeedbackEntity feedback;
     //@OneToMany(cascade = CascadeType.ALL)
     //private WishListEntity wishlist;
     //@OneToMany

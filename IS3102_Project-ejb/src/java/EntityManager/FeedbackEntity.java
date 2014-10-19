@@ -14,8 +14,6 @@ public class FeedbackEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-//    @ManyToOne
-//    private MemberEntity member;
     @Lob
     private String subject;
     @Lob
