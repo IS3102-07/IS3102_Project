@@ -297,12 +297,12 @@ public class StartupBean {
             RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
             em.persist(rawMaterialEntity);
             //Set lead time, lot size, price
-            Query q = em.createQuery("select t from SupplierEntity t where t.supplierName='Supplier 1'");
-            SupplierEntity supplierEntity = (SupplierEntity) q.getSingleResult();
-            Supplier_ItemEntity supplier_ItemEntity = new Supplier_ItemEntity(rawMaterialEntity, supplierEntity, 100.0, 1, 1);
-            em.persist(supplier_ItemEntity);
+//            Query q = em.createQuery("select t from SupplierEntity t where t.supplierName='Supplier 1'");
+//            SupplierEntity supplierEntity = (SupplierEntity) q.getSingleResult();
+//            Supplier_ItemEntity supplier_ItemEntity = new Supplier_ItemEntity(rawMaterialEntity, supplierEntity, 100.0, 1, 1);
+//            em.persist(supplier_ItemEntity);
             //Tie it to a suppliier
-            supplierEntity.getSupplyingItems().add(supplier_ItemEntity);
+//            supplierEntity.getSupplyingItems().add(supplier_ItemEntity);
             System.out.println("Created item entities.");
         } catch (Exception ex) {
             System.out.println("Skipping creating of item entities:\n" + ex);
