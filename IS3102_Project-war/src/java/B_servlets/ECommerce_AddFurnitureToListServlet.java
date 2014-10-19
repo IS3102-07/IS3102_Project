@@ -1,10 +1,9 @@
 package B_servlets;
 
-import EntityManager.FurnitureEntity;
 import EntityManager.MemberEntity;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import ECommerce.ECommerceBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,7 +22,7 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
 
     @EJB
-    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
+    private ECommerceBean ecb;
 
     private String result;
 
@@ -47,7 +46,7 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             
             String sku = request.getParameter("SKU");
 
-            Boolean testing = customerInformationManagementBean.addFurnitureToList(sku, member.getId()); //got problem here
+            Boolean testing = ecb.addItemToWishlist(sku, member.getId()); //got problem here
             System.out.println("ECommerce_AddFurnitureToListServlet: Ends successfully.");
             
             result = "Item added successfully.";

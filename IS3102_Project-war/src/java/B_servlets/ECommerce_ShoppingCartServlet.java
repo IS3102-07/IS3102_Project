@@ -1,8 +1,9 @@
 package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
+import ECommerce.ECommerceBean;
 import EntityManager.ShoppingListEntity;
+import EntityManager.WishListEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import javax.servlet.http.Cookie;
 
 /**
@@ -24,7 +24,7 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
     private ItemManagementBeanLocal itemManagementBean;
 
     @EJB
-    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
+    private ECommerceBean ecb;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,8 +49,8 @@ public class ECommerce_ShoppingCartServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
 
-            ShoppingListEntity shoppingList = customerInformationManagementBean.shoppingList(email);
-            session.setAttribute("shoppingList", shoppingList);
+            WishListEntity wishList = ecb.getWishList(email);
+            session.setAttribute("shoppingList", wishList);
             
             if (errMsg == null) {
                 errMsg = "";
