@@ -58,6 +58,8 @@ public class MemberEntity implements Serializable {
 
     @OneToOne(cascade = {CascadeType.ALL})
     private ShoppingListEntity shoppingList;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private WishListEntity wishList;
 
     @OneToOne
     private CountryEntity country;
