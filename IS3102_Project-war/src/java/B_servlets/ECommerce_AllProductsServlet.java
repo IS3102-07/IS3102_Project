@@ -2,6 +2,7 @@ package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.FurnitureEntity;
+import EntityManager.Item_CountryEntity;
 import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +33,9 @@ public class ECommerce_AllProductsServlet extends HttpServlet {
             session = request.getSession();
             
             List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
+            List<Item_CountryEntity> item_countryList = itemManagementBean.listAllCountryItemPricing();
             session.setAttribute("furnitures", furnitures);
+            session.setAttribute("item_countryList", item_countryList);
             
             response.sendRedirect("B/allProducts.jsp");
             

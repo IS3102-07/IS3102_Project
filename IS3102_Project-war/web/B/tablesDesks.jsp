@@ -13,7 +13,7 @@
         displayCartOption = true;
     }
 %>
-<html> <!--<![endif]-->
+<html>
     <jsp:include page="header.html" />
     <body>
         <script>

@@ -1,4 +1,5 @@
 <%@page import="EntityManager.FurnitureEntity"%>
+<%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -33,6 +34,7 @@
 
         <%
             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+            List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
         %>
 
         <div class="body">
@@ -90,17 +92,25 @@
                                         <span class="product-thumb-info-content">
 
                                             <h4><%=furnitures.get(i).getName()%></h4>
-                                            <span class="price">
-                                                <span class="amount">$72</span>
-                                            </span><br/>
+
                                             <span class="product-thumb-info-act-left"><em>Height: <%=furnitures.get(i).getHeight()%></em></span><br/>
                                             <span class="product-thumb-info-act-left"><em>Length: <%=furnitures.get(i).getLength()%></em></span><br/>
-                                            <span class="product-thumb-info-act-left"><em>Width: <%=furnitures.get(i).getWidth()%></em></span>                                            
+                                            <span class="product-thumb-info-act-left"><em>Width: <%=furnitures.get(i).getWidth()%></em></span><br/>
+                                            <%
+                                                for (int j = 0; j < item_countryList.size(); j++) {
+                                                    if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
+                                            %>
+                                            <span class="product-thumb-info-act-left"><em>Price: $ <%=item_countryList.get(j).getRetailPrice()%></em></span>
+                                            <%
+                                                        break;
+                                                    }
+                                                }
+
+                                            %>
                                         </span>
                                     </span>
                                 </li>
-                                <%
-                                            }
+                                <%                                            }
                                         }
                                     } catch (Exception ex) {
                                         System.out.println(ex);

@@ -35,7 +35,6 @@
                             </ol>
                         </div>
                     </div>
-                    <!-- /.row -->
 
                     <jsp:include page="../displayMessage.jsp" />
 

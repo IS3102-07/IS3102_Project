@@ -12,9 +12,12 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
+@XmlRootElement
 public class WarehouseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,6 +68,7 @@ public class WarehouseEntity implements Serializable {
         this.isDeleted = false;
     }                
 
+    @XmlTransient
     public List<ShippingOrderEntity> getOutbound() {
         return outbound;
     }
@@ -73,6 +77,7 @@ public class WarehouseEntity implements Serializable {
         this.outbound = outbound;
     }
 
+    @XmlTransient
     public List<ShippingOrderEntity> getInbound() {
         return inbound;
     }
@@ -129,6 +134,7 @@ public class WarehouseEntity implements Serializable {
         this.telephone = telephone;
     }
 
+    @XmlTransient
     public List<StorageBinEntity> getStorageBins() {
         return storageBins;
     }
@@ -194,6 +200,7 @@ public class WarehouseEntity implements Serializable {
         this.country = country;
     }
 
+    @XmlTransient
     public List<PurchaseOrderEntity> getPurchaseOrders() {
         return purchaseOrders;
     }
@@ -202,6 +209,7 @@ public class WarehouseEntity implements Serializable {
         this.purchaseOrders = purchaseOrders;
     }
 
+    @XmlTransient
     public List<TransferOrderEntity> getTransferOrders() {
         return transferOrders;
     }

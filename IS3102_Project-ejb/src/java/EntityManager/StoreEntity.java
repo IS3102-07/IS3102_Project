@@ -14,8 +14,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class StoreEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +66,7 @@ public class StoreEntity implements Serializable {
         this.country = country;
     }
     
+    @XmlTransient
     public List<SalesRecordEntity> getSalesRecords() {
         return salesRecords;
     }
@@ -86,6 +90,7 @@ public class StoreEntity implements Serializable {
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+    @XmlTransient
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {
         return saleAndOperationPlanList;
     }
@@ -102,6 +107,7 @@ public class StoreEntity implements Serializable {
         this.regionalOffice = regionalOffice;
     }        
 
+    @XmlTransient
     public List<SaleForecastEntity> getSaleForcastList() {
         return saleForcastList;
     }
@@ -110,6 +116,7 @@ public class StoreEntity implements Serializable {
         this.saleForcastList = saleForcastList;
     }        
     
+    @XmlTransient
     public List<ManufacturingFacilityEntity> getManufacturingFacilityList() {
         return manufacturingFacilityList;
     }
@@ -160,6 +167,7 @@ public String getAddress() {
         this.warehouse = warehouse;
     }
 
+    @XmlTransient
     public List<SalesFigureEntity> getSalesFigureList() {
         return salesFigureList;
     }

@@ -173,7 +173,7 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
     }
 
     @Override
-    public List<RawIngredientEntity> listAllRawIngridients() {
+    public List<RawIngredientEntity> listAllRawIngredients() {
         System.out.println("listAllRawIngredients() called.");
         try {
             Query q = em.createQuery("SELECT t FROM RawIngredientEntity t where t.isDeleted=false");

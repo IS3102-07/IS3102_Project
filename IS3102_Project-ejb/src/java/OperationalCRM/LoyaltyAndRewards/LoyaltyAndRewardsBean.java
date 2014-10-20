@@ -103,7 +103,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     }
 
     @Override
-    public ReturnHelper updateMemberLoyaltyPointsAndTier(String email, Double amountPaid, Long storeID) {
+    public ReturnHelper updateMemberLoyaltyPointsAndTier(String email, Integer pointsUsed, Double amountPaid, Long storeID) {
         System.out.println("updateMemberLoyaltyPointsAndTier() called");
         ReturnHelper rh = new ReturnHelper(false, "Loyalty tier not updated");
         try {
@@ -113,6 +113,8 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             memberEntity.setCummulativeSpending(memberEntity.getCummulativeSpending() + amountPaid);
             //Retrieve country for currency & exchange rate
             StoreEntity storeEntity;
+            //Deduct his points if he used any
+            memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints()-pointsUsed);
             //Calculate points earned
             try {
                 storeEntity = em.getReference(StoreEntity.class, storeID);
