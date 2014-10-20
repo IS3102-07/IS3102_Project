@@ -1,8 +1,8 @@
 package JUnit_Testing;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanRemote;
-import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -116,10 +116,10 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
 
     @Test
     public void listAllStaff() {
-//        System.out.println("listAllStaff");        
-//        List result = accountManagementBean.listAllStaff();
-//        assertFalse(result.isEmpty());
-//        assertEquals(result.size(), result.size());
+        System.out.println("listAllStaff");        
+        List result = accountManagementBean.listAllStaff();
+        assertFalse(result.isEmpty());
+        assertEquals(result.size(), result.size());
     }
 
     @Test
