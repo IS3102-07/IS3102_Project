@@ -785,6 +785,14 @@
         <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_TablesDesksServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MemberManagement_MemberServlet</servlet-name>
+        <servlet-class>A1_servlets.MemberManagement_MemberServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MemberManagement_UpdateMemberServlet</servlet-name>
+        <servlet-class>A1_servlets.MemberManagement_UpdateMemberServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1568,6 +1576,14 @@
     <servlet-mapping>
         <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
         <url-pattern>/ECommerce_TablesDesksServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberManagement_MemberServlet</servlet-name>
+        <url-pattern>/MemberManagement_MemberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberManagement_UpdateMemberServlet</servlet-name>
+        <url-pattern>/MemberManagement_UpdateMemberServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -40,8 +40,9 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
-                                        <i class="icon-featured icon icon-user"></i>
-                                        <h4>Customer Management</h4>
+                                        <a href="../MemberManagement_MemberServlet"><i class="icon-featured icon icon-user"></i>
+                                        <h4>Member Management</h4>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
