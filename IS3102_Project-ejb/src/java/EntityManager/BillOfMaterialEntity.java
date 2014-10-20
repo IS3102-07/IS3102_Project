@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class BillOfMaterialEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,6 +67,7 @@ public class BillOfMaterialEntity implements Serializable {
         this.furniture = furniture;
     }
 
+    @XmlTransient
     public List<LineItemEntity> getListOfLineItems() {
         return listOfLineItems;
     }

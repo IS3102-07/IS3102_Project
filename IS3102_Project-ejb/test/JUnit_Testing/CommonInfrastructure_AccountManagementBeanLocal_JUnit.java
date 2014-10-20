@@ -1,10 +1,10 @@
 package JUnit_Testing;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanRemote;
 import EntityManager.RoleEntity;
+import EntityManager.StaffEntity;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.embeddable.EJBContainer;
 import javax.naming.InitialContext;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,29 +13,29 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import javax.naming.Context;
 import javax.naming.NamingException;
+import static org.junit.Assert.*;
 
 public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
 
-    private static EJBContainer ejbContainer;
-    private static Context ctx;
-//    @EJB
-//    private AccountManagementBeanLocal accountManagementBean;
-//    AccountManagementBeanLocal accountManagementBean = lookupAccountManagementBeanLocal();
+    AccountManagementBeanRemote accountManagementBean = lookupAccountManagementBeanRemote();
+//
+//    private static EJBContainer ejbContainer;
+//    private static Context ctx;
 
     public CommonInfrastructure_AccountManagementBeanLocal_JUnit() {
     }
 
     @BeforeClass
     public static void setUpClass() {
-        ejbContainer = EJBContainer.createEJBContainer();
-        System.out.println("Starting the container");
-        ctx = ejbContainer.getContext();
+//        ejbContainer = EJBContainer.createEJBContainer();
+//        System.out.println("Starting the container");
+//        ctx = ejbContainer.getContext();
     }
 
     @AfterClass
     public static void tearDownClass() {
-        ejbContainer.close();
-         System.out.println("Closing the container");
+//        ejbContainer.close();
+//         System.out.println("Closing the container");
     }
 
     @Before
@@ -64,6 +64,7 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
 
     @Test
     public void loginMember() {
+        
     }
 
     @Test
@@ -107,14 +108,10 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
     }
 
     @Test
-    public void loginStaff() throws NamingException{
-        AccountManagementBeanLocal  accountManagementBean = (AccountManagementBeanLocal)ctx.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean");
-        
+    public void loginStaff() {
         System.out.println("loginStaff");
-        RoleEntity result = accountManagementBean.searchRole("");
-        System.out.println(result.getId());
-//        assertFalse(result.equals(null));
-//        assertEquals(new Long(12L), result.getId());
+        StaffEntity result = accountManagementBean.loginStaff("admin@if.com", "admin");
+        //assertFalse(result.equals(null));
     }
 
     @Test
@@ -139,10 +136,10 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
 
     @Test
     public void checkIfRoleExists() {
-//        System.out.println("checkIfRoleExists");
-//        Boolean result = accountManagementBean.checkIfRoleExists("Administrator");
-//        assertFalse(result == false);
-//        assertTrue(result);
+        System.out.println("checkIfRoleExists");
+        Boolean result = accountManagementBean.checkIfRoleExists("Administrator");
+        assertFalse(result == false);
+        assertTrue(result);
     }
 
     @Test
@@ -151,6 +148,10 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
 
     @Test
     public void listAllRoles() {
+        System.out.println("checkIfRoleExists");
+        Boolean result = accountManagementBean.checkIfRoleExists("Administrator");
+        assertFalse(result == false);
+        assert(result);
     }
 
     @Test
@@ -217,14 +218,14 @@ public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
     public void canStaffAccessToTheWarehouse() {
     }
 
-//    private AccountManagementBeanLocal lookupAccountManagementBeanLocal() {
-//        try {
-//            Context c = new InitialContext();
-//            return (AccountManagementBeanLocal) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean-92639301113872384");
-//        } catch (NamingException ne) {
-//            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-//            throw new RuntimeException(ne);
-//        }
-//    }
+    private AccountManagementBeanRemote lookupAccountManagementBeanRemote() {
+        try {
+            Context c = new InitialContext();
+            return (AccountManagementBeanRemote) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/AccountManagementBean!CommonInfrastructure.AccountManagement.AccountManagementBeanRemote");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 
 }

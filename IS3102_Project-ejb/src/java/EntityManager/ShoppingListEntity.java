@@ -7,8 +7,11 @@ import javax.persistence.Id;
 import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class ShoppingListEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +27,7 @@ public class ShoppingListEntity implements Serializable {
     public Long getId() {
         return id;
     }
+    @XmlTransient
     public List<ItemEntity> getItems() {
         return this.items;
     }

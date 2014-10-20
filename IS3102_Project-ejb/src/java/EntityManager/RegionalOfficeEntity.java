@@ -15,8 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class RegionalOfficeEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +59,7 @@ public class RegionalOfficeEntity implements Serializable {
         this.isDeleted = false;
     }
 
+    @XmlTransient
     public List<SupplierEntity> getSuppliers() {
         return suppliers;
     }
@@ -72,6 +76,7 @@ public class RegionalOfficeEntity implements Serializable {
         this.isDeleted = isDeleted;
     }
 
+    @XmlTransient
     public List<WarehouseEntity> getWarehouseList() {
         return warehouseList;
     }
@@ -80,6 +85,7 @@ public class RegionalOfficeEntity implements Serializable {
         this.warehouseList = warehouseList;
     }
 
+    @XmlTransient
     public List<StoreEntity> getStoreList() {
         return storeList;
     }
@@ -88,6 +94,7 @@ public class RegionalOfficeEntity implements Serializable {
         this.storeList = storeList;
     }
 
+    @XmlTransient
     public List<ManufacturingFacilityEntity> getManufacturingFacilityList() {
         return manufacturingFacilityList;
     }

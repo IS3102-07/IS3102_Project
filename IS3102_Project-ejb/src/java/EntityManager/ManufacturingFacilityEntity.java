@@ -19,12 +19,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Loi Liang Yang
  */
 @Entity
+@XmlRootElement
 public class ManufacturingFacilityEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -96,6 +99,7 @@ public class ManufacturingFacilityEntity implements Serializable {
         this.regionalOffice = regionalOffice;
     }        
     
+    @XmlTransient
     public List<StoreEntity> getStoreList() {
         return storeList;
     }

@@ -32,7 +32,7 @@ import javax.persistence.Query;
 import javax.ejb.EJB;
 
 @Stateful
-public class AccountManagementBean implements AccountManagementBeanLocal {
+public class AccountManagementBean implements AccountManagementBeanLocal, AccountManagementBeanRemote {
 
     @PersistenceContext
     private EntityManager em;

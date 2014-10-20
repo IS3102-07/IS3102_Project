@@ -16,8 +16,11 @@ import javax.persistence.Temporal;
 import java.util.List;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class MemberEntity implements Serializable {
 
     private static long serialVersionUID = 1L;
@@ -141,6 +144,7 @@ public class MemberEntity implements Serializable {
         return getId();
     }
 
+    @XmlTransient
     public List<SalesRecordEntity> getPurchases() {
         return purchases;
     }
