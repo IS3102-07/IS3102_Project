@@ -34,7 +34,7 @@
                     <!-- /.row -->
 
                     <jsp:include page="../displayMessage.jsp" />
-                    <form role="form" name="addStaffForm">
+                    <form role="form" name="addStaffForm" onsubmit="addStaff()">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
@@ -66,7 +66,7 @@
                                     <input class="form-control" type="text" required="true" name="address" >
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block"  onclick="addStaff()">
+                                    <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="A1/staffManagement_add.jsp" name="source">
                             </div>
