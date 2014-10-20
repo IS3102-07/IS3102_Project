@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProductsAndRawMaterialsPurchasingBeanLocal {
+public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProductsAndRawMaterialsPurchasingBeanLocal, RetailProductsAndRawMaterialsPurchasingBeanRemote {
 
     @PersistenceContext
     private EntityManager em;

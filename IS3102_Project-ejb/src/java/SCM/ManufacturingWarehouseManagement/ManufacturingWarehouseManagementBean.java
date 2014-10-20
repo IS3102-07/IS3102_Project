@@ -22,7 +22,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal {
+public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal, ManufacturingWarehouseManagementBeanRemote {
 
     @EJB
     private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;

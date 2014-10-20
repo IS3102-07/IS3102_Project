@@ -32,7 +32,7 @@ import javax.persistence.Query;
  * @author Loi Liang Yang
  */
 @Stateless
-public class FacilityManagementBean implements FacilityManagementBeanLocal {
+public class FacilityManagementBean implements FacilityManagementBeanLocal, FacilityManagementBeanRemote {
 
     @PersistenceContext
     private EntityManager em;

@@ -15,11 +15,11 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import static org.junit.Assert.*;
 
-public class CommonInfrastructure_AccountManagementBeanLocal_JUnit {
+public class CommonInfrastructure_AccountManagementBeanRemote_JUnit {
 
     AccountManagementBeanRemote accountManagementBean = lookupAccountManagementBeanRemote();
 
-    public CommonInfrastructure_AccountManagementBeanLocal_JUnit() {
+    public CommonInfrastructure_AccountManagementBeanRemote_JUnit() {
     }
 
     @BeforeClass
