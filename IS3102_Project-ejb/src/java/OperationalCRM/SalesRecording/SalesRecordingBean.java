@@ -86,11 +86,11 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             }
             StaffEntity staffEntity = accountManagementBean.getStaffByEmail(staffEmail);
             SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased);
+            salesRecordEntity.setStore(storeEntity);//tie the store to record
             em.persist(salesRecordEntity);
             //update sales figures as well
             salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
-
-            storeEntity.getSalesRecords().add(salesRecordEntity);
+            storeEntity.getSalesRecords().add(salesRecordEntity);//tie the record to the store
             em.merge(storeEntity);
         } catch (Exception ex) {
             ex.printStackTrace();
