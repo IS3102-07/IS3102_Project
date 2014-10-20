@@ -107,11 +107,10 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            MemberEntity memberEntity = (MemberEntity) (session.getAttribute("memberEntity"));
                                                             List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));
                                                             if (members != null) {
                                                                 for (int i = 0; i < members.size(); i++) {
-                                                                    if (!members.get(i).getEmail().equals(memberEntity.getEmail())) {
+
                                                         %>
                                                         <tr>
                                                             <td>
@@ -130,15 +129,15 @@
                                                                 <%=members.get(i).getPhone()%>
                                                             </td>
                                                             <td>
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=members.get(i).getId()%>" value="Update" onclick="javascript:updateMember('<%=members.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
-                                                                    }
                                                                 }
+
                                                             }
                                                         %>
                                                     </tbody>
@@ -193,7 +192,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>
