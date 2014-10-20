@@ -23,7 +23,7 @@ import javax.ejb.EJB;
 import javax.persistence.NoResultException;
 
 @Stateless
-public class SystemSecurityBean implements SystemSecurityBeanLocal {
+public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecurityBeanRemote {
 
     @EJB
     AccountManagementBeanLocal accountManagementBean;

@@ -24,7 +24,7 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 @Stateless
-public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogisticsBeanLocal {
+public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogisticsBeanLocal, InboundAndOutboundLogisticsBeanRemote {
 
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
