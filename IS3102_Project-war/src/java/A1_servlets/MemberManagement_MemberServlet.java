@@ -1,7 +1,8 @@
 package A1_servlets;
 
-import EntityManager.AnnouncementEntity;
-import CommonInfrastructure.Workspace.WorkspaceBeanLocal;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.RoleEntity;
+import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -12,40 +13,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-public class WorkspaceAnnouncement_Servlet extends HttpServlet {
+public class MemberManagement_MemberServlet extends HttpServlet {
 
     @EJB
-    private WorkspaceBeanLocal workspaceBeanLocal;
+    private AccountManagementBeanLocal accountManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
 
-            List<AnnouncementEntity> listOfAnnouncements = workspaceBeanLocal.getListOfAllNotExpiredAnnouncement();
-            session.setAttribute("listOfAnnouncements", listOfAnnouncements);
-
+            
+            List<MemberEntity> members = accountManagementBean.listAllMember();
+            session.setAttribute("members", members);
 
             if (errMsg == null && goodMsg == null) {
-                response.sendRedirect("A1/workspace_viewAnnouncement.jsp");
+                response.sendRedirect("A1/memberManagement.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {
                 if (!errMsg.equals("")) {
-                    response.sendRedirect("A1/workspace_viewAnnouncement.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A1/memberManagement.jsp?errMsg=" + errMsg);
                 }
             } else if ((errMsg == null && goodMsg != null)) {
                 if (!goodMsg.equals("")) {
-                    response.sendRedirect("A1/workspace_viewAnnouncement.jsp?goodMsg=" + goodMsg);
+                    response.sendRedirect("A1/memberManagement.jsp?goodMsg=" + goodMsg);
                 }
             }
-
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

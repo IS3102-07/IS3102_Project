@@ -2,9 +2,9 @@
     <jsp:include page="../header2.html" />
     <body>
         <script>
-            function addStaff() {
-                document.addStaffForm.action = "../StaffManagement_AddStaffServlet";
-                document.addStaffForm.submit();
+            function addMember() {
+                document.addMemberForm.action = "../MemberManagement_AddMemberServlet";
+                document.addMemberForm.submit();
             }
         </script>
         <div id="wrapper">
@@ -16,17 +16,17 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Register Staff
+                                Register Member
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-users"></i> <a href="accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-users"></i> <a href="staffManagement.jsp">Staff Management</a>
+                                    <i class="icon icon-users"></i> <a href="memberManagement.jsp">Member Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Register Staff
+                                    <i class="icon icon-edit"></i> Register Member
                                 </li>
                             </ol>
                         </div>
@@ -34,9 +34,13 @@
                     <!-- /.row -->
 
                     <jsp:include page="../displayMessage.jsp" />
-                    <form role="form" name="addStaffForm" onsubmit="addStaff()">
+                    <form role="form" name="addMemberForm" onsubmit="addMember()">
                         <div class="row">
-                            <div class="col-lg-6">                                
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Identification No</label>
+                                    <input class="form-control" name="identificationNo" type="text" required="true">
+                                </div>
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" name="name"  type="text" required="true">
@@ -64,18 +68,14 @@
                                 <div class="form-group">
                                     <input type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
                                 </div>
-                                <input type="hidden" value="A1/staffManagement_add.jsp" name="source">
+                                <input type="hidden" value="A1/memberManagement_add.jsp" name="source">
                             </div>
                         </div>
                     </form>
-
                 </div>
-
             </div>
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-
     </body>
-
 </html>

@@ -12,6 +12,7 @@ import javax.ejb.Local;
 @Local
 public interface AccountManagementBeanLocal {
 
+    public List<MemberEntity> listAllMember();
     public boolean checkMemberEmailExists(String email);
 
     public boolean registerMember(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String password);

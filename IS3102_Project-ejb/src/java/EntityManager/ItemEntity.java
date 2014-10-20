@@ -13,12 +13,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@XmlRootElement
 public abstract class ItemEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +37,8 @@ public abstract class ItemEntity implements Serializable {
     private Integer height;
     private Integer volume;
     private Boolean isDeleted;
+    private String description;
+    private String category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     private List<Supplier_ItemEntity> suppliers;    
 
@@ -121,7 +120,6 @@ public abstract class ItemEntity implements Serializable {
         return "em.ItemEntity[ id=" + id + " ]";
     }
 
-    @XmlTransient
     public List<Item_CountryEntity> getItemCountryList() {
         return itemCountryList;
     }
@@ -159,7 +157,6 @@ public abstract class ItemEntity implements Serializable {
         this.type = type;
     }
 
-    @XmlTransient
     public List<Supplier_ItemEntity> getSuppliers() {
         return suppliers;
     }

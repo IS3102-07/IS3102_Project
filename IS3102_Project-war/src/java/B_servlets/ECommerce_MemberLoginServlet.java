@@ -1,7 +1,9 @@
 package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import EntityManager.MemberEntity;
+import EntityManager.LoyaltyTierEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -11,11 +13,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class ECommerce_MemberLoginServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
+    @EJB
+    private LoyaltyAndRewardsBeanLocal loyaltyRewardsBean;
+    
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,11 +35,13 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
             cookie.setMaxAge(60 * 60); //1 hour
             response.addCookie(cookie);
 
+            List <LoyaltyTierEntity> loyaltyTiers = loyaltyRewardsBean.getAllLoyaltyTiers();
             MemberEntity memberEntity = accountManagementBean.loginMember(email, password);
             if (memberEntity != null) {
                 HttpSession session;
                 session = request.getSession();
                 session.setAttribute("member", memberEntity);
+                session.setAttribute("loyaltyTiers", loyaltyTiers);
                 //out.println("<h1>" + "can login" + "</h1>");
                 response.sendRedirect("B/memberProfile.jsp");
             } else {

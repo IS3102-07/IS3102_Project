@@ -32,7 +32,7 @@ import javax.persistence.Query;
 import javax.ejb.EJB;
 
 @Stateful
-public class AccountManagementBean implements AccountManagementBeanLocal, AccountManagementBeanRemote {
+public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @PersistenceContext
     private EntityManager em;
@@ -402,6 +402,18 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             return staffEntities;
         } catch (Exception ex) {
             System.out.println("\nServer failed to list all staff:\n" + ex);
+            return null;
+        }
+    }
+    
+    public List<MemberEntity> listAllMember() {
+        System.out.println("listAllMember() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> memberEntities = q.getResultList();
+            return memberEntities;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all member:\n" + ex);
             return null;
         }
     }
