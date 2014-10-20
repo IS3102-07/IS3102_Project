@@ -10,6 +10,7 @@ import javax.xml.ws.WebServiceRef;
 
 @Stateless
 public class SalesReportingBean implements SalesReportingBeanLocal {
+
     @WebServiceRef(wsdlLocation = "META-INF/wsdl/localhost_8080/SalesRecordingWebService/SalesRecordingWebService.wsdl")
     private StoreTransaction.SalesRecordingWebService_Service service;
 
@@ -20,8 +21,13 @@ public class SalesReportingBean implements SalesReportingBeanLocal {
     private EntityManager em;
 
     @Override
-    public Boolean submitSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints,Integer loyaltyPointsDeducted, String memberEmail) {
+    public Boolean submitSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail) {
         System.out.println("submitSalesRecord() called;");
+        // Caching/threading method should go here (if got time to do)
+        // Rough check for any missing info before submitting it to the HQ
+        if (staffEmail == null || staffPassword == null || storeID == null || posName == null) {
+            return false;
+        }
         return createSalesRecord(staffEmail, staffPassword, storeID, posName, itemsPurchasedSKU, itemsPurchasedQty, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail);
         //return true;
     }
@@ -32,6 +38,5 @@ public class SalesReportingBean implements SalesReportingBeanLocal {
         StoreTransaction.SalesRecordingWebService port = service.getSalesRecordingWebServicePort();
         return port.createSalesRecord(staffEmail, password, storeID, posName, itemsPurchasedSKU, itemsPurchasedQty, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail);
     }
-    
-    
+
 }

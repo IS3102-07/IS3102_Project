@@ -18,10 +18,7 @@ import javax.servlet.http.HttpSession;
 public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
     @EJB
-    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
-
-    @EJB
-    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private ManufacturingWarehouseManagementBeanLocal mwmb;
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,12 +36,12 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
             boolean canUpdate = false;
             if (status.equals("Completed")) {
-                canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(Long.parseLong(transferOrderId), staff.getName());
+                canUpdate = mwmb.markTransferOrderAsCompleted(Long.parseLong(transferOrderId), staff.getName());
                 result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
                 //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Unfulfillable")) {
                 result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
-                canUpdate = manufacturingWarehouseManagementBean.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
+                canUpdate = mwmb.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
                 //response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Pending")) {
                 result = "?errMsg=Status not selected.";
@@ -55,7 +52,7 @@ public class TransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
                 result = "?errMsg=Invalid request. Items not found or destination bin cannot contain the item (full or wrong bin type).&id=" + transferOrderId;
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else {
-                List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                List<TransferOrderEntity> transferOrders = mwmb.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             }

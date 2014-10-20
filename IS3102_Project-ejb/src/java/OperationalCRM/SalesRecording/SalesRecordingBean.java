@@ -32,13 +32,13 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     private EntityManager em;
 
     @EJB
-    AccountManagementBeanLocal accountManagementBean;
+    private AccountManagementBeanLocal accountManagementBean;
     @EJB
-    LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
+    private LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
     @EJB
-    StoreAndKitchenInventoryManagementBeanLocal storeInventoryManagementBean;
+    private StoreAndKitchenInventoryManagementBeanLocal storeInventoryManagementBean;
     @EJB
-    ItemManagementBeanLocal itemManagementBean;
+    private ItemManagementBeanLocal itemManagementBean;
 
     @Override
     public Boolean createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail) {

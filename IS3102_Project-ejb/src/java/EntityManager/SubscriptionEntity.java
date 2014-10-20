@@ -13,19 +13,35 @@ public class SubscriptionEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    private List<String> emails;
 
-    private String email;
-
-    public void create() {
-
+    public SubscriptionEntity(){
     }
 
-    public boolean addToList(String email) {
-        this.email = email;
-        return true;
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<String> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(List<String> emails) {
+        this.emails = emails;
     }
     
-    public String getEmail() {
-        return email;
-    }
 }

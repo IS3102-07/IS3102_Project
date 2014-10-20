@@ -15,6 +15,7 @@ import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -30,9 +31,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ejb.EJB;
+import javax.ejb.Local;
 
 @Stateful
-public class AccountManagementBean implements AccountManagementBeanLocal {
+@Local
+public class AccountManagementBean implements AccountManagementBeanLocal,Serializable {
 
     @PersistenceContext
     private EntityManager em;

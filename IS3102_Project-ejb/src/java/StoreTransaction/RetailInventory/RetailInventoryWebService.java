@@ -1,6 +1,5 @@
 package StoreTransaction.RetailInventory;
 
-import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.Item_CountryEntity;
@@ -19,18 +18,18 @@ import javax.jws.WebService;
 public class RetailInventoryWebService {
 
     @EJB
-    RetailInventoryBeanLocal RetailInventoryControlLocal;
+    RetailInventoryBeanLocal rib;
 
     @WebMethod
     public StoreEntity getStoreByID(@WebParam(name = "storeID") Long storeID) {
-        StoreEntity storeEntity = RetailInventoryControlLocal.getStoreByID(storeID);
+        StoreEntity storeEntity = rib.getStoreByID(storeID);
         return storeEntity;
     }
     
     @WebMethod
     public String getCountryCode(@WebParam(name = "storeID") Long storeID) {
         try {
-            StoreEntity storeEntity = RetailInventoryControlLocal.getStoreByID(storeID);
+            StoreEntity storeEntity = rib.getStoreByID(storeID);
             if (storeEntity == null) {
                 return null;
             }
@@ -42,7 +41,7 @@ public class RetailInventoryWebService {
 
     @WebMethod
     public ItemHelper getItemBySKU(@WebParam(name = "SKU") String SKU) {
-        ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
+        ItemEntity itemEntity = rib.getItemBySKU(SKU);
         ItemHelper ih = new ItemHelper(itemEntity.getId(), itemEntity.getSKU(), itemEntity.getName());
         return ih;
     }
@@ -51,12 +50,12 @@ public class RetailInventoryWebService {
     public Double getItemCountryPriceBySKU(@WebParam(name = "SKU") String SKU, @WebParam(name = "storeID") Long storeID) {
         System.out.println("getItemCountryPriceBySKU() called.");
         try {
-            ItemEntity itemEntity = RetailInventoryControlLocal.getItemBySKU(SKU);
+            ItemEntity itemEntity = rib.getItemBySKU(SKU);
             if (itemEntity == null) {
                 return null;
             }
             // Check the store in which country
-            StoreEntity storeEntity = RetailInventoryControlLocal.getStoreByID(storeID);
+            StoreEntity storeEntity = rib.getStoreByID(storeID);
             if (storeEntity == null) {
                 return null;
             }
@@ -64,7 +63,7 @@ public class RetailInventoryWebService {
 
             // Retrieve the item_CountryEntity for that country
             Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
-            item_CountryEntity = RetailInventoryControlLocal.getItemPricing(countryEntity.getId(), SKU);
+            item_CountryEntity = rib.getItemPricing(countryEntity.getId(), SKU);
             return item_CountryEntity.getRetailPrice();
         } catch (NullPointerException ex) {
             System.out.println("getItemCountryPriceBySKU(): Pricing for this item is not available.");

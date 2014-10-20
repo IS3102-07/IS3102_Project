@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class TransferOrderLineItemManagement_Servlet extends HttpServlet {
 
     @EJB
-    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
+    private ManufacturingWarehouseManagementBeanLocal mwmb;
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,12 +31,12 @@ public class TransferOrderLineItemManagement_Servlet extends HttpServlet {
 
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
 
-            boolean canUpdate = manufacturingWarehouseManagementBean.addLineItemToTransferOrder(Long.parseLong(transferOrderId), sku, Integer.parseInt(quantity));
+            boolean canUpdate = mwmb.addLineItemToTransferOrder(Long.parseLong(transferOrderId), sku, Integer.parseInt(quantity));
             if (!canUpdate) {
                 result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);
             } else {
-                List<TransferOrderEntity> transferOrders = manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                List<TransferOrderEntity> transferOrders = mwmb.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
                 result = "?goodMsg=Line Item added successfully.&id="+transferOrderId;
                 response.sendRedirect("A3/transferOrderLineItemManagement.jsp" + result);

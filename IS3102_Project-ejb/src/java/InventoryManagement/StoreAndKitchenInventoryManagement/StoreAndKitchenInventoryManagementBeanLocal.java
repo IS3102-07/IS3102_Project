@@ -19,8 +19,9 @@ public interface StoreAndKitchenInventoryManagementBeanLocal {
     public List<StorageBinEntity> viewAllStorageBin(Long warehouseID);
     public StorageBinEntity getInboundStorageBin(Long warehouseID); //look for the inbound storagebin
     public StorageBinEntity getOutboundStorageBin(Long warehouseID); //look for the inbound storagebin
-    public StorageBinEntity getRetailOutletBin(Long warehouseID);
-    public StorageBinEntity getFurnitureMarketplaceBin(Long warehouseID);
+    public List<StorageBinEntity> getRetailOutletBins(Long warehouseID);
+    public List<StorageBinEntity> getFurnitureMarketplaceBins(Long warehouseID);
+    public StorageBinEntity getKitchenBin(Long warehouseID);
     public boolean createTransferOrder(Long warehouseID, Long originStorageBinId, Long targetStorageBinID, LineItemEntity lineItem);
     public Boolean addLineItemToTransferOrder(Long transferOrderID, String SKU, Integer quantity);
     public Boolean removeLineItemFromTransferOrder(Long transferOrderID);
@@ -48,12 +49,14 @@ public interface StoreAndKitchenInventoryManagementBeanLocal {
     public Integer getTotalVolumeOfPalletStorageBin(Long warehouseID);
     public Integer getTotalVolumeOfRetailOutlet(Long warehouseID);
     public Integer getTotalVolumeOfFurnitureMarketplace(Long warehouseID);
+    public Integer getTotalVolumeOfKitchen(Long warehouseID);
     public Integer getTotalFreeVolumeOfInboundStorageBin(Long warehouseID);
     public Integer getTotalFreeVolumeOfOutboundStorageBin(Long warehouseID);
     public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID);
     public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID);
     public Integer getTotalFreeVolumeOfRetailOutlet(Long warehouseID);
     public Integer getTotalFreeVolumeOfFurnitureMarketplace(Long warehouseID);
+    public Integer getTotalFreeVolumeOfKitchen(Long warehouseID);
     
     public List<ItemStorageBinHelper> getItemList(Long warehouseID);
     public List<ItemStorageBinHelper> getOutboundBinItemList(Long warehouseID);
@@ -66,4 +69,5 @@ public interface StoreAndKitchenInventoryManagementBeanLocal {
     public Boolean removeItemFromInventory(String SKU, Integer qty);
     public Boolean removeItemFromFurnitureMarketplace(Long storeID, String SKU, Integer qty);
     public Boolean removeItemFromRetailOutlet(Long storeID, String SKU, Integer qty);
+    public Boolean removeItemFromKitchen(Long storeID, String SKU, Integer qty);
 }
