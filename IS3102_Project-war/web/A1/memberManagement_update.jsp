@@ -56,10 +56,7 @@
                         <div class="col-lg-6">
 
                             <form role="form" action="../MemberManagement_UpdateMemberServlet" onsubmit="return validatePassword()">
-                                <div class="form-group">
-                                    <label>Identification No</label>
-                                    <input class="form-control" required="true" name="identificationNo" type="text" value="<%=member.getIdentificationNo()%>">
-                                </div>
+                                
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" required="true" name="name" type="text" value="<%=member.getName()%>">
@@ -83,48 +80,8 @@
                                 <div class="form-group">
                                     <label>Re-enter New Password</label>
                                     <input class="form-control" type="password" name="repassword" id="repassword">
-                                </div>
+                                </div>                                
                                 
-                                <div class="form-group">
-                                    <label>Roles Assignment</label><br/>
-                                    <%
-                                        List<RoleEntity> roles = (List<RoleEntity>) session.getAttribute("memberUpdateRoles");
-                                        boolean role1, role2, role3, role4, role5, role6, role7;
-                                        role1 = role2 = role3 = role4 = role5 = role6 = role7 = false;
-
-                                        for (RoleEntity currentRole : roles) {
-                                            System.out.println(currentRole.getName());
-                                            if (currentRole.getId().toString().equals("1")) {
-                                                role1 = true;
-                                            } else if (currentRole.getId().toString().equals("2")) {
-                                                role2 = true;
-                                            } else if (currentRole.getId().toString().equals("3")) {
-                                                role3 = true;
-                                            } else if (currentRole.getId().toString().equals("4")) {
-                                                role4 = true;
-                                            } else if (currentRole.getId().toString().equals("5")) {
-                                                role5 = true;
-                                            } else if (currentRole.getId().toString().equals("6")) {
-                                                role6 = true;
-                                            } else if (currentRole.getId().toString().equals("7")) {
-                                                role7 = true;
-                                            }
-                                        }
-                                    %>
-                                    <table class="table table-hover">
-                                        <%
-                                            List<RoleEntity> roleList = (List<RoleEntity>) session.getAttribute("allRoles");
-                                            for (RoleEntity role : roleList) {
-                                        %>
-                                        <tr>
-                                            <td><input type="checkbox" name="roles" value="<%= role.getId() %>" <%if (roles.contains(role)) {%>checked<%}%>/> <%= role.getName() %> </td>
-                                            <td><span class="btn btn-default"><a href="../AccessRight_Servlet/AccessRight_GET?memberId=<%= member.getId() %>&roleId=<%= role.getId() %>">Customize Access Right</a></span></td>
-                                        </tr>
-                                        <%
-                                            }
-                                        %>                                        
-                                    </table>
-                                </div>
                                 <div class="form-group">
                                     <input type="hidden" name="update" value="yes"/>
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block"/>
