@@ -99,7 +99,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
         }
         //Update the member loyalty points
         try {
-            rh = loyaltyAndRewardsBean.updateMemberLoyaltyPointsAndTier(memberEmail, amountPaid, storeID);
+            rh = loyaltyAndRewardsBean.updateMemberLoyaltyPointsAndTier(memberEmail, loyaltyPointsDeducted, amountPaid, storeID);
         } catch (Exception ex) {
             System.out.println("Error in updating loyalty points");
             return false;
