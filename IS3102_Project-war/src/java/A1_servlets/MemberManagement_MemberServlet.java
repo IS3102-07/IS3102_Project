@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import EntityManager.RoleEntity;
+import EntityManager.MemberEntity;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,40 +13,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AccountManagement_ResetPasswordServlet extends HttpServlet {
+public class MemberManagement_MemberServlet extends HttpServlet {
 
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
-    @EJB
-    private SystemSecurityBeanLocal systemSecurityBean;
-    
-    private String result;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
         try {
             HttpSession session;
             session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
 
-            String email = request.getParameter("email");
-            String resetCode = request.getParameter("resetCode");
-            String password = request.getParameter("password");
             
-            if (systemSecurityBean.validatePasswordResetForStaff(email, resetCode)) {
-                accountManagementBean.resetStaffPassword(email, password);
-                result = "?goodMsg=Reset Password Successful. Please login with your new password.";
-                response.sendRedirect("./A1/staffLogin.jsp" + result);
-            } else {
-                result = "?errMsg=Reset Password Unsuccessful. Please key in the correct reset code.";
-                response.sendRedirect("./A1/staffResetPasswordCode.jsp" + result);
-            }
+            List<MemberEntity> members = accountManagementBean.listAllMember();
+            session.setAttribute("members", members);
 
+            if (errMsg == null && goodMsg == null) {
+                response.sendRedirect("A1/memberManagement.jsp");
+            } else if ((errMsg != null) && (goodMsg == null)) {
+                if (!errMsg.equals("")) {
+                    response.sendRedirect("A1/memberManagement.jsp?errMsg=" + errMsg);
+                }
+            } else if ((errMsg == null && goodMsg != null)) {
+                if (!goodMsg.equals("")) {
+                    response.sendRedirect("A1/memberManagement.jsp?goodMsg=" + goodMsg);
+                }
+            }
         } catch (Exception ex) {
-            response.sendRedirect("A1/error.jsp?errMsg="+ex);
-            ex.printStackTrace();
+            out.println("\n\n " + ex.getMessage());
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
