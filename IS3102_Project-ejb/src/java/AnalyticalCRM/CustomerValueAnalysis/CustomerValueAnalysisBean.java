@@ -6,12 +6,12 @@ import EntityManager.RetailProductEntity;
 import EntityManager.SalesRecordEntity;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+@Stateful
 public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal {
-    
-    @PersistenceContext
+    @PersistenceContext    
     private EntityManager em;
     
     @Override
