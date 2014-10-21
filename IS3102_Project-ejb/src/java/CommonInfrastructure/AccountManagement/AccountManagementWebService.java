@@ -42,11 +42,8 @@ public class AccountManagementWebService {
             }
             return null;
         } catch (Exception ex) {
-            if (staffID != null) {
-                return staffEntity.getName();
-            } else {
-                return null;
-            }
+            ex.printStackTrace();
+            return null;
         }
     }
 }
