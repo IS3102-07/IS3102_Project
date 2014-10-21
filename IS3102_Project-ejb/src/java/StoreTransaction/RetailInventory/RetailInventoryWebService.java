@@ -7,6 +7,8 @@ import EntityManager.StoreEntity;
 import HelperClasses.ItemHelper;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
@@ -21,11 +23,18 @@ public class RetailInventoryWebService {
     RetailInventoryBeanLocal rib;
 
     @WebMethod
-    public StoreEntity getStoreByID(@WebParam(name = "storeID") Long storeID) {
-        StoreEntity storeEntity = rib.getStoreByID(storeID);
-        return storeEntity;
+    public List<String> getStoreByID(@WebParam(name = "storeID") Long storeID) {
+        try {
+            StoreEntity storeEntity = rib.getStoreByID(storeID);
+            List<String> result = new ArrayList<>();
+            result.add(storeEntity.getAddress());
+            result.add(storeEntity.getPostalCode());
+            return result;
+        } catch (Exception ex) {
+            return null;
+        }
     }
-    
+
     @WebMethod
     public String getCountryCode(@WebParam(name = "storeID") Long storeID) {
         try {
@@ -75,7 +84,7 @@ public class RetailInventoryWebService {
         }
 
     }
-    
+
     @WebMethod
     public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") String telNo) {
         //TODO not connecting to the URL dunno why
