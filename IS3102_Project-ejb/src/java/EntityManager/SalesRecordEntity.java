@@ -17,7 +17,6 @@ public class SalesRecordEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -39,6 +38,7 @@ public class SalesRecordEntity implements Serializable {
     }
 
     public SalesRecordEntity(MemberEntity member, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String currency, String posName, String staffEntity, List<LineItemEntity> itemsPurchased) {
+        this.id=new Date().getTime();
         this.createdDate = new Date();
         this.member = member;
         this.amountDue = amountDue;
@@ -80,6 +80,7 @@ public class SalesRecordEntity implements Serializable {
     }
 
     public void setStore(StoreEntity store) {
+        this.id = store.getId()*(id.toString().length())+id;
         this.store = store;
     }
 
