@@ -538,8 +538,8 @@
         <servlet-class>B_servlets.ECommerce_StoresServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_ShoppingCartServlet</servlet-class>
+        <servlet-name>ECommerce_WishListServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_WishListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_AllRetailProductsServlet</servlet-name>
@@ -1330,8 +1330,8 @@
         <url-pattern>/ECommerce_AllRetailProductsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
-        <url-pattern>/ECommerce_ShoppingCartServlet</url-pattern>
+        <servlet-name>ECommerce_WishListServlet</servlet-name>
+        <url-pattern>/ECommerce_WishListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_AllFoodsServlet</servlet-name>

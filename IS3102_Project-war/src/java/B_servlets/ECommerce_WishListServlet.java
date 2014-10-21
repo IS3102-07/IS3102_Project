@@ -18,7 +18,7 @@ import javax.servlet.http.Cookie;
  *
  * @author yang
  */
-public class ECommerce_ShoppingCartServlet extends HttpServlet {
+public class ECommerce_WishListServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
