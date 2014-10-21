@@ -201,10 +201,6 @@
         <servlet-class>A3_servlets.TransferOrderManagement_AddServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TransferOrderManagement_UpdateServlet</servlet-name>
-        <servlet-class>A3_servlets.TransferOrderManagement_UpdateServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>TransferOrderManagement_RemoveServlet</servlet-name>
         <servlet-class>A3_servlets.TransferOrderManagement_RemoveServlet</servlet-class>
     </servlet>
@@ -630,10 +626,6 @@
         <servlet-class>A4_servlets.StoreTransferOrderManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>StoreTransferOrderManagement_UpdateServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderManagement_UpdateServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ECommerce_ContactUsServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_ContactUsServlet</servlet-class>
     </servlet>
@@ -1004,10 +996,6 @@
     <servlet-mapping>
         <servlet-name>TransferOrderManagement_AddServlet</servlet-name>
         <url-pattern>/TransferOrderManagement_AddServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TransferOrderManagement_UpdateServlet</servlet-name>
-        <url-pattern>/TransferOrderManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TransferOrderManagement_RemoveServlet</servlet-name>
@@ -1424,10 +1412,6 @@
     <servlet-mapping>
         <servlet-name>StoreTransferOrderManagement_Servlet</servlet-name>
         <url-pattern>/StoreTransferOrderManagement_Servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>StoreTransferOrderManagement_UpdateServlet</servlet-name>
-        <url-pattern>/StoreTransferOrderManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_ContactUsServlet</servlet-name>
