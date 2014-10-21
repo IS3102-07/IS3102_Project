@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EntityManager;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
@@ -106,7 +101,7 @@ public class StartupBean {
                 MemberEntity memberEntity = new MemberEntity();
                 String passwordSalt = accountManagementBean.generatePasswordSalt();
                 String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
-                memberEntity.create("John", "Block 900 Newman Drive B1-09" , new Date(), "john@hotmail.com", "8765434", null, "Weird City", "000012", passwordHash, passwordSalt);
+                memberEntity.create("John", "Block 900 Newman Drive B1-09", new Date(), "john@hotmail.com", "8765434", null, "Weird City", "000012", passwordHash, passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(150);
                 memberEntity.setLoyaltyCardId("F2E5A75D9000");
@@ -210,7 +205,7 @@ public class StartupBean {
                 System.out.println("Created manufacturing facilities & warehouse entities.");
 
                 StoreEntity storeEntity;
-                storeEntity = new StoreEntity("Queenstown Store", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com", countryEntity, "623633");
+                storeEntity = new StoreEntity("Queenstown Store", "317 Alexandra Rd", "67866868", "queens@if.com", countryEntity, "623633");
                 storeEntity.setRegionalOffice(regionalOfficeEntity);
                 warehouseEntity = new WarehouseEntity("Queenstown Store Warehouse", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com");
                 warehouseEntity.setRegionalOffice(regionalOfficeEntity);
