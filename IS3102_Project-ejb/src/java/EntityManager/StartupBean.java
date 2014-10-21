@@ -102,11 +102,32 @@ public class StartupBean {
                 ex.printStackTrace();
             }
             try {
+                //Create cashier account
+                StaffEntity staffEntity = new StaffEntity();
+                String passwordSalt = accountManagementBean.generatePasswordSalt();
+                String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "cashier");
+                staffEntity.create("S0000000A", "Cashier 1", "+65 65162727", "cashier1@if.com", "Island Furniture", passwordSalt, passwordHash);
+                staffEntity.setAccountActivationStatus(true);
+                List<RoleEntity> roles = new ArrayList();
+                Query e = em.createQuery("SELECT t FROM RoleEntity t where t.name='Cashier'");
+                RoleEntity roleEntity = (RoleEntity) e.getSingleResult();
+                roles.add(roleEntity);
+                staffEntity.setRoles(roles);
+                em.persist(staffEntity);
+                staffEntity = new StaffEntity();
+                passwordSalt = accountManagementBean.generatePasswordSalt();
+                passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "cashier");
+                staffEntity.create("S0000000A", "Cashier 2", "+65 65162727", "cashier2@if.com", "Island Furniture", passwordSalt, passwordHash);
+                staffEntity.setAccountActivationStatus(true);
+                staffEntity.setRoles(roles);
+                em.persist(staffEntity);
+                
+
                 //Create member account
                 MemberEntity memberEntity = new MemberEntity();
-                String passwordSalt = accountManagementBean.generatePasswordSalt();
-                String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
-                memberEntity.create("John", "Block 900 Newman Drive B1-09" , new Date(), "john@hotmail.com", "8765434", null, "Weird City", "000012", passwordHash, passwordSalt);
+                passwordSalt = accountManagementBean.generatePasswordSalt();
+                passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
+                memberEntity.create("John", "Block 900 Newman Drive B1-09", new Date(), "john@hotmail.com", "8765434", null, "Weird City", "000012", passwordHash, passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(150);
                 memberEntity.setLoyaltyCardId("F2E5A75D9000");
