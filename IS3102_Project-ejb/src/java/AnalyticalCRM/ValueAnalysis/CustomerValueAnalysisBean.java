@@ -1,4 +1,4 @@
-package AnalyticalCRM.CustomerValueAnalysis;
+package AnalyticalCRM.ValueAnalysis;
 
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
