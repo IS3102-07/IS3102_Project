@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EntityManager;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
@@ -102,11 +97,32 @@ public class StartupBean {
                 ex.printStackTrace();
             }
             try {
+                //Create cashier account
+                StaffEntity staffEntity = new StaffEntity();
+                String passwordSalt = accountManagementBean.generatePasswordSalt();
+                String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "cashier");
+                staffEntity.create("S0000000A", "Cashier 1", "+65 65162727", "cashier1@if.com", "Island Furniture", passwordSalt, passwordHash);
+                staffEntity.setAccountActivationStatus(true);
+                List<RoleEntity> roles = new ArrayList();
+                Query e = em.createQuery("SELECT t FROM RoleEntity t where t.name='Cashier'");
+                RoleEntity roleEntity = (RoleEntity) e.getSingleResult();
+                roles.add(roleEntity);
+                staffEntity.setRoles(roles);
+                em.persist(staffEntity);
+                staffEntity = new StaffEntity();
+                passwordSalt = accountManagementBean.generatePasswordSalt();
+                passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "cashier");
+                staffEntity.create("S0000000A", "Cashier 2", "+65 65162727", "cashier2@if.com", "Island Furniture", passwordSalt, passwordHash);
+                staffEntity.setAccountActivationStatus(true);
+                staffEntity.setRoles(roles);
+                em.persist(staffEntity);
+                
+
                 //Create member account
                 MemberEntity memberEntity = new MemberEntity();
-                String passwordSalt = accountManagementBean.generatePasswordSalt();
-                String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
-                memberEntity.create("John", "Block 900 Newman Drive B1-09" , new Date(), "john@hotmail.com", "8765434", null, "Weird City", "000012", passwordHash, passwordSalt);
+                passwordSalt = accountManagementBean.generatePasswordSalt();
+                passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
+                memberEntity.create("John", "Block 900 Newman Drive B1-09", new Date(), "john@hotmail.com", "8765434", null, "Weird City", "000012", passwordHash, passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(150);
                 memberEntity.setLoyaltyCardId("F2E5A75D9000");
@@ -210,7 +226,7 @@ public class StartupBean {
                 System.out.println("Created manufacturing facilities & warehouse entities.");
 
                 StoreEntity storeEntity;
-                storeEntity = new StoreEntity("Queenstown Store", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com", countryEntity);
+                storeEntity = new StoreEntity("Queenstown Store", "317 Alexandra Rd", "67866868", "queens@if.com", countryEntity, "623633");
                 storeEntity.setRegionalOffice(regionalOfficeEntity);
                 warehouseEntity = new WarehouseEntity("Queenstown Store Warehouse", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com");
                 warehouseEntity.setRegionalOffice(regionalOfficeEntity);
@@ -221,7 +237,7 @@ public class StartupBean {
                 em.persist(storeEntity);
                 countryEntity.getStores().add(storeEntity);
                 em.merge(countryEntity);
-                storeEntity = new StoreEntity("Tampines Store", "60 Tampines North Drive", "67866868", "tampi@if.com", countryEntity);
+                storeEntity = new StoreEntity("Tampines Store", "60 Tampines North Drive", "67866868", "tampi@if.com", countryEntity, "640258");
                 storeEntity.setRegionalOffice(regionalOfficeEntity);
                 warehouseEntity = new WarehouseEntity("Tampines Store Warehouse", "60 Tampines North Drive", "67866868", "tampi@if.com");
                 warehouseEntity.setRegionalOffice(regionalOfficeEntity);

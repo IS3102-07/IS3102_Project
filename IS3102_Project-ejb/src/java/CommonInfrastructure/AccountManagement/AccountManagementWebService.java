@@ -1,8 +1,10 @@
 package CommonInfrastructure.AccountManagement;
 
 import Config.Config;
+import EntityManager.CountryEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
+import EntityManager.StoreEntity;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -13,6 +15,8 @@ import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @WebService(serviceName = "AccountManagementWebService")
 @Stateless
@@ -20,6 +24,9 @@ public class AccountManagementWebService {
 
     @EJB
     AccountManagementBeanLocal AccountManagementBeanLocal;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @WebMethod
     public String posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
@@ -41,6 +48,18 @@ public class AccountManagementWebService {
                 }
             }
             return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @WebMethod
+    public Boolean kioskRegisterMember(String name, String address, Date DOB, String email, String phone, String city, String zipCode, String password, String storeID) {
+        try{
+            StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
+            CountryEntity country = storeEntity.getCountry();
+            return AccountManagementBeanLocal.registerMember(name, address, DOB, email, phone, country, city, zipCode, password);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;

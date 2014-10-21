@@ -40,7 +40,7 @@ public interface FacilityManagementBeanLocal {
     public Boolean updateManufacturingFacilityToRegionalOffice(String callerStaffID, Long regionalOfficeId, Long MFid);
     public Boolean removeManufacturingFacility(String callerStaffID, Long Id);    
     
-    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID);    
+    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode);    
     public Boolean editStore(String callerStaffID, Long id, String storeName, String address, String telephone, String email, Long countryID);  
     public StoreEntity viewStoreEntity(Long storeId);
     public List<StoreEntity> viewListOfStore();

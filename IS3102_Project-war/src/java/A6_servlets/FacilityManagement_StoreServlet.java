@@ -87,6 +87,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     String email = request.getParameter("email");
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                     Long countryID = Long.parseLong(request.getParameter("countryID"));
+                    String postalCode = request.getParameter("postalCode");
 
                     if (fmBean.checkNameExistsOfStore(storeName)) {
                         // request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
@@ -97,7 +98,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                         nextPage = "/FacilityManagement_StoreServlet/storeManagement_index" + result;
                     } else {
                         System.out.println("Posting from create store :");
-                        StoreEntity store = fmBean.createStore(currentLoggedInStaffID, storeName, address, telephone, email, countryID);
+                        StoreEntity store = fmBean.createStore(currentLoggedInStaffID, storeName, address, telephone, email, countryID, postalCode);
                         fmBean.addStoreToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, store.getId());
                         if (store != null) {
                             result = "?goodMsg=A new store record has been saved.";
