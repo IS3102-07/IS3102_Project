@@ -35,7 +35,7 @@ import javax.ejb.Local;
 
 @Stateful
 @Local
-public class AccountManagementBean implements AccountManagementBeanLocal, Serializable {
+public class AccountManagementBean implements AccountManagementBeanLocal, Serializable, AccountManagementBeanRemote {
 
     @PersistenceContext
     private EntityManager em;
