@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package EntityManager;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
@@ -231,7 +226,7 @@ public class StartupBean {
                 System.out.println("Created manufacturing facilities & warehouse entities.");
 
                 StoreEntity storeEntity;
-                storeEntity = new StoreEntity("Queenstown Store", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com", countryEntity, "623633");
+                storeEntity = new StoreEntity("Queenstown Store", "317 Alexandra Rd", "67866868", "queens@if.com", countryEntity, "623633");
                 storeEntity.setRegionalOffice(regionalOfficeEntity);
                 warehouseEntity = new WarehouseEntity("Queenstown Store Warehouse", "317 Alexandra Rd, Singapore 159965", "67866868", "queens@if.com");
                 warehouseEntity.setRegionalOffice(regionalOfficeEntity);
