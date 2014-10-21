@@ -42,6 +42,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit {
     public void checkMemberEmailExists() {
         System.out.println("checkMemberEmailExists");
         Boolean result = accountManagementBean.checkMemberEmailExists("superman@if.com");
+        System.out.println("checkMemberEmailExists():" + result);
         assertTrue(result);
     }
 

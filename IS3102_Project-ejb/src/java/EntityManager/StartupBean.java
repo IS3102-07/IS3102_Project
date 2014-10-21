@@ -106,7 +106,7 @@ public class StartupBean {
                 MemberEntity memberEntity = new MemberEntity();
                 String passwordSalt = accountManagementBean.generatePasswordSalt();
                 String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
-                memberEntity.create(null,null,null,"a",null,null,null,null,passwordHash,passwordSalt);
+                memberEntity.create("John", "Block 900 Newman Drive B1-09" , new Date(), "john@hotmail.com", "8765434", null, "Weird City", "000012", passwordHash, passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(150);
                 memberEntity.setLoyaltyCardId("F2E5A75D9000");
@@ -114,7 +114,7 @@ public class StartupBean {
                 memberEntity = new MemberEntity();
                 passwordSalt = accountManagementBean.generatePasswordSalt();
                 passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, "member");
-                memberEntity.create("Superman", "Block 984 Batman Drive B2-95", new Date(), "b", "999", null, "Unknown City", "006120", passwordHash, passwordSalt);
+                memberEntity.create("Superman", "Block 984 Batman Drive B2-95", new Date(), "superman@hotmail.com", "999", null, "Unknown City", "006120", passwordHash, passwordSalt);
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(500);
                 memberEntity.setLoyaltyCardId("32D3A75D9000");
@@ -126,15 +126,15 @@ public class StartupBean {
             }
             try {
                 //Create countries
-                CountryEntity country = new CountryEntity("Singapore", "SGD", 0.75,65);
+                CountryEntity country = new CountryEntity("Singapore", "SGD", 0.75, 65);
                 em.persist(country);
-                country = new CountryEntity("Malaysia", "RM", 3.0,60);
+                country = new CountryEntity("Malaysia", "RM", 3.0, 60);
                 em.persist(country);
-                country = new CountryEntity("Indonesia", "RUPIAH", 100.0,62);
+                country = new CountryEntity("Indonesia", "RUPIAH", 100.0, 62);
                 em.persist(country);
-                country = new CountryEntity("United States", "(\"", 1.0,1);
+                country = new CountryEntity("United States", "(\"", 1.0, 1);
                 em.persist(country);
-                country = new CountryEntity("China", "RMB", 6.13 ,86);
+                country = new CountryEntity("China", "RMB", 6.13, 86);
                 em.persist(country);
                 //Create schedule
                 sopBean.createSchedule(2013, 1, 5, 5, 5, 5, 0);
