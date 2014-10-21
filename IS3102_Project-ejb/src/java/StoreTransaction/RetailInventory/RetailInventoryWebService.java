@@ -29,6 +29,7 @@ public class RetailInventoryWebService {
             List<String> result = new ArrayList<>();
             result.add(storeEntity.getAddress());
             result.add(storeEntity.getPostalCode());
+            result.add(storeEntity.getCountry().getName());
             return result;
         } catch (Exception ex) {
             return null;
