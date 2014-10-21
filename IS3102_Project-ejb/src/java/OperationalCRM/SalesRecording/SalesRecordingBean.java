@@ -41,7 +41,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     private ItemManagementBeanLocal itemManagementBean;
 
     @Override
-    public Boolean createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail) {
+    public Boolean createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail, String receiptNo) {
         System.out.println("createSalesRecord() called;");
         ReturnHelper rh = new ReturnHelper(false, "System Error");
         StoreEntity storeEntity = null;
@@ -85,7 +85,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                 itemsPurchased.add(lineItemEntity);
             }
             StaffEntity staffEntity = accountManagementBean.getStaffByEmail(staffEmail);
-            SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased);
+            SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased, receiptNo);
             salesRecordEntity.setStore(storeEntity);//tie the store to record
             em.persist(salesRecordEntity);
             //update sales figures as well

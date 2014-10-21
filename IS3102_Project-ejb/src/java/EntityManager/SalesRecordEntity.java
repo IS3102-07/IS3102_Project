@@ -19,6 +19,7 @@ public class SalesRecordEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String receiptNo;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdDate;
     private Double amountDue;
@@ -38,7 +39,8 @@ public class SalesRecordEntity implements Serializable {
     public SalesRecordEntity() {
     }
 
-    public SalesRecordEntity(MemberEntity member, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String currency, String posName, String staffEntity, List<LineItemEntity> itemsPurchased) {
+    public SalesRecordEntity(MemberEntity member, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String currency, String posName, String staffEntity, List<LineItemEntity> itemsPurchased, String receiptNo) {
+        this.receiptNo = receiptNo;
         this.createdDate = new Date();
         this.member = member;
         this.amountDue = amountDue;
@@ -57,6 +59,14 @@ public class SalesRecordEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getReceiptNo() {
+        return receiptNo;
+    }
+
+    public void setReceiptNo(String receiptNo) {
+        this.receiptNo = receiptNo;
     }
 
     public Integer getLoyaltyPointsDeducted() {
@@ -80,6 +90,7 @@ public class SalesRecordEntity implements Serializable {
     }
 
     public void setStore(StoreEntity store) {
+        this.id = store.getId()*(id.toString().length())+id;
         this.store = store;
     }
 

@@ -22,7 +22,7 @@ public class AccountManagementWebService {
     AccountManagementBeanLocal AccountManagementBeanLocal;
 
     @WebMethod
-    public Long posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
+    public String posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
         Long staffID = null;
         try {
             StaffEntity staffEntity = AccountManagementBeanLocal.loginStaff(email, password);
@@ -37,16 +37,13 @@ public class AccountManagementWebService {
                     PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
                     out.println(new Date().toString() + ";" + staffID + ";posLoginStaff();" + staffID + ";");
                     out.close();
-                    return staffID;
+                    return staffEntity.getName();
                 }
             }
             return null;
         } catch (Exception ex) {
-            if (staffID != null) {
-                return staffID;
-            } else {
-                return null;
-            }
+            ex.printStackTrace();
+            return null;
         }
     }
 }
