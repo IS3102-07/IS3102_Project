@@ -62,15 +62,12 @@ public class CommonInfrastructure_SystemSecurityBeanRemote_JUnit {
     }
 
     @Test
-    public void testActivateMemberAccount() {
-    }
-
-    @Test
     public void testValidatePasswordResetForStaff() {
-    }
-
-    @Test
-    public void testValidatePasswordResetForMember() {
+        System.out.println("testValidatePasswordResetForStaff");
+        String testdata_email = "admin@if.com";
+        String testdata_code = "123456787654321";
+        Boolean result = systemSecurityBean.validatePasswordResetForStaff(testdata_email, testdata_code);
+        assertFalse(result);
     }
 
     private SystemSecurityBeanRemote lookupSystemSecurityBeanRemote() {
