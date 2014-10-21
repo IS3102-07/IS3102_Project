@@ -23,7 +23,7 @@ public class RetailInventoryWebService {
     RetailInventoryBeanLocal rib;
 
     @WebMethod
-    public List<String> getStoreByID(@WebParam(name = "storeID") Long storeID) {
+    public List<String> getStoreAddressByID(@WebParam(name = "storeID") Long storeID) {
         try {
             StoreEntity storeEntity = rib.getStoreByID(storeID);
             List<String> result = new ArrayList<>();
