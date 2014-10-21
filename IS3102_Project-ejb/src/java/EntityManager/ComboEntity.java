@@ -25,7 +25,7 @@ public class ComboEntity implements Serializable {
     private String description;
     @Lob
     private String imageURL;
-    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "combos")
+    @OneToOne(mappedBy = "combos")
     private List<MenuItemEntity> menuItems;
 
     public ComboEntity() {
