@@ -14,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CommonInfrastructure_SystemSecurityBeanRemote_JUnit {
+
     SystemSecurityBeanRemote systemSecurityBean = lookupSystemSecurityBeanRemote();
 
     public CommonInfrastructure_SystemSecurityBeanRemote_JUnit() {
@@ -36,35 +37,37 @@ public class CommonInfrastructure_SystemSecurityBeanRemote_JUnit {
     }
 
     @Test
-    public void sendActivationEmailForStaff() {
+    public void testSendActivationEmailForStaff() {
+        System.out.println("testSendActivationEmailForStaff");
+        String testdata_email = "admin@if.com";
+        Boolean result = systemSecurityBean.sendActivationEmailForStaff(testdata_email);
+        assertTrue(result);
     }
 
     @Test
-    public void sendActivationEmailForMember() {
+    public void testSendPasswordResetEmailForStaff() {
+        System.out.println("testSendPasswordResetEmailForStaff");
+        String testdata_email = "admin@if.com";
+        Boolean result = systemSecurityBean.sendPasswordResetEmailForStaff(testdata_email);
+        assertTrue(result);
     }
 
     @Test
-    public void sendPasswordResetEmailForStaff() {
+    public void testActivateStaffAccount() {
+        System.out.println("testActivateStaffAccount");
+        String testdata_email = "admin@if.com";
+        String testdata_code = "123456787654321";
+        Boolean result = systemSecurityBean.activateStaffAccount(testdata_email, testdata_code);
+        assertFalse(result);
     }
 
     @Test
-    public void sendPasswordResetEmailForMember() {
-    }
-
-    @Test
-    public void activateStaffAccount() {
-    }
-
-    @Test
-    public void activateMemberAccount() {
-    }
-
-    @Test
-    public void validatePasswordResetForStaff() {
-    }
-
-    @Test
-    public void validatePasswordResetForMember() {
+    public void testValidatePasswordResetForStaff() {
+        System.out.println("testValidatePasswordResetForStaff");
+        String testdata_email = "admin@if.com";
+        String testdata_code = "123456787654321";
+        Boolean result = systemSecurityBean.validatePasswordResetForStaff(testdata_email, testdata_code);
+        assertFalse(result);
     }
 
     private SystemSecurityBeanRemote lookupSystemSecurityBeanRemote() {
