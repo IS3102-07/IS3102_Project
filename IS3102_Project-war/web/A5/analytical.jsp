@@ -22,8 +22,8 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../StaffManagement_StaffServlet"><i class="icon-featured icon icon-user"> </i>
-                                            <h4></h4>
+                                        <a href="../Analytical_ValueAnalysisServlet"><i class="icon-featured icon icon-user"> </i>
+                                            <h4>Value Analysis</h4>
                                         </a>
                                     </div>
                                 </div>
@@ -31,8 +31,8 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../RoleManagement_RoleServlet"><i class="icon-featured icon icon-user"> </i>
-                                            <h4>Roles Management</h4>
+                                        <a href="../Analytical_SegmentationMarketingServlet"><i class="icon-featured icon icon-user"> </i>
+                                            <h4>Segmentation Marketing</h4>
                                         </a>
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
-                                        <a href="../MemberManagement_MemberServlet"><i class="icon-featured icon icon-user"></i>
+                                        <a href="../Analytical_QueryAndReportingServlet"><i class="icon-featured icon icon-user"></i>
                                         <h4>Query And Reporting</h4>
                                         </a>
                                     </div>

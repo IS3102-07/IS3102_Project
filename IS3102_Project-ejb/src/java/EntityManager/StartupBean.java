@@ -24,8 +24,8 @@ public class StartupBean {
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
 
-    @PersistenceContext
-    EntityManager em;
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
+    private EntityManager em;
 
     @PostConstruct
     private void startup() {

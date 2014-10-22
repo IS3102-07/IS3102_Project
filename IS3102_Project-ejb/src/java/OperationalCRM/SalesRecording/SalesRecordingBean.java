@@ -28,7 +28,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     @EJB
     private SalesForecastBeanLocal salesForecastBean;
 
-    @PersistenceContext
+   @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     @EJB
