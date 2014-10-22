@@ -1,6 +1,6 @@
 package B_servlets;
 
-import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
+import ECommerce.ECommerceBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ECommerce_UnsubscribeServlet extends HttpServlet {
 
     @EJB
-    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
+    private ECommerceBean ecb;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -23,7 +23,7 @@ public class ECommerce_UnsubscribeServlet extends HttpServlet {
             String email = request.getParameter("email");
             System.out.println(email);
             
-            Boolean flag = customerInformationManagementBean.removeFromSubscription(email);
+            Boolean flag = ecb.removeEmailFromSubscription(email);
             
             if (flag) {
                 response.sendRedirect("B/index.jsp");

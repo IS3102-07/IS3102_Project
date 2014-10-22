@@ -1,6 +1,5 @@
 package A3_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.StaffEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
 import java.io.IOException;
@@ -16,8 +15,7 @@ public class SupplierManagement_AddSupplierServlet extends HttpServlet {
 
     @EJB
     private SupplierManagementBeanLocal supplierManagementBean;
-    @EJB
-    private AccountManagementBeanLocal accountManagementBean;
+
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

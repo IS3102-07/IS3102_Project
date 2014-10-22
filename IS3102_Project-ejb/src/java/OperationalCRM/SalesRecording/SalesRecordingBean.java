@@ -32,16 +32,16 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     private EntityManager em;
 
     @EJB
-    AccountManagementBeanLocal accountManagementBean;
+    private AccountManagementBeanLocal accountManagementBean;
     @EJB
-    LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
+    private LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
     @EJB
-    StoreAndKitchenInventoryManagementBeanLocal storeInventoryManagementBean;
+    private StoreAndKitchenInventoryManagementBeanLocal storeInventoryManagementBean;
     @EJB
-    ItemManagementBeanLocal itemManagementBean;
+    private ItemManagementBeanLocal itemManagementBean;
 
     @Override
-    public Boolean createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail) {
+    public Boolean createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail, String receiptNo) {
         System.out.println("createSalesRecord() called;");
         ReturnHelper rh = new ReturnHelper(false, "System Error");
         StoreEntity storeEntity = null;
@@ -85,12 +85,12 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                 itemsPurchased.add(lineItemEntity);
             }
             StaffEntity staffEntity = accountManagementBean.getStaffByEmail(staffEmail);
-            SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased);
+            SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased, receiptNo);
+            salesRecordEntity.setStore(storeEntity);//tie the store to record
             em.persist(salesRecordEntity);
             //update sales figures as well
             salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
-
-            storeEntity.getSalesRecords().add(salesRecordEntity);
+            storeEntity.getSalesRecords().add(salesRecordEntity);//tie the record to the store
             em.merge(storeEntity);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -99,7 +99,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
         }
         //Update the member loyalty points
         try {
-            rh = loyaltyAndRewardsBean.updateMemberLoyaltyPointsAndTier(memberEmail, amountPaid, storeID);
+            rh = loyaltyAndRewardsBean.updateMemberLoyaltyPointsAndTier(memberEmail, loyaltyPointsDeducted, amountPaid, storeID);
         } catch (Exception ex) {
             System.out.println("Error in updating loyalty points");
             return false;

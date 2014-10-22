@@ -17,9 +17,6 @@ import javax.servlet.http.HttpSession;
 public class StoreTransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
 
     @EJB
-    private StoreAndKitchenInventoryManagementBeanLocal manufacturingInventoryControlBean;
-
-    @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
     private String result;
 

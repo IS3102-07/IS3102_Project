@@ -1,10 +1,9 @@
 package B_servlets;
 
-import EntityManager.FurnitureEntity;
 import EntityManager.MemberEntity;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import ECommerce.ECommerceBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,7 +22,7 @@ public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
 
     @EJB
-    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
+    private ECommerceBean ecb;
 
     private String result;
 
@@ -48,7 +47,7 @@ public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
 
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    customerInformationManagementBean.removeFurnitureToList(deleteArr[i], member.getId());
+                    ecb.removeItemFromWishlist(deleteArr[i], member.getId());
                 }
                 response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {

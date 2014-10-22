@@ -201,10 +201,6 @@
         <servlet-class>A3_servlets.TransferOrderManagement_AddServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TransferOrderManagement_UpdateServlet</servlet-name>
-        <servlet-class>A3_servlets.TransferOrderManagement_UpdateServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>TransferOrderManagement_RemoveServlet</servlet-name>
         <servlet-class>A3_servlets.TransferOrderManagement_RemoveServlet</servlet-class>
     </servlet>
@@ -542,8 +538,8 @@
         <servlet-class>B_servlets.ECommerce_StoresServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_ShoppingCartServlet</servlet-class>
+        <servlet-name>ECommerce_WishListServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_WishListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_AllRetailProductsServlet</servlet-name>
@@ -628,10 +624,6 @@
     <servlet>
         <servlet-name>StoreTransferOrderManagement_Servlet</servlet-name>
         <servlet-class>A4_servlets.StoreTransferOrderManagement_Servlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>StoreTransferOrderManagement_UpdateServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderManagement_UpdateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_ContactUsServlet</servlet-name>
@@ -784,6 +776,18 @@
     <servlet>
         <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_TablesDesksServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MemberManagement_MemberServlet</servlet-name>
+        <servlet-class>A1_servlets.MemberManagement_MemberServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MemberManagement_UpdateMemberServlet</servlet-name>
+        <servlet-class>A1_servlets.MemberManagement_UpdateMemberServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MemberManagement_AddMemberServlet</servlet-name>
+        <servlet-class>A1_servlets.MemberManagement_AddMemberServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -992,10 +996,6 @@
     <servlet-mapping>
         <servlet-name>TransferOrderManagement_AddServlet</servlet-name>
         <url-pattern>/TransferOrderManagement_AddServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TransferOrderManagement_UpdateServlet</servlet-name>
-        <url-pattern>/TransferOrderManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TransferOrderManagement_RemoveServlet</servlet-name>
@@ -1330,8 +1330,8 @@
         <url-pattern>/ECommerce_AllRetailProductsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
-        <url-pattern>/ECommerce_ShoppingCartServlet</url-pattern>
+        <servlet-name>ECommerce_WishListServlet</servlet-name>
+        <url-pattern>/ECommerce_WishListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
@@ -1412,10 +1412,6 @@
     <servlet-mapping>
         <servlet-name>StoreTransferOrderManagement_Servlet</servlet-name>
         <url-pattern>/StoreTransferOrderManagement_Servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>StoreTransferOrderManagement_UpdateServlet</servlet-name>
-        <url-pattern>/StoreTransferOrderManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_ContactUsServlet</servlet-name>
@@ -1568,6 +1564,18 @@
     <servlet-mapping>
         <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
         <url-pattern>/ECommerce_TablesDesksServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberManagement_MemberServlet</servlet-name>
+        <url-pattern>/MemberManagement_MemberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberManagement_UpdateMemberServlet</servlet-name>
+        <url-pattern>/MemberManagement_UpdateMemberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberManagement_AddMemberServlet</servlet-name>
+        <url-pattern>/MemberManagement_AddMemberServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

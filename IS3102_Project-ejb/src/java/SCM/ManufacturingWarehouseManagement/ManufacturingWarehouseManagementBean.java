@@ -22,10 +22,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal {
+public class ManufacturingWarehouseManagementBean implements ManufacturingWarehouseManagementBeanLocal, ManufacturingWarehouseManagementBeanRemote {
 
     @EJB
-    private ManufacturingInventoryControlBeanLocal manufacturingInventoryControlBean;
+    private ManufacturingInventoryControlBeanLocal micb;
     @Resource
     private EJBContext context;
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
@@ -253,7 +253,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 System.out.println("SKU number is " + SKU);
                 System.out.println("originBin: " + originBin.getId() + " moving to targetBin: " + targetBin.getId());
 
-                boolean isPass = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
+                boolean isPass = micb.moveSingleItemBetweenStorageBins(SKU, originBin, targetBin);
                 if (!isPass) {
                     System.out.println("markTransferOrderAsCompleted() incompleted resulted in roll back. Item was not found in source bin or volume of destination bin is insufficient.");
                     throw new Exception();

@@ -1,8 +1,10 @@
 package CommonInfrastructure.AccountManagement;
 
 import Config.Config;
+import EntityManager.CountryEntity;
 import EntityManager.RoleEntity;
 import EntityManager.StaffEntity;
+import EntityManager.StoreEntity;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -13,6 +15,8 @@ import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @WebService(serviceName = "AccountManagementWebService")
 @Stateless
@@ -20,9 +24,12 @@ public class AccountManagementWebService {
 
     @EJB
     AccountManagementBeanLocal AccountManagementBeanLocal;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @WebMethod
-    public Long posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
+    public String posLoginStaff(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
         Long staffID = null;
         try {
             StaffEntity staffEntity = AccountManagementBeanLocal.loginStaff(email, password);
@@ -37,16 +44,25 @@ public class AccountManagementWebService {
                     PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
                     out.println(new Date().toString() + ";" + staffID + ";posLoginStaff();" + staffID + ";");
                     out.close();
-                    return staffID;
+                    return staffEntity.getName();
                 }
             }
             return null;
         } catch (Exception ex) {
-            if (staffID != null) {
-                return staffID;
-            } else {
-                return null;
-            }
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @WebMethod
+    public Boolean kioskRegisterMember(String name, String address, Date DOB, String email, String phone, String city, String zipCode, String password, String storeID) {
+        try{
+            StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
+            CountryEntity country = storeEntity.getCountry();
+            return AccountManagementBeanLocal.registerMember(name, address, DOB, email, phone, country, city, zipCode, password);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 }

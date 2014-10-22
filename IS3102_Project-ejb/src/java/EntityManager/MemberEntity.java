@@ -58,6 +58,8 @@ public class MemberEntity implements Serializable {
 
     @OneToOne(cascade = {CascadeType.ALL})
     private ShoppingListEntity shoppingList;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private WishListEntity wishList;
 
     @OneToOne
     private CountryEntity country;
@@ -65,8 +67,6 @@ public class MemberEntity implements Serializable {
     @OneToMany(mappedBy="member")
     private List<SalesRecordEntity> purchases;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
-    //private FeedbackEntity feedback;
     //@OneToMany(cascade = CascadeType.ALL)
     //private WishListEntity wishlist;
     //@OneToMany
@@ -92,6 +92,7 @@ public class MemberEntity implements Serializable {
         setUnlockCode();
         setPasswordReset();
         this.isDeleted = false;
+        this.wishList = new WishListEntity();
         this.shoppingList = new ShoppingListEntity();
         this.purchases = new ArrayList<>();
         this.cummulativeSpending = 0.0;
@@ -103,6 +104,14 @@ public class MemberEntity implements Serializable {
 
     public void setLoyaltyCardId(String loyaltyCardId) {
         this.loyaltyCardId = loyaltyCardId;
+    }
+
+    public WishListEntity getWishList() {
+        return wishList;
+    }
+
+    public void setWishList(WishListEntity wishList) {
+        this.wishList = wishList;
     }
 
     public LoyaltyTierEntity getLoyaltyTier() {

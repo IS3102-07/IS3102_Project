@@ -48,6 +48,7 @@
                                         <option>Shelf</option>
                                         <option>Furniture Marketplace</option>
                                         <option>Retail Outlet</option>
+                                        <option>Kitchen</option>
                                         <option>Inbound</option>
                                         <option>Outbound</option>
                                     </select>

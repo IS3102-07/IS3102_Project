@@ -32,19 +32,32 @@ import javax.persistence.Query;
 import javax.ejb.EJB;
 
 @Stateful
-public class AccountManagementBean implements AccountManagementBeanLocal {
+public class AccountManagementBean implements AccountManagementBeanLocal, AccountManagementBeanRemote {
 
     @PersistenceContext
     private EntityManager em;
 
     @EJB
     private SystemSecurityBeanLocal systemSecurityBean;
-    
+
     @EJB
     private LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBean;
 
     public AccountManagementBean() {
         System.out.println("\nCommonInfrastructure Server (EJB) created.");
+    }
+
+    @Override
+    public List<MemberEntity> listAllMember() {
+        System.out.println("listAllMember() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
+            List<MemberEntity> memberEntities = q.getResultList();
+            return memberEntities;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all member:\n" + ex);
+            return null;
+        }
     }
 
     @Override
@@ -563,7 +576,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             q.setParameter("name", name);
             q.setParameter("accessLevel", accessLevel);
             RoleEntity roleEntity = (RoleEntity) q.getSingleResult();
-            System.out.println("ID:" +roleEntity.getId()+" Role:" + name + " ,Access level:" + accessLevel + " found.");
+            System.out.println("ID:" + roleEntity.getId() + " Role:" + name + " ,Access level:" + accessLevel + " found.");
             return roleEntity;
         } catch (NoResultException ex) {
             System.out.println("Role:" + name + " ,Access level:" + accessLevel + " not found.");
@@ -795,7 +808,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
             return false;
         }
     }
+
     // Uses supplied salt and password to generate a hashed password
+
     public String generatePasswordHash(String salt, String password) {
         String passwordHash = null;
         try {
@@ -1145,7 +1160,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
 
     @Override
     public Long getRegionalOfficeIdBasedOnStaffRole(Long staffId) {
-        System.out.println("getRegionalOfficeIDbasedOnStaffRole() called:"+staffId);
+        System.out.println("getRegionalOfficeIDbasedOnStaffRole() called:" + staffId);
         RoleEntity admin = this.searchRole("Administrator", "System");
         RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
         RoleEntity purchasingManager = this.searchRole("Purchasing Manager", "Region");
@@ -1153,7 +1168,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal {
         RoleEntity storeManager = this.searchRole("Store Manager", "Facility");
         RoleEntity warehouseManager = this.searchRole("Warehouse Manager", "Facility");
         try {
-            System.out.println(regionalManager.getId()+"|"+staffId);
+            System.out.println(regionalManager.getId() + "|" + staffId);
             StaffEntity staffEntity = em.getReference(StaffEntity.class, staffId);
             for (RoleEntity role : staffEntity.getRoles()) {
                 if (role.getName().equals("Regional Manager")) {

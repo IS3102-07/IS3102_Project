@@ -7,9 +7,7 @@ package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
-import EntityManager.StaffEntity;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -26,7 +26,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class ItemManagementBean implements ItemManagementBeanLocal {
+public class ItemManagementBean implements ItemManagementBeanLocal, ItemManagementBeanRemote {
 
     @PersistenceContext
     private EntityManager em;

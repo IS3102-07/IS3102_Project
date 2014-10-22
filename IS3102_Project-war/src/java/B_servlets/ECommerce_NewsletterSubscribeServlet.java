@@ -1,19 +1,19 @@
 package B_servlets;
 
+import ECommerce.ECommerceBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import OperationalCRM.CustomerInformationManagement.CustomerInformationManagementBeanLocal;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 
 public class ECommerce_NewsletterSubscribeServlet extends HttpServlet {
 
     @EJB
-    private CustomerInformationManagementBeanLocal customerInformationManagementBean;
+    private ECommerceBean ecb;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,7 +28,7 @@ public class ECommerce_NewsletterSubscribeServlet extends HttpServlet {
             String email = request.getParameter("email");
             System.out.println(email);
             
-            Boolean test = customerInformationManagementBean.addEmailToSubscription(email);
+            Boolean test = ecb.addEmailToSubscription(email);
             
             response.sendRedirect("B/index.jsp");
         } catch (Exception ex) {

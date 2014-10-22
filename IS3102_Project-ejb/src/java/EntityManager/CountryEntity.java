@@ -8,8 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 public class CountryEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,6 +45,7 @@ public class CountryEntity implements Serializable {
         return suppliers;
     }
 
+    @XmlTransient
     public List<StoreEntity> getStores() {
         return stores;
     }
@@ -137,6 +141,7 @@ public class CountryEntity implements Serializable {
         this.exchangeRate = exchangeRate;
     }
 
+    @XmlTransient
     public List<SupplierEntity> getSuppliers() {
         return suppliers;
     }
@@ -145,6 +150,7 @@ public class CountryEntity implements Serializable {
         this.suppliers = suppliers;
     }
 
+    @XmlTransient
     public List<WarehouseEntity> getWarehouses() {
         return warehouses;
     }

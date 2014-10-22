@@ -87,6 +87,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="input_email">Postal Code</label>
+                                    <input type="text" class="form-control" id="input_postalCode"  name="postalCode" >
+                                </div>
+
+                                <div class="form-group">
                                     <label for="input_telephone">Telephone</label>
                                     <input type="text" class="form-control" id="input_telephone"  name="telephone" >
                                 </div>

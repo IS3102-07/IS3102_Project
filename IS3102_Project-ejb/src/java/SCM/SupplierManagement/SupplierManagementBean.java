@@ -15,7 +15,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 
 @Stateless
-public class SupplierManagementBean implements SupplierManagementBeanLocal {
+public class SupplierManagementBean implements SupplierManagementBeanLocal, SupplierManagementBeanRemote {
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;

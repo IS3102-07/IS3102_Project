@@ -17,6 +17,7 @@
 <xs:element name="amountPaidUsingPoints" type="xs:double" minOccurs="0"/>
 <xs:element name="loyaltyPointsDeducted" type="xs:int" minOccurs="0"/>
 <xs:element name="memberEmail" type="xs:string" minOccurs="0"/>
+<xs:element name="receiptNo" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
