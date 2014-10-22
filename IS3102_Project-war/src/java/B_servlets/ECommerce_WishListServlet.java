@@ -1,46 +1,64 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package A4_servlets;
+package B_servlets;
 
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import ECommerce.ECommerceBean;
+import EntityManager.ShoppingListEntity;
+import EntityManager.WishListEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
 
 /**
  *
- * @author Neo
+ * @author yang
  */
-public class StoreTransferOrderManagement_UpdateServlet extends HttpServlet {
+public class ECommerce_WishListServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @EJB
+    private ItemManagementBeanLocal itemManagementBean;
+
+    @EJB
+    private ECommerceBean ecb;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TransferOrderManagement_UpdateServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TransferOrderManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        System.out.println("ECommerce_ShoppingCartServlet");
+        try {
+
+            String errMsg = request.getParameter("errMsg");
+            System.out.println("Error message received is " + errMsg);
+            Cookie[] cookies = request.getCookies();
+            String email = "";
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("memberId")) {
+                        System.out.println("Cookie value : " + cookie.getValue());
+                        email = cookie.getValue();
+                    }
+                }
+            }
+
+            HttpSession session;
+            session = request.getSession();
+
+            WishListEntity wishList = ecb.getWishList(email);
+            session.setAttribute("shoppingList", wishList);
+            
+            if (errMsg == null) {
+                errMsg = "";
+            }
+            response.sendRedirect("B/shoppingList.jsp?errMsg=" + errMsg);
+
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

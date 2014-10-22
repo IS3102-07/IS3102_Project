@@ -95,6 +95,11 @@
                                     <label for="input_address">Address</label>
                                     <input type="text" class="form-control" id="input_address"  name="address" value="<%= storeHelper.store.getAddress()%>" >
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label for="input_address">Postal Code</label>
+                                    <input type="text" class="form-control" id="input_postalCode"  name="postalCode" value="<%= storeHelper.store.getPostalCode()%>" >
+                                </div>
 
                                 <div class="form-group">
                                     <label for="input_telephone">Telephone</label>

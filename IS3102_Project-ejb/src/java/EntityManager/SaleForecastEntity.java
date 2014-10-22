@@ -28,7 +28,9 @@ public class SaleForecastEntity implements Serializable {
     private ProductGroupEntity productGroup;
     @ManyToOne
     private MonthScheduleEntity schedule;
-            
+    @ManyToOne
+    private MenuItemEntity menuItem;
+    
     private Integer quantity;
     
     public SaleForecastEntity(){}    
@@ -59,6 +61,14 @@ public class SaleForecastEntity implements Serializable {
     public StoreEntity getStore() {
         return store;
     }
+
+    public MenuItemEntity getMenuItem() {
+        return menuItem;
+    }
+
+    public void setMenuItem(MenuItemEntity menuItem) {
+        this.menuItem = menuItem;
+    }       
 
     public void setStore(StoreEntity store) {
         this.store = store;

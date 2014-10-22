@@ -307,14 +307,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID) {
+    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode) {
         System.out.println("createStore() called with name:" + storeName);
         String name;
         Long storeId;
         try {
             
             CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
-            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity);
+            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity, postalCode);
             em.persist(storeEntity);
             countryEntity.getStores().add(storeEntity);
             em.merge(countryEntity);
