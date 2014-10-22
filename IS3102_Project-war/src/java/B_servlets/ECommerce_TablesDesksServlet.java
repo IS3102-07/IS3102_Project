@@ -31,7 +31,7 @@ public class ECommerce_TablesDesksServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             
-            List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
+            List<FurnitureEntity> furnitures = itemManagementBean.viewFurnitureByCategory("Tables & Desks");
             session.setAttribute("furnitures", furnitures);
             
             response.sendRedirect("B/tablesDesks.jsp");
