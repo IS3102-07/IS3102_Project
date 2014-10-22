@@ -14,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SCM_ManufacturingInventoryControlBeanRemote_JUnit {
+
     ManufacturingInventoryControlBeanRemote manufacturingInventoryControlBean = lookupManufacturingInventoryControlBeanRemote();
 
     public SCM_ManufacturingInventoryControlBeanRemote_JUnit() {
@@ -36,88 +37,87 @@ public class SCM_ManufacturingInventoryControlBeanRemote_JUnit {
     }
 
     @Test
-    public void getEmptyStorageBins() {
-    } 
-
-    @Test
-    public void moveInboundPurchaseOrderItemsToReceivingBin() {
+    public void testGetEmptyStorageBins() {
     }
 
     @Test
-    public void moveInboundShippingOrderItemsToReceivingBin() {
+    public void testMoveInboundPurchaseOrderItemsToReceivingBin() {
     }
 
     @Test
-    public void removeItemFromOutboundBinForShipping() {
+    public void testMoveInboundShippingOrderItemsToReceivingBin() {
     }
 
     @Test
-    public void addItemToReceivingBin() {
-    }
-
-
-    @Test
-    public void moveSingleItemBetweenStorageBins() {
+    public void testRemoveItemFromOutboundBinForShipping() {
     }
 
     @Test
-    public void checkItemQty() {
+    public void testAddItemToReceivingBin() {
     }
 
     @Test
-    public void findStorageBinsThatContainsItem() {
+    public void testMoveSingleItemBetweenStorageBins() {
     }
 
     @Test
-    public void getTotalVolumeOfInboundStorageBin() {
+    public void testCheckItemQty() {
     }
 
     @Test
-    public void getTotalVolumeOfOutboundStorageBin() {
+    public void testFindStorageBinsThatContainsItem() {
     }
 
     @Test
-    public void getTotalVolumeOfShelfStorageBin() {
+    public void testGetTotalVolumeOfInboundStorageBin() {
     }
 
     @Test
-    public void getTotalVolumeOfPalletStorageBin() {
+    public void testGetTotalVolumeOfOutboundStorageBin() {
     }
 
     @Test
-    public void getTotalFreeVolumeOfInboundStorageBin() {
+    public void testGetTotalVolumeOfShelfStorageBin() {
     }
 
     @Test
-    public void getTotalFreeVolumeOfOutboundStorageBin() {
+    public void testGetTotalVolumeOfPalletStorageBin() {
     }
 
     @Test
-    public void getTotalFreeVolumeOfPalletStorageBin() {
+    public void testGetTotalFreeVolumeOfInboundStorageBin() {
     }
 
     @Test
-    public void getItemList() {
+    public void testGetTotalFreeVolumeOfOutboundStorageBin() {
     }
 
     @Test
-    public void getOutboundBinItemList() {
+    public void testGetTotalFreeVolumeOfPalletStorageBin() {
     }
 
     @Test
-    public void getBinItemList() {
+    public void testGetItemList() {
     }
 
     @Test
-    public void emptyStorageBin() {
+    public void testGetOutboundBinItemList() {
     }
 
     @Test
-    public void checkIfItemExistInsideStorageBin() {
+    public void testGetBinItemList() {
     }
 
     @Test
-    public void checkIfStorageBinIsOfAppropriateItemType() {
+    public void testEmptyStorageBin() {
+    }
+
+    @Test
+    public void testCheckIfItemExistInsideStorageBin() {
+    }
+
+    @Test
+    public void testCheckIfStorageBinIsOfAppropriateItemType() {
     }
 
     private ManufacturingInventoryControlBeanRemote lookupManufacturingInventoryControlBeanRemote() {

@@ -14,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
+
     ManufacturingWarehouseManagementBeanRemote manufacturingWarehouseManagementBean = lookupManufacturingWarehouseManagementBeanRemote();
 
     public SCM_ManufacturingWarehouseManagementBeanRemote_JUnit() {
@@ -36,71 +37,71 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     }
 
     @Test
-    public void createStorageBin() {
-    } 
-
-    @Test
-    public void updateStorageBin() {
+    public void testCreateStorageBin() {
     }
 
     @Test
-    public void deleteStorageBin() {
+    public void testUpdateStorageBin() {
     }
 
     @Test
-    public void viewStorageBin() {
+    public void testDeleteStorageBin() {
     }
 
     @Test
-    public void viewAllStorageBin() {
+    public void testViewStorageBin() {
     }
 
     @Test
-    public void getInboundStorageBin() {
-    } 
+    public void testViewAllStorageBin() {
+    }
 
     @Test
-    public void getOutboundStorageBin() {
+    public void testGetInboundStorageBin() {
+    }
+
+    @Test
+    public void testGetOutboundStorageBin() {
     } //look for the inbound storagebin
 
     @Test
-    public void createTransferOrder() {
+    public void testCreateTransferOrder() {
     }
 
     @Test
-    public void addLineItemToTransferOrder() {
+    public void testAddLineItemToTransferOrder() {
     }
 
     @Test
-    public void removeLineItemFromTransferOrder() {
+    public void testRemoveLineItemFromTransferOrder() {
     }
 
     @Test
-    public void markTransferOrderAsCompleted() {
+    public void testMarkTransferOrderAsCompleted() {
     }
 
     @Test
-    public void cancelTransferOrder() {
+    public void testCancelTransferOrder() {
     }
 
     @Test
-    public void viewTransferOrder() {
+    public void testViewTransferOrder() {
     }
 
     @Test
-    public void viewAllTransferOrderByWarehouseId() {
+    public void testViewAllTransferOrderByWarehouseId() {
     }
 
     @Test
-    public void deleteTransferOrder() {
+    public void testDeleteTransferOrder() {
     }
 
     @Test
-    public void markTransferOrderAsUnfulfilled() {
+    public void testMarkTransferOrderAsUnfulfilled() {
     }
 
     @Test
-    public void searchItemBySKU() {
+    public void testSearchItemBySKU() {
     }
 
     private ManufacturingWarehouseManagementBeanRemote lookupManufacturingWarehouseManagementBeanRemote() {

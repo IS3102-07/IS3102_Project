@@ -35,50 +35,51 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     public void tearDown() {
     }
 
+
     @Test
-    public void createPurchaseOrder() {
+    public void testCreatePurchaseOrder() {
     }
 
     @Test
-    public void updatePurchaseOrder() {
+    public void testUpdatePurchaseOrder() {
     }
 
     @Test
-    public void updatePurchaseOrderStatus() {
+    public void testUpdatePurchaseOrderStatus() {
     }
 
     @Test
-    public void addLineItemToPurchaseOrder() {
+    public void testAddLineItemToPurchaseOrder() {
     }
 
     @Test
-    public void removeLineItemFromPurchaseOrder() {
+    public void testRemoveLineItemFromPurchaseOrder() {
     }
 
     @Test
-    public void updateLineItemFromPurchaseOrder() {
+    public void testUpdateLineItemFromPurchaseOrder() {
     }
 
     @Test
-    public void getPurchaseOrderById() {
+    public void testGetPurchaseOrderById() {
     }
 
     @Test
-    public void getPurchaseOrderListByStatus() {
+    public void testGetPurchaseOrderListByStatus() {
     }
 
     @Test
-    public void getPurchaseOrderList() {
+    public void testGetPurchaseOrderList() {
     }
 
     @Test
-    public void checkSKUExists() {
+    public void testCheckSKUExists() {
     }
 
     @Test
-    public void getPurchaseOrderListByWarehouseId() {
+    public void testGetPurchaseOrderListByWarehouseId() {
     }
-
+    
     private RetailProductsAndRawMaterialsPurchasingBeanRemote lookupRetailProductsAndRawMaterialsPurchasingBeanRemote() {
         try {
             Context c = new InitialContext();
