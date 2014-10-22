@@ -34,7 +34,7 @@ import javax.persistence.Query;
 @Stateless
 public class FacilityManagementBean implements FacilityManagementBeanLocal, FacilityManagementBeanRemote {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     // Add business logic below. (Right-click in editor and choose

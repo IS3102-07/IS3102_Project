@@ -5,7 +5,7 @@ import javax.persistence.PersistenceContext;
 
 
 public class SegmentationMarketingBean implements SegmentationMarketingBeanLocal {
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     
     public void sendMonthlyNewsletter() {

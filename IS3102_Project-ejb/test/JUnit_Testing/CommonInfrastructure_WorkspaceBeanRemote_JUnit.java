@@ -1,6 +1,9 @@
 package JUnit_Testing;
 
 import CommonInfrastructure.Workspace.WorkspaceBeanRemote;
+import EntityManager.MessageInboxEntity;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -8,12 +11,13 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class CommonInfrastructure_WorkspaceBeanRemote_JUnit {
+
     WorkspaceBeanRemote workspaceBean = lookupWorkspaceBeanRemote();
 
     public CommonInfrastructure_WorkspaceBeanRemote_JUnit() {
@@ -36,86 +40,136 @@ public class CommonInfrastructure_WorkspaceBeanRemote_JUnit {
     }
 
     @Test
-    public void sendMessage() {
+    public void testListAllInboxMessages() {
+        System.out.println("testListAllInboxMessages");
+        Long testdata_staffID = 1L;
+        List<MessageInboxEntity> result = workspaceBean.listAllInboxMessages(testdata_staffID);
+        assertFalse(result.isEmpty());
+        assertTrue(!result.isEmpty());
     }
 
     @Test
-    public void sendMessageToMultipleReceiver() {
+    public void testListAllUnreadInboxMessages() {
+        System.out.println("testListAllUnreadInboxMessages");
+        Long testdata_staffID = 1L;
+        List result = workspaceBean.listAllUnreadInboxMessages(testdata_staffID);
+        assertFalse(result.isEmpty());
+        assertTrue(!result.isEmpty());
     }
 
     @Test
-    public void listAllInboxMessages() {
+    public void testListAllOutboxMessages() {
+        System.out.println("testListAllOutboxMessages");
+        Long testdata_staffID = 1L;
+        List result = workspaceBean.listAllOutboxMessages(testdata_staffID);
+        assertFalse(result.isEmpty());
+        assertTrue(!result.isEmpty());
     }
 
     @Test
-    public void listAllUnreadInboxMessages() {
+    public void testDeleteSingleInboxMessage() {
+        System.out.println("testDeleteSingleInboxMessage");
+        Long testdata_staffID = 12L;
+        Long testdata_messageID = 5L;
+        Boolean result = workspaceBean.deleteSingleInboxMessage(testdata_staffID, testdata_messageID);
+        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test
-    public void listAllOutboxMessages() {
+    public void testDeleteSingleOutboxMessage() {
+        System.out.println("testDeleteSingleOutboxMessage");
+        Long testdata_staffID = 3L;
+        Long testdata_messageID = 251L;
+        Boolean result = workspaceBean.deleteSingleOutboxMessage(testdata_staffID, testdata_messageID);
+        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test
-    public void readInboxMessage() {
+    public void testMakeAnnouncement() {
+        System.out.println("testMakeAnnouncement");
+        String testdata_callerStaffID = "12";
+        String testdata_sender = "Administrator";
+        String testdata_title = "Account registration";
+        String testdata_message = "Please ensure that your account details are correct after registration";
+        Date testdata_expiryDate = new Date();
+        Boolean result = workspaceBean.makeAnnouncement(testdata_callerStaffID, testdata_sender, testdata_title, testdata_message, testdata_expiryDate);
+        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test
-    public void readSentMessage() {
+    public void testGetListOfAllNotExpiredAnnouncement() {
+        System.out.println("testGetListOfAllNotExpiredAnnouncement");
+        List result = workspaceBean.getListOfAllNotExpiredAnnouncement();
+        assertTrue(result.isEmpty());
+        assertFalse(!result.isEmpty());
     }
 
     @Test
-    public void deleteSingleInboxMessage() {
+    public void testUpdateAnnouncement() {
+        System.out.println("testUpdateAnnouncement");
+        String testdata_callerStaffID = "12";
+        Long testdata_announcementId = 1L;
+        String testdata_message = "Please ensure that your account details are correct after registration";
+        Date testdata_expiryDate = new Date();
+        Boolean result = workspaceBean.updateAnnouncement(testdata_callerStaffID, testdata_announcementId, testdata_message, testdata_expiryDate);
+        assertFalse(result);
+        assertEquals(true, result);
     }
 
     @Test
-    public void deleteSingleOutboxMessage() {
+    public void testDeleteAnnouncement() {
+        System.out.println("testDeleteAnnouncement");
+        String testdata_callerStaffID = "12";
+        Long testdata_announcementId = 1L;
+        Boolean result = workspaceBean.deleteAnnouncement(testdata_callerStaffID, testdata_announcementId);
+        assertFalse(result);
+        assertEquals(true, result);
     }
 
     @Test
-    public void makeAnnouncement() {
-    }
-    @Test
-    public void getListOfAllNotExpiredAnnouncement() {
-    }
-
-    @Test
-    public void updateAnnouncement() {
-    }
-
-    @Test
-    public void deleteAnnouncement() {
+    public void testAddToDoList() {
+        System.out.println("testAddToDoList");
+        Long testdata_staffId = 12L;
+        String testdata_description = "Call Michael to buy parts from supplier for production.";
+        Boolean result = workspaceBean.addToDoList(testdata_staffId, testdata_description);
+        assertFalse(result);
+        assertTrue(result);
     }
 
     @Test
-    public void addToDoList() {
+    public void testRemoveToDoList() {
+        System.out.println("testRemoveToDoList");
+        Long testdata_staffId = 12L;
+        Long testdata_toDoId = 3L;
+        Boolean result = workspaceBean.removeToDoList(testdata_staffId, testdata_toDoId);
+        assertTrue(result);
     }
 
     @Test
-    public void removeToDoList() {
+    public void testGetAllToDoListOfAStaff() {
     }
 
     @Test
-    public void getAllToDoListOfAStaff() {
+    public void testMarkToDoListAsDone() {
     }
 
     @Test
-    public void markToDoListAsDone() {
+    public void testMarkToDoListAsUndone() {
     }
 
     @Test
-    public void markToDoListAsUndone() {
+    public void testToggleToDoListIsDone() {
     }
 
     @Test
-    public void toggleToDoListIsDone() {
+    public void testGetStaffEmail() {
     }
 
     @Test
-    public void getStaffEmail() {
-    }
-
-    @Test
-    public void getStaffName() {
+    public void testGetStaffName() {
     }
 
     private WorkspaceBeanRemote lookupWorkspaceBeanRemote() {
