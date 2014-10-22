@@ -28,7 +28,7 @@ import javax.persistence.Query;
 @Stateless
 public class ItemManagementBean implements ItemManagementBeanLocal, ItemManagementBeanRemote {
 
-    @PersistenceContext
+   @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     private RawMaterialEntity rawMaterial;
 
@@ -600,13 +600,16 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     @Override
     public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId) {
         try {
-            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);
-            lineItem.setProductGroup(productGroup);
-            productGroup.setType(lineItem.getItem().getType());
-            productGroup.getLineItemList().add(lineItem);
-            em.merge(productGroup);
-            return true;
+            Query q = em.createQuery("select l from ProductGroupLineItemEntity l where l.item.SKU = ?1 and l.productGroup is not null").setParameter(1, lineItem.getItem().getSKU());
+            if (q.getResultList().isEmpty()) {
+                ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+                lineItem.setProductGroup(productGroup);
+                productGroup.setType(lineItem.getItem().getType());
+                productGroup.getLineItemList().add(lineItem);
+                em.merge(productGroup);
+                return true;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

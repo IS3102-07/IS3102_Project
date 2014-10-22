@@ -24,8 +24,7 @@ import javax.persistence.TemporalType;
 
 @Stateless
 public class WorkspaceBean implements WorkspaceBeanLocal, WorkspaceBeanRemote {
-
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

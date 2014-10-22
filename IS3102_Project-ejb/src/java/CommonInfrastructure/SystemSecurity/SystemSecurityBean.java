@@ -28,7 +28,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
     @EJB
     AccountManagementBeanLocal accountManagementBean;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     String emailServerName = "mailauth.comp.nus.edu.sg";
     String emailFromAddress = "a0097735@comp.nus.edu.sg";

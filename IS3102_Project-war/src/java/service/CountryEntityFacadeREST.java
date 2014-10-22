@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restful_service;
+package service;
 
-import EntityManager.MemberEntity;
+import EntityManager.CountryEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,26 +24,26 @@ import javax.ws.rs.Produces;
  * @author Jason
  */
 @Stateless
-@Path("entitymanager.memberentity")
-public class MemberEntityFacadeREST extends AbstractFacade<MemberEntity> {
+@Path("entitymanager.countryentity")
+public class CountryEntityFacadeREST extends AbstractFacade<CountryEntity> {
     @PersistenceContext(unitName = "IS3102_Project-warPU")
     private EntityManager em;
 
-    public MemberEntityFacadeREST() {
-        super(MemberEntity.class);
+    public CountryEntityFacadeREST() {
+        super(CountryEntity.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(MemberEntity entity) {
+    public void create(CountryEntity entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Long id, MemberEntity entity) {
+    public void edit(@PathParam("id") Long id, CountryEntity entity) {
         super.edit(entity);
     }
 
@@ -56,21 +56,21 @@ public class MemberEntityFacadeREST extends AbstractFacade<MemberEntity> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public MemberEntity find(@PathParam("id") Long id) {
+    public CountryEntity find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<MemberEntity> findAll() {
+    public List<CountryEntity> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<MemberEntity> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<CountryEntity> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

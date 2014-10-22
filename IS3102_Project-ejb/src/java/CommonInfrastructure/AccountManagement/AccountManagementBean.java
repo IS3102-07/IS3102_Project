@@ -34,7 +34,7 @@ import javax.ejb.EJB;
 @Stateful
 public class AccountManagementBean implements AccountManagementBeanLocal, AccountManagementBeanRemote {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     @EJB
@@ -810,7 +810,6 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
     }
 
     // Uses supplied salt and password to generate a hashed password
-
     public String generatePasswordHash(String salt, String password) {
         String passwordHash = null;
         try {
@@ -1367,6 +1366,10 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
 
 }
