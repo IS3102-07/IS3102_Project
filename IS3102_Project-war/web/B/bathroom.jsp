@@ -43,7 +43,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2>Tables & Desks</h2>
+                                    <h2>Bathroom</h2>
                                 </div>
                             </div>
                         </div>

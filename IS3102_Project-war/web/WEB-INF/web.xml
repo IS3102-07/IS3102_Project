@@ -789,6 +789,70 @@
         <servlet-name>MemberManagement_AddMemberServlet</servlet-name>
         <servlet-class>A1_servlets.MemberManagement_AddMemberServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Analytical_ValueAnalysisServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_ValueAnalysisServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Analytical_SegmentationMarketingServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_SegmentationMarketingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Analytical_QueryAndReportingServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_QueryAndReportingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_RetailProductsServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_RetailProductsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_BathroomServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_BathroomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_BedsMattressesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A8/KitchenSaleForecast_index</servlet-name>
+        <jsp-file>/A8/KitchenSaleForecast_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>A8/KitchenSaleForecast_schedule</servlet-name>
+        <jsp-file>/A8/KitchenSaleForecast_schedule.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>A8/KitchenSaleForecast_main</servlet-name>
+        <jsp-file>/A8/KitchenSaleForecast_main.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_LightingsServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_LightingsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_SofasChairServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_SofasChairServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_CabinetsStorageServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_CabinetsStorageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_ChildrenServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ChildrenServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_StudyServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_StudyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_RestaurantServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_RestaurantServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_PointOfSalesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1576,6 +1640,70 @@
     <servlet-mapping>
         <servlet-name>MemberManagement_AddMemberServlet</servlet-name>
         <url-pattern>/MemberManagement_AddMemberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_ValueAnalysisServlet</servlet-name>
+        <url-pattern>/Analytical_ValueAnalysisServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_SegmentationMarketingServlet</servlet-name>
+        <url-pattern>/Analytical_SegmentationMarketingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_QueryAndReportingServlet</servlet-name>
+        <url-pattern>/Analytical_QueryAndReportingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_RetailProductsServlet</servlet-name>
+        <url-pattern>/ECommerce_RetailProductsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_BathroomServlet</servlet-name>
+        <url-pattern>/ECommerce_BathroomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
+        <url-pattern>/ECommerce_BedsMattressesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/KitchenSaleForecast_index</servlet-name>
+        <url-pattern>/A8/KitchenSaleForecast_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/KitchenSaleForecast_schedule</servlet-name>
+        <url-pattern>/A8/KitchenSaleForecast_schedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/KitchenSaleForecast_main</servlet-name>
+        <url-pattern>/A8/KitchenSaleForecast_main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_LightingsServlet</servlet-name>
+        <url-pattern>/ECommerce_LightingsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_SofasChairServlet</servlet-name>
+        <url-pattern>/ECommerce_SofasChairServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_CabinetsStorageServlet</servlet-name>
+        <url-pattern>/ECommerce_CabinetsStorageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_ChildrenServlet</servlet-name>
+        <url-pattern>/ECommerce_ChildrenServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_StudyServlet</servlet-name>
+        <url-pattern>/ECommerce_StudyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_RestaurantServlet</servlet-name>
+        <url-pattern>/ECommerce_RestaurantServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
+        <url-pattern>/ECommerce_PointOfSalesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

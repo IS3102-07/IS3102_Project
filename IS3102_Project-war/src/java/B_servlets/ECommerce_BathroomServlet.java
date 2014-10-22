@@ -1,44 +1,43 @@
-package A6_servlets;
+package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.ProductGroupLineItemEntity;
+import EntityManager.FurnitureEntity;
+import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-public class ProductGroupLineItemManagement_AddServlet extends HttpServlet {
+import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+/**
+ *
+ * @author yang
+ */
+public class ECommerce_BathroomServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal ItemManagementBean;
-    private String result;
+    private ItemManagementBeanLocal itemManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
-            String productGroupId = request.getParameter("id");
-            String sku = request.getParameter("sku");
-            String percent = request.getParameter("percent");
 
-            ProductGroupLineItemEntity productGroupLineItemEntity = ItemManagementBean.createProductGroupLineItem(sku, Double.parseDouble(percent));
-            boolean canUpdate = false;
-            if (productGroupLineItemEntity != null) {
-                canUpdate = ItemManagementBean.addLineItemToProductGroup(Long.parseLong(productGroupId), productGroupLineItemEntity.getId());
-            }
-            if (!canUpdate) {
-                result = "?errMsg=Item already exist in another Product Groupd.&id=" + productGroupId;
-                response.sendRedirect("A6/productGroupManagement_AddLineItem.jsp" + result);
-            } else {
-                result = "?goodMsg=Line item added successfully.&id=" + productGroupId;
-                response.sendRedirect("ProductGroupLineItemManagement_Servlet" + result);
-            }
-
+            HttpSession session;
+            session = request.getSession();
+            
+            List<FurnitureEntity> furnitures = itemManagementBean.viewFurnitureByCategory("Bathroom");
+            session.setAttribute("furnitures", furnitures);
+            
+            response.sendRedirect("B/bathroom.jsp");
+            
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 
