@@ -7,7 +7,9 @@ import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.SalesRecordEntity;
 import EntityManager.StoreEntity;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,39 +24,47 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
     @Override
     public Boolean updateSalesFigureBySalesRecord(Long salesRecordId) {
+        System.out.println("updateSalesFigureBySalesRecord is called");
         try {
             SalesRecordEntity saleRecord = em.find(SalesRecordEntity.class, salesRecordId);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(saleRecord.getCreatedDate());
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+
             Query query = em.createQuery("select s from MonthScheduleEntity s where s.year = ?1 and s.month = ?2")
-                    .setParameter(1, saleRecord.getCreatedDate().getYear())
-                    .setParameter(2, saleRecord.getCreatedDate().getMonth());            
-            MonthScheduleEntity schedule = (MonthScheduleEntity)query.getResultList().get(0);
-            
+                    .setParameter(1, year)
+                    .setParameter(2, month + 1);
+            MonthScheduleEntity schedule = (MonthScheduleEntity) query.getResultList().get(0);
+
             for (LineItemEntity lineItem : saleRecord.getItemsPurchased()) {
-                
+                System.out.println("saleRecord.getItemsPurchased().size(): "+ saleRecord.getItemsPurchased().size());
+                System.out.println(lineItem.getItem().getSKU() + ": " + lineItem.getQuantity());
                 Query q = em.createQuery("select l.productGroup from ProductGroupLineItemEntity l where l.item.SKU = ?1")
                         .setParameter(1, lineItem.getItem().getSKU());
-                if(!q.getResultList().isEmpty()){
-                    ProductGroupEntity productGroup = (ProductGroupEntity)q.getResultList().get(0);
+                if (!q.getResultList().isEmpty()) {
+                    ProductGroupEntity productGroup = (ProductGroupEntity) q.getResultList().get(0);
                     Query q1 = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.id = ?2 and s.productGroup.id = ?3")
-                        .setParameter(1, saleRecord.getStore())
-                        .setParameter(2, schedule.getId())
-                        .setParameter(3, productGroup.getId());
-                    
-                    if(!q1.getResultList().isEmpty()){
-                        SalesFigureEntity saleFigure = (SalesFigureEntity)q1.getResultList().get(0);
+                            .setParameter(1, saleRecord.getStore())
+                            .setParameter(2, schedule.getId())
+                            .setParameter(3, productGroup.getId());
+
+                    if (!q1.getResultList().isEmpty()) {
+                        SalesFigureEntity saleFigure = (SalesFigureEntity) q1.getResultList().get(0);
                         saleFigure.setQuantity(saleFigure.getQuantity() + lineItem.getQuantity());
                         em.merge(saleFigure);
-                    }else{
+                    } else {
                         SalesFigureEntity salesFigure = new SalesFigureEntity();
                         salesFigure.setStore(saleRecord.getStore());
                         salesFigure.setProductGroup(productGroup);
                         salesFigure.setSchedule(schedule);
                         salesFigure.setQuantity(lineItem.getQuantity());
                         em.persist(salesFigure);
-                    }                    
-                }    
-                return true;
+                    }
+                }
             }
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -104,7 +114,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 System.out.println("debug......" + "productGroup.getId()" + productGroup.getId());
 
                 MonthScheduleEntity lastSchedule = schedule;
-                
+
                 try {
                     int amount = 0;
                     for (int i = 0; i < 3; i++) {

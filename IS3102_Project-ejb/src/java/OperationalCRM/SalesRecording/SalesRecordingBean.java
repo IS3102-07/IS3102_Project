@@ -89,7 +89,11 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             salesRecordEntity.setStore(storeEntity);//tie the store to record
             em.persist(salesRecordEntity);
             //update sales figures as well
-            salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
+            try {
+                salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             storeEntity.getSalesRecords().add(salesRecordEntity);//tie the record to the store
             em.merge(storeEntity);
         } catch (Exception ex) {
