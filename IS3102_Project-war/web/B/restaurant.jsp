@@ -1,4 +1,4 @@
-<%@page import="EntityManager.FurnitureEntity"%>
+<%@page import="EntityManager.MenuItemEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -32,7 +32,7 @@
         </script>
 
         <%
-            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+            List<MenuItemEntity> menuItems = (List<MenuItemEntity>) (session.getAttribute("menuItems"));
         %>
 
         <div class="body">
@@ -43,7 +43,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2>Tables & Desks</h2>
+                                    <h2>Restaurant</h2>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h2 class="shorter"><strong>Shop</strong></h2>
-                                <p>Showing <%=furnitures.size()%> results.</p>
+                                <p>Showing <%=menuItems.size()%> results.</p>
                             </div>
                         </div>
                         <div class="row">
@@ -63,8 +63,8 @@
                                 <%
 
                                     try {
-                                        if (furnitures != null) {
-                                            for (int i = 0; i < furnitures.size(); i++) {
+                                        if (menuItems != null) {
+                                            for (int i = 0; i < menuItems.size(); i++) {
                                 %>
 
                                 <li class="col-md-3 col-sm-6 col-xs-12 product">
@@ -73,8 +73,8 @@
                                             if (displayCartOption == true) {
                                         %>
 
-                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Cart"/>
+                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=menuItems.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=menuItems.get(i).getSKU()%>" value="Add To Cart"/>
                                         </a>
                                         <%
                                             }
@@ -82,20 +82,20 @@
 
                                         <span class="product-thumb-info-image">
                                             <span class="product-thumb-info-act">                                                
-                                                <span class="product-thumb-info-act-left"><em><%=furnitures.get(i).getDescription()%></em></span>
+                                                <span class="product-thumb-info-act-left"><em><%=menuItems.get(i).getDescription()%></em></span>
                                             </span>
                                             <img alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
                                         </span>
 
                                         <span class="product-thumb-info-content">
                                             
-                                                <h4><%=furnitures.get(i).getName()%></h4>
+                                                <h4><%=menuItems.get(i).getName()%></h4>
                                                 <span class="price">
                                                     <span class="amount">$72</span>
                                                 </span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Height: <%=furnitures.get(i).getHeight() %></em></span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Length: <%=furnitures.get(i).getLength() %></em></span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Width: <%=furnitures.get(i).getWidth() %></em></span>                                            
+                                                <span class="product-thumb-info-act-left"><em>Height: <%=menuItems.get(i).getHeight() %></em></span><br/>
+                                                <span class="product-thumb-info-act-left"><em>Length: <%=menuItems.get(i).getLength() %></em></span><br/>
+                                                <span class="product-thumb-info-act-left"><em>Width: <%=menuItems.get(i).getWidth() %></em></span>                                            
                                         </span>
                                     </span>
                                 </li>

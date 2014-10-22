@@ -26,6 +26,8 @@ public class MaterialRequirementEntity implements Serializable {
     @ManyToOne
     private ManufacturingFacilityEntity mf;
     @ManyToOne
+    private StoreEntity store;
+    @ManyToOne
     private RawMaterialEntity rawMaterial;    
     private Integer quantity;
     @ManyToOne
@@ -42,6 +44,14 @@ public class MaterialRequirementEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
     }
 
     public ManufacturingFacilityEntity getMf() {

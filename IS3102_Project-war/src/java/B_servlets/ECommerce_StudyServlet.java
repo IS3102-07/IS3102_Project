@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author yang
  */
-public class ECommerce_TablesDesksServlet extends HttpServlet {
+public class ECommerce_StudyServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
@@ -34,7 +34,7 @@ public class ECommerce_TablesDesksServlet extends HttpServlet {
             List<FurnitureEntity> furnitures = itemManagementBean.viewFurnitureByCategory("Tables & Desks");
             session.setAttribute("furnitures", furnitures);
             
-            response.sendRedirect("B/tablesDesks.jsp");
+            response.sendRedirect("B/study.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

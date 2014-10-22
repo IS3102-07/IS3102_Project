@@ -162,7 +162,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
 
     @Override
     public FurnitureEntity viewFurniture(String SKU) {
-        System.out.println("viewRawMaterial() called with SKU:" + SKU);
+        System.out.println("viewFurniture() called with SKU:" + SKU);
         try {
             Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.isDeleted=false");
 
@@ -180,6 +180,27 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
         }
     }
 
+    @Override
+    public List<FurnitureEntity> viewFurnitureByCategory(String category) {
+        System.out.println("viewFurnitureByCategory() called with SKU:" + category);
+        try {
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.category=:category");
+            q.setParameter("category", category);
+            List<FurnitureEntity> furnitures = new ArrayList();
+            for (Object o : q.getResultList()) {
+                FurnitureEntity i = (FurnitureEntity) o;
+                if (i.getCategory().equalsIgnoreCase(category) && i.getIsDeleted() == false) {
+                    System.out.println("\nServer returns furniture:\n" + category);
+                    furnitures.add(i);
+                }
+            }
+            return furnitures;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to view furniture:\n" + ex);
+            return null;
+        }
+    }
+    
     @Override
     public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addRetailProduct() called with SKU:" + SKU);

@@ -1,8 +1,7 @@
 package B_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.FurnitureEntity;
-import EntityManager.RetailProductEntity;
+import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
+import EntityManager.MenuItemEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,10 +15,10 @@ import java.util.List;
  *
  * @author yang
  */
-public class ECommerce_TablesDesksServlet extends HttpServlet {
+public class ECommerce_RestaurantServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
+    private RestaurantManagementBeanLocal restaurantManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,10 +30,10 @@ public class ECommerce_TablesDesksServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             
-            List<FurnitureEntity> furnitures = itemManagementBean.viewFurnitureByCategory("Tables & Desks");
-            session.setAttribute("furnitures", furnitures);
+            List<MenuItemEntity> menuItems = restaurantManagementBean.listAllMenuItem();
+            session.setAttribute("menuItems", menuItems);
             
-            response.sendRedirect("B/tablesDesks.jsp");
+            response.sendRedirect("B/restaurant.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

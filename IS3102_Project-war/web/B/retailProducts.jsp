@@ -32,7 +32,7 @@
         </script>
 
         <%
-            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+            List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProducts"));
         %>
 
         <div class="body">
@@ -43,7 +43,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2>Tables & Desks</h2>
+                                    <h2>Furnitures</h2>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h2 class="shorter"><strong>Shop</strong></h2>
-                                <p>Showing <%=furnitures.size()%> results.</p>
+                                <p>Showing <%=retailProducts.size()%> results.</p>
                             </div>
                         </div>
                         <div class="row">
@@ -63,8 +63,8 @@
                                 <%
 
                                     try {
-                                        if (furnitures != null) {
-                                            for (int i = 0; i < furnitures.size(); i++) {
+                                        if (retailProducts != null) {
+                                            for (int i = 0; i < retailProducts.size(); i++) {
                                 %>
 
                                 <li class="col-md-3 col-sm-6 col-xs-12 product">
@@ -73,8 +73,8 @@
                                             if (displayCartOption == true) {
                                         %>
 
-                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Cart"/>
+                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProducts.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=retailProducts.get(i).getSKU()%>" value="Add To Cart"/>
                                         </a>
                                         <%
                                             }
@@ -82,20 +82,20 @@
 
                                         <span class="product-thumb-info-image">
                                             <span class="product-thumb-info-act">                                                
-                                                <span class="product-thumb-info-act-left"><em><%=furnitures.get(i).getDescription()%></em></span>
+                                                <span class="product-thumb-info-act-left"><em><%=retailProducts.get(i).getDescription()%></em></span>
                                             </span>
                                             <img alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
                                         </span>
 
                                         <span class="product-thumb-info-content">
                                             
-                                                <h4><%=furnitures.get(i).getName()%></h4>
+                                                <h4><%=retailProducts.get(i).getName()%></h4>
                                                 <span class="price">
                                                     <span class="amount">$72</span>
                                                 </span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Height: <%=furnitures.get(i).getHeight() %></em></span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Length: <%=furnitures.get(i).getLength() %></em></span><br/>
-                                                <span class="product-thumb-info-act-left"><em>Width: <%=furnitures.get(i).getWidth() %></em></span>                                            
+                                                <span class="product-thumb-info-act-left"><em>Height: <%=retailProducts.get(i).getHeight() %></em></span><br/>
+                                                <span class="product-thumb-info-act-left"><em>Length: <%=retailProducts.get(i).getLength() %></em></span><br/>
+                                                <span class="product-thumb-info-act-left"><em>Width: <%=retailProducts.get(i).getWidth() %></em></span>                                            
                                         </span>
                                     </span>
                                 </li>

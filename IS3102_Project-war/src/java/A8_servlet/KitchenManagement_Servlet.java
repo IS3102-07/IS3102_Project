@@ -1,44 +1,59 @@
-package B_servlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package A8_servlet;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.FurnitureEntity;
-import EntityManager.RetailProductEntity;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.MonthScheduleEntity;
+import EntityManager.RegionalOfficeEntity;
+import KitchenManagement.FoodDemandForecastingAndPlanning.FoodDemandForecastingAndPlanningBeanLocal;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-/**
- *
- * @author yang
- */
-public class ECommerce_TablesDesksServlet extends HttpServlet {
 
+
+public class KitchenManagement_Servlet extends HttpServlet {
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
-
+    private FoodDemandForecastingAndPlanningBeanLocal fdfpBean;        
+    @EJB
+    private FacilityManagementBeanLocal fmBean;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        
+        String nextPage = "/KitchenManagement_Servlet/KitchenSaleForecast_index_GET";
+        ServletContext servletContext = getServletContext();
+        RequestDispatcher dispatcher;        
+        HttpSession session = request.getSession();
+        List<MonthScheduleEntity> scheduleList;
+        String target = request.getPathInfo();
 
-        try {
+        switch (target) {
 
-            HttpSession session;
-            session = request.getSession();
+            case "/KitchenSaleForecast_index_GET":
+                List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
+                if (regionalOfficeList == null) {
+                    regionalOfficeList = new ArrayList<>();
+                }
+                request.setAttribute("regionalOfficeList", regionalOfficeList);
+                nextPage = "/A8/KitchenSaleForecast_index";
+                break;
+                
             
-            List<FurnitureEntity> furnitures = itemManagementBean.viewFurnitureByCategory("Tables & Desks");
-            session.setAttribute("furnitures", furnitures);
-            
-            response.sendRedirect("B/tablesDesks.jsp");
-            
-        } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
         }
+        dispatcher = servletContext.getRequestDispatcher(nextPage);
+        dispatcher.forward(request, response);                
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
