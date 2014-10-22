@@ -853,6 +853,10 @@
         <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_PointOfSalesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>KitchenManagement_servlet</servlet-name>
+        <servlet-class>A8_servlet.KitchenManagement_servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1704,6 +1708,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
         <url-pattern>/ECommerce_PointOfSalesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KitchenManagement_servlet</servlet-name>
+        <url-pattern>/KitchenManagement_servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

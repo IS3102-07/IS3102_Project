@@ -324,10 +324,10 @@
                 </a>
                 <ul id="Kitchen" class="collapse">
                     <li>
-                        <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
+                        <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Sales Forecast</a>
                     </li>
                     <li>
-                        <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales and Operations Planning</a>
+                        <a href="../KitchenManagement_servlet/*">Sales and Operations Planning</a>
                     </li>
                     <li>
                         <a href="../PPD_index_GET/*">Production Plan Distribution</a>
