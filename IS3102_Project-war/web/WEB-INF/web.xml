@@ -813,6 +813,18 @@
         <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_BedsMattressesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>A8/KitchenSaleForecast_index</servlet-name>
+        <jsp-file>/A8/KitchenSaleForecast_index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>A8/KitchenSaleForecast_schedule</servlet-name>
+        <jsp-file>/A8/KitchenSaleForecast_schedule.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>A8/KitchenSaleForecast_main</servlet-name>
+        <jsp-file>/A8/KitchenSaleForecast_main.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1624,6 +1636,18 @@
     <servlet-mapping>
         <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
         <url-pattern>/ECommerce_BedsMattressesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/KitchenSaleForecast_index</servlet-name>
+        <url-pattern>/A8/KitchenSaleForecast_index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/KitchenSaleForecast_schedule</servlet-name>
+        <url-pattern>/A8/KitchenSaleForecast_schedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/KitchenSaleForecast_main</servlet-name>
+        <url-pattern>/A8/KitchenSaleForecast_main</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

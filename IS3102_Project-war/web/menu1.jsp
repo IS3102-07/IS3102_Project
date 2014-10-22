@@ -316,7 +316,26 @@
                     </li>
                 </ul>
             </li>
-            <% }
+            <% } %>
+            
+            <li>
+                <a href="javascript:;" data-toggle="collapse" data-target="#Kitchen">
+                    <i class="icon icon-book"></i> Kitchen Management <i class="icon icon-caret-down"></i>
+                </a>
+                <ul id="Kitchen" class="collapse">
+                    <li>
+                        <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
+                    </li>
+                    <li>
+                        <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales and Operations Planning</a>
+                    </li>
+                    <li>
+                        <a href="../PPD_index_GET/*">Production Plan Distribution</a>
+                    </li>                    
+                </ul>
+            </li>
+            
+            <%
                 approvedRolesID = new Long[]{1L, 2L, 4L, 5L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
