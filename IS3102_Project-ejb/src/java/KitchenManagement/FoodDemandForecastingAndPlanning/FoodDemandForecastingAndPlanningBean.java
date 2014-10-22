@@ -1,0 +1,472 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package KitchenManagement.FoodDemandForecastingAndPlanning;
+
+import EntityManager.FurnitureEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.MasterProductionScheduleEntity;
+import EntityManager.MaterialRequirementEntity;
+import EntityManager.MenuItemEntity;
+import EntityManager.MonthScheduleEntity;
+import EntityManager.ProductGroupEntity;
+import EntityManager.ProductGroupLineItemEntity;
+import EntityManager.PurchaseOrderEntity;
+import EntityManager.RawMaterialEntity;
+import EntityManager.SaleAndOperationPlanEntity;
+import EntityManager.SaleForecastEntity;
+import EntityManager.SalesFigureEntity;
+import EntityManager.StoreEntity;
+import EntityManager.Supplier_ItemEntity;
+import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanLocal;
+import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author Administrator
+ */
+@Stateless
+public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecastingAndPlanningBeanLocal {
+    @EJB
+    private RetailProductsAndRawMaterialsPurchasingBeanLocal purchaseBean;
+    @EJB
+    private ManufacturingInventoryControlBeanLocal micBean;
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
+    private EntityManager em;
+
+    public MonthScheduleEntity getTheBeforeOne(MonthScheduleEntity schedule) {
+        try {
+            if (schedule.getMonth() == 1) {
+                Query q = em.createQuery("select s from MonthScheduleEntity s where s.year = ?1 and s.month = ?2")
+                        .setParameter(1, schedule.getYear() - 1)
+                        .setParameter(2, 12);
+                return (MonthScheduleEntity) q.getResultList().get(0);
+            } else {
+                Query q = em.createQuery("select s from MonthScheduleEntity s where s.year = ?1 and s.month = ?2")
+                        .setParameter(1, schedule.getYear())
+                        .setParameter(2, schedule.getMonth() - 1);
+                return (MonthScheduleEntity) q.getResultList().get(0);
+            }
+        } catch (Exception ex) {
+        }
+
+        return null;
+    }
+    
+    
+    public SaleForecastEntity getSalesForecast(Long storeId, Long menuItemId, Long scheduleId) {
+        try {
+            Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                    .setParameter(1, menuItemId)
+                    .setParameter(2, storeId)
+                    .setParameter(3, scheduleId);            
+
+            if (q.getResultList().isEmpty()) {                
+
+                // if not exist, then create it
+                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+                StoreEntity store = em.find(StoreEntity.class, storeId);
+                MenuItemEntity menuItem = em.find(MenuItemEntity.class, menuItemId);                                
+
+                MonthScheduleEntity lastSchedule = schedule;
+                
+                try {
+                    int amount = 0;
+                    for (int i = 0; i < 3; i++) {                        
+
+                        lastSchedule = this.getTheBeforeOne(lastSchedule);                        
+
+                        Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                                .setParameter(1, menuItemId)
+                                .setParameter(2, storeId)
+                                .setParameter(3, lastSchedule.getId());
+
+                        if (!q2.getResultList().isEmpty()) {                            
+
+                            SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
+                            amount += salesFigureEntity.getQuantity();
+                        }
+                    }
+
+                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, amount / 3);                    
+                    return saleForecast;
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, 0);                    
+                    return saleForecast;
+                }
+
+            } else {
+                return (SaleForecastEntity) q.getResultList().get(0);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    
+    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long menuItemId, Integer year) {
+        try {
+            Query q = em.createQuery("select s from SalesFigureEntity s where s.store.id = ?1 AND s.menuItem.id = ?2 AND s.schedule.year = ?3 ")
+                    .setParameter(1, StoreId)
+                    .setParameter(2, menuItemId)
+                    .setParameter(3, year);
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+    
+    
+    public Boolean generateMasterProductionSchedules(Long storeId) {
+        System.out.println("generateMasterProductionSchedules is called.");
+        try {
+            Query q = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = q.getResultList();
+            if (!scheduleList.isEmpty()) {
+                StoreEntity store = em.find(StoreEntity.class, storeId);                
+                MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
+
+                // clear former MPSs
+                Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2")
+                        .setParameter(1, storeId)
+                        .setParameter(2, lastSchedule.getId());
+                List<MasterProductionScheduleEntity> formerMPSs = (List<MasterProductionScheduleEntity>) q1.getResultList();
+                for (MasterProductionScheduleEntity mps : formerMPSs) {
+//                    MaterialRequirementEntity[] mrArray = (MaterialRequirementEntity[]) mps.getMaterialRequirementList().toArray();
+//                    for (MaterialRequirementEntity mr : mrArray) {
+//                        mps.getMaterialRequirementList().remove(mr);
+//                        em.remove(mr);
+//                        em.flush();
+//                    }
+                    em.remove(mps);
+                }
+                em.flush();
+
+                // generate MPSs
+                Query q2 = em.createQuery("select sf from SaleForecastEntity sf where sf.schedule.id = ?1 and sf.store.id = ?2")
+                        .setParameter(1, lastSchedule.getId())
+                        .setParameter(2, storeId);
+                List<SaleForecastEntity> sfList = (List<SaleForecastEntity>) q2.getResultList();
+                System.out.println("sfList.size(): " + sfList.size());
+
+                for (SaleForecastEntity sf : sfList) {                    
+                                        
+                    Query q3 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2 and mps.menuItem.SKU = ?3")
+                            .setParameter(1, storeId)
+                            .setParameter(2, lastSchedule.getId())
+                            .setParameter(3, sf.getMenuItem().getSKU());
+
+                    MasterProductionScheduleEntity mps;
+                    Boolean mpsExits;
+                    if (q3.getResultList().isEmpty()) {
+                        mps = new MasterProductionScheduleEntity();
+                        mps.setStore(store);
+                        mps.setSchedule(lastSchedule);
+                        mps.setMenuItem(sf.getMenuItem());
+                        mpsExits = false;
+                    } else {
+                        mps = (MasterProductionScheduleEntity) q3.getResultList().get(0);
+                        mpsExits = true;
+                    }
+                    // total work days in the month
+                    int days_month = lastSchedule.getWorkDays_firstWeek() + lastSchedule.getWorkDays_secondWeek() + lastSchedule.getWorkDays_thirdWeek()
+                            + lastSchedule.getWorkDays_forthWeek() + lastSchedule.getWorkDays_fifthWeek();
+
+                    int amount = sf.getQuantity();                    
+
+                    int amount_week1 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_firstWeek() / days_month);
+                    int amount_week2 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_secondWeek() / days_month);
+                    int amount_week3 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_thirdWeek() / days_month);
+                    int amount_week4 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_forthWeek() / days_month);
+
+                    mps.setAmount_month(mps.getAmount_month() + amount);
+                    mps.setAmount_week1(mps.getAmount_week1() + amount_week1);
+                    mps.setAmount_week2(mps.getAmount_week2() + amount_week2);
+                    mps.setAmount_week3(mps.getAmount_week3() + amount_week3);
+                    if (lastSchedule.getWorkDays_fifthWeek() == 0) {
+                        mps.setAmount_week4(mps.getAmount_week4() + amount - amount_week1 - amount_week2 - amount_week3);
+                    } else {
+                        mps.setAmount_week4(mps.getAmount_week4() + amount_week4);
+                        mps.setAmount_week5(mps.getAmount_week5() + amount - amount_week1 - amount_week2 - amount_week3 - amount_week4);
+                    }
+                    if (mpsExits) {
+                        em.merge(mps);
+                    } else {
+                        em.persist(mps);
+                    }
+
+                }
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    
+    public List<MasterProductionScheduleEntity> getMasterProductionSchedules(Long storeId) {
+        try {
+            Query q = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = q.getResultList();
+            if (!scheduleList.isEmpty()) {
+                StoreEntity store = em.find(StoreEntity.class, storeId);    
+                MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
+                Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2")
+                        .setParameter(1, storeId)
+                        .setParameter(2, lastSchedule.getId());
+                return (List<MasterProductionScheduleEntity>) q1.getResultList();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+    
+    
+    public Boolean generateMaterialRequirementPlan(Long storeId) {
+        System.out.println("generateMaterialRequirementPlan is called.");
+        try {
+            StoreEntity store = em.find(StoreEntity.class, storeId); 
+            Query q = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = q.getResultList();
+            MonthScheduleEntity schedule = scheduleList.get(scheduleList.size() - 1);
+            Calendar calendar = Calendar.getInstance();
+            calendar.clear();
+            calendar.set(Calendar.YEAR, schedule.getYear());
+            calendar.set(Calendar.MONTH, schedule.getMonth()-1);
+
+            Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2")
+                    .setParameter(1, storeId)
+                    .setParameter(2, schedule.getId());
+            List<MasterProductionScheduleEntity> mpsList = (List<MasterProductionScheduleEntity>) q1.getResultList();
+            
+            for (MasterProductionScheduleEntity mps : mpsList) {
+                for (LineItemEntity lineItem : mps.getMenuItem().getRecipe().getListOfLineItems()) {
+                    Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id = ?3 and mr.mps.id = ?4")
+                            .setParameter(1, storeId)
+                            .setParameter(2, lineItem.getItem().getSKU())
+                            .setParameter(3, schedule.getId())
+                            .setParameter(4, mps.getId());
+                    List<MaterialRequirementEntity> mrList = (List<MaterialRequirementEntity>) q2.getResultList();
+                    for (MaterialRequirementEntity mr : mrList) {
+                        em.remove(mr);
+                    }
+                    em.flush();
+                }
+            }
+            
+            for (MasterProductionScheduleEntity mps : mpsList) {
+                for (LineItemEntity lineItem : mps.getMenuItem().getRecipe().getListOfLineItems()) {   
+
+                    Query query1 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                            .setParameter(1, storeId)
+                            .setParameter(2, lineItem.getItem().getSKU())
+                            .setParameter(3, schedule.getId())
+                            .setParameter(4, 1);
+                    if (query1.getResultList().isEmpty()) {
+                        MaterialRequirementEntity MR1 = new MaterialRequirementEntity();
+                        MR1.setStore(store);
+                        MR1.setMps(mps);
+                        MR1.setRawMaterial((RawMaterialEntity) lineItem.getItem());
+                        MR1.setQuantity(mps.getAmount_week1() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                        MR1.setSchedule(schedule);
+                        MR1.setDay(1);
+                        em.persist(MR1);
+                    } else {
+                        MaterialRequirementEntity MR1 = (MaterialRequirementEntity) query1.getResultList().get(0);
+                        MR1.setQuantity(MR1.getQuantity() + mps.getAmount_week1() * lineItem.getQuantity());                        
+                        em.merge(MR1);
+                    }
+
+                    calendar.set(Calendar.WEEK_OF_MONTH, 2);
+                    calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    System.out.println("calendar.get(Calendar.DAY_OF_MONTH) week2 :" + calendar.get(Calendar.DAY_OF_MONTH));
+                    Query query2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                            .setParameter(1, storeId)
+                            .setParameter(2, lineItem.getItem().getSKU())
+                            .setParameter(3, schedule.getId())
+                            .setParameter(4, calendar.get(Calendar.DAY_OF_MONTH));
+                    
+                    if (query2.getResultList().isEmpty()) {
+                        MaterialRequirementEntity MR2 = new MaterialRequirementEntity();
+                        MR2.setStore(store);
+                        MR2.setMps(mps);
+                        MR2.setRawMaterial((RawMaterialEntity) lineItem.getItem());
+                        MR2.setQuantity(mps.getAmount_week2() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                        MR2.setSchedule(schedule);
+                        MR2.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+                        em.persist(MR2);
+                    } else {
+                        MaterialRequirementEntity MR2 = (MaterialRequirementEntity) query2.getResultList().get(0);
+                        MR2.setQuantity(MR2.getQuantity() + mps.getAmount_week2() * lineItem.getQuantity());                        
+                        em.merge(MR2);
+                    }
+
+                    calendar.set(Calendar.WEEK_OF_MONTH, 3);
+                    calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    System.out.println("calendar.get(Calendar.DAY_OF_MONTH) week3 :" + calendar.get(Calendar.DAY_OF_MONTH));
+                    Query query3 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                            .setParameter(1, storeId)
+                            .setParameter(2, lineItem.getItem().getSKU())
+                            .setParameter(3, schedule.getId())
+                            .setParameter(4, calendar.get(Calendar.DAY_OF_MONTH));
+                    if (query3.getResultList().isEmpty()) {
+                        MaterialRequirementEntity MR3 = new MaterialRequirementEntity();
+                        MR3.setStore(store);
+                        MR3.setMps(mps);
+                        MR3.setRawMaterial((RawMaterialEntity) lineItem.getItem());
+                        MR3.setQuantity(mps.getAmount_week3() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                        MR3.setSchedule(schedule);
+                        MR3.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+                        em.persist(MR3);
+                    } else {
+                        MaterialRequirementEntity MR3 = (MaterialRequirementEntity) query3.getResultList().get(0);
+                        MR3.setQuantity(MR3.getQuantity() + mps.getAmount_week3() * lineItem.getQuantity());                        
+                        em.merge(MR3);
+                    }
+
+                    calendar.set(Calendar.WEEK_OF_MONTH, 4);
+                    calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    System.out.println("calendar.get(Calendar.DAY_OF_MONTH) week4 :" + calendar.get(Calendar.DAY_OF_MONTH));
+                    Query query4 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                            .setParameter(1, storeId)
+                            .setParameter(2, lineItem.getItem().getSKU())
+                            .setParameter(3, schedule.getId())
+                            .setParameter(4, calendar.get(Calendar.DAY_OF_MONTH));
+                    if (query4.getResultList().isEmpty()) {
+                        MaterialRequirementEntity MR4 = new MaterialRequirementEntity();
+                        MR4.setStore(store);
+                        MR4.setMps(mps);
+                        MR4.setRawMaterial((RawMaterialEntity) lineItem.getItem());
+                        MR4.setQuantity(mps.getAmount_week4() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                        MR4.setSchedule(schedule);
+                        MR4.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+                        em.persist(MR4);
+                    } else {
+                        MaterialRequirementEntity MR4 = (MaterialRequirementEntity) query4.getResultList().get(0);
+                        MR4.setQuantity(MR4.getQuantity() + mps.getAmount_week4() * lineItem.getQuantity());                        
+                        em.merge(MR4);
+                    }
+
+                    if (mps.getAmount_week5() != 0) {
+                        calendar.set(Calendar.WEEK_OF_MONTH, 5);
+                        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                        System.out.println("calendar.get(Calendar.DAY_OF_MONTH) week5 :" + calendar.get(Calendar.DAY_OF_MONTH));
+                        Query query5 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                                .setParameter(1, storeId)
+                                .setParameter(2, lineItem.getItem().getSKU())
+                                .setParameter(3, schedule.getId())
+                                .setParameter(4, calendar.get(Calendar.DAY_OF_MONTH));
+                        if (query5.getResultList().isEmpty()) {
+                            MaterialRequirementEntity MR5 = new MaterialRequirementEntity();
+                            MR5.setStore(store);
+                            MR5.setMps(mps);
+                            MR5.setRawMaterial((RawMaterialEntity) lineItem.getItem());
+                            MR5.setQuantity(mps.getAmount_week5() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                            MR5.setSchedule(schedule);
+                            MR5.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+                            em.persist(MR5);
+                        } else {
+                            MaterialRequirementEntity MR5 = (MaterialRequirementEntity) query5.getResultList().get(0);
+                            MR5.setQuantity(MR5.getQuantity() + mps.getAmount_week5() * lineItem.getQuantity());
+                            em.merge(MR5);
+                        }
+                    }
+                }
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public List<MaterialRequirementEntity> getMaterialRequirementEntityList(Long storeId) {
+        try {
+            StoreEntity store = em.find(StoreEntity.class, storeId); 
+            Query q = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = q.getResultList();
+            MonthScheduleEntity schedule = scheduleList.get(scheduleList.size() - 1);
+
+            Query q1 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.schedule.id = ?2")
+                    .setParameter(1, storeId)
+                    .setParameter(2, schedule.getId());
+            return (List<MaterialRequirementEntity>) q1.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+    
+    public Boolean generatePurchaseOrderFromMaterialRequirement(Long storeId) {
+        System.out.println("generatePurchaseOrderFromMaterialRequirement is called.");
+        try {
+            StoreEntity store = em.find(StoreEntity.class, storeId); 
+            Query q = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = q.getResultList();
+            MonthScheduleEntity schedule = scheduleList.get(scheduleList.size() - 1);
+            Calendar calendar = Calendar.getInstance();
+            calendar.clear();
+            calendar.set(Calendar.YEAR, schedule.getYear());
+            calendar.set(Calendar.MONTH, schedule.getMonth());
+
+            Query q1 = em.createQuery("select rm from RawMaterialEntity rm");
+            List<RawMaterialEntity> rmList = (List<RawMaterialEntity>) q1.getResultList();
+
+            for (RawMaterialEntity rm : rmList) {
+                Integer stockLevel = micBean.checkItemQty(store.getWarehouse().getId(), rm.getSKU());
+
+                Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.schedule.id = ?2 and mr.rawMaterial.SKU = ?3 order by mr.day")
+                        .setParameter(1, storeId)
+                        .setParameter(2, schedule.getId())
+                        .setParameter(3, rm.getSKU());
+                List<MaterialRequirementEntity> mrList = (List<MaterialRequirementEntity>) q2.getResultList();
+                System.out.println("mrList.size()" + mrList.size());
+
+                for (MaterialRequirementEntity mr : mrList) {
+                    System.out.println("mr.getDay()" + mr.getDay());
+                    if (stockLevel >= mr.getQuantity()) {
+                        stockLevel -= mr.getQuantity();
+                    } else {
+                        Query q3 = em.createQuery("select si from Supplier_ItemEntity si where si.supplier.regionalOffice.id = ?1 and si.item.SKU = ?2")
+                                .setParameter(1, store.getRegionalOffice().getId())
+                                .setParameter(2, rm.getSKU());
+                        Supplier_ItemEntity supplier_ItemEntity = (Supplier_ItemEntity) q3.getSingleResult();
+
+                        int lotsize = supplier_ItemEntity.getLotSize();
+                        int purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1) * lotsize;
+                        System.out.println("(mr.getQuantity() - stockLevel): " + (mr.getQuantity() - stockLevel) + "; lotsize: " + lotsize);
+                        System.out.println("purchaseQuantity: " + purchaseQuantity);
+                        calendar.set(Calendar.DAY_OF_MONTH, mr.getDay());
+
+                        PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), calendar.getTime());
+                        purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), rm.getSKU(), purchaseQuantity);
+
+                        stockLevel = stockLevel + purchaseQuantity - mr.getQuantity();
+                    }
+                }
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+}

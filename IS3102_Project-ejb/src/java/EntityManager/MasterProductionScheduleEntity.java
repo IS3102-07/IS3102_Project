@@ -31,10 +31,14 @@ public class MasterProductionScheduleEntity implements Serializable {
     private MonthScheduleEntity schedule;
     @ManyToOne
     private ManufacturingFacilityEntity mf;
+    @ManyToOne
+    private StoreEntity store;    
     @OneToMany(mappedBy="mps")
     private List<MaterialRequirementEntity> materialRequirementList;
     @OneToOne
     private FurnitureEntity furniture;
+    @ManyToOne 
+    MenuItemEntity menuItem;
     private Integer amount_month;
     private Integer amount_week1;
     private Integer amount_week2;
@@ -60,6 +64,22 @@ public class MasterProductionScheduleEntity implements Serializable {
         this.id = id;
     }
 
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
+    }
+
+    public MenuItemEntity getMenuItem() {
+        return menuItem;
+    }
+
+    public void setMenuItem(MenuItemEntity menuItem) {
+        this.menuItem = menuItem;
+    }
+            
     public List<MaterialRequirementEntity> getMaterialRequirementList() {
         return materialRequirementList;
     }
