@@ -28,7 +28,7 @@ import javax.persistence.Query;
 @Stateless
 public class ItemManagementBean implements ItemManagementBeanLocal, ItemManagementBeanRemote {
 
-    @PersistenceContext
+   @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     private RawMaterialEntity rawMaterial;
 
@@ -162,7 +162,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
 
     @Override
     public FurnitureEntity viewFurniture(String SKU) {
-        System.out.println("viewRawMaterial() called with SKU:" + SKU);
+        System.out.println("viewFurniture() called with SKU:" + SKU);
         try {
             Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.isDeleted=false");
 
@@ -180,6 +180,27 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
         }
     }
 
+    @Override
+    public List<FurnitureEntity> viewFurnitureByCategory(String category) {
+        System.out.println("viewFurnitureByCategory() called with SKU:" + category);
+        try {
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.category=:category");
+            q.setParameter("category", category);
+            List<FurnitureEntity> furnitures = new ArrayList();
+            for (Object o : q.getResultList()) {
+                FurnitureEntity i = (FurnitureEntity) o;
+                if (i.getCategory().equalsIgnoreCase(category) && i.getIsDeleted() == false) {
+                    System.out.println("\nServer returns furniture:\n" + category);
+                    furnitures.add(i);
+                }
+            }
+            return furnitures;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to view furniture:\n" + ex);
+            return null;
+        }
+    }
+    
     @Override
     public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addRetailProduct() called with SKU:" + SKU);
@@ -600,13 +621,16 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     @Override
     public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId) {
         try {
-            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);
-            lineItem.setProductGroup(productGroup);
-            productGroup.setType(lineItem.getItem().getType());
-            productGroup.getLineItemList().add(lineItem);
-            em.merge(productGroup);
-            return true;
+            Query q = em.createQuery("select l from ProductGroupLineItemEntity l where l.item.SKU = ?1 and l.productGroup is not null").setParameter(1, lineItem.getItem().getSKU());
+            if (q.getResultList().isEmpty()) {
+                ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+                lineItem.setProductGroup(productGroup);
+                productGroup.setType(lineItem.getItem().getType());
+                productGroup.getLineItemList().add(lineItem);
+                em.merge(productGroup);
+                return true;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

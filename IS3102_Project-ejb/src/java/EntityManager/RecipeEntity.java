@@ -25,6 +25,7 @@ public class RecipeEntity implements Serializable {
     private String description;
     @OneToOne
     private MenuItemEntity menuItem;
+    private Integer broadLotSize;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH})
     private List<LineItemEntity> listOfLineItems;
 
@@ -58,6 +59,14 @@ public class RecipeEntity implements Serializable {
 
     public MenuItemEntity getMenuItem() {
         return menuItem;
+    }
+
+    public Integer getBroadLotSize() {
+        return broadLotSize;
+    }
+
+    public void setBroadLotSize(Integer broadLotSize) {
+        this.broadLotSize = broadLotSize;
     }
 
     public void setMenuItem(MenuItemEntity furniture) {

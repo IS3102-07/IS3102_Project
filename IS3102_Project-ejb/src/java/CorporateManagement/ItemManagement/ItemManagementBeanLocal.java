@@ -30,6 +30,7 @@ public interface ItemManagementBeanLocal {
     public boolean editFurniture(String id, String SKU, String name, String category, String description, String imageURL);
     public boolean removeFurniture(String SKU);
     public FurnitureEntity viewFurniture(String SKU);
+    public List<FurnitureEntity> viewFurnitureByCategory(String SKU);
     public List<FurnitureEntity> listAllFurniture();
     
     public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height);

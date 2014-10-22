@@ -16,7 +16,7 @@ import javax.persistence.Query;
 @Stateless
 public class RetailInventoryBean implements RetailInventoryBeanLocal {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     @Override
@@ -35,6 +35,7 @@ public class RetailInventoryBean implements RetailInventoryBeanLocal {
             return null;
         }
     }
+
     @Override
     public RawMaterialEntity viewRawMaterial(String SKU) {
         System.out.println("viewRawMaterial() called with SKU:" + SKU);
@@ -148,7 +149,7 @@ public class RetailInventoryBean implements RetailInventoryBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public Item_CountryEntity getItemPricing(Long countryId, String SKU) {
         System.out.println("getItemPricing() called.");

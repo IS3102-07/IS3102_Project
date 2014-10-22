@@ -1,12 +1,14 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -26,6 +28,9 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
     private String imageURL;
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "menuItem")
     private RecipeEntity recipe;
+    
+    @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="menuItem")
+    private List<SaleForecastEntity> saleForcastEntityList;    
 
     public MenuItemEntity() {
     }

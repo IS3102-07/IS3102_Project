@@ -90,7 +90,6 @@ public class SalesRecordEntity implements Serializable {
     }
 
     public void setStore(StoreEntity store) {
-        this.id = store.getId()*(id.toString().length())+id;
         this.store = store;
     }
 

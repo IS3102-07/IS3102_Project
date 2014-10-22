@@ -21,7 +21,7 @@ import javax.persistence.Query;
 @Stateless
 public class ECommerceBean implements ECommerceBeanLocal {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     FeedbackEntity feedback;
 
@@ -212,11 +212,12 @@ public class ECommerceBean implements ECommerceBeanLocal {
         Query q = em.createQuery("SELECT t FROM SubscriptionEntity t");
         for (Object o : q.getResultList()) {
             SubscriptionEntity subscriber = (SubscriptionEntity) o;
-            for(String emailInList:subscriber.getEmails())
-            if (emailInList.equalsIgnoreCase(email)) {
-                em.remove(subscriber);
-                em.flush();
-                return true;
+            for (String emailInList : subscriber.getEmails()) {
+                if (emailInList.equalsIgnoreCase(email)) {
+                    em.remove(subscriber);
+                    em.flush();
+                    return true;
+                }
             }
         }
         return false;

@@ -14,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SCM_InboundAndOutboundLogisticsBeanRemote_JUnit {
+
     InboundAndOutboundLogisticsBeanRemote inboundAndOutboundLogisticsBean = lookupInboundAndOutboundLogisticsBeanRemote();
 
     public SCM_InboundAndOutboundLogisticsBeanRemote_JUnit() {
@@ -36,43 +37,43 @@ public class SCM_InboundAndOutboundLogisticsBeanRemote_JUnit {
     }
 
     @Test
-    public void createShippingOrderBasicInfo() {
+    public void testCreateShippingOrderBasicInfo() {
     }
 
     @Test
-    public void checkSKUExists() {
+    public void testCheckSKUExists() {
     }
 
     @Test
-    public void updateShippingOrder() {
+    public void testUpdateShippingOrder() {
     }
 
     @Test
-    public void updateShippingOrderStatus() {
+    public void testUpdateShippingOrderStatus() {
     }
 
     @Test
-    public void addLineItemToShippingOrder() {
+    public void testAddLineItemToShippingOrder() {
     }
 
     @Test
-    public void removeLineItemFromShippingOrder() {
+    public void testRemoveLineItemFromShippingOrder() {
     }
 
     @Test
-    public void updateLineItemFromShippingOrder() {
+    public void testUpdateLineItemFromShippingOrder() {
     }
 
     @Test
-    public void getShippingOrderList() {
+    public void testGetShippingOrderList() {
     }
 
     @Test
-    public void getShippingOrderById() {
+    public void testGetShippingOrderById() {
     }
 
     @Test
-    public void getShippingOrderListByWarehouseId() {
+    public void testGetShippingOrderListByWarehouseId() {
     }
 
     private InboundAndOutboundLogisticsBeanRemote lookupInboundAndOutboundLogisticsBeanRemote() {
