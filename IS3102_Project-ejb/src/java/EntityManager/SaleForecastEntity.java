@@ -41,6 +41,13 @@ public class SaleForecastEntity implements Serializable {
         this.schedule = schedule;
         this.quantity = quantity;
     }            
+    
+    public SaleForecastEntity(StoreEntity store, MenuItemEntity menuItem, MonthScheduleEntity schedule, Integer quantity) {
+        this.store = store;
+        this.menuItem = menuItem;
+        this.schedule = schedule;
+        this.quantity = quantity;
+    }
 
     public MonthScheduleEntity getSchedule() {
         return schedule;
