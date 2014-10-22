@@ -801,6 +801,18 @@
         <servlet-name>Analytical_QueryAndReportingServlet</servlet-name>
         <servlet-class>A5_servlets.Analytical_QueryAndReportingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_RetailProductsServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_RetailProductsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_BathroomServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_BathroomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_BedsMattressesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1600,6 +1612,18 @@
     <servlet-mapping>
         <servlet-name>Analytical_QueryAndReportingServlet</servlet-name>
         <url-pattern>/Analytical_QueryAndReportingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_RetailProductsServlet</servlet-name>
+        <url-pattern>/ECommerce_RetailProductsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_BathroomServlet</servlet-name>
+        <url-pattern>/ECommerce_BathroomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
+        <url-pattern>/ECommerce_BedsMattressesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
