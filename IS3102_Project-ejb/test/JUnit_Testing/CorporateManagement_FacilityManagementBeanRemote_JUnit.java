@@ -4,6 +4,7 @@ import CorporateManagement.FacilityManagement.FacilityManagementBeanRemote;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.StoreEntity;
+import EntityManager.WarehouseEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -173,7 +174,7 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         System.out.println("testGetManufacturingFacilityByName");
         String testdata_name = "Middle East Regional Office";
         ManufacturingFacilityEntity result = facilityManagementBean.getManufacturingFacilityByName(testdata_name);
-        assertNotNull(result);
+        assertEquals("Middle East Regional Office", result.getName());
         assertNull(result);
     }
 
@@ -260,7 +261,7 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         System.out.println("testGetStoreByName");
         String testdata_name = "Tampines Store";
         StoreEntity result = facilityManagementBean.getStoreByName(testdata_name);
-        assertNotNull(result);
+        assertEquals("Tampines Store", result.getName());
         assertNull(result);
     }
 
@@ -275,71 +276,150 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
 
     @Test
     public void testRemoveStore() {
-        
+        System.out.println("testRemoveStore");
+        String testdata_callerStaffID = "12";
+        Long testdata_storeId = 53L;
+        Boolean result = facilityManagementBean.removeStore(testdata_callerStaffID, testdata_storeId);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testAddStoreToRegionalOffice() {
+        System.out.println("testAddStoreToRegionalOffice");
+        String testdata_callerStaffID = "12";
+        Long testdata_regionalOfficeId = 46L;
+        Long testdata_storeId = 53L;
+        Boolean result = facilityManagementBean.addStoreToRegionalOffice(testdata_callerStaffID, testdata_regionalOfficeId, testdata_storeId);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testUpdateStoreToRegionalOffice() {
-    }
-
-    @Test
-    public void testGetStoreHelperClass() {
-    }
-
-    @Test
-    public void testGetStoreHelperList() {
+        System.out.println("testUpdateStoreToRegionalOffice");
+        String testdata_callerStaffID = "12";
+        Long testdata_regionalOfficeId = 46L;
+        Long testdata_storeId = 55L;
+        Boolean result = facilityManagementBean.updateStoreToRegionalOffice(testdata_callerStaffID, testdata_regionalOfficeId, testdata_storeId);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testGetStoreListByRegionalOffice() {
+        System.out.println("testGetStoreListByRegionalOffice");
+        Long testdata_regionalOfficeId = 46L;
+        List result = facilityManagementBean.getStoreListByRegionalOffice(testdata_regionalOfficeId);
+        assertTrue(result != null);
+        assertNull(result);
     }
 
     @Test
     public void testCreateWarehouse() {
+        System.out.println("testCreateWarehouse");
+        String testdata_callerStaffID = "12";
+        String testdata_warehouseName = "Bugis Store Warehouse";
+        String testdata_address = "30 Bugis Street";
+        String testdata_telephone = "6789123";
+        String testdata_email = "bugiswarehouse@if.com";
+        Long testdata_storeID = 55L;
+        Long testdata_MFid = 48L;
+        WarehouseEntity result = facilityManagementBean.createWarehouse(testdata_callerStaffID, testdata_warehouseName, testdata_address, testdata_telephone, testdata_email, testdata_storeID, testdata_MFid);
+        assertTrue(result != null);
+        assertFalse(result == null);
     }
 
     @Test
     public void testEditWarehouse() {
+        System.out.println("testEditWarehouse");
+        String testdata_callerStaffID = "12";
+        String testdata_warehouseName = "Bugis Store Warehouse";
+        String testdata_address = "30 Bugis Street";
+        String testdata_telephone = "6789123";
+        String testdata_email = "bugiswarehouse@if.com";
+        Long testdata_id = 54L;
+        Boolean result = facilityManagementBean.editWarehouse(testdata_callerStaffID, testdata_id, testdata_warehouseName, testdata_address, testdata_telephone, testdata_email);
+        assertTrue(result != null);
+        assertFalse(result == null);
     }
 
     @Test
     public void testDeleteWarehouse() {
+        System.out.println("testDeleteWarehouse");
+        String testdata_callerStaffID = "12";
+        Long testdata_id = 54L;
+        Boolean result = facilityManagementBean.deleteWarehouse(testdata_callerStaffID, testdata_id);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testGetWarehouseByName() {
+        System.out.println("testGetWarehouseByName");
+        String testdata_name = "Tampines Store Warehouse";
+        StoreEntity result = facilityManagementBean.getStoreByName(testdata_name);
+        assertEquals("Tampines Store Warehouse", result.getName());
+        assertNull(result);
     }
 
     @Test
     public void testCheckNameExistsOfWarehouse() {
+        System.out.println("testCheckNameExistsOfWarehouse");
+        String testdata_name = "Queenstown Store Warehouse";
+        Boolean result = facilityManagementBean.checkNameExistsOfWarehouse(testdata_name);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testCheckIfWarehouseContainsItem() {
+        System.out.println("testCheckIfWarehouseContainsItem");
+        Long testdata_id = 51L;
+        Boolean result = facilityManagementBean.checkIfWarehouseContainsItem(testdata_id);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testGetWarehouseById() {
+        System.out.println("testGetWarehouseById");
+        Long testdata_id = 49L;
+        StoreEntity result = facilityManagementBean.getStoreByID(testdata_id);
+        assertNotNull(result);
+        assertNull(result);
     }
 
     @Test
     public void testGetWarehouseList() {
+        System.out.println("testGetWarehouseList");
+        List result = facilityManagementBean.getWarehouseList();
+        assertTrue(!result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 
     @Test
     public void testGetMFWarehouseList() {
+        System.out.println("testGetMFWarehouseList");
+        List result = facilityManagementBean.getMFWarehouseList();
+        assertTrue(!result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 
     @Test
     public void testGetStoreWarehouseList() {
+        System.out.println("testGetStoreWarehouseList");
+        List result = facilityManagementBean.getStoreWarehouseList();
+        assertTrue(!result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 
     @Test
     public void testGetListOfCountries() {
+        System.out.println("testGetListOfCountries");
+        List result = facilityManagementBean.getListOfCountries();
+        assertTrue(!result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 
     private FacilityManagementBeanRemote lookupFacilityManagementBeanRemote() {
