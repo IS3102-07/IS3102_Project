@@ -20,6 +20,8 @@ public class SalesFigureEntity implements Serializable {
     private StoreEntity store;    
     @ManyToOne
     private ProductGroupEntity productGroup;
+    @ManyToOne
+    private MenuItemEntity menuItem;
     
     public SalesFigureEntity(){}
     
