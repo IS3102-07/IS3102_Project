@@ -150,26 +150,54 @@ public class CommonInfrastructure_WorkspaceBeanRemote_JUnit {
 
     @Test
     public void testGetAllToDoListOfAStaff() {
+        System.out.println("testGetAllToDoListOfAStaff");
+        Long testdata_staffId = 12L;
+        List result = workspaceBean.getAllToDoListOfAStaff(testdata_staffId);
+        assertNull(result);
+        assertTrue(result != null);
     }
 
     @Test
     public void testMarkToDoListAsDone() {
+        System.out.println("testMarkToDoListAsDone");
+        Long testdata_id = 40L;
+        Boolean result = workspaceBean.markToDoListAsDone(testdata_id);
+        assertFalse(!result);
+        assertTrue(result);
     }
 
     @Test
     public void testMarkToDoListAsUndone() {
+        System.out.println("testMarkToDoListAsDone");
+        Long testdata_id = 53L;
+        Boolean result = workspaceBean.markToDoListAsDone(testdata_id);
+        assertFalse(!result);
+        assertTrue(result);
     }
 
     @Test
     public void testToggleToDoListIsDone() {
+        System.out.println("testToggleToDoListIsDone");
+        Long testdata_id = 34L;
+        Boolean result = workspaceBean.toggleToDoListIsDone(testdata_id);
+        assertFalse(!result);
+        assertTrue(result);
     }
 
     @Test
     public void testGetStaffEmail() {
+        System.out.println("testGetStaffEmail");
+        Long testdata_staffID = 12L;
+        String result = workspaceBean.getStaffEmail(testdata_staffID);
+        assertEquals("admin@if.com", result);
     }
 
     @Test
     public void testGetStaffName() {
+        System.out.println("testGetStaffName");
+        Long testdata_staffID = 12L;
+        String result = workspaceBean.getStaffEmail(testdata_staffID);
+        assertEquals("Administrator", result);
     }
 
     private WorkspaceBeanRemote lookupWorkspaceBeanRemote() {
