@@ -29,7 +29,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     @Override

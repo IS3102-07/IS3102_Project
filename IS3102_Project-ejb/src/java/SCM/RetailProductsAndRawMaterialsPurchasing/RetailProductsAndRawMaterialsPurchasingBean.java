@@ -19,7 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProductsAndRawMaterialsPurchasingBeanLocal, RetailProductsAndRawMaterialsPurchasingBeanRemote {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     public RetailProductsAndRawMaterialsPurchasingBean() {

@@ -28,7 +28,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     @EJB
     private SalesForecastBeanLocal salesForecastBean;
 
-    @PersistenceContext
+   @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     @EJB
@@ -89,11 +89,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             salesRecordEntity.setStore(storeEntity);//tie the store to record
             em.persist(salesRecordEntity);
             //update sales figures as well
-            try {
-                salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
             storeEntity.getSalesRecords().add(salesRecordEntity);//tie the record to the store
             em.merge(storeEntity);
         } catch (Exception ex) {

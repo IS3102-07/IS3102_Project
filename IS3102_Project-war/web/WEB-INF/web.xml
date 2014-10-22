@@ -538,8 +538,8 @@
         <servlet-class>B_servlets.ECommerce_StoresServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_ShoppingCartServlet</servlet-class>
+        <servlet-name>ECommerce_WishListServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_WishListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_AllRetailProductsServlet</servlet-name>
@@ -788,6 +788,18 @@
     <servlet>
         <servlet-name>MemberManagement_AddMemberServlet</servlet-name>
         <servlet-class>A1_servlets.MemberManagement_AddMemberServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Analytical_ValueAnalysisServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_ValueAnalysisServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Analytical_SegmentationMarketingServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_SegmentationMarketingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Analytical_QueryAndReportingServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_QueryAndReportingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -1330,8 +1342,8 @@
         <url-pattern>/ECommerce_AllRetailProductsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
-        <url-pattern>/ECommerce_ShoppingCartServlet</url-pattern>
+        <servlet-name>ECommerce_WishListServlet</servlet-name>
+        <url-pattern>/ECommerce_WishListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
@@ -1576,6 +1588,18 @@
     <servlet-mapping>
         <servlet-name>MemberManagement_AddMemberServlet</servlet-name>
         <url-pattern>/MemberManagement_AddMemberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_ValueAnalysisServlet</servlet-name>
+        <url-pattern>/Analytical_ValueAnalysisServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_SegmentationMarketingServlet</servlet-name>
+        <url-pattern>/Analytical_SegmentationMarketingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_QueryAndReportingServlet</servlet-name>
+        <url-pattern>/Analytical_QueryAndReportingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

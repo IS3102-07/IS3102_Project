@@ -17,7 +17,7 @@ public class SalesReportingBean implements SalesReportingBeanLocal {
     @EJB
     RetailInventoryBeanLocal inventoryBean;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     @Override
@@ -28,8 +28,8 @@ public class SalesReportingBean implements SalesReportingBeanLocal {
         if (staffEmail == null || staffPassword == null || storeID == null || posName == null) {
             return false;
         }
-        return createSalesRecord(staffEmail, staffPassword, storeID, posName, itemsPurchasedSKU, itemsPurchasedQty, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail,receiptNo);
-        //return true;
+        //return createSalesRecord(staffEmail, staffPassword, storeID, posName, itemsPurchasedSKU, itemsPurchasedQty, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail,receiptNo);
+        return true;
     }
     
     //consume hq web service
