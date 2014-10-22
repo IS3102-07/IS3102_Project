@@ -1,6 +1,7 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class ComboEntity implements Serializable {
@@ -25,10 +26,12 @@ public class ComboEntity implements Serializable {
     private String description;
     @Lob
     private String imageURL;
-    @OneToOne(mappedBy = "combos")
-    private List<MenuItemEntity> menuItems;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "combo")
+    private List<ComboLineItemEntity> lineItemList;
 
     public ComboEntity() {
+        this.lineItemList = new ArrayList<>();
     }
 
     public Long getId() {
@@ -38,6 +41,46 @@ public class ComboEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public List<ComboLineItemEntity> getLineItemList() {
+        return lineItemList;
+    }
+
+    public void setLineItemList(List<ComboLineItemEntity> lineItemList) {
+        this.lineItemList = lineItemList;
+    }        
 
     @Override
     public int hashCode() {
