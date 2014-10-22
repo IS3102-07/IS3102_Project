@@ -34,7 +34,7 @@ public class ECommerce_RetailProductsServlet extends HttpServlet {
             List<RetailProductEntity> retailProducts = itemManagementBean.listAllRetailProduct();
             session.setAttribute("retailProducts", retailProducts);
             
-            response.sendRedirect("B/tablesDesks.jsp");
+            response.sendRedirect("B/retailProducts.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
