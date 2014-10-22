@@ -108,22 +108,35 @@
                                             <div class="col-md-6">
                                                 <h2 class="short">Progress Bar</h2>
                                                 <%
+                                                    int a = 100;
+                                                    out.println(member.getLoyaltyPoints());
                                                     for (int i = 0; i < loyaltyTiers.size(); i++) {
 
 
                                                 %>
                                                 <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=a%>%; color:red;" >
 
                                                         <%=loyaltyTiers.get(i).getAmtOfSpendingRequired()%>
                                                     </div>
                                                 </div>
                                                 <%
+                                                    a = a-25;
                                                     }
                                                 %>
-
-                                                
                                             </div>
+                                            
+                                            <div class="col-md-6">
+                                                <h2 class="short">Progress Bar</h2>
+                                                <%
+                                                   
+                                                    out.println(member.getLoyaltyPoints());
+                                                    out.println(member.getCummulativeSpending());
+                                                   
+                                                    }
+                                                %>
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
