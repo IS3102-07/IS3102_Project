@@ -423,7 +423,7 @@
             %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#corporateCRM">
-                    <i class="icon icon-briefcase"></i> Corporate CRM <i class="icon icon-caret-down"></i>
+                    <i class="icon icon-briefcase"></i> Corporate Management <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="corporateCRM" class="collapse">
                     <li>
@@ -433,7 +433,7 @@
                         <a href="../A6/itemManagement.jsp">Item Management</a>
                     </li>
                     <li>
-                        <a href="../A6/loyaltyTierManagement.jsp">Loyalty Program Management</a>
+                        <a href="../A6/restaurantManagement.jsp">Restaurant Management</a>
                     </li>
                 </ul>
             </li>
