@@ -88,10 +88,6 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     }
 
     @Test
-    public void testDeleteStorageBin() {
-    }
-
-    @Test
     public void testGetInboundStorageBin() {
         //Force create an inbound bin in the warehouse first
         manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Inbound", 200, 200, 200);
@@ -105,18 +101,6 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
         manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Outbound", 200, 200, 200);
         StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
         assertNull(result);
-    }
-
-    @Test
-    public void test05CreateTransferOrder() {        
-    }
-
-    @Test
-    public void testAddLineItemToTransferOrder() {             
-    }
-
-    @Test
-    public void testRemoveLineItemFromTransferOrder() {          
     }
 
     @Test

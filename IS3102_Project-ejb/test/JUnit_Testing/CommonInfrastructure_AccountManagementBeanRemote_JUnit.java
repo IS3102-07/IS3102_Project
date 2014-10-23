@@ -87,7 +87,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     public void test04EditStaff() {
         System.out.println("testEditStaff()");
         String testdata_callerStaffID = "1";
-        Long testdata_staffID = 1000L;
+        Long testdata_staffID = 23L;
         String testdata_address = "55 Tanglin Home, #04-12";
         String testdata_phone = "81234333";
         String testdata_password = "";
@@ -108,7 +108,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     public void test06RemoveStaff() {
         System.out.println("testRemoveStaff()");
         String testdata_callerStaffID = "1";
-        Long testdata_staffID = 1200L;
+        Long testdata_staffID = 92L;
         Boolean result = accountManagementBean.removeStaff(testdata_callerStaffID, testdata_staffID);
         assertTrue(result);
     }
@@ -164,7 +164,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     public void test12ListAllRoles() {
         System.out.println("testListAllRoles");
         List result = accountManagementBean.listAllRoles();
-        assertTrue(!result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 
     @Test
