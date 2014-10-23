@@ -24,8 +24,6 @@ public class SCM_InboundAndOutboundLogisticsBeanRemote_JUnit {
 
     InboundAndOutboundLogisticsBeanRemote inboundAndOutboundLogisticsBean = lookupInboundAndOutboundLogisticsBeanRemote();
 
-    static Long shippingOrderId = null; //no need to change
-
     public SCM_InboundAndOutboundLogisticsBeanRemote_JUnit() {
     }
 
@@ -46,106 +44,88 @@ public class SCM_InboundAndOutboundLogisticsBeanRemote_JUnit {
     }
 
     @Test
-    public void test01CreateShippingOrderBasicInfo() {
-        System.out.println("test01CreateShippingOrderBasicInfo()");
-        Date testdata_expectedReceivedDate = new Date();
-        Long testdata_destinationWarehouseID = 1000L;
-        Long testdata_sourceWarehouseD = 1200L;
-        ShippingOrderEntity result = inboundAndOutboundLogisticsBean.createShippingOrderBasicInfo(testdata_expectedReceivedDate, testdata_destinationWarehouseID, testdata_sourceWarehouseD);
-        assertNull(result);
-
-        //    public ShippingOrderEntity createShippingOrderBasicInfo(Date expectedReceivedDate, Long sourceWarehouseID, Long destinationWarehouseID);
-    }
-
-    @Test
     public void testCheckSKUExists() {
         System.out.println("testCheckSKUExists()");
-        boolean result = inboundAndOutboundLogisticsBean.checkSKUExists("F10000000");
-        assertFalse(result);
-
-        //public boolean checkSKUExists(String SKU);
+        boolean result = inboundAndOutboundLogisticsBean.checkSKUExists("F_TD_01");
+        assertTrue(result);
     }
 
     @Test
     public void testUpdateShippingOrder() {
         System.out.println("testUpdateShippingOrder");
-        Long testdata_shippingOrderID = 1000L;
-        Long testdata_sourceWarehouseID = 1000L;
-        Long testdata_destinationWarehouseID = 1000L;
+        Long testdata_shippingOrderID = 352L;
+        Long testdata_sourceWarehouseID = 24L;
+        Long testdata_destinationWarehouseID = 54L;
         Date testdata_expectedReceivedDate = new Date();
-
         boolean result = inboundAndOutboundLogisticsBean.updateShippingOrder(testdata_shippingOrderID, testdata_sourceWarehouseID, testdata_destinationWarehouseID, testdata_expectedReceivedDate);
-
-        //    public Boolean updateShippingOrder(Long shippingOrderID, Long sourceWarehouseID, Long destinationWarehouseID, Date expectedReceivedDate);
+        assertFalse(result);
     }
 
     @Test
     public void testUpdateShippingOrderStatus() {
         System.out.println("testUpdateShippingOrderStatus");
-        Long testdata_shippingOrderID = 1000L;
+        Long testdata_shippingOrderID = 352L;
         String testdata_status = "";
         String testdata_submittedBy = "";
 
         boolean result = inboundAndOutboundLogisticsBean.updateShippingOrderStatus(testdata_shippingOrderID, testdata_status, testdata_submittedBy);
-
-        //    public Boolean updateShippingOrderStatus(Long shippingOrderID, String status, String submittedBy);
+        assertFalse(result);
     }
 
     @Test
     public void testAddLineItemToShippingOrder() {
         System.out.println("testAddLineItemToShippingOrder");
-        Long testdata_shippingOrderID = 1000L;
+        Long testdata_shippingOrderID = 352L;
         String testdata_SKU = "";
         int testdata_qty = 1;
 
         boolean result = inboundAndOutboundLogisticsBean.addLineItemToShippingOrder(testdata_shippingOrderID, testdata_SKU, testdata_qty);
-        //public Boolean addLineItemToShippingOrder(Long shippingOrderID, String SKU, Integer qty);
+        assertNotNull(result);
     }
 
     @Test
     public void testRemoveLineItemFromShippingOrder() {
         System.out.println("testRemoveLineItemFromShippingOrder");
-        Long testdata_shippingOrderID = 1000L;
+        Long testdata_shippingOrderID = 62L;
         Long testdata_lineItemID = 1000L;
         boolean result = inboundAndOutboundLogisticsBean.removeLineItemFromShippingOrder(testdata_shippingOrderID, testdata_lineItemID);
-        //    public Boolean removeLineItemFromShippingOrder(Long shippingOrderID, Long lineItemID);
+        assertFalse(result);
     }
 
     @Test
     public void testUpdateLineItemFromShippingOrder() {
         System.out.println("testUpdateLineItemFromShippingOrder");
-        Long testdata_shippingOrderID = 1000L;
+        Long testdata_shippingOrderID = 432L;
         Long testdata_lineItemID = 1000L;
         String testdata_SKU = "";
         int testdata_qty = 1;
         boolean result = inboundAndOutboundLogisticsBean.updateLineItemFromShippingOrder(testdata_shippingOrderID, testdata_lineItemID, testdata_SKU, testdata_qty);
-        //    public Boolean updateLineItemFromShippingOrder(Long shippingOrderID, Long lineItemID, String SKU, Integer qty);
+        assertFalse(result);
     }
 
     @Test
-    public void test02GetShippingOrderList() {
+    public void test01GetShippingOrderList() {
         System.out.println("testGetShippingOrderList");
         WarehouseEntity testdata_orgin_warehouse = null; //???????
         Date testdata_shippedDate = new Date();
         List<ShippingOrderEntity> result = inboundAndOutboundLogisticsBean.getShippingOrderList(testdata_orgin_warehouse, testdata_shippedDate);
-        shippingOrderId = result.get(0).getId();
-        //    public List<ShippingOrderEntity> getShippingOrderList(WarehouseEntity origin, Date shippedDate);
+        assertNotNull(result);
     }
 
     @Test
-    public void test03GetShippingOrderById() {
+    public void test02GetShippingOrderById() {
         System.out.println("testGetShippingOrderById");
-        ShippingOrderEntity result = inboundAndOutboundLogisticsBean.getShippingOrderById(shippingOrderId);
-        //    public ShippingOrderEntity getShippingOrderById(Long id);
+        Long testdata_shippingOrderId = 563L;
+        ShippingOrderEntity result = inboundAndOutboundLogisticsBean.getShippingOrderById(testdata_shippingOrderId);
+        assertNull(result);
     }
 
     @Test
     public void testGetShippingOrderListByWarehouseId() {
         System.out.println("testGetShippingOrderListByWarehouseId");
-        Long testdata_warehouseId = 1000L;
+        Long testdata_warehouseId = 64L;
         List<ShippingOrderEntity> result = inboundAndOutboundLogisticsBean.getShippingOrderListByWarehouseId(testdata_warehouseId);
-
-        //    public List<ShippingOrderEntity> getShippingOrderListByWarehouseId(Long warehouseId);
+        assertNotNull(result);
     }
 
     private InboundAndOutboundLogisticsBeanRemote lookupInboundAndOutboundLogisticsBeanRemote() {

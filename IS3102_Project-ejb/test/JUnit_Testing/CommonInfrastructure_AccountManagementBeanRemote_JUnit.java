@@ -67,7 +67,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
 
 
     @Test
-    public void test04CheckMemberEmailExists() {
+    public void test02CheckMemberEmailExists() {
         System.out.println("testCheckMemberEmailExists()");
         String testdata_email = "superman@hotmail.com";
         Boolean result = accountManagementBean.checkMemberEmailExists(testdata_email);
@@ -75,7 +75,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test06CheckStaffEmailExists() {
+    public void test03CheckStaffEmailExists() {
         System.out.println("testCheckStaffEmailExists()");
         String testdata_email = "admin@if.com";
         Boolean result = accountManagementBean.checkStaffEmailExists(testdata_email);
@@ -84,7 +84,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
 
 
     @Test
-    public void test08EditStaff() {
+    public void test04EditStaff() {
         System.out.println("testEditStaff()");
         String testdata_callerStaffID = "1";
         Long testdata_staffID = 1000L;
@@ -96,7 +96,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test10ResetStaffPassword() {
+    public void test05ResetStaffPassword() {
         System.out.println("testResetStaffPassword()");
         String testdata_email = "abcc@if.com";
         String testdata_password = "12345678";
@@ -105,7 +105,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test11RemoveStaff() {
+    public void test06RemoveStaff() {
         System.out.println("testRemoveStaff()");
         String testdata_callerStaffID = "1";
         Long testdata_staffID = 1200L;
@@ -115,7 +115,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
 
 
     @Test
-    public void test13CreateRole() {
+    public void test07CreateRole() {
         System.out.println("testCreateRole");
         String testdata_callerStaffID = "50";
         String testdata_name = "Supervisor";
@@ -127,14 +127,14 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test14GetRoleById() {
+    public void test08GetRoleById() {
         System.out.println("testGetRoleById()");
         RoleEntity result = accountManagementBean.getRoleById(1L);
         assertNotNull(result);
     }
 
     @Test
-    public void test15UpdateRole() {
+    public void test09UpdateRole() {
         System.out.println("testUpdateRole");
         System.out.println("test15UpdateRole " + roleId);
         String testdata_callerStaffID = "50";
@@ -145,7 +145,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test16DeleteRole() {
+    public void test10DeleteRole() {
         System.out.println("testDeleteRole");
         String testdata_callerStaffID = "50";
         Long testdata_roleID = roleId;
@@ -154,21 +154,21 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test17CheckIfRoleExists() {
+    public void test11CheckIfRoleExists() {
         System.out.println("checkIfRoleExists");
         Boolean result = accountManagementBean.checkIfRoleExists("Administrator");
         assertTrue(result);
     }
 
     @Test
-    public void test18ListAllRoles() {
+    public void test12ListAllRoles() {
         System.out.println("testListAllRoles");
         List result = accountManagementBean.listAllRoles();
         assertTrue(!result.isEmpty());
     }
 
     @Test
-    public void test19SearchRole() {
+    public void test13SearchRole() {
         System.out.println("testSearchRole");
         String testdata_name = "Regional Manager";
         RoleEntity result = accountManagementBean.searchRole(testdata_name);
@@ -176,7 +176,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test20GetCountry() {
+    public void test14GetCountry() {
         System.out.println("testGetCountry");
         String testdata_countryName = "Singapore";
         CountryEntity result = accountManagementBean.getCountry(testdata_countryName);
@@ -184,7 +184,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test21CheckStaffInvalidLoginAttempts() {
+    public void test15CheckStaffInvalidLoginAttempts() {
         System.out.println("testCheckStaffInvalidLoginAttempts");
         String testdata_email = "admin@if.com";
         Integer result = accountManagementBean.checkStaffInvalidLoginAttempts(testdata_email);
@@ -192,7 +192,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void test22IsAccessRightExist() {
+    public void test16IsAccessRightExist() {
         System.out.println("testIsAccessRightExist");
         Long testdata_staffId = 10L;
         Long testdata_roleId = 5L;
