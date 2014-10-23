@@ -1,5 +1,6 @@
 package JUnit_Testing;
 
+import CorporateManagement.FacilityManagement.FacilityManagementBeanRemote;
 import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanRemote;
@@ -28,11 +29,12 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
-    
-    ManufacturingWarehouseManagementBeanRemote manufacturingWarehouseManagementBean = lookupManufacturingWarehouseManagementBeanRemote();
 
-    Long warehouseID = 1L;//Need to change to the warehouse created after the facility management JUnit test
-    
+    ManufacturingWarehouseManagementBeanRemote manufacturingWarehouseManagementBean = lookupManufacturingWarehouseManagementBeanRemote();
+    FacilityManagementBeanRemote facilityManagementBean = lookupFacilityManagementBeanRemote();
+
+    Long warehouseID = 51L;//Need to change to the warehouse created after the facility management JUnit test
+
     // Automatically retrieved variable
     Long storageBinID = null;
 
@@ -59,8 +61,8 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     @Test
     public void test01CreateStorageBin() {
         System.out.println("test01CreateStorageBin");
-        WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-        StorageBinEntity expResult = new StorageBinEntity(warehouseEntity, "Inbound", 1200, 1200, 1200);
+        WarehouseEntity warehouseEntity = facilityManagementBean.getWarehouseList().get(0);
+        warehouseID = warehouseEntity.getId();
         Boolean result = manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Pallet", 200, 200, 200);
         assertTrue(result);
     }
@@ -69,18 +71,18 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     public void test02ViewAllStorageBin() {
         System.out.println("test02ViewAllStorageBin");
         List<StorageBinEntity> result = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseID);
-        storageBinID = result.get(result.size()-1).getId();
-        System.out.println(storageBinID+"!!!!!!!!!!!");
+        storageBinID = result.get(result.size() - 1).getId();
+        System.out.println(storageBinID + "!!!!!!!!!!!");
         assertNotNull(result);
     }
-    
+
     @Test
     public void test03ViewStorageBin() {
         System.out.println("test03ViewStorageBin");
         StorageBinEntity result = manufacturingWarehouseManagementBean.viewStorageBin(storageBinID);
         assertNotNull(result);
     }
-    
+
     @Test
     public void test04UpdateStorageBin() {
         System.out.println("testUpdateStorageBin");
@@ -102,6 +104,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
 
     @Test
     public void testCreateTransferOrder() {
+        //manufacturingWarehouseManagementBean.get
     }
 
     @Test
@@ -144,6 +147,16 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
         try {
             Context c = new InitialContext();
             return (ManufacturingWarehouseManagementBeanRemote) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/ManufacturingWarehouseManagementBean!SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanRemote");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private FacilityManagementBeanRemote lookupFacilityManagementBeanRemote() {
+        try {
+            Context c = new InitialContext();
+            return (FacilityManagementBeanRemote) c.lookup("java:global/IS3102_Project/IS3102_Project-ejb/FacilityManagementBean!CorporateManagement.FacilityManagement.FacilityManagementBeanRemote");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
