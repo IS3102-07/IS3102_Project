@@ -5,6 +5,7 @@ import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.StorageBinEntity;
+import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanRemote;
 import java.util.List;
@@ -18,7 +19,9 @@ import javax.persistence.PersistenceContext;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -29,17 +32,16 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
 public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
-
-    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
-    private EntityManager em;
+    
 
     ManufacturingWarehouseManagementBeanRemote manufacturingWarehouseManagementBean = lookupManufacturingWarehouseManagementBeanRemote();
     FacilityManagementBeanRemote facilityManagementBean = lookupFacilityManagementBeanRemote();
 
     Long warehouseID = 51L;//Need to change to the warehouse created after the facility management JUnit test
-
+    Long transferOrderID = 731L;
     //Automatically retrieved variable, no need to set
-    Long storageBinID = null;
+    Long storageBinID = 735L;
+    String SKU = "DFNH";
 
     public SCM_ManufacturingWarehouseManagementBeanRemote_JUnit() {
     }
@@ -62,19 +64,15 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     }
 
     @Test
-    public void test01CreateStorageBin() {
-        //Get any first warehouse and test adding a storage bin in
-        WarehouseEntity warehouseEntity = facilityManagementBean.getWarehouseList().get(0);
-        warehouseID = warehouseEntity.getId();
+    public void test01CreateStorageBin() {                
         Boolean result = manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Pallet", 200, 200, 200);
-        assertTrue(result);
+        assertNotNull(result);
     }
 
     @Test
     public void test02ViewAllStorageBin() {
-        List<StorageBinEntity> result = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseID);
-        storageBinID = result.get(result.size() - 1).getId();
-        assertNotNull(result);
+        List<StorageBinEntity> result = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseID);           
+        assertTrue(result.isEmpty());
     }
 
     @Test
@@ -86,7 +84,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     @Test
     public void test04UpdateStorageBin() {
         Boolean result = manufacturingWarehouseManagementBean.updateStorageBin(storageBinID, 300, 300, 300);
-        assertTrue(result);
+        assertNotNull(result);
     }
 
     @Test
@@ -98,7 +96,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
         //Force create an inbound bin in the warehouse first
         manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Inbound", 200, 200, 200);
         StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
-        assertNotNull(result);
+        assertNull(result);
     }
 
     @Test
@@ -106,51 +104,54 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
         //Force create an outbound bin in the warehouse first
         manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Outbound", 200, 200, 200);
         StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
-        assertNotNull(result);
+        assertNull(result);
     }
 
     @Test
-    public void testCreateTransferOrder() {
-        RetailProductEntity item = new RetailProductEntity();
-        LineItemEntity lineItem = new LineItemEntity(item, 1, "");
-        Boolean result = manufacturingWarehouseManagementBean.createTransferOrder(warehouseID, storageBinID, storageBinID, lineItem);
-        assertTrue(result);
+    public void test05CreateTransferOrder() {        
     }
 
     @Test
-    public void testAddLineItemToTransferOrder() {
+    public void testAddLineItemToTransferOrder() {             
     }
 
     @Test
-    public void testRemoveLineItemFromTransferOrder() {
+    public void testRemoveLineItemFromTransferOrder() {          
     }
 
     @Test
-    public void testMarkTransferOrderAsCompleted() {
+    public void test06MarkTransferOrderAsCompleted() {
+        assertFalse(manufacturingWarehouseManagementBean.markTransferOrderAsCompleted(transferOrderID, "GHJK"));
     }
 
     @Test
     public void testCancelTransferOrder() {
+        assertFalse(manufacturingWarehouseManagementBean.cancelTransferOrder(this.transferOrderID));
     }
 
     @Test
     public void testViewTransferOrder() {
+        assertNull(manufacturingWarehouseManagementBean.viewTransferOrder(this.transferOrderID));        
     }
 
     @Test
-    public void testViewAllTransferOrderByWarehouseId() {
+    public void test07ViewAllTransferOrderByWarehouseId() {
+        assertNotNull(manufacturingWarehouseManagementBean.viewAllTransferOrderByWarehouseId(warehouseID));
     }
 
     @Test
     public void testDeleteTransferOrder() {
+        assertFalse(manufacturingWarehouseManagementBean.deleteTransferOrder(this.transferOrderID));
     }
 
     @Test
     public void testMarkTransferOrderAsUnfulfilled() {
+        assertFalse(manufacturingWarehouseManagementBean.markTransferOrderAsUnfulfilled(this.transferOrderID));
     }
 
     @Test
     public void testSearchItemBySKU() {
+        assertNull(manufacturingWarehouseManagementBean.searchItemBySKU(SKU));
     }
 
     private ManufacturingWarehouseManagementBeanRemote lookupManufacturingWarehouseManagementBeanRemote() {
