@@ -1,6 +1,9 @@
 package JUnit_Testing;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanRemote;
+import EntityManager.ItemEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.RetailProductEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanRemote;
@@ -35,7 +38,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
 
     Long warehouseID = 51L;//Need to change to the warehouse created after the facility management JUnit test
 
-    // Automatically retrieved variable
+    //Automatically retrieved variable, no need to set
     Long storageBinID = null;
 
     public SCM_ManufacturingWarehouseManagementBeanRemote_JUnit() {
@@ -60,7 +63,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
 
     @Test
     public void test01CreateStorageBin() {
-        System.out.println("test01CreateStorageBin");
+        //Get any first warehouse and test adding a storage bin in
         WarehouseEntity warehouseEntity = facilityManagementBean.getWarehouseList().get(0);
         warehouseID = warehouseEntity.getId();
         Boolean result = manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Pallet", 200, 200, 200);
@@ -69,23 +72,19 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
 
     @Test
     public void test02ViewAllStorageBin() {
-        System.out.println("test02ViewAllStorageBin");
         List<StorageBinEntity> result = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseID);
         storageBinID = result.get(result.size() - 1).getId();
-        System.out.println(storageBinID + "!!!!!!!!!!!");
         assertNotNull(result);
     }
 
     @Test
     public void test03ViewStorageBin() {
-        System.out.println("test03ViewStorageBin");
         StorageBinEntity result = manufacturingWarehouseManagementBean.viewStorageBin(storageBinID);
         assertNotNull(result);
     }
 
     @Test
     public void test04UpdateStorageBin() {
-        System.out.println("testUpdateStorageBin");
         Boolean result = manufacturingWarehouseManagementBean.updateStorageBin(storageBinID, 300, 300, 300);
         assertTrue(result);
     }
@@ -96,15 +95,26 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
 
     @Test
     public void testGetInboundStorageBin() {
+        //Force create an inbound bin in the warehouse first
+        manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Inbound", 200, 200, 200);
+        StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
+        assertNotNull(result);
     }
 
     @Test
     public void testGetOutboundStorageBin() {
-    } //look for the inbound storagebin
+        //Force create an outbound bin in the warehouse first
+        manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Outbound", 200, 200, 200);
+        StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
+        assertNotNull(result);
+    }
 
     @Test
     public void testCreateTransferOrder() {
-        //manufacturingWarehouseManagementBean.get
+        RetailProductEntity item = new RetailProductEntity();
+        LineItemEntity lineItem = new LineItemEntity(item, 1, "");
+        Boolean result = manufacturingWarehouseManagementBean.createTransferOrder(warehouseID, storageBinID, storageBinID, lineItem);
+        assertTrue(result);
     }
 
     @Test
