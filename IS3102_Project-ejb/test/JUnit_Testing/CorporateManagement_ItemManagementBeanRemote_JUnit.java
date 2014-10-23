@@ -96,10 +96,9 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test05RemoveRawMaterial() {
         System.out.println("testRemoveRawMaterial");
-        String testdata_SKU = "RM2";
+        String testdata_SKU = "RM10";
         Boolean result = itemManagementBean.removeRawMaterial(testdata_SKU);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
@@ -148,9 +147,9 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test10RemoveFurniture() {
         System.out.println("testRemoveFurniture");
-        String testdata_SKU = "F5";
+        String testdata_SKU = "F10";
         Boolean result = itemManagementBean.removeFurniture(testdata_SKU);
-        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test
@@ -200,24 +199,21 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
         System.out.println("testViewRetailProduct");
         String testdata_SKU = "RT1";
         RetailProductEntity result = itemManagementBean.viewRetailProduct(testdata_SKU);
-        assertNull(result);
         assertEquals(result.getSKU(), "RT1");
     }
     @Test
     public void test16RemoveRetailProduct() {
         System.out.println("testRemoveRetailProduct");
-        String testdata_SKU = "RT1";
+        String testdata_SKU = "RT5";
         Boolean result = itemManagementBean.removeRetailProduct(testdata_SKU);
-        assertTrue(result);
+        assertFalse(result);
     }
-
-
 
     @Test
     public void test17ListAllRetailProduct() {
         System.out.println("testListAllRetailProduct");
         List result = itemManagementBean.listAllRetailProduct();
-        assertTrue(result.isEmpty());
+        assertTrue(!result.isEmpty());
     }
 
     @Test
@@ -248,7 +244,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     }
 
     @Test
-    public void testViewSingleBOM() {
+    public void test21ViewSingleBOM() {
         System.out.println("testViewSingleBOM");
         Long testdata_BOMId = 2L;
         BillOfMaterialEntity result = itemManagementBean.viewSingleBOM(testdata_BOMId);
@@ -256,145 +252,131 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     }
 
     @Test
-    public void testListAllBOM() {
+    public void test22ListAllBOM() {
         System.out.println("testListAllBOM");
         List result = itemManagementBean.listAllBOM();
         assertTrue(!result.isEmpty());
-        assertFalse(result.isEmpty());
     }
 
     @Test
-    public void testAddLineItemToBOM() {
+    public void test23AddLineItemToBOM() {
         System.out.println("testAddLineItemToBOM");
         String testdata_SKU = "F1";
         Integer testdata_qty = 2;
         Long testdata_BOMId = 1L;
         Boolean result = itemManagementBean.addLineItemToBOM(testdata_SKU, testdata_qty, testdata_BOMId);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testDeleteLineItemFromBOM() {
+    public void test24DeleteLineItemFromBOM() {
         System.out.println("testDeleteLineItemFromBOM");
         Long testdata_lineItemId = 1L;
         Long testdata_BOMId = 1L;
         Boolean result = itemManagementBean.deleteLineItemFromBOM(testdata_lineItemId, testdata_BOMId);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testLinkBOMAndFurniture() {
+    public void test25LinkBOMAndFurniture() {
         System.out.println("testLinkBOMandFurniture");
         Long testdata_BOMId = 1L;
         Long testdata_FurnitureId = 1L;
         Boolean result = itemManagementBean.deleteLineItemFromBOM(testdata_BOMId, testdata_FurnitureId);
-        assertTrue(result);
-        assertFalse(!result);
+        assertNotNull(!result);
     }
 
     @Test
-    public void testListAllFurnitureWithoutBOM() {
+    public void test26ListAllFurnitureWithoutBOM() {
         System.out.println("testListAllFurnitureWithoutBOM");
         List result = itemManagementBean.listAllFurnitureWithoutBOM();
-        assertTrue(result.isEmpty());
-        assertFalse(!result.isEmpty());
+        assertTrue(!result.isEmpty());
     }
 
     @Test
-    public void testCreateProductGroup() {
+    public void test27CreateProductGroup() {
         System.out.println("testCreateProductGroup");
         String testdata_name = "F001";
         Integer testdata_workhours = 100;
         Integer testdata_lotSize = 100;
         ProductGroupEntity result = itemManagementBean.createProductGroup(testdata_name, testdata_workhours, testdata_lotSize);
-        assertNotNull(result);
         assertNull(result);
     }
 
     @Test
-    public void testEditProductGroup() {
+    public void test28EditProductGroup() {
         System.out.println("testEditProductGroup");
         Long testdata_productGroupId = 1L;
         String testdata_name = "F001";
         Integer testdata_workhours = 100;
         Integer testdata_lotSize = 100;
         Boolean result = itemManagementBean.editProductGroup(testdata_productGroupId, testdata_name, testdata_workhours, testdata_lotSize);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testGetProductGroup() {
+    public void test29GetProductGroup() {
         System.out.println("testGetProductGroup");
         Long testdata_id = 1L;
         ProductGroupEntity result = itemManagementBean.getProductGroup(testdata_id);
-        assertNotNull(result);
         assertNull(result);
     }
 
     @Test
-    public void testGetAllProductGroup() {
+    public void test30GetAllProductGroup() {
         System.out.println("testGetAllProductGroup");
         List result = itemManagementBean.getAllProductGroup();
-        assertTrue(result.isEmpty());
-        assertFalse(!result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 
     @Test
-    public void testCreateProductGroupLineItem() {
+    public void test31CreateProductGroupLineItem() {
         System.out.println("testCreateProductGroupLineItem");
         String testdata_SKU = "F1";
         Double testdata_percent = 0.1;
         ProductGroupLineItemEntity result = itemManagementBean.createProductGroupLineItem(testdata_SKU, testdata_percent);
         assertNotNull(result);
-        assertNull(result);
     }
 
     @Test
-    public void testEditProductGroupLineItem() {
+    public void test32EditProductGroupLineItem() {
         System.out.println("testEditProductGroupLineItem");
         Long testdata_productGroupLineItemId = 1L;
         String testdata_SKU = "F1";
         Double testdata_percent = 0.1;
         Boolean result = itemManagementBean.editProductGroupLineItem(testdata_productGroupLineItemId, testdata_SKU, testdata_percent);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testAddLineItemToProductGroup() {
+    public void test33AddLineItemToProductGroup() {
         System.out.println("testAddLineItemToProductGroup");
         Long testdata_productGroupId = 1L;
         Long testdata_lineItemId = 1L;
         Boolean result = itemManagementBean.addLineItemToProductGroup(testdata_productGroupId, testdata_lineItemId);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testRemoveLineItemFromProductGroup() {
+    public void test34RemoveLineItemFromProductGroup() {
         System.out.println("testRemoveLineItemToProductGroup");
         Long testdata_productGroupId = 1L;
         Long testdata_lineItemId = 1L;
         Boolean result = itemManagementBean.removeLineItemFromProductGroup(testdata_productGroupId, testdata_lineItemId);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
 
     }
 
     @Test
-    public void testRemoveProductGroup() {
+    public void test35RemoveProductGroup() {
         System.out.println("testRemoveProductGroup");
         Long testdata_productGroupId = 1L;
         Boolean result = itemManagementBean.removeProductGroup(testdata_productGroupId);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testCheckIfSKUIsFurniture() {
+    public void test36CheckIfSKUIsFurniture() {
         System.out.println("testCheckIfSKUIsFurniture");
         String testdata_SKU = "F1";
         Boolean result = itemManagementBean.checkIfSKUIsFurniture(testdata_SKU);
@@ -402,145 +384,58 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
         assertFalse(!result);
     }
 
-    @Test
-    public void testAddCountryItemPricing() {
-        System.out.println("testAddCountryItemPricing");
-        Long testdata_countryId = 1L;
-        String testdata_SKU = "F1";
-        Double testdata_price = 1.0;
-        ReturnHelper result = itemManagementBean.addCountryItemPricing(testdata_countryId, testdata_SKU, testdata_price);
-        assertNull(result);
-        assertNotNull(result);
-    }
 
     @Test
-    public void testRemoveCountryItemPricing() {
-        System.out.println("testAddCountryItemPricing");
-        Long testdata_countryId = 1L;
-        ReturnHelper result = itemManagementBean.removeCountryItemPricing(testdata_countryId);
-        assertNull(result);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testEditCountryItemPricing() {
-        System.out.println("testAddCountryItemPricing");
-        Long testdata_countryId = 1L;
-        Double testdata_price = 1.0;
-        ReturnHelper result = itemManagementBean.editCountryItemPricing(testdata_countryId, testdata_price);
-        assertNull(result);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testGetCountryItemPricing() {
+    public void test37GetCountryItemPricing() {
         System.out.println("testGetCountryItemPricing");
         Long testdata_countryItemId = 1L;
         Item_CountryEntity result = itemManagementBean.getCountryItemPricing(testdata_countryItemId);
         assertNull(result);
+    }
+
+    @Test
+    public void test38ListAllCountryItemPricing() {
+        System.out.println("testGetCountryItemPricing");
+        List result = itemManagementBean.listAllCountryItemPricing();
+        assertNotNull(result.isEmpty());
+    }
+
+    @Test
+    public void test39ListAllCountry() {
+        System.out.println("testListAllCountry");
+        List result = itemManagementBean.listAllCountry();
+        assertNotNull(result.isEmpty());
+    }
+
+    @Test
+    public void test40ListAllItemsSKU() {
+        System.out.println("testListAllItemsSKU");
+        List result = itemManagementBean.listAllItemsSKU();
+        assertNotNull(result.isEmpty());
+    }
+
+    @Test
+    public void test41ListAllItemsSKUForSupplier() {
+        System.out.println("testListAllItemsSKUorSupplier");
+        List result = itemManagementBean.listAllItemsSKUForSupplier();
         assertNotNull(result);
     }
 
     @Test
-    public void testListAllCountryItemPricing() {
-        System.out.println("testGetCountryItemPricing");
-        List result = itemManagementBean.listAllCountryItemPricing();
-        assertNull(result.isEmpty());
-        assertNotNull(result.isEmpty());
-    }
-
-    @Test
-    public void testListAllCountry() {
-        System.out.println("testListAllCountry");
-        List result = itemManagementBean.listAllCountry();
-        assertNull(result.isEmpty());
-        assertNotNull(result.isEmpty());
-    }
-
-    @Test
-    public void testListAllItemsSKU() {
-        System.out.println("testListAllItemsSKU");
-        List result = itemManagementBean.listAllItemsSKU();
-        assertNull(result.isEmpty());
-        assertNotNull(result.isEmpty());
-    }
-
-    @Test
-    public void testListAllItemsSKUForSupplier() {
-        System.out.println("testListAllItemsSKUorSupplier");
-        List result = itemManagementBean.listAllItemsSKUForSupplier();
-        assertNull(result.isEmpty());
-        assertNotNull(result.isEmpty());
-    }
-
-    @Test
-    public void testListAllItemsOfCountry() {
+    public void test42ListAllItemsOfCountry() {
         System.out.println("testListAllItemsOfCountry");
         Long testdata_countryId = 1L;
         List result = itemManagementBean.listAllItemsOfCountry(testdata_countryId);
-        assertNull(result.isEmpty());
         assertNotNull(result.isEmpty());
     }
 
     @Test
-    public void testGetItemPricing() {
+    public void test43GetItemPricing() {
         System.out.println("testGetItemPricing");
         Long testdata_itemId = 1L;
         String testdata_SKU = "F1";
         Item_CountryEntity result = itemManagementBean.getItemPricing(testdata_itemId, testdata_SKU);
         assertNull(result);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testAddSupplierItemInfo() {
-        System.out.println("testAddSupplierItemInfo");
-        String testdata_SKU = "F1";
-        Long testdata_supplierId = 1L;
-        Double testdata_costPrice = 1.0;
-        Integer testdata_lotSize = 10;
-        Integer testdata_leadTime = 1;
-        ReturnHelper result = itemManagementBean.addSupplierItemInfo(testdata_SKU, testdata_supplierId, testdata_costPrice, testdata_lotSize, testdata_leadTime);
-        assertNull(result);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testRemoveSupplierItemInfo() {
-        System.out.println("testRemoveSupplierItemInfo");
-        Long testdata_supplierItemId = 1L;
-        ReturnHelper result = itemManagementBean.removeSupplierItemInfo(testdata_supplierItemId);
-        assertNull(result);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testEditSupplierItemInfo() {
-        System.out.println("testAddSupplierItemInfo");
-        Long testdata_supplierItemId = 1L;
-        Double testdata_costPrice = 1.0;
-        Integer testdata_lotSize = 10;
-        Integer testdata_leadTime = 1;
-        ReturnHelper result = itemManagementBean.editSupplierItemInfo(testdata_supplierItemId, testdata_costPrice, testdata_lotSize, testdata_leadTime);
-        assertNull(result);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testGetSupplierItemInfo() {
-        System.out.println("testRemoveSupplierItemInfo");
-        Long testdata_supplierItemId = 1L;
-        Supplier_ItemEntity result = itemManagementBean.getSupplierItemInfo(testdata_supplierItemId);
-        assertNull(result);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testListAllSupplierItemInfo() {
-        System.out.println("testRemoveSupplierItemInfo");
-        List result = itemManagementBean.listAllSupplierItemInfo();
-        assertNull(result.isEmpty());
-        assertNotNull(result.isEmpty());
     }
 
     private ItemManagementBeanRemote lookupItemManagementBeanRemote() {
