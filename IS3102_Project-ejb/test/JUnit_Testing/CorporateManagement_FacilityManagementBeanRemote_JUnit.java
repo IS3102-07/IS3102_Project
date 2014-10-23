@@ -23,10 +23,10 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
 
-    static Long manufacturingId = 8L;
+    static Long manufacturingId = 52L;
     static Long manufacturingFacilityId = 1L; //do not change
-    static Long storeId = 53L;
-    static Long warehouseId = 2L;
+    static Long storeId = 55L;
+    static Long warehouseId = 56L;
     FacilityManagementBeanRemote facilityManagementBean = lookupFacilityManagementBeanRemote();
 
     public CorporateManagement_FacilityManagementBeanRemote_JUnit() {
@@ -193,19 +193,19 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         assertFalse(result);
     }
 
-    @Test
-    public void test16EditStore() {
-        System.out.println("testEditStore");
-        String testdata_callerStaffID = "12";
-        Long testdata_id = storeId;
-        String testdata_storeName = "Bugis Home Store";
-        String testdata_address = "30 Bugis Street";
-        String testdata_telephone = "64756666";
-        String testdata_email = "bugisstore@if.com";
-        Long testdata_countryID = 19L;
-        Boolean result = facilityManagementBean.editStore(testdata_callerStaffID, testdata_id, testdata_storeName, testdata_address, testdata_telephone, testdata_email, testdata_countryID);
-        assertFalse(result == null);
-    }
+//    @Test
+//    public void test16EditStore() {
+//        System.out.println("testEditStore");
+//        String testdata_callerStaffID = "12";
+//        Long testdata_id = storeId;
+//        String testdata_storeName = "Bugis Home Store";
+//        String testdata_address = "30 Bugis Street";
+//        String testdata_telephone = "64756666";
+//        String testdata_email = "bugisstore@if.com";
+//        Long testdata_countryID = 19L;
+//        Boolean result = facilityManagementBean.editStore(testdata_callerStaffID, testdata_id, testdata_storeName, testdata_address, testdata_telephone, testdata_email, testdata_countryID);
+//        assertFalse(result == null);
+//    }
 
     @Test
     public void test17ViewStoreEntity() {
@@ -294,7 +294,7 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         Long testdata_storeID = 55L;
         Long testdata_MFid = 48L;
         WarehouseEntity result = facilityManagementBean.createWarehouse(testdata_callerStaffID, testdata_warehouseName, testdata_address, testdata_telephone, testdata_email, testdata_storeID, testdata_MFid);
-        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test
@@ -330,7 +330,7 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
     @Test
     public void test30CheckNameExistsOfWarehouse() {
         System.out.println("testCheckNameExistsOfWarehouse");
-        String testdata_name = "Tampines Store Warehouse";
+        String testdata_name = "Queenstown Store Warehouse";
         Boolean result = facilityManagementBean.checkNameExistsOfWarehouse(testdata_name);
         assertTrue(result);
     }

@@ -46,7 +46,7 @@ public class SCM_InboundAndOutboundLogisticsBeanRemote_JUnit {
     @Test
     public void testCheckSKUExists() {
         System.out.println("testCheckSKUExists()");
-        boolean result = inboundAndOutboundLogisticsBean.checkSKUExists("F_TD_01");
+        boolean result = inboundAndOutboundLogisticsBean.checkSKUExists("F1");
         assertTrue(result);
     }
 
