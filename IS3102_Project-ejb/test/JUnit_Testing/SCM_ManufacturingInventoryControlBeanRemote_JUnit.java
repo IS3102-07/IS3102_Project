@@ -1,6 +1,12 @@
 package JUnit_Testing;
 
+import EntityManager.FurnitureEntity;
+import EntityManager.ItemEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.StorageBinEntity;
+import HelperClasses.ItemStorageBinHelper;
 import SCM.ManufacturingInventoryControl.ManufacturingInventoryControlBeanRemote;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -42,86 +48,151 @@ public class SCM_ManufacturingInventoryControlBeanRemote_JUnit {
 
     @Test
     public void testGetEmptyStorageBins() {
+        ItemEntity itemEntity = new FurnitureEntity();
+        Long warehouseId = 1200L;
+        List<StorageBinEntity> emptyStorageBins = manufacturingInventoryControlBean.getEmptyStorageBins(warehouseId, itemEntity);
+        assertNull(emptyStorageBins);
     }
 
     @Test
     public void testMoveInboundPurchaseOrderItemsToReceivingBin() {
+        Long purchaseOrderId = 5000L;
+        Boolean result = manufacturingInventoryControlBean.moveInboundPurchaseOrderItemsToReceivingBin(purchaseOrderId);
+        assertFalse(result);
     }
 
     @Test
     public void testMoveInboundShippingOrderItemsToReceivingBin() {
+        Long shippingOrderID = 1L;
+        Boolean result = manufacturingInventoryControlBean.moveInboundShippingOrderItemsToReceivingBin(shippingOrderID);
+        assertFalse(result);
     }
 
     @Test
     public void testRemoveItemFromOutboundBinForShipping() {
+        Long shippingOrderID = 1234L;
+        Boolean result = manufacturingInventoryControlBean.removeItemFromOutboundBinForShipping(shippingOrderID);
+        assertFalse(result);
     }
 
     @Test
     public void testAddItemToReceivingBin() {
+        Long shippingOrderID = 500L;
+        String SKU = "F1";
+        Boolean result = manufacturingInventoryControlBean.addItemToReceivingBin(shippingOrderID, SKU);
+        assertFalse(result);
     }
 
     @Test
     public void testMoveSingleItemBetweenStorageBins() {
+        StorageBinEntity source = new StorageBinEntity();
+        StorageBinEntity destination = new StorageBinEntity();
+        String SKU = "F1";
+        Boolean result = manufacturingInventoryControlBean.moveSingleItemBetweenStorageBins(SKU, source, destination);
+        assertFalse(result);
     }
 
     @Test
     public void testCheckItemQty() {
+        Long warehouseId = 200L;
+        String SKU = "F1";
+        Integer result = manufacturingInventoryControlBean.checkItemQty(warehouseId, SKU);
+        assertNotNull(result);
     }
 
     @Test
     public void testFindStorageBinsThatContainsItem() {
+        Long warehouseId = 1200L;
+        String SKU = "F1";
+        List<StorageBinEntity> storageBins = manufacturingInventoryControlBean.findStorageBinsThatContainsItem(warehouseId, SKU);
+        
+        assertNull(storageBins);
     }
 
     @Test
     public void testGetTotalVolumeOfInboundStorageBin() {
+        Long warehouseId = 1200L;
+        Integer volume = manufacturingInventoryControlBean.getTotalVolumeOfInboundStorageBin(warehouseId);
+        assertNotNull(volume);
     }
 
     @Test
     public void testGetTotalVolumeOfOutboundStorageBin() {
+        Long warehouseId = 1200L;
+        Integer volume = manufacturingInventoryControlBean.getTotalVolumeOfOutboundStorageBin(warehouseId);
+        assertNotNull(volume);
     }
 
     @Test
     public void testGetTotalVolumeOfShelfStorageBin() {
+        Long warehouseId = 1200L;
+        Integer volume = manufacturingInventoryControlBean.getTotalVolumeOfShelfStorageBin(warehouseId);
+        assertNotNull(volume);
     }
 
     @Test
     public void testGetTotalVolumeOfPalletStorageBin() {
+        Long warehouseId = 1200L;
+        Integer volume = manufacturingInventoryControlBean.getTotalVolumeOfPalletStorageBin(warehouseId);
+        assertNotNull(volume);
     }
 
     @Test
     public void testGetTotalFreeVolumeOfInboundStorageBin() {
+        Long warehouseId = 1200L;
+        Integer volume = manufacturingInventoryControlBean.getTotalFreeVolumeOfInboundStorageBin(warehouseId);
+        assertNotNull(volume);
     }
 
     @Test
     public void testGetTotalFreeVolumeOfOutboundStorageBin() {
+        Long warehouseId = 600L;
+        Integer volume = manufacturingInventoryControlBean.getTotalFreeVolumeOfOutboundStorageBin(warehouseId);
+        assertNotNull(volume);
     }
 
     @Test
     public void testGetTotalFreeVolumeOfPalletStorageBin() {
+        Long warehouseId = 600L;
+        Integer volume = manufacturingInventoryControlBean.getTotalFreeVolumeOfPalletStorageBin(warehouseId);
+        assertNotNull(volume);
     }
 
     @Test
     public void testGetItemList() {
+        Long warehouseId = 600L;
+        List<ItemStorageBinHelper> getItemList = manufacturingInventoryControlBean.getItemList(warehouseId);
+        assertNull(getItemList);
     }
 
     @Test
     public void testGetOutboundBinItemList() {
+        Long warehouseId = 600L;
+        List<ItemStorageBinHelper> getItemList = manufacturingInventoryControlBean.getItemList(warehouseId);
+        assertNull(getItemList);
     }
 
     @Test
     public void testGetBinItemList() {
+        Long storageBinId = 200L;
+        List<ItemStorageBinHelper> getItemList = manufacturingInventoryControlBean.getBinItemList(storageBinId);
+        assertNotNull(getItemList);
     }
 
     @Test
     public void testEmptyStorageBin() {
-    }
-
-    @Test
-    public void testCheckIfItemExistInsideStorageBin() {
+        Long lineItemID = 200L;
+        Long storageBinID = 1200L;
+        Boolean result = manufacturingInventoryControlBean.emptyStorageBin(lineItemID, storageBinID);
+        assertFalse(result);
     }
 
     @Test
     public void testCheckIfStorageBinIsOfAppropriateItemType() {
+        Long storageBinId = 200L;
+        String SKU = "F1";
+        Boolean result = manufacturingInventoryControlBean.checkIfStorageBinIsOfAppropriateItemType(storageBinId, SKU);
+        assertFalse(result);
     }
 
     private ManufacturingInventoryControlBeanRemote lookupManufacturingInventoryControlBeanRemote() {

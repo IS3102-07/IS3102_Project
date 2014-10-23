@@ -121,30 +121,28 @@
                                                     </div>
                                                 </div>
                                                 <%
-                                                    a = a-25;
+                                                        a = a - 25;
                                                     }
                                                 %>
                                             </div>
-                                            
+
                                             <div class="col-md-6">
                                                 <h2 class="short">Progress Bar</h2>
                                                 <%
-                                                   
                                                     out.println(member.getLoyaltyPoints());
                                                     out.println(member.getCummulativeSpending());
-                                                   
-                                                    }
+
+
                                                 %>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <%
-                        } catch (Exception ex) {
+                    <%                        } catch (Exception ex) {
                             response.sendRedirect("index.jsp");
                             ex.printStackTrace();
                         }%>
