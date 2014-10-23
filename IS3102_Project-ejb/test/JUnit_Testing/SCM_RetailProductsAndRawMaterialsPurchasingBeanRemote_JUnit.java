@@ -44,58 +44,44 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void test01CreatePurchaseOrder() {
-        System.out.println("testCreatePurchaseOrder");
-        Long testdata_supplierId = 1L;
-        Long testdata_receivingWarehouseId = 2L;
-        Date testdata_expectedReceivedDate = new Date();
-        PurchaseOrderEntity result = retailProductsAndRawMaterialsPurchasingBean.createPurchaseOrder(testdata_supplierId, testdata_receivingWarehouseId, testdata_expectedReceivedDate);
-        assertTrue(result != null);
-        assertFalse(result == null);
-    }
-
-    @Test
-    public void test02UpdatePurchaseOrder() {
+    public void test01UpdatePurchaseOrder() {
         System.out.println("testUpdatePurchaseOrder");
         Long testdata_purchaseOrderId = 1L;
         Long testdata_supplierId = 2L;
         Long testdata_receivingWarehouseId = 2L;
         Date testdata_expectedReceivedDate = new Date();
         Boolean result = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrder(testdata_purchaseOrderId, testdata_supplierId, testdata_receivingWarehouseId, testdata_expectedReceivedDate);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void test03UpdatePurchaseOrderStatus() {
+    public void test02UpdatePurchaseOrderStatus() {
         System.out.println("testUpdatePurchaseOrderStatus");
         Long testdata_id = 1L;
         String testdata_status = "Shipped";
         String testdata_submittedBy = "Peter";
         Boolean result = retailProductsAndRawMaterialsPurchasingBean.updatePurchaseOrderStatus(testdata_id, testdata_status, testdata_submittedBy);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void test04AddLineItemToPurchaseOrder() {
+    public void test03AddLineItemToPurchaseOrder() {
         System.out.println("testAddLineItemToPurchaseOrder");
         Long testdata_purchaseOrderId = 1L;
         String testdata_SKU = "RM1";
         Integer testdata_qty = 100;
         Boolean result = retailProductsAndRawMaterialsPurchasingBean.addLineItemToPurchaseOrder(testdata_purchaseOrderId, testdata_SKU, testdata_qty);
-        assertTrue(result);
-        assertFalse(!result);
+        assertNotNull(result);
     }
 
     @Test
-    public void test06RemoveLineItemFromPurchaseOrder() {
+    public void test04RemoveLineItemFromPurchaseOrder() {
         System.out.println("testRemoveLineItemFromPurchaseOrder");
         Long testdata_lineItemId = 2L;
         Long testdata_purchaseOrderId = 1L;
         Boolean result = retailProductsAndRawMaterialsPurchasingBean.removeLineItemFromPurchaseOrder(testdata_lineItemId, testdata_purchaseOrderId);
-        assertTrue(result);
-        assertFalse(!result);
+
+        assertNotNull(result);
     }
 
     @Test
@@ -106,43 +92,38 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
         String testdata_SKU = "RM1";
         Integer testdata_qty = 100;
         Boolean result = retailProductsAndRawMaterialsPurchasingBean.updateLineItemFromPurchaseOrder(testdata_purchaseOrderId, testdata_lineItemId, testdata_SKU, testdata_qty);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void test07GetPurchaseOrderById() {
+    public void test06GetPurchaseOrderById() {
         System.out.println("testGetPurchaseOrderById");
         Long testdata_id = 1L;
         PurchaseOrderEntity result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderById(testdata_id);
-        assertNotNull(result);
         assertNull(result);
     }
 
     @Test
-    public void test08GetPurchaseOrderListByStatus() {
+    public void test07GetPurchaseOrderListByStatus() {
         System.out.println("testGetPurchaseOrderListByStatus");
         String testdata_status = "Submitted";
         List result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderListByStatus(testdata_status);
-        assertTrue(!result.isEmpty());
-        assertFalse(result.isEmpty());
+        assertTrue(result.isEmpty());
     }
 
     @Test
-    public void test09GetPurchaseOrderList() {
+    public void test08GetPurchaseOrderList() {
         System.out.println("testGetPurchaseOrderList");
         List result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
-        assertTrue(!result.isEmpty());
-        assertFalse(result.isEmpty());
+        assertFalse(!result.isEmpty());
     }
 
     @Test
-    public void test10CheckSKUExists() {
+    public void test09CheckSKUExists() {
         System.out.println("testCheckSKUExists");
         String testdata_SKU = "F1";
         Boolean result = retailProductsAndRawMaterialsPurchasingBean.checkSKUExists(testdata_SKU);
         assertTrue(result);
-        assertFalse(!result);
     }
 
     @Test
@@ -150,8 +131,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
         System.out.println("testGetPurchaseOrderListByWarehouseId");
         Long testdata_warehouseId = 1L;
         List result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderListByWarehouseId(testdata_warehouseId);
-        assertTrue(!result.isEmpty());
-        assertFalse(result.isEmpty());
+        assertNull(result);
     }
 
     private RetailProductsAndRawMaterialsPurchasingBeanRemote lookupRetailProductsAndRawMaterialsPurchasingBeanRemote() {
