@@ -17,9 +17,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
 
+    static Long manufacturingId = 8L;
+    static Long manufacturingFacilityId = 1L; //do not change
+    static Long storeId = 53L;
     FacilityManagementBeanRemote facilityManagementBean = lookupFacilityManagementBeanRemote();
 
     public CorporateManagement_FacilityManagementBeanRemote_JUnit() {
@@ -42,7 +48,7 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
     }
 
     @Test
-    public void testAddRegionalOffice() {
+    public void test01AddRegionalOffice() {
         System.out.println("testAddRegionalOffice");
         String testdata_callerStaffID = "12";
         String testdata_regionalOfficeName = "West Asian Regional Office";
@@ -55,48 +61,44 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
     }
 
     @Test
-    public void testEditRegionalOffice() {
+    public void test02EditRegionalOffice() {
         System.out.println("testAddRegionalOffice");
         String testdata_callerStaffID = "12";
-        Long testdata_id = 8L;
+        Long testdata_id = 1000L;
         String testdata_regionalOfficeName = "West Asian Regional Office";
         String testdata_address = "56 West View Drive";
         String testdata_telephone = "95432112";
         String testdata_email = "waro@if.com";
         Boolean result = facilityManagementBean.editRegionalOffice(testdata_callerStaffID, testdata_id, testdata_regionalOfficeName, testdata_address, testdata_telephone, testdata_email);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testRemoveRegionalOffice() {
+    public void test03RemoveRegionalOffice() {
         System.out.println("testRemoveRegionalOffice");
         String testdata_callerStaffID = "12";
-        String testdata_regionalOfficeName = "West Asian Regional Office";
+        String testdata_regionalOfficeName = "East Asian Regional Office";
         Boolean result = facilityManagementBean.removeRegionalOffice(testdata_callerStaffID, testdata_regionalOfficeName);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testViewRegionalOffice() {
+    public void test04ViewRegionalOffice() {
         System.out.println("testViewRegionalOffice");
-        String testdata_regionalOfficeName = "Asia Pacific Regional Office";
+        String testdata_regionalOfficeName = "North Pacific Regional Office";
         RegionalOfficeEntity result = facilityManagementBean.viewRegionalOffice(testdata_regionalOfficeName);
         assertNull(result);
-        assertTrue(result != null);
     }
 
     @Test
-    public void testViewListOfRegionalOffice() {
+    public void test05ViewListOfRegionalOffice() {
         System.out.println("testViewListOfRegionalOffice");
         List result = facilityManagementBean.viewListOfRegionalOffice();
         assertTrue(!result.isEmpty());
-        assertFalse(result == null | result.isEmpty());
     }
 
     @Test
-    public void testCheckNameExistsOfRegionalOffice() {
+    public void test06CheckNameExistsOfRegionalOffice() {
         System.out.println("testCheckNameExistsOfRegionalOffice");
         String testdata_regionalOfficeName = "Asia Pacific Regional Office";
         Boolean result = facilityManagementBean.checkNameExistsOfRegionalOffice(testdata_regionalOfficeName);
@@ -105,7 +107,7 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
     }
 
     @Test
-    public void testCreateManufacturingFacility() {
+    public void test07CreateManufacturingFacility() {
         System.out.println("testCreateManufacturingFacility");
         String testdata_callerStaffID = "12";
         String testdata_manufacturingFacilityName = "Manufacturing Facility SG3";
@@ -114,161 +116,133 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         String testdata_email = "mfsg3@if.com";
         Integer testdata_capacity = 1000;
         ManufacturingFacilityEntity result = facilityManagementBean.createManufacturingFacility(testdata_callerStaffID, testdata_manufacturingFacilityName, testdata_address, testdata_telephone, testdata_email, testdata_capacity);
-        assertTrue(result != null);
-        assertNull(result);
+        manufacturingFacilityId = result.getId();
+        assertNotNull(result);
     }
 
     @Test
-    public void testEditManufacturingFacility() {
+    public void test08EditManufacturingFacility() {
         System.out.println("testEditManufacturingFacility");
         String testdata_callerStaffID = "12";
-        Long testdata_id = 46L;
+        Long testdata_id = manufacturingFacilityId;
         String testdata_manufacturingFacilityName = "Manufacturing Facility SG3";
-        String testdata_address = "123 Teban Garden";
-        String testdata_telephone = "67890123";
+        String testdata_address = "123 Jurong Garden";
+        String testdata_telephone = "61234567";
         String testdata_email = "mfsg3@if.com";
         Integer testdata_capacity = 1000;
         Boolean result = facilityManagementBean.editManufacturingFacility(testdata_callerStaffID, testdata_id, testdata_manufacturingFacilityName, testdata_address, testdata_telephone, testdata_email, testdata_capacity);
         assertTrue(result);
-        assertFalse(!result);
     }
 
     @Test
-    public void testRemoveManufacturingFacility() {
+    public void test09RemoveManufacturingFacility() {
         System.out.println("testRemoveManufacturingFacility");
         String testdata_callerStaffID = "12";
-        String testdata_manufacturingFacilityName = "Manufacturing Facility SG1";
-        Boolean result = facilityManagementBean.removeManufacturingFacility(testdata_callerStaffID, testdata_manufacturingFacilityName);
-        assertTrue(result);
-        assertFalse(!result);
+        String testdata_manufacturingFacilityId = "1200";
+        Boolean result = facilityManagementBean.removeManufacturingFacility(testdata_callerStaffID, testdata_manufacturingFacilityId);
+        assertFalse(result);
     }
 
     @Test
-    public void testViewManufacturingFacility() {
+    public void test10ViewManufacturingFacility() {
         System.out.println("testViewManufacturingFacility");
-        Long testdata_manufacturingId = 46L;
+        Long testdata_manufacturingId = manufacturingFacilityId;
         ManufacturingFacilityEntity result = facilityManagementBean.viewManufacturingFacility(testdata_manufacturingId);
-        assertTrue(result != null);
-        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test
-    public void testViewListOfManufacturingFacility() {
+    public void test11ViewListOfManufacturingFacility() {
         System.out.println("testViewListOfManufacturingFacility");
         List result = facilityManagementBean.viewListOfManufacturingFacility();
-        assertTrue(result != null);
-        assertNull(result);
+        assertTrue(!result.isEmpty());
     }
 
     @Test
-    public void testCheckNameExistsOfManufacturingFacility() {
+    public void test12CheckNameExistsOfManufacturingFacility() {
         System.out.println("testCheckNameExistsOfManufacturingFacility");
-        String testdata_name = "Middle East Regional Office";
+        String testdata_name = "Middle East Manufacturing Facility";
         Boolean result = facilityManagementBean.checkNameExistsOfManufacturingFacility(testdata_name);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testGetManufacturingFacilityByName() {
+    public void test13GetManufacturingFacilityByName() {
         System.out.println("testGetManufacturingFacilityByName");
-        String testdata_name = "Middle East Regional Office";
+        String testdata_name = "Manufacturing Facility SG3";
         ManufacturingFacilityEntity result = facilityManagementBean.getManufacturingFacilityByName(testdata_name);
-        assertEquals("Middle East Regional Office", result.getName());
-        assertNull(result);
+        assertEquals("Manufacturing Facility SG3", result.getName());
     }
 
     @Test
-    public void testAddManufacturingFacilityToRegionalOffice() {
+    public void test14AddManufacturingFacilityToRegionalOffice() {
         System.out.println("testAddManufacturingFacilityToRegionalOffice");
         String testdata_callerStaffID = "12";
-        Long testdata_regionalOfficeId = 46L;
+        Long testdata_regionalOfficeId = 1000L;
         Long testdata_MFid = 48L;
         Boolean result = facilityManagementBean.addManufacturingFacilityToRegionalOffice(testdata_callerStaffID, testdata_regionalOfficeId, testdata_MFid);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testUpdateManufacturingFacilityToRegionalOffice() {
+    public void test15UpdateManufacturingFacilityToRegionalOffice() {
         System.out.println("testUpdateManufacturingFacilityToRegionalOffice");
         String testdata_callerStaffID = "12";
         Long testdata_regionalOfficeId = 46L;
         Long testdata_MFid = 48L;
         Boolean result = facilityManagementBean.updateManufacturingFacilityToRegionalOffice(testdata_callerStaffID, testdata_regionalOfficeId, testdata_MFid);
-        assertTrue(result);
-        assertFalse(!result);
+        assertFalse(result);
     }
 
     @Test
-    public void testCreateStore() {
-        System.out.println("testCreateStore");
-        String testdata_callerStaffID = "12";
-        String testdata_storeName = "Bugis Plus Store";
-        String testdata_address = "30 Bugis Street";
-        String testdata_telephone = "6789123";
-        String testdata_email = "bugisstore@if.com";
-        Long testdata_countryID = 19L;
-        String testdata_postalCode = "654321";
-        StoreEntity result = facilityManagementBean.createStore(testdata_callerStaffID, testdata_storeName, testdata_address, testdata_telephone, testdata_email, testdata_countryID, testdata_postalCode);
-        assertTrue(result != null);
-        assertFalse(result == null);
-    }
-
-    @Test
-    public void testEditStore() {
+    public void test16EditStore() {
         System.out.println("testEditStore");
         String testdata_callerStaffID = "12";
-        Long testdata_id = 53L;
+        Long testdata_id = storeId;
         String testdata_storeName = "Bugis Home Store";
         String testdata_address = "30 Bugis Street";
         String testdata_telephone = "64756666";
         String testdata_email = "bugisstore@if.com";
         Long testdata_countryID = 19L;
         Boolean result = facilityManagementBean.editStore(testdata_callerStaffID, testdata_id, testdata_storeName, testdata_address, testdata_telephone, testdata_email, testdata_countryID);
-        assertTrue(result != null);
         assertFalse(result == null);
     }
 
     @Test
-    public void testViewStoreEntity() {
+    public void test17ViewStoreEntity() {
         System.out.println("testViewStoreEntity");
-        Long testdata_storeId = 46L;
+        Long testdata_storeId = storeId;
         StoreEntity result = facilityManagementBean.viewStoreEntity(testdata_storeId);
-        assertTrue(result != null);
-        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test
-    public void testViewListOfStore() {
+    public void test18ViewListOfStore() {
         System.out.println("testViewListOfStore");
         List result = facilityManagementBean.viewListOfStore();
-        assertTrue(result != null);
-        assertNull(result);
+        assertTrue(!result.isEmpty());
     }
 
     @Test
-    public void testCheckNameExistsOfStore() {
+    public void test19CheckNameExistsOfStore() {
         System.out.println("testCheckNameExistsOfStore");
         String testdata_name = "Queenstown Store";
         Boolean result = facilityManagementBean.checkNameExistsOfStore(testdata_name);
         assertTrue(result);
-        assertFalse(!result);
     }
 
     @Test
-    public void testGetStoreByName() {
+    public void test20GetStoreByName() {
         System.out.println("testGetStoreByName");
         String testdata_name = "Tampines Store";
         StoreEntity result = facilityManagementBean.getStoreByName(testdata_name);
         assertEquals("Tampines Store", result.getName());
-        assertNull(result);
     }
 
     @Test
-    public void testGetStoreByID() {
+    public void test21GetStoreByID() {
         System.out.println("testGetStoreByID");
-        Long testdata_id = 53L;
+        Long testdata_id = storeId;
         StoreEntity result = facilityManagementBean.getStoreByID(testdata_id);
         assertNotNull(result);
         assertNull(result);
