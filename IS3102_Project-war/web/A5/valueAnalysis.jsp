@@ -51,7 +51,7 @@
                             <h1 class="page-header">Value Analysis</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-users"></i> <a href="accountManagement.jsp">Account Management</a>
+                                    <i class="icon icon-users"></i> <a href="analytical.jsp">Value Analysis</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-users"></i> Value Analysis
@@ -85,7 +85,7 @@
                                 <form name="memberManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            
+
                                             <br>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -94,6 +94,11 @@
                                                     <div class="progress-bars">
                                                         <div class="progress-label">
                                                             <span>HTML/CSS</span>
+                                                        </div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                                                100
+                                                            </div>
                                                         </div>
                                                         <div class="progress">
                                                             <div class="progress-bar progress-bar-primary" data-appear-progress-animation="70%">
@@ -128,7 +133,7 @@
 
                                                 </div>
                                                 <!-- /.table-responsive -->
-                                                
+
                                                 <input type="hidden" name="id" value="">    
                                             </div>
 
