@@ -933,6 +933,22 @@
         <servlet-name>RecipeManagement_UpdateRecipeServlet</servlet-name>
         <servlet-class>A6_servlets.RecipeManagement_UpdateRecipeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoyaltyManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.LoyaltyManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoyaltyManagement_AddServlet</servlet-name>
+        <servlet-class>A4_servlets.LoyaltyManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoyaltyManagement_UpdateServlet</servlet-name>
+        <servlet-class>A4_servlets.LoyaltyManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoyaltyManagement_RemoveServlet</servlet-name>
+        <servlet-class>A4_servlets.LoyaltyManagement_RemoveServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1864,6 +1880,22 @@
     <servlet-mapping>
         <servlet-name>RecipeManagement_UpdateRecipeServlet</servlet-name>
         <url-pattern>/RecipeManagement_UpdateRecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoyaltyManagement_Servlet</servlet-name>
+        <url-pattern>/LoyaltyManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoyaltyManagement_AddServlet</servlet-name>
+        <url-pattern>/LoyaltyManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoyaltyManagement_UpdateServlet</servlet-name>
+        <url-pattern>/LoyaltyManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoyaltyManagement_RemoveServlet</servlet-name>
+        <url-pattern>/LoyaltyManagement_RemoveServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
