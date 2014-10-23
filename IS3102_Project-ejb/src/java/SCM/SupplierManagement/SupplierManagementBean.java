@@ -31,7 +31,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal, Supp
     }
 
     @Override
-    public void addSupplier(String supplierName, String contactNo, String email, String address, Long countryId, Long roID) {
+    public Boolean addSupplier(String supplierName, String contactNo, String email, String address, Long countryId, Long roID) {
         System.out.println("addSupplier() called.");
         try {
             RegionalOfficeEntity regionalOfficeEntity = em.getReference(RegionalOfficeEntity.class, roID);
@@ -43,8 +43,10 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal, Supp
             em.refresh(supplier);
             regionalOfficeEntity.getSuppliers().add(supplier);
             em.merge(regionalOfficeEntity);
+            return true;
         } catch (Exception ex) {
             System.out.println("Failed to add supplier: " + ex);
+            return false;
         }
     }
 
