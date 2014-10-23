@@ -16,8 +16,8 @@
                 }
             }
             function addLineItem() {
-                document.lineRestaurantManagement.action = "../RecipeManagement_AddLineItemRecipeServlet";
-                document.lineRestaurantManagement.submit();
+                document.lineItemRestaurantManagement.action = "../RecipeManagement_AddLineItemRecipeServlet";
+                document.lineItemRestaurantManagement.submit();
             }
             function removeLineItem() {
                 checkboxes = document.getElementsByName('delete');
@@ -35,8 +35,8 @@
                     var yes = confirm("Are you sure?!");
                     if (yes === true) {
                         window.event.returnValue = true;
-                        document.lineRestaurantManagement.action = "../RecipeManagement_RemoveLineItemRecipeServlet";
-                        document.lineRestaurantManagement.submit();
+                        document.lineItemRestaurantManagement.action = "../RecipeManagement_RemoveLineItemRecipeServlet";
+                        document.lineItemRestaurantManagement.submit();
                     } else {
                         window.event.returnValue = false;
                     }
@@ -78,7 +78,7 @@
                                     %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="lineRestaurantManagement">
+                                <form name="lineItemRestaurantManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
 
