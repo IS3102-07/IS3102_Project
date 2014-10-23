@@ -5,19 +5,6 @@ a<%@page import="EntityManager.CountryEntity"%>
 
     <jsp:include page="../header2.html" />
     <body>
-<script>
-            function goBackPage() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.furnitureManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
-                    document.furnitureManagement.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
-            }
-            
-        </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
@@ -103,7 +90,7 @@ a<%@page import="EntityManager.CountryEntity"%>
                         <!-- /.row -->
                     </div>
                     <%} catch (Exception ex) {
-                        
+
                             //response.sendRedirect("../FurnitureManagement_FurnitureServlet");
                         }%>
                 </div>
@@ -116,7 +103,7 @@ a<%@page import="EntityManager.CountryEntity"%>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
