@@ -96,11 +96,11 @@ public class RetailInventoryWebService {
 
             String requestURL = "http://smsc.vianett.no/v3/send.ashx?";
             requestURL += ("username=" + "lee_yuan_guang@hotmail.com");
-            requestURL += ("&SenderAddress="+"Island Furniture");
+            requestURL += ("&SenderAddress="+"IF");//11char max
             requestURL += ("&SenderAddressType="+"5");
             requestURL += ("&password=" + "r0b16");
             requestURL += ("&tel=" + telNo);
-            requestURL += ("&msg=" + smsMessage);
+            requestURL += ("&msg=" + URLEncoder.encode(smsMessage));
 
             URL url = new URL(requestURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

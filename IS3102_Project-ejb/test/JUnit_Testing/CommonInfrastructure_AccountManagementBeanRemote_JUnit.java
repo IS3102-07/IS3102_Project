@@ -86,8 +86,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     public void test08EditStaff() {
         System.out.println("testEditStaff()");
         String testdata_callerStaffID = "1";
-        Long testdata_staffID = staffId;
-        System.out.println("test08EditStaff " + staffId);
+        Long testdata_staffID = 1000L;
         String testdata_address = "55 Tanglin Home, #04-12";
         String testdata_phone = "81234333";
         String testdata_password = "";
@@ -98,7 +97,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     @Test
     public void test10ResetStaffPassword() {
         System.out.println("testResetStaffPassword()");
-        String testdata_email = "zul@if.com";
+        String testdata_email = "abcc@if.com";
         String testdata_password = "12345678";
         Boolean result = accountManagementBean.resetStaffPassword(testdata_email, testdata_password);
         assertFalse(result);
@@ -108,9 +107,9 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     public void test11RemoveStaff() {
         System.out.println("testRemoveStaff()");
         String testdata_callerStaffID = "1";
-        Long testdata_staffID = staffId;
+        Long testdata_staffID = 1200L;
         Boolean result = accountManagementBean.removeStaff(testdata_callerStaffID, testdata_staffID);
-        assertFalse(result);
+        assertTrue(result);
     }
 
 
