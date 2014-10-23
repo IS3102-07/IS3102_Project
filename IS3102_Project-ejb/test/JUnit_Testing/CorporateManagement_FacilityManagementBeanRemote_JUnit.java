@@ -58,7 +58,6 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         String testdata_email = "waro@if.com";
         Boolean result = facilityManagementBean.addRegionalOffice(testdata_callerStaffID, testdata_regionalOfficeName, testdata_address, testdata_telephone, testdata_email);
         assertTrue(result);
-        assertFalse(!result);
     }
 
     @Test
