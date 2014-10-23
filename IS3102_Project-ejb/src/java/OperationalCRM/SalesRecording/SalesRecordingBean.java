@@ -47,44 +47,53 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
         StoreEntity storeEntity = null;
         MemberEntity memberEntity = null;
         String currency = "";
-        //Retrieve member
-        if (memberEmail != null && memberEmail.length() > 0) {
+        try {
+            //Find staff for the sale record
+            StaffEntity staffEntity = accountManagementBean.getStaffByEmail(staffEmail);
+            //Retrieve country for currency & exchange rate to be stored in sales record
             try {
-                Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.email=:email");
-                q.setParameter("email", memberEmail);
-                memberEntity = (MemberEntity) q.getSingleResult();
-            } catch (NoResultException ex) {
-                System.out.println("createSalesRecord(): Member does not exist:");
-                return false;
-                //return new ReturnHelper(false, "Member details could not be retrieved based on the card provided. Contact customer service.");
+                storeEntity = em.getReference(StoreEntity.class, storeID);
+                CountryEntity countryEntity = storeEntity.getCountry();
+                currency = countryEntity.getCurrency();
             } catch (Exception ex) {
-                System.out.println("createSalesRecord(): Failed to retrieve member based on email:");
-                ex.printStackTrace();
+                System.out.println("createSalesRecord(): Error in retriving country");
                 return false;
-                //return new ReturnHelper(false, "System error in retriving membership information.");
+                //return new ReturnHelper(false, "System error in retriving country information.");
             }
-        }
-        //Retrieve country for currency & exchange rate to be stored in sales record
-        try {
-            storeEntity = em.getReference(StoreEntity.class, storeID);
-            CountryEntity countryEntity = storeEntity.getCountry();
-            currency = countryEntity.getCurrency();
-        } catch (Exception ex) {
-            System.out.println("createSalesRecord(): Error in retriving country");
-            return false;
-            //return new ReturnHelper(false, "System error in retriving country information.");
-        }
-        //Actual creating of sales record
-        try {
+            //Add item into sale record
             //Convert into itementiy andd then into line item entity
             List<LineItemEntity> itemsPurchased = new ArrayList();
-            for (int i = 0; i < itemsPurchasedSKU.size(); i++) {
-                String SKU = itemsPurchasedSKU.get(i);
+            for (int itemsToAddToSaleOrder = 0; itemsToAddToSaleOrder < itemsPurchasedSKU.size(); itemsToAddToSaleOrder++) {
+                String SKU = itemsPurchasedSKU.get(itemsToAddToSaleOrder);
                 ItemEntity itemEntity = itemManagementBean.getItemBySKU(SKU);
-                LineItemEntity lineItemEntity = new LineItemEntity(itemEntity, itemsPurchasedQty.get(i), "");
+                LineItemEntity lineItemEntity = new LineItemEntity(itemEntity, itemsPurchasedQty.get(itemsToAddToSaleOrder), "");
                 itemsPurchased.add(lineItemEntity);
             }
-            StaffEntity staffEntity = accountManagementBean.getStaffByEmail(staffEmail);
+            //Retrieve member
+            if (memberEmail != null && memberEmail.length() > 0) {
+                try {
+                    Query q = em.createQuery("SELECT t FROM MemberEntity t WHERE t.email=:email");
+                    q.setParameter("email", memberEmail);
+                    memberEntity = (MemberEntity) q.getSingleResult();
+                    //Update the member loyalty points
+                    try {
+                        rh = loyaltyAndRewardsBean.updateMemberLoyaltyPointsAndTier(memberEmail, loyaltyPointsDeducted, amountPaid, storeID);
+                    } catch (Exception ex) {
+                        System.out.println("Error in updating loyalty points");
+                        return false;
+                        //return new ReturnHelper(false, "System error in updating loyalty points, transaction has been cancelled. Please contact customer service.");
+                    }
+                } catch (NoResultException ex) {
+                    System.out.println("createSalesRecord(): Member does not exist:");
+                    return false;
+                    //return new ReturnHelper(false, "Member details could not be retrieved based on the card provided. Contact customer service.");
+                } catch (Exception ex) {
+                    System.out.println("createSalesRecord(): Failed to retrieve member based on email:");
+                    ex.printStackTrace();
+                    return false;
+                    //return new ReturnHelper(false, "System error in retriving membership information.");
+                }
+            }
             SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased, receiptNo);
             salesRecordEntity.setStore(storeEntity);//tie the store to record
             em.persist(salesRecordEntity);
@@ -97,19 +106,18 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             return false;
             //return new ReturnHelper(false, "System error in creating sales record.");
         }
-        //Update the member loyalty points
-        try {
-            rh = loyaltyAndRewardsBean.updateMemberLoyaltyPointsAndTier(memberEmail, loyaltyPointsDeducted, amountPaid, storeID);
-        } catch (Exception ex) {
-            System.out.println("Error in updating loyalty points");
-            return false;
-            //return new ReturnHelper(false, "System error in updating loyalty points, transaction has been cancelled. Please contact customer service.");
-        }
         //Update inventory amount
         try {
-            //TODO remove from retail outlet or furniture marketplace
-            //storeInventoryManagementBean.removeItemFromInventory(SKU, quantity);
-            //if kitchen just no updating of amount
+            for (int itemsToRemove = itemsPurchasedSKU.size(); itemsToRemove > 0; itemsToRemove--) {
+                String currentItemSKU = itemsPurchasedSKU.get(itemsToRemove - 1);
+                String currentItemType = itemManagementBean.getItemBySKU(currentItemSKU).getType();
+                switch (currentItemType) { //only remove if is one of the following items type
+                    case "Furniture":
+                    case "Retail Product":
+                    case "Raw Material":
+                        storeInventoryManagementBean.removeItemFromInventory(itemsPurchasedSKU.get(itemsToRemove - 1), itemsPurchasedQty.get(itemsToRemove - 1));
+                }
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             //TODO log that inventory cannot be updated, continue to let customer checkout
