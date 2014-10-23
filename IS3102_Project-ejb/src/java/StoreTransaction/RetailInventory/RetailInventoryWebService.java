@@ -7,6 +7,7 @@ import EntityManager.StoreEntity;
 import HelperClasses.ItemHelper;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -91,7 +92,7 @@ public class RetailInventoryWebService {
         //TODO not connecting to the URL dunno why
         try {
             String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
-            System.out.println("Sending SMS: " + telNo + ": " + smsMessage);
+            System.out.println("Sending SMS: " + telNo + ": " +  URLEncoder.encode(smsMessage));
 
             String requestURL = "http://smsc.vianett.no/v3/send.ashx?";
             requestURL += ("username=" + "lee_yuan_guang@hotmail.com");
