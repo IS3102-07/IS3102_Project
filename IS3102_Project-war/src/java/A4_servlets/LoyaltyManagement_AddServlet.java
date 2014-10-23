@@ -27,7 +27,7 @@ public class LoyaltyManagement_AddServlet extends HttpServlet {
                 loyaltyAndRewardsBeanLocal.createLoyaltyTier(tier, Double.parseDouble(requiredAmount));
 
                 result = "?goodMsg=Tier: " + tier + " has been created successfully.";
-                response.sendRedirect("FurnitureManagement_FurnitureServlet" + result);
+                response.sendRedirect("LoyaltyManagement_Servlet" + result);
             } else {
                 result = "?errMsg=Failed to add tier, Tier: " + tier + " already exist.";
                 response.sendRedirect(source + result);

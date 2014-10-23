@@ -30,7 +30,7 @@
                     <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" action="../FurnitureManagement_AddFurnitureServlet">
+                            <form role="form" action="../LoyaltyManagement_AddServlet">
                                 <div class="form-group">
                                     <label>Tier</label>
                                     <input class="form-control" required="true" type="text" name="tier" >
