@@ -46,7 +46,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleForecast_Servlet/SaleForecast_schedule_POST">
+                                            <form action="../KitchenManagement_servlet/KitchenSaleForecast_schedule_POST">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>                                                            

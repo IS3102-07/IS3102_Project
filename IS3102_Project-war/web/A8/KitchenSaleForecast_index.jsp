@@ -31,8 +31,7 @@
                         }
                     </style>    
                     
-                    <a href="../SaleAndOperationPlanning_Servlet/sop_scheduleManagement_GET"><button class="btn btn-primary">Schedule Management</button></a>
-                    <br><br>
+                                        
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -57,7 +56,7 @@
                                 </div>
                                 <div class="panel-body">
 
-                                    <form action="../SaleForecast_Servlet/SaleForecast_index_POST">
+                                    <form action="../KitchenManagement_servlet/KitchenSaleForecast_index_POST">
                                         <div class="form-group">
                                             <label for="select_regionalOffice">Regional Office</label>
                                             <select id="select_regionalOffice" class="form-control" name="regionalOffice" onchange="getStore()">

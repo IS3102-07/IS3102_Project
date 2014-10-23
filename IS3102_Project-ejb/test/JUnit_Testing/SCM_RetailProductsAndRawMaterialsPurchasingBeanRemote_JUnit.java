@@ -40,7 +40,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testCreatePurchaseOrder() {
+    public void test01CreatePurchaseOrder() {
         System.out.println("testCreatePurchaseOrder");
         Long testdata_supplierId = 1L;
         Long testdata_receivingWarehouseId = 2L;
@@ -51,7 +51,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testUpdatePurchaseOrder() {
+    public void test02UpdatePurchaseOrder() {
         System.out.println("testUpdatePurchaseOrder");
         Long testdata_purchaseOrderId = 1L;
         Long testdata_supplierId = 2L;
@@ -63,7 +63,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testUpdatePurchaseOrderStatus() {
+    public void test03UpdatePurchaseOrderStatus() {
         System.out.println("testUpdatePurchaseOrderStatus");
         Long testdata_id = 1L;
         String testdata_status = "Shipped";
@@ -74,7 +74,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testAddLineItemToPurchaseOrder() {
+    public void test04AddLineItemToPurchaseOrder() {
         System.out.println("testAddLineItemToPurchaseOrder");
         Long testdata_purchaseOrderId = 1L;
         String testdata_SKU = "RM1";
@@ -85,7 +85,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testRemoveLineItemFromPurchaseOrder() {
+    public void test06RemoveLineItemFromPurchaseOrder() {
         System.out.println("testRemoveLineItemFromPurchaseOrder");
         Long testdata_lineItemId = 2L;
         Long testdata_purchaseOrderId = 1L;
@@ -95,7 +95,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testUpdateLineItemFromPurchaseOrder() {
+    public void test05UpdateLineItemFromPurchaseOrder() {
         System.out.println("testUpdateLineItemFromPurchaseOrder");
         Long testdata_lineItemId = 2L;
         Long testdata_purchaseOrderId = 1L;
@@ -107,7 +107,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testGetPurchaseOrderById() {
+    public void test07GetPurchaseOrderById() {
         System.out.println("testGetPurchaseOrderById");
         Long testdata_id = 1L;
         PurchaseOrderEntity result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderById(testdata_id);
@@ -116,7 +116,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testGetPurchaseOrderListByStatus() {
+    public void test08GetPurchaseOrderListByStatus() {
         System.out.println("testGetPurchaseOrderListByStatus");
         String testdata_status = "Submitted";
         List result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderListByStatus(testdata_status);
@@ -125,7 +125,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testGetPurchaseOrderList() {
+    public void test09GetPurchaseOrderList() {
         System.out.println("testGetPurchaseOrderList");
         List result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
         assertTrue(!result.isEmpty());
@@ -133,17 +133,16 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     }
 
     @Test
-    public void testCheckSKUExists() {
+    public void test10CheckSKUExists() {
         System.out.println("testCheckSKUExists");
         String testdata_SKU = "F1";
         Boolean result = retailProductsAndRawMaterialsPurchasingBean.checkSKUExists(testdata_SKU);
         assertTrue(result);
         assertFalse(!result);
-
     }
 
     @Test
-    public void testGetPurchaseOrderListByWarehouseId() {
+    public void test11GetPurchaseOrderListByWarehouseId() {
         System.out.println("testGetPurchaseOrderListByWarehouseId");
         Long testdata_warehouseId = 1L;
         List result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderListByWarehouseId(testdata_warehouseId);

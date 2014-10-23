@@ -37,10 +37,12 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
 
     @Override
     public ShippingOrderEntity createShippingOrderBasicInfo(Date expectedReceivedDate, Long sourceWarehouseID, Long destinationWarehouseID) {
-        WarehouseEntity sourceWarehouse = em.getReference(WarehouseEntity.class, sourceWarehouseID);
-        WarehouseEntity destinationWarehouse = em.getReference(WarehouseEntity.class, destinationWarehouseID);
-        ShippingOrderEntity shippingOrder = new ShippingOrderEntity(expectedReceivedDate, sourceWarehouse, destinationWarehouse);
+
         try {
+            WarehouseEntity sourceWarehouse = em.getReference(WarehouseEntity.class, sourceWarehouseID);
+            WarehouseEntity destinationWarehouse = em.getReference(WarehouseEntity.class, destinationWarehouseID);
+            ShippingOrderEntity shippingOrder = new ShippingOrderEntity(expectedReceivedDate, sourceWarehouse, destinationWarehouse);
+
             em.persist(shippingOrder);
             sourceWarehouse.getOutbound().add(shippingOrder);
             em.merge(sourceWarehouse);
@@ -48,7 +50,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
             em.merge(destinationWarehouse);
             System.out.println("ShippingOrder with id: " + shippingOrder.getId() + " is created successfully");
             return shippingOrder;
-        } catch (EntityExistsException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
@@ -222,7 +224,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
         System.out.println("updateShippingOrderStatus() called.");
         try {
             ShippingOrderEntity shippingOrder = em.find(ShippingOrderEntity.class, id);
-            if(status.equals("Submitted")){
+            if (status.equals("Submitted")) {
                 shippingOrder.setSubmittedBy(submittedBy);
                 em.merge(shippingOrder);
                 em.flush();

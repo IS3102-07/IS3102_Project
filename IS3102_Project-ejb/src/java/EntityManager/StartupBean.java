@@ -116,7 +116,6 @@ public class StartupBean {
                 staffEntity.setAccountActivationStatus(true);
                 staffEntity.setRoles(roles);
                 em.persist(staffEntity);
-                
 
                 //Create member account
                 MemberEntity memberEntity = new MemberEntity();
@@ -376,11 +375,13 @@ public class StartupBean {
             List<ProductGroupEntity> productGroupList = (List<ProductGroupEntity>) q2.getResultList();
             Query q3 = em.createQuery("select s from MonthScheduleEntity s");
             List<MonthScheduleEntity> scheduleList = (List<MonthScheduleEntity>) q3.getResultList();
-
+            Query q4 = em.createQuery("select m from MenuItemEntity m");
+            List<MenuItemEntity> menuItemList = (List<MenuItemEntity>) q4.getResultList();
+            
             int index = 1;
             for (StoreEntity store : storeList) {
-                for (ProductGroupEntity productGroup : productGroupList) {
-                    for (MonthScheduleEntity schedule : scheduleList) {
+                for (MonthScheduleEntity schedule : scheduleList) {
+                    for (ProductGroupEntity productGroup : productGroupList) {
                         try {
                             SalesFigureEntity saleFigure = new SalesFigureEntity();
                             saleFigure.setStore(store);
@@ -403,6 +404,31 @@ public class StartupBean {
                         } catch (Exception ex) {
                         }
                     }
+                    
+                    for(MenuItemEntity menuitem: menuItemList){
+                        try {
+                            SalesFigureEntity saleFigure = new SalesFigureEntity();
+                            saleFigure.setStore(store);
+                            saleFigure.setMenuItem(menuitem);
+                            saleFigure.setSchedule(schedule);
+
+                            if ((index % 5) == 0) {
+                                saleFigure.setQuantity(20);
+                            } else if ((index % 5) == 1) {
+                                saleFigure.setQuantity(25);
+                            } else if ((index % 5) == 2) {
+                                saleFigure.setQuantity(35);
+                            } else if ((index % 5) == 3) {
+                                saleFigure.setQuantity(40);
+                            } else {
+                                saleFigure.setQuantity(30);
+                            }
+                            index++;
+                            em.persist(saleFigure);
+                        } catch (Exception ex) {
+                        }
+                    }
+                    
                 }
             }
 

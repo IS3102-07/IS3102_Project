@@ -5,6 +5,11 @@
  */
 package KitchenManagement.FoodDemandForecastingAndPlanning;
 
+import EntityManager.MasterProductionScheduleEntity;
+import EntityManager.MaterialRequirementEntity;
+import EntityManager.SaleForecastEntity;
+import EntityManager.SalesFigureEntity;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +18,13 @@ import javax.ejb.Local;
  */
 @Local
 public interface FoodDemandForecastingAndPlanningBeanLocal {
+    
+    public SaleForecastEntity getSalesForecast(Long storeId, Long menuItemId, Long scheduleId);
+    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long menuItemId, Integer year);
+    public Boolean generateMasterProductionSchedules(Long storeId);
+    public List<MasterProductionScheduleEntity> getMasterProductionSchedules(Long storeId);
+    public Boolean generateMaterialRequirementPlan(Long storeId);
+    public List<MaterialRequirementEntity> getMaterialRequirementEntityList(Long storeId);
+    public Boolean generatePurchaseOrderFromMaterialRequirement(Long storeId);
     
 }
