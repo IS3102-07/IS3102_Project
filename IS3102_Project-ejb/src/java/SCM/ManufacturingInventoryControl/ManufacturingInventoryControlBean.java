@@ -208,14 +208,14 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     public boolean addItemToReceivingBin(Long warehouseID, String SKU
     ) {
 
-        System.out.println("addItemToReceivingBin() called with SKU:" + SKU + " & wahouseID:" + warehouseID);
-        StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
-        em.merge(inboundBin);
-        if (inboundBin == null) {
-            System.out.println("Failed to add item to receiving bin, receiving bin not found.");
-            return false;
-        }
         try {
+            System.out.println("addItemToReceivingBin() called with SKU:" + SKU + " & wahouseID:" + warehouseID);
+            StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
+            em.merge(inboundBin);
+            if (inboundBin == null) {
+                System.out.println("Failed to add item to receiving bin, receiving bin not found.");
+                return false;
+            }
             Query q = em.createQuery("SELECT t FROM ItemEntity t WHERE t.SKU=:SKU");
             q.setParameter("SKU", SKU);
             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
@@ -646,7 +646,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<ItemStorageBinHelper> getOutboundBinItemList(Long warehouseID) {
         System.out.println("getOutboundBinItemList() called");
@@ -692,7 +692,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<ItemStorageBinHelper> getBinItemList(Long storageBinID) {
         System.out.println("getBinItemList() called");

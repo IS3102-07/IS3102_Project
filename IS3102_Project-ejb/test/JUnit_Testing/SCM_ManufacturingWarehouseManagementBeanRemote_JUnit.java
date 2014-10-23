@@ -37,7 +37,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     ManufacturingWarehouseManagementBeanRemote manufacturingWarehouseManagementBean = lookupManufacturingWarehouseManagementBeanRemote();
     FacilityManagementBeanRemote facilityManagementBean = lookupFacilityManagementBeanRemote();
 
-    Long warehouseID = 51L;//Need to change to the warehouse created after the facility management JUnit test
+    Long warehouseID = 56L;//Need to change to the warehouse created after the facility management JUnit test
     Long transferOrderID = 731L;
     //Automatically retrieved variable, no need to set
     Long storageBinID = 735L;
@@ -72,7 +72,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     @Test
     public void test02ViewAllStorageBin() {
         List<StorageBinEntity> result = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseID);           
-        assertTrue(result.isEmpty());
+        assertNotNull(result.isEmpty());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
         //Force create an inbound bin in the warehouse first
         manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Inbound", 200, 200, 200);
         StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
-        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
         //Force create an outbound bin in the warehouse first
         manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Outbound", 200, 200, 200);
         StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
-        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test
