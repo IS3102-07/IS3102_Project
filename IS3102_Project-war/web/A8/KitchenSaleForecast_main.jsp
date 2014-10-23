@@ -70,6 +70,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable1">
                                                     <thead>
                                                         <tr>
+                                                            <th>SKU</th>
                                                             <th>Product Group Name</th>
                                                             <th>Sales Forecast</th>
                                                             <th>Action</th>                                                                                                                        
@@ -83,11 +84,11 @@
 
                                                         %>
                                                         <tr>
-
-                                                            <td><%= s.getProductGroup().getProductGroupName()%></td>                                                        
+                                                            <td><%= s.getMenuItem().getSKU() %></td>
+                                                            <td><%= s.getMenuItem().getName() %></td>
                                                             <td><%= s.getQuantity()%></td>
                                                             <td>
-                                                                <button class="btn btn-primary" name="productGroupId" value="<%= s.getProductGroup().getId()%>">View historical data</button>
+                                                                <button class="btn btn-primary" name="productGroupId" value="<%= s.getMenuItem().getId()%>">View historical data</button>
                                                             </td>                                                   
                                                         </tr>
                                                         <%

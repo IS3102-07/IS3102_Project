@@ -33,6 +33,14 @@ public class SalesFigureEntity implements Serializable {
     public void setSchedule(MonthScheduleEntity schedule) {
         this.schedule = schedule;
     }        
+
+    public MenuItemEntity getMenuItem() {
+        return menuItem;
+    }
+
+    public void setMenuItem(MenuItemEntity menuItem) {
+        this.menuItem = menuItem;
+    }
     
     public Long getId() {
         return id;

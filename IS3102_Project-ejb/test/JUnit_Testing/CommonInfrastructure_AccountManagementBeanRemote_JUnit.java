@@ -3,9 +3,7 @@ package JUnit_Testing;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanRemote;
 import EntityManager.AccessRightEntity;
 import EntityManager.CountryEntity;
-import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
-import EntityManager.StaffEntity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,10 +18,16 @@ import org.junit.Test;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import static org.junit.Assert.*;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements Serializable {
 
     AccountManagementBeanRemote accountManagementBean = lookupAccountManagementBeanRemote();
+    static Long memberId;
+    static Long staffId;
+    static Long roleId;
 
     public CommonInfrastructure_AccountManagementBeanRemote_JUnit() {
     }
@@ -45,15 +49,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void testCheckMemberEmailExists() {
-        System.out.println("testCheckMemberEmailExists()");
-        String testdata_email = "superman@hotmail.com";
-        Boolean result = accountManagementBean.checkMemberEmailExists(testdata_email);
-        assertTrue(result);
-    }
-
-    @Test
-    public void testRegisterMember() {
+    public void test01RegisterMember() {
         System.out.println("testRegisterMember()");
         String testdata_name = "Paul";
         String testdata_address = "44 Tanglin Hill, #04-12";
@@ -68,153 +64,110 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
         assertTrue(result);
     }
 
+
     @Test
-    public void testGetMemberByEmail() {
-        System.out.println("testGetMemberByEmail()");
+    public void test04CheckMemberEmailExists() {
+        System.out.println("testCheckMemberEmailExists()");
         String testdata_email = "superman@hotmail.com";
-        MemberEntity result = accountManagementBean.getMemberByEmail(testdata_email);
-        assertNotNull(result);
+        Boolean result = accountManagementBean.checkMemberEmailExists(testdata_email);
+        assertTrue(result);
     }
 
     @Test
-    public void testLoginMember() {
-        System.out.println("testLoginMember()");
-        String testdata_email = "superman@hotmail.com";
-        String testdata_password = "member";
-        MemberEntity result = accountManagementBean.loginMember(testdata_email, testdata_password);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testCheckStaffEmailExists() {
+    public void test06CheckStaffEmailExists() {
         System.out.println("testCheckStaffEmailExists()");
         String testdata_email = "admin@if.com";
         Boolean result = accountManagementBean.checkStaffEmailExists(testdata_email);
         assertTrue(result);
     }
 
-    @Test
-    public void testRegisterStaff() {
-        System.out.println("testRegisterStaff()");
-        String testdata_callerStaffID = "98980000";
-        String testdata_identificationNo = "S1717171";
-        String testdata_email = "brandon@if.com";
-        String testdata_name = "Zul";
-        String testdata_address = "44 Tanglin Home, #04-12";
-        String testdata_phone = "81234123";
-        String testdata_password = "admin";
-        StaffEntity result = accountManagementBean.registerStaff(testdata_callerStaffID, testdata_identificationNo, testdata_name, testdata_phone, testdata_email, testdata_address, testdata_password);
-        assertNotNull(result);
-    }
 
     @Test
-    public void testGetStaffByEmail() {
-        System.out.println("testGetStaffByEmail()");
-        String testdata_email = "admin@if.com";
-        StaffEntity result = accountManagementBean.getStaffByEmail(testdata_email);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testGetRoleById() {
-        System.out.println("testGetRoleById()");
-        RoleEntity result = accountManagementBean.getRoleById(1L);
-        assertNotNull(result);
-    }
-
-    @Test
-    public void testEditStaff() {
+    public void test08EditStaff() {
         System.out.println("testEditStaff()");
-        String testdata_callerStaffID = "0000000";
+        String testdata_callerStaffID = "1";
+        Long testdata_staffID = 1000L;
         String testdata_address = "55 Tanglin Home, #04-12";
         String testdata_phone = "81234333";
-        String testdata_password = "admin";
-        Boolean result = accountManagementBean.editStaff(testdata_callerStaffID, Long.MIN_VALUE, testdata_phone, testdata_password, testdata_address);
-        assertTrue(result);
+        String testdata_password = "";
+        Boolean result = accountManagementBean.editStaff(testdata_callerStaffID, testdata_staffID, testdata_phone, testdata_password, testdata_address);
+        assertFalse(result);
     }
 
     @Test
-    public void testResetStaffPassword() {
+    public void test10ResetStaffPassword() {
         System.out.println("testResetStaffPassword()");
-        String testdata_email = "hello@if.com";
+        String testdata_email = "abcc@if.com";
         String testdata_password = "12345678";
         Boolean result = accountManagementBean.resetStaffPassword(testdata_email, testdata_password);
         assertFalse(result);
     }
 
     @Test
-    public void testRemoveStaff() {
+    public void test11RemoveStaff() {
         System.out.println("testRemoveStaff()");
-        String testdata_callerStaffID = "abc";
-        Long testdata_staffID = 1L;
+        String testdata_callerStaffID = "1";
+        Long testdata_staffID = 1200L;
         Boolean result = accountManagementBean.removeStaff(testdata_callerStaffID, testdata_staffID);
-        assertFalse(result);
+        assertTrue(result);
     }
 
-    @Test
-    public void testLoginStaff() {
-        System.out.println("testLoginStaff");
-        String testdata_email = "admin@if.com";
-        String testdata_password = "admin";
-        StaffEntity result = accountManagementBean.loginStaff(testdata_email, testdata_password);
-        assertFalse(result.equals(null));
-        assertNotNull(result);
-    }
 
     @Test
-    public void testListAllStaff() {
-        System.out.println("testListAllStaff");
-        List result = accountManagementBean.listAllStaff();
-        assertFalse(result.isEmpty());
-        assertTrue(!result.isEmpty());
-    }
-
-    @Test
-    public void testCreateRole() {
+    public void test13CreateRole() {
         System.out.println("testCreateRole");
         String testdata_callerStaffID = "50";
         String testdata_name = "Supervisor";
         String testdata_accessLevel = "Store";
         RoleEntity result = accountManagementBean.createRole(testdata_callerStaffID, testdata_name, testdata_accessLevel);
+        roleId = result.getId();
+        System.out.println("test13CreateRole " + roleId);
         assertNotNull(result);
     }
 
     @Test
-    public void testUpdateRole() {
+    public void test14GetRoleById() {
+        System.out.println("testGetRoleById()");
+        RoleEntity result = accountManagementBean.getRoleById(1L);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void test15UpdateRole() {
         System.out.println("testUpdateRole");
+        System.out.println("test15UpdateRole " + roleId);
         String testdata_callerStaffID = "50";
-        Long testdata_roleID = 1L;
+        Long testdata_roleID = roleId;
         String testdata_accessLevel = "Store";
         Boolean result = accountManagementBean.updateRole(testdata_callerStaffID, testdata_roleID, testdata_accessLevel);
         assertTrue(result);
     }
 
     @Test
-    public void testDeleteRole() {
+    public void test16DeleteRole() {
         System.out.println("testDeleteRole");
         String testdata_callerStaffID = "50";
-        Long testdata_roleID = 100L;
+        Long testdata_roleID = roleId;
         Boolean result = accountManagementBean.deleteRole(testdata_callerStaffID, testdata_roleID);
-        assertFalse(result);
-    }
-
-    @Test
-    public void testCheckIfRoleExists() {
-        System.out.println("checkIfRoleExists");
-        Boolean result = accountManagementBean.checkIfRoleExists("Administrator");
-        assertFalse(result == false);
         assertTrue(result);
     }
 
     @Test
-    public void testListAllRoles() {
+    public void test17CheckIfRoleExists() {
+        System.out.println("checkIfRoleExists");
+        Boolean result = accountManagementBean.checkIfRoleExists("Administrator");
+        assertTrue(result);
+    }
+
+    @Test
+    public void test18ListAllRoles() {
         System.out.println("testListAllRoles");
         List result = accountManagementBean.listAllRoles();
         assertTrue(!result.isEmpty());
     }
 
     @Test
-    public void testSearchRole() {
+    public void test19SearchRole() {
         System.out.println("testSearchRole");
         String testdata_name = "Regional Manager";
         RoleEntity result = accountManagementBean.searchRole(testdata_name);
@@ -222,7 +175,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void testGetCountry() {
+    public void test20GetCountry() {
         System.out.println("testGetCountry");
         String testdata_countryName = "Singapore";
         CountryEntity result = accountManagementBean.getCountry(testdata_countryName);
@@ -230,7 +183,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void testCheckStaffInvalidLoginAttempts() {
+    public void test21CheckStaffInvalidLoginAttempts() {
         System.out.println("testCheckStaffInvalidLoginAttempts");
         String testdata_email = "admin@if.com";
         Integer result = accountManagementBean.checkStaffInvalidLoginAttempts(testdata_email);
@@ -238,7 +191,7 @@ public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements S
     }
 
     @Test
-    public void testIsAccessRightExist() {
+    public void test22IsAccessRightExist() {
         System.out.println("testIsAccessRightExist");
         Long testdata_staffId = 10L;
         Long testdata_roleId = 5L;

@@ -30,7 +30,7 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
     private RecipeEntity recipe;
     
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="menuItem")
-    private List<SaleForecastEntity> saleForcastEntityList;    
+    private List<SaleForecastEntity> saleForecastEntityList;    
 
     public MenuItemEntity() {
     }
