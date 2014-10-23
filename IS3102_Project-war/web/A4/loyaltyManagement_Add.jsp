@@ -1,11 +1,59 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+<%@page import="java.util.List"%>
+<%@page import="EntityManager.FurnitureEntity"%>
+<html lang="en">
+    <jsp:include page="../header2.html" />
     <body>
-        <h1>Hello World!</h1>
+        <div id="wrapper">
+            <jsp:include page="../menu1.jsp" />
+            <div id="page-wrapper">
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                Add Loyalty
+                            </h1>
+                            <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="icon icon-archive"></i><a href="../LoyaltyManagement_Servlet"> Loyalty Management</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-edit"></i> Add Loyalty
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                    <jsp:include page="../displayMessage.jsp" />
+                    <!-- /.warning -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form role="form" action="../FurnitureManagement_AddFurnitureServlet">
+                                <div class="form-group">
+                                    <label>Tier</label>
+                                    <input class="form-control" required="true" type="text" name="tier" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Required amount spent</label>
+                                    <input class="form-control" type="number" required="true" min="1" name="requiredAmount" >
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
+                                </div>
+                                <input type="hidden" value="A4/loyaltyManagement_Add.jsp" name="source">
+                            </form>
+                        </div>
+                        <!-- /.row -->
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- /#page-wrapper -->
+        </div>
+        <!-- /#wrapper -->
     </body>
+
 </html>

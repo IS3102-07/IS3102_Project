@@ -1,7 +1,9 @@
 package A4_servlets;
 
+import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,20 +11,31 @@ import javax.servlet.http.HttpServletResponse;
 
 public class LoyaltyManagement_AddServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @EJB
+    private LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBeanLocal;
+    String result;
 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoyaltyManagement_AddServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoyaltyManagement_AddServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String tier = request.getParameter("tier");
+            String requiredAmount = request.getParameter("requiredAmount");
+            String source = request.getParameter("source");
+
+            if (loyaltyAndRewardsBeanLocal.getLoyaltyTierByName(tier) == null) {
+                loyaltyAndRewardsBeanLocal.createLoyaltyTier(tier, Double.parseDouble(requiredAmount));
+
+                result = "?goodMsg=Tier: " + tier + " has been created successfully.";
+                response.sendRedirect("FurnitureManagement_FurnitureServlet" + result);
+            } else {
+                result = "?errMsg=Failed to add tier, Tier: " + tier + " already exist.";
+                response.sendRedirect(source + result);
+            }
+        } catch (Exception ex) {
+            out.println(ex);
+        } finally {
+            out.close();
         }
     }
 

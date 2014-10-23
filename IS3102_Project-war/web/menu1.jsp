@@ -357,7 +357,7 @@
                 </a>
                 <ul id="pperationalCRM" class="collapse">
                     <li>
-                        <a href="#">Loyalty & Rewards</a>
+                        <a href="../LoyaltyManagement_Servlet">Loyalty & Rewards</a>
                     </li>
                     <li>
                         <a href="#">Customer Service</a>
