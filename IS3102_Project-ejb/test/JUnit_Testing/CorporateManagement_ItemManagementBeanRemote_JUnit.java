@@ -4,8 +4,13 @@ import CorporateManagement.ItemManagement.ItemManagementBeanRemote;
 import EntityManager.BillOfMaterialEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
+import EntityManager.Item_CountryEntity;
+import EntityManager.ProductGroupEntity;
+import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.RawMaterialEntity;
 import EntityManager.RetailProductEntity;
+import EntityManager.Supplier_ItemEntity;
+import HelperClasses.ReturnHelper;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -286,115 +291,271 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
 
     @Test
     public void testDeleteLineItemFromBOM() {
-        
+        System.out.println("testDeleteLineItemFromBOM");
+        Long testdata_lineItemId = 1L;
+        Long testdata_BOMId = 1L;
+        Boolean result = itemManagementBean.deleteLineItemFromBOM(testdata_lineItemId, testdata_BOMId);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testLinkBOMAndFurniture() {
+        System.out.println("testLinkBOMandFurniture");
+        Long testdata_BOMId = 1L;
+        Long testdata_FurnitureId = 1L;
+        Boolean result = itemManagementBean.deleteLineItemFromBOM(testdata_BOMId, testdata_FurnitureId);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testListAllFurnitureWithoutBOM() {
+        System.out.println("testListAllFurnitureWithoutBOM");
+        List result = itemManagementBean.listAllFurnitureWithoutBOM();
+        assertTrue(result.isEmpty());
+        assertFalse(!result.isEmpty());
     }
 
     @Test
     public void testCreateProductGroup() {
+        System.out.println("testCreateProductGroup");
+        String testdata_name = "F001";
+        Integer testdata_workhours = 100;
+        Integer testdata_lotSize = 100;
+        ProductGroupEntity result = itemManagementBean.createProductGroup(testdata_name, testdata_workhours, testdata_lotSize);
+        assertNotNull(result);
+        assertNull(result);
     }
 
     @Test
     public void testEditProductGroup() {
+        System.out.println("testEditProductGroup");
+        Long testdata_productGroupId = 1L;
+        String testdata_name = "F001";
+        Integer testdata_workhours = 100;
+        Integer testdata_lotSize = 100;
+        Boolean result = itemManagementBean.editProductGroup(testdata_productGroupId, testdata_name, testdata_workhours, testdata_lotSize);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testGetProductGroup() {
+        System.out.println("testGetProductGroup");
+        Long testdata_id = 1L;
+        ProductGroupEntity result = itemManagementBean.getProductGroup(testdata_id);
+        assertNotNull(result);
+        assertNull(result);
     }
 
     @Test
     public void testGetAllProductGroup() {
+        System.out.println("testGetAllProductGroup");
+        List result = itemManagementBean.getAllProductGroup();
+        assertTrue(result.isEmpty());
+        assertFalse(!result.isEmpty());
     }
 
     @Test
     public void testCreateProductGroupLineItem() {
+        System.out.println("testCreateProductGroupLineItem");
+        String testdata_SKU = "F1";
+        Double testdata_percent = 0.1;
+        ProductGroupLineItemEntity result = itemManagementBean.createProductGroupLineItem(testdata_SKU, testdata_percent);
+        assertNotNull(result);
+        assertNull(result);
     }
 
     @Test
     public void testEditProductGroupLineItem() {
+        System.out.println("testEditProductGroupLineItem");
+        Long testdata_productGroupLineItemId = 1L;
+        String testdata_SKU = "F1";
+        Double testdata_percent = 0.1;
+        Boolean result = itemManagementBean.editProductGroupLineItem(testdata_productGroupLineItemId, testdata_SKU, testdata_percent);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testAddLineItemToProductGroup() {
+        System.out.println("testAddLineItemToProductGroup");
+        Long testdata_productGroupId = 1L;
+        Long testdata_lineItemId = 1L;
+        Boolean result = itemManagementBean.addLineItemToProductGroup(testdata_productGroupId, testdata_lineItemId);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
     @Test
     public void testRemoveLineItemFromProductGroup() {
+        System.out.println("testRemoveLineItemToProductGroup");
+        Long testdata_productGroupId = 1L;
+        Long testdata_lineItemId = 1L;
+        Boolean result = itemManagementBean.removeLineItemFromProductGroup(testdata_productGroupId, testdata_lineItemId);
+        assertTrue(result);
+        assertFalse(!result);
+
     }
 
-    @Test
+    @Test    
     public void testRemoveProductGroup() {
+        System.out.println("testRemoveProductGroup");
+        Long testdata_productGroupId = 1L;
+        Boolean result = itemManagementBean.removeProductGroup(testdata_productGroupId);
+        assertTrue(result);
+        assertFalse(!result);
     }
 
-    @Test
+    @Test     
     public void testCheckIfSKUIsFurniture() {
-    }
+        System.out.println("testCheckIfSKUIsFurniture");
+        String testdata_SKU = "F1";
+        Boolean result = itemManagementBean.checkIfSKUIsFurniture(testdata_SKU);
+        assertTrue(result);
+        assertFalse(!result);
+    } 
 
-    @Test
+    @Test    
     public void testAddCountryItemPricing() {
+        System.out.println("testAddCountryItemPricing");
+        Long testdata_countryId = 1L;
+        String testdata_SKU = "F1";
+        Double testdata_price = 1.0;
+        ReturnHelper result = itemManagementBean.addCountryItemPricing(testdata_countryId,testdata_SKU,testdata_price);
+        assertNull(result);
+        assertNotNull(result);
     }
 
-    @Test
+    @Test    
     public void testRemoveCountryItemPricing() {
+        System.out.println("testAddCountryItemPricing");
+        Long testdata_countryId = 1L;
+        ReturnHelper result = itemManagementBean.removeCountryItemPricing(testdata_countryId);
+        assertNull(result);
+        assertNotNull(result);
     }
-
-    @Test
+    
+    @Test     
     public void testEditCountryItemPricing() {
+        System.out.println("testAddCountryItemPricing");
+        Long testdata_countryId = 1L;
+        Double testdata_price = 1.0;
+        ReturnHelper result = itemManagementBean.editCountryItemPricing(testdata_countryId, testdata_price);
+        assertNull(result);
+        assertNotNull(result);
     }
 
-    @Test
+    @Test     
     public void testGetCountryItemPricing() {
+        System.out.println("testGetCountryItemPricing");
+        Long testdata_countryItemId = 1L;
+        Item_CountryEntity result= itemManagementBean.getCountryItemPricing(testdata_countryItemId);
+        assertNull(result);
+        assertNotNull(result);
     }
 
-    @Test
+    @Test    
     public void testListAllCountryItemPricing() {
+        System.out.println("testGetCountryItemPricing");
+        List result= itemManagementBean.listAllCountryItemPricing();
+        assertNull(result.isEmpty());
+        assertNotNull(result.isEmpty());
     }
 
     @Test
     public void testListAllCountry() {
+        System.out.println("testListAllCountry");
+        List result= itemManagementBean.listAllCountry();
+        assertNull(result.isEmpty());
+        assertNotNull(result.isEmpty());
     }
 
     @Test
     public void testListAllItemsSKU() {
+        System.out.println("testListAllItemsSKU");
+        List result= itemManagementBean.listAllItemsSKU();
+        assertNull(result.isEmpty());
+        assertNotNull(result.isEmpty());
     }
 
     @Test
     public void testListAllItemsSKUForSupplier() {
+        System.out.println("testListAllItemsSKUorSupplier");
+        List result= itemManagementBean.listAllItemsSKUForSupplier();
+        assertNull(result.isEmpty());
+        assertNotNull(result.isEmpty());
     }
 
     @Test
     public void testListAllItemsOfCountry() {
+        System.out.println("testListAllItemsOfCountry");
+        Long testdata_countryId = 1L;
+        List result= itemManagementBean.listAllItemsOfCountry(testdata_countryId);
+        assertNull(result.isEmpty());
+        assertNotNull(result.isEmpty());
     }
 
     @Test
     public void testGetItemPricing() {
+        System.out.println("testGetItemPricing");
+        Long testdata_itemId = 1L;
+        String testdata_SKU = "F1";
+        Item_CountryEntity result= itemManagementBean.getItemPricing(testdata_itemId, testdata_SKU);
+        assertNull(result);
+        assertNotNull(result);
     }
 
-    @Test
+    @Test    
     public void testAddSupplierItemInfo() {
+        System.out.println("testAddSupplierItemInfo");
+        String testdata_SKU = "F1";
+        Long testdata_supplierId= 1L;
+        Double testdata_costPrice=1.0;
+        Integer testdata_lotSize=10;
+        Integer testdata_leadTime =1;
+        ReturnHelper result= itemManagementBean.addSupplierItemInfo(testdata_SKU, testdata_supplierId, testdata_costPrice, testdata_lotSize, testdata_leadTime);
+        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test
     public void testRemoveSupplierItemInfo() {
+        System.out.println("testRemoveSupplierItemInfo");
+        Long testdata_supplierItemId= 1L;
+        ReturnHelper result= itemManagementBean.removeSupplierItemInfo(testdata_supplierItemId);
+        assertNull(result);
+        assertNotNull(result);
     }
 
-    @Test
+    @Test    
     public void testEditSupplierItemInfo() {
+        System.out.println("testAddSupplierItemInfo");
+        Long testdata_supplierItemId = 1L;
+        Double testdata_costPrice=1.0;
+        Integer testdata_lotSize=10;
+        Integer testdata_leadTime =1;
+        ReturnHelper result= itemManagementBean.editSupplierItemInfo(testdata_supplierItemId, testdata_costPrice, testdata_lotSize, testdata_leadTime);
+        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test
     public void testGetSupplierItemInfo() {
+        System.out.println("testRemoveSupplierItemInfo");
+        Long testdata_supplierItemId= 1L;
+        Supplier_ItemEntity result= itemManagementBean.getSupplierItemInfo(testdata_supplierItemId);
+        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test
     public void testListAllSupplierItemInfo() {
+        System.out.println("testRemoveSupplierItemInfo");
+        List result= itemManagementBean.listAllSupplierItemInfo();
+        assertNull(result.isEmpty());
+        assertNotNull(result.isEmpty());
     }
 
     private ItemManagementBeanRemote lookupItemManagementBeanRemote() {
