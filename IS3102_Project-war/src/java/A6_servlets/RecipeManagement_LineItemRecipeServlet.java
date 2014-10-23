@@ -36,14 +36,14 @@ public class RecipeManagement_LineItemRecipeServlet extends HttpServlet {
       
             
              if (errMsg == null && goodMsg == null) {
-                response.sendRedirect("A6/recipeManagement_lineRestaurantManagement.jsp?recipeName=" + recipe.getName());
+                response.sendRedirect("A6/recipeManagement_lineItemManagement.jsp?recipeName=" + recipe.getName());
             } else if ((errMsg != null) && (goodMsg == null)) {
                 if (!errMsg.equals("")) {
-                response.sendRedirect("A6/recipeManagement_lineRestaurantManagement.jsp?errMsg=" + errMsg + "&recipeName=" + recipe.getName());
+                response.sendRedirect("A6/recipeManagement_lineItemManagement.jsp?errMsg=" + errMsg + "&recipeName=" + recipe.getName());
                 }
             } else if ((errMsg == null && goodMsg != null)) {
                 if (!goodMsg.equals("")) {
-                response.sendRedirect("A6/recipeManagement_lineRestaurantManagement.jsp?goodMsg=" + goodMsg + "&recipeName=" + recipe.getName());
+                response.sendRedirect("A6/recipeManagement_lineItemManagement.jsp?goodMsg=" + goodMsg + "&recipeName=" + recipe.getName());
                 }
             }
         } catch (Exception ex) {

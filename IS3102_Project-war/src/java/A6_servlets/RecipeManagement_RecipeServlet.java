@@ -27,7 +27,7 @@ public class RecipeManagement_RecipeServlet extends HttpServlet {
             String goodMsg = request.getParameter("goodMsg");
             List<RecipeEntity> listOfRecipe = restaurantManagementBean.listAllRecipe();
             session.setAttribute("listOfRecipe", listOfRecipe);
-            session.setAttribute("listOfFurniture", restaurantManagementBean.listAllMenuItemWithoutRecipe());
+            session.setAttribute("listOfMenuItem", restaurantManagementBean.listAllMenuItemWithoutRecipe());
 
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/recipeManagement.jsp");
