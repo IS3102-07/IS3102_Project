@@ -98,7 +98,7 @@ public class RetailInventoryWebService {
             requestURL += ("username=" + "lee_yuan_guang@hotmail.com");
             requestURL += ("&password=" + "r0b16");
             requestURL += ("&tel=" + telNo);
-            requestURL += ("&msg=" + smsMessage);
+            requestURL += ("&msg=" + URLEncoder.encode(smsMessage));
 
             URL url = new URL(requestURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
