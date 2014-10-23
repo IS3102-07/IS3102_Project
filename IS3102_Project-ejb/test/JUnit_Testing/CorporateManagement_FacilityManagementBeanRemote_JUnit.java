@@ -103,7 +103,6 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         String testdata_regionalOfficeName = "Asia Pacific Regional Office";
         Boolean result = facilityManagementBean.checkNameExistsOfRegionalOffice(testdata_regionalOfficeName);
         assertTrue(result);
-        assertFalse(!result);
     }
 
     @Test
