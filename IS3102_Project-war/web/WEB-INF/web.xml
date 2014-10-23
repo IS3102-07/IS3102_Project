@@ -853,6 +853,38 @@
         <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_PointOfSalesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RestaurantManagement_AddRawIngredient</servlet-name>
+        <servlet-class>A6_servlets.RestaurantManagement_AddRawIngredient</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestaurantManagement_RawIngredientServlet</servlet-name>
+        <servlet-class>A6_servlets.RestaurantManagement_RawIngredientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestaurantManagement_RemoveRawIngredient</servlet-name>
+        <servlet-class>A6_servlets.RestaurantManagement_RemoveRawIngredient</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RestaurantManagement_UpdateRawIngredient</servlet-name>
+        <servlet-class>A6_servlets.RestaurantManagement_UpdateRawIngredient</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RawIngredientManagement_AddRawIngredientServlet</servlet-name>
+        <servlet-class>A6_servlets.RawIngredientManagement_AddRawIngredientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RawIngredientManagement_RemoveRawIngredientServlet</servlet-name>
+        <servlet-class>A6_servlets.RawIngredientManagement_RemoveRawIngredientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RawIngredientManagement_RawIngredientServlet</servlet-name>
+        <servlet-class>A6_servlets.RawIngredientManagement_RawIngredientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RawIngredientManagement_UpdateRawIngredientServlet</servlet-name>
+        <servlet-class>A6_servlets.RawIngredientManagement_UpdateRawIngredientServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1704,6 +1736,38 @@
     <servlet-mapping>
         <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
         <url-pattern>/ECommerce_PointOfSalesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestaurantManagement_AddRawIngredient</servlet-name>
+        <url-pattern>/RestaurantManagement_AddRawIngredient</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestaurantManagement_RawIngredientServlet</servlet-name>
+        <url-pattern>/RestaurantManagement_RawIngredientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestaurantManagement_RemoveRawIngredient</servlet-name>
+        <url-pattern>/RestaurantManagement_RemoveRawIngredient</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RestaurantManagement_UpdateRawIngredient</servlet-name>
+        <url-pattern>/RestaurantManagement_UpdateRawIngredient</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RawIngredientManagement_AddRawIngredientServlet</servlet-name>
+        <url-pattern>/RawIngredientManagement_AddRawIngredientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RawIngredientManagement_RemoveRawIngredientServlet</servlet-name>
+        <url-pattern>/RawIngredientManagement_RemoveRawIngredientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RawIngredientManagement_RawIngredientServlet</servlet-name>
+        <url-pattern>/RawIngredientManagement_RawIngredientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RawIngredientManagement_UpdateRawIngredientServlet</servlet-name>
+        <url-pattern>/RawIngredientManagement_UpdateRawIngredientServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
