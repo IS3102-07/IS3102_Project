@@ -901,6 +901,38 @@
         <servlet-name>MenuItemManagement_MenuItemServlet</servlet-name>
         <servlet-class>A6_servlets.MenuItemManagement_MenuItemServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RecipeManagement_AddRecipeServlet</servlet-name>
+        <servlet-class>A6_servlets.RecipeManagement_AddRecipeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecipeManagement_AddLineItemRecipeServlet</servlet-name>
+        <servlet-class>A6_servlets.RecipeManagement_AddLineItemRecipeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecipeManagement_RecipeServlet</servlet-name>
+        <servlet-class>A6_servlets.RecipeManagement_RecipeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecipeManagement_LineItemRecipeServlet</servlet-name>
+        <servlet-class>A6_servlets.RecipeManagement_LineItemRecipeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecipeManagement_LinkRecipeServlet</servlet-name>
+        <servlet-class>A6_servlets.RecipeManagement_LinkRecipeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecipeManagement_RemoveRecipeServlet</servlet-name>
+        <servlet-class>A6_servlets.RecipeManagement_RemoveRecipeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecipeManagement_RemoveLineItemRecipeServlet</servlet-name>
+        <servlet-class>A6_servlets.RecipeManagement_RemoveLineItemRecipeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecipeManagement_UpdateRecipeServlet</servlet-name>
+        <servlet-class>A6_servlets.RecipeManagement_UpdateRecipeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1800,6 +1832,38 @@
     <servlet-mapping>
         <servlet-name>MenuItemManagement_MenuItemServlet</servlet-name>
         <url-pattern>/MenuItemManagement_MenuItemServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecipeManagement_AddRecipeServlet</servlet-name>
+        <url-pattern>/RecipeManagement_AddRecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecipeManagement_AddLineItemRecipeServlet</servlet-name>
+        <url-pattern>/RecipeManagement_AddLineItemRecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecipeManagement_RecipeServlet</servlet-name>
+        <url-pattern>/RecipeManagement_RecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecipeManagement_LineItemRecipeServlet</servlet-name>
+        <url-pattern>/RecipeManagement_LineItemRecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecipeManagement_LinkRecipeServlet</servlet-name>
+        <url-pattern>/RecipeManagement_LinkRecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecipeManagement_RemoveRecipeServlet</servlet-name>
+        <url-pattern>/RecipeManagement_RemoveRecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecipeManagement_RemoveLineItemRecipeServlet</servlet-name>
+        <url-pattern>/RecipeManagement_RemoveLineItemRecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecipeManagement_UpdateRecipeServlet</servlet-name>
+        <url-pattern>/RecipeManagement_UpdateRecipeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
