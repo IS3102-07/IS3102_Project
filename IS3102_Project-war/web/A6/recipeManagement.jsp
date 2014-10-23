@@ -67,13 +67,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Bill of Materials Management</h1>
+                            <h1 class="page-header">Recipe Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"></i>  <a href="restaurantManagement.jsp">Item Management</a>
+                                    <i class="icon icon-user"></i>  <a href="restaurantManagement.jsp">Restaurant Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-sitemap"></i> Bill of Material Management
+                                    <i class="icon icon-sitemap"></i> Recipe Management
                                 </li>
                             </ol>
                         </div>
@@ -87,7 +87,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Add or remove Bill of Materials");
+                                            out.println("Add or remove recipe");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);

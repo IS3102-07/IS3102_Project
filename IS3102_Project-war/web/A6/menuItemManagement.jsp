@@ -69,7 +69,7 @@
                                     String errMsg = request.getParameter("errMsg");
                                     String goodMsg = request.getParameter("goodMsg");
                                     if (errMsg == null && goodMsg == null) {
-                                        out.println("Add or remove menuItem");
+                                        out.println("Add or remove menu item");
                                     } else if ((errMsg != null) && (goodMsg == null)) {
                                         if (!errMsg.equals("")) {
                                             out.println(errMsg);

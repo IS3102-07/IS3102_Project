@@ -1,7 +1,10 @@
 package A4_servlets;
 
+import HelperClasses.ReturnHelper;
+import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,20 +12,28 @@ import javax.servlet.http.HttpServletResponse;
 
 public class LoyaltyManagement_UpdateServlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @EJB
+    private LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBeanLocal;
+    private String result;
 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoyaltyManagement_UpdateServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoyaltyManagement_UpdateServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            String id = request.getParameter("id");
+            String requiredAmount = request.getParameter("requiredAmount");
+
+            ReturnHelper returnHelper = loyaltyAndRewardsBeanLocal.updateLoyaltyTier(Long.parseLong(id), Double.parseDouble(requiredAmount));
+
+            if (!returnHelper.getIsSuccess()) {
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("loyaltyManagement_Update.jsp" + result);
+            } else {
+                result = "?goodMsg=Tier updated successfully.";
+                response.sendRedirect("LoyaltyManagement_Servlet" + result);
+            }
+        } catch (Exception ex) {
+            out.println(ex);
         }
     }
 

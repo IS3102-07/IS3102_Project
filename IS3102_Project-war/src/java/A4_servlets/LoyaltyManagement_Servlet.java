@@ -1,28 +1,41 @@
 package A4_servlets;
 
+import EntityManager.LoyaltyTierEntity;
+import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class LoyaltyManagement_Servlet extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @EJB
+    private LoyaltyAndRewardsBeanLocal loyaltyAndRewardsBeanLocal;
 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoyaltyManagement_Servlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoyaltyManagement_Servlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+
+            List<LoyaltyTierEntity> loyaltyTiers = loyaltyAndRewardsBeanLocal.getAllLoyaltyTiers();
+            session.setAttribute("loyaltyTiers", loyaltyTiers);
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A4/loyaltyManagement.jsp");
+            } else {
+                response.sendRedirect("A4/loyaltyManagement.jsp?errMsg=" + errMsg);
+            }
+
+        } catch (Exception ex) {
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

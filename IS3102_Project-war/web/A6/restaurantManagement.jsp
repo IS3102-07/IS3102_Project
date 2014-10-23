@@ -43,15 +43,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="col-md-4">
-                                <div class="featured-box featured-box-sixenary">
-                                    <div class="box-content">
-                                        <a href="../CountryItemPricingManagement_Servlet"><i class="icon-featured icon icon-dollar"> </i>
-                                            <h4>Item Pricing Management</h4>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-quartenary">
                                     <div class="box-content">
