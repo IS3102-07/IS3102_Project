@@ -22,7 +22,7 @@ import org.junit.runners.MethodSorters;
 public class CommonInfrastructure_WorkspaceBeanRemote_JUnit {
 
     WorkspaceBeanRemote workspaceBean = lookupWorkspaceBeanRemote();
-    static Long staffId = 12L; //admin id 12L
+    static Long staffId = 12L; //admin id 12L after initial startup
     //todoId = 1L
 
     public CommonInfrastructure_WorkspaceBeanRemote_JUnit() {
@@ -47,7 +47,7 @@ public class CommonInfrastructure_WorkspaceBeanRemote_JUnit {
     @Test
     public void test01ListAllInboxMessages() {
         System.out.println("testListAllInboxMessages");
-        Long testdata_staffID = 12L;
+        Long testdata_staffID = staffId;
         List result = workspaceBean.listAllInboxMessages(testdata_staffID);
         assertTrue(result.isEmpty());
     }

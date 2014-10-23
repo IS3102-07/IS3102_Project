@@ -24,6 +24,7 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommonInfrastructure_AccountManagementBeanRemote_JUnit implements Serializable {
 
+    //No configuration required 
     AccountManagementBeanRemote accountManagementBean = lookupAccountManagementBeanRemote();
     static Long memberId;
     static Long staffId;

@@ -19,6 +19,7 @@ import org.junit.runners.MethodSorters;
 public class CommonInfrastructure_SystemSecurityBeanRemote_JUnit {
 
     SystemSecurityBeanRemote systemSecurityBean = lookupSystemSecurityBeanRemote();
+    //No configuration needed
 
     public CommonInfrastructure_SystemSecurityBeanRemote_JUnit() {
     }
