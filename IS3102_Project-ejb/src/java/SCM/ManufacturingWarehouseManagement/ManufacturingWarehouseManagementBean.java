@@ -158,12 +158,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     @Override
     public TransferOrderEntity viewTransferOrder(Long id) {
         try {
-            if (em.getReference(TransferOrderEntity.class, id) == null) {
-
-                return null;
-            }
-
-            return em.getReference(TransferOrderEntity.class, id);
+            return em.find(TransferOrderEntity.class, id);
         } catch (Exception ex) {
             System.out.println("\nServer failed to viewTransferOrder:\n" + ex);
             return null;
@@ -304,9 +299,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
         System.out.println("markTransferOrderAsUnfulfilled() called.");
         try {
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
-            transferOrder.setStatus(
-                    "Unfulfillable");
-
+            transferOrder.setStatus("Unfulfillable");
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to markTransferOrderAsUnfulfilled:\n" + ex);
@@ -339,7 +332,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
             return itemEntity;
-        } catch (EntityNotFoundException ex) {
+        } catch (Exception ex) {
             return null;
         }
     }
