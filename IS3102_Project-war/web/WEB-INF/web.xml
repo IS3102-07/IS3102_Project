@@ -949,6 +949,10 @@
         <servlet-name>LoyaltyManagement_RemoveServlet</servlet-name>
         <servlet-class>A4_servlets.LoyaltyManagement_RemoveServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>KitchenManagement_servlet</servlet-name>
+        <servlet-class>A8_servlet.KitchenManagement_servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1896,6 +1900,10 @@
     <servlet-mapping>
         <servlet-name>LoyaltyManagement_RemoveServlet</servlet-name>
         <url-pattern>/LoyaltyManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KitchenManagement_servlet</servlet-name>
+        <url-pattern>/KitchenManagement_servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
