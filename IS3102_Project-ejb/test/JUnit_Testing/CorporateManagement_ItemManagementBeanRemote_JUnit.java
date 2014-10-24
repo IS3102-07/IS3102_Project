@@ -381,7 +381,6 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
         String testdata_SKU = "F1";
         Boolean result = itemManagementBean.checkIfSKUIsFurniture(testdata_SKU);
         assertTrue(result);
-        assertFalse(!result);
     }
 
 
