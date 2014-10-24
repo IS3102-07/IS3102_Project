@@ -55,6 +55,10 @@ public class MemberEntity implements Serializable {
     private Integer securityQuestion;
     @Lob
     private String securityAnswer;
+    
+    private Integer age;
+    private Integer income;
+    private String occupation;
 
     @OneToOne(cascade = {CascadeType.ALL})
     private ShoppingListEntity shoppingList;
