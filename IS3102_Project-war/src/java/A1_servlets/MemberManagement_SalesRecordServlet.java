@@ -1,9 +1,12 @@
-package A3_servlets;
+package A1_servlets;
 
-import EntityManager.WarehouseEntity;
-import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.MemberEntity;
+import EntityManager.RoleEntity;
+import EntityManager.SalesRecordEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,36 +14,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StorageBinManagement_AddServlet extends HttpServlet {
+public class MemberManagement_SalesRecordServlet extends HttpServlet {
 
     @EJB
-    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-    private String result;
+    private AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
             HttpSession session;
-            session = request.getSession();
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            String name= request.getParameter("name");
-            String type = request.getParameter("type");
-            String length = request.getParameter("length");
-            String width = request.getParameter("width");
-            String height = request.getParameter("height");
-
-            boolean canUpdate = manufacturingWarehouseManagementBean.createStorageBin(warehouseEntity.getId(), name, type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
-            if (!canUpdate) {
-                result = "?errMsg=The selected storage bin type already exist. Only one inbound and outbound storage bin can exist per warehouse. If the size of the bin was changed, update there the bin details accordingly instead of creating a new one. Alternatively, delete the bin first before trying to create one.";
-                response.sendRedirect("A3/storageBinManagement_Add.jsp" + result);
-            } else {
-                result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
-                response.sendRedirect("StorageBinManagement_Servlet" + result);
-            }
-
+            session = request.getSession();         
+            String id = request.getParameter("id");
+            List<SalesRecordEntity> salesRecords = accountManagementBean.listAllSalesRecord();
+            session.setAttribute("salesRecords", salesRecords);
+            session.setAttribute("id", id);
+            response.sendRedirect("A1/memberManagement_viewSalesRecordDetails.jsp");
+                       
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

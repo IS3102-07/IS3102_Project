@@ -1,7 +1,6 @@
-package A3_servlets;
+package B_servlets;
 
-import EntityManager.WarehouseEntity;
-import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -11,11 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StorageBinManagement_AddServlet extends HttpServlet {
+public class ECommerce_SelectCountry extends HttpServlet {
 
     @EJB
-    private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-    private String result;
+    FacilityManagementBeanLocal facilityManagementBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -23,24 +21,36 @@ public class StorageBinManagement_AddServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            String name= request.getParameter("name");
-            String type = request.getParameter("type");
-            String length = request.getParameter("length");
-            String width = request.getParameter("width");
-            String height = request.getParameter("height");
-
-            boolean canUpdate = manufacturingWarehouseManagementBean.createStorageBin(warehouseEntity.getId(), name, type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
-            if (!canUpdate) {
-                result = "?errMsg=The selected storage bin type already exist. Only one inbound and outbound storage bin can exist per warehouse. If the size of the bin was changed, update there the bin details accordingly instead of creating a new one. Alternatively, delete the bin first before trying to create one.";
-                response.sendRedirect("A3/storageBinManagement_Add.jsp" + result);
-            } else {
-                result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
-                response.sendRedirect("StorageBinManagement_Servlet" + result);
+            String country = request.getParameter("Country");
+            Long countryID = facilityManagementBeanLocal.getCountryID(country);
+            session.setAttribute("countryID", countryID);
+            switch (country) {
+                case "France":
+                    response.sendRedirect("B/FRA/index.jsp");
+                    break;
+                case "USA":
+                    response.sendRedirect("B/USA/index.jsp");
+                    break;
+                case "China":
+                    response.sendRedirect("B/CN/index.jsp");
+                    break;
+                case "Singapore":
+                    response.sendRedirect("B/SG/index.jsp");
+                    break;
+                case "Malaysia":
+                    response.sendRedirect("B/MY/index.jsp");
+                    break;
+                case "Indonesia":
+                    response.sendRedirect("B/IDN/index.jsp");
+                    break;
+                default:
+                    response.sendRedirect("B/index.jsp");
+                    break;
             }
 
         } catch (Exception ex) {
             out.println(ex);
+            ex.printStackTrace();
         }
     }
 

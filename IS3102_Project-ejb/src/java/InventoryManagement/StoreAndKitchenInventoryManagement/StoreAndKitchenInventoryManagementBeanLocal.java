@@ -12,8 +12,8 @@ import javax.ejb.Local;
 @Local
 public interface StoreAndKitchenInventoryManagementBeanLocal {
     //Warehouse Management
-    public boolean createStorageBin(Long warehouseID, String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
-    public boolean updateStorageBin(Long storageBinId, Integer length, Integer width, Integer height);
+    public boolean createStorageBin(Long warehouseID, String name, String type, Integer _length, Integer width, Integer height); //types are inbound, outbound, shelf, pallet
+    public boolean updateStorageBin(Long storageBinId, String name, Integer length, Integer width, Integer height);
     public boolean deleteStorageBin(Long id);
     public StorageBinEntity viewStorageBin(Long storageBinID);
     public List<StorageBinEntity> viewAllStorageBin(Long warehouseID);

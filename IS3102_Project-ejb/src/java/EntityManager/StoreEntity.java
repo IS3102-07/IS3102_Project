@@ -42,7 +42,9 @@ public class StoreEntity implements Serializable {
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
     private List<SalesFigureEntity> salesFigureList;    
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
-    private List<SaleAndOperationPlanEntity> saleAndOperationPlanList;    
+    private List<SaleAndOperationPlanEntity> saleAndOperationPlanList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
+    private List<Store_ItemEntity> items;   
     @ManyToMany(mappedBy="storeList")
     @JoinTable(name="store_manufacturingFacility")
     private List<ManufacturingFacilityEntity> manufacturingFacilityList;
@@ -80,6 +82,14 @@ public class StoreEntity implements Serializable {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public List<Store_ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Store_ItemEntity> items) {
+        this.items = items;
     }
 
     public void setSalesRecords(List<SalesRecordEntity> salesRecords) {

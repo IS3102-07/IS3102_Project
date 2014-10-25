@@ -27,14 +27,14 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Sales Forecast
+                                Kitchen Sales Forecast
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Sales Forecast</a>
                                 </li>   
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="../SaleForecast_Servlet/SaleForecast_schedule_GET">Schedule</a>
+                                    <i class="icon icon-calendar"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_schedule_GET">Schedule</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-list"></i>  <a href="#">Dashboard</a>
@@ -66,7 +66,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleForecast_Servlet/SaleForecast_main_POST">
+                                            <form action="../KitchenManagement_servlet/ViewSaleFigure_GET">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable1">
                                                     <thead>
                                                         <tr>
@@ -88,7 +88,7 @@
                                                             <td><%= s.getMenuItem().getName() %></td>
                                                             <td><%= s.getQuantity()%></td>
                                                             <td>
-                                                                <button class="btn btn-primary" name="productGroupId" value="<%= s.getMenuItem().getId()%>">View historical data</button>
+                                                                <button class="btn btn-primary" name="menuItemSKU" value="<%= s.getMenuItem().getSKU() %>">View historical data</button>
                                                             </td>                                                   
                                                         </tr>
                                                         <%
@@ -97,7 +97,7 @@
                                                     </tbody>
                                                 </table>                                                    
                                             </form>                                              
-
+                                            <a href="KitchenDemandManagement_GET"><span class="btn btn-primary">Kitchen Demand Management</span></a>
                                         </div>
                                     </div>
                                     <!-- /.table-responsive -->

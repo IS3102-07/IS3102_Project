@@ -951,7 +951,23 @@
     </servlet>
     <servlet>
         <servlet-name>KitchenManagement_servlet</servlet-name>
-        <servlet-class>A8_servlet.KitchenManagement_servlet</servlet-class>
+        <servlet-class>A8_servlets.KitchenManagement_servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_SelectCountry</servlet-name>
+        <servlet-class>B_servlets.ECommerce_SelectCountry</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A8/HistoricalData</servlet-name>
+        <jsp-file>/A8/HistoricalData.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>MemberManagement_SalesRecordServlet</servlet-name>
+        <servlet-class>A1_servlets.MemberManagement_SalesRecordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>A8/KitchenDemandManagement</servlet-name>
+        <jsp-file>/A8/KitchenDemandManagement.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -1904,6 +1920,22 @@
     <servlet-mapping>
         <servlet-name>KitchenManagement_servlet</servlet-name>
         <url-pattern>/KitchenManagement_servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_SelectCountry</servlet-name>
+        <url-pattern>/ECommerce_SelectCountry</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/HistoricalData</servlet-name>
+        <url-pattern>/A8/HistoricalData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberManagement_SalesRecordServlet</servlet-name>
+        <url-pattern>/MemberManagement_SalesRecordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/KitchenDemandManagement</servlet-name>
+        <url-pattern>/A8/KitchenDemandManagement</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

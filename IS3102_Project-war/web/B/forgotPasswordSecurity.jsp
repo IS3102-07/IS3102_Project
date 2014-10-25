@@ -2,6 +2,7 @@
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
 <%@page import="EntityManager.MemberEntity"%>
+<jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>

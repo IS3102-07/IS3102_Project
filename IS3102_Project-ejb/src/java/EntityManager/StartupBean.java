@@ -78,6 +78,23 @@ public class StartupBean {
                 System.out.println("Skipping creating of roles:\n" + ex);
                 ex.printStackTrace();
             }
+            Long goldLoyaltyTierID = 1L;
+            try {
+                LoyaltyTierEntity loyaltyTierEntity;
+                loyaltyTierEntity = new LoyaltyTierEntity("Gold", 5000.0);
+                em.persist(loyaltyTierEntity);
+                goldLoyaltyTierID = loyaltyTierEntity.getId();
+                loyaltyTierEntity = new LoyaltyTierEntity("Silver", 3000.0);
+                em.persist(loyaltyTierEntity);
+                loyaltyTierEntity = new LoyaltyTierEntity("Bronze", 1000.0);
+                em.persist(loyaltyTierEntity);
+                loyaltyTierEntity = new LoyaltyTierEntity("Classic", 0.0);
+                em.persist(loyaltyTierEntity);
+
+            } catch (Exception ex) {
+                System.out.println("Skipping creating of loyalty tiers\n" + ex);
+                ex.printStackTrace();
+            }
             try {
                 //Create administrator account
                 StaffEntity staffEntity = new StaffEntity();
@@ -125,6 +142,8 @@ public class StartupBean {
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(150);
                 memberEntity.setLoyaltyCardId("F2E5A75D9000");
+                LoyaltyTierEntity loyaltyTierEntity = em.getReference(LoyaltyTierEntity.class, goldLoyaltyTierID);
+                memberEntity.setLoyaltyTier(loyaltyTierEntity);
                 em.persist(memberEntity);
                 memberEntity = new MemberEntity();
                 passwordSalt = accountManagementBean.generatePasswordSalt();
@@ -133,6 +152,7 @@ public class StartupBean {
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(500);
                 memberEntity.setLoyaltyCardId("32D3A75D9000");
+                memberEntity.setLoyaltyTier(loyaltyTierEntity);
                 em.persist(memberEntity);
                 System.out.println("Created member with ID:member@if.com and PW:member.");
             } catch (Exception ex) {
@@ -309,8 +329,14 @@ public class StartupBean {
             em.persist(furnitureEntity);
             furnitureEntity = new FurnitureEntity("F3", "Table 2", "Tables & Desks", "The table top in tempered glass is stain resistant and easy to clean. Adjustable feet make the table stand steady also on uneven floors.", "imageURL", 99, 71, 52);
             em.persist(furnitureEntity);
-            RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
-            em.persist(rawMaterialEntity);
+            RawMaterialEntity rawMaterialEntity1 = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
+            em.persist(rawMaterialEntity1);
+            RawMaterialEntity rawMaterialEntity2 = new RawMaterialEntity("RM2", "Steel", "Metal", "A piece of steel", 1, 1, 1);
+            em.persist(rawMaterialEntity2);
+            MenuItemEntity menuItem1 = new MenuItemEntity("MI1", "Chicken Rice", "Main", "hao wei dao, bu jie shi", "url", 1, 1, 1);
+            em.persist(menuItem1);
+            MenuItemEntity menuItem2 = new MenuItemEntity("MI2", "Salad", "Sides", "hao wei dao, bu jie shi", "url", 1, 1, 1);
+            em.persist(menuItem2);
             //Set lead time, lot size, price
 //            Query q = em.createQuery("select t from SupplierEntity t where t.supplierName='Supplier 1'");
 //            SupplierEntity supplierEntity = (SupplierEntity) q.getSingleResult();
@@ -324,21 +350,6 @@ public class StartupBean {
             ex.printStackTrace();
         }
 
-        try {
-            LoyaltyTierEntity loyaltyTierEntity;
-            loyaltyTierEntity = new LoyaltyTierEntity("Gold", 5000.0);
-            em.persist(loyaltyTierEntity);
-            loyaltyTierEntity = new LoyaltyTierEntity("Silver", 3000.0);
-            em.persist(loyaltyTierEntity);
-            loyaltyTierEntity = new LoyaltyTierEntity("Bronze", 1000.0);
-            em.persist(loyaltyTierEntity);
-            loyaltyTierEntity = new LoyaltyTierEntity("Classic", 0.0);
-            em.persist(loyaltyTierEntity);
-
-        } catch (Exception ex) {
-            System.out.println("Skipping creating of loyalty tiers\n" + ex);
-            ex.printStackTrace();
-        }
         try {
             //Item_Country pricing
             Query q = em.createQuery("Select c from CountryEntity c where c.name='Singapore'");
@@ -377,8 +388,9 @@ public class StartupBean {
             List<MonthScheduleEntity> scheduleList = (List<MonthScheduleEntity>) q3.getResultList();
             Query q4 = em.createQuery("select m from MenuItemEntity m");
             List<MenuItemEntity> menuItemList = (List<MenuItemEntity>) q4.getResultList();
-            
+
             int index = 1;
+            int ind = 1;
             for (StoreEntity store : storeList) {
                 for (MonthScheduleEntity schedule : scheduleList) {
                     for (ProductGroupEntity productGroup : productGroupList) {
@@ -404,31 +416,31 @@ public class StartupBean {
                         } catch (Exception ex) {
                         }
                     }
-                    
-                    for(MenuItemEntity menuitem: menuItemList){
+
+                    for (MenuItemEntity menuitem : menuItemList) {
                         try {
                             SalesFigureEntity saleFigure = new SalesFigureEntity();
                             saleFigure.setStore(store);
                             saleFigure.setMenuItem(menuitem);
                             saleFigure.setSchedule(schedule);
 
-                            if ((index % 5) == 0) {
+                            if ((ind % 5) == 0) {
                                 saleFigure.setQuantity(20);
-                            } else if ((index % 5) == 1) {
+                            } else if ((ind % 5) == 1) {
                                 saleFigure.setQuantity(25);
-                            } else if ((index % 5) == 2) {
+                            } else if ((ind % 5) == 2) {
                                 saleFigure.setQuantity(35);
-                            } else if ((index % 5) == 3) {
+                            } else if ((ind % 5) == 3) {
                                 saleFigure.setQuantity(40);
                             } else {
                                 saleFigure.setQuantity(30);
                             }
-                            index++;
+                            ind++;
                             em.persist(saleFigure);
                         } catch (Exception ex) {
                         }
                     }
-                    
+
                 }
             }
 

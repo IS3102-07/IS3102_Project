@@ -65,6 +65,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public SaleForecastEntity getSalesForecast(Long storeId, Long menuItemId, Long scheduleId) {
         try {
             Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
@@ -73,12 +74,11 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     .setParameter(3, scheduleId);            
 
             if (q.getResultList().isEmpty()) {                
-
+                System.out.println("q.getResultList().isEmpty()");
                 // if not exist, then create it
                 MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
                 StoreEntity store = em.find(StoreEntity.class, storeId);
                 MenuItemEntity menuItem = em.find(MenuItemEntity.class, menuItemId);                                
-
                 MonthScheduleEntity lastSchedule = schedule;
                 
                 try {
@@ -86,22 +86,20 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     for (int i = 0; i < 3; i++) {                        
 
                         lastSchedule = this.getTheBeforeOne(lastSchedule);                        
-
                         Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                                 .setParameter(1, menuItemId)
                                 .setParameter(2, storeId)
                                 .setParameter(3, lastSchedule.getId());
 
                         if (!q2.getResultList().isEmpty()) {                            
-
+                            System.out.println("!q2.getResultList().isEmpty()");
                             SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
                             amount += salesFigureEntity.getQuantity();
                         }
                     }
-
-                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, amount / 3);                    
+                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, amount / 3);                                        
+                    em.persist(saleForecast);                    
                     return saleForecast;
-
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, 0);                    
@@ -118,11 +116,12 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
-    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long menuItemId, Integer year) {
+    @Override
+    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, String menuItemSKU, Integer year) {
         try {
-            Query q = em.createQuery("select s from SalesFigureEntity s where s.store.id = ?1 AND s.menuItem.id = ?2 AND s.schedule.year = ?3 ")
+            Query q = em.createQuery("select s from SalesFigureEntity s where s.store.id = ?1 AND s.menuItem.SKU = ?2 AND s.schedule.year = ?3 ")
                     .setParameter(1, StoreId)
-                    .setParameter(2, menuItemId)
+                    .setParameter(2, menuItemSKU)
                     .setParameter(3, year);
             return q.getResultList();
         } catch (Exception ex) {
@@ -132,6 +131,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public Boolean generateMasterProductionSchedules(Long storeId) {
         System.out.println("generateMasterProductionSchedules is called.");
         try {
@@ -220,6 +220,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public List<MasterProductionScheduleEntity> getMasterProductionSchedules(Long storeId) {
         try {
             Query q = em.createQuery("select s from MonthScheduleEntity s");
@@ -239,6 +240,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public Boolean generateMaterialRequirementPlan(Long storeId) {
         System.out.println("generateMaterialRequirementPlan is called.");
         try {
@@ -414,6 +416,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         return new ArrayList<>();
     }
     
+    @Override
     public Boolean generatePurchaseOrderFromMaterialRequirement(Long storeId) {
         System.out.println("generatePurchaseOrderFromMaterialRequirement is called.");
         try {
