@@ -25,27 +25,23 @@ public class MemberManagement_UpdateMemberServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
 
-            String update = request.getParameter("update");
-            String source = request.getParameter("source");
-            System.out.println("What is update : " + update);
-            if (source != null) {
-                String memberId = request.getParameter("id");
-                String name = request.getParameter("name");
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                String address = request.getParameter("address");
-                String phone = request.getParameter("phone");
-                boolean canUpdateInfo = accountManagementBean.editMember(Long.valueOf(memberId), null, name, address, email, phone, null, null, null, null, null, null);
-                if (!canUpdateInfo) {
-                    result += "?&errMsg=Error updating your particulars.";
-                    response.sendRedirect("" + result);
-                } else {
-                    MemberEntity memberEntity = accountManagementBean.getMemberByEmail(email);
-                    session.setAttribute("memberEntity", memberEntity);
-                    result = "?goodMsg=Particulars updated successfully.";
-                    response.sendRedirect(source + result);
-                }
+            String memberId = request.getParameter("id");
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String address = request.getParameter("address");
+            String phone = request.getParameter("phone");
+            boolean canUpdateInfo = accountManagementBean.editMember(Long.valueOf(memberId), null, name, address, email, phone, null, null, null, null, null, null);
+            if (!canUpdateInfo) {
+                result += "?&errMsg=Error updating your particulars.";
+                response.sendRedirect("memberManagement_update" + result);
+            } else {
+                MemberEntity memberEntity = accountManagementBean.getMemberByEmail(email);
+                session.setAttribute("memberEntity", memberEntity);
+                result = "?goodMsg=Particulars updated successfully.";
+                response.sendRedirect("MemberManagement_MemberServlet" + result);
             }
+
         } catch (Exception ex) {
             out.println(ex);
             ex.printStackTrace();
