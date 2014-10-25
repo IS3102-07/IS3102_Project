@@ -2,11 +2,14 @@ package A8_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
+import EntityManager.ItemEntity;
 import EntityManager.MenuItemEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.SaleForecastEntity;
+import EntityManager.SalesFigureEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import KitchenManagement.FoodDemandForecastingAndPlanning.FoodDemandForecastingAndPlanningBeanLocal;
@@ -35,6 +38,8 @@ public class KitchenManagement_servlet extends HttpServlet {
     private AccountManagementBeanLocal amBean;
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
+    @EJB
+    private ItemManagementBeanLocal imBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -113,6 +118,37 @@ public class KitchenManagement_servlet extends HttpServlet {
                     ex.printStackTrace();
                 }
                 nextPage = "/A8/KitchenSaleForecast_main";
+                break;
+
+            case "/ViewSaleFigure_GET":
+                System.out.println("ViewSaleFigure_GET is called.");
+                String menuItemSKU = request.getParameter("menuItemSKU");
+                Long storeId = (long) session.getAttribute("s_storeId");
+                Long schedulelId = (long) session.getAttribute("scheduleId");
+
+                ItemEntity item = restaurantBean.getItemBySKU(menuItemSKU);
+                store = fmBean.viewStoreEntity(storeId);
+                MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
+
+                List<SalesFigureEntity> list1;
+                List<SalesFigureEntity> list2;
+                List<SalesFigureEntity> list3;
+                if (schedule.getMonth() != 1) {
+                    list1 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 2);
+                    list2 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 1);
+                    list3 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear());
+                } else {
+                    list1 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 3);
+                    list2 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 2);
+                    list3 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 1);
+                }
+                request.setAttribute("menuItem", (MenuItemEntity) item);
+                request.setAttribute("store", store);
+                request.setAttribute("schedule", schedule);
+                request.setAttribute("saleDate1", list1);
+                request.setAttribute("saleDate2", list2);
+                request.setAttribute("saleDate3", list3);
+                nextPage = "/A8/HistoricalData";
                 break;
 
         }

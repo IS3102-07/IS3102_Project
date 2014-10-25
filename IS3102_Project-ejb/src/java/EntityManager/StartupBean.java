@@ -385,6 +385,7 @@ public class StartupBean {
             List<MenuItemEntity> menuItemList = (List<MenuItemEntity>) q4.getResultList();
             
             int index = 1;
+            int ind = 1;
             for (StoreEntity store : storeList) {
                 for (MonthScheduleEntity schedule : scheduleList) {
                     for (ProductGroupEntity productGroup : productGroupList) {
@@ -418,18 +419,18 @@ public class StartupBean {
                             saleFigure.setMenuItem(menuitem);
                             saleFigure.setSchedule(schedule);
 
-                            if ((index % 5) == 0) {
+                            if ((ind % 5) == 0) {
                                 saleFigure.setQuantity(20);
-                            } else if ((index % 5) == 1) {
+                            } else if ((ind % 5) == 1) {
                                 saleFigure.setQuantity(25);
-                            } else if ((index % 5) == 2) {
+                            } else if ((ind % 5) == 2) {
                                 saleFigure.setQuantity(35);
-                            } else if ((index % 5) == 3) {
+                            } else if ((ind % 5) == 3) {
                                 saleFigure.setQuantity(40);
                             } else {
                                 saleFigure.setQuantity(30);
                             }
-                            index++;
+                            ind++;
                             em.persist(saleFigure);
                         } catch (Exception ex) {
                         }
