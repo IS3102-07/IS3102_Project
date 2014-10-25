@@ -1,7 +1,6 @@
 package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.RoleEntity;
 import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,7 +38,7 @@ public class MemberManagement_UpdateMemberServlet extends HttpServlet {
                 boolean canUpdateInfo = accountManagementBean.editMember(Long.valueOf(memberId), null, name, address, email, phone, null, null, null, null, null, null);
                 if (!canUpdateInfo) {
                     result += "?&errMsg=Error updating your particulars.";
-                    response.sendRedirect(source + result);
+                    response.sendRedirect("" + result);
                 } else {
                     MemberEntity memberEntity = accountManagementBean.getMemberByEmail(email);
                     session.setAttribute("memberEntity", memberEntity);

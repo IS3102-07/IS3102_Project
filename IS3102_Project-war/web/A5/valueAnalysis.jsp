@@ -1,4 +1,3 @@
-<%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.MemberEntity"%>
 <html lang="en">
@@ -88,6 +87,9 @@
 
                                             <br>
                                             <div class="row">
+                                                <%
+                                                    List<MemberEntity> members = (List<MemberEntity>) request.getAttribute("members");
+                                                %>
                                                 <div class="col-md-6">
                                                     <h2 class="short">Progress Bar</h2>
 

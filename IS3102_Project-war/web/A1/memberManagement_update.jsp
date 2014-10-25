@@ -56,7 +56,7 @@
                         <div class="col-lg-6">
 
                             <form role="form" action="../MemberManagement_UpdateMemberServlet" onsubmit="return validatePassword()">
-                                
+                                <input type="hidden" value="A1/memberManagement_add.jsp" name="source">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" required="true" name="name" type="text" value="<%=member.getName()%>">

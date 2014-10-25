@@ -1,8 +1,7 @@
 package A5_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.RoleEntity;
-import EntityManager.StaffEntity;
+import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -28,10 +27,8 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
 
-            List<RoleEntity> roles = accountManagementBean.listAllRoles();
-            session.setAttribute("roles", roles);
-            List<StaffEntity> staffs = accountManagementBean.listAllStaff();
-            session.setAttribute("staffs", staffs);
+            List<MemberEntity> members = accountManagementBean.listAllMember();
+            session.setAttribute("members", members);
 
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/valueAnalysis.jsp");
