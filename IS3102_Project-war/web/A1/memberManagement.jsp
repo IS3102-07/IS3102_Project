@@ -96,7 +96,6 @@
                                                             <th>Name</th>
                                                             <th>Email</th>
                                                             <th>Phone</th>
-                                                            <th>Roles</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
