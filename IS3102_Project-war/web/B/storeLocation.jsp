@@ -1,5 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.StoreEntity"%>
+<jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>

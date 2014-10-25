@@ -40,7 +40,7 @@
                     <li>
                         <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
-                    
+
 
                     <li class="dropdown mega-menu-item mega-menu-fullwidth">
                         <a class="dropdown-toggle" href="#">
@@ -163,7 +163,7 @@
                     <li>
                         <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
-                    
+
 
                     <li class="dropdown mega-menu-item mega-menu-fullwidth">
                         <a class="dropdown-toggle" href="#">
