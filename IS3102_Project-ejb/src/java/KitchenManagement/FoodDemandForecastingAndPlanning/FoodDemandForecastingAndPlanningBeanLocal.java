@@ -20,7 +20,7 @@ import javax.ejb.Local;
 public interface FoodDemandForecastingAndPlanningBeanLocal {
     
     public SaleForecastEntity getSalesForecast(Long storeId, Long menuItemId, Long scheduleId);
-    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long menuItemId, Integer year);
+    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, String menuItemSKU, Integer year);
     public Boolean generateMasterProductionSchedules(Long storeId);
     public List<MasterProductionScheduleEntity> getMasterProductionSchedules(Long storeId);
     public Boolean generateMaterialRequirementPlan(Long storeId);

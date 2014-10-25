@@ -2,11 +2,14 @@ package A8_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
+import EntityManager.ItemEntity;
 import EntityManager.MenuItemEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.SaleForecastEntity;
+import EntityManager.SalesFigureEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import KitchenManagement.FoodDemandForecastingAndPlanning.FoodDemandForecastingAndPlanningBeanLocal;
@@ -23,29 +26,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 public class KitchenManagement_servlet extends HttpServlet {
+
     @EJB
     private RestaurantManagementBeanLocal restaurantBean;
     @EJB
-    private FoodDemandForecastingAndPlanningBeanLocal fdfpBean;        
+    private FoodDemandForecastingAndPlanningBeanLocal fdfpBean;
     @EJB
     private FacilityManagementBeanLocal fmBean;
     @EJB
     private AccountManagementBeanLocal amBean;
     @EJB
     private SalesAndOperationPlanningBeanLocal sopBean;
-    
-    
+    @EJB
+    private ItemManagementBeanLocal imBean;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         System.out.println("KitchenManagement_Servlet is called");
-        
+
         String nextPage = "/KitchenManagement_servlet/KitchenSaleForecast_index_GET";
         ServletContext servletContext = getServletContext();
-        RequestDispatcher dispatcher;        
+        RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         List<MonthScheduleEntity> scheduleList;
         String target = request.getPathInfo();
@@ -60,8 +64,8 @@ public class KitchenManagement_servlet extends HttpServlet {
                 request.setAttribute("regionalOfficeList", regionalOfficeList);
                 nextPage = "/A8/KitchenSaleForecast_index";
                 break;
-                
-                case "/KitchenSaleForecast_index_POST":
+
+            case "/KitchenSaleForecast_index_POST":
                 String storeName = request.getParameter("storeName");
                 StoreEntity store = fmBean.getStoreByName(storeName);
                 StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
@@ -94,31 +98,62 @@ public class KitchenManagement_servlet extends HttpServlet {
                 try {
                     Long storeId = (long) session.getAttribute("s_storeId");
                     Long schedulelId = (long) session.getAttribute("scheduleId");
-                 
+
                     List<MenuItemEntity> menuItemList = restaurantBean.listAllMenuItem();
+                    System.out.println("menuItemList.size(): " + menuItemList.size());
                     List<SaleForecastEntity> saleForecastList = new ArrayList<>();
-                    for(MenuItemEntity menuItem: menuItemList){
+                    for (MenuItemEntity menuItem : menuItemList) {
                         SaleForecastEntity saleForecast = fdfpBean.getSalesForecast(storeId, menuItem.getId(), schedulelId);
                         saleForecastList.add(saleForecast);
                     }
-                    
+                    System.out.println("saleForecastList.size(): " + saleForecastList.size());
                     store = fmBean.viewStoreEntity(storeId);
                     MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
 
                     request.setAttribute("store", store);
                     request.setAttribute("schedule", schedule);
                     request.setAttribute("saleForecastList", saleForecastList);
-                                        
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 nextPage = "/A8/KitchenSaleForecast_main";
                 break;
-                
-            
+
+            case "/ViewSaleFigure_GET":
+                System.out.println("ViewSaleFigure_GET is called.");
+                String menuItemSKU = request.getParameter("menuItemSKU");
+                Long storeId = (long) session.getAttribute("s_storeId");
+                Long schedulelId = (long) session.getAttribute("scheduleId");
+
+                ItemEntity item = restaurantBean.getItemBySKU(menuItemSKU);
+                store = fmBean.viewStoreEntity(storeId);
+                MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
+
+                List<SalesFigureEntity> list1;
+                List<SalesFigureEntity> list2;
+                List<SalesFigureEntity> list3;
+                if (schedule.getMonth() != 1) {
+                    list1 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 2);
+                    list2 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 1);
+                    list3 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear());
+                } else {
+                    list1 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 3);
+                    list2 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 2);
+                    list3 = fdfpBean.getYearlySalesFigureList(storeId, menuItemSKU, schedule.getYear() - 1);
+                }
+                request.setAttribute("menuItem", (MenuItemEntity) item);
+                request.setAttribute("store", store);
+                request.setAttribute("schedule", schedule);
+                request.setAttribute("saleDate1", list1);
+                request.setAttribute("saleDate2", list2);
+                request.setAttribute("saleDate3", list3);
+                nextPage = "/A8/HistoricalData";
+                break;
+
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);                
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
