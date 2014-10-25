@@ -67,6 +67,7 @@ public interface FacilityManagementBeanLocal {
     public List<WarehouseEntity> getStoreWarehouseList();
     
     public List<CountryEntity> getListOfCountries();
+    public Long getCountryID(String countryName);
     
     @Remove
     public void remove();

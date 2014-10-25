@@ -823,5 +823,17 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             return null;
         }
     }
-
+    
+    @Override
+    public Long getCountryID(String countryName){
+        System.out.println("getCountryID() called.");
+        try {
+            Query q = em.createQuery("Select c from CountryEntity c where c.name=:countryName");
+            q.setParameter("countryName", countryName);
+            return (Long) q.getSingleResult();
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getListOfCountries:\n" + ex);
+            return null;
+        }
+    }
 }
