@@ -953,6 +953,10 @@
         <servlet-name>KitchenManagement_servlet</servlet-name>
         <servlet-class>A8_servlets.KitchenManagement_servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_SelectCountry</servlet-name>
+        <servlet-class>B_servlets.ECommerce_SelectCountry</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1904,6 +1908,10 @@
     <servlet-mapping>
         <servlet-name>KitchenManagement_servlet</servlet-name>
         <url-pattern>/KitchenManagement_servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_SelectCountry</servlet-name>
+        <url-pattern>/ECommerce_SelectCountry</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
