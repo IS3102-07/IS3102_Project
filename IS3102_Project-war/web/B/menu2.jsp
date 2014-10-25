@@ -40,7 +40,7 @@
                     <li>
                         <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
-                    
+
 
                     <li class="dropdown mega-menu-item mega-menu-fullwidth">
                         <a class="dropdown-toggle" href="#">
@@ -55,10 +55,10 @@
                                             <ul class="sub-menu">
                                                 <li>
                                                     <ul class="sub-menu">
-                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Bathroom</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-linux"></i> Bedroom</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-male"></i> Children</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Cooking</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Tables & Desk</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-linux"></i> Bathroom</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-male"></i> Beds & Mattresses</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Sofas & Chair</a></li>
                                                         <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Decoration</a></li>
                                                     </ul>
                                                 </li>
@@ -163,7 +163,7 @@
                     <li>
                         <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
-                    
+
 
                     <li class="dropdown mega-menu-item mega-menu-fullwidth">
                         <a class="dropdown-toggle" href="#">

@@ -11,7 +11,7 @@
 
             <div role="main" class="main">
 
-                <section class="parallax" data-stellar-background-ratio="0.5" style="background-image: url(img/map.JPG); opacity: 0.2">
+                <section class="parallax" data-stellar-background-ratio="0.5" style="background-image: url(img/map.JPG); ">
                     <div class="container">
 
                         <div class="container" >
@@ -35,8 +35,8 @@
                                             <a href="../ECommerce_SelectCountry?Country=China"><h3>China</h3></a>
                                         </div>
                                         <div class="col-md-3" >
-                                            <h1 style="color: white">International</h1>
-                                            <a href="../ECommerce_SelectCountry?Country=English"><h3>English</h3></a>
+                                            <h1 style="color: white">Global</h1>
+                                            <a href="../ECommerce_SelectCountry?Country=International"><h3>International</h3></a>
                                         </div>
                                     </div>
                                 </div>

@@ -73,7 +73,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     .setParameter(3, scheduleId);            
 
             if (q.getResultList().isEmpty()) {                
-
+                System.out.println("q.getResultList().isEmpty()");
                 // if not exist, then create it
                 MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
                 StoreEntity store = em.find(StoreEntity.class, storeId);
@@ -93,7 +93,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                                 .setParameter(3, lastSchedule.getId());
 
                         if (!q2.getResultList().isEmpty()) {                            
-
+                            System.out.println("!q2.getResultList().isEmpty()");
                             SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
                             amount += salesFigureEntity.getQuantity();
                         }
@@ -118,11 +118,11 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
-    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long menuItemId, Integer year) {
+    public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, String menuItemSKU, Integer year) {
         try {
-            Query q = em.createQuery("select s from SalesFigureEntity s where s.store.id = ?1 AND s.menuItem.id = ?2 AND s.schedule.year = ?3 ")
+            Query q = em.createQuery("select s from SalesFigureEntity s where s.store.id = ?1 AND s.menuItem.SKU = ?2 AND s.schedule.year = ?3 ")
                     .setParameter(1, StoreId)
-                    .setParameter(2, menuItemId)
+                    .setParameter(2, menuItemSKU)
                     .setParameter(3, year);
             return q.getResultList();
         } catch (Exception ex) {

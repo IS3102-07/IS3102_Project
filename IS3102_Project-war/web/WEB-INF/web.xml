@@ -957,6 +957,10 @@
         <servlet-name>ECommerce_SelectCountry</servlet-name>
         <servlet-class>B_servlets.ECommerce_SelectCountry</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>A8/HistoricalData</servlet-name>
+        <jsp-file>/A8/HistoricalData.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1912,6 +1916,10 @@
     <servlet-mapping>
         <servlet-name>ECommerce_SelectCountry</servlet-name>
         <url-pattern>/ECommerce_SelectCountry</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/HistoricalData</servlet-name>
+        <url-pattern>/A8/HistoricalData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

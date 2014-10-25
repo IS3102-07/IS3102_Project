@@ -1,6 +1,7 @@
 <%@page import="EntityManager.MemberEntity"%>
 <%@page import="EntityManager.LoyaltyTierEntity"%>
 <%@page import="java.util.List;"%>
+<jsp:include page="checkCountry.jsp" />
 <html> 
     <jsp:include page="header.html" />
     <body>

@@ -1,6 +1,7 @@
 <%@page import="EntityManager.ShoppingListEntity"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
