@@ -951,7 +951,7 @@
     </servlet>
     <servlet>
         <servlet-name>KitchenManagement_servlet</servlet-name>
-        <servlet-class>A8_servlet.KitchenManagement_servlet</servlet-class>
+        <servlet-class>A8_servlets.KitchenManagement_servlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
