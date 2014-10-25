@@ -962,8 +962,8 @@
         <jsp-file>/A8/HistoricalData.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>A8/KitchenDemandManagement</servlet-name>
-        <jsp-file>/A8/KitchenDemandManagement.jsp</jsp-file>
+        <servlet-name>MemberManagement_SalesRecordServlet</servlet-name>
+        <servlet-class>A1_servlets.MemberManagement_SalesRecordServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -1926,8 +1926,8 @@
         <url-pattern>/A8/HistoricalData</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>A8/KitchenDemandManagement</servlet-name>
-        <url-pattern>/A8/KitchenDemandManagement</url-pattern>
+        <servlet-name>MemberManagement_SalesRecordServlet</servlet-name>
+        <url-pattern>/MemberManagement_SalesRecordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -8,9 +8,9 @@
     <body>
         <script>
             function viewSalesRecordDetails(id) {
-                memberManagement.id.value = id;
-                document.memberManagement.action = "memberManagement_viewSalesRecordDetails.jsp";
-                document.memberManagement.submit();
+                viewSalesRecord.id.value = id;
+                document.viewSalesRecord.action = "../MemberManagement_SalesRecordServlet";
+                document.viewSalesRecord.submit();
             }
         </script>
 
@@ -89,7 +89,7 @@
                                                                 <%=salesRecords.get(i).getAmountDue()%>
                                                             </td>                                                          
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=salesRecords.get(i).getId()%>" value="View Details" onclick="javascript:viewSalesRecordDetails('<%=salesRecords.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=salesRecords.get(i).getId()%>" value="View Details" onclick="viewSalesRecordDetails('<%=salesRecords.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>                                                    
                                                         <%}

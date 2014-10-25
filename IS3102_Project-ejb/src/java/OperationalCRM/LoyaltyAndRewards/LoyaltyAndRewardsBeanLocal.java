@@ -2,6 +2,7 @@ package OperationalCRM.LoyaltyAndRewards;
 
 import EntityManager.LoyaltyTierEntity;
 import EntityManager.MemberEntity;
+import EntityManager.ShoppingListEntity;
 import HelperClasses.ReturnHelper;
 import java.util.List;
 import javax.ejb.Local;
@@ -22,4 +23,5 @@ public interface LoyaltyAndRewardsBeanLocal {
     
     public Boolean createSyncWithPhoneRequest(String qrCode);
     public String getSyncWithPhoneStatus(String qrCode);
+    public ShoppingListEntity getMemberShoppingList(String email);
 }
