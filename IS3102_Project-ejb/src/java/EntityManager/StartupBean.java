@@ -309,8 +309,14 @@ public class StartupBean {
             em.persist(furnitureEntity);
             furnitureEntity = new FurnitureEntity("F3", "Table 2", "Tables & Desks", "The table top in tempered glass is stain resistant and easy to clean. Adjustable feet make the table stand steady also on uneven floors.", "imageURL", 99, 71, 52);
             em.persist(furnitureEntity);
-            RawMaterialEntity rawMaterialEntity = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
-            em.persist(rawMaterialEntity);
+            RawMaterialEntity rawMaterialEntity1 = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
+            em.persist(rawMaterialEntity1);
+            RawMaterialEntity rawMaterialEntity2 = new RawMaterialEntity("RM2", "Steel", "Metal", "A piece of steel", 1, 1, 1);
+            em.persist(rawMaterialEntity2);
+            MenuItemEntity menuItem1 = new MenuItemEntity("MI1", "Chicken Rice", "Main", "hao wei dao, bu jie shi", "url", 1, 1, 1);
+            em.persist(menuItem1);
+            MenuItemEntity menuItem2 = new MenuItemEntity("MI2", "Salad", "Sides", "hao wei dao, bu jie shi", "url", 1, 1, 1);
+            em.persist(menuItem2);
             //Set lead time, lot size, price
 //            Query q = em.createQuery("select t from SupplierEntity t where t.supplierName='Supplier 1'");
 //            SupplierEntity supplierEntity = (SupplierEntity) q.getSingleResult();

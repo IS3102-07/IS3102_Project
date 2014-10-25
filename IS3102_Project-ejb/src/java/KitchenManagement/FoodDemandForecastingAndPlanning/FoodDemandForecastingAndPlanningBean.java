@@ -73,7 +73,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     .setParameter(3, scheduleId);            
 
             if (q.getResultList().isEmpty()) {                
-
+                System.out.println("q.getResultList().isEmpty()");
                 // if not exist, then create it
                 MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
                 StoreEntity store = em.find(StoreEntity.class, storeId);
@@ -93,7 +93,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                                 .setParameter(3, lastSchedule.getId());
 
                         if (!q2.getResultList().isEmpty()) {                            
-
+                            System.out.println("!q2.getResultList().isEmpty()");
                             SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
                             amount += salesFigureEntity.getQuantity();
                         }
