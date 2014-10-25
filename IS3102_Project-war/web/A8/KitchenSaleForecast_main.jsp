@@ -97,7 +97,7 @@
                                                     </tbody>
                                                 </table>                                                    
                                             </form>                                              
-
+                                            <a href="KitchenDemandManagement_GET"><span class="btn btn-primary">Kitchen Demand Management</span></a>
                                         </div>
                                     </div>
                                     <!-- /.table-responsive -->

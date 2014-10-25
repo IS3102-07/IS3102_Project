@@ -47,7 +47,7 @@
                                         <thead>
                                             <tr>                                                            
                                                 <th>SKU</th>
-                                                <th>Product Name</th>                                                            
+                                                <th>Menu Item Name</th>
                                                 <th>Production Amount</th>
                                                 <th>Week 1</th>
                                                 <th>Week 2</th>
@@ -62,8 +62,8 @@
                                                 for (MasterProductionScheduleEntity mps : mpsList) {
                                             %>
                                             <tr>    
-                                                <td><%= mps.getFurniture().getSKU() %></td>
-                                                <td><%= mps.getFurniture().getName() %></td>
+                                                <td><%= mps.getMenuItem().getSKU() %></td>
+                                                <td><%= mps.getMenuItem().getName() %></td>
                                                 <td><%= mps.getAmount_month() %></td>
                                                 <td><%= mps.getAmount_week1() %></td>
                                                 <td><%= mps.getAmount_week2() %></td>

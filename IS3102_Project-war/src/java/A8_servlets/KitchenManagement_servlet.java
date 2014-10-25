@@ -154,7 +154,8 @@ public class KitchenManagement_servlet extends HttpServlet {
                 nextPage = "/A8/HistoricalData";
                 break;
 
-            case "_GET":
+            case "/KitchenDemandManagement_GET":
+                System.out.println("KitchenDemandManagement_GET is called");
                 store = (StoreEntity)session.getAttribute("k_store");                
                 List<MasterProductionScheduleEntity> mpsList = new ArrayList<>();
                 if(fdfpBean.generateMasterProductionSchedules(store.getId())){
@@ -163,6 +164,7 @@ public class KitchenManagement_servlet extends HttpServlet {
                     System.out.println("mpsList.size(): " + mpsList.size());
                 }
                 request.setAttribute("mpsList", mpsList);
+                nextPage = "/A8/KitchenDemandManagement";
                 break;
                 
             case "_POST":
