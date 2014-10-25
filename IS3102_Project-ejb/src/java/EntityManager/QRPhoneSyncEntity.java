@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class PhoneSyncEntity implements Serializable {
+public class QRPhoneSyncEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,8 +15,8 @@ public class PhoneSyncEntity implements Serializable {
     private String qrCode;
     private String memberEmail;
 
-    public PhoneSyncEntity(){}
-    public PhoneSyncEntity(String qrCode) {
+    public QRPhoneSyncEntity(){}
+    public QRPhoneSyncEntity(String qrCode) {
         this.qrCode = qrCode;
     }
     
@@ -54,10 +54,10 @@ public class PhoneSyncEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PhoneSyncEntity)) {
+        if (!(object instanceof QRPhoneSyncEntity)) {
             return false;
         }
-        PhoneSyncEntity other = (PhoneSyncEntity) object;
+        QRPhoneSyncEntity other = (QRPhoneSyncEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

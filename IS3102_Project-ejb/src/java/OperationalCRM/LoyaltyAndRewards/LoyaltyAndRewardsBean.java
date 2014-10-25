@@ -3,6 +3,7 @@ package OperationalCRM.LoyaltyAndRewards;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.LoyaltyTierEntity;
 import EntityManager.MemberEntity;
+import EntityManager.QRPhoneSyncEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ReturnHelper;
 import java.util.ArrayList;
@@ -204,6 +205,39 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         } catch (Exception ex) {
             ex.printStackTrace();
             return new ArrayList();
+        }
+    }
+    
+    @Override
+    public Boolean createSyncWithPhoneRequest(String qrCode) {
+        System.out.println("createSyncWithPhoneRequest() called");
+        try {
+            QRPhoneSyncEntity phoneSyncEntity = new QRPhoneSyncEntity(qrCode);
+            em.persist(phoneSyncEntity);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("createSyncWithPhoneRequest(): Error");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public String getSyncWithPhoneStatus(String qrCode) {
+        System.out.println("getSyncWithPhoneStatus() called");
+        try {
+            Query q = em.createQuery("SELECT p from PhoneSyncEntity p where p.qrCode=:qrCode");
+            q.setParameter("qrCode", qrCode);
+            QRPhoneSyncEntity phoneSyncEntity = (QRPhoneSyncEntity) q.getSingleResult();
+            if (phoneSyncEntity == null || phoneSyncEntity.getMemberEmail() == null) {
+                return null;
+            } else {
+                return phoneSyncEntity.getMemberEmail();
+            }
+        } catch (Exception ex) {
+            System.out.println("getSyncWithPhoneStatus(): Error");
+            ex.printStackTrace();
+            return null;
         }
     }
 

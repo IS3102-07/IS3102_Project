@@ -19,4 +19,7 @@ public interface LoyaltyAndRewardsBeanLocal {
     public ReturnHelper deleteLoyaltyTier(Long tierID);
     public LoyaltyTierEntity getLoyaltyTierByName(String name);
     public List<LoyaltyTierEntity> getAllLoyaltyTiers();
+    
+    public Boolean createSyncWithPhoneRequest(String qrCode);
+    public String getSyncWithPhoneStatus(String qrCode);
 }
