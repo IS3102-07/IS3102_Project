@@ -15,6 +15,7 @@ public class PhoneSyncEntity implements Serializable {
     private String qrCode;
     private String memberEmail;
 
+    public PhoneSyncEntity(){}
     public PhoneSyncEntity(String qrCode) {
         this.qrCode = qrCode;
     }
