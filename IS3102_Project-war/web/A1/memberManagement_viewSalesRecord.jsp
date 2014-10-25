@@ -6,7 +6,14 @@
 
     <jsp:include page="../header2.html" />
     <body>
-        
+        <script>
+            function viewSalesRecordDetails(id) {
+                memberManagement.id.value = id;
+                document.memberManagement.action = "memberManagement_viewSalesRecordDetails.jsp";
+                document.memberManagement.submit();
+            }
+        </script>
+
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
@@ -47,6 +54,7 @@
                                                             <th>Receipt No</th>
                                                             <th>Created Date</th>     
                                                             <th>Store</th>
+                                                            <th>Price</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -55,14 +63,14 @@
                                                             try {
                                                                 String id = request.getParameter("id");
                                                                 List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));
-                                                                MemberEntity member = new MemberEntity();                                                             
+                                                                MemberEntity member = new MemberEntity();
                                                                 for (int i = 0; i < members.size(); i++) {
                                                                     if (members.get(i).getId() == Integer.parseInt(id)) {
                                                                         member = members.get(i);
                                                                     }
                                                                 }
-                                                                List<SalesRecordEntity> salesRecords = member.getPurchases();                                                          
-                                                                for (int i = 0; i < salesRecords.size(); i++) {                                                                                                                                 
+                                                                List<SalesRecordEntity> salesRecords = member.getPurchases();
+                                                                for (int i = 0; i < salesRecords.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
@@ -78,25 +86,35 @@
                                                                 <%=salesRecords.get(i).getStore().getName()%>
                                                             </td>
                                                             <td>
+                                                                <%=salesRecords.get(i).getAmountDue()%>
+                                                            </td>                                                          
+                                                            <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=salesRecords.get(i).getId()%>" value="View Details" onclick="javascript:viewSalesRecordDetails('<%=salesRecords.get(i).getId()%>')"/>
                                                             </td>
-                                                        </tr>
+                                                        </tr>                                                    
+                                                        <%}
+                                                            } catch (Exception ex) {
+                                                                response.sendRedirect("../MemberManagement_MemberServlet");
+                                                            }%>
                                                     </tbody>
+                                                </table>
                                             </div>
+                                            <input type="hidden" name="id" value="">    
                                         </div>
-                                        <%}
-                                            } catch (Exception ex) {
-                                                response.sendRedirect("../MemberManagement_MemberServlet");
-                                            }%>
                                     </div>
-                                </table>
+                                </form>
                             </div>
                         </div>
+                        <!-- /.panel-body -->
+
                     </div>
                 </div>
             </div>
-            <!-- /.panel-body -->
-        </form>
-    </div>
-</body>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('#dataTables-example').dataTable();
+            });
+        </script>
+    </body>
 </html>
