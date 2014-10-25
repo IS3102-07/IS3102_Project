@@ -11,7 +11,7 @@
                 memberManagement.id.value = id;
                 document.memberManagement.action = "memberManagement_viewSalesRecord.jsp";
                 document.memberManagement.submit();
-            }         
+            }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -62,7 +62,7 @@
                                 <form name="memberManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            
+
                                             <br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -99,9 +99,7 @@
                                                             <td>
                                                                 <%=members.get(i).getPhone()%>
                                                             </td>
-                                                            <td>
 
-                                                            </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=members.get(i).getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=members.get(i).getId()%>')"/>
                                                             </td>
@@ -115,7 +113,7 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
-                                            
+
                                             <input type="hidden" name="id" value="">    
                                         </div>
 
@@ -137,24 +135,6 @@
 
         </div>
         <!-- /#wrapper -->
-
-
-        <div role="dialog" class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Alert</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p id="messageBox">Member will be removed. Are you sure?</p>
-                    </div>
-                    <div class="modal-footer">                        
-                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeMember()"  />
-                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
