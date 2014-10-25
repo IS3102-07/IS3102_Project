@@ -44,12 +44,19 @@ public abstract class ItemEntity implements Serializable {
     private String category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     private List<Supplier_ItemEntity> suppliers;    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    private List<Store_ItemEntity> stores;   
 
     public ItemEntity() {
         this.itemCountryList = new ArrayList<>();
+        this.suppliers = new ArrayList();
+        this.stores = new ArrayList();
     }
 
     public ItemEntity(String SKU, Integer _length, Integer width, Integer height) {
+        this.itemCountryList = new ArrayList<>();
+        this.suppliers = new ArrayList();
+        this.stores = new ArrayList();
         this.SKU = SKU;
         this._length = _length;
         this.width = width;
@@ -64,6 +71,30 @@ public abstract class ItemEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<Store_ItemEntity> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<Store_ItemEntity> stores) {
+        this.stores = stores;
     }
 
     public Boolean getIsDeleted() {
