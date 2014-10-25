@@ -97,11 +97,11 @@
                                                                 <%=member.getEmail()%>
                                                             </td>
                                                             <td>
-                                                                <%=members.get(i).getPhone()%>
+                                                                <%=member.getPhone()%>
                                                             </td>
 
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=members.get(i).getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=members.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=member.getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=member.getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
