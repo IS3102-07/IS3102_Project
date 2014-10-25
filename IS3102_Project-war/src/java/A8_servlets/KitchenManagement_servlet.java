@@ -1,4 +1,4 @@
-package A8_servlet;
+package A8_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
