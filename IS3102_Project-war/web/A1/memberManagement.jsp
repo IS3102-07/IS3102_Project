@@ -7,34 +7,11 @@
 
     <body>
         <script>
-            function updateMember(id) {
+            function viewSalesRecord(id) {
                 memberManagement.id.value = id;
-                document.memberManagement.action = "../MemberManagement_UpdateMemberServlet";
+                document.memberManagement.action = "memberManagement_viewSalesRecord.jsp";
                 document.memberManagement.submit();
-            }
-            function removeMember() {
-                checkboxes = document.getElementsByName('delete');
-                var numOfTicks = 0;
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    if (checkboxes[i].checked) {
-                        numOfTicks++;
-                    }
-                }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = true;
-                    document.memberManagement.action = "../MemberManagement_MemberServlet";
-                    document.memberManagement.submit();
-                } else {
-                    window.event.returnValue = true;
-                    document.memberManagement.action = "../MemberManagement_RemoveMemberServlet";
-                    document.memberManagement.submit();
-                }
-            }
-            function addMember() {
-                window.event.returnValue = true;
-                document.memberManagement.action = "memberManagement_add.jsp";
-                document.memberManagement.submit();
-            }
+            }         
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -126,7 +103,7 @@
 
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=members.get(i).getId()%>" value="Update" onclick="javascript:updateMember('<%=members.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=members.get(i).getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=members.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%

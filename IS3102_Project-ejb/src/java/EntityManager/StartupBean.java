@@ -78,6 +78,23 @@ public class StartupBean {
                 System.out.println("Skipping creating of roles:\n" + ex);
                 ex.printStackTrace();
             }
+            Long goldLoyaltyTierID = 1L;
+            try {
+                LoyaltyTierEntity loyaltyTierEntity;
+                loyaltyTierEntity = new LoyaltyTierEntity("Gold", 5000.0);
+                em.persist(loyaltyTierEntity);
+                goldLoyaltyTierID = loyaltyTierEntity.getId();
+                loyaltyTierEntity = new LoyaltyTierEntity("Silver", 3000.0);
+                em.persist(loyaltyTierEntity);
+                loyaltyTierEntity = new LoyaltyTierEntity("Bronze", 1000.0);
+                em.persist(loyaltyTierEntity);
+                loyaltyTierEntity = new LoyaltyTierEntity("Classic", 0.0);
+                em.persist(loyaltyTierEntity);
+
+            } catch (Exception ex) {
+                System.out.println("Skipping creating of loyalty tiers\n" + ex);
+                ex.printStackTrace();
+            }
             try {
                 //Create administrator account
                 StaffEntity staffEntity = new StaffEntity();
@@ -125,6 +142,8 @@ public class StartupBean {
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(150);
                 memberEntity.setLoyaltyCardId("F2E5A75D9000");
+                LoyaltyTierEntity loyaltyTierEntity = em.getReference(LoyaltyTierEntity.class, goldLoyaltyTierID);
+                memberEntity.setLoyaltyTier(loyaltyTierEntity);
                 em.persist(memberEntity);
                 memberEntity = new MemberEntity();
                 passwordSalt = accountManagementBean.generatePasswordSalt();
@@ -133,6 +152,7 @@ public class StartupBean {
                 memberEntity.setAccountActivationStatus(true);
                 memberEntity.setLoyaltyPoints(500);
                 memberEntity.setLoyaltyCardId("32D3A75D9000");
+                memberEntity.setLoyaltyTier(loyaltyTierEntity);
                 em.persist(memberEntity);
                 System.out.println("Created member with ID:member@if.com and PW:member.");
             } catch (Exception ex) {
@@ -331,21 +351,6 @@ public class StartupBean {
         }
 
         try {
-            LoyaltyTierEntity loyaltyTierEntity;
-            loyaltyTierEntity = new LoyaltyTierEntity("Gold", 5000.0);
-            em.persist(loyaltyTierEntity);
-            loyaltyTierEntity = new LoyaltyTierEntity("Silver", 3000.0);
-            em.persist(loyaltyTierEntity);
-            loyaltyTierEntity = new LoyaltyTierEntity("Bronze", 1000.0);
-            em.persist(loyaltyTierEntity);
-            loyaltyTierEntity = new LoyaltyTierEntity("Classic", 0.0);
-            em.persist(loyaltyTierEntity);
-
-        } catch (Exception ex) {
-            System.out.println("Skipping creating of loyalty tiers\n" + ex);
-            ex.printStackTrace();
-        }
-        try {
             //Item_Country pricing
             Query q = em.createQuery("Select c from CountryEntity c where c.name='Singapore'");
             CountryEntity c = (CountryEntity) q.getSingleResult();
@@ -383,7 +388,7 @@ public class StartupBean {
             List<MonthScheduleEntity> scheduleList = (List<MonthScheduleEntity>) q3.getResultList();
             Query q4 = em.createQuery("select m from MenuItemEntity m");
             List<MenuItemEntity> menuItemList = (List<MenuItemEntity>) q4.getResultList();
-            
+
             int index = 1;
             int ind = 1;
             for (StoreEntity store : storeList) {
@@ -411,8 +416,8 @@ public class StartupBean {
                         } catch (Exception ex) {
                         }
                     }
-                    
-                    for(MenuItemEntity menuitem: menuItemList){
+
+                    for (MenuItemEntity menuitem : menuItemList) {
                         try {
                             SalesFigureEntity saleFigure = new SalesFigureEntity();
                             saleFigure.setStore(store);
@@ -435,7 +440,7 @@ public class StartupBean {
                         } catch (Exception ex) {
                         }
                     }
-                    
+
                 }
             }
 
