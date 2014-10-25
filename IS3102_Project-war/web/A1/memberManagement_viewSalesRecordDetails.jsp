@@ -7,13 +7,24 @@
 
     <jsp:include page="../header2.html" />
     <body>
-
+        <%
+            try {
+                String id = (String) (session.getAttribute("id"));
+                List<SalesRecordEntity> salesRecords = (List<SalesRecordEntity>) (session.getAttribute("salesRecords"));
+                SalesRecordEntity salesRecord = new SalesRecordEntity();
+                for (int i = 0; i < salesRecords.size(); i++) {
+                    if (salesRecords.get(i).getId() == Integer.parseInt(id)) {
+                        salesRecord = salesRecords.get(i);
+                    }
+                }
+        %>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
+
                             <h1 class="page-header">View Sales Record Details</h1>
                             <ol class="breadcrumb">
                                 <li>
@@ -22,8 +33,9 @@
                                 <li class="active">
                                     <i class="icon icon-users"></i> <a href="memberManagement.jsp"> Member Management </a>                                 
                                 </li>
+
                                 <li class="active">
-                                    <i class="icon icon-users"></i> <a href="memberManagement_viewSalesRecord.jsp"> View Sales Record</a>                                 
+                                    <i class="icon icon-users"></i> <a href="memberManagement_viewSalesRecord.jsp?id=<%=salesRecord.getMember().getId()%>"> View Sales Record</a>                                 
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-users"></i> View Sales Record Details</a>                                 
@@ -53,18 +65,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%
-                                                            String id = request.getParameter("id");
-                                                            List<SalesRecordEntity> salesRecords = (List<SalesRecordEntity>) (session.getAttribute("salesRecord"));
-                                                            SalesRecordEntity salesRecord = new SalesRecordEntity();
-                                                            for (int i = 0; i < salesRecords.size(); i++) {
-                                                                if (salesRecords.get(i).getId() == Integer.parseInt(id)) {
-                                                                    salesRecord = salesRecords.get(i);
-                                                                }
-                                                            }
-                                                            List<LineItemEntity> lineItems = salesRecord.getItemsPurchased();
-                                                            for (int i = 0; i < lineItems.size(); i++) {
-                                                        %>
+                                                        <%   List<LineItemEntity> lineItems = salesRecord.getItemsPurchased();
+                                                            for (int i = 0; i < lineItems.size(); i++){%>
                                                         <tr>
                                                             <td>
                                                                 <%=lineItems.get(i).getItem().getSKU()%>
@@ -81,7 +83,13 @@
                                             </div>
                                         </div>
                                         <%}
+                                            }
+                                            catch (Exception ex
 
+                                            
+                                                ) {
+                                                response.sendRedirect("../MemberManagement_MemberServlet");
+                                            }
                                         %>
                                     </div>
                                     </table>
