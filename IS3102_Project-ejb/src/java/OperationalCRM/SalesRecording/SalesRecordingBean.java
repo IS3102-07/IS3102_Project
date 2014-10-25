@@ -6,7 +6,7 @@ import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.MemberEntity;
-import EntityManager.PhoneSyncEntity;
+import EntityManager.QRPhoneSyncEntity;
 import EntityManager.SalesRecordEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
@@ -124,37 +124,5 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             //TODO log that inventory cannot be updated, continue to let customer checkout
         }
         return true;
-    }
-
-    public Boolean createSyncWithPhoneRequest(String qrCode) {
-        System.out.println("createSyncWithPhoneRequest() called");
-        try {
-            PhoneSyncEntity phoneSyncEntity = new PhoneSyncEntity(qrCode);
-            em.persist(phoneSyncEntity);
-            return true;
-        } catch (Exception ex) {
-            System.out.println("createSyncWithPhoneRequest(): Error");
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public String getSyncWithPhoneStatus(String qrCode) {
-        System.out.println("getSyncWithPhoneStatus() called");
-        try {
-            Query q = em.createQuery("SELECT p from PhoneSyncEntity p where p.qrCode=:qrCode");
-            q.setParameter("qrCode", qrCode);
-            PhoneSyncEntity phoneSyncEntity = (PhoneSyncEntity) q.getSingleResult();
-            if (phoneSyncEntity == null || phoneSyncEntity.getMemberEmail() == null) {
-                return null;
-            } else {
-                return phoneSyncEntity.getMemberEmail();
-            }
-        } catch (Exception ex) {
-            System.out.println("getSyncWithPhoneStatus(): Error");
-            ex.printStackTrace();
-            return null;
-        }
     }
 }
