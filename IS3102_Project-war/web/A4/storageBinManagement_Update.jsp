@@ -57,10 +57,14 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../StoreStorageBinManagement_UpdateServlet">
+                            <form role="form" action="../StoreStorageBinManagement_UpdateServlet">                             
                                 <div class="form-group">
                                     <label>Type</label>
                                     <input class="form-control" name="type" type="text" value="<%=storageBin.getType()%>" disabled >
+                                </div>
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input class="form-control" name="name" type="text" value="<%=storageBin.getName()%>"required="true">
                                 </div>
                                 <div class="form-group">
                                     <label>Length</label>

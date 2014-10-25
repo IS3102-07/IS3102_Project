@@ -24,12 +24,13 @@ public class StorageBinManagement_AddServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+            String name= request.getParameter("name");
             String type = request.getParameter("type");
             String length = request.getParameter("length");
             String width = request.getParameter("width");
             String height = request.getParameter("height");
 
-            boolean canUpdate = manufacturingWarehouseManagementBean.createStorageBin(warehouseEntity.getId(), type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
+            boolean canUpdate = manufacturingWarehouseManagementBean.createStorageBin(warehouseEntity.getId(), name, type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
             if (!canUpdate) {
                 result = "?errMsg=The selected storage bin type already exist. Only one inbound and outbound storage bin can exist per warehouse. If the size of the bin was changed, update there the bin details accordingly instead of creating a new one. Alternatively, delete the bin first before trying to create one.";
                 response.sendRedirect("A3/storageBinManagement_Add.jsp" + result);

@@ -307,10 +307,7 @@
                 <a href="javascript:;" data-toggle="collapse" data-target="#store">
                     <i class="icon icon-home"></i> Store Inventory <i class="icon icon-caret-down"></i>
                 </a>
-                <ul id="store" class="collapse">
-                    <li>
-                        <a href="#">Store's Stock Transfer</a>
-                    </li>
+                <ul id="store" class="collapse">                 
                     <li>
                         <a href="../RetailWarehouseManagement_Servlet">Store's Inventory Management</a>
                     </li>

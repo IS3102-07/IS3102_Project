@@ -34,9 +34,9 @@ public class StorageBinEntity implements Serializable {
 
     }
 
-    public StorageBinEntity(WarehouseEntity warehouseEntity, String type, Integer _length, Integer width, Integer height) {
+    public StorageBinEntity(WarehouseEntity warehouseEntity, String name, String type, Integer _length, Integer width, Integer height) {
         this.warehouse = warehouseEntity;
-        this.name="";
+        this.name = name;
         this.type = type;
         this._length = _length;
         this.width = width;
