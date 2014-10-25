@@ -65,6 +65,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public SaleForecastEntity getSalesForecast(Long storeId, Long menuItemId, Long scheduleId) {
         try {
             Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
@@ -78,7 +79,6 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                 MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
                 StoreEntity store = em.find(StoreEntity.class, storeId);
                 MenuItemEntity menuItem = em.find(MenuItemEntity.class, menuItemId);                                
-
                 MonthScheduleEntity lastSchedule = schedule;
                 
                 try {
@@ -86,7 +86,6 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     for (int i = 0; i < 3; i++) {                        
 
                         lastSchedule = this.getTheBeforeOne(lastSchedule);                        
-
                         Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                                 .setParameter(1, menuItemId)
                                 .setParameter(2, storeId)
@@ -98,10 +97,9 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                             amount += salesFigureEntity.getQuantity();
                         }
                     }
-
-                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, amount / 3);                    
+                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, amount / 3);                                        
+                    em.persist(saleForecast);                    
                     return saleForecast;
-
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, 0);                    
@@ -118,6 +116,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, String menuItemSKU, Integer year) {
         try {
             Query q = em.createQuery("select s from SalesFigureEntity s where s.store.id = ?1 AND s.menuItem.SKU = ?2 AND s.schedule.year = ?3 ")
@@ -132,6 +131,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public Boolean generateMasterProductionSchedules(Long storeId) {
         System.out.println("generateMasterProductionSchedules is called.");
         try {
@@ -220,6 +220,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public List<MasterProductionScheduleEntity> getMasterProductionSchedules(Long storeId) {
         try {
             Query q = em.createQuery("select s from MonthScheduleEntity s");
@@ -239,6 +240,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
     }
     
     
+    @Override
     public Boolean generateMaterialRequirementPlan(Long storeId) {
         System.out.println("generateMaterialRequirementPlan is called.");
         try {
@@ -414,6 +416,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         return new ArrayList<>();
     }
     
+    @Override
     public Boolean generatePurchaseOrderFromMaterialRequirement(Long storeId) {
         System.out.println("generatePurchaseOrderFromMaterialRequirement is called.");
         try {

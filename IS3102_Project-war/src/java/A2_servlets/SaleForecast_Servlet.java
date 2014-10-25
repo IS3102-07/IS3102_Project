@@ -158,6 +158,8 @@ public class SaleForecast_Servlet extends HttpServlet {
                 request.setAttribute("saleDate3", list3);
                 nextPage = "/A2/ViewSaleFigure";
                 break;
+                
+            
 
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
