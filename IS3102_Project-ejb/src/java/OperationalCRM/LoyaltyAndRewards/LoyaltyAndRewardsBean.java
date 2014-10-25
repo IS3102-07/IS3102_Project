@@ -105,7 +105,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     @Override
     public ReturnHelper updateMemberLoyaltyPointsAndTier(String email, Integer pointsUsed, Double amountPaid, Long storeID) {
         System.out.println("updateMemberLoyaltyPointsAndTier() called");
-        ReturnHelper rh = new ReturnHelper(false, "Loyalty tier not updated");
+        ReturnHelper rh = new ReturnHelper(false, "");
         try {
             Query q = em.createQuery("select m from MemberEntity m where m.email=:email and m.isDeleted=false");
             q.setParameter("email", email);
@@ -124,13 +124,22 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
                 System.out.println("createSalesRecord(): Error in retriving country");
                 return new ReturnHelper(false, "System error in retriving country information.");
             }
-            //Update to new tier (if neccessary)
+            //Recalculates member tier
             List<LoyaltyTierEntity> tiers = getAllLoyaltyTiers();
+            Double currentHighestTierSpending = 0.0;
+            LoyaltyTierEntity highestTierThatFitsMember = null;
+            // Find fitting tier
             for (LoyaltyTierEntity curr : tiers) {
-                if (memberEntity.getCummulativeSpending() > curr.getAmtOfSpendingRequired()) {
-                    memberEntity.setLoyaltyTier(curr);
-                    rh = new ReturnHelper(true, "Congratulations! Your account have been upgraded to a new tier:" + curr.getTier());
+                Double currAmtOfSpendingRequired = curr.getAmtOfSpendingRequired();
+                if (memberEntity.getCummulativeSpending() >= currAmtOfSpendingRequired && currAmtOfSpendingRequired >= currentHighestTierSpending) {
+                    currentHighestTierSpending = curr.getAmtOfSpendingRequired();
+                    highestTierThatFitsMember = curr;
                 }
+            }
+            // Update to new tier (if neccessary)
+            if (!highestTierThatFitsMember.getId().equals(memberEntity.getLoyaltyTier().getId())) {
+                memberEntity.setLoyaltyTier(highestTierThatFitsMember);
+                rh = new ReturnHelper(true, "Your account tier have been updated to:" + highestTierThatFitsMember.getTier());
             }
             em.merge(memberEntity);
             return rh;
