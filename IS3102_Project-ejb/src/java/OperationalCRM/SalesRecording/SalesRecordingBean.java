@@ -6,6 +6,7 @@ import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.MemberEntity;
+import EntityManager.QRPhoneSyncEntity;
 import EntityManager.SalesRecordEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
@@ -28,7 +29,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     @EJB
     private SalesForecastBeanLocal salesForecastBean;
 
-   @PersistenceContext(unitName = "IS3102_Project-ejbPU")
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
     @EJB

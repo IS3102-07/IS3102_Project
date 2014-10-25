@@ -830,7 +830,8 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
         try {
             Query q = em.createQuery("Select c from CountryEntity c where c.name=:countryName");
             q.setParameter("countryName", countryName);
-            return (Long) q.getSingleResult();
+            CountryEntity countryEntity = (CountryEntity) q.getSingleResult();
+            return countryEntity.getId();
         } catch (Exception ex) {
             System.out.println("\nServer failed to getListOfCountries:\n" + ex);
             return null;

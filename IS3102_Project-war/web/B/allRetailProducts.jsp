@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
