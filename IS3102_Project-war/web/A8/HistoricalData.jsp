@@ -17,15 +17,15 @@
                             <h1 class="page-header">
                                 Historical Sales Figures
                             </h1>
-                            <ol class="breadcrumb">
+                            <ol class="breadcrumb">                                
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Sales Forecast</a>
                                 </li>   
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="../SaleForecast_Servlet/SaleForecast_schedule_GET">Schedule</a>
+                                    <i class="icon icon-calendar"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_schedule_GET">Schedule</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="../SaleForecast_Servlet/SaleForecast_main_GET">Dashboard</a>
+                                    <i class="icon icon-list"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_main_GET">Dashboard</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-list"></i> Historical Sales Figures
