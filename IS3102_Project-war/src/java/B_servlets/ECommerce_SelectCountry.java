@@ -1,28 +1,56 @@
 package B_servlets;
 
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ECommerce_SelectCountry extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @EJB
+    FacilityManagementBeanLocal facilityManagementBeanLocal;
 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ECommerce_SelectCountry</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ECommerce_SelectCountry at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String country = request.getParameter("Country");
+            Long countryID = facilityManagementBeanLocal.getCountryID(country);
+            session.setAttribute("countryID", countryID);
+            switch (country) {
+                case "France":
+                    response.sendRedirect("B/FRA/index.jsp");
+                    break;
+                case "USA":
+                    response.sendRedirect("B/USA/index.jsp");
+                    break;
+                case "China":
+                    response.sendRedirect("B/CN/index.jsp");
+                    break;
+                case "Singapore":
+                    response.sendRedirect("B/SG/index.jsp");
+                    break;
+                case "Malaysia":
+                    response.sendRedirect("B/MY/index.jsp");
+                    break;
+                case "Indonesia":
+                    response.sendRedirect("B/IDN/index.jsp");
+                    break;
+                default:
+                    response.sendRedirect("B/index.jsp");
+                    break;
+            }
+
+        } catch (Exception ex) {
+            out.println(ex);
+            ex.printStackTrace();
         }
     }
 

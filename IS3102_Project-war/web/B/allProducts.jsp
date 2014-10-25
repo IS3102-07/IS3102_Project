@@ -4,7 +4,7 @@
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="EntityManager.MemberEntity"%>
-
+<jsp:include page="checkCountry.jsp" />
 <%
     Boolean displayCartOption = false;
     MemberEntity member = (MemberEntity) (session.getAttribute("member"));
