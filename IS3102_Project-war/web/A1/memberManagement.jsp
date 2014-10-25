@@ -72,6 +72,8 @@
                                                         <tr>
                                                             <th><input type="checkbox" onclick="checkAll(this)" /></th>
                                                             <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>Phone</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -95,8 +97,11 @@
                                                                 <%=member.getEmail()%>
                                                             </td>
                                                             <td>
-                                                            <th>Email</th>
-                                                            <th>Phone</th>
+                                                                <%=members.get(i).getPhone()%>
+                                                            </td>
+
+                                                            <td>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=members.get(i).getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=members.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -108,10 +113,7 @@
                                             </div>
                                             <!-- /.table-responsive -->
 
-                                          
-
-                                            <td>
-                                                
+                                            <input type="hidden" name="id" value="">    
                                         </div>
 
                                     </div>
