@@ -1,4 +1,4 @@
-<%@page import="EntityManager.MasterProductionScheduleEntity"%>
+<%@page import="EntityManager.MaterialRequirementEntity"%>
 <%@page import="EntityManager.SaleAndOperationPlanEntity"%>
 <%@page import="EntityManager.RegionalOfficeEntity"%>
 <%@page import="HelperClasses.MessageHelper"%>
@@ -15,14 +15,14 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Kitchen Demand Management</h1>
+                            <h1 class="page-header">Material Requirement Planning</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-crop"></i><a href="../DemandManagement_index_GET/*"> Demand Management</a>
-                                </li>                                
+                                    <i class="icon icon-credit-card"></i>  <a href="../MRP_index_GET/*">Material Requirement Planning</a>
+                                </li>                                                               
                                 <li>
-                                    <i class="icon icon-calendar"></i><a href="#"> Master Production Schedule List</a>
-                                </li>
+                                    <i class="icon icon-list-ul"></i>  <a href="#">Material Requirement List</a>
+                                </li>   
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
@@ -47,38 +47,50 @@
                                         <thead>
                                             <tr>                                                            
                                                 <th>SKU</th>
-                                                <th>Menu Item Name</th>
-                                                <th>Production Amount</th>
-                                                <th>Week 1</th>
-                                                <th>Week 2</th>
-                                                <th>Week 3</th>
-                                                <th>Week 4</th>
-                                                <th>Week 5</th>
+                                                <th>Ingredient Name</th>                                                            
+                                                <th>Required Amount</th>                                                
+                                                <th>Required Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <%
-                                                List<MasterProductionScheduleEntity> mpsList = (List<MasterProductionScheduleEntity>) request.getAttribute("mpsList");
-                                                for (MasterProductionScheduleEntity mps : mpsList) {
+                                                List<MaterialRequirementEntity> mrList = (List<MaterialRequirementEntity>) request.getAttribute("mrList");
+                                                for (MaterialRequirementEntity mr : mrList) {
                                             %>
                                             <tr>    
-                                                <td><%= mps.getMenuItem().getSKU() %></td>
-                                                <td><%= mps.getMenuItem().getName() %></td>
-                                                <td><%= mps.getAmount_month() %></td>
-                                                <td><%= mps.getAmount_week1() %></td>
-                                                <td><%= mps.getAmount_week2() %></td>
-                                                <td><%= mps.getAmount_week3() %></td>
-                                                <td><%= mps.getAmount_week4() %></td>
-                                                <td><%= mps.getAmount_week5() %></td>
+                                                <td><%= mr.getRawIngredient().getSKU() %></td>
+                                                <td><%= mr.getRawIngredient().getName() %></td>
+                                                <td><%= mr.getQuantity() %></td>
+                                                <td><%= mr.getSchedule().getYear() %>-<%= mr.getSchedule().getMonth()%>-<%= mr.getDay() %></td>                                                
                                             </tr>
                                             <%
                                                 }
-
                                             %>                                                                                                                                                                                                                                                                                                
-
                                         </tbody>
-                                    </table>                                                    
-                                    <a href="KitchenMaterialRequirement_GET"><span class="btn btn-primary">Generate Material Requirement</span></a>
+                                    </table> 
+
+                                    <form role="form" action="Kitchen_purchaseOrder">
+
+                                        <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Generate Purchase Orders</button></a>
+                                        
+                                        <div role="dialog" class="modal fade" id="myModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4>Alert</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p id="messageBox"><b>Purchase Orders for all Material Requirements in this month will be submitted. Continue?</b></p>
+                                                    </div>
+                                                    <div class="modal-footer">                                                                                                                                
+                                                        <button class="btn btn-primary" name="submit-btn" value="Delete Warehouse">Confirm</button>
+                                                        <a class="btn btn-default" data-dismiss ="modal">Close</a>                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>                               
 
                             </div>

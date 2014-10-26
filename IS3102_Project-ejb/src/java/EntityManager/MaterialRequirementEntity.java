@@ -29,6 +29,8 @@ public class MaterialRequirementEntity implements Serializable {
     private StoreEntity store;
     @ManyToOne
     private RawMaterialEntity rawMaterial;    
+    @ManyToOne
+    private RawIngredientEntity rawIngredient;    
     private Integer quantity;
     @ManyToOne
     private MonthScheduleEntity schedule;
@@ -44,6 +46,14 @@ public class MaterialRequirementEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public RawIngredientEntity getRawIngredient() {
+        return rawIngredient;
+    }
+
+    public void setRawIngredient(RawIngredientEntity rawIngredient) {
+        this.rawIngredient = rawIngredient;
     }
 
     public StoreEntity getStore() {

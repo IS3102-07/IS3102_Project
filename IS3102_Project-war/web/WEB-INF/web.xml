@@ -969,6 +969,10 @@
         <servlet-name>A8/KitchenDemandManagement</servlet-name>
         <jsp-file>/A8/KitchenDemandManagement.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>A8/KitchenMaterialRequirement</servlet-name>
+        <jsp-file>/A8/KitchenMaterialRequirement.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1936,6 +1940,10 @@
     <servlet-mapping>
         <servlet-name>A8/KitchenDemandManagement</servlet-name>
         <url-pattern>/A8/KitchenDemandManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>A8/KitchenMaterialRequirement</servlet-name>
+        <url-pattern>/A8/KitchenMaterialRequirement</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

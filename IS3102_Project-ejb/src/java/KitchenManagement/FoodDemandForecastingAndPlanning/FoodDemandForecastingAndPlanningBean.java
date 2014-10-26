@@ -5,18 +5,14 @@
  */
 package KitchenManagement.FoodDemandForecastingAndPlanning;
 
-import EntityManager.FurnitureEntity;
 import EntityManager.LineItemEntity;
-import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MasterProductionScheduleEntity;
 import EntityManager.MaterialRequirementEntity;
 import EntityManager.MenuItemEntity;
 import EntityManager.MonthScheduleEntity;
-import EntityManager.ProductGroupEntity;
-import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.PurchaseOrderEntity;
+import EntityManager.RawIngredientEntity;
 import EntityManager.RawMaterialEntity;
-import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.StoreEntity;
@@ -141,18 +137,18 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                 StoreEntity store = em.find(StoreEntity.class, storeId);                
                 MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
 
+                Query q0 = em.createQuery("select mr from MaterialRequirementEntity mr");
+                for(MaterialRequirementEntity mr: (List<MaterialRequirementEntity>)q0.getResultList()){
+                    em.remove(mr);
+                }
+                em.flush();
+                
                 // clear former MPSs
                 Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2")
                         .setParameter(1, storeId)
                         .setParameter(2, lastSchedule.getId());
                 List<MasterProductionScheduleEntity> formerMPSs = (List<MasterProductionScheduleEntity>) q1.getResultList();
                 for (MasterProductionScheduleEntity mps : formerMPSs) {
-//                    MaterialRequirementEntity[] mrArray = (MaterialRequirementEntity[]) mps.getMaterialRequirementList().toArray();
-//                    for (MaterialRequirementEntity mr : mrArray) {
-//                        mps.getMaterialRequirementList().remove(mr);
-//                        em.remove(mr);
-//                        em.flush();
-//                    }
                     em.remove(mps);
                 }
                 em.flush();
@@ -260,12 +256,13 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
             
             for (MasterProductionScheduleEntity mps : mpsList) {
                 for (LineItemEntity lineItem : mps.getMenuItem().getRecipe().getListOfLineItems()) {
-                    Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id = ?3 and mr.mps.id = ?4")
+                    Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id = ?3 and mr.mps.id = ?4")
                             .setParameter(1, storeId)
                             .setParameter(2, lineItem.getItem().getSKU())
                             .setParameter(3, schedule.getId())
                             .setParameter(4, mps.getId());
                     List<MaterialRequirementEntity> mrList = (List<MaterialRequirementEntity>) q2.getResultList();
+                    System.out.println("mrList.getSize(): " + mrList.size());
                     for (MaterialRequirementEntity mr : mrList) {
                         em.remove(mr);
                     }
@@ -285,8 +282,8 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         MaterialRequirementEntity MR1 = new MaterialRequirementEntity();
                         MR1.setStore(store);
                         MR1.setMps(mps);
-                        MR1.setRawMaterial((RawMaterialEntity) lineItem.getItem());
-                        MR1.setQuantity(mps.getAmount_week1() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                        MR1.setRawIngredient((RawIngredientEntity) lineItem.getItem());                        
+                        MR1.setQuantity(mps.getAmount_week1() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                         MR1.setSchedule(schedule);
                         MR1.setDay(1);
                         em.persist(MR1);
@@ -309,8 +306,8 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         MaterialRequirementEntity MR2 = new MaterialRequirementEntity();
                         MR2.setStore(store);
                         MR2.setMps(mps);
-                        MR2.setRawMaterial((RawMaterialEntity) lineItem.getItem());
-                        MR2.setQuantity(mps.getAmount_week2() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                        MR2.setRawIngredient((RawIngredientEntity) lineItem.getItem());
+                        MR2.setQuantity(mps.getAmount_week2() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                         MR2.setSchedule(schedule);
                         MR2.setDay(calendar.get(Calendar.DAY_OF_MONTH));
                         em.persist(MR2);
@@ -332,8 +329,8 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         MaterialRequirementEntity MR3 = new MaterialRequirementEntity();
                         MR3.setStore(store);
                         MR3.setMps(mps);
-                        MR3.setRawMaterial((RawMaterialEntity) lineItem.getItem());
-                        MR3.setQuantity(mps.getAmount_week3() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                        MR3.setRawIngredient((RawIngredientEntity) lineItem.getItem());
+                        MR3.setQuantity(mps.getAmount_week3() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                         MR3.setSchedule(schedule);
                         MR3.setDay(calendar.get(Calendar.DAY_OF_MONTH));
                         em.persist(MR3);
@@ -355,8 +352,8 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         MaterialRequirementEntity MR4 = new MaterialRequirementEntity();
                         MR4.setStore(store);
                         MR4.setMps(mps);
-                        MR4.setRawMaterial((RawMaterialEntity) lineItem.getItem());
-                        MR4.setQuantity(mps.getAmount_week4() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                        MR4.setRawIngredient((RawIngredientEntity) lineItem.getItem());
+                        MR4.setQuantity(mps.getAmount_week4() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                         MR4.setSchedule(schedule);
                         MR4.setDay(calendar.get(Calendar.DAY_OF_MONTH));
                         em.persist(MR4);
@@ -379,8 +376,8 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                             MaterialRequirementEntity MR5 = new MaterialRequirementEntity();
                             MR5.setStore(store);
                             MR5.setMps(mps);
-                            MR5.setRawMaterial((RawMaterialEntity) lineItem.getItem());
-                            MR5.setQuantity(mps.getAmount_week5() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize());
+                            MR5.setRawIngredient((RawIngredientEntity) lineItem.getItem());
+                            MR5.setQuantity(mps.getAmount_week5() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                             MR5.setSchedule(schedule);
                             MR5.setDay(calendar.get(Calendar.DAY_OF_MONTH));
                             em.persist(MR5);
@@ -429,13 +426,13 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
             calendar.set(Calendar.YEAR, schedule.getYear());
             calendar.set(Calendar.MONTH, schedule.getMonth());
 
-            Query q1 = em.createQuery("select rm from RawMaterialEntity rm");
-            List<RawMaterialEntity> rmList = (List<RawMaterialEntity>) q1.getResultList();
+            Query q1 = em.createQuery("select rm from RawIngredientEntity rm");
+            List<RawIngredientEntity> rmList = (List<RawIngredientEntity>) q1.getResultList();
 
-            for (RawMaterialEntity rm : rmList) {
+            for (RawIngredientEntity rm : rmList) {
                 Integer stockLevel = micBean.checkItemQty(store.getWarehouse().getId(), rm.getSKU());
 
-                Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.schedule.id = ?2 and mr.rawMaterial.SKU = ?3 order by mr.day")
+                Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.schedule.id = ?2 and mr.rawIngredient.SKU = ?3 order by mr.day")
                         .setParameter(1, storeId)
                         .setParameter(2, schedule.getId())
                         .setParameter(3, rm.getSKU());
