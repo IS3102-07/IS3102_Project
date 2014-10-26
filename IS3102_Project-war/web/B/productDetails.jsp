@@ -9,7 +9,7 @@
     String sku = request.getParameter("sku");
     if (sku == null) {
 %>
-<jsp:forward page="allProducts.jsp" />
+<jsp:forward page="index.jsp" />
 <%
     }
     Boolean displayCartOption = false;
