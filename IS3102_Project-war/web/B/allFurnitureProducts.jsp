@@ -94,7 +94,7 @@
 
                                             %>
                                             <br/>
-                                            <a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>View Availability <%%></em></span></a>
+                                            <a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
 
                                         </span>
                                     </span>

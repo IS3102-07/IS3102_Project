@@ -1,9 +1,10 @@
 package B_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.FurnitureEntity;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.Item_CountryEntity;
-import EntityManager.RetailProductEntity;
+import EntityManager.StoreEntity;
+import EntityManager.WarehouseEntity;
+import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,14 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-/**
- *
- * @author yang
- */
-public class ECommerce_AllProductsServlet extends HttpServlet {
+
+public class ECommerce_StockAvailability extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
+    private StoreAndKitchenInventoryManagementBeanLocal skimb;
+    @EJB
+    private FacilityManagementBeanLocal fmb;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,13 +31,15 @@ public class ECommerce_AllProductsServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
-            List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
-            Long countryID = (Long) session.getAttribute("countryID");
-            List<Item_CountryEntity> item_countryList = itemManagementBean.listAllItemsOfCountry(countryID);
-            session.setAttribute("furnitures", furnitures);
-            session.setAttribute("item_countryList", item_countryList);
+            Long storeID = Long.parseLong(request.getParameter("storeID"));
+            String SKU = (String) request.getParameter("SKU");
+            StoreEntity storeEntity = fmb.getStoreByID(storeID);
+            WarehouseEntity warehouseEntity = storeEntity.getWarehouse();
+            String itemQty = skimb.checkItemQty(warehouseEntity.getId(), SKU)+"";
+            session.setAttribute("storeEntity", storeEntity);
+            session.setAttribute("itemQty", itemQty);
             
-            response.sendRedirect("B/allFurnitureProducts.jsp");
+            response.sendRedirect("B/stockAvailability.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

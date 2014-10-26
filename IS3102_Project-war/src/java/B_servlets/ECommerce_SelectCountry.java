@@ -1,8 +1,12 @@
 package B_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.CountryEntity;
+import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +27,19 @@ public class ECommerce_SelectCountry extends HttpServlet {
             session = request.getSession();
             String country = request.getParameter("Country");
             Long countryID = facilityManagementBeanLocal.getCountryID(country);
+            List<CountryEntity> fullCountryList = facilityManagementBeanLocal.getListOfCountries();
+            CountryEntity selectedCountry = null;
+            List<StoreEntity> storesInCountry = new ArrayList<>();
+            //List all stores in the country
+            for (CountryEntity countryEntity : fullCountryList) {
+                if (countryEntity.getId().equals(countryID)) {
+                    selectedCountry = countryEntity;
+                    storesInCountry = countryEntity.getStores();
+                    break;
+                }
+            }
             session.setAttribute("countryID", countryID);
+            session.setAttribute("storesInCountry", storesInCountry);
             switch (country) {
 //                case "France":
 //                    response.sendRedirect("B/FRA/index.jsp");
