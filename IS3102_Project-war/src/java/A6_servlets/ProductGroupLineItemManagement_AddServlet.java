@@ -30,7 +30,7 @@ public class ProductGroupLineItemManagement_AddServlet extends HttpServlet {
                 canUpdate = ItemManagementBean.addLineItemToProductGroup(Long.parseLong(productGroupId), productGroupLineItemEntity.getId());
             }
             if (!canUpdate) {
-                result = "?errMsg=Item already exist in another Product Groupd.&id=" + productGroupId;
+                result = "?errMsg=Item already exist in a Product Group.&id=" + productGroupId;
                 response.sendRedirect("A6/productGroupManagement_AddLineItem.jsp" + result);
             } else {
                 result = "?goodMsg=Line item added successfully.&id=" + productGroupId;
