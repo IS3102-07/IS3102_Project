@@ -182,7 +182,17 @@ public class KitchenManagement_servlet extends HttpServlet {
                     mrList = fdfpBean.getMaterialRequirementEntityList(storeId);
                 }
                 request.setAttribute("mrList", mrList);
-                nextPage="/A8/KitchenMaterialRequirement";
+                nextPage = "/A8/KitchenMaterialRequirement";
+                break;
+
+            case "/Kitchen_purchaseOrder":
+                storeId = (long) session.getAttribute("s_storeId");
+                if (fdfpBean.generatePurchaseOrderFromMaterialRequirement(storeId)) {
+                    request.setAttribute("alertMessage", "Purchase Orders have been generated.");
+                } else {
+                    request.setAttribute("alertMessage", "Failed To generate Purchase Orders");
+                }
+                nextPage = "/KitchenManagement_servlet/KitchenMaterialRequirement_GET";
                 break;
 
         }

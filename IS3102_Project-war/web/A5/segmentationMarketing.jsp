@@ -85,36 +85,45 @@
                                 <form name="staffManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-
                                             <br>
-
-
-
                                             <%
                                                 Double totalCustomerRevenue = (Double) session.getAttribute("totalCustomerRevenue");
                                                 List<MemberEntity> members = (List<MemberEntity>) session.getAttribute("members");
-
                                             %>
-
-
-
-
-
-
-
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     Total Customer Revenue : <%=totalCustomerRevenue%>
-
                                                     <div class="progress">
                                                         <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
                                                             <span class="sr-only">45% Complete</span>
                                                         </div>
                                                     </div>
+                                                    <table class="table table-hover">
 
-                                                    <div id="myfirstchart" style="height: 250px;"></div>
+                                                        <tr>
+                                                            <td>Id</td>
+                                                            <td>Last Purchase</td>
+                                                        </tr>
+                                                        <tbody>
 
+                                                            <%
+                                                                for (int i = 0; i < members.size(); i++) {
+                                                            %>
+                                                            <tr>
+                                                                <td> 
+                                                                    <%=members.get(i).getId()%>
+                                                                </td>
+                                                                <td>
+                                                                    <%=members.get(i).getName()%>
+                                                                </td>
+                                                            </tr>
+                                                            <%
+                                                                }
+                                                            %>
+
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    

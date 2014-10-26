@@ -137,18 +137,18 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                 StoreEntity store = em.find(StoreEntity.class, storeId);                
                 MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
 
+                Query q0 = em.createQuery("select mr from MaterialRequirementEntity mr");
+                for(MaterialRequirementEntity mr: (List<MaterialRequirementEntity>)q0.getResultList()){
+                    em.remove(mr);
+                }
+                em.flush();
+                
                 // clear former MPSs
                 Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2")
                         .setParameter(1, storeId)
                         .setParameter(2, lastSchedule.getId());
                 List<MasterProductionScheduleEntity> formerMPSs = (List<MasterProductionScheduleEntity>) q1.getResultList();
                 for (MasterProductionScheduleEntity mps : formerMPSs) {
-//                    MaterialRequirementEntity[] mrArray = (MaterialRequirementEntity[]) mps.getMaterialRequirementList().toArray();
-//                    for (MaterialRequirementEntity mr : mrArray) {
-//                        mps.getMaterialRequirementList().remove(mr);
-//                        em.remove(mr);
-//                        em.flush();
-//                    }
                     em.remove(mps);
                 }
                 em.flush();
@@ -426,13 +426,13 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
             calendar.set(Calendar.YEAR, schedule.getYear());
             calendar.set(Calendar.MONTH, schedule.getMonth());
 
-            Query q1 = em.createQuery("select rm from RawMaterialEntity rm");
-            List<RawMaterialEntity> rmList = (List<RawMaterialEntity>) q1.getResultList();
+            Query q1 = em.createQuery("select rm from RawIngredientEntity rm");
+            List<RawIngredientEntity> rmList = (List<RawIngredientEntity>) q1.getResultList();
 
-            for (RawMaterialEntity rm : rmList) {
+            for (RawIngredientEntity rm : rmList) {
                 Integer stockLevel = micBean.checkItemQty(store.getWarehouse().getId(), rm.getSKU());
 
-                Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.schedule.id = ?2 and mr.rawMaterial.SKU = ?3 order by mr.day")
+                Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.schedule.id = ?2 and mr.rawIngredient.SKU = ?3 order by mr.day")
                         .setParameter(1, storeId)
                         .setParameter(2, schedule.getId())
                         .setParameter(3, rm.getSKU());
