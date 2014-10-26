@@ -16,7 +16,7 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-archive"></i><a href="../LoyaltyManagement_Servlet"> Loyalty Management</a>
+                                    <i class="icon icon-user"></i><a href="../LoyaltyManagement_Servlet"> Loyalty Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Add Loyalty

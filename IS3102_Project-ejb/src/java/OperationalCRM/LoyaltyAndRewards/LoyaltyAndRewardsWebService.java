@@ -1,6 +1,7 @@
 package OperationalCRM.LoyaltyAndRewards;
 
 import EntityManager.MemberEntity;
+import EntityManager.ShoppingListEntity;
 import OperationalCRM.SalesRecording.SalesRecordingBeanLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -36,7 +37,12 @@ public class LoyaltyAndRewardsWebService {
     }
 
     @WebMethod
-    public String getSyncWithPhoneStatus(String qrCode) {
+    public String getSyncWithPhoneStatus(@WebParam(name="qrCode")String qrCode) {
         return LoyaltyAndRewardsBeanLocal.getSyncWithPhoneStatus(qrCode);
+    }
+    
+    @WebMethod
+    public ShoppingListEntity getMemberShoppingList(@WebParam(name="email")String email) {
+        return LoyaltyAndRewardsBeanLocal.getMemberShoppingList(email);
     }
 }

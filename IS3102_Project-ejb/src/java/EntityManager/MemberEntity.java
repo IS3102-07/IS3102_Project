@@ -189,6 +189,13 @@ public class MemberEntity implements Serializable {
     public void setAccountActivationStatus(Boolean status) {
         this.accountActivationStatus = status;
     }
+    
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+    public Integer getAge() {
+        return this.age;
+    }
 
     public String getActivationCode() {
         return activationCode;

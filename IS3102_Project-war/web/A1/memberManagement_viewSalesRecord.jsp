@@ -8,9 +8,9 @@
     <body>
         <script>
             function viewSalesRecordDetails(id) {
-                memberManagement.id.value = id;
-                document.memberManagement.action = "memberManagement_viewSalesRecordDetails.jsp";
-                document.memberManagement.submit();
+                viewSalesRecord.id.value = id;
+                document.viewSalesRecord.action = "../MemberManagement_SalesRecordServlet";
+                document.viewSalesRecord.submit();
             }
         </script>
 
@@ -26,10 +26,10 @@
                                     <i class="icon icon-users"></i> <a href="accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> <a href="memberManagement.jsp"> Member Management </a>                                 
+                                    <i class="icon icon-user"></i> <a href="memberManagement.jsp"> Member Management </a>                                 
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> View Sales Record</a>                                 
+                                    <i class="icon icon-inbox"></i> View Sales Record</a>                                 
                                 </li>
                             </ol>
                         </div>
@@ -89,7 +89,7 @@
                                                                 <%=salesRecords.get(i).getAmountDue()%>
                                                             </td>                                                          
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=salesRecords.get(i).getId()%>" value="View Details" onclick="javascript:viewSalesRecordDetails('<%=salesRecords.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=salesRecords.get(i).getId()%>" value="View Details" onclick="viewSalesRecordDetails('<%=salesRecords.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>                                                    
                                                         <%}
