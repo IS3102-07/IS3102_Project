@@ -39,6 +39,71 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
 
     }
 
+    public Boolean discountMemberLoyaltyPoints(String email) {
+        System.out.println("Server called sendActivationEmailForStaff():" + email);
+        String activationCode = "";
+        StaffEntity staff = null;
+        try {
+            Query q = em.createQuery("SELECT t FROM StaffEntity t");
+
+            for (Object o : q.getResultList()) {
+                StaffEntity i = (StaffEntity) o;
+                if (i.getEmail().equalsIgnoreCase(email)) {
+                    activationCode += i.getActivationCode();
+                    staff = em.find(StaffEntity.class, i.getId());
+
+                    System.out.println("\nServer returns activation code of staff:\n" + activationCode);
+
+                    String passwordSalt = accountManagementBean.generatePasswordSalt();
+                    String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, activationCode);
+
+                    staff.setPasswordHash(passwordHash);
+                    staff.setPasswordSalt(passwordSalt);
+                    em.merge(staff);
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
+            return false;
+        }
+
+        try {
+            Properties props = new Properties();
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtp.host", emailServerName);
+            props.put("mail.smtp.port", "25");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.debug", "true");
+            javax.mail.Authenticator auth = new SMTPAuthenticator();
+            Session session = Session.getInstance(props, auth);
+            session.setDebug(true);
+            Message msg = new MimeMessage(session);
+            if (msg != null) {
+                msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
+                msg.setSubject("Island Furniture Staff Account Activation");
+                String messageText = "Greetings from Island Furniture... \n\n"
+                        + "Here is your activation code to be keyed in in order to activate your staff account :\n\n"
+                        + "Email: " + email + "\n\n"
+                        + "Activation Code: " + activationCode + "\n\n"
+                        + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/A1/staffActivateAccount.jsp";
+                msg.setText(messageText);
+                msg.setHeader("X-Mailer", mailer);
+                Date timeStamp = new Date();
+                msg.setSentDate(timeStamp);
+                Transport.send(msg);
+            }
+            return true;
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            staff.setAccountActivationStatus(true);
+            return false;
+        }
+    }
+    
     //When staff user account is created, this function should be invoked
     public Boolean sendActivationEmailForStaff(String email) {
         System.out.println("Server called sendActivationEmailForStaff():" + email);
