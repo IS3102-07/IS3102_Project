@@ -15,6 +15,10 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
+    
+    public Integer numOfMembersInAgeGroup(Integer startAge, Integer endAge);
+    public Integer averageCummulativeSpending();
+    public Integer totalCummulativeSpending(Integer startAge, Integer endAge);
     public Double totalCustomerRevenue();
     public Integer customerLifetimeValueOfMember(Long memberId);
     public List<ItemEntity> viewSimilarProducts(Long itemId);

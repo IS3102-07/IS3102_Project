@@ -21,7 +21,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
     @EJB
     AccountManagementBeanLocal accountManagementBean;
-    
+
     public CustomerValueAnalysisBean() {
         System.out.println("\nCustomer Value Analysis Server (EJB) created.");
     }
@@ -29,6 +29,48 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     @Override
     public Integer customerLifetimeValueOfMember(Long memberId) {
         return 5;
+    }
+
+    @Override
+    public Integer totalCummulativeSpending(Integer startAge, Integer endAge) {
+        System.out.println("totalCummulativeSpending()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+
+        int numOfmembersInGroup = 0;
+        int totalCummulativeSpending = 0;
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getAge() > startAge && members.get(i).getAge() < endAge) {
+                numOfmembersInGroup++;
+                totalCummulativeSpending += members.get(i).getCummulativeSpending();
+            }
+        }
+        return totalCummulativeSpending;
+    }
+
+    @Override
+    public Integer averageCummulativeSpending() {
+        System.out.println("averageCummulativeSpending()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+
+        int totalCummulativeSpending = 0;
+        for (int i = 0; i < members.size(); i++) {
+            totalCummulativeSpending += members.get(i).getCummulativeSpending();
+        }
+        return (totalCummulativeSpending / members.size());
+    }
+
+    @Override
+    public Integer numOfMembersInAgeGroup(Integer startAge, Integer endAge) {
+        System.out.println("numOfMembersInAgeGroup()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+
+        int numOfmembersInGroup = 0;
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getAge() > startAge && members.get(i).getAge() < endAge) {
+                numOfmembersInGroup++;
+            }
+        }
+        return numOfmembersInGroup;
     }
 
     @Override
@@ -42,7 +84,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             MemberEntity member = members.get(i);
             profit += member.getCummulativeSpending();
         }
-        
+
         return profit;
     }
 
