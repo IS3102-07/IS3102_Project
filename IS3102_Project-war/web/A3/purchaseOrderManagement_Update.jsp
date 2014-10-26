@@ -251,7 +251,7 @@
                                                             <th>Item Type</th>
                                                             <th>Price (Per Lot Size)</th>
                                                             <th>Lot Size</th>
-                                                            <th>Quantity (Per Lot Size)</th>
+                                                            <th>Quantity (In Lot Size)</th>
                                                             <th>Lead Time</th>
                                                             <th>Action</th>
                                                         </tr>

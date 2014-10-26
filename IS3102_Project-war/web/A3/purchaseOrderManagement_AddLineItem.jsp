@@ -71,7 +71,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Quantity (Per Lot Size)</label>
+                                            <label>Quantity (In Lot Size)</label>
                                             <input class="form-control" name="quantity" type="number" min="1" max="9999" required="true" >
                                         </div>
                                         <div class="form-group">

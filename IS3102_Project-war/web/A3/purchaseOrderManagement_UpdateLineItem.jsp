@@ -71,7 +71,7 @@
                                             <input class="form-control" name="sku" type="text"  value="<%=lineItem.getItem().getSKU()%>" disabled/>
                                         </div>
                                         <div class="form-group">
-                                            <label>Quantity</label>
+                                            <label>Quantity (In Lot Size)</label>
                                             <input class="form-control" name="quantity" type="number" required="true"  min="1" max="9999" value="<%=lineItem.getQuantity()%>">
                                         </div>
                                         <div class="form-group">
