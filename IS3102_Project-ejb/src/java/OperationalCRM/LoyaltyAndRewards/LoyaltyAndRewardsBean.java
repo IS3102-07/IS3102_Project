@@ -226,7 +226,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     public String getSyncWithPhoneStatus(String qrCode) {
         System.out.println("getSyncWithPhoneStatus() called");
         try {
-            Query q = em.createQuery("SELECT p from PhoneSyncEntity p where p.qrCode=:qrCode");
+            Query q = em.createQuery("SELECT p from QRPhoneSyncEntity p where p.qrCode=:qrCode");
             q.setParameter("qrCode", qrCode);
             QRPhoneSyncEntity phoneSyncEntity = (QRPhoneSyncEntity) q.getSingleResult();
             if (phoneSyncEntity == null || phoneSyncEntity.getMemberEmail() == null) {
