@@ -375,4 +375,19 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return false;
         }
     }
+    
+    @Override
+    public List<TransferOrderEntity> viewLatestCompletedTransferOrders(Long warehouseId) {
+        System.out.println("viewLatestCompletedTransferOrders() called.");
+        try {
+            Query q = em.createQuery("Select t from TransferOrderEntity t where t.warehouse.id=:id and t.status='Completed' and t.isDeleted=false ORDER BY t.id desc");
+            q.setMaxResults(3);
+            q.setParameter("id", warehouseId);
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("\nServer failed to viewLatestCompletedTransferOrders():\n" + ex);
+            return null;
+        }
+    }
 }

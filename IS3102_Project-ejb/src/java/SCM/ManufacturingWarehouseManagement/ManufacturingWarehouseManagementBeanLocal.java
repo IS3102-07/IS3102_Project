@@ -42,4 +42,6 @@ public interface ManufacturingWarehouseManagementBeanLocal {
     public boolean markTransferOrderAsUnfulfilled(Long transferOrderId);
     
     public ItemEntity searchItemBySKU(String SKU);
+    
+    public List<TransferOrderEntity> viewLatestCompletedTransferOrders(Long warehouseId);
 }

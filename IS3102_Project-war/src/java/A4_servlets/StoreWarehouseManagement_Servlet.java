@@ -1,8 +1,10 @@
 package A4_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
+import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,6 +21,8 @@ public class StoreWarehouseManagement_Servlet extends HttpServlet {
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
+    @EJB
+    private ManufacturingWarehouseManagementBeanLocal mwmbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -42,6 +46,8 @@ public class StoreWarehouseManagement_Servlet extends HttpServlet {
                 double freeInbound = simbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
                 double totalOutbound = simbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
                 double freeOutbound = simbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+                List<TransferOrderEntity> latestTransferOrders = mwmbl.viewLatestCompletedTransferOrders(Long.parseLong(warehouseId));
+                session.setAttribute("latestTransferOrders", latestTransferOrders);
 
                 System.out.println("Checking total at start");
                 System.out.println("Total Pallet: "+totalPallet + " , Total Shelf: " + totalShelf + " , Total Inbound: " + totalInbound + " , Total Outbound: " + totalOutbound);

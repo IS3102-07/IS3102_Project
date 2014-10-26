@@ -114,8 +114,10 @@
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Date Created</th>
                                                             <th>Date Transferred</th>
-                                                            <th>Origin</th>
-                                                            <th>Target</th>
+                                                            <th>Origin ID</th>
+                                                            <th>Origin Name</th>
+                                                            <th>Target ID</th>
+                                                            <th>Target Name</th>
                                                             <th>Status</th>
                                                             <th>Submitted By</th>
                                                             <th>Warehouse</th>
@@ -147,7 +149,13 @@
                                                                 Bin <%=((StorageBinEntity) transferOrders.get(i).getOrigin()).getId()%>
                                                             </td>
                                                             <td>
+                                                                <%=((StorageBinEntity) transferOrders.get(i).getOrigin()).getName()%>
+                                                            </td>
+                                                            <td>
                                                                 Bin <%=((StorageBinEntity) transferOrders.get(i).getTarget()).getId()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=((StorageBinEntity) transferOrders.get(i).getTarget()).getName()%>
                                                             </td>
                                                             <td>
                                                                 <%=transferOrders.get(i).getStatus()%>

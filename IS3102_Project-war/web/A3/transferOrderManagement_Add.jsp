@@ -25,7 +25,7 @@
                                     <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li>
                                     <i class="icon icon-exchange"></i> <a href="transferOrderManagement.jsp">Transfer Order Management</a>
@@ -49,7 +49,7 @@
                                         <%
                                             List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
                                             for (int i = 0; i < storageBins.size(); i++) {
-                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getName() + " - "+storageBins.get(i).getType() + "</option>");
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin ID"+storageBins.get(i).getId()+" | " + storageBins.get(i).getName() + " - "+storageBins.get(i).getType() + "</option>");
                                             }
                                         %>
                                     </select>
@@ -60,7 +60,7 @@
                                     <select class="form-control" name="target" required="true">
                                         <%
                                             for (int i = 0; i < storageBins.size(); i++) {
-                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getName() + " - "+storageBins.get(i).getType() + "</option>");
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin ID"+storageBins.get(i).getId()+" | " + storageBins.get(i).getName() + " - "+storageBins.get(i).getType() + "</option>");
                                             }
                                         %>
                                     </select>
