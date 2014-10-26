@@ -1,8 +1,7 @@
 package A5_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.RoleEntity;
-import EntityManager.StaffEntity;
+import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
+import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpSession;
 public class Analytical_ValueAnalysisServlet extends HttpServlet {
 
     @EJB
-    private AccountManagementBeanLocal accountManagementBean;
+    private CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -27,11 +26,8 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
-
-            List<RoleEntity> roles = accountManagementBean.listAllRoles();
-            session.setAttribute("roles", roles);
-            List<StaffEntity> staffs = accountManagementBean.listAllStaff();
-            session.setAttribute("staffs", staffs);
+            Double totalCustomerRevenue = customerValueAnalysisBean.totalCustomerRevenue();
+            session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
 
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/valueAnalysis.jsp");

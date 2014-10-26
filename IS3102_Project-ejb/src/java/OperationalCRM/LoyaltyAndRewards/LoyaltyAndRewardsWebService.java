@@ -45,4 +45,9 @@ public class LoyaltyAndRewardsWebService {
     public ShoppingListEntity getMemberShoppingList(@WebParam(name="email")String email) {
         return LoyaltyAndRewardsBeanLocal.getMemberShoppingList(email);
     }
+    
+    @WebMethod
+    public Boolean tieMemberToSyncRequest(@WebParam(name="email")String email, @WebParam(name="qrCode")String qrCode) {
+        return LoyaltyAndRewardsBeanLocal.tieMemberToSyncRequest(email, qrCode);
+    }
 }

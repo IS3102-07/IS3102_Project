@@ -49,7 +49,7 @@
                                         <%
                                             List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
                                             for (int i = 0; i < storageBins.size(); i++) {
-                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getId() + " - "+storageBins.get(i).getType() + "</option>");
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getName() + " - "+storageBins.get(i).getType() + "</option>");
                                             }
                                         %>
                                     </select>
@@ -60,7 +60,7 @@
                                     <select class="form-control" name="target" required="true">
                                         <%
                                             for (int i = 0; i < storageBins.size(); i++) {
-                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getId() + " - "+storageBins.get(i).getType() + "</option>");
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin " + storageBins.get(i).getName() + " - "+storageBins.get(i).getType() + "</option>");
                                             }
                                         %>
                                     </select>
