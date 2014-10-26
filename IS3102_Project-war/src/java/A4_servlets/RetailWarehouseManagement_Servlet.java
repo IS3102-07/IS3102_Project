@@ -1,6 +1,7 @@
 package A4_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
@@ -42,6 +43,8 @@ public class RetailWarehouseManagement_Servlet extends HttpServlet {
                 double freeInbound = simbl.getTotalFreeVolumeOfInboundStorageBin(Long.parseLong(warehouseId));
                 double totalOutbound = simbl.getTotalVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
                 double freeOutbound = simbl.getTotalFreeVolumeOfOutboundStorageBin(Long.parseLong(warehouseId));
+                List<TransferOrderEntity> latestTransferOrders = simbl.viewLatestCompletedTransferOrders(Long.parseLong(warehouseId));
+                session.setAttribute("latestTransferOrders", latestTransferOrders);
 
                 System.out.println("Checking total at start");
                 System.out.println("Total Pallet: "+totalPallet + " , Total Shelf: " + totalShelf + " , Total Inbound: " + totalInbound + " , Total Outbound: " + totalOutbound);
