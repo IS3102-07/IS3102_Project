@@ -28,8 +28,8 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    alert("No items selected.");
-                    window.event.returnValue = false;
+                       window.event.returnValue = true;
+                        document.lineItemManagement.submit();
                 } else {
           
                         window.event.returnValue = true;
@@ -45,7 +45,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Line Item Management for <%=request.getParameter("bomName")%></h1>
+                            <h1 class="page-header">Line Item Management</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
@@ -54,7 +54,7 @@
                                     <i class="icon icon-sitemap"></i>  <a href="../BomManagement_BomServlet">Bill of Material Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-calendar"></i> Line Item Management for <%=request.getParameter("bomName")%>
+                                    <i class="icon icon-calendar"></i> Line Item Management
                                 </li>
                             </ol>
                         </div>

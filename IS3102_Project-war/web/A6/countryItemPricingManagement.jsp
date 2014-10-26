@@ -36,8 +36,8 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    alert("No record(s) selected.");
-                    window.event.returnValue = false;
+                    window.event.returnValue = true;
+                    document.itemPricingManagement.submit();
                 } else {
                   
                         window.event.returnValue = true;
