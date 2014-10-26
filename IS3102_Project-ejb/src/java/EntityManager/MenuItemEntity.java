@@ -37,10 +37,9 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
 
     public MenuItemEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         super(SKU, _length, width, height);
-        this.name = name;
         super.setName(name);
-        this.category = category;
-        this.description = description;
+        super.setCategory(category);
+        super.setDescription(description);
         this.imageURL = imageURL;
         super.setType("Menu Item");
         super.setIsDeleted(false);
@@ -68,23 +67,6 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        super.setName(name);
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getImageURL() {
@@ -120,18 +102,5 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
         return "entityManagerBean.MenuItem[ id=" + id + " ]";
     }
 
-    /**
-     * @return the category
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
 }

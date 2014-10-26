@@ -154,7 +154,7 @@
                                                                 <%=lineItems.get(i).getItem().getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=lineItems.get(i).getPercent()%>
+                                                                <%=lineItems.get(i).getPercent() * 100 %> %
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePGLineItem('<%=lineItems.get(i).getId()%>')"/>

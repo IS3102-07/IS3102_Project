@@ -31,9 +31,9 @@ public class ECommerce_AllProductsServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
-            
             List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
-            List<Item_CountryEntity> item_countryList = itemManagementBean.listAllCountryItemPricing();
+            Long countryID = (Long) session.getAttribute("countryID");
+            List<Item_CountryEntity> item_countryList = itemManagementBean.listAllItemsOfCountry(countryID);
             session.setAttribute("furnitures", furnitures);
             session.setAttribute("item_countryList", item_countryList);
             

@@ -24,13 +24,13 @@ public class ProductGroupLineItemManagement_AddServlet extends HttpServlet {
             String sku = request.getParameter("sku");
             String percent = request.getParameter("percent");
 
-            ProductGroupLineItemEntity productGroupLineItemEntity = ItemManagementBean.createProductGroupLineItem(sku, Double.parseDouble(percent));
+            ProductGroupLineItemEntity productGroupLineItemEntity = ItemManagementBean.createProductGroupLineItem(sku, Double.parseDouble(percent)/100);
             boolean canUpdate = false;
             if (productGroupLineItemEntity != null) {
                 canUpdate = ItemManagementBean.addLineItemToProductGroup(Long.parseLong(productGroupId), productGroupLineItemEntity.getId());
             }
             if (!canUpdate) {
-                result = "?errMsg=Item already exist in another Product Groupd.&id=" + productGroupId;
+                result = "?errMsg=Item already exist in a Product Group.&id=" + productGroupId;
                 response.sendRedirect("A6/productGroupManagement_AddLineItem.jsp" + result);
             } else {
                 result = "?goodMsg=Line item added successfully.&id=" + productGroupId;

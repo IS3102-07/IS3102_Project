@@ -15,15 +15,10 @@
             }
             function linkMenuItem(id) {
 
-                var yes = confirm("Are you sure?!");
-                if (yes === true) {
-                    window.event.returnValue = true;
-                    recipeManagement.id.value = id;
-                    document.recipeManagement.action = "../RecipeManagement_LinkRecipeServlet";
-                    document.recipeManagement.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
+                window.event.returnValue = true;
+                recipeManagement.id.value = id;
+                document.recipeManagement.action = "../RecipeManagement_LinkRecipeServlet";
+                document.recipeManagement.submit();
 
             }
             function updateRecipe(id) {
@@ -83,20 +78,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading"> <%                                                               
-                                        String errMsg = request.getParameter("errMsg");
-                                        String goodMsg = request.getParameter("goodMsg");
-                                        if (errMsg == null && goodMsg == null) {
-                                            out.println("Add or remove recipe");
-                                        } else if ((errMsg != null) && (goodMsg == null)) {
-                                            if (!errMsg.equals("")) {
-                                                out.println(errMsg);
-                                            }
-                                        } else if ((errMsg == null && goodMsg != null)) {
-                                            if (!goodMsg.equals("")) {
-                                                out.println(goodMsg);
-                                            }
+                                <div class="panel-heading"> <%
+                                    String errMsg = request.getParameter("errMsg");
+                                    String goodMsg = request.getParameter("goodMsg");
+                                    if (errMsg == null && goodMsg == null) {
+                                        out.println("Add or remove recipe");
+                                    } else if ((errMsg != null) && (goodMsg == null)) {
+                                        if (!errMsg.equals("")) {
+                                            out.println(errMsg);
                                         }
+                                    } else if ((errMsg == null && goodMsg != null)) {
+                                        if (!goodMsg.equals("")) {
+                                            out.println(goodMsg);
+                                        }
+                                    }
                                     %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
@@ -164,7 +159,23 @@
                                                                         }
                                                                     %>
                                                                 </select>
-                                                                <input type="button" style="width:30%;height:30px;float:right;" name="btnLink" class="btn btn-primary btn-block" value="Link" onclick="javascript:linkMenuItem('<%=listOfRecipe.get(i).getId()%>')"/>
+                                                                <a href="#UpdateLink" data-toggle="modal"><button class="btn btn-primary btn-block" style="width:30%;height:30px;float:right;">Link</button></a>
+                                                                <div role="dialog" class="modal fade" id="UpdateLink">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h4>Alert</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p id="messageBox">The menu item will be linked to the BOM. Are you sure?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">                        
+                                                                                <input class="btn btn-primary" name="btnLink" type="submit" value="Confirm" onclick="javascript:linkMenuItem('<%=listOfRecipe.get(i).getId()%>')" />
+                                                                                <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                               
                                                                 <%
                                                                     }
                                                                 %>

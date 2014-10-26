@@ -59,7 +59,7 @@
                                     <input class="form-control"  type="text" name="SKU" value="<%=supplierItemInfo.getItem().getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Cost Price</label>
+                                    <label>Cost Price Per Unit</label>
                                     <input class="form-control" type="number" step="any" name="costPrice" required="true" value="<%=supplierItemInfo.getCostPrice()%>" >
                                 </div>
                                <div class="form-group">
@@ -67,7 +67,7 @@
                                     <input class="form-control" type="number"  name="lotSize" required="true" value="<%=supplierItemInfo.getLotSize()%>" >
                                 </div>
                                 <div class="form-group">
-                                    <label>Lead Time</label>
+                                    <label>Lead Time (Days)</label>
                                     <input class="form-control" type="number"  name="leadTime" required="true" value="<%=supplierItemInfo.getLeadTime()%>" >
                                 </div>
                                 <div class="form-group">

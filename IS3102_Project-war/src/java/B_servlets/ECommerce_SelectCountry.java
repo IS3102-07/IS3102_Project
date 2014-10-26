@@ -25,24 +25,24 @@ public class ECommerce_SelectCountry extends HttpServlet {
             Long countryID = facilityManagementBeanLocal.getCountryID(country);
             session.setAttribute("countryID", countryID);
             switch (country) {
-                case "France":
-                    response.sendRedirect("B/FRA/index.jsp");
-                    break;
-                case "USA":
-                    response.sendRedirect("B/USA/index.jsp");
-                    break;
-                case "China":
-                    response.sendRedirect("B/CN/index.jsp");
-                    break;
-                case "Singapore":
-                    response.sendRedirect("B/SG/index.jsp");
-                    break;
-                case "Malaysia":
-                    response.sendRedirect("B/MY/index.jsp");
-                    break;
-                case "Indonesia":
-                    response.sendRedirect("B/IDN/index.jsp");
-                    break;
+//                case "France":
+//                    response.sendRedirect("B/FRA/index.jsp");
+//                    break;
+//                case "USA":
+//                    response.sendRedirect("B/USA/index.jsp");
+//                    break;
+//                case "China":
+//                    response.sendRedirect("B/CN/index.jsp");
+//                    break;
+//                case "Singapore":
+//                    response.sendRedirect("B/SG/index.jsp");
+//                    break;
+//                case "Malaysia":
+//                    response.sendRedirect("B/MY/index.jsp");
+//                    break;
+//                case "Indonesia":
+//                    response.sendRedirect("B/IDN/index.jsp");
+//                    break;
                 default:
                     response.sendRedirect("B/index.jsp");
                     break;

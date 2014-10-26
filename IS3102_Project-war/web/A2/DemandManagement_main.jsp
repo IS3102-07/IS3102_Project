@@ -1,3 +1,4 @@
+<%@page import="EntityManager.MonthScheduleEntity"%>
 <%@page import="EntityManager.MasterProductionScheduleEntity"%>
 <%@page import="EntityManager.SaleAndOperationPlanEntity"%>
 <%@page import="EntityManager.RegionalOfficeEntity"%>
@@ -39,7 +40,15 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">                                    
-                                    <b>Master Production Plan</b>
+                                    <% MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule"); %>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <b>Material Requirement</b>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <b>Schedule: <%= schedule.getYear()%> - <%= schedule.getMonth() %></b>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="panel-body">
 

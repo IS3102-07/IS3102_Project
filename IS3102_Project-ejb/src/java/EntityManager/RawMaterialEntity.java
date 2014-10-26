@@ -17,27 +17,18 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Lob
-    private String name;
-    private String category;
-    private String description;
+  
 
     public RawMaterialEntity() {
     }
 
     public RawMaterialEntity(String SKU, String name, String category, String description, Integer _length, Integer width, Integer height) {
         super(SKU, _length, width, height);
-        this.name = name;
         super.setName(name);
-        this.category = category;
-        this.description = description;
+        super.setCategory(category);
+        super.setDescription(description);
         super.setType("Raw Material");
         super.setIsDeleted(false);
-    }
-
-    public void create(String name) {
-        this.name = name;
-        super.setName(name);
     }
 
     public Long getId() {
@@ -46,15 +37,6 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        super.setName(name);
     }
 
     @Override
@@ -82,19 +64,4 @@ public class RawMaterialEntity extends ItemEntity implements Serializable {
         return "entityManagerBean.RawMaterial[ id=" + id + " ]";
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

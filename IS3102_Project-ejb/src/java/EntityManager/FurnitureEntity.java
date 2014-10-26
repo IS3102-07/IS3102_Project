@@ -18,12 +18,7 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Lob
-    private String name;
-    @Lob
-    private String category;
-    @Lob
-    private String description;
+    
     @Lob
     private String imageURL;    
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "furniture")
@@ -34,10 +29,9 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
 
     public FurnitureEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         super(SKU, _length, width, height);
-        this.name = name;
         super.setName(name);
-        this.category = category;
-        this.description = description;
+        super.setCategory(category);
+        super.setDescription(description);
         this.imageURL = imageURL;
         super.setType("Furniture");
         super.setIsDeleted(false);
@@ -57,24 +51,7 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        super.setName(name);
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    } 
 
     public String getImageURL() {
         return imageURL;
@@ -107,20 +84,6 @@ public class FurnitureEntity extends ItemEntity implements Serializable {
     @Override
     public String toString() {
         return "entityManagerBean.Furniture[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the category
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public BillOfMaterialEntity getBOM() {

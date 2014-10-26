@@ -7,6 +7,7 @@ package A2_servlets;
 
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MasterProductionScheduleEntity;
+import EntityManager.MonthScheduleEntity;
 import MRP.DemandManagement.DemandManagementBeanLocal;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +48,11 @@ public class DemandManagement_main_GET extends HttpServlet {
             System.out.println("mpsList.size(): " + mpsList.size());
         }
         request.setAttribute("mpsList", mpsList);
+        try {
+            MonthScheduleEntity schedule = mpsList.get(0).getSchedule();
+            request.setAttribute("schedule", schedule);
+        } catch (Exception ex) {
+        }
         
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);        

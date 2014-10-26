@@ -28,18 +28,14 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    alert("No items selected.");
-                    window.event.returnValue = false;
+                       window.event.returnValue = true;
+                        document.lineItemManagement.submit();
                 } else {
-
-                    var yes = confirm("Are you sure?!");
-                    if (yes === true) {
+          
                         window.event.returnValue = true;
                         document.lineItemManagement.action = "../BomManagement_RemoveLineItemBomServlet";
                         document.lineItemManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                    
                 }
             }
         </script>
@@ -49,7 +45,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Line Item Management for <%=request.getParameter("bomName")%></h1>
+                            <h1 class="page-header">Line Item Management</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="itemManagement.jsp">Item Management</a>
@@ -58,7 +54,7 @@
                                     <i class="icon icon-sitemap"></i>  <a href="../BomManagement_BomServlet">Bill of Material Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-calendar"></i> Line Item Management for <%=request.getParameter("bomName")%>
+                                    <i class="icon icon-calendar"></i> Line Item Management
                                 </li>
                             </ol>
                         </div>
@@ -70,11 +66,11 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading"> <%
-                                        String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add or remove line item(s)";
-                                        }
-                                        out.println(errMsg);
+                                    String errMsg = request.getParameter("errMsg");
+                                    if (errMsg == null || errMsg.equals("")) {
+                                        errMsg = "Add or remove line item(s)";
+                                    }
+                                    out.println(errMsg);
                                     %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
@@ -85,7 +81,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Line Item" />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeLineItem()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Line Item</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -130,7 +126,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Line Item"/>
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeLineItem()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Line Item</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">  
@@ -143,28 +139,8 @@
                                                     <div class="col-md-3"><br>
                                                         Raw Material SKU: 
                                                         <input type="text" class="form-control" name="sku"/><br>
-                                                        Quantity: <select class="form-inline" name="qty"> 
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
-                                                            <option value="10">10</option>
-                                                            <option value="11">11</option>
-                                                            <option value="12">12</option>
-                                                            <option value="13">13</option>
-                                                            <option value="14">14</option>
-                                                            <option value="15">15</option>
-                                                            <option value="16">16</option>
-                                                            <option value="17">17</option>
-                                                            <option value="18">18</option>
-                                                            <option value="19">19</option>
-                                                            <option value="20">20</option>
-                                                        </select>
+                                                        Quantity: 
+                                                        <input type ="number" class="form-control" name="qty"/><br>
                                                         <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="addLineItem()"  />
                                                     </div>
                                                 </div>
@@ -189,17 +165,32 @@
 
         </div>
         <!-- /#wrapper -->
-
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Line Item will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeLineItem()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
 
-            $(".btnAdd").click(function () {
+            $(".btnAdd").click(function() {
                 $("html, body").animate({scrollTop: $(document).height()}, "slow");
-                $("#addLineItemForm").show("slow", function () {
+                $("#addLineItemForm").show("slow", function() {
                 });
             });
         </script>

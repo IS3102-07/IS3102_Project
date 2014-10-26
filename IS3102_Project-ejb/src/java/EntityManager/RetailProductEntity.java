@@ -18,13 +18,7 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Lob
-    private String name;
-    @Lob
-    private String category;
-    @Lob
-    private String description;
+
     @Lob
     private String imageURL;
 
@@ -33,10 +27,9 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
 
     public RetailProductEntity(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         super(SKU, _length, width, height);
-        this.name = name;
         super.setName(name);
-        this.category = category;
-        this.description = description;
+        super.setCategory(category);
+        super.setDescription(description);
         this.imageURL = imageURL;
         super.setType("Retail Product");
         super.setIsDeleted(false);
@@ -56,15 +49,6 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        super.setName(name);
     }
 
     @Override
@@ -92,23 +76,7 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
         return "entityManagerBean.RetailProduct[ id=" + id + " ]";
     }
 
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
 
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the imageURL
-     */
     public String getImageURL() {
         return imageURL;
     }
@@ -120,17 +88,4 @@ public class RetailProductEntity extends ItemEntity implements Serializable {
         this.imageURL = imageURL;
     }
 
-    /**
-     * @return the category
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
 }

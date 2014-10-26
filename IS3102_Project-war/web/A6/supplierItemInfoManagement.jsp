@@ -33,18 +33,14 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    alert("No record(s) selected.");
                     window.event.returnValue = false;
+                    document.supplierItemInfoManagement.action = "../SupplierItemInfoManagement_Servlet";
+                    document.supplierItemInfoManagement.submit();
                 } else {
+                    window.event.returnValue = true;
+                    document.supplierItemInfoManagement.action = "../SupplierItemInfoManagement_RemoveSupplierItemInfoServlet";
+                    document.supplierItemInfoManagement.submit();
 
-                    var yes = confirm("Are you sure?!");
-                    if (yes === true) {
-                        window.event.returnValue = true;
-                        document.supplierItemInfoManagement.action = "../SupplierItemInfoManagement_RemoveSupplierItemInfoServlet";
-                        document.supplierItemInfoManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
                 }
             }
         </script>
@@ -87,7 +83,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Supplier Item Info" />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Record(s)" onclick="removeRecord()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Record</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -100,7 +96,7 @@
                                                             <th style="width:15%">SKU</th>
                                                             <th style="width:15%">Cost Price</th>
                                                             <th style="width:10%">Lot Size</th>
-                                                            <th style="width:15%">Lead Time (weeks)</th>
+                                                            <th style="width:15%">Lead Time (Days)</th>
                                                             <th style="width:8%">Update</th>
                                                         </tr>
                                                     </thead>
@@ -147,7 +143,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Supplier Item Info"/>
-                                                    <input class="btn btn-primary" name="btnRemove" type="button" value="Remove Record(s)" onclick="removeRecord()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Record</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">  
@@ -170,7 +166,7 @@
                                                                 <select class="form-control" name="supplierId"> 
                                                                     <%
                                                                         List<SupplierEntity> listOfSuppliers = (List<SupplierEntity>) session.getAttribute("listOfSuppliers");
-                                                                        for(SupplierEntity s : listOfSuppliers){
+                                                                        for (SupplierEntity s : listOfSuppliers) {
                                                                             out.print("<option value=\"" + s.getId() + "\">ID " + s.getId() + ": " + s.getSupplierName() + "</option>");
                                                                         }
                                                                     %>
@@ -193,7 +189,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Cost Price:&nbsp;
+                                                                Cost Price Per Unit:&nbsp;
                                                             </td>
                                                             <td>
                                                                 <input type="number" step="any" class="form-control" name="costPrice" required/>
@@ -209,7 +205,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Lead Time:&nbsp;
+                                                                Lead Time (Days):&nbsp;
                                                             </td>
                                                             <td>
                                                                 <input type="number" class="form-control" name="leadTime" required/>
@@ -239,16 +235,31 @@
         </div>
         <!-- /#wrapper -->
 
-
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Record will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeRecord()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
 
-            $(".btnAdd").click(function () {
+            $(".btnAdd").click(function() {
                 $("html, body").animate({scrollTop: $(document).height()}, "slow");
-                $("#addItemPricingForm").show("slow", function () {
+                $("#addItemPricingForm").show("slow", function() {
                 });
             });
 
