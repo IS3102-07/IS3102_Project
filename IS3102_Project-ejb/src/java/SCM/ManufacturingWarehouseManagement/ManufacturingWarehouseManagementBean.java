@@ -378,9 +378,9 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     
     @Override
     public List<TransferOrderEntity> viewLatestCompletedTransferOrders(Long warehouseId) {
-        System.out.println("viewLatestCompletedTransferOrders() called.");
+        System.out.println("viewLatestCompletedTransferOrders() called. with warehouseId:"+warehouseId);
         try {
-            Query q = em.createQuery("Select t from TransferOrderEntity t where t.warehouse.id=:id and t.status='Completed' and t.isDeleted=false ORDER BY t.id desc");
+            Query q = em.createQuery("Select t from TransferOrderEntity t where t.warehouse.id=:id and t.status='Completed' and t.isDeleted=false ORDER BY t.dateTransferred desc");
             q.setMaxResults(3);
             q.setParameter("id", warehouseId);
             return q.getResultList();

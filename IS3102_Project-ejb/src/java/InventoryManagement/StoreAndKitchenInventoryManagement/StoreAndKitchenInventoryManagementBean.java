@@ -1542,9 +1542,49 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     }
 
     @Override
-    public Boolean removeItemFromInventory(String SKU, Integer qty) {
-        //TODO
-        return false;
+    public Boolean removeItemFromInventory(Long storeID, String SKU, Integer qty) {
+        ItemEntity itemEntity = getItemBySKU(SKU);
+        Boolean removeStatus = false;
+        switch (itemEntity.getType()) {
+            case "Furniture":
+                removeStatus = removeItemFromFurnitureMarketplace(storeID, SKU, qty);
+                break;
+            case "Retail Product":
+                removeStatus = removeItemFromRetailOutlet(storeID, SKU, qty);
+                break;
+            default:
+                // no need to remove for all other items
+                removeStatus = true;
+        }
+        return removeStatus;
     }
 
+    @Override
+    public List<TransferOrderEntity> viewLatestCompletedTransferOrders(Long warehouseId) {
+        System.out.println("viewLatestCompletedTransferOrders() called. with warehouseId:" + warehouseId);
+        try {
+            Query q = em.createQuery("Select t from TransferOrderEntity t where t.warehouse.id=:id and t.status='Completed' and t.isDeleted=false ORDER BY t.dateTransferred desc");
+            q.setMaxResults(3);
+            q.setParameter("id", warehouseId);
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("\nServer failed to viewLatestCompletedTransferOrders():\n" + ex);
+            return null;
+        }
+    }
+
+    public ItemEntity getItemBySKU(String SKU) {
+        System.out.println("getItemBySKU() called with SKU: " + SKU);
+        try {
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU and i.isDeleted=false");
+            q.setParameter("SKU", SKU);
+            ItemEntity item = (ItemEntity) q.getSingleResult();
+            System.out.println("getItemBySKU() is successful.");
+            return item;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to getItemBySKU():\n" + ex);
+            return null;
+        }
+    }
 }

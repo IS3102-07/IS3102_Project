@@ -116,7 +116,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                     case "Furniture":
                     case "Retail Product":
                     case "Raw Material":
-                        storeInventoryManagementBean.removeItemFromInventory(itemsPurchasedSKU.get(itemsToRemove - 1), itemsPurchasedQty.get(itemsToRemove - 1));
+                        storeInventoryManagementBean.removeItemFromInventory(storeID, itemsPurchasedSKU.get(itemsToRemove - 1), itemsPurchasedQty.get(itemsToRemove - 1));
                 }
             }
         } catch (Exception ex) {
