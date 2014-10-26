@@ -186,7 +186,11 @@
                                                                             </table>
                                                                         </div>
                                                                         <!-- /.table-responsive -->
-
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">                                                 
+                                                                                <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Send Loyalty Points</button></a>
+                                                                            </div>
+                                                                        </div>
                                                                         <input type="hidden" name="id" value="">    
                                                                     </div>
 
@@ -240,6 +244,23 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
+        
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Staff will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStaff()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
