@@ -8,9 +8,9 @@
     <body>
         <script>
             function viewSalesRecord(id) {
-                memberManagement.id.value = id;
-                document.memberManagement.action = "memberManagement_viewSalesRecord.jsp";
-                document.memberManagement.submit();
+                membersManagement.id.value = id;
+                document.membersManagement.action = "memberManagement_viewSalesRecord.jsp";
+                document.membersManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -32,7 +32,7 @@
                                     <i class="icon icon-users"></i> <a href="accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Member Management
+                                    <i class="icon icon-user"></i> Member Management
                                 </li>
                             </ol>
                         </div>
@@ -70,8 +70,8 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox" onclick="checkAll(this)" /></th>
                                                             <th>Name</th>
+                                                            <th>Address</th>
                                                             <th>Email</th>
                                                             <th>Phone</th>
                                                             <th>Action</th>
@@ -83,10 +83,7 @@
                                                             if (members != null) {
                                                                 for (MemberEntity member : members) {
                                                         %>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="checkbox" name="delete" value="<%=member.getId()%>" />
-                                                            </td>
+                                                        <tr>                                                      
                                                             <td>
                                                                 <%=member.getName()%>
                                                             </td>

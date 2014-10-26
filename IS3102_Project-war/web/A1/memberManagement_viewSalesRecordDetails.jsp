@@ -31,14 +31,14 @@
                                     <i class="icon icon-users"></i> <a href="accountManagement.jsp">Account Management</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> <a href="memberManagement.jsp"> Member Management </a>                                 
+                                    <i class="icon icon-user"></i> <a href="memberManagement.jsp"> Member Management </a>                                 
                                 </li>
 
                                 <li class="active">
-                                    <i class="icon icon-users"></i> <a href="memberManagement_viewSalesRecord.jsp?id=<%=salesRecord.getMember().getId()%>"> View Sales Record</a>                                 
+                                    <i class="icon icon-inbox"></i> <a href="memberManagement_viewSalesRecord.jsp?id=<%=salesRecord.getMember().getId()%>"> View Sales Record</a>                                 
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> View Sales Record Details</a>                                 
+                                    <i class="icon icon-envelope"></i> View Sales Record Details</a>                                 
                                 </li>
                             </ol>
                         </div>
