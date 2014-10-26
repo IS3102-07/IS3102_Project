@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.MemberEntity;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
@@ -30,17 +31,33 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     public Integer customerLifetimeValueOfMember(Long memberId) {
         return 5;
     }
+    
+    @Override
+    public Date getCustomerRecency(Long memberId) {
+        Date date = new Date();
+        return date;
+    }
+    
+    @Override
+    public Integer getCustomerFrequency(Long memberId) {
+       Integer test = 10;
+       return test;
+    }
+    
+    @Override
+    public Integer getCustomerMonetaryValue(Long memberId) {
+       Integer test = 10;
+       return test;
+    }
 
     @Override
     public Integer totalCummulativeSpending(Integer startAge, Integer endAge) {
         System.out.println("totalCummulativeSpending()");
         List<MemberEntity> members = accountManagementBean.listAllMember();
 
-        int numOfmembersInGroup = 0;
         int totalCummulativeSpending = 0;
         for (int i = 0; i < members.size(); i++) {
             if (members.get(i).getAge() > startAge && members.get(i).getAge() < endAge) {
-                numOfmembersInGroup++;
                 totalCummulativeSpending += members.get(i).getCummulativeSpending();
             }
         }

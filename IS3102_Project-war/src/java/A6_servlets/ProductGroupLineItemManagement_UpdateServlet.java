@@ -38,7 +38,7 @@ public class ProductGroupLineItemManagement_UpdateServlet extends HttpServlet {
                 result = "?errMsg=SKU is not a funriture.&id=" + productGroupId + "&lineItemId=" + lineitemId;
                 response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);
             } else {
-                boolean canUpdate = ItemManagementBean.editProductGroupLineItem(Long.parseLong(lineitemId), sku, Double.parseDouble(percent));
+                boolean canUpdate = ItemManagementBean.editProductGroupLineItem(Long.parseLong(lineitemId), sku, Double.parseDouble(percent)/100);
                 if (!canUpdate) {
                     result = "?errMsg=Unable update Product Group.&id=" + productGroupId + "&lineItemId=" + lineitemId;
                     response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);

@@ -7,6 +7,7 @@ package A2_servlets;
 
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MaterialRequirementEntity;
+import EntityManager.MonthScheduleEntity;
 import MRP.ManufacturingRequirementPlanning.ManufacturingRequirementPlanningBeanLocal;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,30 +26,36 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class MRP_main_GET extends HttpServlet {
+
     @EJB
-    private ManufacturingRequirementPlanningBeanLocal mrBean;    
-    
+    private ManufacturingRequirementPlanningBeanLocal mrBean;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         System.out.println("servlet MRP_main_GET is called");
-        
+
         String nextPage = "/A2/MRP_main";
         ServletContext servletContext = getServletContext();
-        RequestDispatcher dispatcher;        
+        RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
-        
+
         ManufacturingFacilityEntity mf = (ManufacturingFacilityEntity) session.getAttribute("MRP_mf");
         List<MaterialRequirementEntity> mrList = new ArrayList<>();
-        if(mrBean.generateMaterialRequirementPlan(mf.getId())){
+        if (mrBean.generateMaterialRequirementPlan(mf.getId())) {
             System.out.println("Material Requirement Plan is generated.");
             mrList = mrBean.getMaterialRequirementEntityList(mf.getId());
         }        
         request.setAttribute("mrList", mrList);
+        try {
+            MonthScheduleEntity schedule = mrList.get(0).getMps().getSchedule();
+            request.setAttribute("schedule", schedule);
+        } catch (Exception ex) {
+        }
         
         dispatcher = servletContext.getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);        
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

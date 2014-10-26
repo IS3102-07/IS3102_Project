@@ -59,6 +59,8 @@ public class MemberEntity implements Serializable {
     private Integer age;
     private Integer income;
     private String occupation;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date joinDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
     private ShoppingListEntity shoppingList;
@@ -106,6 +108,13 @@ public class MemberEntity implements Serializable {
         return loyaltyCardId;
     }
 
+    public Date getJoinDate() {
+        return this.joinDate;
+    }
+    
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
+    }
     public void setLoyaltyCardId(String loyaltyCardId) {
         this.loyaltyCardId = loyaltyCardId;
     }

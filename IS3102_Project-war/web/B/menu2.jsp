@@ -1,8 +1,4 @@
 <%@page import="EntityManager.MemberEntity"%>
-<%
-    MemberEntity member = (MemberEntity) (session.getAttribute("member"));
-    if (member == null) {
-%>
 <header id="header">
     <div class="container">
         <h1 class="logo">
@@ -10,6 +6,10 @@
                 <img alt="Island Furniture" width="180" height="80" data-sticky-width="82" data-sticky-height="40" src="../img/logo.png">
             </a>
         </h1>
+        <%
+            MemberEntity member = (MemberEntity) (session.getAttribute("member"));
+            if (member == null) {
+        %>
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
@@ -26,104 +26,9 @@
                 <i class="icon icon-bars"></i>
             </button>
         </nav>
-    </div>
-    <div class="navbar-collapse nav-main-collapse collapse">
-        <div class="container">
-            <nav class="nav-main mega-menu">
-                <ul class="nav nav-pills nav-main" id="mainMenu">
-                    <li class="dropdown active">
-                        <a href="allProductsCatalog.jsp">All Products</a>
-                    </li>
-                    <li>
-                        <a href="promotion.jsp">Promotion</a>
-                    </li>
-                    <li>
-                        <a href="virtualStore.jsp">Virtual Store</a>
-                    </li>
-
-
-                    <li class="dropdown mega-menu-item mega-menu-fullwidth">
-                        <a class="dropdown-toggle" href="#">
-                            All Departments
-                            <i class="icon icon-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="mega-menu-content">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <ul class="sub-menu">
-                                                <li>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Tables & Desk</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-linux"></i> Bathroom</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-male"></i> Beds & Mattresses</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Sofas & Chair</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Decoration</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <ul class="sub-menu">
-                                                <li>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="about-us.html"><i class="icon icon-coffee"></i> Dining</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Eating</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-angle-double-right"></i> Hallway</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Kitchen</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Laundry</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <ul class="sub-menu">
-                                                <li>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="feature-grid-system.html">Lighting</a></li>
-                                                        <li><a href="feature-grid-system.html">Living room</a></li>
-                                                        <li><a href="feature-grid-system.html">Outdoor</a></li>
-                                                        <li><a href="feature-grid-system.html">Secondary storage</a></li>
-                                                        <li><a href="feature-grid-system.html">Small Storage</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <ul class="sub-menu">
-                                                <li>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="feature-grid-system.html">Textiles</a></li>
-                                                        <li><a href="feature-grid-system.html">Workspaces</a></li>
-                                                        <li><a href="feature-grid-system.html">For business</a></li>
-                                                        <li><a href="feature-grid-system.html">Summer</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </nav>
-        </div>
-    </div>
-</header>
-
-<%
-} else {
-%>
-<header id="header">
-    <div class="container">
-        <h1 class="logo">
-            <a href="index.jsp">
-                <img alt="Island Furniture" width="180" height="80" data-sticky-width="82" data-sticky-height="40" src="../img/logo.png">
-            </a>
-        </h1>
+        <%
+        } else {
+        %>
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
@@ -149,6 +54,7 @@
                 <i class="icon icon-bars"></i>
             </button>
         </nav>
+        <%}%>
     </div>
     <div class="navbar-collapse nav-main-collapse collapse">
         <div class="container">
@@ -163,8 +69,6 @@
                     <li>
                         <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
-
-
                     <li class="dropdown mega-menu-item mega-menu-fullwidth">
                         <a class="dropdown-toggle" href="#">
                             All Departments
@@ -178,11 +82,10 @@
                                             <ul class="sub-menu">
                                                 <li>
                                                     <ul class="sub-menu">
-                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Bathroom</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-linux"></i> Bedroom</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-male"></i> Children</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Cooking</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Decoration</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Tables & Desk</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-linux"></i> Bathroom</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-male"></i> Beds & Mattresses</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Sofas & Chair</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -191,36 +94,10 @@
                                             <ul class="sub-menu">
                                                 <li>
                                                     <ul class="sub-menu">
-                                                        <li><a href="about-us.html"><i class="icon icon-coffee"></i> Dining</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Eating</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-angle-double-right"></i> Hallway</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Kitchen</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Laundry</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <ul class="sub-menu">
-                                                <li>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="feature-grid-system.html">Lighting</a></li>
-                                                        <li><a href="feature-grid-system.html">Living room</a></li>
-                                                        <li><a href="feature-grid-system.html">Outdoor</a></li>
-                                                        <li><a href="feature-grid-system.html">Secondary storage</a></li>
-                                                        <li><a href="feature-grid-system.html">Small Storage</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <ul class="sub-menu">
-                                                <li>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="feature-grid-system.html">Textiles</a></li>
-                                                        <li><a href="feature-grid-system.html">Workspaces</a></li>
-                                                        <li><a href="feature-grid-system.html">For business</a></li>
-                                                        <li><a href="feature-grid-system.html">Summer</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Cabinets & Storage</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-coffee"></i> Lightings</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Study</a></li>
+                                                        <li><a href="about-us.html"><i class="icon icon-angle-double-right"></i> Children</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -230,10 +107,8 @@
                             </li>
                         </ul>
                     </li>
-
                 </ul>
             </nav>
         </div>
     </div>
 </header>
-<%}%>

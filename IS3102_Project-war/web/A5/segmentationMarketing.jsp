@@ -99,6 +99,20 @@
                                                             <span class="sr-only">45% Complete</span>
                                                         </div>
                                                     </div>
+                                                    List Customers Income : 
+                                                    <select name="cars">
+                                                        <option value="volvo">Volvo</option>
+                                                        <option value="saab">Saab</option>
+                                                        <option value="fiat">Fiat</option>
+                                                        <option value="audi">Audi</option>
+                                                    </select>
+                                                    List Customers Last Purchase : 
+                                                    <select name="cars">
+                                                        <option value="volvo">Volvo</option>
+                                                        <option value="saab">Saab</option>
+                                                        <option value="fiat">Fiat</option>
+                                                        <option value="audi">Audi</option>
+                                                    </select>
                                                     <table class="table table-hover">
 
                                                         <tr>
@@ -126,6 +140,7 @@
                                                     </table>
                                                 </div>
                                             </div>
+
                                             <input type="hidden" name="id" value="">    
                                         </div>
 

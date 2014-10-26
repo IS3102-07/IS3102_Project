@@ -26,8 +26,6 @@ public class Analytical_QueryAndReportingServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
-            Double totalCustomerRevenue = customerValueAnalysisBean.totalCustomerRevenue();
-            session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
 
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/queryAndReporting.jsp");
