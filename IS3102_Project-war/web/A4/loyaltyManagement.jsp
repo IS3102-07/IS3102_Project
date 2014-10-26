@@ -51,7 +51,7 @@
                             <h1 class="page-header">Loyalty Management</h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Loyalty Management
+                                    <i class="icon icon-user"></i> Loyalty Management
                                 </li>
                             </ol>
                         </div>

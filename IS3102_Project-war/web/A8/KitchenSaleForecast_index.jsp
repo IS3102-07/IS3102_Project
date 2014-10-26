@@ -14,7 +14,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Sales Forecast</h1>
+                            <h1 class="page-header">Kitchen Sales Forecast</h1>
                             <ol class="breadcrumb">
                                 <li>
                                     <i class="icon icon-dashboard"></i>  <a href="#">Sales Forecast</a>

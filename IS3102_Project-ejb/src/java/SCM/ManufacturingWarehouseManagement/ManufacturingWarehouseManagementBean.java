@@ -36,7 +36,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     List<LineItemEntity> lineItems;
 
     @Override
-    public boolean createStorageBin(Long warehouseID, String type, Integer _length, Integer width, Integer height) {
+    public boolean createStorageBin(Long warehouseID, String name, String type, Integer _length, Integer width, Integer height) {
         try {
             switch (type.toLowerCase()) {
                 case "inbound":
@@ -53,7 +53,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                     break;
             }
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-            storageBin = new StorageBinEntity(warehouseEntity, type, _length, width, height);
+            storageBin = new StorageBinEntity(warehouseEntity, name, type, _length, width, height);
             em.persist(storageBin);
             warehouseEntity.getStorageBins().add(storageBin);
             em.merge(warehouseEntity);
@@ -70,8 +70,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
     }
 
     @Override
-    public
-            boolean updateStorageBin(Long storageBinId, Integer length, Integer width, Integer height) {
+    public boolean updateStorageBin(Long storageBinId, String name, Integer length, Integer width, Integer height) {
         System.out.println("updateStorageBin() called.");
         System.out.println("length: " + length);
         System.out.println("width: " + width);
@@ -84,6 +83,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
                 System.out.println("Cannot find storage bin or storage bin contains items");
                 return false;
             }
+            storageBin.setName(name);
             storageBin.setHeight(height);
             storageBin.setLength(length);
             storageBin.setWidth(width);

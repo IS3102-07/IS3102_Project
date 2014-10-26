@@ -65,7 +65,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
 
     @Test
     public void test01CreateStorageBin() {                
-        Boolean result = manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Pallet", 200, 200, 200);
+        Boolean result = manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "bin1", "Pallet", 200, 200, 200);
         assertNotNull(result);
     }
 
@@ -83,14 +83,14 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
 
     @Test
     public void test04UpdateStorageBin() {
-        Boolean result = manufacturingWarehouseManagementBean.updateStorageBin(storageBinID, 300, 300, 300);
+        Boolean result = manufacturingWarehouseManagementBean.updateStorageBin(storageBinID,"bin1", 300, 300, 300);
         assertNotNull(result);
     }
 
     @Test
     public void testGetInboundStorageBin() {
         //Force create an inbound bin in the warehouse first
-        manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Inbound", 200, 200, 200);
+        manufacturingWarehouseManagementBean.createStorageBin(warehouseID,"bin3","Inbound", 200, 200, 200);
         StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
         assertNotNull(result);
     }
@@ -98,7 +98,7 @@ public class SCM_ManufacturingWarehouseManagementBeanRemote_JUnit {
     @Test
     public void testGetOutboundStorageBin() {
         //Force create an outbound bin in the warehouse first
-        manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "Outbound", 200, 200, 200);
+        manufacturingWarehouseManagementBean.createStorageBin(warehouseID, "bin2", "Outbound", 200, 200, 200);
         StorageBinEntity result = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
         assertNotNull(result);
     }

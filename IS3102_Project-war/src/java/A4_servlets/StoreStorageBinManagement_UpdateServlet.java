@@ -22,13 +22,14 @@ public class StoreStorageBinManagement_UpdateServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-
+            
             String storageBinId = request.getParameter("id");
+            String name = request.getParameter("name");
             String length = request.getParameter("length");
             String width = request.getParameter("width");
             String height = request.getParameter("height");
 
-            boolean canUpdate = simbl.updateStorageBin(Long.parseLong(storageBinId), Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
+            boolean canUpdate = simbl.updateStorageBin(Long.parseLong(storageBinId), name, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
             //out.println("<h1>" + canUpdate + "</h1>");
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";

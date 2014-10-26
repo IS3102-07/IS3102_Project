@@ -1,13 +1,14 @@
 package CommonInfrastructure.AccountManagement;
 
-import EntityManager.CountryEntity;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
 import Config.Config;
 import EntityManager.AccessRightEntity;
+import EntityManager.CountryEntity;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MemberEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.RoleEntity;
+import EntityManager.SalesRecordEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
@@ -23,13 +24,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.ejb.EJB;
 
 @Stateful
 public class AccountManagementBean implements AccountManagementBeanLocal, AccountManagementBeanRemote {
@@ -1367,7 +1368,19 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             return false;
         }
     }
-
+    
+    @Override
+    public List<SalesRecordEntity> listAllSalesRecord() {
+        System.out.println("listAllSalesRecord() called.");
+        try {
+            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+            return salesRecords;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all member:\n" + ex);
+            return null;
+        }
+    }
     public void persist(Object object) {
         em.persist(object);
     }

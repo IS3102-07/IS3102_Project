@@ -1,18 +1,18 @@
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
-<%@page import="EntityManager.MemberEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
 
     <body>
         <script>
-            function updateMember(id) {
-                memberManagement.id.value = id;
-                document.memberManagement.action = "../MemberManagement_UpdateMemberServlet";
-                document.memberManagement.submit();
+            function updateStaff(id) {
+                staffManagement.id.value = id;
+                document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
+                document.staffManagement.submit();
             }
-            function removeMember() {
+            function removeStaff() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -22,18 +22,18 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.memberManagement.action = "../MemberManagement_MemberServlet";
-                    document.memberManagement.submit();
+                    document.staffManagement.action = "../StaffManagement_StaffServlet";
+                    document.staffManagement.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.memberManagement.action = "../MemberManagement_RemoveMemberServlet";
-                    document.memberManagement.submit();
+                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
+                    document.staffManagement.submit();
                 }
             }
-            function addMember() {
+            function addStaff() {
                 window.event.returnValue = true;
-                document.memberManagement.action = "memberManagement_add.jsp";
-                document.memberManagement.submit();
+                document.staffManagement.action = "staffManagement_add.jsp";
+                document.staffManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -51,7 +51,7 @@
                             <h1 class="page-header">Value Analysis</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-users"></i> <a href="analytical.jsp">Value Analysis</a>
+                                    <i class="icon icon-users"></i> <a href="analytical.jsp">Analytical CRM</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-users"></i> Value Analysis
@@ -69,7 +69,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Register a new member or remove an existing member");
+                                            out.println("Register a new staff or remove an existing staff");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);
@@ -82,63 +82,43 @@
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="memberManagement">
+                                <form name="staffManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-
+                                            
                                             <br>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h2 class="short">Progress Bar</h2>
 
-                                                    <div class="progress-bars">
-                                                        <div class="progress-label">
-                                                            <span>HTML/CSS</span>
-                                                        </div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                                                                100
-                                                            </div>
-                                                        </div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-primary" data-appear-progress-animation="70%">
-                                                                <span class="progress-bar-tooltip">70%</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="progress-label">
-                                                            <span>Design</span>
-                                                        </div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-primary" data-appear-progress-animation="85%" data-appear-animation-delay="300">
-                                                                <span class="progress-bar-tooltip">85%</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="progress-label">
-                                                            <span>WordPress</span>
-                                                        </div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-primary" data-appear-progress-animation="75%" data-appear-animation-delay="600">
-                                                                <span class="progress-bar-tooltip">75%</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="progress-label">
-                                                            <span>Photoshop</span>
-                                                        </div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-primary" data-appear-progress-animation="85%" data-appear-animation-delay="900">
-                                                                <span class="progress-bar-tooltip">85%</span>
-                                                            </div>
+
+
+                                            <%
+                                                Double totalCustomerRevenue = (Double) session.getAttribute("totalCustomerRevenue");
+
+                                            %>
+
+
+
+
+
+
+
+                                            <!-- /.table-responsive -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Total Customer Revenue : <%=totalCustomerRevenue%>
+
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                                            <span class="sr-only">45% Complete</span>
                                                         </div>
                                                     </div>
-
+                                                    
                                                 </div>
-                                                <!-- /.table-responsive -->
-
-                                                <input type="hidden" name="id" value="">    
                                             </div>
-
+                                            <input type="hidden" name="id" value="">    
                                         </div>
-                                        <!-- /.panel-body -->
+
+                                    </div>
+                                    <!-- /.panel-body -->
                                 </form>
 
                             </div>
@@ -164,10 +144,10 @@
                         <h4>Alert</h4>
                     </div>
                     <div class="modal-body">
-                        <p id="messageBox">Member will be removed. Are you sure?</p>
+                        <p id="messageBox">Staff will be removed. Are you sure?</p>
                     </div>
                     <div class="modal-footer">                        
-                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeMember()"  />
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStaff()"  />
                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
                     </div>
                 </div>

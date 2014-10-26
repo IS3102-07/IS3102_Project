@@ -63,6 +63,10 @@
                                     <input class="form-control" name="type" type="text" value="<%=storageBin.getType()%>" disabled >
                                 </div>
                                 <div class="form-group">
+                                    <label>Name</label>
+                                    <input class="form-control" name="name" type="text" value="<%=storageBin.getName()%>"required="true">
+                                </div>
+                                <div class="form-group">
                                     <label>Length</label>
                                     <input class="form-control" name="length" type="number" min="1" max="1200" value="<%=storageBin.getLength()%>" required="true" >
                                 </div>

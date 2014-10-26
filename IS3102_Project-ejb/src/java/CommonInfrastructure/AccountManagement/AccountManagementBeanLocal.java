@@ -4,6 +4,7 @@ import EntityManager.AccessRightEntity;
 import EntityManager.CountryEntity;
 import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
+import EntityManager.SalesRecordEntity;
 import EntityManager.StaffEntity;
 import java.util.Date;
 import java.util.List;
@@ -123,5 +124,8 @@ public interface AccountManagementBeanLocal {
     public Boolean checkIfStaffIsReceptionist(Long staffId);
 
     public Boolean checkIfStaffIsGlobalManager(Long staffId);
+    
+    public List<SalesRecordEntity> listAllSalesRecord();
+
 
 }
