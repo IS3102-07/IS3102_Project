@@ -5,19 +5,7 @@
 
     <jsp:include page="../header2.html" />
     <body>
-<script>
-            function goBackPage() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.menuItemManagement.action = "../MenuItemManagement_RemoveMenuItemServlet";
-                    document.menuItemManagement.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
-            }
-            
-        </script>
+
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 

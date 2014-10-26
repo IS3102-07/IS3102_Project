@@ -17,21 +17,6 @@
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
-        <script>
-            function checkAll(source) {
-                checkboxes = document.getElementsByName('delete');
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    checkboxes[i].checked = source.checked;
-                }
-            }
-            function addItem() {
-                window.event.returnValue = true;
-                id = document.getElementsByName('item');
-                document.allFurnitures.action = "../ECommerce_AddFurnitureToListServlet?id=" + id;
-                document.allFurnitures.submit();
-            }
-        </script>
-
         <%
             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
             List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
@@ -84,7 +69,7 @@
 
                                         <span class="product-thumb-info-image">
                                             <span class="product-thumb-info-act">                                                
-                                                <span class="product-thumb-info-act-left"><em><%=furnitures.get(i).getDescription()%></em></span>
+                                                <span class="product-thumb-info-act-left"><a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"  style="color: white"><em>View Details</em></a></span>
                                             </span>
                                             <img alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
                                         </span>
@@ -101,12 +86,16 @@
                                                     if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
                                             %>
                                             <span class="product-thumb-info-act-left"><em>Price: $ <%=item_countryList.get(j).getRetailPrice()%></em></span>
+
                                             <%
                                                         break;
                                                     }
                                                 }
 
                                             %>
+                                            <br/>
+                                            <a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>View Availability <%%></em></span></a>
+
                                         </span>
                                     </span>
                                 </li>
@@ -117,43 +106,13 @@
                                     }
                                 %>
 
-
                             </ul>
-
                         </div>
                         <hr class="tall">
-
                     </div>
                 </div>
             </div>
             <jsp:include page="footer.html" />
         </div>
-        <!-- Theme Initializer -->
-        <script src="../js/theme.plugins.js"></script>
-        <script src="../js/theme.js"></script>
-
-        <!-- Current Page JS -->
-        <script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-        <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-        <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-        <script src="../js/views/view.home.js"></script>   
-    </div>
-
-    <div role="dialog" class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Alert</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="messageBox">Item will be added to shopping list.</p>
-                </div>
-                <div class="modal-footer">                        
-                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="addItem()"/>
-                    <a class="btn btn-default" data-dismiss ="modal">Close</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+    </body>
 </html>

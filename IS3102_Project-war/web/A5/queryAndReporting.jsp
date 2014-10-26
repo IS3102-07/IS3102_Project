@@ -93,17 +93,137 @@
                                             %>
                                             <!-- /.table-responsive -->
                                             <div class="row">
+                                                <div class="col-md-12">                                                    
+                                                    <h4>Simple Regression Analysis</h4>
+                                                    <div class="col-md-6">
+                                                        <form action="">
+                                                            Select Independent Variable<br/>
+                                                            <input type="checkbox" name="income" value="yes">Income<br/>
+                                                            <input type="checkbox" name="age" value="yes">Age<br/>
+                                                            <input type="checkbox" name="joinDate" value="yes">Join Date<br/>
+                                                            <input type="checkbox" name="cummulativeSpending" value="yes">Cummulative Spending<br/>                                                        
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        Select Dependent Variable
+                                                        <select name="dependentVariable">                                                            
+                                                            <option value="income">Income</option>
+                                                            <option value="age">Age</option>
+                                                            <option value="joinDate">Join Date</option>
+                                                            <option value="CummulativeSpending">Cummulative Spending</option>
+                                                        </select>
+                                                        <br/>
+                                                        <input type="submit" value="Generate Regression Analysis Table"/>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="">
-                                                    <input type="">
-                                                    Simple Regression Analysis
+                                                    <h4>Query And Reporting</h4>
+                                                    Search Options
 
-                                                    <div class="progress">
-                                                        <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                                            <span class="sr-only">45% Complete</span>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="tabs">
+                                                                <ul class="nav nav-tabs">
+                                                                    <li class="active">
+                                                                        <a href="#member" data-toggle="tab"><i class="icon icon-user"></i> Members</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#sales" data-toggle="tab"> Sales Records</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div id="member" class="tab-pane active">
+                                                                        <h4>Search Options</h4>
+                                                                        <div class="panel-body">
+                                                                            <div class="table-responsive">
+                                                                                <br>
+                                                                                <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline">
+                                                                                    <table class="table table-striped table-bordered table-hover table-condensed" id="dataTables-example">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <td>Attribute</td>
+                                                                                                <td>Search Options</td>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr>                                                      
+                                                                                                <td>
+                                                                                                    Income Range 
+                                                                                                </td>
+                                                                                                <td>Min: <select name="incomeMin">
+                                                                                                        <option value="nomin">No Min</option>
+                                                                                                        <option value="1">1</option>
+                                                                                                        <option value="10000">10000</option>
+                                                                                                        <option value="20000">20000</option>
+                                                                                                        <option value="30000">30000</option>
+                                                                                                    </select> Max: <select name="incomeMax">    
+                                                                                                        <option value="nomax">No Max</option>
+                                                                                                        <option value="10000">10000</option>
+                                                                                                        <option value="20000">20000</option>
+                                                                                                        <option value="30000">30000</option>
+                                                                                                        <option value="40000">40000</option>
+                                                                                                    </select>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        <br/>
+                                                                                        <tr><td>
+                                                                                        Age</td><td>Min: <input type="text" name="ageMin"/> Max: <input type="text" name="ageMax"/><br/>
+                                                                                            </td></tr>
+                                                                                        <tr><td>
+                                                                                                Join Date</td><td> Min: <input type="text" name="joinDateMin"/> Max: <input type="text" name="joinDateMax"/><br/>
+                                                                                            </td></tr>
+                                                                                        <tr><td>
+                                                                                                Cummulative Spending</td><td> - Min: <input type="text" name="cummulativeSpendingMin"/> Max: <input type="text" name="cummulativeSpendingMax"/><br/>
+                                                                                            </td></tr>
+                                                                                        <tr><td>
+                                                                                                Purchase Recency</td><td> Min: <input type="text" name="recencyMin"/> Max: <input type="text" name="recencyMax"/><br/>
+                                                                                            </td></tr>
+                                                                                        <tr><td>
+                                                                                                Purchase Frequency</td><td> Min: <input type="text" name="frequencyMin"/> Max: <input type="text" name="frequencyMax"/><br/>
+                                                                                            </td></tr>
+                                                                                        <tr><td>
+                                                                                                Purchase Monetary Value</td><td> Min: <input type="text" name="monetaryMin"/> Max: <input type="text" name="monetaryMax"/><br/>
+                                                                                            </td></tr>
+                                                                                        <tr><td>
+                                                                                                CLV</td><td> Min: <input type="text" name="clvMin"/> Max: <input type="text" name="clvMax"/><br/>
+                                                                                            </td></tr>
+                                                                                        
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                    <input type="button" value="Submit" name="Submit"/>
+                                                                                </div>
+                                                                                <!-- /.table-responsive -->
+                                                                                <input type="hidden" name="id" value="">    
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="sales" class="tab-pane">
+                                                                        <h4>Customer Lifetime Value</h4>
+                                                                        <table class="table">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    Name
+                                                                                </td>
+                                                                                <td>
+                                                                                    Group 2 Members Profile
+                                                                                </td>
+                                                                                <td>
+                                                                                    Group 3 Members Profile
+                                                                                </td>
+                                                                                <td>
+                                                                                    Group 4 Members Profile
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div id="myfirstchart" style="height: 250px;"></div>
+
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    

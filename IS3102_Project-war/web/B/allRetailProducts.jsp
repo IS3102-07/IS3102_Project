@@ -61,7 +61,6 @@
                                             <span class="product-thumb-info-image">
                                                 <span class="product-thumb-info-act">
                                                     <span class="product-thumb-info-act-left"><em><%=retailProducts.get(i).getDescription()%></em></span>
-
                                                 </span>
                                                 <img alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
                                             </span>
