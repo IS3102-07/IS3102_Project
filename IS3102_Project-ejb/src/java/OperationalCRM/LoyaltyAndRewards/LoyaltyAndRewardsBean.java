@@ -255,4 +255,25 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             return null;
         }
     }
+    
+    @Override
+    public Boolean tieMemberToSyncRequest(String email, String qrCode) {
+        System.out.println("tieMemberToSyncRequest() called");
+        try {
+            Query q = em.createQuery("SELECT p from QRPhoneSyncEntity p where p.qrCode=:qrCode");
+            q.setParameter("qrCode", qrCode);
+            QRPhoneSyncEntity phoneSyncEntity = (QRPhoneSyncEntity) q.getSingleResult();
+            if (phoneSyncEntity == null) {
+                return false;
+            } else {
+                phoneSyncEntity.setMemberEmail(email);
+                em.merge(phoneSyncEntity);
+                return true;
+            }
+        } catch (Exception ex) {
+            System.out.println("tieMemberToSyncRequest(): Error");
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }
