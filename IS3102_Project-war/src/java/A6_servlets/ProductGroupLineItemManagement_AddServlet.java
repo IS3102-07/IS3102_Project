@@ -24,7 +24,7 @@ public class ProductGroupLineItemManagement_AddServlet extends HttpServlet {
             String sku = request.getParameter("sku");
             String percent = request.getParameter("percent");
 
-            ProductGroupLineItemEntity productGroupLineItemEntity = ItemManagementBean.createProductGroupLineItem(sku, Double.parseDouble(percent));
+            ProductGroupLineItemEntity productGroupLineItemEntity = ItemManagementBean.createProductGroupLineItem(sku, Double.parseDouble(percent)/100);
             boolean canUpdate = false;
             if (productGroupLineItemEntity != null) {
                 canUpdate = ItemManagementBean.addLineItemToProductGroup(Long.parseLong(productGroupId), productGroupLineItemEntity.getId());

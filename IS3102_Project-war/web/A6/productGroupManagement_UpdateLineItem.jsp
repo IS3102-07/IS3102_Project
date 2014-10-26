@@ -70,11 +70,11 @@
                                     <form role="form" action="../ProductGroupLineItemManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text" value="<%=lineItem.getFurniture().getSKU()%>" required="true">
+                                            <input class="form-control" name="sku" type="text" value="<%=lineItem.getItem().getSKU()%>" required="true">
                                         </div>
                                         <div class="form-group">
                                             <label>Percent</label>
-                                            <input class="form-control" name="percent" type="number" min="0" step="0.1" max="100" required="true" value="<%=lineItem.getPercent()%>" >
+                                            <input class="form-control" name="percent" type="number" min="0" step="0.1" max="100" required="true" value="<%=lineItem.getPercent() * 100 %>" >
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" value="Update Line Item" class="btn btn-lg btn-primary btn-block">
