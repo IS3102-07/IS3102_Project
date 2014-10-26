@@ -14,16 +14,13 @@
     <body>
         <script>
             function removeItemFromStorageBin(id, storageBinId) {
-                var yes = confirm("Are you sure you want to delete the all instance of this item in this storage bin?\nThis action cannot be reversed!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.inventoryControl.lineItemID.value = id;
-                    document.inventoryControl.storageBinId.value = storageBinId;
-                    document.inventoryControl.action = "../RetailInventoryControl_RemoveServlet";
-                    document.inventoryControl.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
+
+                window.event.returnValue = true;
+                document.inventoryControl.lineItemID.value = id;
+                document.inventoryControl.storageBinId.value = storageBinId;
+                document.inventoryControl.action = "../RetailInventoryControl_RemoveServlet";
+                document.inventoryControl.submit();
+
             }
         </script>
         <div id="wrapper">
@@ -115,7 +112,23 @@
                                                                 <%=itemStorageBinHelpers.get(i).getItemType()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Remove" onclick="removeItemFromStorageBin('<%=itemStorageBinHelpers.get(i).getLineItemID()%>', '<%=itemStorageBinHelpers.get(i).getStorageBinID()%>')"/>
+                                                                <a href="#myModal" data-toggle="modal"><button class="btn btn-primary btn-block">Remove Item From Storage Bin</button></a>
+                                                                <div role="dialog" class="modal fade" id="myModal">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h4>Alert</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p id="messageBox">Are you sure you want to delete the all instance of this item in this storage bin?</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">                        
+                                                                                <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeItemFromStorageBin('<%=itemStorageBinHelpers.get(i).getLineItemID()%>', '<%=itemStorageBinHelpers.get(i).getStorageBinID()%>')" />
+                                                                                <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -152,7 +165,7 @@
         <!-- /#wrapper -->
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

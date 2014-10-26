@@ -6,19 +6,7 @@
 
     <jsp:include page="../header2.html" />
     <body>
-<script>
-            function goBackPage() {
-                var yes = confirm("Are you sure?!");
-                if (yes == true) {
-                    window.event.returnValue = true;
-                    document.furnitureManagement.action = "../FurnitureManagement_RemoveFurnitureServlet";
-                    document.furnitureManagement.submit();
-                } else {
-                    window.event.returnValue = false;
-                }
-            }
-            
-        </script>
+        
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
@@ -74,7 +62,7 @@
                                     <label>Description</label>
                                     <input class="form-control" type="text"  name="description" required="true" value="<%=rawMaterial.getDescription()%>" >
                                 </div>
-                               <div class="form-group">
+                                <div class="form-group">
                                     <label>SKU</label>
                                     <input class="form-control" type="text"  name="SKU" required="true" value="<%=rawMaterial.getSKU()%>" disabled>
                                 </div>
@@ -94,13 +82,13 @@
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="<%=rawMaterial.getId()%>" name="id">
-                                 <input type="hidden" value="<%=rawMaterial.getSKU()%>" name="SKU">
+                                <input type="hidden" value="<%=rawMaterial.getSKU()%>" name="SKU">
                             </form>
                         </div>
                         <!-- /.row -->
                     </div>
                     <%} catch (Exception ex) {
-                        
+
                             //response.sendRedirect("../RawMaterialManagement_RawMaterialServlet");
                         }%>
                 </div>
