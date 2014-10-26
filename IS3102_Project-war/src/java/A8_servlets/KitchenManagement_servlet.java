@@ -7,6 +7,7 @@ import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
 import EntityManager.ItemEntity;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MasterProductionScheduleEntity;
+import EntityManager.MaterialRequirementEntity;
 import EntityManager.MenuItemEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.RegionalOfficeEntity;
@@ -130,7 +131,6 @@ public class KitchenManagement_servlet extends HttpServlet {
 
                 ItemEntity item = restaurantBean.getItemBySKU(menuItemSKU);
                 store = fmBean.viewStoreEntity(storeId);
-                session.setAttribute("k_store", store);
                 MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
 
                 List<SalesFigureEntity> list1;
@@ -155,22 +155,36 @@ public class KitchenManagement_servlet extends HttpServlet {
                 break;
 
             case "/KitchenDemandManagement_GET":
-                System.out.println("KitchenDemandManagement_GET is called");
-                store = (StoreEntity)session.getAttribute("k_store");                
-                List<MasterProductionScheduleEntity> mpsList = new ArrayList<>();
-                if(fdfpBean.generateMasterProductionSchedules(store.getId())){
-                    System.out.println("Master Production Schedule is generated.");
-                    mpsList = fdfpBean.getMasterProductionSchedules(store.getId());
-                    System.out.println("mpsList.size(): " + mpsList.size());
+                try {
+                    System.out.println("KitchenDemandManagement_GET is called");
+                    storeId = (long) session.getAttribute("s_storeId");
+
+                    List<MasterProductionScheduleEntity> mpsList = new ArrayList<>();
+                    if (fdfpBean.generateMasterProductionSchedules(storeId)) {
+                        System.out.println("Master Production Schedule is generated.");
+                        mpsList = fdfpBean.getMasterProductionSchedules(storeId);
+                        System.out.println("mpsList.size(): " + mpsList.size());
+                    }
+                    request.setAttribute("mpsList", mpsList);
+                    System.out.println("mpsList.size: " + mpsList.size());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-                request.setAttribute("mpsList", mpsList);
                 nextPage = "/A8/KitchenDemandManagement";
                 break;
-                
-            case "_POST":
-                
+
+            case "/KitchenMaterialRequirement_GET":
+                System.out.println("KitchenMaterialRequirement_GET is called");
+                storeId = (long) session.getAttribute("s_storeId");
+                List<MaterialRequirementEntity> mrList = new ArrayList<>();
+                if (fdfpBean.generateMaterialRequirementPlan(storeId)) {
+                    System.out.println("Material Requirement Plan is generated.");
+                    mrList = fdfpBean.getMaterialRequirementEntityList(storeId);
+                }
+                request.setAttribute("mrList", mrList);
+                nextPage="/A8/KitchenMaterialRequirement";
                 break;
-                
+
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
