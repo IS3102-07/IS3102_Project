@@ -36,6 +36,12 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                 MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
 
                 // clear former MPSs
+                Query q0 = em.createQuery("select mr from MaterialRequirementEntity mr");
+                for(MaterialRequirementEntity mr: (List<MaterialRequirementEntity>)q0.getResultList()){
+                    em.remove(mr);
+                }
+                em.flush();
+                
                 Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.mf.id = ?1 and mps.schedule.id = ?2")
                         .setParameter(1, MfId)
                         .setParameter(2, lastSchedule.getId());

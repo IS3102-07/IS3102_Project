@@ -69,7 +69,7 @@
                                         </tbody>
                                     </table> 
 
-                                    <form role="form" action="../MRP_purchaseOrder/*">
+                                    <form role="form" action="Kitchen_purchaseOrder">
 
                                         <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Generate Purchase Orders</button></a>
                                         
