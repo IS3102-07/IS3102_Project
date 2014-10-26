@@ -39,15 +39,10 @@
                     alert("No record(s) selected.");
                     window.event.returnValue = false;
                 } else {
-
-                    var yes = confirm("Are you sure?!");
-                    if (yes === true) {
+                  
                         window.event.returnValue = true;
                         document.itemPricingManagement.action = "../CountryItemPricingManagement_RemoveCountryItemPricingServlet";
-                        document.itemPricingManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                        document.itemPricingManagement.submit();                   
                 }
             }
         </script>
@@ -90,7 +85,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Item Pricing" />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Record(s)" onclick="removeRecord()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Record</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -145,7 +140,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Item Pricing"/>
-                                                    <input class="btn btn-primary" name="btnRemove" type="button" value="Remove Record(s)" onclick="removeRecord()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Record</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">  
@@ -223,7 +218,23 @@
 
         </div>
         <!-- /#wrapper -->
-
+        
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Record will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeRecord()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>

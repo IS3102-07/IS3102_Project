@@ -31,15 +31,11 @@
                     alert("No items selected.");
                     window.event.returnValue = false;
                 } else {
-
-                    var yes = confirm("Are you sure?!");
-                    if (yes === true) {
+          
                         window.event.returnValue = true;
                         document.lineItemManagement.action = "../BomManagement_RemoveLineItemBomServlet";
                         document.lineItemManagement.submit();
-                    } else {
-                        window.event.returnValue = false;
-                    }
+                    
                 }
             }
         </script>
@@ -70,11 +66,11 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading"> <%
-                                        String errMsg = request.getParameter("errMsg");
-                                        if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Add or remove line item(s)";
-                                        }
-                                        out.println(errMsg);
+                                    String errMsg = request.getParameter("errMsg");
+                                    if (errMsg == null || errMsg.equals("")) {
+                                        errMsg = "Add or remove line item(s)";
+                                    }
+                                    out.println(errMsg);
                                     %>                                  
                                 </div>
                                 <!-- /.panel-heading -->
@@ -85,7 +81,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Line Item" />
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeLineItem()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Line Item</button></a>
                                                 </div>
                                             </div>
                                             <br/>
@@ -130,7 +126,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary btnAdd" name="btnAdd" type="button" value="Add Line Item"/>
-                                                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Remove Line Item(s)" onclick="removeLineItem()"  />
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Line Item</button></a>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">  
@@ -169,17 +165,32 @@
 
         </div>
         <!-- /#wrapper -->
-
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Line Item will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeLineItem()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
 
-            $(".btnAdd").click(function () {
+            $(".btnAdd").click(function() {
                 $("html, body").animate({scrollTop: $(document).height()}, "slow");
-                $("#addLineItemForm").show("slow", function () {
+                $("#addLineItemForm").show("slow", function() {
                 });
             });
         </script>
