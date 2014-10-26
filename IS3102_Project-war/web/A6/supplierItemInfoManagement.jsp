@@ -100,7 +100,7 @@
                                                             <th style="width:15%">SKU</th>
                                                             <th style="width:15%">Cost Price</th>
                                                             <th style="width:10%">Lot Size</th>
-                                                            <th style="width:15%">Lead Time (weeks)</th>
+                                                            <th style="width:15%">Lead Time (Days)</th>
                                                             <th style="width:8%">Update</th>
                                                         </tr>
                                                     </thead>
@@ -193,7 +193,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Cost Price:&nbsp;
+                                                                Cost Price Per Unit:&nbsp;
                                                             </td>
                                                             <td>
                                                                 <input type="number" step="any" class="form-control" name="costPrice" required/>
@@ -209,7 +209,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Lead Time:&nbsp;
+                                                                Lead Time (Days):&nbsp;
                                                             </td>
                                                             <td>
                                                                 <input type="number" class="form-control" name="leadTime" required/>
