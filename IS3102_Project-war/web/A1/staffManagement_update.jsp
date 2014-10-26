@@ -75,14 +75,14 @@
                                     <label>Address</label>
                                     <input class="form-control" type="text" required="true" name="address" value="<%=staff.getAddress()%>">
                                 </div>
+                               <!-- <div class="form-group">
+                                    <label>New Password (leave blank unless setting a new password).</label>-->
+                                    <input class="form-control" type="hidden" name="password" id="password">
+                                <!--</div>
                                 <div class="form-group">
-                                    <label>New Password (leave blank unless setting a new password).</label>
-                                    <input class="form-control" type="password" name="password" id="password">
-                                </div>
-                                <div class="form-group">
-                                    <label>Re-enter New Password</label>
-                                    <input class="form-control" type="password" name="repassword" id="repassword">
-                                </div>
+                                    <label>Re-enter New Password</label>-->
+                                    <input class="form-control" type="hidden" name="repassword" id="repassword">
+                                <!--</div>-->
                                 
                                 <div class="form-group">
                                     <label>Roles Assignment</label><br/>

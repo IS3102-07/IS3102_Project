@@ -116,7 +116,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             //Retrieve country for currency & exchange rate
             StoreEntity storeEntity;
             //Deduct his points if he used any
-            memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints()-pointsUsed);
+            memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints() - pointsUsed);
             //Calculate points earned
             try {
                 storeEntity = em.getReference(StoreEntity.class, storeID);
@@ -208,7 +208,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             return new ArrayList();
         }
     }
-    
+
     @Override
     public Boolean createSyncWithPhoneRequest(String qrCode) {
         System.out.println("createSyncWithPhoneRequest() called");
@@ -225,8 +225,9 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
 
     @Override
     public String getSyncWithPhoneStatus(String qrCode) {
-        System.out.println("getSyncWithPhoneStatus() called");
+        System.out.println("getSyncWithPhoneStatus() called with qrCode:" + qrCode);
         try {
+            em.flush();
             Query q = em.createQuery("SELECT p from QRPhoneSyncEntity p where p.qrCode=:qrCode");
             q.setParameter("qrCode", qrCode);
             QRPhoneSyncEntity phoneSyncEntity = (QRPhoneSyncEntity) q.getSingleResult();
@@ -241,7 +242,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public ShoppingListEntity getMemberShoppingList(String email) {
         try {
@@ -255,7 +256,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public Boolean tieMemberToSyncRequest(String email, String qrCode) {
         System.out.println("tieMemberToSyncRequest() called");
@@ -268,6 +269,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             } else {
                 phoneSyncEntity.setMemberEmail(email);
                 em.merge(phoneSyncEntity);
+                em.flush();
                 return true;
             }
         } catch (Exception ex) {
