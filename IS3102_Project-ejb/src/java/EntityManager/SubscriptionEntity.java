@@ -14,7 +14,7 @@ public class SubscriptionEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private List<String> emails;
+    private String email;
 
     public SubscriptionEntity(){
     }
@@ -36,12 +36,12 @@ public class SubscriptionEntity implements Serializable {
         this.id = id;
     }
 
-    public List<String> getEmails() {
-        return emails;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmails(List<String> emails) {
-        this.emails = emails;
+    public void setEmail(String email) {
+        this.email = email;
     }
     
 }

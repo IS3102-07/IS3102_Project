@@ -50,7 +50,7 @@
                                     <i class="icon icon-home"></i> <a href="storeWarehouseManagement_view.jsp">Store Inventory Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-home"></i> <a href="storeWarehouseManagement.jsp"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../RetailWarehouseManagement_Servlet?destination=storeWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li>
                                     <i class="icon icon-exchange"></i><a href="transferOrderManagement.jsp"> Transfer Order Management</a>

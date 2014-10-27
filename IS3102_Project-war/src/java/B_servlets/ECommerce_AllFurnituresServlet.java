@@ -1,41 +1,46 @@
 package B_servlets;
 
-import ECommerce.ECommerceBeanLocal;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.FurnitureEntity;
+import EntityManager.Item_CountryEntity;
+import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-public class ECommerce_UnsubscribeServlet extends HttpServlet {
+import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+/**
+ *
+ * @author yang
+ */
+public class ECommerce_AllFurnituresServlet extends HttpServlet {
 
     @EJB
-    private ECommerceBeanLocal ecb;
-    
+    private ItemManagementBeanLocal itemManagementBean;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
+
+            HttpSession session;
+            session = request.getSession();
+            List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
+            Long countryID = (Long) session.getAttribute("countryID");
+            List<Item_CountryEntity> item_countryList = itemManagementBean.listAllItemsOfCountry(countryID);
+            session.setAttribute("furnitures", furnitures);
+            session.setAttribute("item_countryList", item_countryList);
             
-            String email = request.getParameter("email");
-            System.out.println(email);
-            
-            Boolean flag = ecb.removeEmailFromSubscription(email);
-            
-            String errMsg;
-            if (flag) {
-                errMsg = "?goodMsg=Your email has been successfuly removed from the subscription list.";
-                response.sendRedirect("B/unsubscribe.jsp" + errMsg);
-            } else {
-                errMsg = "?errMsg=The email does not exist in the subscription list.";
-                response.sendRedirect("B/unsubscribe.jsp" + errMsg);
-            }
+            response.sendRedirect("B/allFurnitureProducts.jsp");
             
         } catch (Exception ex) {
-            ex.printStackTrace();
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

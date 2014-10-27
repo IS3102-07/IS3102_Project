@@ -6,12 +6,12 @@
 <%@page import="EntityManager.MemberEntity"%>
 <jsp:include page="checkCountry.jsp" />
 <%
-    Boolean displayCartOption = false;
+    Boolean displayWishlistOption = false;
     MemberEntity member = (MemberEntity) (session.getAttribute("member"));
     if (member == null) {
-        displayCartOption = false;
+        displayWishlistOption = false;
     } else {
-        displayCartOption = true;
+        displayWishlistOption = true;
     }
 %>
 <html> <!--<![endif]-->
@@ -57,11 +57,11 @@
                                 <li class="col-md-3 col-sm-6 col-xs-12 product">
                                     <span class="product-thumb-info">
                                         <%
-                                            if (displayCartOption == true) {
+                                            if (displayWishlistOption == true) {
                                         %>
 
                                         <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Cart"/>
+                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Wishlist"/>
                                         </a>
                                         <%
                                             }
@@ -94,7 +94,7 @@
 
                                             %>
                                             <br/>
-                                            <a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>View Availability <%%></em></span></a>
+                                            <a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
 
                                         </span>
                                     </span>

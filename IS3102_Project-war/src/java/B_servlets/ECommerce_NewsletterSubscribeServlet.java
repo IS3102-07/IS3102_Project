@@ -1,6 +1,6 @@
 package B_servlets;
 
-import ECommerce.ECommerceBean;
+import ECommerce.ECommerceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 public class ECommerce_NewsletterSubscribeServlet extends HttpServlet {
 
     @EJB
-    private ECommerceBean ecb;
+    private ECommerceBeanLocal ecb;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -111,6 +111,7 @@
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>ID</th>
+                                                            <th>Name</th>
                                                             <th>Type</th>
                                                             <th>Length</th>
                                                             <th>Width</th>
@@ -132,6 +133,9 @@
                                                             </td>
                                                             <td>
                                                                 <%=storageBins.get(i).getId()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=storageBins.get(i).getName()%>
                                                             </td>
                                                             <td>
                                                                 <%=storageBins.get(i).getType()%>

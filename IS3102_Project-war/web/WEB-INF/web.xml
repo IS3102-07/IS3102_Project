@@ -519,7 +519,7 @@
     </servlet>
     <servlet>
         <servlet-name>ECommerce_AllProductsServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_AllProductsServlet</servlet-class>
+        <servlet-class>B_servlets.ECommerce_AllFurnituresServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>
@@ -972,6 +972,10 @@
     <servlet>
         <servlet-name>A8/KitchenMaterialRequirement</servlet-name>
         <jsp-file>/A8/KitchenMaterialRequirement.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_StockAvailability</servlet-name>
+        <servlet-class>B_servlets.ECommerce_StockAvailability</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -1944,6 +1948,10 @@
     <servlet-mapping>
         <servlet-name>A8/KitchenMaterialRequirement</servlet-name>
         <url-pattern>/A8/KitchenMaterialRequirement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_StockAvailability</servlet-name>
+        <url-pattern>/ECommerce_StockAvailability</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

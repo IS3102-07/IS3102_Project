@@ -125,8 +125,7 @@
                                                     <tbody>
                                                         <tr class="cart_table_item">
 
-                                                            <%                                                                ShoppingListEntity shoppingList = (ShoppingListEntity) (session.getAttribute("wishList"));
-
+                                                            <%ShoppingListEntity shoppingList = (ShoppingListEntity) (session.getAttribute("wishList"));
                                                                 try {
                                                                     if (shoppingList != null) {
                                                                         for (int i = 0; i < shoppingList.getItems().size(); i++) {

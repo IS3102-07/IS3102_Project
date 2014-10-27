@@ -21,9 +21,9 @@ public class TransferOrderEntity implements Serializable {
     private Long id;
     @OneToOne(cascade = CascadeType.ALL)
     private LineItemEntity lineItem;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateCreated;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateTransferred;
     @OneToOne
     private StorageBinEntity origin;

@@ -64,7 +64,7 @@
                         <a href="allProductsCatalog.jsp">All Products</a>
                     </li>
                     <li>
-                        <a href="promotion.jsp">Promotion</a>
+                        <a href="#">Promotion</a>
                     </li>
                     <li>
                         <a href="virtualStore.jsp">Virtual Store</a>

@@ -1,5 +1,5 @@
+<%@page import="EntityManager.StoreEntity"%>
 <%@page import="EntityManager.FurnitureEntity"%>
-<%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,7 +26,7 @@
         <%
             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
             FurnitureEntity furniture = new FurnitureEntity();
-            List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
+            List<StoreEntity> storesInCountry = (List<StoreEntity>) session.getAttribute("storesInCountry");
 
             if (furnitures != null) {
                 for (int i = 0; i < furnitures.size(); i++) {
@@ -37,7 +37,18 @@
             }
 
         %>
-
+        <script>
+            function popupwindow(url, title, w, h) {
+                var left = (screen.width / 2) - (w / 2);
+                var top = (screen.height / 2) - (h / 2);
+                return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+            }
+            function checkItemQty() {
+                var e = document.getElementById("countrySelector");
+                var strUser = e.options[e.selectedIndex].value;
+                popupwindow('../ECommerce_StockAvailability?storeID=' + strUser + '&SKU=<%=sku%>', 'Stock Availability', 200, 100)
+            }
+        </script>
         <div class="body">
             <jsp:include page="menu2.jsp" />
             <div class="body">
@@ -72,29 +83,29 @@
 
                                     <p class="price"><h4 class="amount">$22</h4></p>
 
-                                    <p>Height: <%=furniture.getHeight()%></p>
-                                    <p>Length: <%=furniture.getLength()%></p>
-                                    <p>Width: <%=furniture.getWidth()%></p>
+                                    <p>
+                                        Height: <%=furniture.getHeight()%><br/>
+                                        Length: <%=furniture.getLength()%><br/>
+                                        Width: <%=furniture.getWidth()%>
+                                    </p>
 
                                     <p class="taller">
                                         <%if (furniture.getDescription() != null) {
                                                 furniture.getDescription();
                                             }%>
                                     </p>
-
-                                    <select style="color: black;">
-                                        <option value="volvo">Volvo</option>
-                                        <option value="saab">Saab</option>
-                                        <option value="mercedes">Mercedes</option>
-                                        <option value="audi">Audi</option>
-                                    </select>
-                                    <button href="#" class="btn btn-primary btn-icon">Select Country</button>
-                                    <br/><br/>
-
                                     <div class="product_meta">
-                                        <span class="posted_in">Categories: <a rel="tag" href="#">Accessories</a>, <a rel="tag" href="#">Bags</a>.</span>
+                                        <span class="posted_in">Category: <a rel="tag" href="#"><%=furniture.getCategory()%></a></span>
                                     </div>
 
+                                    <br/><br/>
+                                    View Item Availability<br/>
+                                    <select style="color: black;" id="countrySelector">
+                                        <% for (int i = 0; i < storesInCountry.size(); i++) {%>
+                                        <option value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
+                                        <%}%>
+                                    </select><br/>
+                                    <button href="#" target="popup" onclick="checkItemQty()" class="btn btn-primary btn-icon">Check Item Availability</button>
                                 </div>
                             </div>
                         </div>

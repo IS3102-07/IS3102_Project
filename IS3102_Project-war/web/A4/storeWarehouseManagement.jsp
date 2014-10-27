@@ -1,3 +1,5 @@
+<%@page import="EntityManager.TransferOrderEntity"%>
+<%@page import="java.util.List"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
@@ -9,6 +11,7 @@
                 try {
                     WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
                     double[] warehousesCapacity = (double[]) (session.getAttribute("warehousesCapacity"));
+                    List<TransferOrderEntity> latestTransferOrders = (List<TransferOrderEntity>) session.getAttribute("latestTransferOrders");
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -169,16 +172,24 @@
                                                     <th>Order #</th>
                                                     <th>Order Placed</th>
                                                     <th>Order Completed</th>
-                                                    <th>Destination</th>
+                                                    <th>Dest Bin ID</th>
+                                                    <th>Dest Name</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <%for (int i = 0; i < latestTransferOrders.size(); i++) {%>
                                                 <tr>
-                                                    <td>3326</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:29 PM</td>
-                                                    <td>$321.33</td>
+                                                    <td><%=latestTransferOrders.get(i).getId()%></td>
+                                                    <td><%=latestTransferOrders.get(i).getDateCreated()%></td>
+                                                    <td><%if (latestTransferOrders.get(i).getDateTransferred() == null) {
+                                                            out.println("Pending");
+                                                        } else {
+                                                            out.println(latestTransferOrders.get(i).getDateTransferred());
+                                                        }%></td>
+                                                    <td><%=latestTransferOrders.get(i).getTarget().getId()%></td>
+                                                    <td><%=latestTransferOrders.get(i).getTarget().getName()%></td>
                                                 </tr>
+                                                <%}%>
                                             </tbody>
                                         </table>
                                     </div>

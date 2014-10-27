@@ -109,7 +109,7 @@ public class ECommerceBean implements ECommerceBeanLocal {
     public Boolean addEmailToSubscription(String email) {
         System.out.println("addEmailToSubscription()");
         SubscriptionEntity subscription = new SubscriptionEntity();
-        subscription.getEmails().add(email);
+        subscription.setEmail(email);
         em.merge(subscription);
 
         try {
@@ -161,12 +161,11 @@ public class ECommerceBean implements ECommerceBeanLocal {
 
     @Override
     public Boolean sendMonthlyNewsletter() {
-        System.out.println("sendActivationEmailForStaff():");
+        System.out.println("sendMonthlyNewsletter():");
         try {
             Query q = em.createQuery("SELECT t FROM SubscriptionEntity t");
             for (Object o : q.getResultList()) {
                 SubscriptionEntity subscriber = (SubscriptionEntity) o;
-                for (int i = 0; i < subscriber.getEmails().size(); i++) {
                     try {
                         Properties props = new Properties();
                         props.put("mail.transport.protocol", "smtp");
@@ -181,12 +180,12 @@ public class ECommerceBean implements ECommerceBeanLocal {
                         Message msg = new MimeMessage(session);
                         if (msg != null) {
                             msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
-                            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(subscriber.getEmails().get(i), false));
+                            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(subscriber.getEmail(), false));
                             msg.setSubject("Island Furniture Staff Account Activation");
                             String messageText = "Greetings from Island Furniture... \n\n"
                                     + "Here is your monthly enewsletter :\n\n"
                                     + "Promotion for this week is as follow"
-                                    + "Click here to unsubscribe: http://localhost:8080/IS3102_Project-war/ECommerce_UnsubscribeServlet?email=" + subscriber.getEmails().get(i);
+                                    + "Click here to unsubscribe: http://localhost:8080/IS3102_Project-war/ECommerce_UnsubscribeServlet?email=" + subscriber.getEmail();
                             msg.setText(messageText);
                             msg.setHeader("X-Mailer", mailer);
                             Date timeStamp = new Date();
@@ -198,7 +197,6 @@ public class ECommerceBean implements ECommerceBeanLocal {
                         return false;
                     }
                     return true;
-                }
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to send monthly code :\n" + ex);
@@ -212,13 +210,11 @@ public class ECommerceBean implements ECommerceBeanLocal {
         Query q = em.createQuery("SELECT t FROM SubscriptionEntity t");
         for (Object o : q.getResultList()) {
             SubscriptionEntity subscriber = (SubscriptionEntity) o;
-            for (String emailInList : subscriber.getEmails()) {
-                if (emailInList.equalsIgnoreCase(email)) {
+                if (subscriber.getEmail().equalsIgnoreCase(email)) {
                     em.remove(subscriber);
                     em.flush();
                     return true;
                 }
-            }
         }
         return false;
     }
