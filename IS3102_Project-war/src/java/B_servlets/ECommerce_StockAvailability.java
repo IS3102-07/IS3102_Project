@@ -22,25 +22,31 @@ public class ECommerce_StockAvailability extends HttpServlet {
     @EJB
     private FacilityManagementBeanLocal fmb;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         try {
-
             HttpSession session;
             session = request.getSession();
-            Long storeID = Long.parseLong(request.getParameter("storeID"));
+            String storeIDstring = (String) request.getParameter("storeID");
             String SKU = (String) request.getParameter("sku");
+            if ((storeIDstring == null || storeIDstring.equals(""))&& (SKU == null || SKU.equals(""))) {
+                response.sendRedirect("B/index.jsp");
+            } else if (storeIDstring == null || storeIDstring.equals("")) {
+                response.sendRedirect("B/productDetails.jsp?sku=" + SKU);
+            }
+            Long storeID = Long.parseLong(storeIDstring);
             StoreEntity storeEntity = fmb.getStoreByID(storeID);
             WarehouseEntity warehouseEntity = storeEntity.getWarehouse();
-            String itemQty = skimb.checkItemQty(warehouseEntity.getId(), SKU)+"";
+            String itemQty = skimb.checkItemQty(warehouseEntity.getId(), SKU) + "";
             session.setAttribute("storeEntity", storeEntity);
-            
-            response.sendRedirect("B/productDetails.jsp?sku="+SKU+"&itemQty="+itemQty+"&storeID="+storeEntity.getId());
-            
+
+            response.sendRedirect("B/productDetails.jsp?sku=" + SKU + "&itemQty=" + itemQty + "&storeID=" + storeEntity.getId());
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

@@ -47,9 +47,6 @@
                                         <label>Description</label>
                                         <input class="form-control" required="true" type="text" name="description">
                                     </div>
-                                    <div>
-                                        <input type="file" name="javafile">
-                                    </div>
                                     <div class="form-group">
                                         <label>SKU</label>
                                         <input class="form-control" type="text" required="true" name="SKU">
@@ -66,6 +63,10 @@
                                         <label>Height per item</label>
                                         <input class="form-control" type="number" required="true" min="1" step="1" name="height" >
                                     </div>
+                                    <div>
+                                        <input type="file" name="javafile">
+                                    </div>
+                                    <br/>
                                     <div class="form-group">
                                         <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                     </div>

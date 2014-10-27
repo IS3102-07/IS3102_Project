@@ -1,4 +1,5 @@
 <%@page import="EntityManager.MemberEntity"%>
+<%String URLprefix = (String) session.getAttribute("URLprefix");%>
 <header id="header">
     <div class="container">
         <h1 class="logo">
@@ -74,7 +75,18 @@
                             All Departments
                             <i class="icon icon-angle-down"></i>
                         </a>
-                        
+                        <ul class="dropdown-menu">
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-map-marker"></i> Tables & Desk</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-map-marker"></i> Bathroom</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-map-marker"></i> Beds & Mattresses</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-map-marker"></i> Sofas & Chair</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-map-marker"></i> Cabinets & Storage</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-map-marker"></i> Lightings</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-map-marker"></i> Study</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-map-marker"></i> Children</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-coffee"></i> Food Products</a></li>
+                            <li><a href="<%=URLprefix%>about-us.html"><i class="icon icon-cutlery"></i> Restaurant</a></li>
+                        </ul>
                     </li>
                 </ul>
             </nav>

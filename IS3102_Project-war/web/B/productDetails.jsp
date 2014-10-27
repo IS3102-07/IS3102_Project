@@ -12,12 +12,12 @@
 <jsp:forward page="index.jsp" />
 <%
     }
-    Boolean displayCartOption = false;
+    Boolean displayWishlistOption = false;
     MemberEntity member = (MemberEntity) (session.getAttribute("member"));
     if (member == null) {
-        displayCartOption = false;
+        displayWishlistOption = false;
     } else {
-        displayCartOption = true;
+        displayWishlistOption = true;
     }
 %>
 <html> <!--<![endif]-->
@@ -74,7 +74,16 @@
                                 <div class="summary entry-summary">
 
                                     <h2 class="shorter"><strong><%=furniture.getName()%></strong></h2>
+                                            <%
+                                                if (displayWishlistOption == true) {
+                                            %>
 
+                                    <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                        <input type="button" name="btnEdit" class="btn btn-primary" id="<%=furniture.getSKU()%>" value="Add To Wishlist"/>
+                                    </a>
+                                    <%
+                                        }
+                                    %>
 
                                     <p class="price"><h4 class="amount">$22</h4></p>
 
@@ -92,7 +101,6 @@
                                     <div class="product_meta">
                                         <span class="posted_in">Category: <a rel="tag" href="#"><%=furniture.getCategory()%></a></span>
                                     </div>
-
                                     <br/><br/>
 
                                     <div class="row">
@@ -101,20 +109,20 @@
                                                 View Item Availability<br/>
                                                 <select style="color: black;" name="storeID">
                                                     <option> </option>
-                                                    <% for (int i = 0; i < storesInCountry.size(); i++) {%>
-                                                    <option value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
                                                     <%String storeIDstring = (request.getParameter("storeID"));
                                                         Long storeID = 1L;
                                                         if (storeIDstring != null) {
                                                             storeID = Long.parseLong(storeIDstring);
                                                         }
-                                                        if (storeIDstring != null && storeID == storesInCountry.get(i).getId()) {
-                                                    %>
+                                                        for (int i = 0; i < storesInCountry.size(); i++) {
+                                                            if (!storesInCountry.get(i).getId().equals(storeID)) {%>
+                                                    <option value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
+                                                    <%} else {%>
                                                     <option selected value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
                                                     <%
+                                                            }
                                                         }
                                                     %>
-                                                    <%}%>
                                                 </select><br/><br/>
                                                 <input type="submit" class="btn btn-primary btn-icon" value="Check Item Availability"/>
                                                 <input type="hidden" name="sku" value="<%=sku%>"/>
