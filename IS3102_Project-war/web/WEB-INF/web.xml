@@ -519,7 +519,7 @@
     </servlet>
     <servlet>
         <servlet-name>ECommerce_AllProductsServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_AllProductsServlet</servlet-class>
+        <servlet-class>B_servlets.ECommerce_AllFurnituresServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>

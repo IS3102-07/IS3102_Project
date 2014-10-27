@@ -36,7 +36,7 @@
                                     <div class="col-md-4">
                                         <div class="featured-box featured-box-secondary">
                                             <div class="box-content">
-                                                <a href="../ECommerce_AllProductsServlet"><i class="icon-featured icon icon-archive"> </i>
+                                                <a href="../ECommerce_AllFurnituresServlet"><i class="icon-featured icon icon-archive"> </i>
                                                     <h4>Furnitures</h4>
                                                 </a>
                                             </div>
