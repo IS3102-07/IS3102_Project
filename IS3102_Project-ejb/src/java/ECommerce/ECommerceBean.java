@@ -89,11 +89,11 @@ public class ECommerceBean implements ECommerceBeanLocal {
             ItemEntity item = (ItemEntity) q.getSingleResult();
 
             System.out.println("removeItemFromWishlist(): item found SKU is " + item.getSKU());
-            ShoppingListEntity shoppingList = member.getShoppingList();
+            WishListEntity wishList = member.getWishList();
 
-            for (int i = 0; i < shoppingList.getItems().size(); i++) {
-                if (shoppingList.getItems().get(i) == item) {
-                    shoppingList.getItems().remove(i);
+            for (int i = 0; i < wishList.getItems().size(); i++) {
+                if (wishList.getItems().get(i) == item) {
+                    wishList.getItems().remove(i);
                 }
             }
             em.merge(member);
