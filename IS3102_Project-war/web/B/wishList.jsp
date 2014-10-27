@@ -8,6 +8,11 @@
     <jsp:include page="header.html" />
     <body>
         <script>
+            var totalPrice = 0;
+            for (var i = 0, n = wishList.getItems().size; i < n; i++) {
+                    totalPrice += wishList.getItems().get(i).get
+                }
+            
             function removeItem() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -48,13 +53,14 @@
                 if (quantity > 1) {
                     document.getElementById(source).value--;
                     document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
+                    totalPrice -= priceOfProduct;
                 }
             }
             function plus(source) {
                 var priceOfProduct = document.getElementById("price" + source).innerHTML;
                 document.getElementById(source).value++;
                 document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
-                
+                totalPrice += priceOfProduct;
             }
 
             function finalTotalPrice() {
@@ -129,10 +135,10 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr class="cart_table_item">
-                                                            
+
                                                             <%WishListEntity wishList = (WishListEntity) (session.getAttribute("wishList"));
-                                                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
-                                                            List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
+                                                                List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                                                                List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
                                                                 try {
                                                                     if (wishList != null) {
                                                                         for (int i = 0; i < wishList.getItems().size(); i++) {
@@ -151,18 +157,18 @@
 
                                                             <td class="product-price">
                                                                 $<span class="amount" id="price<%=wishList.getItems().get(i).getId()%>">
-                                                                <%
-                                                for (int j = 0; j < item_countryList.size(); j++) {
-                                                    if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
-                                            %>
-                                            <span class="product-thumb-info-act-left"><em>Price: $ <%=item_countryList.get(j).getRetailPrice()%></em></span>
+                                                                    <%
+                                                                        for (int j = 0; j < item_countryList.size(); j++) {
+                                                                            if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
+                                                                    %>
+                                                                    <%=item_countryList.get(j).getRetailPrice()%>
 
-                                            <%
-                                                        break;
-                                                    }
-                                                }
+                                                                    <%
+                                                                                break;
+                                                                            }
+                                                                        }
 
-                                            %>
+                                                                    %>
                                                                 </span>
                                                             </td>
                                                             <td class="product-quantity">
@@ -175,13 +181,25 @@
                                                                 </form>
                                                             </td>
                                                             <td class="product-subtotal">
-                                                                $<span class="amount" id="totalPrice<%=wishList.getItems().get(i).getId()%>">299</span>
+                                                                $<span class="amount" id="totalPrice<%=wishList.getItems().get(i).getId()%>">
+                                                                    <%
+                                                                        for (int j = 0; j < item_countryList.size(); j++) {
+                                                                            if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
+                                                                    %>
+                                                                    <%=item_countryList.get(j).getRetailPrice()%>
+
+                                                                    <%
+                                                                                break;
+                                                                            }
+                                                                        }
+
+                                                                    %>
+                                                                </span>
 
                                                             </td>
                                                         </tr>
 
-                                                        <%
-                                                                    }
+                                                        <%                                                                    }
                                                                 }
                                                             } catch (Exception ex) {
                                                                 System.out.println(ex);
@@ -193,11 +211,7 @@
                                                             <td>
                                                                 <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Item</button></a>
                                                             </td>
-                                                            <td class="actions" colspan="6">
-                                                                <div class="actions-continue">
-                                                                    $<span class="amount" id="finalTotalPrice">0</span>
-                                                                </div>
-                                                            </td>
+                                                            
                                                         </tr>
                                                     </tbody>
                                                 </table>
