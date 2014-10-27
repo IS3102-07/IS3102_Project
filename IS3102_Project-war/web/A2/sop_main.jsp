@@ -216,7 +216,6 @@
                                                     <div class="col-md-3">                                                        
                                                         <input type="submit" name="submit-btn" value="Delete Sales And Operations Plan" class="btn btn-primary" data-loading-text="Loading...">
                                                     </div>
-
                                                     <div class="col-md-9">
                                                         <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Generate Purchase Orders</button></a>
 
