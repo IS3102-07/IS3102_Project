@@ -39,6 +39,7 @@ public class ECommerce_SelectCountry extends HttpServlet {
                 }
             }
             session.setAttribute("countryID", countryID);
+            session.setAttribute("countryName", country);
             session.setAttribute("storesInCountry", storesInCountry);
             switch (country) {
 //                case "France":

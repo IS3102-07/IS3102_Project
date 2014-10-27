@@ -3,7 +3,6 @@ package B_servlets;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.FurnitureEntity;
 import EntityManager.Item_CountryEntity;
-import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,10 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-/**
- *
- * @author yang
- */
+
 public class ECommerce_AllFurnituresServlet extends HttpServlet {
 
     @EJB
@@ -36,9 +32,35 @@ public class ECommerce_AllFurnituresServlet extends HttpServlet {
             List<Item_CountryEntity> item_countryList = itemManagementBean.listAllItemsOfCountry(countryID);
             session.setAttribute("furnitures", furnitures);
             session.setAttribute("item_countryList", item_countryList);
-            
-            response.sendRedirect("B/allFurnitureProducts.jsp");
-            
+
+            String country = (String) session.getAttribute("countryName");
+            if (country == null) {
+                country = "";
+            }
+            switch (country) {
+//                case "France":
+//                    response.sendRedirect("B/FRA/allFurnitureProducts.jsp");
+//                    break;
+//                case "USA":
+//                    response.sendRedirect("B/USA/allFurnitureProducts.jsp");
+//                    break;
+//                case "China":
+//                    response.sendRedirect("B/CN/allFurnitureProducts.jsp");
+//                    break;
+//                case "Singapore":
+//                    response.sendRedirect("B/SG/allFurnitureProducts.jsp");
+//                    break;
+//                case "Malaysia":
+//                    response.sendRedirect("B/MY/allFurnitureProducts.jsp");
+//                    break;
+//                case "Indonesia":
+//                    response.sendRedirect("B/IDN/allFurnitureProducts.jsp");
+//                    break;
+                default:
+                    response.sendRedirect("B/allFurnitureProducts.jsp");
+                    break;
+            }
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

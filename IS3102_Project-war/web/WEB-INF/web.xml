@@ -518,7 +518,7 @@
         <jsp-file>/A1/AccessRight.jsp</jsp-file>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_AllProductsServlet</servlet-name>
+        <servlet-name>ECommerce_AllFurnituresServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_AllFurnituresServlet</servlet-class>
     </servlet>
     <servlet>
@@ -1494,8 +1494,8 @@
         <url-pattern>/A1/AccessRight</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_AllProductsServlet</servlet-name>
-        <url-pattern>/ECommerce_AllProductsServlet</url-pattern>
+        <servlet-name>ECommerce_AllFurnituresServlet</servlet-name>
+        <url-pattern>/ECommerce_AllFurnituresServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_AddFurnitureToListServlet</servlet-name>

@@ -33,8 +33,33 @@ public class ECommerce_BathroomServlet extends HttpServlet {
             
             List<FurnitureEntity> furnitures = itemManagementBean.viewFurnitureByCategory("Bathroom");
             session.setAttribute("furnitures", furnitures);
-            
-            response.sendRedirect("B/bathroom.jsp");
+            String country = (String) session.getAttribute("countryName");
+            if (country == null) {
+                country = "";
+            }
+            switch (country) {
+//                case "France":
+//                    response.sendRedirect("B/FRA/bathroom.jsp");
+//                    break;
+//                case "USA":
+//                    response.sendRedirect("B/USA/bathroom.jsp");
+//                    break;
+//                case "China":
+//                    response.sendRedirect("B/CN/bathroom.jsp");
+//                    break;
+//                case "Singapore":
+//                    response.sendRedirect("B/SG/bathroom.jsp");
+//                    break;
+//                case "Malaysia":
+//                    response.sendRedirect("B/MY/bathroom.jsp");
+//                    break;
+//                case "Indonesia":
+//                    response.sendRedirect("B/IDN/bathroom.jsp");
+//                    break;
+                default:
+                    response.sendRedirect("B/bathroom.jsp");
+                    break;
+            }
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
