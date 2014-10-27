@@ -22,7 +22,7 @@
                                     <i class="icon icon-dashboard"></i>  <a href="../PPD_index_GET/*">Production Plan Distribution</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Distribution Schema List</a>
+                                    <i class="icon icon-list"></i> Distribution Schema List</a>
                                 </li>
                             </ol>
                         </div>

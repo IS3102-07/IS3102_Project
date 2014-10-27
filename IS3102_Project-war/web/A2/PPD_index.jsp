@@ -17,7 +17,7 @@
                             <h1 class="page-header">Production Plan Distribution</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Production Plan Distribution</a>
+                                    <i class="icon icon-dashboard"></i> Production Plan Distribution</a>
                                 </li>
                             </ol>
                         </div>

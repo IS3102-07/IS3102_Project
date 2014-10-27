@@ -17,7 +17,7 @@
                             <h1 class="page-header">Sales Forecast</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="#">Sales Forecast</a>
+                                    <i class="icon icon-dashboard"></i> Sales Forecast</a>
                                 </li>                                
                             </ol>
                         </div>
