@@ -28,7 +28,7 @@ import javax.persistence.Query;
 @Stateless
 public class ItemManagementBean implements ItemManagementBeanLocal, ItemManagementBeanRemote {
 
-   @PersistenceContext(unitName = "IS3102_Project-ejbPU")
+    @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
     private RawMaterialEntity rawMaterial;
 
@@ -200,7 +200,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
             return null;
         }
     }
-    
+
     @Override
     public boolean addRetailProduct(String SKU, String name, String category, String description, String imageURL, Integer _length, Integer width, Integer height) {
         System.out.println("addRetailProduct() called with SKU:" + SKU);
@@ -602,16 +602,26 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     }
 
     @Override
-    public Boolean editProductGroupLineItem(Long productGroupLineItemID, String SKU, double percent) {
+    public Boolean editProductGroupLineItem(Long productGroupID, Long productGroupLineItemID, String SKU, double percent) {
         try {
+            double sum = 0.0;
+            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupID);
+            for (int i = 0; i < productGroup.getLineItemList().size(); i++) {
+                sum += productGroup.getLineItemList().get(i).getPercent();
+            }
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, productGroupLineItemID);
-            lineItem.setPercent(percent);
-            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
-            q.setParameter("SKU", SKU);
-            ItemEntity item = (ItemEntity) q.getSingleResult();
-            lineItem.setItem(item);
-            em.merge(lineItem);
-            return true;
+            sum -= lineItem.getPercent();
+            if (sum + percent <= 1.0) {
+                lineItem.setPercent(percent);
+                Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+                q.setParameter("SKU", SKU);
+                ItemEntity item = (ItemEntity) q.getSingleResult();
+                lineItem.setItem(item);
+                em.merge(lineItem);
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -621,15 +631,24 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     @Override
     public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId) {
         try {
+            double sum = 0.0;
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);
             Query q = em.createQuery("select l from ProductGroupLineItemEntity l where l.item.SKU = ?1 and l.productGroup is not null").setParameter(1, lineItem.getItem().getSKU());
             if (q.getResultList().isEmpty()) {
                 ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
-                lineItem.setProductGroup(productGroup);
-                productGroup.setType(lineItem.getItem().getType());
-                productGroup.getLineItemList().add(lineItem);
-                em.merge(productGroup);
-                return true;
+                for (int i = 0; i < productGroup.getLineItemList().size(); i++) {
+                    sum += productGroup.getLineItemList().get(i).getPercent();
+                }
+                sum += lineItem.getPercent();
+                if (sum <= 1.0) {
+                    lineItem.setProductGroup(productGroup);
+                    productGroup.setType(lineItem.getItem().getType());
+                    productGroup.getLineItemList().add(lineItem);
+                    em.merge(productGroup);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

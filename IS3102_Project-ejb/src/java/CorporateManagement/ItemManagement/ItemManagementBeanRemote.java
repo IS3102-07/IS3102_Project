@@ -60,7 +60,7 @@ public interface ItemManagementBeanRemote {
     public ProductGroupEntity getProductGroup(Long id);
     public List<ProductGroupEntity> getAllProductGroup();    
     public ProductGroupLineItemEntity createProductGroupLineItem(String furnitureSKU, double percent);    
-    public Boolean editProductGroupLineItem(Long productGroupLineItemID, String SKU, double percent);
+    public Boolean editProductGroupLineItem(Long productGroupID, Long productGroupLineItemID, String SKU, double percent);
     public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId);
     public Boolean removeLineItemFromProductGroup(Long productGroupId, Long lineItemId);
     public boolean removeProductGroup(Long productGroupID);
