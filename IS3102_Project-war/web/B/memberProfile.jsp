@@ -110,16 +110,21 @@
                                                 <h2 class="short">Loyalty Rewards</h2>
                                                 <%
                                                     int a = 100;
-                                                    out.println(member.getLoyaltyPoints());
+
                                                     for (int i = 0; i < loyaltyTiers.size(); i++) {
 
 
                                                 %>
-                                                <div class="progress">
-                                                    Tier : <%=loyaltyTiers.get(i).getTier()%>
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=a%>%; color:red;" >
-
-                                                        <%=loyaltyTiers.get(i).getAmtOfSpendingRequired()%>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="progress">
+                                                            <br/>
+                                                            Tier : <%=loyaltyTiers.get(i).getTier()%> <br/>
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=a%>%; color:red; background-image: 'none';
+                                                                 background-color: 'red'" >
+                                                                <%=loyaltyTiers.get(i).getAmtOfSpendingRequired()%>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <%
@@ -129,28 +134,57 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <h2 class="short">My Loyalty Points</h2>
-                                                <%
-                                                    out.println("My Points : " + member.getLoyaltyPoints());
-                                                    out.println("My Total Spending : " + member.getCummulativeSpending());
+                                                <h2 class="short">Loyalty Rewards</h2>
 
-
-                                                %>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="progress">
+                                                            <br/>
+                                                            My Points : <%=member.getLoyaltyPoints()%> <br/>
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%; color:red; background-image: 'none';
+                                                                 background-color: 'red'" >
+                                                                test
+                                                            </div>
+                                                        </div>
+                                                            <%
+                                                            int barPercentage = 0;
+                                                            int barRemainder = 0;
+                                                                if (member.getLoyaltyPoints() < 5000) {
+                                                                    barPercentage = member.getLoyaltyPoints()/5000;
+                                                                    barRemainder = 100 - barPercentage;
+                                                                }
+                                                            %>
+                                                        <div class="progress">
+                                                            <div class="progress-bar progress-bar-success" style="width: <%=barPercentage%>%">
+                                                                <span class="sr-only">35% Complete (success)</span>
+                                                                <%=barPercentage%>
+                                                            </div>
+                                                            <div class="progress-bar progress-bar-danger" style="width: <%=barRemainder%>%">
+                                                                <span class="sr-only">20% Complete (warning)</span>
+                                                                <%=barRemainder%>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
+
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <%                        } catch (Exception ex) {
-                            response.sendRedirect("index.jsp");
-                            ex.printStackTrace();
-                        }%>
                 </div>
+                <%                        } catch (Exception ex) {
+                        response.sendRedirect("index.jsp");
+                        ex.printStackTrace();
+                    }%>
             </div>
         </div>
-        <jsp:include page="footer.html" />
-    </body>
+    </div>
+    <jsp:include page="footer.html" />
+</body>
 </html>

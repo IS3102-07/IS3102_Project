@@ -54,7 +54,10 @@
                                                             <th>Receipt No</th>
                                                             <th>Created Date</th>     
                                                             <th>Store</th>
-                                                            <th>Price</th>
+                                                            <th>Amount Due</th>
+                                                            <th>Amount Paid</th>
+                                                            <th>Discount</th>
+                                                            <th>Points Used</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -86,8 +89,17 @@
                                                                 <%=salesRecords.get(i).getStore().getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=salesRecords.get(i).getAmountDue()%>
-                                                            </td>                                                          
+                                                                <%=salesRecords.get(i).getAmountDue()%>0 <%=salesRecords.get(i).getCurrency()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=salesRecords.get(i).getAmountPaid()%>0 <%=salesRecords.get(i).getCurrency()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=salesRecords.get(i).getAmountPaidUsingPoints()%>0 <%=salesRecords.get(i).getCurrency()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=salesRecords.get(i).getLoyaltyPointsDeducted()%>
+                                                            </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=salesRecords.get(i).getId()%>" value="View Details" onclick="viewSalesRecordDetails('<%=salesRecords.get(i).getId()%>')"/>
                                                             </td>

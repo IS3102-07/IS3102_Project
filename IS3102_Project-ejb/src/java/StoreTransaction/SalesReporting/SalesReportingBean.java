@@ -26,10 +26,10 @@ public class SalesReportingBean implements SalesReportingBeanLocal {
         // Caching/threading method should go here (if got time to do)
         // Rough check for any missing info before submitting it to the HQ
         if (staffEmail == null || staffPassword == null || storeID == null || posName == null) {
+            System.out.println("Sales record has missing authorization or information, ignoring request.");
             return false;
         }
-        //return createSalesRecord(staffEmail, staffPassword, storeID, posName, itemsPurchasedSKU, itemsPurchasedQty, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail,receiptNo);
-        return true;
+        return createSalesRecord(staffEmail, staffPassword, storeID, posName, itemsPurchasedSKU, itemsPurchasedQty, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, memberEmail,receiptNo);
     }
     
     //consume hq web service
