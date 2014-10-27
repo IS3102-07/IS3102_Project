@@ -38,7 +38,7 @@
                     <a href="../ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
                 </li>
                 <li>
-                    <a href="../ECommerce_ShoppingCartServlet"><i class="icon icon-shopping-cart"></i>My Wish List</a>
+                    <a href="../ECommerce_WishListServlet"><i class="icon icon-shopping-cart"></i>My Wish List</a>
                 </li>
                 <li>
                     <a href="memberProfile.jsp"><i class="icon icon-user"></i>Profile</a>
