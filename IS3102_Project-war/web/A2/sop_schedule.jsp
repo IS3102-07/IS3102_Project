@@ -29,7 +29,7 @@
                                     <i class="icon icon-pencil"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_index_GET">Sales And Operations Planning</a>
                                 </li>                             
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="#">Schedule</a>
+                                    <i class="icon icon-calendar"></i> Schedule</a>
                                 </li>
                             </ol>
                         </div>
