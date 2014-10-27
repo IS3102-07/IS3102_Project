@@ -276,11 +276,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 targetInventory = Integer.parseInt(request.getParameter("targetInventory"));
                 sopId = Long.parseLong(request.getParameter("sopId"));
 
-                if (sopBean.editSOP(sopId, productionPlan, currentInventory, targetInventory)) {
-                    request.setAttribute("alertMessage", "Sales and Operations Plan is saved.");
-                } else {
-                    request.setAttribute("alertMessage", "Failed to edit Sales and Operations Plan.");
-                }
+                sopBean.editSOP(sopId, productionPlan, currentInventory, targetInventory);
 
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 break;

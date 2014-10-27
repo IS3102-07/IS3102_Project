@@ -10,6 +10,40 @@
     <body>
 
         <script>
+            function removeSOP() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = true;
+                    document.sopManagement.submit();
+                } else {
+                    window.event.returnValue = true;
+                    document.sopManagement.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
+                    document.sopManagement.submit();
+                }
+            }
+            function removeSOP1() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = true;
+                    document.sopManagement1.submit();
+                } else {
+                    window.event.returnValue = true;
+                    document.sopManagement1.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
+                    document.sopManagement1.submit();
+                }
+            }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -36,7 +70,7 @@
                                     <i class="icon icon-calendar"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_schedule_GET">Schedule</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Dashboard</a>
+                                    <i class="icon icon-list"></i> Dashboard</a>
                                 </li>
                             </ol>
                         </div>
@@ -114,7 +148,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/sopManagement">
+                                            <form name="sopManagement1" action="../SaleAndOperationPlanning_Servlet/sopManagement">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable2">
                                                     <thead>
                                                         <tr>
@@ -150,8 +184,24 @@
                                                     </tbody>
                                                 </table>    
                                                 <div class="row">
-                                                    <div class="col-md-12">                                                        
-                                                        <input type="submit" name="submit-btn" value="Delete Sales And Operations Plan" class="btn btn-primary" data-loading-text="Loading...">
+                                                    <div class="col-md-12">  
+                                                        <a href="#myModal2" data-toggle="modal"><button class="btn btn-primary">Delete Sales and Operations Plan</button></a>
+                                                        <div role="dialog" class="modal fade" id="myModal2">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4>Alert</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p id="messageBox">SOP will be removed. Are you sure?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">                        
+                                                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeSOP1()"  />
+                                                                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>                                              
@@ -180,8 +230,8 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/sopManagement">
-                                                <table class="table table-striped table-bordered table-hover" id="dataTable2">
+                                            <form name="sopManagement" action="../SaleAndOperationPlanning_Servlet/sopManagement">
+                                                <table class="table table-striped table-bordered table-hover" id="dataTable3">
                                                     <thead>
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
@@ -194,8 +244,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%                                                           
-                                                            List<SaleAndOperationPlanEntity> retailSopList = (List<SaleAndOperationPlanEntity>) request.getAttribute("retailSopList");
+                                                        <%                                                            List<SaleAndOperationPlanEntity> retailSopList = (List<SaleAndOperationPlanEntity>) request.getAttribute("retailSopList");
                                                             for (SaleAndOperationPlanEntity model : retailSopList) {
                                                         %>
                                                         <tr>
@@ -214,7 +263,23 @@
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-3">                                                        
-                                                        <input type="submit" name="submit-btn" value="Delete Sales And Operations Plan" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <a href="#myModal1" data-toggle="modal"><button class="btn btn-primary">Delete Sales and Operations Plan</button></a>
+                                                        <div role="dialog" class="modal fade" id="myModal1">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4>Alert</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p id="messageBox">SOP will be removed. Are you sure?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">                        
+                                                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeSOP()"  />
+                                                                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-9">
                                                         <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Generate Purchase Orders</button></a>
@@ -274,9 +339,10 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->        
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTable1').dataTable();
                 $('#dataTable2').dataTable();
+                $('#dataTable3').dataTable();
             }
             );
         </script>
