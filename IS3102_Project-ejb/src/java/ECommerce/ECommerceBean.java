@@ -55,19 +55,19 @@ public class ECommerceBean implements ECommerceBeanLocal {
             ItemEntity item = (ItemEntity) q.getSingleResult();
 
             System.out.println("addItemToWishlist(): item found SKU is " + item.getSKU());
-            ShoppingListEntity shoppingList = member.getShoppingList();
+            WishListEntity wishList = member.getWishList();
 
-            Boolean itemExistInShoppingList = false;
-            for (int i = 0; i < shoppingList.getItems().size(); i++) {
-                if (shoppingList.getItems().get(i) == item) {
-                    itemExistInShoppingList = true;
+            Boolean itemExistInWishList = false;
+            for (int i = 0; i < wishList.getItems().size(); i++) {
+                if (wishList.getItems().get(i) == item) {
+                    itemExistInWishList = true;
                 }
             }
 
-            if (itemExistInShoppingList == true) {
+            if (itemExistInWishList == true) {
                 return false;
             } else {
-                shoppingList.addItems(item);
+                wishList.getItems().add(item);
                 em.merge(member);
                 return true;
             }
