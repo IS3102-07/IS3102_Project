@@ -1,7 +1,6 @@
 package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.FurnitureEntity;
 import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,10 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-/**
- *
- * @author yang
- */
+
 public class ECommerce_AllRetailProductsServlet extends HttpServlet {
 
     @EJB
@@ -34,8 +30,33 @@ public class ECommerce_AllRetailProductsServlet extends HttpServlet {
             List<RetailProductEntity> retailProducts = itemManagementBean.listAllRetailProduct();
             session.setAttribute("retailProducts", retailProducts);
             
-            response.sendRedirect("B/allRetailProducts.jsp");
-            
+            String country = (String) session.getAttribute("countryName");
+            if (country == null) {
+                country = "";
+            }
+            switch (country) {
+//                case "France":
+//                    response.sendRedirect("B/FRA/allRetailProducts.jsp");
+//                    break;
+//                case "USA":
+//                    response.sendRedirect("B/USA/allRetailProducts.jsp");
+//                    break;
+//                case "China":
+//                    response.sendRedirect("B/CN/allRetailProducts.jsp");
+//                    break;
+//                case "Singapore":
+//                    response.sendRedirect("B/SG/allRetailProducts.jsp");
+//                    break;
+//                case "Malaysia":
+//                    response.sendRedirect("B/MY/allRetailProducts.jsp");
+//                    break;
+//                case "Indonesia":
+//                    response.sendRedirect("B/IDN/allRetailProducts.jsp");
+//                    break;
+                default:
+                    response.sendRedirect("B/allRetailProducts.jsp");
+                    break;
+            }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

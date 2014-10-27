@@ -98,6 +98,11 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
             SalesRecordEntity salesRecordEntity = new SalesRecordEntity(memberEntity, amountDue, amountPaid, amountPaidUsingPoints, loyaltyPointsDeducted, currency, posName, staffEntity.getName(), itemsPurchased, receiptNo);
             salesRecordEntity.setStore(storeEntity);//tie the store to record
             em.persist(salesRecordEntity);
+            if (memberEntity != null) {
+                memberEntity.getPurchases().add(salesRecordEntity);
+                em.merge(memberEntity);
+            }
+
             //update sales figures as well
             salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
             storeEntity.getSalesRecords().add(salesRecordEntity);//tie the record to the store
