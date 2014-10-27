@@ -100,7 +100,7 @@ public class MemberEntity implements Serializable {
         this.isDeleted = false;
         this.wishList = new WishListEntity();
         this.shoppingList = new ShoppingListEntity();
-        this.purchases = new ArrayList<>();
+        this.purchases = new ArrayList<SalesRecordEntity>();
         this.cummulativeSpending = 0.0;
     }
 
