@@ -70,6 +70,7 @@
                                                                     }
                                                                 }
                                                                 List<SalesRecordEntity> salesRecords = member.getPurchases();
+                                                                System.out.println(salesRecords.size()+"!!");
                                                                 for (int i = 0; i < salesRecords.size(); i++) {
                                                         %>
                                                         <tr>
