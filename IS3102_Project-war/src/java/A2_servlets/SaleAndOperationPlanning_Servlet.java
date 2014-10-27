@@ -222,11 +222,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 Long schedulelId = (long) session.getAttribute("scheduleId");
 
                 SaleAndOperationPlanEntity sop = sopBean.createSOP(storeId, schedulelId, productGroupId, saleForecast, productionPlan, currentInventory, targetInventory);
-                if (sop != null) {
-                    request.setAttribute("alertMessage", "Sale and Operation Plan is created.");
-                } else {
-                    request.setAttribute("alertMessage", "Failed to create Sale and Operation Plan.");
-                }
+                
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 break;
 
@@ -240,7 +236,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                     storeId = (long) session.getAttribute("sop_storeId");
                     schedulelId = (long) session.getAttribute("scheduleId");
                     if(sopBean.generatePurchaseOrdersForRetailProduct(storeId, schedulelId)){
-                        request.setAttribute("alertMessage", "Purchase Order has been submitted.");
+                        request.setAttribute("alertMessage", "Purchase Order has been generated.");
                     }else{
                         request.setAttribute("alertMessage", "Fail to place purchase order.");
                     }   

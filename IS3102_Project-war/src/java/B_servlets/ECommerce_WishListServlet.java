@@ -1,6 +1,8 @@
 package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import ECommerce.ECommerceBeanLocal;
+import EntityManager.ShoppingListEntity;
 import ECommerce.ECommerceBean;
 import EntityManager.WishListEntity;
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class ECommerce_WishListServlet extends HttpServlet {
     private ItemManagementBeanLocal itemManagementBean;
 
     @EJB
-    private ECommerceBean ecb;
+    private ECommerceBeanLocal ecb;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
