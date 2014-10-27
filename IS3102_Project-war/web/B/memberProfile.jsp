@@ -216,11 +216,14 @@
                                                 <td>
                                                     Loyalty Points Deducted
                                                 </td>
+                                                <td>
+                                                    Items Purchased
+                                                </td>
                                                 </thead>
                                                 <%
                                                     for (int i = 0; i < member.getPurchases().size(); i++) {
 
-                                                    
+
                                                 %>
                                                 <tr>
                                                     <td>
@@ -231,19 +234,27 @@
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getAmountPaid()%>
-                                                        Amount Paid
+
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getAmountPaidUsingPoints()%>
-                                                        Amount Paid Using Points
+
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getCreatedDate()%>
-                                                        Created Date
+
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getLoyaltyPointsDeducted()%>
-                                                        Loyalty Points Deducted
+
+                                                    </td>
+                                                    <td> 
+                                                        <%
+                                                            for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                                                                out.print(member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getName());
+                                                            }
+                                                        %>
+                                                        
                                                     </td>
                                                 </tr>
                                                 <%
@@ -257,11 +268,7 @@
                         </div>
                     </div>
                 </div>
-                <%                        }
-                    catch (Exception ex
-
-                    
-                        ) {
+                <%                        } catch (Exception ex) {
                         response.sendRedirect("index.jsp");
                         ex.printStackTrace();
                     }%>
