@@ -107,7 +107,7 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h2 class="short">Progress Bar</h2>
+                                                <h2 class="short">Loyalty Rewards</h2>
                                                 <%
                                                     int a = 100;
                                                     out.println(member.getLoyaltyPoints());
@@ -116,6 +116,7 @@
 
                                                 %>
                                                 <div class="progress">
+                                                    Tier : <%=loyaltyTiers.get(i).getTier()%>
                                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=a%>%; color:red;" >
 
                                                         <%=loyaltyTiers.get(i).getAmtOfSpendingRequired()%>
@@ -128,10 +129,10 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <h2 class="short">Progress Bar</h2>
+                                                <h2 class="short">My Loyalty Points</h2>
                                                 <%
-                                                    out.println(member.getLoyaltyPoints());
-                                                    out.println(member.getCummulativeSpending());
+                                                    out.println("My Points : " + member.getLoyaltyPoints());
+                                                    out.println("My Total Spending : " + member.getCummulativeSpending());
 
 
                                                 %>
