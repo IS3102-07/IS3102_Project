@@ -68,7 +68,7 @@
                             <div class="panel panel-green">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-2);  }
-                                        else{ out.print(schedule.getYear()-1); } %> - Product Group <%= productGroup.getName() %> - Product Group <%= productGroup.getName() %> Sales Figure</h3>
+                                        else{ out.print(schedule.getYear()-1); } %> - Product Group <%= productGroup.getName() %> Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart2"></div>
@@ -81,7 +81,7 @@
                             <div class="panel panel-green">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-1);  }
-                                        else{ out.print(schedule.getYear()); } %> - Product Group <%= productGroup.getName() %> - Product Group <%= productGroup.getName() %> Sales Figure</h3>
+                                        else{ out.print(schedule.getYear()); } %> - Product Group <%= productGroup.getName() %> Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart3"></div>
