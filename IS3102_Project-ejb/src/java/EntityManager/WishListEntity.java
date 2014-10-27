@@ -31,6 +31,14 @@ public class WishListEntity implements Serializable {
         this.id = id;
     }
 
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -22,8 +22,7 @@ public class ECommerce_StockAvailability extends HttpServlet {
     @EJB
     private FacilityManagementBeanLocal fmb;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
@@ -32,14 +31,13 @@ public class ECommerce_StockAvailability extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             Long storeID = Long.parseLong(request.getParameter("storeID"));
-            String SKU = (String) request.getParameter("SKU");
+            String SKU = (String) request.getParameter("sku");
             StoreEntity storeEntity = fmb.getStoreByID(storeID);
             WarehouseEntity warehouseEntity = storeEntity.getWarehouse();
             String itemQty = skimb.checkItemQty(warehouseEntity.getId(), SKU)+"";
             session.setAttribute("storeEntity", storeEntity);
-            session.setAttribute("itemQty", itemQty);
             
-            response.sendRedirect("B/stockAvailability.jsp");
+            response.sendRedirect("B/productDetails.jsp?sku="+SKU+"&itemQty="+itemQty+"&storeID="+storeEntity.getId());
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

@@ -71,7 +71,7 @@
                                             <span class="product-thumb-info-act">                                                
                                                 <span class="product-thumb-info-act-left"><a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"  style="color: white"><em>View Details</em></a></span>
                                             </span>
-                                            <img alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
+                                                <img alt="" class="img-responsive" src="<%=furnitures.get(i).getImageURL()%>">
                                         </span>
 
                                         <span class="product-thumb-info-content">

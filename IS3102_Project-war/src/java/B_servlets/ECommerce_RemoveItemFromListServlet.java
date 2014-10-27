@@ -3,7 +3,7 @@ package B_servlets;
 import EntityManager.MemberEntity;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import ECommerce.ECommerceBean;
+import ECommerce.ECommerceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -22,7 +22,7 @@ public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
 
     @EJB
-    private ECommerceBean ecb;
+    private ECommerceBeanLocal ecb;
 
     private String result;
 
@@ -49,9 +49,9 @@ public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     ecb.removeItemFromWishlist(deleteArr[i], member.getId());
                 }
-                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("ECommerce_WishListServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
-                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=Nothing selected.");
+                response.sendRedirect("ECommerce_WishListServlet?errMsg=Nothing selected.");
             }
             
         } catch (Exception ex) {

@@ -135,7 +135,7 @@
                     <h4>Alert</h4>
                 </div>
                 <div class="modal-body">
-                    <p id="messageBox">Item will be added to shopping list.</p>
+                    <p id="messageBox">Item will be added to wish list.</p>
                 </div>
                 <div class="modal-footer">                        
                     <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="addItem()"/>

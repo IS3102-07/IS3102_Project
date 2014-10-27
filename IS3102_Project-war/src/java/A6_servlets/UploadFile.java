@@ -14,82 +14,68 @@ import java.io.*;
 import java.util.Collection;
 
 public class UploadFile extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public UploadFile() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
+    public UploadFile() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		try {
-			response.setContentType("text/html");
-			PrintWriter out=response.getWriter();
-			// String disposition = "attachment; fileName=data.csv";
-	        //response.setHeader("Content-Disposition", disposition);
-			
-			Part file = request.getPart("javafile");
+        // TODO Auto-generated method stub
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // TODO Auto-generated method stub
+        try {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            // String disposition = "attachment; fileName=data.csv";
+            //response.setHeader("Content-Disposition", disposition);
+
+            Part file = request.getPart("javafile");
 			// System.out.println(request.getParameter("javafile"));
 
-			//String fileName = request.getParameter("admin");
-			String s = file.getHeader("content-disposition");
+            //String fileName = request.getParameter("admin");
+            String s = file.getHeader("content-disposition");
 
-			System.out.println(s);
+            System.out.println(s);
 
-			int index = s.indexOf("filename");
+            int index = s.indexOf("filename");
 
-			index=index+9;//move to the " in filename="
-			
-			int endIndex=s.indexOf("\"",index+1);
-			String fileName=s.substring(index+1, endIndex);
-			//fileName="a.html";
-			//System.out.println(fileName);
-			if (file != null) {
+            index = index + 9;//move to the " in filename="
 
-				InputStream fileInputStream = file.getInputStream();
-				OutputStream fileOutputStream = new FileOutputStream(request
-						.getServletContext().getRealPath("/testSolution/")
-						+ "/" + fileName);
-				OutputStream fileOutputStream2 = new FileOutputStream( "c:/tempFiles/" + fileName);
+            int endIndex = s.indexOf("\"", index + 1);
+            String fileName = s.substring(index + 1, endIndex);
+            //fileName="a.html";
+            //System.out.println(fileName);
+            if (file != null) {
 
-				int nextByte;
-				while ((nextByte = fileInputStream.read()) != -1) {
-					//System.out.println("!");
-					fileOutputStream.write(nextByte);
-					fileOutputStream2.write(nextByte);
-					
-				}
-				fileOutputStream.close();
-				fileOutputStream2.close();
-				fileInputStream.close();
-				
-				out.println("Upload Successful!");
-				out.flush();
-				out.close();
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
-		
-	}
+                InputStream fileInputStream = file.getInputStream();
+                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/testSolution/") + "/" + fileName);
+                OutputStream fileOutputStream2 = new FileOutputStream("c:/tempFiles/" + fileName);
+
+                int nextByte;
+                while ((nextByte = fileInputStream.read()) != -1) {
+                    //System.out.println("!");
+                    fileOutputStream.write(nextByte);
+                    fileOutputStream2.write(nextByte);
+
+                }
+                fileOutputStream.close();
+                fileOutputStream2.close();
+                fileInputStream.close();
+
+                out.println("Upload Successful!");
+                out.flush();
+                out.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
 }

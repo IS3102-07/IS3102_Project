@@ -3,7 +3,7 @@ package B_servlets;
 import EntityManager.MemberEntity;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import ECommerce.ECommerceBean;
+import ECommerce.ECommerceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -22,7 +22,7 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
 
     @EJB
-    private ECommerceBean ecb;
+    private ECommerceBeanLocal ecb;
 
     private String result;
 
@@ -51,10 +51,10 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             
             result = "Item added successfully.";
             if (testing) {
-                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=" + result);
+                response.sendRedirect("ECommerce_WishListServlet?errMsg=" + result);
             } else {
                 result = "Item already added to cart.";
-                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=" + result);
+                response.sendRedirect("ECommerce_WishListServlet?errMsg=" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

@@ -34,7 +34,7 @@
                                 <div class="col-md-12">
 
                                     <div class="col-md-4">
-                                        <div class="featured-box featured-box-secondary">
+                                        <div class="featured-box featured-box-primary">
                                             <div class="box-content">
                                                 <a href="../ECommerce_AllFurnituresServlet"><i class="icon-featured icon icon-archive"> </i>
                                                     <h4>Furnitures</h4>
@@ -52,7 +52,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="featured-box featured-box-primary">
+                                        <div class="featured-box featured-box-fiveneary">
                                             <div class="box-content">
                                                 <a href="../ECommerce_AllFoodsServlet"><i class="icon-featured icon icon-cutlery"> </i>
                                                     <h4>Restaurant Menu</h4>

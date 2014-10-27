@@ -1,5 +1,7 @@
-<%@page import="EntityManager.ShoppingListEntity"%>
+<%@page import="EntityManager.WishListEntity"%>
 <%@page import="java.util.List"%>
+<%@page import="EntityManager.Item_CountryEntity"%>
+<%@page import="EntityManager.FurnitureEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
@@ -16,12 +18,12 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.shoppingList.action = "../ECommerce_ShoppingCartServlet";
-                    document.shoppingList.submit();
+                    document.wishList.action = "../ECommerce_WishListServlet";
+                    document.wishList.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.shoppingList.action = "../ECommerce_RemoveItemFromListServlet";
-                    document.shoppingList.submit();
+                    document.wishList.action = "../ECommerce_RemoveItemFromListServlet";
+                    document.wishList.submit();
                 }
             }
             function printDiv(divName) {
@@ -52,11 +54,14 @@
                 var priceOfProduct = document.getElementById("price" + source).innerHTML;
                 document.getElementById(source).value++;
                 document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
+                
             }
 
             function finalTotalPrice() {
-
-                var finalTotalPrice
+                checkboxes = document.getElementsById('totalPrice');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
             }
 
         </script>
@@ -84,17 +89,17 @@
                                 <div class="col-md-12">
                                     <div class="featured-box featured-box-secundary featured-box-cart">
                                         <div class="box-content">
-                                            <form method="post" action="" name="shoppingList">
+                                            <form method="post" action="" name="wishList">
                                                 <%
                                                     String errMsg = request.getParameter("errMsg");
                                                     if (errMsg == null) {
-                                                        out.println("Successfully added item to cart.");
+                                                        out.println("Successfully added item to wishlist.");
                                                     } else if (errMsg != null) {
                                                         if (!errMsg.equals("")) {
                                                             out.println(errMsg);
                                                         }
                                                     } else if (errMsg == "") {
-                                                        out.println("Successfully added item to cart.");
+                                                        out.println("Successfully added item to wishlist.");
                                                     }
 
                                                 %>
@@ -124,14 +129,16 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr class="cart_table_item">
-
-                                                            <%ShoppingListEntity shoppingList = (ShoppingListEntity) (session.getAttribute("wishList"));
+                                                            
+                                                            <%WishListEntity wishList = (WishListEntity) (session.getAttribute("wishList"));
+                                                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                                                            List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
                                                                 try {
-                                                                    if (shoppingList != null) {
-                                                                        for (int i = 0; i < shoppingList.getItems().size(); i++) {
+                                                                    if (wishList != null) {
+                                                                        for (int i = 0; i < wishList.getItems().size(); i++) {
                                                             %>
                                                             <td class="product-remove">
-                                                                <input type="checkbox" name="delete" value="<%=shoppingList.getItems().get(i).getSKU()%>" />
+                                                                <input type="checkbox" name="delete" value="<%=wishList.getItems().get(i).getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
                                                                 <a href="shop-product-sidebar.html">
@@ -139,23 +146,36 @@
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a href="shop-product-sidebar.html"><%=shoppingList.getItems().get(i).getName()%></a>
+                                                                <a href="shop-product-sidebar.html"><%=wishList.getItems().get(i).getName()%></a>
                                                             </td>
 
                                                             <td class="product-price">
-                                                                $<span class="amount" id="price<%=shoppingList.getItems().get(i).getId()%>">299</span>
+                                                                $<span class="amount" id="price<%=wishList.getItems().get(i).getId()%>">
+                                                                <%
+                                                for (int j = 0; j < item_countryList.size(); j++) {
+                                                    if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
+                                            %>
+                                            <span class="product-thumb-info-act-left"><em>Price: $ <%=item_countryList.get(j).getRetailPrice()%></em></span>
+
+                                            <%
+                                                        break;
+                                                    }
+                                                }
+
+                                            %>
+                                                                </span>
                                                             </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
                                                                     <div class="quantity">
-                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=shoppingList.getItems().get(i).getId()%>)">
-                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=shoppingList.getItems().get(i).getId()%>">
-                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=shoppingList.getItems().get(i).getId()%>)">
+                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=wishList.getItems().get(i).getId()%>)">
+                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=wishList.getItems().get(i).getId()%>">
+                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=wishList.getItems().get(i).getId()%>)">
                                                                     </div>
                                                                 </form>
                                                             </td>
                                                             <td class="product-subtotal">
-                                                                $<span class="amount" id="totalPrice<%=shoppingList.getItems().get(i).getId()%>">299</span>
+                                                                $<span class="amount" id="totalPrice<%=wishList.getItems().get(i).getId()%>">299</span>
 
                                                             </td>
                                                         </tr>

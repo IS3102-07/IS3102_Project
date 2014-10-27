@@ -43,11 +43,6 @@
                 var top = (screen.height / 2) - (h / 2);
                 return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
             }
-            function checkItemQty() {
-                var e = document.getElementById("countrySelector");
-                var strUser = e.options[e.selectedIndex].value;
-                popupwindow('../ECommerce_StockAvailability?storeID=' + strUser + '&SKU=<%=sku%>', 'Stock Availability', 200, 100)
-            }
         </script>
         <div class="body">
             <jsp:include page="menu2.jsp" />
@@ -70,7 +65,7 @@
                             <div class="col-md-6">
                                 <div>
                                     <div class="thumbnail">
-                                        <img alt="" class="img-responsive img-rounded" src="../img/products/1.JPG">
+                                        <img alt="" class="img-responsive img-rounded" src="<%=furniture.getImageURL()%>">
                                     </div>
                                 </div>
                             </div>
@@ -99,22 +94,52 @@
                                     </div>
 
                                     <br/><br/>
-                                    View Item Availability<br/>
-                                    <select style="color: black;" id="countrySelector">
-                                        <% for (int i = 0; i < storesInCountry.size(); i++) {%>
-                                        <option value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
-                                        <%}%>
-                                    </select><br/>
-                                    <button href="#" target="popup" onclick="checkItemQty()" class="btn btn-primary btn-icon">Check Item Availability</button>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <form action="../ECommerce_StockAvailability">
+                                                View Item Availability<br/>
+                                                <select style="color: black;" name="storeID">
+                                                    <option> </option>
+                                                    <% for (int i = 0; i < storesInCountry.size(); i++) {%>
+                                                    <option value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
+                                                    <%String storeIDstring = (request.getParameter("storeID"));
+                                                        Long storeID = 1L;
+                                                        if (storeIDstring != null) {
+                                                            storeID = Long.parseLong(storeIDstring);
+                                                        }
+                                                        if (storeIDstring != null && storeID == storesInCountry.get(i).getId()) {
+                                                    %>
+                                                    <option selected value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
+                                                    <%
+                                                        }
+                                                    %>
+                                                    <%}%>
+                                                </select><br/><br/>
+                                                <input type="submit" class="btn btn-primary btn-icon" value="Check Item Availability"/>
+                                                <input type="hidden" name="sku" value="<%=sku%>"/>
+                                            </form>
+                                        </div>
+                                        <%
+                                            String itemQty = (String) (request.getParameter("itemQty"));
+                                            if (itemQty != null) {
+                                        %>
+                                        <div class="col-md-6">
+                                            Status: <%if (Integer.parseInt(itemQty) > 0) {%>Available<%} else {%>Unavailable<%}%>
+                                            <br/>
+                                            Remaining Qty: <%=itemQty%>
+                                            <%}%>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <hr class="tall">
+                            <hr class="tall">
+                        </div>
                     </div>
                 </div>
+                <jsp:include page="footer.html" />
             </div>
-            <jsp:include page="footer.html" />
-        </div>
     </body>
 </html>

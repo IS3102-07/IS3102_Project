@@ -69,43 +69,12 @@
                     <li>
                         <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
-                    <li class="dropdown mega-menu-item mega-menu-fullwidth">
+                    <li class="dropdown">
                         <a class="dropdown-toggle" href="#">
                             All Departments
                             <i class="icon icon-angle-down"></i>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <div class="mega-menu-content">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <ul class="sub-menu">
-                                                <li>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Tables & Desk</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-linux"></i> Bathroom</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-male"></i> Beds & Mattresses</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Sofas & Chair</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <ul class="sub-menu">
-                                                <li>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="about-us.html"><i class="icon icon-map-marker"></i> Cabinets & Storage</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-coffee"></i> Lightings</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-cutlery"></i> Study</a></li>
-                                                        <li><a href="about-us.html"><i class="icon icon-angle-double-right"></i> Children</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                        
                     </li>
                 </ul>
             </nav>
