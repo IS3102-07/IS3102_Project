@@ -51,10 +51,10 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             
             result = "Item added successfully.";
             if (testing) {
-                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=" + result);
+                response.sendRedirect("ECommerce_WishListServlet?errMsg=" + result);
             } else {
                 result = "Item already added to cart.";
-                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=" + result);
+                response.sendRedirect("ECommerce_WishListServlet?errMsg=" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

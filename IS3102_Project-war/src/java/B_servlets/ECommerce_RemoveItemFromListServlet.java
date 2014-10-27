@@ -49,9 +49,9 @@ public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     ecb.removeItemFromWishlist(deleteArr[i], member.getId());
                 }
-                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("ECommerce_WishListServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
-                response.sendRedirect("ECommerce_ShoppingCartServlet?errMsg=Nothing selected.");
+                response.sendRedirect("ECommerce_WishListServlet?errMsg=Nothing selected.");
             }
             
         } catch (Exception ex) {

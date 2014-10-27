@@ -45,7 +45,7 @@ public class ECommerce_PromotionServlet extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
             
-            response.sendRedirect("B/shoppingList.jsp");
+            response.sendRedirect("B/wishList.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

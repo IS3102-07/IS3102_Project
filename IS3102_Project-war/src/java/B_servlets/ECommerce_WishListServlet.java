@@ -2,7 +2,6 @@ package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import ECommerce.ECommerceBean;
-import EntityManager.ShoppingListEntity;
 import EntityManager.WishListEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
