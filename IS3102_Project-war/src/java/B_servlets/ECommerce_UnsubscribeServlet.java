@@ -1,6 +1,6 @@
 package B_servlets;
 
-import ECommerce.ECommerceBean;
+import ECommerce.ECommerceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ECommerce_UnsubscribeServlet extends HttpServlet {
 
     @EJB
-    private ECommerceBean ecb;
+    private ECommerceBeanLocal ecb;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -25,10 +25,13 @@ public class ECommerce_UnsubscribeServlet extends HttpServlet {
             
             Boolean flag = ecb.removeEmailFromSubscription(email);
             
+            String errMsg;
             if (flag) {
-                response.sendRedirect("B/index.jsp");
+                errMsg = "?goodMsg=Your email has been successfuly removed from the subscription list.";
+                response.sendRedirect("B/unsubscribe.jsp" + errMsg);
             } else {
-                response.sendRedirect("B/index.jsp");
+                errMsg = "?errMsg=The email does not exist in the subscription list.";
+                response.sendRedirect("B/unsubscribe.jsp" + errMsg);
             }
             
         } catch (Exception ex) {
