@@ -1,5 +1,7 @@
 <%@page import="EntityManager.WishListEntity"%>
 <%@page import="java.util.List"%>
+<%@page import="EntityManager.Item_CountryEntity"%>
+<%@page import="EntityManager.FurnitureEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
@@ -52,11 +54,14 @@
                 var priceOfProduct = document.getElementById("price" + source).innerHTML;
                 document.getElementById(source).value++;
                 document.getElementById("totalPrice" + source).innerHTML = priceOfProduct * document.getElementById(source).value;
+                
             }
 
             function finalTotalPrice() {
-
-                var finalTotalPrice
+                checkboxes = document.getElementsById('totalPrice');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
             }
 
         </script>
@@ -124,8 +129,10 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr class="cart_table_item">
-
+                                                            
                                                             <%WishListEntity wishList = (WishListEntity) (session.getAttribute("wishList"));
+                                                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                                                            List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
                                                                 try {
                                                                     if (wishList != null) {
                                                                         for (int i = 0; i < wishList.getItems().size(); i++) {
@@ -143,7 +150,20 @@
                                                             </td>
 
                                                             <td class="product-price">
-                                                                $<span class="amount" id="price<%=wishList.getItems().get(i).getId()%>">299</span>
+                                                                $<span class="amount" id="price<%=wishList.getItems().get(i).getId()%>">
+                                                                <%
+                                                for (int j = 0; j < item_countryList.size(); j++) {
+                                                    if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
+                                            %>
+                                            <span class="product-thumb-info-act-left"><em>Price: $ <%=item_countryList.get(j).getRetailPrice()%></em></span>
+
+                                            <%
+                                                        break;
+                                                    }
+                                                }
+
+                                            %>
+                                                                </span>
                                                             </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
