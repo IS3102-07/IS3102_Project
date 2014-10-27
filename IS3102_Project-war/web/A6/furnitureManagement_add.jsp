@@ -46,28 +46,7 @@
                                     <label>Description</label>
                                     <input class="form-control" required="true" type="text" name="description">
                                 </div>
-                                <div class="form-group">
-                                    <label>Image URL</label>
-                                    <input class="form-control" type="text" required="true" name="imageURL" >
-                                    <form action="UploadFile" method="POST" enctype="multipart/form-data">
-                                        <fieldset>
-                                            <br>
-                                            <!--  
-                                             <input type="text" name="admin" placeholder="admin">
-                                            
-                                            -->
-                                            <div>
-
-                                                <input type="file" name="javafile">
-                                            </div>
-
-
-                                            <input type="submit" value="submit">
-                                        </fieldset>
-                                    </form>
-                                </div>
-
-
+                                
                                 <div class="form-group">
                                     <label>SKU</label>
                                     <input class="form-control" type="text" required="true" name="SKU">
