@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author yang
  */
-public class ECommerce_AllProductsServlet extends HttpServlet {
+public class ECommerce_AllFurnituresServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;

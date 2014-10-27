@@ -30,7 +30,6 @@ public class ECommerce_WishListServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        System.out.println("ECommerce_ShoppingCartServlet");
         try {
 
             String errMsg = request.getParameter("errMsg");
@@ -50,12 +49,12 @@ public class ECommerce_WishListServlet extends HttpServlet {
             session = request.getSession();
 
             WishListEntity wishList = ecb.getWishList(email);
-            session.setAttribute("shoppingList", wishList);
+            session.setAttribute("wishList", wishList);
             
             if (errMsg == null) {
                 errMsg = "";
             }
-            response.sendRedirect("B/shoppingList.jsp?errMsg=" + errMsg);
+            response.sendRedirect("B/wishList.jsp?errMsg=" + errMsg);
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

@@ -1,11 +1,26 @@
+<%@page import="EntityManager.Item_CountryEntity"%>
+<%@page import="EntityManager.MemberEntity"%>
 <%@page import="EntityManager.FurnitureEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="checkCountry.jsp" />
+<%
+    Boolean displayCartOption = false;
+    MemberEntity member = (MemberEntity) (session.getAttribute("member"));
+    if (member == null) {
+        displayCartOption = false;
+    } else {
+        displayCartOption = true;
+    }
+%>
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
+        <%
+            List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("furnitures"));
+            List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
+        %>
         <script>
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -66,12 +81,27 @@
                                             </span>
                                         </a>
                                         <span class="product-thumb-info-content">
-                                            <a href="shop-product-sidebar.html">
-                                                <h4><%=retailProducts.get(i).getName()%></h4>
-                                                <span class="price">
-                                                    <span class="amount">$72</span>
-                                                </span>
-                                            </a>
+
+                                            <h4><%=retailProducts.get(i).getName()%></h4>
+
+                                            <span class="product-thumb-info-act-left"><em>Height: <%=retailProducts.get(i).getHeight()%></em></span><br/>
+                                            <span class="product-thumb-info-act-left"><em>Length: <%=retailProducts.get(i).getLength()%></em></span><br/>
+                                            <span class="product-thumb-info-act-left"><em>Width: <%=retailProducts.get(i).getWidth()%></em></span><br/>
+                                            <%
+                                                for (int j = 0; j < item_countryList.size(); j++) {
+                                                    if (item_countryList.get(j).getItem().getId().equals(retailProducts.get(i).getId())) {
+                                            %>
+                                            <span class="product-thumb-info-act-left"><em>Price: $ <%=item_countryList.get(j).getRetailPrice()%></em></span>
+
+                                            <%
+                                                        break;
+                                                    }
+                                                }
+
+                                            %>
+                                            <br/>
+                                            <a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
+
                                         </span>
                                     </span>
                                 </li>
