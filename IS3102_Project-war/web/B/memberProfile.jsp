@@ -195,97 +195,61 @@
                                             <h4>My Sales Records</h4>
 
 
-                                            <div role="main" class="main">
+                                            <table class="table table-hover">
 
-                                                <div class="container">
+                                                <thead>
+                                                <td>
+                                                    Receipt No
+                                                </td>
+                                                <td>
+                                                    Amount Due
+                                                </td>
+                                                <td>
+                                                    Amount Paid
+                                                </td>
+                                                <td>
+                                                    Amount Paid Using Points
+                                                </td>
+                                                <td>
+                                                    Created Date
+                                                </td>
+                                                <td>
+                                                    Loyalty Points Deducted
+                                                </td>
+                                                </thead>
+                                                <%
+                                                    for (int i = 0; i < member.getPurchases().size(); i++) {
 
-                                                    <hr class="tall">
-
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-
-                                                            <div class="row featured-boxes">
-                                                                <div class="col-md-12">
-                                                                    <div class="featured-box featured-box-secundary featured-box-cart">
-                                                                        <div class="box-content">
-                                                                            <form method="post" action="">
-                                                                                <table cellspacing="0" class="shop_table cart">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th class="product-remove">
-                                                                                                &nbsp;
-                                                                                            </th>
-                                                                                            <th class="product-thumbnail">
-                                                                                                &nbsp;
-                                                                                            </th>
-                                                                                            <th class="product-name">
-                                                                                                Product
-                                                                                            </th>
-                                                                                            <th class="product-price">
-                                                                                                Price
-                                                                                            </th>
-                                                                                            <th class="product-quantity">
-                                                                                                Quantity
-                                                                                            </th>
-                                                                                            <th class="product-subtotal">
-                                                                                                Total
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <tr class="cart_table_item">
-                                                                                            <td class="product-remove">
-                                                                                                <a title="Remove this item" class="remove" href="#">
-                                                                                                    <i class="fa fa-times"></i>
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="product-thumbnail">
-                                                                                                <a href="shop-product-sidebar.html">
-                                                                                                    <img width="100" height="100" alt="" class="img-responsive" src="img/products/product-1.jpg">
-                                                                                                </a>
-                                                                                            </td>
-                                                                                            <td class="product-name">
-                                                                                                <a href="shop-product-sidebar.html">Photo Camera</a>
-                                                                                            </td>
-                                                                                            <td class="product-price">
-                                                                                                <span class="amount">$299</span>
-                                                                                            </td>
-                                                                                            <td class="product-quantity">
-                                                                                                <form enctype="multipart/form-data" method="post" class="cart">
-                                                                                                    <div class="quantity">
-                                                                                                        <input type="button" class="minus" value="-">
-                                                                                                        <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
-                                                                                                        <input type="button" class="plus" value="+">
-                                                                                                    </div>
-                                                                                                </form>
-                                                                                            </td>
-                                                                                            <td class="product-subtotal">
-                                                                                                <span class="amount">$299</span>
-                                                                                            </td>
-                                                                                        </tr>
-
-
-                                                                                        <tr>
-                                                                                            <td class="actions" colspan="6">
-                                                                                                <div class="actions-continue">
-                                                                                                    <input type="submit" value="Update Cart" name="update_cart" class="btn btn-default">
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
+                                                    
+                                                %>
+                                                <tr>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getReceiptNo()%>
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getAmountDue()%>
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getAmountPaid()%>
+                                                        Amount Paid
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getAmountPaidUsingPoints()%>
+                                                        Amount Paid Using Points
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getCreatedDate()%>
+                                                        Created Date
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getLoyaltyPointsDeducted()%>
+                                                        Loyalty Points Deducted
+                                                    </td>
+                                                </tr>
+                                                <%
+                                                    }
+                                                %>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -293,7 +257,11 @@
                         </div>
                     </div>
                 </div>
-                <%                        } catch (Exception ex) {
+                <%                        }
+                    catch (Exception ex
+
+                    
+                        ) {
                         response.sendRedirect("index.jsp");
                         ex.printStackTrace();
                     }%>
