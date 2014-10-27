@@ -25,4 +25,6 @@ public interface LoyaltyAndRewardsBeanLocal {
     public String getSyncWithPhoneStatus(String qrCode);
     public ShoppingListEntity getMemberShoppingList(String email);
     public Boolean tieMemberToSyncRequest(String email, String qrCode);
+    
+    public LoyaltyTierEntity getMemberNextTier(Long memberID);
 }
