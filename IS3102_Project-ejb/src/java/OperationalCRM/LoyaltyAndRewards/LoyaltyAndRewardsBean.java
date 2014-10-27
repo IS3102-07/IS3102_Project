@@ -105,6 +105,29 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     }
 
     @Override
+    public LoyaltyTierEntity getMemberNextTier(Long memberID) {
+        try {
+            System.out.println("getMemberNextTier() called");
+            MemberEntity memberEntity = em.getReference(MemberEntity.class, memberID);
+            LoyaltyTierEntity memberCurrentTier = memberEntity.getLoyaltyTier();
+            List<LoyaltyTierEntity> tiers = getAllLoyaltyTiers();
+            //Already highest tier
+            if (!tiers.isEmpty() && tiers.get(tiers.size() - 1).getAmtOfSpendingRequired().equals(memberCurrentTier.getAmtOfSpendingRequired())) {
+                return null;
+            }//list already sorted in asc order
+            for (int i = 0; i < tiers.size()-1; i++) {
+                if (tiers.get(i).getAmtOfSpendingRequired().equals(memberCurrentTier.getAmtOfSpendingRequired())) {
+                    return tiers.get(i+1);//next tier
+                }
+            }
+            return null;//shouldn't be able to reach here
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public ReturnHelper updateMemberLoyaltyPointsAndTier(String email, Integer pointsUsed, Double amountPaid, Long storeID) {
         System.out.println("updateMemberLoyaltyPointsAndTier() called");
         ReturnHelper rh = new ReturnHelper(false, "");
@@ -201,7 +224,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     public List<LoyaltyTierEntity> getAllLoyaltyTiers() {
         System.out.println("getAllLoyaltyTiers() called");
         try {
-            Query q = em.createQuery("SELECT t FROM LoyaltyTierEntity t where t.isDeleted=false");
+            Query q = em.createQuery("SELECT t FROM LoyaltyTierEntity t where t.isDeleted=false order by t.amtOfSpendingRequired asc");
             return q.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
