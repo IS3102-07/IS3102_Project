@@ -18,7 +18,7 @@
     <jsp:include page="header.html" />
     <body>
         <%
-            List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("furnitures"));
+            List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProducts"));
             List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
         %>
         <script>
@@ -60,7 +60,6 @@
 
                                 <%
 
-                                    List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProducts"));
 
                                     try {
                                         if (retailProducts != null) {

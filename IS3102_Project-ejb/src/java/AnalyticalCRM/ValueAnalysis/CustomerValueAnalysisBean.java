@@ -95,11 +95,11 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("totalCustomerRevenue()");
         List<MemberEntity> members = accountManagementBean.listAllMember();
 
-        Double profit = Double.valueOf(0);
+        Double profit = new Double("0");
 
         for (int i = 0; i < members.size(); i++) {
-            MemberEntity member = members.get(i);
-            profit += member.getCummulativeSpending();
+            
+            profit += members.get(i).getCummulativeSpending();
         }
 
         return profit;
