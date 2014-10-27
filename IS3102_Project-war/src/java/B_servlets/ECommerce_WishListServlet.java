@@ -4,9 +4,12 @@ import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import ECommerce.ECommerceBeanLocal;
 import EntityManager.ShoppingListEntity;
 import ECommerce.ECommerceBean;
+import EntityManager.FurnitureEntity;
+import EntityManager.Item_CountryEntity;
 import EntityManager.WishListEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +54,11 @@ public class ECommerce_WishListServlet extends HttpServlet {
 
             WishListEntity wishList = ecb.getWishList(email);
             session.setAttribute("wishList", wishList);
+            List<FurnitureEntity> furnitures = itemManagementBean.listAllFurniture();
+            Long countryID = (Long) session.getAttribute("countryID");
+            List<Item_CountryEntity> item_countryList = itemManagementBean.listAllItemsOfCountry(countryID);
+            session.setAttribute("furnitures", furnitures);
+            session.setAttribute("item_countryList", item_countryList);
             
             if (errMsg == null) {
                 errMsg = "";

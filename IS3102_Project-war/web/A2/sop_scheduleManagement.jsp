@@ -17,6 +17,7 @@
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
                     document.scheduleManagement.submit();
+                    
                 } else {
                     window.event.returnValue = true;
                     document.scheduleManagement.action = "../SaleAndOperationPlanning_Servlet/deleteSchedule";
@@ -52,7 +53,7 @@
                                     <i class="icon icon-dashboard"></i>  <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
                                 </li>                              
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="#">Schedule Management</a>
+                                    <i class="icon icon-calendar"></i> Schedule Management</a>
                                 </li>
                             </ol>
                         </div>

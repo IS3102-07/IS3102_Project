@@ -22,7 +22,7 @@
                                     <i class="icon icon-credit-card"></i>  <a href="../MRP_index_GET/*">Material Requirement Planning</a>
                                 </li>                                                               
                                 <li>
-                                    <i class="icon icon-list-ul"></i>  <a href="#">Material Requirement List</a>
+                                    <i class="icon icon-list-ul"></i> Material Requirement List</a>
                                 </li>   
                             </ol>
                         </div>

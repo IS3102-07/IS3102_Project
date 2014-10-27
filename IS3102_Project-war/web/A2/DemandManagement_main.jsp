@@ -22,7 +22,7 @@
                                     <i class="icon icon-crop"></i><a href="../DemandManagement_index_GET/*"> Demand Management</a>
                                 </li>                                
                                 <li>
-                                    <i class="icon icon-calendar"></i><a href="#"> Master Production Schedule List</a>
+                                    <i class="icon icon-calendar"></i> Master Production Schedule List</a>
                                 </li>
                             </ol>
                         </div>

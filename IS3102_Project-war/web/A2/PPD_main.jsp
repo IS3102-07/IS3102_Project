@@ -21,7 +21,7 @@
                                     <i class="icon icon-dashboard"></i>  <a href="../PPD_index_GET/*">Production Plan Distribution</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Distribution Result List</a>
+                                    <i class="icon icon-list"></i> Distribution Result List</a>
                                 </li>
                             </ol>
                         </div>

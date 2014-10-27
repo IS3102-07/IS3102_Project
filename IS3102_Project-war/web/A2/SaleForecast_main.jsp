@@ -37,7 +37,7 @@
                                     <i class="icon icon-calendar"></i>  <a href="../SaleForecast_Servlet/SaleForecast_schedule_GET">Schedule</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Dashboard</a>
+                                    <i class="icon icon-list"></i> Dashboard</a>
                                 </li>
                             </ol>
                         </div>

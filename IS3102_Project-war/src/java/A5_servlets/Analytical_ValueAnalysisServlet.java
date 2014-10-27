@@ -31,6 +31,7 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             String goodMsg = request.getParameter("goodMsg");
             System.out.println("Analytical_ValueAnalysisServlet");
             Double totalCustomerRevenue = customerValueAnalysisBean.totalCustomerRevenue();
+            System.out.println(totalCustomerRevenue);
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
 
             List <MemberEntity> members = accountManagementBean.listAllMember();

@@ -31,7 +31,7 @@
                                     <i class="icon icon-list"></i>  <a href="../SaleAndOperationPlanning_Servlet/sop_main_GET">Dashboard</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-edit"></i>  <a href="#">Edit Sales And Operations Plan</a>
+                                    <i class="icon icon-edit"></i> Edit Sales And Operations Plan</a>
                                 </li>
                             </ol>
                         </div>

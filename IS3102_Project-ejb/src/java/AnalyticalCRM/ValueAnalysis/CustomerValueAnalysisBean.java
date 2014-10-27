@@ -58,6 +58,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         int totalCummulativeSpending = 0;
         for (int i = 0; i < members.size(); i++) {
             if (members.get(i).getAge() > startAge && members.get(i).getAge() < endAge) {
+                System.out.println(members.get(i).getName());
                 totalCummulativeSpending += members.get(i).getCummulativeSpending();
             }
         }
