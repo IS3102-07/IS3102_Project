@@ -29,6 +29,7 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
+            System.out.println("Analytical_ValueAnalysisServlet");
             Double totalCustomerRevenue = customerValueAnalysisBean.totalCustomerRevenue();
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
 

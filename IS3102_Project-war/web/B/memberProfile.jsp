@@ -1,10 +1,17 @@
 <%@page import="EntityManager.MemberEntity"%>
 <%@page import="EntityManager.LoyaltyTierEntity"%>
+<%@page import="EntityManager.SalesRecordEntity"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List;"%>
 <jsp:include page="checkCountry.jsp" />
 <html> 
     <jsp:include page="header.html" />
     <body>
+        <script>
+            function pdpaWindow() {
+                var myWindow = window.open(": http://localhost:8080/IS3102_Project-war/B/pdpa.jsp");
+            }
+        </script>
         <jsp:include page="menu2.jsp" />
         <div role="main" class="main">
             <section class="page-top">
@@ -33,6 +40,9 @@
                                 </li>
                                 <li>
                                     <a href="#loyaltyProgram" data-toggle="tab">Loyalty Program</a>
+                                </li>
+                                <li>
+                                    <a href="#salesHistory" data-toggle="tab">Sales History</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -92,6 +102,11 @@
                                         </div>
                                         <div class="panel-footer" style="padding-bottom: 0px;">
                                             <div class="row">
+                                                <input type="checkbox" name="serviceLevelAgreement">Accept our <a href=#" onclick="pdpaWindow()">service level agreement.</a>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer" style="padding-bottom: 0px;">
+                                            <div class="row">
                                                 <div class="form-group">
                                                     <input type="submit" value="Submit" class="btn btn-primary"/>
                                                     <input type="reset" value="Reset" class="btn btn-primary"/>
@@ -100,6 +115,8 @@
                                                 <input type="hidden" value="<%=member.getEmail()%>" name="email"/>
                                             </div>
                                         </div>
+
+
                                     </form>
                                 </div>
                                 <div id="loyaltyProgram" class="tab-pane" onclick="">
@@ -140,21 +157,22 @@
                                                     <div class="col-md-12">
                                                         <div class="progress">
                                                             <br/>
-                                                            My Points : <%=member.getLoyaltyPoints()%> <br/>
+                                                            My Points : <%=member.getLoyaltyPoints()%> <br/>                                                            
                                                             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%; color:red; background-image: 'none';
                                                                  background-color: 'red'" >
                                                                 test
                                                             </div>
                                                         </div>
-                                                            <%
+                                                        <%
                                                             int barPercentage = 0;
                                                             int barRemainder = 0;
-                                                                if (member.getLoyaltyPoints() < 5000) {
-                                                                    barPercentage = member.getLoyaltyPoints()/5000;
-                                                                    barRemainder = 100 - barPercentage;
-                                                                }
-                                                            %>
+                                                            if (member.getLoyaltyPoints() < 5000) {
+                                                                barPercentage = member.getLoyaltyPoints() / 5000;
+                                                                barRemainder = 100 - barPercentage;
+                                                            }
+                                                        %>
                                                         <div class="progress">
+                                                            My Tier : <%=member.getLoyaltyTier().getTier()%> <br/>
                                                             <div class="progress-bar progress-bar-success" style="width: <%=barPercentage%>%">
                                                                 <span class="sr-only">35% Complete (success)</span>
                                                                 <%=barPercentage%>
@@ -163,22 +181,87 @@
                                                                 <span class="sr-only">20% Complete (warning)</span>
                                                                 <%=barRemainder%>
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
+                                    </div>
+                                </div>
+                                <div id="salesHistory" class="tab-pane" onclick="">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>My Sales Records</h4>
 
 
+                                            <table class="table table-hover">
+
+                                                <thead>
+                                                <td>
+                                                    Receipt No
+                                                </td>
+                                                <td>
+                                                    Amount Due
+                                                </td>
+                                                <td>
+                                                    Amount Paid
+                                                </td>
+                                                <td>
+                                                    Amount Paid Using Points
+                                                </td>
+                                                <td>
+                                                    Created Date
+                                                </td>
+                                                <td>
+                                                    Loyalty Points Deducted
+                                                </td>
+                                                </thead>
+                                                <%
+                                                    for (int i = 0; i < member.getPurchases().size(); i++) {
+
+                                                    
+                                                %>
+                                                <tr>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getReceiptNo()%>
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getAmountDue()%>
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getAmountPaid()%>
+                                                        Amount Paid
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getAmountPaidUsingPoints()%>
+                                                        Amount Paid Using Points
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getCreatedDate()%>
+                                                        Created Date
+                                                    </td>
+                                                    <td>
+                                                        <%=member.getPurchases().get(i).getLoyaltyPointsDeducted()%>
+                                                        Loyalty Points Deducted
+                                                    </td>
+                                                </tr>
+                                                <%
+                                                    }
+                                                %>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <%                        } catch (Exception ex) {
+                <%                        }
+                    catch (Exception ex
+
+                    
+                        ) {
                         response.sendRedirect("index.jsp");
                         ex.printStackTrace();
                     }%>

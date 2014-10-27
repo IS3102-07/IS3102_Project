@@ -6,6 +6,23 @@
     <body>
 
         <script>
+            function removeSchedule() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = true;
+                    document.scheduleManagement.submit();
+                } else {
+                    window.event.returnValue = true;
+                    document.scheduleManagement.action = "../SaleAndOperationPlanning_Servlet/deleteSchedule";
+                    document.scheduleManagement.submit();
+                }
+            }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -52,7 +69,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleAndOperationPlanning_Servlet/deleteSchedule">
+                                            <form name="scheduleManagement">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
@@ -90,7 +107,7 @@
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-12">                                                        
-                                                        <input type="submit" name="submit-btn" value="Delete Schedule" class="btn btn-primary" data-loading-text="Loading...">
+                                                        <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Delete Schedule</button></a>
                                                     </div>
                                                 </div>
                                             </form>  
@@ -164,19 +181,25 @@
         </div>
         <!-- /#wrapper -->
 
-        <%
-            if (request.getAttribute("alertMessage") != null) {
-        %>
-        <script>
-            alert("<%= request.getAttribute("alertMessage")%>");
-        </script>
-        <%
-            }
-        %>
-
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Schedule will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeSchedule()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->        
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             }
             );

@@ -47,6 +47,7 @@ public class MemberEntity implements Serializable {
     private Integer loyaltyPoints;
     private Double cummulativeSpending;
     private Boolean accountActivationStatus;
+    private Boolean serviceLevelAgreement;
     private String activationCode;
     private Boolean accountLockStatus;
     private String unlockCode;
@@ -110,6 +111,13 @@ public class MemberEntity implements Serializable {
 
     public Date getJoinDate() {
         return this.joinDate;
+    }
+    
+    public void setServiceLevelAgreement() {
+        this.serviceLevelAgreement = true;
+    }
+    public Boolean getServiceLevelAgreement() {
+        return this.serviceLevelAgreement;
     }
     
     public void setJoinDate(Date joinDate) {
