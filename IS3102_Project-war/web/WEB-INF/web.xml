@@ -981,6 +981,14 @@
         <servlet-name>ComboManagement_ComboServlet</servlet-name>
         <servlet-class>A6_servlets.ComboManagement_ComboServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ComboManagement_AddServlet</servlet-name>
+        <servlet-class>A6_servlets.ComboManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComboManagement_RemoveServlet</servlet-name>
+        <servlet-class>A6_servlets.ComboManagement_RemoveServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1960,6 +1968,14 @@
     <servlet-mapping>
         <servlet-name>ComboManagement_ComboServlet</servlet-name>
         <url-pattern>/ComboManagement_ComboServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboManagement_AddServlet</servlet-name>
+        <url-pattern>/ComboManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboManagement_RemoveServlet</servlet-name>
+        <url-pattern>/ComboManagement_RemoveServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

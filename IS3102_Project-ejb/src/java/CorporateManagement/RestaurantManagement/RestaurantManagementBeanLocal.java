@@ -54,5 +54,9 @@ public interface RestaurantManagementBeanLocal {
     public boolean checkSKUExists(String SKU);
     
     public List<ComboEntity> getAllCombo();
+    
+    public ComboEntity createCombo(String SKU, String name, String Description, String imageURL);
+
+    public boolean removeCombo(Long comboID);
 
 }
