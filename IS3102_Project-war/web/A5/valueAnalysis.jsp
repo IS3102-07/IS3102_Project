@@ -129,12 +129,17 @@
                                                 <div class="col-md-6">
                                                     <div id="myfirstchart"></div>
                                                 </div>
-                                            </div>
-                                            <div class="row">       
-                                                <div class="col-md-12">        
-
+                                                   
+                                                <div class="col-md-6">        
+                                                    <h4>RFM Summary</h4>
+                                                    <% Integer averageMemberRecency = (Integer) session.getAttribute("averageMemberRecency");%>
+                                                    Average Recency : <%=averageMemberRecency%>
+                                                    Average Frequency :
+                                                    Average Monetary Value :
                                                 </div>
                                             </div>
+                                            </div>
+                                            
 
                                             <div class="row">
                                                 <div class="col-lg-12">

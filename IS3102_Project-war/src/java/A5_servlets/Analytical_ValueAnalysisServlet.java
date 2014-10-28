@@ -61,6 +61,8 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             session.setAttribute("numOfMembersInAgeGroup3", numOfMembersInAgeGroup3);
             session.setAttribute("numOfMembersInAgeGroup4", numOfMembersInAgeGroup4);
             
+            Integer averageMemberRecency = customerValueAnalysisBean.getAverageCustomerRecency();
+            session.setAttribute("averageMemberRecency", averageMemberRecency);
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/valueAnalysis.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {

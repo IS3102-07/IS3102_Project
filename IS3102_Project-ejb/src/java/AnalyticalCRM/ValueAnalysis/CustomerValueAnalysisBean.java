@@ -10,7 +10,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.MemberEntity;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.Query;
@@ -30,34 +34,59 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
     @Override
     public Integer getAverageCustomerRecency() {
-        
-        Integer averageLastPurchase;
+        System.out.println("getAverageCustomerRecency()");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+
+        Integer numOfDaysWithRecord = 0;
+        Integer totalDays = 0;
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity t");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
-                for (SalesRecordEntity salesRecord : member.getPurchases()) {
-                    salesRecord.getCreatedDate();
+                System.out.println("Inside members list");
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    System.out.println("This member has purchases records of " + member.getPurchases().size());
+                    List <Date> dates = new ArrayList<Date>();
+                    Date latest;
+                    
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        System.out.println("Looping through purchases");
+                        dates.add(member.getPurchases().get(i).getCreatedDate());
+                    }
+                    latest = Collections.max(dates);
+                    System.out.println("Latest date for member :" + member.getName() + " is " + latest);
+                    
+                    Long days = date.getTime() - latest.getTime();
+                    System.out.println("Number of dates against today's date : " + TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS));
+                    days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                    numOfDaysWithRecord++;
+                    totalDays += (int) (long) days;
+                } else {
+                    System.out.println("This member has NO purchases records");
                 }
             }
         } catch (Exception ex) {
-            System.out.println("\nServer failed to list all non member sales records:\n" + ex);
+            System.out.println("\nServer failed to list recency:\n" + ex);
         }
-        return 10;
+        System.out.println("Average recency days is : " + totalDays/numOfDaysWithRecord);
+        
+        return totalDays/numOfDaysWithRecord;
     }
-    
+
     @Override
     public Integer getAverageCustomerFrequency() {
-        
+
         return 10;
     }
+
     @Override
     public Integer getAverageCustomerMonetaryValue() {
-        
+
         return 10;
     }
-    
+
     @Override
     public Integer customerLifetimeValueOfMember(Long memberId) {
         return 5;
@@ -87,11 +116,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<MemberEntity> members = accountManagementBean.listAllMember();
 
         int totalCummulativeSpending = 0;
-        for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getAge() > startAge && members.get(i).getAge() < endAge) {
-                totalCummulativeSpending += members.get(i).getCummulativeSpending();
+        for (MemberEntity member : members) {
+            if (member.getAge() > startAge && member.getAge() < endAge) {
+                totalCummulativeSpending += member.getCummulativeSpending();
             }
         }
+        System.out.println("totalCummulativeSpending is : " + totalCummulativeSpending);
         return totalCummulativeSpending;
     }
 
