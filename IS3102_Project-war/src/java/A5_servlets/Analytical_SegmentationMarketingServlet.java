@@ -30,7 +30,7 @@ public class Analytical_SegmentationMarketingServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
-            Double totalCustomerRevenue = customerValueAnalysisBean.totalCustomerRevenue();
+            Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
             List <MemberEntity> members = accountManagementBean.listAllMember();
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
             session.setAttribute("members", members);
