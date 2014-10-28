@@ -18,7 +18,7 @@
                                     <i class="icon icon-user"></i>  <a href="restaurantManagement.jsp">Restaurant Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-cogs"></i> <a href="../ComboManagement_Servlet">Combo Management</a>
+                                    <i class="icon icon-cogs"></i> <a href="../ComboManagement_ComboServlet">Combo Management</a>
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-edit"></i> Create Combo

@@ -43,7 +43,7 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.comboManagement.action = "../ComboManagement_Servlet";
+                    document.comboManagement.action = "../ComboManagement_ComboServlet";
                     document.comboManagement.submit();
                 } else {
                     window.event.returnValue = true;
@@ -113,6 +113,7 @@
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Combo</th>
                                                             <th>Description</th>
+                                                            <th>SKU</th>
                                                             <th>Menu Item SKUs</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -131,7 +132,10 @@
                                                             </td>
                                                             <td>
                                                                 <%=combos.get(i).getDescription()%>
-                                                            </td>                                                          
+                                                            </td>
+                                                             <td>
+                                                                <%=combos.get(i).getSKU()%>
+                                                            </td>
                                                             <td>
                                                                 <%
                                                                     List<ComboLineItemEntity> lineItems = combos.get(i).getLineItemList();
