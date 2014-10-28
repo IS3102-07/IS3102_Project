@@ -50,7 +50,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>               
-                                                            <th></th>
+                                                            <th hidden></th>
                                                             <th>Year</th>
                                                             <th>Month</th>                                                            
                                                             <th>Action</th>
@@ -63,7 +63,7 @@
                                                                 for (MonthScheduleEntity schedule : scheduleList) {
                                                         %>
                                                         <tr>                  
-                                                            <td></td>
+                                                            <td hidden></td>
                                                             <td><%= schedule.getYear() %></td>
                                                             <td><%= schedule.getMonth() %></td>
                                                             <td><button class="btn btn-primary" name="scheduleId" value="<%= schedule.getId() %>">Access</button></a></td>

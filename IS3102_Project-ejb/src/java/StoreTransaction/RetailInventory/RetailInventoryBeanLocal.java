@@ -8,6 +8,7 @@ import EntityManager.RetailProductEntity;
 import EntityManager.StoreEntity;
 import java.util.List;
 import javax.ejb.Local;
+import javax.jws.WebParam;
 
 @Local
 public interface RetailInventoryBeanLocal {
@@ -24,4 +25,6 @@ public interface RetailInventoryBeanLocal {
     
     public RetailProductEntity viewRetailProduct(String SKU);
     public List<RetailProductEntity> listAllRetailProduct();
+    
+    public Boolean checkIfCustomerNeedToWaitForPicker(String receiptNo);
 }

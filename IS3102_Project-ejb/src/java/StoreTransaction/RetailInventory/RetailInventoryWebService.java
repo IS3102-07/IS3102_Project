@@ -22,7 +22,7 @@ public class RetailInventoryWebService {
 
     @EJB
     RetailInventoryBeanLocal rib;
-
+  
     @WebMethod
     public List<String> getStoreAddressByID(@WebParam(name = "storeID") Long storeID) {
         try {
@@ -118,5 +118,10 @@ public class RetailInventoryWebService {
             ex.printStackTrace();
             return false;
         }
+    }
+    
+    @WebMethod
+    public Boolean checkIfCustomerNeedToWaitForPicker(@WebParam(name = "receiptNo") String receiptNo) {
+        return rib.checkIfCustomerNeedToWaitForPicker(receiptNo);
     }
 }
