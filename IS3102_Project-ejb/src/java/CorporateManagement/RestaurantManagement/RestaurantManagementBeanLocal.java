@@ -1,5 +1,6 @@
 package CorporateManagement.RestaurantManagement;
 
+import EntityManager.ComboEntity;
 import EntityManager.ItemEntity;
 import EntityManager.MenuItemEntity;
 import EntityManager.RawIngredientEntity;
@@ -51,4 +52,7 @@ public interface RestaurantManagementBeanLocal {
     public ItemEntity getItemBySKU(String SKU);
 
     public boolean checkSKUExists(String SKU);
+    
+    public List<ComboEntity> getAllCombo();
+
 }

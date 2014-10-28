@@ -1,11 +1,13 @@
 package CorporateManagement.RestaurantManagement;
 
-import EntityManager.RecipeEntity;
-import EntityManager.MenuItemEntity;
+import EntityManager.ComboEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.MenuItemEntity;
 import EntityManager.RawIngredientEntity;
+import EntityManager.RecipeEntity;
 import EntityManager.SupplierEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -370,5 +372,15 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
             System.out.println("\nServer failed to perform checkSKUExists:\n" + ex);
             return false;
         }
+    }
+    @Override
+    public List<ComboEntity> getAllCombo() {
+        try {
+            Query q = em.createQuery("select c from ComboEntity c where c.isDeleted=false");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }
