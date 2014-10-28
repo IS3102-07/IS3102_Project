@@ -132,10 +132,13 @@
                                                    
                                                 <div class="col-md-6">        
                                                     <h4>RFM Summary</h4>
-                                                    <% Integer averageMemberRecency = (Integer) session.getAttribute("averageMemberRecency");%>
-                                                    Average Recency : <%=averageMemberRecency%>
-                                                    Average Frequency :
-                                                    Average Monetary Value :
+                                                    <% Integer averageMemberRecency = (Integer) session.getAttribute("averageMemberRecency");
+                                                        Integer averageMemberFrequency = (Integer) session.getAttribute("averageMemberFrequency");
+                                                        Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
+                                                    %>
+                                                    Average Recency : <%=averageMemberRecency%> Days<br/>
+                                                    Average Frequency : <%=averageMemberFrequency%> Purchases<br/>
+                                                    Average Monetary Value : <%=averageMemberMonetaryValue%><br/>
                                                 </div>
                                             </div>
                                             </div>
@@ -174,9 +177,10 @@
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <%
-
+                                                                                    List <Integer> memberRecencyValue = (List <Integer>) session.getAttribute("memberRecencyValue");
                                                                                         if (members != null) {
-                                                                                            for (MemberEntity member : members) {
+                                                                                            for (int i = 0; i< members.size(); i++) {
+                                                                                                MemberEntity member = members.get(i);
                                                                                     %>
                                                                                     <tr>                   
                                                                                         <td>
@@ -186,7 +190,7 @@
                                                                                             <%=member.getName()%>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%=member.getAddress()%>
+                                                                                            <%=memberRecencyValue.get(i)%>
                                                                                         </td>
                                                                                         <td>
                                                                                             <%=member.getEmail()%>

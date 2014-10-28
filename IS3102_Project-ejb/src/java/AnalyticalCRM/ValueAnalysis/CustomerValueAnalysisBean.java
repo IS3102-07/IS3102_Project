@@ -48,16 +48,16 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                     System.out.println("This member has purchases records of " + member.getPurchases().size());
-                    List <Date> dates = new ArrayList<Date>();
+                    List<Date> dates = new ArrayList<Date>();
                     Date latest;
-                    
+
                     for (int i = 0; i < member.getPurchases().size(); i++) {
                         System.out.println("Looping through purchases");
                         dates.add(member.getPurchases().get(i).getCreatedDate());
                     }
                     latest = Collections.max(dates);
                     System.out.println("Latest date for member :" + member.getName() + " is " + latest);
-                    
+
                     Long days = date.getTime() - latest.getTime();
                     System.out.println("Number of dates against today's date : " + TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS));
                     days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
@@ -70,21 +70,68 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         } catch (Exception ex) {
             System.out.println("\nServer failed to list recency:\n" + ex);
         }
-        System.out.println("Average recency days is : " + totalDays/numOfDaysWithRecord);
-        
-        return totalDays/numOfDaysWithRecord;
+        System.out.println("Average recency days is : " + totalDays / numOfDaysWithRecord);
+
+        return totalDays / numOfDaysWithRecord;
     }
 
     @Override
     public Integer getAverageCustomerFrequency() {
+        System.out.println("getAverageCustomerFrequency()");
 
-        return 10;
+        Integer numOfPurchases = 0;
+        Integer frequency = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                System.out.println("Inside members list");
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    numOfPurchases++;
+                    frequency += member.getPurchases().size();
+                } else {
+                    System.out.println("This member has NO purchases records");
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list recency:\n" + ex);
+        }
+        System.out.println("Average frequency is : " + frequency / numOfPurchases);
+
+        return frequency / numOfPurchases;
     }
 
     @Override
     public Integer getAverageCustomerMonetaryValue() {
+        System.out.println("getAverageCustomerMonetaryValue()");
 
-        return 10;
+        Integer amountOfPurchase = 0;
+        Integer numOfPurchases = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                System.out.println("Inside members list");
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    System.out.println("This member has purchases records of " + member.getPurchases().size());
+
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        System.out.println("Looping through purchases");
+                        numOfPurchases++;
+                        amountOfPurchase += member.getPurchases().get(i).getAmountDue().intValue();
+                    }
+                } else {
+                    System.out.println("This member has NO purchases records");
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list monetary value:\n" + ex);
+        }
+        System.out.println("Average monetary value : " + amountOfPurchase / numOfPurchases);
+
+        return amountOfPurchase / numOfPurchases;
     }
 
     @Override
@@ -94,8 +141,32 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
     @Override
     public Integer getCustomerRecency(Long memberId) {
+        System.out.println("getAverageCustomerRecency()");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Long days = (long) 0;
+        
         MemberEntity member = em.find(MemberEntity.class, memberId);
-        return 10;
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+            System.out.println("This member has purchases records of " + member.getPurchases().size());
+
+            List<Date> dates = new ArrayList<Date>();
+            Date latest;
+            for (int i = 0; i < member.getPurchases().size(); i++) {
+                System.out.println("Looping through purchases");
+                dates.add(member.getPurchases().get(i).getCreatedDate());
+            }
+            latest = Collections.max(dates);
+            System.out.println("Latest date for member :" + member.getName() + " is " + latest);
+
+            days = date.getTime() - latest.getTime();
+            System.out.println("Number of dates against today's date : " + TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS));
+            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+
+        } else {
+            System.out.println("This member has NO purchases records");
+        }
+        return (int) (long) days;
     }
 
     @Override

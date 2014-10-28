@@ -5,6 +5,7 @@ import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
 import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -36,33 +37,47 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
             session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
 
-            List <MemberEntity> members = accountManagementBean.listAllMember();
+            List<MemberEntity> members = accountManagementBean.listAllMember();
+            List<Integer> memberRecencyValue = new ArrayList();
+            for (MemberEntity member : members) {
+                memberRecencyValue.add(customerValueAnalysisBean.getCustomerRecency(member.getId()));
+            }
+            for (int i=0;i<members.size();i++) {
+                System.out.println(members.get(i).getId()+"||||||"+memberRecencyValue.get(i));
+            }
             session.setAttribute("members", members);
-            
+            session.setAttribute("memberRecencyValue", memberRecencyValue);
+
             Integer cummulativeSpendingAgeGrp1 = customerValueAnalysisBean.totalCummulativeSpending(17, 26);
             Integer cummulativeSpendingAgeGrp2 = customerValueAnalysisBean.totalCummulativeSpending(25, 41);
             Integer cummulativeSpendingAgeGrp3 = customerValueAnalysisBean.totalCummulativeSpending(40, 56);
             Integer cummulativeSpendingAgeGrp4 = customerValueAnalysisBean.totalCummulativeSpending(55, 76);
             Integer averageCummulativeSpending = customerValueAnalysisBean.averageCummulativeSpending();
-            
+
             session.setAttribute("cummulativeSpendingAgeGrp1", cummulativeSpendingAgeGrp1);
             session.setAttribute("cummulativeSpendingAgeGrp2", cummulativeSpendingAgeGrp2);
             session.setAttribute("cummulativeSpendingAgeGrp3", cummulativeSpendingAgeGrp3);
             session.setAttribute("cummulativeSpendingAgeGrp4", cummulativeSpendingAgeGrp4);
             session.setAttribute("averageCummulativeSpending", averageCummulativeSpending);
-            
+
             Integer numOfMembersInAgeGroup1 = customerValueAnalysisBean.numOfMembersInAgeGroup(17, 26);
             Integer numOfMembersInAgeGroup2 = customerValueAnalysisBean.numOfMembersInAgeGroup(25, 41);
             Integer numOfMembersInAgeGroup3 = customerValueAnalysisBean.numOfMembersInAgeGroup(40, 56);
             Integer numOfMembersInAgeGroup4 = customerValueAnalysisBean.numOfMembersInAgeGroup(55, 76);
-            
+
             session.setAttribute("numOfMembersInAgeGroup1", numOfMembersInAgeGroup1);
             session.setAttribute("numOfMembersInAgeGroup2", numOfMembersInAgeGroup2);
             session.setAttribute("numOfMembersInAgeGroup3", numOfMembersInAgeGroup3);
             session.setAttribute("numOfMembersInAgeGroup4", numOfMembersInAgeGroup4);
-            
+
             Integer averageMemberRecency = customerValueAnalysisBean.getAverageCustomerRecency();
             session.setAttribute("averageMemberRecency", averageMemberRecency);
+
+            Integer averageMemberFrequency = customerValueAnalysisBean.getAverageCustomerFrequency();
+            session.setAttribute("averageMemberFrequency", averageMemberFrequency);
+
+            Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
+            session.setAttribute("averageMemberMonetaryValue", averageMemberMonetaryValue);
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/valueAnalysis.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {
