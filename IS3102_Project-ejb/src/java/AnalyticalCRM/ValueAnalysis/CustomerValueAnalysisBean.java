@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.MemberEntity;
-import EntityManager.RoleEntity;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -30,26 +29,56 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
 
     @Override
+    public Integer getAverageCustomerRecency() {
+        
+        Integer averageLastPurchase;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                for (SalesRecordEntity salesRecord : member.getPurchases()) {
+                    salesRecord.getCreatedDate();
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all non member sales records:\n" + ex);
+        }
+        return 10;
+    }
+    
+    @Override
+    public Integer getAverageCustomerFrequency() {
+        
+        return 10;
+    }
+    @Override
+    public Integer getAverageCustomerMonetaryValue() {
+        
+        return 10;
+    }
+    
+    @Override
     public Integer customerLifetimeValueOfMember(Long memberId) {
         return 5;
     }
-    
+
     @Override
-    public Date getCustomerRecency(Long memberId) {
-        Date date = new Date();
-        return date;
+    public Integer getCustomerRecency(Long memberId) {
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        return 10;
     }
-    
+
     @Override
     public Integer getCustomerFrequency(Long memberId) {
-       Integer test = 10;
-       return test;
+        Integer test = 10;
+        return test;
     }
-    
+
     @Override
     public Integer getCustomerMonetaryValue(Long memberId) {
-       Integer test = 10;
-       return test;
+        Integer test = 10;
+        return test;
     }
 
     @Override
@@ -60,7 +89,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         int totalCummulativeSpending = 0;
         for (int i = 0; i < members.size(); i++) {
             if (members.get(i).getAge() > startAge && members.get(i).getAge() < endAge) {
-                System.out.println(members.get(i).getName());
                 totalCummulativeSpending += members.get(i).getCummulativeSpending();
             }
         }
@@ -101,28 +129,31 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Double profit = new Double("0");
 
         for (int i = 0; i < members.size(); i++) {
-            
+
             profit += members.get(i).getCummulativeSpending();
         }
 
         return profit;
     }
-    
+
     @Override
     public Double totalNonMemberRevenue() {
         System.out.println("totalNonMemberRevenue()");
-        
+
         Double profit = new Double("0");
         try {
-            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t where t.member_id=null");
+            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
             List<SalesRecordEntity> salesRecords = q.getResultList();
-            
+
             for (SalesRecordEntity salesRecord : salesRecords) {
-                profit += salesRecord.getAmountDue() + salesRecord.getAmountPaid();
+                if (salesRecord.getMember() == null) {
+                    profit += salesRecord.getAmountDue() + salesRecord.getAmountPaid();
+                }
             }
         } catch (Exception ex) {
-            System.out.println("\nServer failed to list all member:\n" + ex);
+            System.out.println("\nServer failed to list all non member sales records:\n" + ex);
         }
+
         return profit;
     }
 
