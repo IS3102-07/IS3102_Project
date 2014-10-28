@@ -10,7 +10,7 @@ html {
 
 body {
     background-color: white;
-    color: #C5C5C5;
+    color: #413333;
     font-family: "Open Sans", Arial, sans-serif;
     font-size: 14px;
     line-height: 22px;
@@ -279,7 +279,7 @@ body {
 }
 
 #header nav ul.nav-top li a, #header nav ul.nav-top li span {
-    color: #999;
+    color: #4D4C4C;
     font-size: 0.9em;
     padding: 6px 10px;
 }

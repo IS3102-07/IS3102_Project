@@ -87,11 +87,11 @@
 
                                     <p class="price"><h4 class="amount">$22</h4></p>
 
-                                    <p>
+                                    <p1>
                                         Height: <%=furniture.getHeight()%><br/>
                                         Length: <%=furniture.getLength()%><br/>
                                         Width: <%=furniture.getWidth()%>
-                                    </p>
+                                    </p1>
 
                                     <p class="taller">
                                         <%if (furniture.getDescription() != null) {
