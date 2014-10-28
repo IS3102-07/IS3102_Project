@@ -77,6 +77,9 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
     @Override
     public boolean registerMember(String name, String address, Date DOB, String email, String phone, CountryEntity country, String city, String zipCode, String password) {
         System.out.println("registerMember() called with email:" + email);
+        if (checkMemberEmailExists(email)) {
+            return false;
+        }
         Long memberID;
         String passwordSalt = generatePasswordSalt();
         String passwordHash = generatePasswordHash(passwordSalt, password);
@@ -1368,7 +1371,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             return false;
         }
     }
-    
+
     @Override
     public List<SalesRecordEntity> listAllSalesRecord() {
         System.out.println("listAllSalesRecord() called.");
@@ -1381,6 +1384,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             return null;
         }
     }
+
     public void persist(Object object) {
         em.persist(object);
     }

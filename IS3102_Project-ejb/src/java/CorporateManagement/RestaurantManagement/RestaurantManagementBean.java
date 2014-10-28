@@ -1,11 +1,13 @@
 package CorporateManagement.RestaurantManagement;
 
-import EntityManager.RecipeEntity;
-import EntityManager.MenuItemEntity;
+import EntityManager.ComboEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.MenuItemEntity;
 import EntityManager.RawIngredientEntity;
+import EntityManager.RecipeEntity;
 import EntityManager.SupplierEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -371,4 +373,51 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
             return false;
         }
     }
+    @Override
+    public List<ComboEntity> getAllCombo() {
+        try {
+            Query q = em.createQuery("select c from ComboEntity c where c.isDeleted=false");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+    
+    @Override
+    public ComboEntity createCombo(String SKU, String name, String description, String imageURL) {
+        try {
+            Query q = em.createQuery("select c from ItemEntity c where c.SKU = ?1").setParameter(1, SKU);
+            if (q.getResultList().isEmpty()) {
+                ComboEntity combo = new ComboEntity(SKU, name, description, imageURL);
+                em.persist(combo);
+                return combo;
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    @Override
+    public boolean removeCombo(Long comboID) {
+        System.out.println("removeCombo() called with SKU:" + comboID);
+        try {
+            ComboEntity comboEntity = em.getReference(ComboEntity.class, comboID);
+            comboEntity.setIsDeleted(true);
+            em.merge(comboEntity);
+            em.flush();
+            System.out.println("Combo removed succesfully");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Combo not found");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove combo:\n" + ex);
+            return false;
+        }
+    }
+
 }
