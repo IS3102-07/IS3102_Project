@@ -33,7 +33,7 @@
                 }
             }
             function removeCombo() {
-                
+
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -80,7 +80,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <%
-                                           String errMsg = request.getParameter("errMsg");
+                                        String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
                                             out.println("Add Combo");
@@ -133,7 +133,7 @@
                                                             <td>
                                                                 <%=combos.get(i).getDescription()%>
                                                             </td>
-                                                             <td>
+                                                            <td>
                                                                 <%=combos.get(i).getSKU()%>
                                                             </td>
                                                             <td>
@@ -213,7 +213,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>
