@@ -77,6 +77,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
+                                                            <th></th>
                                                             <th>Purchase Order ID</th>
                                                             <th>Supplier</th>
                                                             <th>Shipping Destination</th>
@@ -145,6 +146,7 @@
                                                                 WarehouseEntity warehouse = finalListOfPO.get(i).getDestination();
                                                     %>
                                                     <tr>
+                                                        <td></td>
                                                         <td>
                                                             <%=finalListOfPO.get(i).getId()%>
                                                         </td>

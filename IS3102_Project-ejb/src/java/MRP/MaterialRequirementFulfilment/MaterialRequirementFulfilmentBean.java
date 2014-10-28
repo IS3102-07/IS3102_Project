@@ -69,7 +69,12 @@ public class MaterialRequirementFulfilmentBean implements MaterialRequirementFul
                         Supplier_ItemEntity supplier_ItemEntity = (Supplier_ItemEntity) q3.getSingleResult();
 
                         int lotsize = supplier_ItemEntity.getLotSize();
-                        int purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1) * lotsize;
+                        int purchaseQuantity = 0;
+                        if (((mr.getQuantity() - stockLevel) % lotsize) != 0) {
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1) * lotsize;
+                        } else {
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize)) * lotsize;
+                        }
                         System.out.println("(mr.getQuantity() - stockLevel): " + (mr.getQuantity() - stockLevel) + "; lotsize: " + lotsize);
                         System.out.println("purchaseQuantity: " + purchaseQuantity);
                         calendar.set(Calendar.DAY_OF_MONTH, mr.getDay());

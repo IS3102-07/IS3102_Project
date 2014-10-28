@@ -198,7 +198,7 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
     public List<PurchaseOrderEntity> getPurchaseOrderList() {
         System.out.println("getPurchaseOrderList() called");
         try {
-            Query q = em.createQuery("select p from PurchaseOrderEntity p");
+            Query q = em.createQuery("select p from PurchaseOrderEntity p ORDER BY p.createdDate desc");
             System.out.println("List returned.");
             return q.getResultList();
         } catch (Exception ex) {
@@ -230,9 +230,9 @@ public class RetailProductsAndRawMaterialsPurchasingBean implements RetailProduc
         try {
             Query q;
             if (warehouseId == null) {
-                q = em.createQuery("Select p from PurchaseOrderEntity p");
+                q = em.createQuery("Select p from PurchaseOrderEntity p ORDER BY p.createdDate desc");
             } else {
-                q = em.createQuery("Select p from PurchaseOrderEntity p where p.receivedWarehouse.id=:warehouseId");
+                q = em.createQuery("Select p from PurchaseOrderEntity p where p.receivedWarehouse.id=:warehouseId ORDER BY p.createdDate DESC");
                 q.setParameter("warehouseId", warehouseId);
             }
             List<PurchaseOrderEntity> listOfPurchaseOrders = q.getResultList();
