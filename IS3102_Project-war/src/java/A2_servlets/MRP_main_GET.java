@@ -8,6 +8,7 @@ package A2_servlets;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.MaterialRequirementEntity;
 import EntityManager.MonthScheduleEntity;
+import MRP.DemandManagement.DemandManagementBeanLocal;
 import MRP.ManufacturingRequirementPlanning.ManufacturingRequirementPlanningBeanLocal;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class MRP_main_GET extends HttpServlet {
 
     @EJB
     private ManufacturingRequirementPlanningBeanLocal mrBean;
+    @EJB
+    private DemandManagementBeanLocal dmBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,7 +52,7 @@ public class MRP_main_GET extends HttpServlet {
         }        
         request.setAttribute("mrList", mrList);
         try {
-            MonthScheduleEntity schedule = mrList.get(0).getMps().getSchedule();
+            MonthScheduleEntity schedule = dmBean.getLastSchedule();
             request.setAttribute("schedule", schedule);
         } catch (Exception ex) {
         }
