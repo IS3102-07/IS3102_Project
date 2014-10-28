@@ -6,6 +6,8 @@ import EntityManager.RawMaterialEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.FurnitureEntity;
 import EntityManager.Item_CountryEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.SalesRecordEntity;
 import EntityManager.StoreEntity;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -180,6 +182,24 @@ public class RetailInventoryBean implements RetailInventoryBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to perform checkSKUExists:\n" + ex);
             return false;
+        }
+    }
+
+    @Override
+    public Boolean checkIfCustomerNeedToWaitForPicker(String receiptNo) {
+        try {
+            Query q = em.createQuery("Select i from SalesRecordEntity i where i.receiptNo=:receiptNo");
+            q.setParameter("receiptNo", receiptNo);
+            SalesRecordEntity salesRecordEntity = (SalesRecordEntity) q.getSingleResult();
+            List<LineItemEntity> lineItemEntities = salesRecordEntity.getItemsPurchased();
+            for (LineItemEntity curr:lineItemEntities) {
+                if (curr.getItem().getVolume()>360000)
+                    return true;
+            }
+            return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 }
