@@ -16,9 +16,14 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
+    
+    public Integer getAverageCustomerRecency();
+    public Integer getAverageCustomerFrequency();
+    public Integer getAverageCustomerMonetaryValue();
+            
     public Integer getCustomerMonetaryValue(Long memberId);
     public Integer getCustomerFrequency(Long memberId);
-    public Date getCustomerRecency(Long memberId);
+    public Integer getCustomerRecency(Long memberId);
     public Integer numOfMembersInAgeGroup(Integer startAge, Integer endAge);
     public Integer averageCummulativeSpending();
     public Integer totalCummulativeSpending(Integer startAge, Integer endAge);
