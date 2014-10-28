@@ -45,7 +45,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">                                            
                                     <a href="../PPD_main_POST/*"><button class="btn btn-primary"><span class="icon icon-repeat"></span> Distribute Production Plan</button></a>                                                                                
-                                    <a href="#"><span class="btn btn-primary"><span class="icon icon-truck"></span> Generate Shipping Order</span></a>                                                                            
+                                    <a href="../MRP_main_POST/generateShippingOrderForFurniture"><span class="btn btn-primary"><span class="icon icon-truck"></span> Generate Shipping Order</span></a>                                                                            
                                 </div>
                                 <div class="panel-body">
 

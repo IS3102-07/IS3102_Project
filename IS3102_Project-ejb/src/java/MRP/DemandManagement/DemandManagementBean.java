@@ -59,12 +59,6 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                         .setParameter(2, lastSchedule.getId());
                 List<MasterProductionScheduleEntity> formerMPSs = (List<MasterProductionScheduleEntity>) q1.getResultList();
                 for (MasterProductionScheduleEntity mps : formerMPSs) {
-//                    MaterialRequirementEntity[] mrArray = (MaterialRequirementEntity[]) mps.getMaterialRequirementList().toArray();
-//                    for (MaterialRequirementEntity mr : mrArray) {
-//                        mps.getMaterialRequirementList().remove(mr);
-//                        em.remove(mr);
-//                        em.flush();
-//                    }
                     em.remove(mps);
                 }
                 em.flush();

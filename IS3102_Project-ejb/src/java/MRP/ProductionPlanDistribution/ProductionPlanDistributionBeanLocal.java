@@ -32,6 +32,8 @@ public interface ProductionPlanDistributionBeanLocal {
     
     public List<SaleAndOperationPlanEntity> getDistributedSOPList(Long regionalOfficeId);
     
+    public Boolean generateShippingOrder(Long regionalOfficeId, Long scheduleId);
+    
     @Remove
     public void remove();
 }
