@@ -49,7 +49,7 @@ public class DemandManagement_main_GET extends HttpServlet {
         }
         request.setAttribute("mpsList", mpsList);
         try {
-            MonthScheduleEntity schedule = mpsList.get(0).getSchedule();
+            MonthScheduleEntity schedule = dmBean.getLastSchedule();
             request.setAttribute("schedule", schedule);
         } catch (Exception ex) {
         }
