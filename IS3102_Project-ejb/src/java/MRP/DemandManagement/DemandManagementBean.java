@@ -26,6 +26,18 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
     private EntityManager em;
 
     @Override
+    public MonthScheduleEntity getLastSchedule() {
+        try {
+            Query q = em.createQuery("select s from MonthScheduleEntity s");
+            List<MonthScheduleEntity> scheduleList = q.getResultList();
+            return scheduleList.get(scheduleList.size() - 1);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public Boolean generateMasterProductionSchedules(Long MfId) {
         System.out.println("generateMasterProductionSchedules is called.");
         try {
@@ -37,22 +49,16 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
 
                 // clear former MPSs
                 Query q0 = em.createQuery("select mr from MaterialRequirementEntity mr");
-                for(MaterialRequirementEntity mr: (List<MaterialRequirementEntity>)q0.getResultList()){
+                for (MaterialRequirementEntity mr : (List<MaterialRequirementEntity>) q0.getResultList()) {
                     em.remove(mr);
                 }
                 em.flush();
-                
+
                 Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.mf.id = ?1 and mps.schedule.id = ?2")
                         .setParameter(1, MfId)
                         .setParameter(2, lastSchedule.getId());
                 List<MasterProductionScheduleEntity> formerMPSs = (List<MasterProductionScheduleEntity>) q1.getResultList();
                 for (MasterProductionScheduleEntity mps : formerMPSs) {
-//                    MaterialRequirementEntity[] mrArray = (MaterialRequirementEntity[]) mps.getMaterialRequirementList().toArray();
-//                    for (MaterialRequirementEntity mr : mrArray) {
-//                        mps.getMaterialRequirementList().remove(mr);
-//                        em.remove(mr);
-//                        em.flush();
-//                    }
                     em.remove(mps);
                 }
                 em.flush();
