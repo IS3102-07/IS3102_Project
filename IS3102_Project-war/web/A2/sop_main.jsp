@@ -10,6 +10,31 @@
     <body>
 
         <script>
+            function editSOPRetailProduct(){
+                 document.sopManagement.action = "../SaleAndOperationPlanning_Servlet/sopManagement";
+                 document.sopManagement.submit();
+            }
+            function editSOP(){
+                 document.sopManagement1.action = "../SaleAndOperationPlanning_Servlet/sopManagement";
+                 document.sopManagement1.submit();
+            }
+            function removeSOPRetailProduct() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                       numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = false;
+                    document.sopManagement.submit();
+                } else {
+                    window.event.returnValue = true;
+                    document.sopManagement.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
+                    document.sopManagement.submit();
+                }
+            }
             function removeSOP() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -19,24 +44,7 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = true;
-                    document.sopManagement.submit();
-                } else {
-                    window.event.returnValue = true;
-                    document.sopManagement.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
-                    document.sopManagement.submit();
-                }
-            }
-            function removeSOP1() {
-                checkboxes = document.getElementsByName('delete');
-                var numOfTicks = 0;
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    if (checkboxes[i].checked) {
-                        numOfTicks++;
-                    }
-                }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = true;
+                    window.event.returnValue = false;
                     document.sopManagement1.submit();
                 } else {
                     window.event.returnValue = true;
@@ -148,7 +156,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form name="sopManagement1" action="../SaleAndOperationPlanning_Servlet/sopManagement">
+                                            <form name="sopManagement1">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable2">
                                                     <thead>
                                                         <tr>
@@ -174,7 +182,7 @@
                                                             <td><%= model.sop.getProductionPlan()%></td>
                                                             <td><%= model.sop.getCurrentInventoryLevel()%></td>
                                                             <td><%= model.sop.getTargetInventoryLevel()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= model.sop.getId()%>">Edit</button></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" onclick="editSOP()" value="<%= model.sop.getId()%>">Edit</button></td>
                                                         </tr>
                                                         <%
                                                             }
@@ -185,8 +193,8 @@
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-12">  
-                                                        <a href="#myModal2" data-toggle="modal"><button class="btn btn-primary">Delete Sales and Operations Plan</button></a>
-                                                        <div role="dialog" class="modal fade" id="myModal2">
+                                                        <a href="#deleteSOP" data-toggle="modal"><button class="btn btn-primary">Delete Sales and Operations Plan</button></a>
+                                                        <div role="dialog" class="modal fade" id="deleteSOP">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -196,7 +204,7 @@
                                                                         <p id="messageBox">SOP will be removed. Are you sure?</p>
                                                                     </div>
                                                                     <div class="modal-footer">                        
-                                                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeSOP1()"  />
+                                                                        <input class="btn btn-primary" name="btnRemove" value="Confirm" onclick="removeSOP()"  />
                                                                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
                                                                     </div>
                                                                 </div>
@@ -230,7 +238,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form name="sopManagement" action="../SaleAndOperationPlanning_Servlet/sopManagement">
+                                            <form name="sopManagement">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable3">
                                                     <thead>
                                                         <tr>
@@ -254,7 +262,7 @@
                                                             <td><%= model.getProductionPlan()%></td>
                                                             <td><%= model.getCurrentInventoryLevel()%></td>
                                                             <td><%= model.getTargetInventoryLevel()%></td>
-                                                            <td><button class="btn btn-primary" name="submit-btn" value="<%= model.getId()%>">Edit</button></td>
+                                                            <td><button class="btn btn-primary" name="submit-btn" onclick="editSOPRetailProduct()" value="<%= model.getId()%>">Edit</button></td>
                                                         </tr>
                                                         <%
                                                             }
@@ -263,8 +271,8 @@
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-3">                                                        
-                                                        <a href="#myModal1" data-toggle="modal"><button class="btn btn-primary">Delete Sales and Operations Plan</button></a>
-                                                        <div role="dialog" class="modal fade" id="myModal1">
+                                                        <a href="#deleteSOPRetailProduct" data-toggle="modal"><button class="btn btn-primary">Delete Sales and Operations Plan</button></a>
+                                                        <div role="dialog" class="modal fade" id="deleteSOPRetailProduct">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -274,7 +282,7 @@
                                                                         <p id="messageBox">SOP will be removed. Are you sure?</p>
                                                                     </div>
                                                                     <div class="modal-footer">                        
-                                                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeSOP()"  />
+                                                                        <input class="btn btn-primary" name="btnRemove" value="Confirm" onclick="removeSOPRetailProduct()"  />
                                                                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
                                                                     </div>
                                                                 </div>

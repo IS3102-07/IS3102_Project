@@ -42,25 +42,32 @@ public class ECommerce_SelectCountry extends HttpServlet {
             session.setAttribute("countryName", country);
             session.setAttribute("storesInCountry", storesInCountry);
             switch (country) {
-//                case "France":
-//                    response.sendRedirect("B/FRA/index.jsp");
-//                    break;
-//                case "USA":
-//                    response.sendRedirect("B/USA/index.jsp");
-//                    break;
-//                case "China":
-//                    response.sendRedirect("B/CN/index.jsp");
-//                    break;
-//                case "Singapore":
-//                    response.sendRedirect("B/SG/index.jsp");
-//                    break;
-//                case "Malaysia":
-//                    response.sendRedirect("B/MY/index.jsp");
-//                    break;
-//                case "Indonesia":
-//                    response.sendRedirect("B/IDN/index.jsp");
-//                    break;
+                case "France":
+                    session.setAttribute("URLprefix", "FRA/");
+                    response.sendRedirect("B/FRA/index.jsp");
+                    break;
+                case "USA":
+                    session.setAttribute("URLprefix", "USA/");
+                    response.sendRedirect("B/USA/index.jsp");
+                    break;
+                case "China":
+                    session.setAttribute("URLprefix", "CN/");
+                    response.sendRedirect("B/CN/index.jsp");
+                    break;
+                case "Singapore":
+                    session.setAttribute("URLprefix", "SG/");
+                    response.sendRedirect("B/SG/index.jsp");
+                    break;
+                case "Malaysia":
+                    session.setAttribute("URLprefix", "MY/");
+                    response.sendRedirect("B/MY/index.jsp");
+                    break;
+                case "Indonesia":
+                    session.setAttribute("URLprefix", "IDN/");
+                    response.sendRedirect("B/IDN/index.jsp");
+                    break;
                 default:
+                    session.setAttribute("URLprefix", "");
                     response.sendRedirect("B/index.jsp");
                     break;
             }

@@ -1,14 +1,20 @@
 package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+@MultipartConfig
 public class FurnitureManagement_UpdateFurnitureServlet extends HttpServlet {
 
     @EJB
@@ -19,14 +25,33 @@ public class FurnitureManagement_UpdateFurnitureServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String SKU  = request.getParameter("SKU");
+            String SKU = request.getParameter("SKU");
             String name = request.getParameter("name");
             String category = request.getParameter("category");
             String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
-            String source = request.getParameter("source");
             String id = request.getParameter("id");
+
+            Part file = request.getPart("javafile");
+
+            String fileName = SKU + ".jpg";
+            String imageURL = "/IS3102_Project-war/img/products/" + fileName;
+
+            if (file != null) {
+                String s = file.getHeader("content-disposition");
+                InputStream fileInputStream = file.getInputStream();
+                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+
+                System.out.println("fileOutputStream  " + fileOutputStream);
+                int nextByte;
+                while ((nextByte = fileInputStream.read()) != -1) {
+                    fileOutputStream.write(nextByte);
+                }
+                fileOutputStream.close();
+                fileInputStream.close();
+            }
+
             boolean canUpdate = itemManagementBean.editFurniture(id, SKU, name, category, description, imageURL);
+
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("furnitureManagement_update.jsp" + result);

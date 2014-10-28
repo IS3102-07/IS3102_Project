@@ -20,7 +20,7 @@ public class FurnitureManagement_AddFurnitureServlet extends HttpServlet {
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
     String result;
- 
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -29,47 +29,34 @@ public class FurnitureManagement_AddFurnitureServlet extends HttpServlet {
             String name = request.getParameter("name");
             String category = request.getParameter("category");
             String description = request.getParameter("description");
-            //String imageURL = request.getParameter("imageURL");
             Integer _length = Integer.parseInt(request.getParameter("length"));
             Integer width = Integer.parseInt(request.getParameter("width"));
             Integer height = Integer.parseInt(request.getParameter("height"));
             String source = request.getParameter("source");
 
             Part file = request.getPart("javafile");
-            String s = file.getHeader("content-disposition");
-            System.out.println(s);
-
-            int index = s.indexOf("filename");
-
-            index = index + 9;//move to the " in filename="
-
-            int endIndex = s.indexOf("\"", index + 1);
-            String fileName = s.substring(index + 1, endIndex);
-            //fileName="a.html";
-            //System.out.println(fileName);
-            if (file != null) {
-
-                InputStream fileInputStream = file.getInputStream();
-                System.out.println("path >>>" + request.getServletContext().getRealPath("/testSolution/"));
-                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/testSolution/") + "/" + fileName);
-                OutputStream fileOutputStream2 = new FileOutputStream("c:/tempFiles/" + fileName);
-                
-                System.out.println("fileOutputStream  " + fileOutputStream);
-                System.out.println("fileOutputStream2  " + fileOutputStream2);
-//                int nextByte;
-//                while ((nextByte = fileInputStream.read()) != -1) {
-//                    fileOutputStream.write(nextByte);
-//                    fileOutputStream2.write(nextByte);
-//                }
-//                fileOutputStream.close();
-//                fileOutputStream2.close();
-//                fileInputStream.close();
-
-            }
 
             if (!itemManagementBean.checkSKUExists(SKU)) {
-                //itemManagementBean.addFurniture(SKU, name, category, description, imageURL, _length, width, height);
+                String fileName = SKU + ".jpg";
+                String imageURL = "/IS3102_Project-war/img/products/" + fileName;
+
+                itemManagementBean.addFurniture(SKU, name, category, description, imageURL, _length, width, height);
                 result = "?goodMsg=Furniture with SKU: " + SKU + " has been created successfully.";
+
+                if (file != null) {
+                    String s = file.getHeader("content-disposition");
+                    InputStream fileInputStream = file.getInputStream();
+                    OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+
+                    System.out.println("fileOutputStream  " + fileOutputStream);
+                    int nextByte;
+                    while ((nextByte = fileInputStream.read()) != -1) {
+                        fileOutputStream.write(nextByte);
+                    }
+                    fileOutputStream.close();
+                    fileInputStream.close();
+                }
+
                 response.sendRedirect("FurnitureManagement_FurnitureServlet" + result);
             } else {
                 result = "?errMsg=Failed to add furniture, SKU: " + SKU + " already exist.";

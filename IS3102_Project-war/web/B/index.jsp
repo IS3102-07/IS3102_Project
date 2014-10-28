@@ -132,7 +132,7 @@
                                      data-y="220"
                                      data-speed="1500"
                                      data-start="1200"
-                                     data-easing="easeOutExpo" style="font-size: 40px;">Are Aesthetically Pleasing!</div>
+                                     data-easing="easeOutExpo" style="font-size: 40px;">Are Aesthetically<br/>Pleasing!</div>
 
                                 <div class="tp-caption main-label sft stb"
                                      data-x="580"

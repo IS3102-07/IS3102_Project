@@ -341,10 +341,11 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test32EditProductGroupLineItem() {
         System.out.println("testEditProductGroupLineItem");
+        Long testdata_productGroupId = 1L;
         Long testdata_productGroupLineItemId = 1L;
         String testdata_SKU = "F1";
         Double testdata_percent = 0.1;
-        Boolean result = itemManagementBean.editProductGroupLineItem(testdata_productGroupLineItemId, testdata_SKU, testdata_percent);
+        Boolean result = itemManagementBean.editProductGroupLineItem(testdata_productGroupId, testdata_productGroupLineItemId, testdata_SKU, testdata_percent);
         assertFalse(result);
     }
 
