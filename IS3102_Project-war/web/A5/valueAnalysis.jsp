@@ -3,7 +3,9 @@
 <%@page import="EntityManager.StaffEntity"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
+
     <body>
+
         <script>
             function updateStaff(id) {
                 staffManagement.id.value = id;
@@ -86,6 +88,7 @@
                                             <br>
                                             <%
                                                 Double totalCustomerRevenue = (Double) session.getAttribute("totalCustomerRevenue");
+                                                Double totalNonCustomerRevenue = (Double) session.getAttribute("totalNonCustomerRevenue");
                                                 Integer cummulativeSpendingAgeGrp1 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp1");
                                                 Integer cummulativeSpendingAgeGrp2 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp2");
                                                 Integer cummulativeSpendingAgeGrp3 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp3");
@@ -109,6 +112,19 @@
                                                     </div>
                                                     Total Number of Customers : <%=members.size()%> <br/>
                                                     Average Customer Cummulative Spending : <%=averageCummulativeSpending%>
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Donut Chart</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div id="morris-donut-chart"></div>
+                                                            <div class="text-right">
+                                                                <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div id="myfirstchart"></div>
@@ -244,7 +260,7 @@
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-        
+
         <div role="dialog" class="modal fade" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -281,6 +297,18 @@
                 xkey: 'y',
                 ykeys: ['a', 'b', 'c'],
                 labels: ['Total Cummulative Spending', 'Total Number Of Members', 'Age Group']
+            });
+
+            new Morris.Donut({
+                element: 'morris-donut-chart',
+                data: [{
+                        label: "Member Sales",
+                        value: <%=totalCustomerRevenue%>
+                    }, {
+                        label: "Non-Member Sales",
+                        value: <%=totalNonCustomerRevenue%>
+                    }],
+                resize: true
             });
 
         </script>

@@ -10,9 +10,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.MemberEntity;
+import EntityManager.RoleEntity;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.persistence.Query;
 
 @Stateful
 public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal {
@@ -92,8 +94,8 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
 
     @Override
-    public Double totalCustomerRevenue() {
-        System.out.println("totalCustomerRevenue()");
+    public Double totalMemberRevenue() {
+        System.out.println("totalMemberRevenue()");
         List<MemberEntity> members = accountManagementBean.listAllMember();
 
         Double profit = new Double("0");
@@ -103,6 +105,24 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             profit += members.get(i).getCummulativeSpending();
         }
 
+        return profit;
+    }
+    
+    @Override
+    public Double totalNonMemberRevenue() {
+        System.out.println("totalNonMemberRevenue()");
+        
+        Double profit = new Double("0");
+        try {
+            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t where t.member_id=null");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+            
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                profit += salesRecord.getAmountDue() + salesRecord.getAmountPaid();
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list all member:\n" + ex);
+        }
         return profit;
     }
 

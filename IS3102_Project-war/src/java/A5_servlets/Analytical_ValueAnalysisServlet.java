@@ -30,9 +30,11 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
             System.out.println("Analytical_ValueAnalysisServlet");
-            Double totalCustomerRevenue = customerValueAnalysisBean.totalCustomerRevenue();
+            Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
+            Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
             System.out.println(totalCustomerRevenue);
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
+            session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
 
             List <MemberEntity> members = accountManagementBean.listAllMember();
             session.setAttribute("members", members);
