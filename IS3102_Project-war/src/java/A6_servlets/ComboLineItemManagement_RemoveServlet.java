@@ -1,7 +1,6 @@
 package A6_servlets;
 
 import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
-import EntityManager.ComboLineItemEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -10,32 +9,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ComboLineItemManagement_AddServlet extends HttpServlet {
+public class ComboLineItemManagement_RemoveServlet extends HttpServlet {
 
     @EJB
     private RestaurantManagementBeanLocal RestaurantManagementBean;
-    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
         try {
             String comboId = request.getParameter("id");
-            String sku = request.getParameter("sku");
 
-            ComboLineItemEntity comboLineItemEntity = RestaurantManagementBean.createComboLineItem(sku);
-            boolean canUpdate = false;
-            if (comboLineItemEntity != null) {
-                canUpdate = RestaurantManagementBean.addLineItemToCombo(Long.parseLong(comboId), comboLineItemEntity.getId());
-            }
-            if (!canUpdate) {
-                result = "?errMsg=Add combo failed. Please check SKU.&id=" + comboId;
-                response.sendRedirect("A6/comboManagement_AddLineItem.jsp" + result);
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    RestaurantManagementBean.removeLineItemFromCombo(Long.parseLong(comboId), Long.parseLong(deleteArr[i]));
+                }
+                response.sendRedirect("ComboLineItemManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).&id=" + comboId);
             } else {
-                result = "?goodMsg=Line item added successfully.&id=" + comboId;
-                response.sendRedirect("ComboLineItemManagement_Servlet" + result);
+                response.sendRedirect("A6/comboManagement_Update.jsp?errMsg=Nothing is selected.&id=" + comboId);
             }
-
         } catch (Exception ex) {
             out.println(ex);
         }

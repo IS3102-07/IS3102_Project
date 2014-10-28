@@ -66,4 +66,8 @@ public interface RestaurantManagementBeanLocal {
 
     public ComboLineItemEntity createComboLineItem(String SKU);
 
+    public Boolean removeLineItemFromCombo(Long comboId, Long lineItemId);
+
+    public Boolean deleteComboLineItem(Long id);
+
 }

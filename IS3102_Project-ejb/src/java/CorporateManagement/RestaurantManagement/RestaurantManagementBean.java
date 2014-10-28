@@ -444,29 +444,28 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
             return false;
         }
     }
-    
+
     @Override
     public Boolean addLineItemToCombo(Long comboId, Long lineItemId) {
         try {
             ComboLineItemEntity lineItem = em.find(ComboLineItemEntity.class, lineItemId);
-            Query q = em.createQuery("select l from ComboItemEntity l where l.menuItem.SKU = ?1 and l.combo is not null").setParameter(1, lineItem.getMenuItem().getSKU());
+            Query q = em.createQuery("select l from ComboLineItemEntity l where l.menuItem.SKU = ?1 and l.combo is not null").setParameter(1, lineItem.getMenuItem().getSKU());
             if (q.getResultList().isEmpty()) {
-                ComboEntity combo = em.find(ComboEntity.class, comboId);            
-                    lineItem.setCombo(combo);
-                    combo.setType(lineItem.getMenuItem().getType());
-                    combo.getLineItemList().add(lineItem);
-                    em.merge(combo);
-                    return true;
-                } else {
-                    return false;
-                }
+                ComboEntity combo = em.find(ComboEntity.class, comboId);
+                lineItem.setCombo(combo);
+                combo.setType(lineItem.getMenuItem().getType());
+                combo.getLineItemList().add(lineItem);
+                em.merge(combo);
+                return true;
+            } else {
+                return false;
             }
-         catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return false;
     }
-    
+
     @Override
     public ComboLineItemEntity createComboLineItem(String SKU) {
         System.out.println("createComboLineItem() called");
@@ -487,4 +486,29 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
         return null;
     }
 
+    @Override
+    public Boolean removeLineItemFromCombo(Long comboId, Long lineItemId) {
+        System.out.println("removeLineItemFromCombo() called");
+        try {
+            ComboEntity combo = em.find(ComboEntity.class, comboId);
+            ComboLineItemEntity lineItem = em.find(ComboLineItemEntity.class, lineItemId);
+            combo.getLineItemList().remove(lineItem);
+            em.merge(combo);
+            this.deleteComboLineItem(lineItemId);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public Boolean deleteComboLineItem(Long id) {
+        try {
+            em.remove(em.find(ComboLineItemEntity.class, id));
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }

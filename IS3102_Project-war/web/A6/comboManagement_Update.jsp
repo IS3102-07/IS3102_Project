@@ -24,12 +24,8 @@
                 document.comboManagement.action = "comboManagement_AddLineItem.jsp";
                 document.comboManagement.submit();
             }
-            function updateComboLineItem(lineItemId) {
-                comboManagement.lineItemId.value = lineItemId;
-                document.comboManagement.action = "comboManagement_UpdateLineItem.jsp";
-                document.comboManagement.submit();
-            }
-            function removePGLineItem() {
+           
+            function removeComboLineItem() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -138,7 +134,6 @@
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>SKU</th>
                                                             <th>Menu Item Name</th>
-                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -156,10 +151,7 @@
                                                             </td>
                                                             <td>
                                                                 <%=lineItems.get(i).getMenuItem().getName()%>
-                                                            </td>                                  
-                                                            <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updateComboLineItem('<%=lineItems.get(i).getId()%>')"/>
-                                                            </td>
+                                                            </td>                                                                                            
                                                         </tr>
                                                         <%}
                                                             }%>
