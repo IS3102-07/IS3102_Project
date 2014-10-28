@@ -216,7 +216,7 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
             Calendar calendar = Calendar.getInstance();
             calendar.clear();
             calendar.set(Calendar.YEAR, schedule.getYear());
-            calendar.set(Calendar.MONTH, schedule.getMonth());
+            calendar.set(Calendar.MONTH, schedule.getMonth()-1);
 
             Query q2 = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.schedule.id = ?1 and sop.manufacturingFacility.regionalOffice.id = ?2")
                     .setParameter(1, scheduleId)
