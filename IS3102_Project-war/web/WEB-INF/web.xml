@@ -806,8 +806,8 @@
         <servlet-class>B_servlets.ECommerce_RetailProductsServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_BathroomServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_BathroomServlet</servlet-class>
+        <servlet-name>ECommerce_FurnitureCategoryServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_FurnitureCategoryServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
@@ -1782,8 +1782,8 @@
         <url-pattern>/ECommerce_RetailProductsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_BathroomServlet</servlet-name>
-        <url-pattern>/ECommerce_BathroomServlet</url-pattern>
+        <servlet-name>ECommerce_FurnitureCategoryServlet</servlet-name>
+        <url-pattern>/ECommerce_FurnitureCategoryServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
