@@ -2,7 +2,9 @@ package CommonInfrastructure.AccountManagement;
 
 import Config.Config;
 import EntityManager.CountryEntity;
+import EntityManager.MemberEntity;
 import EntityManager.RoleEntity;
+import EntityManager.ShoppingListEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import java.io.BufferedWriter;
@@ -60,6 +62,20 @@ public class AccountManagementWebService {
             StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
             CountryEntity country = storeEntity.getCountry();
             return AccountManagementBeanLocal.registerMember(name, address, DOB, email, phone, country, city, zipCode, password);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @WebMethod
+    public ShoppingListEntity getMemberShoppingList(@WebParam(name="email") String email) {
+        try {
+            MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
+            if (memberEntity == null)
+                return null;
+            else
+                return memberEntity.getShoppingList();
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
