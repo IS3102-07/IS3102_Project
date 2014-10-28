@@ -298,7 +298,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     @Override
     public List<ShippingOrderEntity> getShippingOrderList(WarehouseEntity origin, Date shippedDate) {
         try {
-            Query query = em.createQuery("select s from ShippingOrderEntity s where s.origin = ?1 and s.shippedDate = ?2")
+            Query query = em.createQuery("select s from ShippingOrderEntity s where s.origin = ?1 and s.shippedDate = ?2 ORDER BY s.createdDate desc")
                     .setParameter(1, origin).setParameter(2, shippedDate, TemporalType.DATE);
 
             return query.getResultList();
@@ -311,7 +311,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     @Override
     public List<ShippingOrderEntity> getShippingOrderList(Date expectedReceivedDate, WarehouseEntity destination) {
         try {
-            Query query = em.createQuery("select s from ShippingOrderEntity s where s.destination = ?1 and s.expectedReceivedDate = ?2")
+            Query query = em.createQuery("select s from ShippingOrderEntity s where s.destination = ?1 and s.expectedReceivedDate = ?2 ORDER BY s.expectedReceivedDate desc")
                     .setParameter(1, destination).setParameter(2, expectedReceivedDate, TemporalType.DATE);
 
             return query.getResultList();
@@ -338,7 +338,7 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
     public List<ShippingOrderEntity> getShippingOrderList() {
         System.out.println("getShippingOrderList() called");
         try {
-            Query q = em.createQuery("select p from ShippingOrderEntity p");
+            Query q = em.createQuery("select p from ShippingOrderEntity p ORDER BY p.createdDate DESC");
             System.out.println("List returned.");
             return q.getResultList();
         } catch (Exception ex) {

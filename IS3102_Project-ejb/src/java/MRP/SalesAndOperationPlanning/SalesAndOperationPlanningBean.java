@@ -166,7 +166,7 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
 
     @Override
     public List<MonthScheduleEntity> getScheduleList() {
-        Query q = em.createQuery("select s from MonthScheduleEntity s");
+        Query q = em.createQuery("select s from MonthScheduleEntity s ORDER BY s.year DESC,s.month DESC");
         return q.getResultList();
     }
 
@@ -227,7 +227,7 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     @Override
     public List<SOP_Helper> getSOPHelperList(Long storeId, Long scheduleId) {
         try {
-            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2 and sop.productGroup.type = ?3")
+            Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2 and sop.productGroup.type = ?3 order by SOP.year desc, SOP.month desc")
                     .setParameter(1, storeId)
                     .setParameter(2, scheduleId)
                     .setParameter(3, "Furniture");

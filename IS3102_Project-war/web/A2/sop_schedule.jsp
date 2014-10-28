@@ -49,7 +49,8 @@
                                             <form action="../SaleAndOperationPlanning_Servlet/sop_schedule_POST">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
-                                                        <tr>                                                            
+                                                        <tr>               
+                                                            <th></th>
                                                             <th>Year</th>
                                                             <th>Month</th>                                                            
                                                             <th>Action</th>
@@ -61,7 +62,8 @@
                                                             if (scheduleList != null) {
                                                                 for (MonthScheduleEntity schedule : scheduleList) {
                                                         %>
-                                                        <tr>                                                            
+                                                        <tr>                  
+                                                            <td></td>
                                                             <td><%= schedule.getYear() %></td>
                                                             <td><%= schedule.getMonth() %></td>
                                                             <td><button class="btn btn-primary" name="scheduleId" value="<%= schedule.getId() %>">Access</button></a></td>

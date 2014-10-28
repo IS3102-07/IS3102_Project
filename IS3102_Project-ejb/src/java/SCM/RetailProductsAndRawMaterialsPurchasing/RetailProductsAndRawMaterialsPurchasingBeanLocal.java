@@ -20,6 +20,6 @@ public interface RetailProductsAndRawMaterialsPurchasingBeanLocal {
    public List<PurchaseOrderEntity> getPurchaseOrderListByStatus(String status);
    public List<PurchaseOrderEntity> getPurchaseOrderList();
    public boolean checkSKUExists(String SKU);
-       public List<PurchaseOrderEntity> getPurchaseOrderListByWarehouseId(Long warehouseId);
+   public List<PurchaseOrderEntity> getPurchaseOrderListByWarehouseId(Long warehouseId);
 
 }
