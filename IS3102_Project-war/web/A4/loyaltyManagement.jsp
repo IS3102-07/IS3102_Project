@@ -95,7 +95,7 @@
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Name</th>
-                                                            <th>Required Spending Amount (in USD) to Reach</th>
+                                                            <th>Spending Amount Required (in USD)</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>

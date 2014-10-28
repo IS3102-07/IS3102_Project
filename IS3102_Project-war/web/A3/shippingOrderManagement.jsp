@@ -82,7 +82,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
+                                                            <th hidden></th>
                                                             <th>Shipping Order ID</th>
                                                             <th>Shipping Origin</th>
                                                             <th>Shipping Destination</th>
@@ -150,7 +150,7 @@
                                                                 WarehouseEntity destination = finalListOfSO.get(i).getDestination();
                                                     %>
                                                     <tr>
-                                                        <td></td>
+                                                        <td hidden></td>
                                                         <td>
                                                             <%=finalListOfSO.get(i).getId()%>
                                                         </td>
