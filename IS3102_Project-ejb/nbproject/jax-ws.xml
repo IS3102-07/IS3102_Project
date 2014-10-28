@@ -16,6 +16,9 @@
     <service name="SalesReportingWebService">
       <implementation-class>StoreTransaction.SalesReporting.SalesReportingWebService</implementation-class>
     </service>
+    <service name="CustomerServiceWebService">
+      <implementation-class>OperationalCRM.CustomerService.CustomerServiceWebService</implementation-class>
+    </service>
   </services>
   <clients>
     <client name="SalesRecordingWebService">
