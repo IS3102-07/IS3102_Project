@@ -37,10 +37,14 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
 
             List <LoyaltyTierEntity> loyaltyTiers = loyaltyRewardsBean.getAllLoyaltyTiers();
             MemberEntity memberEntity = accountManagementBean.loginMember(email, password);
-            LoyaltyTierEntity nextLoyaltyTier = loyaltyRewardsBean
+            
+            System.out.println("Loyalty Points : " + memberEntity.getLoyaltyPoints());
+            
             if (memberEntity != null) {
                 HttpSession session;
                 session = request.getSession();
+                LoyaltyTierEntity nextLoyaltyTier = loyaltyRewardsBean.getMemberNextTier(memberEntity.getId());
+                session.setAttribute("nextLoyaltyTier", nextLoyaltyTier);
                 session.setAttribute("member", memberEntity);
                 session.setAttribute("loyaltyTiers", loyaltyTiers);
                 //out.println("<h1>" + "can login" + "</h1>");
