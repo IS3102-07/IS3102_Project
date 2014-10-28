@@ -22,7 +22,8 @@ public interface CustomerValueAnalysisBeanLocal {
     public Integer numOfMembersInAgeGroup(Integer startAge, Integer endAge);
     public Integer averageCummulativeSpending();
     public Integer totalCummulativeSpending(Integer startAge, Integer endAge);
-    public Double totalCustomerRevenue();
+    public Double totalMemberRevenue();
+    public Double totalNonMemberRevenue();
     public Integer customerLifetimeValueOfMember(Long memberId);
     public List<ItemEntity> viewSimilarProducts(Long itemId);
     public List<ItemEntity> viewUpsellProducts(Long itemId);
