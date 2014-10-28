@@ -22,6 +22,9 @@
                                     <i class="icon icon-dashboard"></i>  <a href="../PPD_index_GET/*">Production Plan Distribution</a>
                                 </li>
                                 <li>
+                                    <i class="icon icon-list"></i> <a href="../PPD_main_GET/">Distribution Workspace</a>
+                                </li>
+                                <li>
                                     <i class="icon icon-list"></i> Distribution Schema List</a>
                                 </li>
                             </ol>
@@ -35,7 +38,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <p>Access one scheme to start planning</p>
+                                    <p>Each connection of facilities means the transportation cost between them is acceptable. Wrong connection may result in high transport cost.</p>
                                 </div>
                                 <!-- /.panel-heading -->
 
@@ -47,6 +50,7 @@
                                                     <thead>
                                                         <tr>                                                            
                                                             <th>Manufacturing Facility</th>
+                                                            <th>Capacity (work hour)</th>
                                                             <th>Store</th>  
                                                             <th>Action</th>
                                                         </tr>
@@ -58,6 +62,7 @@
                                                         %>
                                                         <tr>                                                            
                                                             <td><%= mf.getName()%></td>
+                                                            <td><%= mf.getCapacity() %></td>
                                                             <td><%= store.getName()%></td>
                                                             <td><span class="btn btn-default">
                                                                     <a href="../store_MF_connectionManagement_POST/removeConnection?mfId=<%= mf.getId() %>&storeId=<%= store.getId() %>&regionalOfficeId=<%= regionalOfficeId %>">Remove</a>

@@ -43,7 +43,7 @@ public class MaterialRequirementFulfilmentBean implements MaterialRequirementFul
             Calendar calendar = Calendar.getInstance();
             calendar.clear();
             calendar.set(Calendar.YEAR, schedule.getYear());
-            calendar.set(Calendar.MONTH, schedule.getMonth());
+            calendar.set(Calendar.MONTH, schedule.getMonth()-1);
 
             Query q1 = em.createQuery("select rm from RawMaterialEntity rm");
             List<RawMaterialEntity> rmList = (List<RawMaterialEntity>) q1.getResultList();
