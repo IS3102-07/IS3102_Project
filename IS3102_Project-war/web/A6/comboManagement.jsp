@@ -7,7 +7,7 @@
 <%
     List<ComboEntity> combos = (List<ComboEntity>) (session.getAttribute("combos"));
     if (combos == null) {
-        response.sendRedirect("../ComboManagement_Servlet");
+        response.sendRedirect("../ComboManagement_ComboServlet");
     } else {
 %>
 <html lang="en">

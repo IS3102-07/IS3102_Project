@@ -5,7 +5,7 @@
     List<ComboEntity> combos = (List<ComboEntity>) (session.getAttribute("combos"));
     String id = request.getParameter("id");
     if (combos == null || id == null) {
-        response.sendRedirect("../ComboManagement_Servlet");
+        response.sendRedirect("../ComboManagement_ComboServlet");
     } else {
         ComboEntity combo = new ComboEntity();
         for (int i = 0; i < combos.size(); i++) {
