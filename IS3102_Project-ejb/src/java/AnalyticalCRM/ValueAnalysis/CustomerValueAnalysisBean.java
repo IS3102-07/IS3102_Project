@@ -141,44 +141,64 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
     @Override
     public Integer getCustomerRecency(Long memberId) {
-        System.out.println("getAverageCustomerRecency()");
+        System.out.println("getCustomerRecency()");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        Long days = (long) 0;
+        Integer days = 0;
         
         MemberEntity member = em.find(MemberEntity.class, memberId);
         if (member.getPurchases() != null && member.getPurchases().size() != 0) {
             System.out.println("This member has purchases records of " + member.getPurchases().size());
 
             List<Date> dates = new ArrayList<Date>();
-            Date latest;
+            
             for (int i = 0; i < member.getPurchases().size(); i++) {
                 System.out.println("Looping through purchases");
                 dates.add(member.getPurchases().get(i).getCreatedDate());
             }
-            latest = Collections.max(dates);
+            Date latest = Collections.max(dates);
             System.out.println("Latest date for member :" + member.getName() + " is " + latest);
 
-            days = date.getTime() - latest.getTime();
-            System.out.println("Number of dates against today's date : " + TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS));
-            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+            Long numOfDaysBetween = date.getTime() - latest.getTime();
+            System.out.println("Number of dates against today's date : " + TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS));
+            days = (int) (long) TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS);
 
         } else {
             System.out.println("This member has NO purchases records");
         }
-        return (int) (long) days;
+        return days;
     }
 
     @Override
     public Integer getCustomerFrequency(Long memberId) {
-        Integer test = 10;
-        return test;
+        System.out.println("getCustomerFrequency()");
+        
+        Integer numOfPurchases;
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+            numOfPurchases = member.getPurchases().size();
+        } else {
+            System.out.println("This member has NO purchases records");
+            return 0;
+        }
+        return numOfPurchases;
     }
 
     @Override
     public Integer getCustomerMonetaryValue(Long memberId) {
-        Integer test = 10;
-        return test;
+        System.out.println("getCustomerMonetaryValue()");
+        
+        Integer totalPriceOfPurchases = 0;
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+            for (int i = 0; i< member.getPurchases().size();i++) {
+                totalPriceOfPurchases += member.getPurchases().get(i).getAmountDue().intValue();
+            }
+        } else {
+            System.out.println("This member has NO purchases records");
+            return 0;
+        }
+        return totalPriceOfPurchases;
     }
 
     @Override

@@ -42,11 +42,21 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             for (MemberEntity member : members) {
                 memberRecencyValue.add(customerValueAnalysisBean.getCustomerRecency(member.getId()));
             }
+            List<Integer> memberFrequencyValue = new ArrayList();
+            for (MemberEntity member : members) {
+                memberFrequencyValue.add(customerValueAnalysisBean.getCustomerFrequency(member.getId()));
+            }
+            List<Integer> memberMonetaryValue = new ArrayList();
+            for (MemberEntity member : members) {
+                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
+            }
             for (int i=0;i<members.size();i++) {
                 System.out.println(members.get(i).getId()+"||||||"+memberRecencyValue.get(i));
             }
             session.setAttribute("members", members);
             session.setAttribute("memberRecencyValue", memberRecencyValue);
+            session.setAttribute("memberFrequencyValue", memberFrequencyValue);
+            session.setAttribute("memberMonetaryValue", memberMonetaryValue);
 
             Integer cummulativeSpendingAgeGrp1 = customerValueAnalysisBean.totalCummulativeSpending(17, 26);
             Integer cummulativeSpendingAgeGrp2 = customerValueAnalysisBean.totalCummulativeSpending(25, 41);

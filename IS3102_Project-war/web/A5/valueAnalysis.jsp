@@ -178,6 +178,8 @@
                                                                                 <tbody>
                                                                                     <%
                                                                                     List <Integer> memberRecencyValue = (List <Integer>) session.getAttribute("memberRecencyValue");
+                                                                                    List <Integer> memberFrequencyValue = (List <Integer>) session.getAttribute("memberFrequencyValue");
+                                                                                    List <Integer> memberMonetaryValue = (List <Integer>) session.getAttribute("memberMonetaryValue");
                                                                                         if (members != null) {
                                                                                             for (int i = 0; i< members.size(); i++) {
                                                                                                 MemberEntity member = members.get(i);
@@ -193,10 +195,10 @@
                                                                                             <%=memberRecencyValue.get(i)%>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%=member.getEmail()%>
+                                                                                            <%=memberFrequencyValue.get(i)%>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%=member.getPhone()%>
+                                                                                            <%=memberMonetaryValue.get(i)%>
                                                                                         </td>
 
                                                                                         <td>
