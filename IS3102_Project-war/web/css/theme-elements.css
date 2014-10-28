@@ -175,6 +175,12 @@ p {
     margin: 0 0 20px;
 }
 
+p1 {
+    color: #000000;
+    line-height: 24px;
+    margin: 0 0 20px;
+}
+
 p.featured {
     font-size: 1.6em;
     line-height: 1.5em;
