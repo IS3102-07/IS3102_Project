@@ -19,12 +19,6 @@ public class MenuItemEntity extends ItemEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Lob
-    private String name;
-    @Lob
-    private String category;
-    @Lob
-    private String description;
-    @Lob
     private String imageURL;
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "menuItem")
     private RecipeEntity recipe;

@@ -124,7 +124,7 @@ public abstract class ItemEntity implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (SKU != null ? SKU.hashCode() : 0);
+        hash += (getSKU() != null ? getSKU().hashCode() : 0);
         return hash;
     }
 
@@ -143,7 +143,7 @@ public abstract class ItemEntity implements Serializable {
             return false;
         }
         ItemEntity other = (ItemEntity) object;
-        if ((this.SKU == null && other.SKU != null) || (this.SKU != null && !this.SKU.equals(other.SKU))) {
+        if ((this.getSKU() == null && other.getSKU() != null) || (this.getSKU() != null && !this.SKU.equals(other.SKU))) {
             return false;
         }
         return true;
@@ -197,6 +197,13 @@ public abstract class ItemEntity implements Serializable {
 
     public void setSuppliers(List<Supplier_ItemEntity> suppliers) {
         this.suppliers = suppliers;
+    }
+
+    /**
+     * @param SKU the SKU to set
+     */
+    public void setSKU(String SKU) {
+        this.SKU = SKU;
     }
     
 }
