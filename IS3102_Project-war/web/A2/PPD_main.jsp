@@ -18,7 +18,7 @@
                             <h1 class="page-header">Production Plan Distribution</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../PPD_index_GET/*">Production Plan Distribution</a>
+                                    <i class="icon icon-dashboard"></i> <a href="../PPD_index_GET/*">Production Plan Distribution</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-list"></i> Distribution Result List</a>
@@ -37,16 +37,15 @@
                     <%
                         RegionalOfficeEntity regionalOffice = (RegionalOfficeEntity) session.getAttribute("PPD_regionalOffice");
                     %>
-                    <a href="../store_MF_connectionManagement_GET/*?regionalOffice=<%= regionalOffice.getId()%>"><button class="btn btn-primary">Distribution Schema Management</button></a>
+                    <a href="../store_MF_connectionManagement_GET/*?regionalOffice=<%= regionalOffice.getId()%>"><button class="btn btn-primary"><span class="icon icon-cogs"></span> Distribution Schema Management</button></a>
                     <br><br>
 
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-
-                                    <a href="../PPD_main_POST/*"><button class="btn btn-primary">Distribute Production Plan</button></a>
-
+                                <div class="panel-heading">                                            
+                                    <a href="../PPD_main_POST/*"><button class="btn btn-primary"><span class="icon icon-repeat"></span> Distribute Production Plan</button></a>                                                                                
+                                    <a href="#"><span class="btn btn-primary"><span class="icon icon-truck"></span> Generate Shipping Order</span></a>                                                                            
                                 </div>
                                 <div class="panel-body">
 
