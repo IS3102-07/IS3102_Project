@@ -399,18 +399,16 @@ public class StartupBean {
                             saleFigure.setStore(store);
                             saleFigure.setProductGroup(productGroup);
                             saleFigure.setSchedule(schedule);
-
-                            if ((index % 5) == 0) {
-                                saleFigure.setQuantity(20);
-                            } else if ((index % 5) == 1) {
-                                saleFigure.setQuantity(25);
-                            } else if ((index % 5) == 2) {
-                                saleFigure.setQuantity(35);
-                            } else if ((index % 5) == 3) {
-                                saleFigure.setQuantity(40);
+                            
+                            if ((index % 4) == 0) {
+                                saleFigure.setQuantity(30 + index*3);
+                            } else if ((index % 4) == 1) {
+                                saleFigure.setQuantity(25 + index*3);
+                            } else if ((index % 4) == 2) {
+                                saleFigure.setQuantity(30 + index*3);
                             } else {
-                                saleFigure.setQuantity(30);
-                            }
+                                saleFigure.setQuantity(35 + index*3);
+                            }                                                        
                             index++;
                             em.persist(saleFigure);
                         } catch (Exception ex) {

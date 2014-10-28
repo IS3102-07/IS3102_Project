@@ -129,12 +129,20 @@
                                                 <div class="col-md-6">
                                                     <div id="myfirstchart"></div>
                                                 </div>
-                                            </div>
-                                            <div class="row">       
-                                                <div class="col-md-12">        
-
+                                                   
+                                                <div class="col-md-6">        
+                                                    <h4>RFM Summary</h4>
+                                                    <% Integer averageMemberRecency = (Integer) session.getAttribute("averageMemberRecency");
+                                                        Integer averageMemberFrequency = (Integer) session.getAttribute("averageMemberFrequency");
+                                                        Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
+                                                    %>
+                                                    Average Recency : <%=averageMemberRecency%> Days<br/>
+                                                    Average Frequency : <%=averageMemberFrequency%> Purchases<br/>
+                                                    Average Monetary Value : <%=averageMemberMonetaryValue%><br/>
                                                 </div>
                                             </div>
+                                            </div>
+                                            
 
                                             <div class="row">
                                                 <div class="col-lg-12">
@@ -169,9 +177,12 @@
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <%
-
+                                                                                    List <Integer> memberRecencyValue = (List <Integer>) session.getAttribute("memberRecencyValue");
+                                                                                    List <Integer> memberFrequencyValue = (List <Integer>) session.getAttribute("memberFrequencyValue");
+                                                                                    List <Integer> memberMonetaryValue = (List <Integer>) session.getAttribute("memberMonetaryValue");
                                                                                         if (members != null) {
-                                                                                            for (MemberEntity member : members) {
+                                                                                            for (int i = 0; i< members.size(); i++) {
+                                                                                                MemberEntity member = members.get(i);
                                                                                     %>
                                                                                     <tr>                   
                                                                                         <td>
@@ -181,13 +192,13 @@
                                                                                             <%=member.getName()%>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%=member.getAddress()%>
+                                                                                            <%=memberRecencyValue.get(i)%>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%=member.getEmail()%>
+                                                                                            <%=memberFrequencyValue.get(i)%>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <%=member.getPhone()%>
+                                                                                            <%=memberMonetaryValue.get(i)%>
                                                                                         </td>
 
                                                                                         <td>
