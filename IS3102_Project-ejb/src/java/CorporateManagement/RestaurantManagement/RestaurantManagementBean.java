@@ -373,6 +373,7 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
             return false;
         }
     }
+
     @Override
     public List<ComboEntity> getAllCombo() {
         try {
@@ -383,7 +384,7 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
         }
         return new ArrayList<>();
     }
-    
+
     @Override
     public ComboEntity createCombo(String SKU, String name, String description, String imageURL) {
         try {
@@ -400,7 +401,7 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
         }
         return null;
     }
-    
+
     @Override
     public boolean removeCombo(Long comboID) {
         System.out.println("removeCombo() called with SKU:" + comboID);
@@ -420,4 +421,26 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
         }
     }
 
+    @Override
+    public Boolean editCombo(Long comboID, String SKU, String name, String description, String imageURL) {
+        System.out.println("editCombo() called");
+        try {
+            Query q = em.createQuery("select c from ComboEntity c where c.SKU = ?1").setParameter(1, SKU);
+            List<ComboEntity> listOfComboEntity = q.getResultList();
+            ComboEntity comboEntity = em.getReference(ComboEntity.class, comboID);
+            if (listOfComboEntity == null || listOfComboEntity.isEmpty() || comboEntity.getId().equals(comboID)) {
+                comboEntity.setSKU(SKU);
+                comboEntity.setName(name);
+                comboEntity.setDescription(description);
+                comboEntity.setImageURL(imageURL);
+                em.merge(comboEntity);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

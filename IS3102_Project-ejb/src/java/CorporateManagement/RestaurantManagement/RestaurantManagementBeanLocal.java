@@ -58,5 +58,7 @@ public interface RestaurantManagementBeanLocal {
     public ComboEntity createCombo(String SKU, String name, String Description, String imageURL);
 
     public boolean removeCombo(Long comboID);
+    
+    public Boolean editCombo(Long comboID, String SKU, String name, String description, String imageURL);
 
 }
