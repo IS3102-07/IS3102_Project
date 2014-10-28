@@ -127,10 +127,11 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
                     List<StoreEntity> storeList = mf.getStoreList();
                     Collections.sort(storeList, new CustomeComparator_Store());
                     for (StoreEntity store : storeList) {
-                        Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.year = ?2 and sop.schedule.month= ?3")
+                        Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.year = ?2 and sop.schedule.month= ?3 and sop.productGroup.type = ?4")
                                 .setParameter(1, store.getId())
                                 .setParameter(2, lastSchedule.getYear())
-                                .setParameter(3, lastSchedule.getMonth());
+                                .setParameter(3, lastSchedule.getMonth())
+                                .setParameter(4, "Furniture");
                         List<SaleAndOperationPlanEntity> sopList = q.getResultList();
                         for (SaleAndOperationPlanEntity sop : sopList) {
                             if (sop.getManufacturingFacility() == null) {
