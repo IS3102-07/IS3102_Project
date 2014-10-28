@@ -7,7 +7,6 @@ import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.SalesRecordEntity;
 import EntityManager.StoreEntity;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -15,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 @Stateless
 public class SalesForecastBean implements SalesForecastBeanLocal {
@@ -172,5 +172,5 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
         }
         return new ArrayList<>();
     }
-
+       
 }
