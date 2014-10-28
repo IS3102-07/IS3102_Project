@@ -96,7 +96,7 @@ public class RetailInventoryWebService {
 
             String requestURL = "http://smsc.vianett.no/v3/send.ashx?";
             requestURL += ("username=" + "lee_yuan_guang@hotmail.com");
-            requestURL += ("&SenderAddress="+"IF");//11char max
+            requestURL += ("&SenderAddress="+"Island");//11char max
             requestURL += ("&SenderAddressType="+"5");
             requestURL += ("&password=" + "r0b16");
             requestURL += ("&tel=" + telNo);
