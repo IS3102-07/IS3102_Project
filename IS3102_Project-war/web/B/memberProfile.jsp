@@ -31,6 +31,7 @@
                         try {
                             MemberEntity member = (MemberEntity) session.getAttribute("member");
                             List<LoyaltyTierEntity> loyaltyTiers = (List<LoyaltyTierEntity>) (session.getAttribute("loyaltyTiers"));
+                            LoyaltyTierEntity nextLoyaltyTier = (LoyaltyTierEntity) session.getAttribute("nextLoyaltyTier");
                     %>
                     <div class="row">
                         <div class="tabs">
@@ -124,7 +125,7 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h2 class="short">Loyalty Rewards</h2>
+                                                <h2 class="short">Loyalty Tiers</h2>
                                                 <%
                                                     int a = 100;
 
@@ -145,43 +146,44 @@
                                                     </div>
                                                 </div>
                                                 <%
-                                                        a = a - 25;
+                                                        a = a - (100 / loyaltyTiers.size());
                                                     }
                                                 %>
                                             </div>
 
                                             <div class="col-md-6">
-                                                <h2 class="short">Loyalty Rewards</h2>
+                                                <h2 class="short">My Loyalty Points</h2>
 
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="progress">
                                                             <br/>
-                                                            My Points : <%=member.getLoyaltyPoints()%> <br/>                                                            
-                                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%; color:red; background-image: 'none';
-                                                                 background-color: 'red'" >
-                                                                test
-                                                            </div>
+                                                            My Points : <%=member.getLoyaltyPoints()%> <br/>      
                                                         </div>
                                                         <%
-                                                            int barPercentage = 0;
-                                                            int barRemainder = 0;
-                                                            if (member.getLoyaltyPoints() < 5000) {
-                                                                barPercentage = member.getLoyaltyPoints() / 5000;
-                                                                barRemainder = 100 - barPercentage;
-                                                            }
-                                                        %>
-                                                        <div class="progress">
-                                                            My Tier : <%=member.getLoyaltyTier().getTier()%> <br/>
-                                                            <div class="progress-bar progress-bar-success" style="width: <%=barPercentage%>%">
-                                                                <span class="sr-only">35% Complete (success)</span>
-                                                                <%=barPercentage%>
-                                                            </div>
-                                                            <div class="progress-bar progress-bar-danger" style="width: <%=barRemainder%>%">
-                                                                <span class="sr-only">20% Complete (warning)</span>
-                                                                <%=barRemainder%>
-                                                            </div>
+                                                            Double barPercentage = (nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()) / nextLoyaltyTier.getAmtOfSpendingRequired();
 
+                                                            Double barRemainder = 1 - barPercentage;
+                                                        %>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="progress">
+                                                                    <br/>
+                                                                    Current Tier : <%=member.getLoyaltyTier().getTier()%> <br/>
+
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-success" style="width: <%=barRemainder*100%>%">
+                                                                            <span class="sr-only">35% Complete (success)</span>
+                                                                            <%=member.getLoyaltyPoints()%>
+                                                                        </div>
+                                                                        <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%=barPercentage*100%>%">
+                                                                            <span class="sr-only">20% Complete (warning)</span>
+                                                                            <%=nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()%>
+                                                                        </div>
+                                                                    </div>
+                                                                    Next Tier : <%=nextLoyaltyTier.getTier()%>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,7 +256,7 @@
                                                                 out.print(member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getName());
                                                             }
                                                         %>
-                                                        
+
                                                     </td>
                                                 </tr>
                                                 <%
