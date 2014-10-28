@@ -977,6 +977,34 @@
         <servlet-name>ECommerce_StockAvailability</servlet-name>
         <servlet-class>B_servlets.ECommerce_StockAvailability</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ComboManagement_ComboServlet</servlet-name>
+        <servlet-class>A6_servlets.ComboManagement_ComboServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComboManagement_AddServlet</servlet-name>
+        <servlet-class>A6_servlets.ComboManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComboManagement_RemoveServlet</servlet-name>
+        <servlet-class>A6_servlets.ComboManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComboManagement_UpdateServlet</servlet-name>
+        <servlet-class>A6_servlets.ComboManagement_UpdateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComboLineItemManagement_Servlet</servlet-name>
+        <servlet-class>A6_servlets.ComboLineItemManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComboLineItemManagement_AddServlet</servlet-name>
+        <servlet-class>A6_servlets.ComboLineItemManagement_AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComboLineItemManagement_RemoveServlet</servlet-name>
+        <servlet-class>A6_servlets.ComboLineItemManagement_RemoveServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1952,6 +1980,34 @@
     <servlet-mapping>
         <servlet-name>ECommerce_StockAvailability</servlet-name>
         <url-pattern>/ECommerce_StockAvailability</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboManagement_ComboServlet</servlet-name>
+        <url-pattern>/ComboManagement_ComboServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboManagement_AddServlet</servlet-name>
+        <url-pattern>/ComboManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboManagement_RemoveServlet</servlet-name>
+        <url-pattern>/ComboManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboManagement_UpdateServlet</servlet-name>
+        <url-pattern>/ComboManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboLineItemManagement_Servlet</servlet-name>
+        <url-pattern>/ComboLineItemManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboLineItemManagement_AddServlet</servlet-name>
+        <url-pattern>/ComboLineItemManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComboLineItemManagement_RemoveServlet</servlet-name>
+        <url-pattern>/ComboLineItemManagement_RemoveServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

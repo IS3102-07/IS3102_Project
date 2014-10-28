@@ -106,7 +106,8 @@ public class SaleForecast_Servlet extends HttpServlet {
                     List<ProductGroupEntity> productGroupList = imBean.getAllProductGroup();
                     List<SaleForecastEntity> saleForecastList = new ArrayList<>();
                     for (ProductGroupEntity productGroup : productGroupList) {
-                        SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
+                        SaleForecastEntity saleForecast = sfBean.getSalesForecastLinearRegression(storeId, productGroup.getId(), schedulelId);
+//                        SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
                         saleForecastList.add(saleForecast);
                     }
 

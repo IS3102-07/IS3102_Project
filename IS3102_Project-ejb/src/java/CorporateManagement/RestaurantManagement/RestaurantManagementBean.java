@@ -1,11 +1,14 @@
 package CorporateManagement.RestaurantManagement;
 
-import EntityManager.RecipeEntity;
-import EntityManager.MenuItemEntity;
+import EntityManager.ComboEntity;
+import EntityManager.ComboLineItemEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.MenuItemEntity;
 import EntityManager.RawIngredientEntity;
+import EntityManager.RecipeEntity;
 import EntityManager.SupplierEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -370,5 +373,142 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
             System.out.println("\nServer failed to perform checkSKUExists:\n" + ex);
             return false;
         }
+    }
+
+    @Override
+    public List<ComboEntity> getAllCombo() {
+        try {
+            Query q = em.createQuery("select c from ComboEntity c where c.isDeleted=false");
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public ComboEntity createCombo(String SKU, String name, String description, String imageURL) {
+        try {
+            Query q = em.createQuery("select c from ItemEntity c where c.SKU = ?1").setParameter(1, SKU);
+            if (q.getResultList().isEmpty()) {
+                ComboEntity combo = new ComboEntity(SKU, name, description, imageURL);
+                em.persist(combo);
+                return combo;
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean removeCombo(Long comboID) {
+        System.out.println("removeCombo() called with SKU:" + comboID);
+        try {
+            ComboEntity comboEntity = em.getReference(ComboEntity.class, comboID);
+            comboEntity.setIsDeleted(true);
+            em.merge(comboEntity);
+            em.flush();
+            System.out.println("Combo removed succesfully");
+            return true;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Combo not found");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove combo:\n" + ex);
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean editCombo(Long comboID, String SKU, String name, String description, String imageURL) {
+        System.out.println("editCombo() called");
+        try {
+            Query q = em.createQuery("select c from ComboEntity c where c.SKU = ?1").setParameter(1, SKU);
+            List<ComboEntity> listOfComboEntity = q.getResultList();
+            ComboEntity comboEntity = em.getReference(ComboEntity.class, comboID);
+            if (listOfComboEntity == null || listOfComboEntity.isEmpty() || comboEntity.getId().equals(comboID)) {
+                comboEntity.setSKU(SKU);
+                comboEntity.setName(name);
+                comboEntity.setDescription(description);
+                comboEntity.setImageURL(imageURL);
+                em.merge(comboEntity);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean addLineItemToCombo(Long comboId, Long lineItemId) {
+        try {
+            ComboLineItemEntity lineItem = em.find(ComboLineItemEntity.class, lineItemId);
+            Query q = em.createQuery("select l from ComboLineItemEntity l where l.menuItem.SKU = ?1 and l.combo is not null").setParameter(1, lineItem.getMenuItem().getSKU());
+            if (q.getResultList().isEmpty()) {
+                ComboEntity combo = em.find(ComboEntity.class, comboId);
+                lineItem.setCombo(combo);
+                combo.setType(lineItem.getMenuItem().getType());
+                combo.getLineItemList().add(lineItem);
+                em.merge(combo);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public ComboLineItemEntity createComboLineItem(String SKU) {
+        System.out.println("createComboLineItem() called");
+        try {
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            MenuItemEntity item = (MenuItemEntity) q.getSingleResult();
+            ComboLineItemEntity lineItem = new ComboLineItemEntity();
+            lineItem.setMenuItem(item);
+            em.persist(lineItem);
+            return lineItem;
+        } catch (NoResultException ex) {
+            System.out.println("Could not find menu Item with SKU.");
+        } catch (Exception ex) {
+            System.out.println("Failed to createComboLineItem()");
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean removeLineItemFromCombo(Long comboId, Long lineItemId) {
+        System.out.println("removeLineItemFromCombo() called");
+        try {
+            ComboEntity combo = em.find(ComboEntity.class, comboId);
+            ComboLineItemEntity lineItem = em.find(ComboLineItemEntity.class, lineItemId);
+            combo.getLineItemList().remove(lineItem);
+            em.merge(combo);
+            this.deleteComboLineItem(lineItemId);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    public Boolean deleteComboLineItem(Long id) {
+        try {
+            em.remove(em.find(ComboLineItemEntity.class, id));
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

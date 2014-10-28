@@ -566,7 +566,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
             em.persist(lineItem);
             return lineItem;
         } catch (NoResultException ex) {
-            System.out.println("Cuold not find furniture with SKU.");
+            System.out.println("Could not find furniture with SKU.");
         } catch (Exception ex) {
             System.out.println("Failed to createProductGroupLineItem()");
             ex.printStackTrace();
