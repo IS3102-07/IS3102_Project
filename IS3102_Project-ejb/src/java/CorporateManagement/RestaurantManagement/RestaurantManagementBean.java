@@ -1,6 +1,7 @@
 package CorporateManagement.RestaurantManagement;
 
 import EntityManager.ComboEntity;
+import EntityManager.ComboLineItemEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.MenuItemEntity;
@@ -443,4 +444,47 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
             return false;
         }
     }
+    
+    @Override
+    public Boolean addLineItemToCombo(Long comboId, Long lineItemId) {
+        try {
+            ComboLineItemEntity lineItem = em.find(ComboLineItemEntity.class, lineItemId);
+            Query q = em.createQuery("select l from ComboItemEntity l where l.menuItem.SKU = ?1 and l.combo is not null").setParameter(1, lineItem.getMenuItem().getSKU());
+            if (q.getResultList().isEmpty()) {
+                ComboEntity combo = em.find(ComboEntity.class, comboId);            
+                    lineItem.setCombo(combo);
+                    combo.setType(lineItem.getMenuItem().getType());
+                    combo.getLineItemList().add(lineItem);
+                    em.merge(combo);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+         catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+    
+    @Override
+    public ComboLineItemEntity createComboLineItem(String SKU) {
+        System.out.println("createComboLineItem() called");
+        try {
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            MenuItemEntity item = (MenuItemEntity) q.getSingleResult();
+            ComboLineItemEntity lineItem = new ComboLineItemEntity();
+            lineItem.setMenuItem(item);
+            em.persist(lineItem);
+            return lineItem;
+        } catch (NoResultException ex) {
+            System.out.println("Could not find menu Item with SKU.");
+        } catch (Exception ex) {
+            System.out.println("Failed to createComboLineItem()");
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 }

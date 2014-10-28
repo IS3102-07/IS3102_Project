@@ -1,6 +1,7 @@
 package CorporateManagement.RestaurantManagement;
 
 import EntityManager.ComboEntity;
+import EntityManager.ComboLineItemEntity;
 import EntityManager.ItemEntity;
 import EntityManager.MenuItemEntity;
 import EntityManager.RawIngredientEntity;
@@ -52,13 +53,17 @@ public interface RestaurantManagementBeanLocal {
     public ItemEntity getItemBySKU(String SKU);
 
     public boolean checkSKUExists(String SKU);
-    
+
     public List<ComboEntity> getAllCombo();
-    
+
     public ComboEntity createCombo(String SKU, String name, String Description, String imageURL);
 
     public boolean removeCombo(Long comboID);
-    
+
     public Boolean editCombo(Long comboID, String SKU, String name, String description, String imageURL);
+
+    public Boolean addLineItemToCombo(Long comboId, Long lineItemId);
+
+    public ComboLineItemEntity createComboLineItem(String SKU);
 
 }
