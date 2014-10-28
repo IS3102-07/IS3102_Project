@@ -359,15 +359,6 @@
                     <li>
                         <a href="#">Customer Service</a>
                     </li>
-                    <li>
-                        <a href="#">Promotional Sales</a>
-                    </li>
-                    <li>
-                        <a href="#">Product Retirement Campaign</a>
-                    </li>
-                    <li>
-                        <a href="#"> Customer Information Management</a>
-                    </li>
                 </ul>
             </li>
             <% }
