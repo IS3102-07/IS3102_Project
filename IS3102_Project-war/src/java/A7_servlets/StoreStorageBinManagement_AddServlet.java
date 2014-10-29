@@ -1,5 +1,6 @@
-package A4_servlets;
+package A7_servlets;
 
+import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreStorageBinManagement_UpdateServlet extends HttpServlet {
+public class StoreStorageBinManagement_AddServlet extends HttpServlet {
 
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
@@ -22,20 +23,19 @@ public class StoreStorageBinManagement_UpdateServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            
-            String storageBinId = request.getParameter("id");
+            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
             String name = request.getParameter("name");
+            String type = request.getParameter("type");
             String length = request.getParameter("length");
             String width = request.getParameter("width");
             String height = request.getParameter("height");
 
-            boolean canUpdate = simbl.updateStorageBin(Long.parseLong(storageBinId), name, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
-            //out.println("<h1>" + canUpdate + "</h1>");
+            boolean canUpdate = simbl.createStorageBin(warehouseEntity.getId(), name, type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
             if (!canUpdate) {
-                result = "?errMsg=Please try again.";
-                response.sendRedirect("A4/storageBinManagement_Update.jsp" + result);
+                result = "?errMsg=The selected storage bin type already exist. Only one inbound and outbound storage bin can exist per warehouse. If the size of the bin was changed, update there the bin details accordingly instead of creating a new one. Alternatively, delete the bin first before trying to create one.";
+                response.sendRedirect("A7/storageBinManagement_Add.jsp" + result);
             } else {
-                result = "?errMsg=Storage bin updated successfully.";
+                result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
                 response.sendRedirect("StoreStorageBinManagement_Servlet" + result);
             }
 

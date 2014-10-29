@@ -1,45 +1,36 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.StorageBinEntity;
-import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class StoreStorageBinManagement_Servlet extends HttpServlet {
+public class StoreStorageBinManagement_RemoveServlet extends HttpServlet {
 
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            HttpSession session;
-            session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            if (warehouseEntity == null) {
-                response.sendRedirect("A4/storeWarehouseManagement_view.jsp");
-            } else {
-                List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
-                session.setAttribute("storageBins", storageBins);
-                if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A4/storageBinManagement.jsp");
-                } else {
-                    response.sendRedirect("A4/storageBinManagement.jsp?errMsg=" + errMsg);
+
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    if (!simbl.deleteStorageBin(Long.parseLong(deleteArr[i]))) {
+                         response.sendRedirect("StoreStorageBinManagement_Servlet?errMsg=Unable to delete one or more storage bins as the storage bin contains items");
+                    }
                 }
+            response.sendRedirect("StoreStorageBinManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");         
             }
+
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            out.println(ex);
         }
     }
 

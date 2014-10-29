@@ -1,8 +1,7 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.StorageBinEntity;
-import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
+import HelperClasses.ItemStorageBinHelper;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreTransferOrderManagement_Servlet extends HttpServlet {
+public class RetailInventoryControl_Servlet extends HttpServlet {
 
     @EJB
-    private StoreAndKitchenInventoryManagementBeanLocal simbl;
+    private StoreAndKitchenInventoryManagementBeanLocal manufacturingInventoryControlBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -27,32 +26,23 @@ public class StoreTransferOrderManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
-            String goodMsg = request.getParameter("goodMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-
             if (warehouseEntity == null) {
-                response.sendRedirect("A4/storeWarehouseManagement_view.jsp");
+                response.sendRedirect("ManufacturingWarehouseManagement_Servlet");
             } else {
-                List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
-                session.setAttribute("storageBins", storageBins);
-
-                List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
-                session.setAttribute("transferOrders", transferOrders);
-
-                if (errMsg == null && goodMsg == null) {
-                    response.sendRedirect("A4/transferOrderManagement.jsp");
-                } else if ((errMsg != null) && (goodMsg == null)) {
-                    if (!errMsg.equals("")) {
-                        response.sendRedirect("A4/transferOrderManagement.jsp?errMsg=" + errMsg);
-                    }
-                } else if ((errMsg == null && goodMsg != null)) {
-                    if (!goodMsg.equals("")) {
-                        response.sendRedirect("A4/transferOrderManagement.jsp?goodMsg=" + goodMsg);
-                    }
+                List<ItemStorageBinHelper> itemStorageBinHelpers = manufacturingInventoryControlBean.getItemList(warehouseEntity.getId());
+                System.out.println("Retrieving itemStorageBinHelpers list...");
+                System.out.println("Size of itemStorageBinHelpers: " + itemStorageBinHelpers.size());
+                session.setAttribute("itemStorageBinHelpers", itemStorageBinHelpers);
+                if (errMsg == null || errMsg.equals("")) {
+                    response.sendRedirect("A7/retailInventoryControlManagement.jsp");
+                } else {
+                    response.sendRedirect("A7/retailInventoryControlManagement.jsp?errMsg=" + errMsg);
                 }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

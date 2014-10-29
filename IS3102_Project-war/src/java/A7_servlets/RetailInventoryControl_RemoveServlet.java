@@ -1,4 +1,4 @@
-package A4_servlets;
+package A7_servlets;
 
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class StoreTransferOrderManagement_RemoveServlet extends HttpServlet {
+public class RetailInventoryControl_RemoveServlet extends HttpServlet {
 
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
@@ -19,14 +19,16 @@ public class StoreTransferOrderManagement_RemoveServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
 
-            String[] deleteArr = request.getParameterValues("delete");
-            if (deleteArr != null) {
-                for (int i = 0; i < deleteArr.length; i++) {
-                    simbl.deleteTransferOrder(Long.parseLong(deleteArr[i]));
-                }
-                response.sendRedirect("StoreTransferOrderManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            String lineItemID = request.getParameter("lineItemID");
+            String storageBinID = request.getParameter("storageBinId");
+            System.out.println("remove servlet storageBinID " + storageBinID);
+            System.out.println("remove servlet lineItemID " + lineItemID);
+
+            if (storageBinID != null && lineItemID != null) {
+                simbl.emptyStorageBin(Long.parseLong(lineItemID), Long.parseLong(storageBinID));
+                response.sendRedirect("RetailInventoryControl_Servlet?goodMsg=Successfully removed all instance of the selected item from storage bin.");
             } else {
-                response.sendRedirect("A4/transferOrderManagement_Servlet.jsp?errMsg=Nothing is selected.");
+                response.sendRedirect("A7/retailInventoryControlManagement.jsp?errMsg=Nothing is selected.");
             }
 
         } catch (Exception ex) {

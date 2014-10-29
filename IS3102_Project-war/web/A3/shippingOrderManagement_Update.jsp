@@ -86,6 +86,7 @@
                     <!-- /.row -->
 
                     <jsp:include page="../displayMessageLong.jsp" />
+                    
 
                     <div class="row">
                         <div class="col-lg-6">

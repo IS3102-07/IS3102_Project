@@ -1,11 +1,8 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.TransferOrderEntity;
-import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreTransferOrderLineItemManagement_RemoveServlet extends HttpServlet {
+public class StoreStorageBinManagement_UpdateServlet extends HttpServlet {
 
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
@@ -25,20 +22,25 @@ public class StoreTransferOrderLineItemManagement_RemoveServlet extends HttpServ
         try {
             HttpSession session;
             session = request.getSession();
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            String transferOrderId = request.getParameter("id");
-            boolean canUpdate = simbl.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
+            
+            String storageBinId = request.getParameter("id");
+            String name = request.getParameter("name");
+            String length = request.getParameter("length");
+            String width = request.getParameter("width");
+            String height = request.getParameter("height");
+
+            boolean canUpdate = simbl.updateStorageBin(Long.parseLong(storageBinId), name, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
+            //out.println("<h1>" + canUpdate + "</h1>");
             if (!canUpdate) {
-                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
-                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                result = "?errMsg=Please try again.";
+                response.sendRedirect("A7/storageBinManagement_Update.jsp" + result);
             } else {
-                List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
-                session.setAttribute("transferOrders", transferOrders);
-                result = "?goodMsg=Item removed successfully.&id="+transferOrderId;
-                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                result = "?errMsg=Storage bin updated successfully.";
+                response.sendRedirect("StoreStorageBinManagement_Servlet" + result);
             }
+
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            out.println(ex);
         }
     }
 

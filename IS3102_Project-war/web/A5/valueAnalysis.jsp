@@ -1,6 +1,7 @@
 <%@page import="EntityManager.MemberEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.StaffEntity"%>
+<%@page import="java.text.DecimalFormat"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
 
@@ -124,60 +125,16 @@
                                                     <div id="myfirstchart"></div>
                                                 </div>
 
-                                                
-                                                    <% Integer averageMemberRecency = (Integer) session.getAttribute("averageMemberRecency");
-                                                        Integer averageMemberFrequency = (Integer) session.getAttribute("averageMemberFrequency");
-                                                        Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
-                                                    %>
+
+                                                <% Integer averageMemberRecency = (Integer) session.getAttribute("averageMemberRecency");
+                                                    Integer averageMemberFrequency = (Integer) session.getAttribute("averageMemberFrequency");
+                                                    Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
+                                                %>
 
 
-                                                    
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="row">
-
-                                                    <div class="pricing-table">
-                                                        <div class="col-md-4">
-                                                            <div class="plan">
-                                                                <h3>Recency<span><%=averageMemberRecency%></span></h3>
-                                                                <a class="btn btn-lg btn-primary" href="#">Sign up</a>
-                                                                <ul>
-                                                                    <li><b>Average Recency</b> <%=averageMemberRecency%> days</li>
-                                                                    <li><b>25th Percentile</b> <%=averageMemberRecency / 2%></li>
-                                                                    <li><b>75th Percentile</b> <%=(averageMemberRecency / 2) + averageMemberRecency%></li>
-                                                                    <li><b>Unlimited</b> subdomains</li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="plan">
-                                                                <h3>Frequency<span><%=averageMemberFrequency%></span></h3>
-                                                                <a class="btn btn-lg btn-primary" href="#">Sign up</a>
-                                                                <ul>
-                                                                    <li><b>Average Frequency</b> <%=averageMemberFrequency%> purchases</li>
-                                                                    <li><b>25th Percentile</b> <%=averageMemberFrequency / 2%></li>
-                                                                    <li><b>75th Percentile</b> <%=(averageMemberFrequency / 2) + averageMemberFrequency%></li>
-                                                                    <li><b>Unlimited</b> subdomains</li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="plan">
-                                                                <h3>Monetary<span><%=averageMemberMonetaryValue%></span></h3>
-                                                                <a class="btn btn-lg btn-primary" href="#">Sign up</a>
-                                                                <ul>
-                                                                    <li><b>Average Monetary</b> <%=averageMemberMonetaryValue%></li>
-                                                                    <li><b>25th Percentile</b> <%=averageMemberMonetaryValue / 2%></li>
-                                                                    <li><b>75th Percentile</b> <%=(averageMemberMonetaryValue / 2) + averageMemberMonetaryValue%></li>
-                                                                    <li><b>Unlimited</b> subdomains</li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
 
                                             </div>
+
                                         </div>
 
 
@@ -199,6 +156,49 @@
                                                             <h4>Recency, Frequency & Monetary Value</h4>
                                                             <div class="panel-body">
                                                                 <div class="table-responsive">
+
+                                                                    <div class="col-lg-12">
+                                                                        <div class="row">
+
+                                                                            <div class="pricing-table">
+                                                                                <div class="col-md-4">
+                                                                                    <div class="plan">
+                                                                                        <h3>Recency<span><%=averageMemberRecency%></span></h3>
+                                                                                        <ul>
+                                                                                            <li><b>Average Recency</b> <%=averageMemberRecency%> days</li>
+                                                                                            <li><b>25th Percentile</b> <%=averageMemberRecency / 2%></li>
+                                                                                            <li><b>75th Percentile</b> <%=(averageMemberRecency / 2) + averageMemberRecency%></li>
+                                                                                            <li><b>Recency</b> is the average last purchase per member away from today</li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <div class="plan">
+                                                                                        <h3>Frequency<span><%=averageMemberFrequency%></span></h3>
+                                                                                        <ul>
+                                                                                            <li><b>Average Frequency</b> <%=averageMemberFrequency%> purchases</li>
+                                                                                            <li><b>25th Percentile</b> <%=averageMemberFrequency / 2%></li>
+                                                                                            <li><b>75th Percentile</b> <%=(averageMemberFrequency / 2) + averageMemberFrequency%></li>
+                                                                                            <li><b>Frequency</b> is the number of purchases per member through their membership</li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <div class="plan">
+                                                                                        <h3>Monetary<span><%=averageMemberMonetaryValue%></span></h3>
+                                                                                        <ul>
+                                                                                            <li><b>Average Monetary</b> $<%=averageMemberMonetaryValue%></li>
+                                                                                            <li><b>25th Percentile</b> <%=averageMemberMonetaryValue / 2%></li>
+                                                                                            <li><b>75th Percentile</b> <%=(averageMemberMonetaryValue / 2) + averageMemberMonetaryValue%></li>
+                                                                                            <li><b>Monetary</b> is the average total spending per member</li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
 
                                                                     <br>
                                                                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
@@ -230,28 +230,28 @@
                                                                                         <%=member.getName()%>
                                                                                     </td>
                                                                                     <td <% if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
-                                                                                        %>bgcolor="#FF0000"<%
-                                                                                    } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
+                                                                                        %>bgcolor="#0066FF"<%
+                                                                                        } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
                                                                                         %>
-                                                                                        bgcolor="#0066FF"
+                                                                                        bgcolor="#FF0000"
                                                                                         <% } else { %>
                                                                                         bgcolor="#00FF00"
                                                                                         <%
-                                                                                    }
+                                                                                            }
                                                                                         %>
                                                                                         >
                                                                                         <%=memberRecencyValue.get(i)%>
                                                                                     </td>
                                                                                     <td
-                                                                                        <% if (memberFrequencyValue.get(i) < (averageMemberFrequency / 2)) {
+                                                                                        <% if (memberFrequencyValue.get(i) <= (averageMemberFrequency / 2)) {
                                                                                         %>bgcolor="#FF0000"<%
-                                                                                    } else if (memberFrequencyValue.get(i) > ((averageMemberFrequency / 2) + averageMemberFrequency)) {
+                                                                                        } else if (memberFrequencyValue.get(i) > ((averageMemberFrequency / 2) + averageMemberFrequency)) {
                                                                                         %>
                                                                                         bgcolor="#0066FF"
                                                                                         <% } else { %>
                                                                                         bgcolor="#00FF00"
                                                                                         <%
-                                                                                    }
+                                                                                            }
                                                                                         %>
                                                                                         >
                                                                                         <%=memberFrequencyValue.get(i)%>
@@ -259,13 +259,13 @@
                                                                                     <td
                                                                                         <% if (memberMonetaryValue.get(i) < (averageMemberMonetaryValue / 2)) {
                                                                                         %>bgcolor="#FF0000"<%
-                                                                                    } else if (memberMonetaryValue.get(i) > ((averageMemberMonetaryValue / 2) + averageMemberMonetaryValue)) {
+                                                                                        } else if (memberMonetaryValue.get(i) > ((averageMemberMonetaryValue / 2) + averageMemberMonetaryValue)) {
                                                                                         %>
                                                                                         bgcolor="#0066FF"
                                                                                         <% } else { %>
                                                                                         bgcolor="#00FF00"
                                                                                         <%
-                                                                                    }
+                                                                                            }
                                                                                         %>
                                                                                         >
                                                                                         <%=memberMonetaryValue.get(i)%>
@@ -298,7 +298,7 @@
                                                             <table class="table">
                                                                 <tr>
                                                                     <td>
-                                                                        
+
                                                                     </td>
                                                                     <td>
                                                                         Acquisition Year
@@ -315,7 +315,7 @@
                                                                         Customers
                                                                     </td>
                                                                     <td>
-                                                                        testing 321
+                                                                        <%=members.size()%>
                                                                     </td>
                                                                     <td>
                                                                         testing 321
@@ -330,11 +330,13 @@
                                                                     </td>
                                                                     <td>
                                                                         <%
-                                                                                    Integer customerRetentionRate = (Integer) session.getAttribute("customerRetentionRate");
-                                                                                    %>
+                                                                            Double customerRetentionRate = (Double) session.getAttribute("customerRetentionRate");
+                                                                            DecimalFormat df = new DecimalFormat("#.00");
+                                                                        %>
+                                                                        <% out.print(df.format(customerRetentionRate * 100));%>%
                                                                     </td>
                                                                     <td>
-                                                                        <%=customerRetentionRate%>
+
                                                                     </td>
                                                                     <td>
                                                                         Total Revenue
@@ -345,21 +347,22 @@
                                                                         Orders per Year
                                                                     </td>
                                                                     <td>
-                                                                        Cost of Sales
+
                                                                     </td>
                                                                     <td>
-                                                                        Acquisition/Mkt. Cost
+
                                                                     </td>
                                                                     <td>
-                                                                        Marketing Costs
+
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
-                                                                        Avg Order Size
+                                                                        Avg Order Price
                                                                     </td>
                                                                     <td>
-                                                                        testing 321
+                                                                        <% Double averageOrdersPerAcquiredYear = (Double) session.getAttribute("averageOrdersPerAcquiredYear"); %>
+                                                                        <% out.print(df.format(averageOrdersPerAcquiredYear));%>
                                                                     </td>
                                                                     <td>
                                                                         testing 321
@@ -382,62 +385,8 @@
                                                                         testing 321
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Costs
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Cost of Sales
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Acquisition/Mkt. Cost
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Marketing Costs
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
+
+
                                                                 <tr>
                                                                     <td>
                                                                         Total Costs
@@ -454,7 +403,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
-                                                                        Gross Profit
+                                                                        Profit Margin
                                                                     </td>
                                                                     <td>
                                                                         testing 321
@@ -466,48 +415,7 @@
                                                                         testing 321
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Discount Rate
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Net Present Value
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Cumulative NPV Profit
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
+                                                                
                                                                 <tr>
                                                                     <td>
                                                                         Customer LTV

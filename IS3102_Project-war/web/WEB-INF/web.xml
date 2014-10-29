@@ -567,59 +567,59 @@
     </servlet>
     <servlet>
         <servlet-name>StoreStorageBinManagement_AddServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreStorageBinManagement_AddServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreStorageBinManagement_AddServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreStorageBinManagement_RemoveServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreStorageBinManagement_RemoveServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreStorageBinManagement_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreStorageBinManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.StoreStorageBinManagement_Servlet</servlet-class>
+        <servlet-class>A7_servlets.StoreStorageBinManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreStorageBinManagement_UpdateServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreStorageBinManagement_UpdateServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreStorageBinManagement_UpdateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RetailInventoryControl_RemoveServlet</servlet-name>
-        <servlet-class>A4_servlets.RetailInventoryControl_RemoveServlet</servlet-class>
+        <servlet-class>A7_servlets.RetailInventoryControl_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RetailInventoryControl_Servlet</servlet-name>
-        <servlet-class>A4_servlets.RetailInventoryControl_Servlet</servlet-class>
+        <servlet-class>A7_servlets.RetailInventoryControl_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RetailWarehouseManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.RetailWarehouseManagement_Servlet</servlet-class>
+        <servlet-class>A7_servlets.RetailWarehouseManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_RemoveServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_RemoveServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderLineItemManagement_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_Servlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderLineItemManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_UpdateServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_UpdateServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderLineItemManagement_UpdateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderManagement_AddServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderManagement_AddServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderManagement_AddServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderManagement_RemoveServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderManagement_RemoveServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderManagement_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderManagement_Servlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_ContactUsServlet</servlet-name>
