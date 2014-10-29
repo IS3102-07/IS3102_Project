@@ -1,43 +1,40 @@
-package A4_servlets;
+package A3_servlets;
 
-import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.RegionalOfficeEntity;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import HelperClasses.ReturnHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class SalesRecordManagement_Servlet extends HttpServlet {
+public class SupplierItemInfoManagement_UpdateSupplierItemInfoServlet extends HttpServlet {
 
     @EJB
-    private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    private ItemManagementBeanLocal ItemManagementBean;
+    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
-            HttpSession session;
-            session = request.getSession();
+            String supplierItemId = request.getParameter("id");
+            String costPrice = request.getParameter("costPrice");
+            String lotSize = request.getParameter("lotSize");
+            String leadTime = request.getParameter("leadTime");
+            ReturnHelper rh = ItemManagementBean.editSupplierItemInfo(Long.parseLong(supplierItemId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
 
-            List<RegionalOfficeEntity> regionalOffices = facilityManagementBeanLocal.viewListOfRegionalOffice();
-            
-            if (regionalOffices == null) {
-                regionalOffices = new ArrayList<>();
+            if (!rh.getIsSuccess()) {
+                result = "?errMsg=" + rh.getMessage() + "&id=" + supplierItemId;
+                response.sendRedirect("A3/supplierItemInfoManagement_update.jsp" + result);
+            } else {
+                result = "?errMsg=" + rh.getMessage();
+                response.sendRedirect("SupplierItemInfoManagement_Servlet" + result);
             }
-
-            session.setAttribute("regionalOffices", regionalOffices);
-
-            response.sendRedirect("A4/salesRecordManagement.jsp");
-
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            out.println(ex);
         }
     }
 

@@ -735,19 +735,19 @@
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_Servlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_Servlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MRP_main_GET</servlet-name>
@@ -1008,6 +1008,18 @@
     <servlet>
         <servlet-name>SalesRecordManagement_Servlet</servlet-name>
         <servlet-class>A4_servlets.SalesRecordManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_ajax_Servlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_ajax_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_SalesRecordServlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_SalesRecordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_viewSalesRecordServlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_viewSalesRecordServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -2016,6 +2028,18 @@
     <servlet-mapping>
         <servlet-name>SalesRecordManagement_Servlet</servlet-name>
         <url-pattern>/SalesRecordManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_ajax_Servlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_ajax_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_SalesRecordServlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_SalesRecordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_viewSalesRecordServlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_viewSalesRecordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

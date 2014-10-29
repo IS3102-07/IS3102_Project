@@ -1,40 +1,41 @@
-package A6_servlets;
+package A4_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import HelperClasses.ReturnHelper;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SupplierItemInfoManagement_UpdateSupplierItemInfoServlet extends HttpServlet {
+/**
+ *
+ * @author Administrator
+ */
+public class SalesRecordManagement_ajax_Servlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal ItemManagementBean;
-    private String result;
+    private FacilityManagementBeanLocal fmBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            String supplierItemId = request.getParameter("id");
-            String costPrice = request.getParameter("costPrice");
-            String lotSize = request.getParameter("lotSize");
-            String leadTime = request.getParameter("leadTime");
-            ReturnHelper rh = ItemManagementBean.editSupplierItemInfo(Long.parseLong(supplierItemId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
+        
+        System.out.println("SalesRecordManagement_ajax_Servlet is called");
+        Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
+        System.out.println("regionalOfficeId: " + regionalOfficeId);
+        List<StoreEntity> storeList = fmBean.getStoreListByRegionalOffice(regionalOfficeId);
+        
+        System.out.println("List.size(): "+ storeList.size());
 
-            if (!rh.getIsSuccess()) {
-                result = "?errMsg=" + rh.getMessage() + "&id=" + supplierItemId;
-                response.sendRedirect("A6/supplierItemInfoManagement_update.jsp" + result);
-            } else {
-                result = "?errMsg=" + rh.getMessage();
-                response.sendRedirect("SupplierItemInfoManagement_Servlet" + result);
+        try (PrintWriter out = response.getWriter()) {
+            for (StoreEntity store : storeList) {
+                System.out.println("store.getName: "+store.getName());
+                out.write(store.getName()+";");
             }
-        } catch (Exception ex) {
-            out.println(ex);
         }
     }
 

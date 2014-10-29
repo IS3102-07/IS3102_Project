@@ -1,11 +1,11 @@
 package A4_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.RegionalOfficeEntity;
+import EntityManager.StaffEntity;
+import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,29 +13,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class SalesRecordManagement_Servlet extends HttpServlet {
+public class SalesRecordManagement_SalesRecordServlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    private AccountManagementBeanLocal accountManagementBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
             HttpSession session;
             session = request.getSession();
+            String storeName = request.getParameter("storeName");
+            StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
 
-            List<RegionalOfficeEntity> regionalOffices = facilityManagementBeanLocal.viewListOfRegionalOffice();
+            StoreEntity store = facilityManagementBeanLocal.getStoreByName(storeName);
             
-            if (regionalOffices == null) {
-                regionalOffices = new ArrayList<>();
+            if (accountManagementBeanLocal.canStaffAccessToTheStore(currentUser.getId(), store.getId())) {
+                System.out.println("hi11111");
+                session.setAttribute("storeId", store.getId());
+                response.sendRedirect("SalesRecordManagement_viewSalesRecordServlet");
+            } else {
+                System.out.println("hi21111");
+                request.setAttribute("alertMessage", "You are not allowed to access the store.");
+                response.sendRedirect("SalesRecordManagement_Servlet");
+
             }
-
-            session.setAttribute("regionalOffices", regionalOffices);
-
-            response.sendRedirect("A4/salesRecordManagement.jsp");
-
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

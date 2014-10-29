@@ -1,34 +1,42 @@
+package A4_servlets;
 
-package A6_servlets;
-
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
+import EntityManager.SalesRecordEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class SupplierItemInfoManagement_RemoveSupplierItemInfoServlet extends HttpServlet {
+public class SalesRecordManagement_viewSalesRecordServlet extends HttpServlet {
+
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
+    private CustomerServiceBeanLocal customerServiceBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
         try {
-            String[] deleteArr = request.getParameterValues("delete");
-            if (deleteArr != null) {
-                for (String deleteArr1 : deleteArr) {
-                    System.out.println(deleteArr1);
-                    itemManagementBean.removeSupplierItemInfo(Long.parseLong(deleteArr1));
-                }
-                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
-            }
+            System.out.println("hi");
+            HttpSession session;
+            session = request.getSession();
+            Long storeId; 
+            storeId = (Long)session.getAttribute("storeId");
+            System.out.println("hi" + storeId);
+            
+            List<SalesRecordEntity> salesRecords = customerServiceBeanLocal.viewSalesRecord(storeId);
+            
+            session.setAttribute("salesRecords", salesRecords);
+
+            response.sendRedirect("A4/salesRecordManagement_View.jsp");
+
         } catch (Exception ex) {
-            out.println(ex);
-            response.sendRedirect("A6/supplierItemInfoManagement.jsp?errMsg=An error has occured, please try again.");
+            out.println("\n\n " + ex.getMessage());
         }
     }
 
@@ -72,3 +80,5 @@ public class SupplierItemInfoManagement_RemoveSupplierItemInfoServlet extends Ht
     }// </editor-fold>
 
 }
+
+

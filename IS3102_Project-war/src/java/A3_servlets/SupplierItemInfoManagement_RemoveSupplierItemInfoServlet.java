@@ -1,7 +1,7 @@
-package A6_servlets;
+
+package A3_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import HelperClasses.ReturnHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -10,30 +10,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SupplierItemInfoManagement_AddSupplierItemInfoServlet extends HttpServlet {
-
+public class SupplierItemInfoManagement_RemoveSupplierItemInfoServlet extends HttpServlet {
     @EJB
-    private ItemManagementBeanLocal itemManagementBeanLocal;
+    private ItemManagementBeanLocal itemManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
-        try{
-            String sku = request.getParameter("sku");
-            String supplierId = request.getParameter("supplierId");
-            String costPrice = request.getParameter("costPrice");
-            String lotSize = request.getParameter("lotSize");
-            String leadTime = request.getParameter("leadTime");
-            ReturnHelper helper = itemManagementBeanLocal.addSupplierItemInfo(sku, Long.parseLong(supplierId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
-           
-            if (!helper.getIsSuccess()) {
-                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
-            } else {
-                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
+        try {
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (String deleteArr1 : deleteArr) {
+                    System.out.println(deleteArr1);
+                    itemManagementBean.removeSupplierItemInfo(Long.parseLong(deleteArr1));
+                }
+                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             }
-        }catch(Exception ex){
-            ex.printStackTrace();
-            response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=An error has occurred. Please try again.");
+        } catch (Exception ex) {
+            out.println(ex);
+            response.sendRedirect("A3/supplierItemInfoManagement.jsp?errMsg=An error has occured, please try again.");
         }
     }
 
