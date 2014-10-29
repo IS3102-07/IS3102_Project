@@ -230,10 +230,10 @@
                                                                                         <%=member.getName()%>
                                                                                     </td>
                                                                                     <td <% if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
-                                                                                        %>bgcolor="#FF0000"<%
+                                                                                        %>bgcolor="#0066FF"<%
                                                                                         } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
                                                                                         %>
-                                                                                        bgcolor="#0066FF"
+                                                                                        bgcolor="#FF0000"
                                                                                         <% } else { %>
                                                                                         bgcolor="#00FF00"
                                                                                         <%
