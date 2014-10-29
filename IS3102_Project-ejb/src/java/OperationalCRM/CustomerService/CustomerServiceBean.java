@@ -16,7 +16,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     public List<SalesRecordEntity> viewSalesRecord(Long storeId) {
         System.out.println("View sales record is called()" + storeId);
         try{
-        Query q = em.createQuery("select sr from SalesRecordEntity sr where s.store.id = ?1").setParameter(1, storeId);
+        Query q = em.createQuery("select sr from SalesRecordEntity sr where sr.store.id = ?1").setParameter(1, storeId);
             List<SalesRecordEntity> salesRecords = q.getResultList();
                    return salesRecords;
         }
