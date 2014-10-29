@@ -30,12 +30,12 @@ public class StoreTransferOrderLineItemManagement_RemoveServlet extends HttpServ
             boolean canUpdate = simbl.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
             if (!canUpdate) {
                 result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
-                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             } else {
                 List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
                 result = "?goodMsg=Item removed successfully.&id="+transferOrderId;
-                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

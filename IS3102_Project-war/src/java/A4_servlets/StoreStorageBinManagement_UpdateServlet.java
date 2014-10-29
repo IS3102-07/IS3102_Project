@@ -33,7 +33,7 @@ public class StoreStorageBinManagement_UpdateServlet extends HttpServlet {
             //out.println("<h1>" + canUpdate + "</h1>");
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
-                response.sendRedirect("A4/storageBinManagement_Update.jsp" + result);
+                response.sendRedirect("A7/storageBinManagement_Update.jsp" + result);
             } else {
                 result = "?errMsg=Storage bin updated successfully.";
                 response.sendRedirect("StoreStorageBinManagement_Servlet" + result);

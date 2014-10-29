@@ -33,7 +33,7 @@ public class StoreStorageBinManagement_AddServlet extends HttpServlet {
             boolean canUpdate = simbl.createStorageBin(warehouseEntity.getId(), name, type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
             if (!canUpdate) {
                 result = "?errMsg=The selected storage bin type already exist. Only one inbound and outbound storage bin can exist per warehouse. If the size of the bin was changed, update there the bin details accordingly instead of creating a new one. Alternatively, delete the bin first before trying to create one.";
-                response.sendRedirect("A4/storageBinManagement_Add.jsp" + result);
+                response.sendRedirect("A7/storageBinManagement_Add.jsp" + result);
             } else {
                 result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
                 response.sendRedirect("StoreStorageBinManagement_Servlet" + result);

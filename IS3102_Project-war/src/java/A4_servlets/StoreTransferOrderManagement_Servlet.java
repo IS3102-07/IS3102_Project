@@ -31,7 +31,7 @@ public class StoreTransferOrderManagement_Servlet extends HttpServlet {
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
 
             if (warehouseEntity == null) {
-                response.sendRedirect("A4/storeWarehouseManagement_view.jsp");
+                response.sendRedirect("A7/storeWarehouseManagement_view.jsp");
             } else {
                 List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
                 session.setAttribute("storageBins", storageBins);

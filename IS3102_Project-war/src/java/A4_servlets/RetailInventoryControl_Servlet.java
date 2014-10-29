@@ -35,9 +35,9 @@ public class RetailInventoryControl_Servlet extends HttpServlet {
                 System.out.println("Size of itemStorageBinHelpers: " + itemStorageBinHelpers.size());
                 session.setAttribute("itemStorageBinHelpers", itemStorageBinHelpers);
                 if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A4/retailInventoryControlManagement.jsp");
+                    response.sendRedirect("A7/retailInventoryControlManagement.jsp");
                 } else {
-                    response.sendRedirect("A4/retailInventoryControlManagement.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A7/retailInventoryControlManagement.jsp?errMsg=" + errMsg);
                 }
             }
         } catch (Exception ex) {

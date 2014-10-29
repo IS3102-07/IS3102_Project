@@ -28,7 +28,7 @@ public class StoreTransferOrderLineItemManagement_OriginBinItemsServlet extends 
             TransferOrderEntity TO = simbl.viewTransferOrder(Long.parseLong(transferOrderId));
             List<ItemStorageBinHelper> listOfLineItems = simbl.getBinItemList(TO.getOrigin().getId());
             session.setAttribute("listOfLineItems", listOfLineItems);
-            response.sendRedirect("A4/transferOrderLineItemManagement.jsp?id=" + transferOrderId);
+            response.sendRedirect("A7/transferOrderLineItemManagement.jsp?id=" + transferOrderId);
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

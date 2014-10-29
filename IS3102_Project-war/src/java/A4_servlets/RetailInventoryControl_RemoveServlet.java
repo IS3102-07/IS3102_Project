@@ -28,7 +28,7 @@ public class RetailInventoryControl_RemoveServlet extends HttpServlet {
                 simbl.emptyStorageBin(Long.parseLong(lineItemID), Long.parseLong(storageBinID));
                 response.sendRedirect("RetailInventoryControl_Servlet?goodMsg=Successfully removed all instance of the selected item from storage bin.");
             } else {
-                response.sendRedirect("A4/retailInventoryControlManagement.jsp?errMsg=Nothing is selected.");
+                response.sendRedirect("A7/retailInventoryControlManagement.jsp?errMsg=Nothing is selected.");
             }
 
         } catch (Exception ex) {

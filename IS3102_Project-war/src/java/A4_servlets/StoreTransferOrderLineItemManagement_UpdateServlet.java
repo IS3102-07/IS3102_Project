@@ -37,23 +37,23 @@ public class StoreTransferOrderLineItemManagement_UpdateServlet extends HttpServ
             if (status.equals("Completed")) {
                 canUpdate = simbl.markTransferOrderAsCompleted(Long.parseLong(transferOrderId), staff.getName());
                 result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
-                //response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                //response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Unfulfillable")) {
                 result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
                 canUpdate = simbl.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
-                //response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                //response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             } else if (status.equals("Pending")) {
                 result = "?errMsg=Status not selected.";
-                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             }
             if (!canUpdate) {
 
                 result = "?errMsg=Invalid request. Items not found or destination bin cannot contain the item (full or wrong bin type).&id=" + transferOrderId;
-                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             } else {
                 List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
-                response.sendRedirect("A4/transferOrderLineItemManagement.jsp" + result);
+                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             }
 
         } catch (Exception ex) {

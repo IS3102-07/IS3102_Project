@@ -28,14 +28,14 @@ public class StoreStorageBinManagement_Servlet extends HttpServlet {
             String errMsg = request.getParameter("errMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
             if (warehouseEntity == null) {
-                response.sendRedirect("A4/storeWarehouseManagement_view.jsp");
+                response.sendRedirect("A7/storeWarehouseManagement_view.jsp");
             } else {
                 List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
                 session.setAttribute("storageBins", storageBins);
                 if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A4/storageBinManagement.jsp");
+                    response.sendRedirect("A7/storageBinManagement.jsp");
                 } else {
-                    response.sendRedirect("A4/storageBinManagement.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A7/storageBinManagement.jsp?errMsg=" + errMsg);
                 }
             }
         } catch (Exception ex) {
