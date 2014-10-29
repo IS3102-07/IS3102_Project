@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ECommerce_UnsubscribeServlet extends HttpServlet {
 
@@ -19,7 +20,12 @@ public class ECommerce_UnsubscribeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            
+            HttpSession session;
+            session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                URLprefix="";
+            }
             String email = request.getParameter("email");
             System.out.println(email);
             
@@ -28,10 +34,10 @@ public class ECommerce_UnsubscribeServlet extends HttpServlet {
             String errMsg;
             if (flag) {
                 errMsg = "?goodMsg=Your email has been successfuly removed from the subscription list.";
-                response.sendRedirect("B/unsubscribe.jsp" + errMsg);
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "unsubscribe.jsp" + errMsg);
             } else {
                 errMsg = "?errMsg=The email does not exist in the subscription list.";
-                response.sendRedirect("B/unsubscribe.jsp" + errMsg);
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "unsubscribe.jsp" + errMsg);
             }
             
         } catch (Exception ex) {

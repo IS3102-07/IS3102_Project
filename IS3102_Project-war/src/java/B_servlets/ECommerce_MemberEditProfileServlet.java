@@ -38,10 +38,13 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
             session = request.getSession();
             MemberEntity memberEntity = accountManagementBean.getMemberByEmail(email);
             session.setAttribute("member", memberEntity);
-            
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                URLprefix = "";
+            }
             if (test) {
                 result = "Account updated successfully.";
-                response.sendRedirect("B/memberProfile.jsp?goodMsg=" + result);
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberProfile.jsp?goodMsg=" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

@@ -5,6 +5,8 @@ import EntityManager.FurnitureEntity;
 import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 /**
  *
  * @author yang
  */
-public class ECommerce_BathroomServlet extends HttpServlet {
+public class ECommerce_FurnitureCategoryServlet extends HttpServlet {
 
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
@@ -30,37 +33,17 @@ public class ECommerce_BathroomServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
-            
-            List<FurnitureEntity> furnitures = itemManagementBean.viewFurnitureByCategory("Bathroom");
+
+            String category = URLDecoder.decode(request.getParameter("cat"));
+            List<FurnitureEntity> furnitures = itemManagementBean.viewFurnitureByCategory(category);
             session.setAttribute("furnitures", furnitures);
-            String country = (String) session.getAttribute("countryName");
-            if (country == null) {
-                country = "";
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
             }
-            switch (country) {
-//                case "France":
-//                    response.sendRedirect("B/FRA/bathroom.jsp");
-//                    break;
-//                case "USA":
-//                    response.sendRedirect("B/USA/bathroom.jsp");
-//                    break;
-//                case "China":
-//                    response.sendRedirect("B/CN/bathroom.jsp");
-//                    break;
-//                case "Singapore":
-//                    response.sendRedirect("B/SG/bathroom.jsp");
-//                    break;
-//                case "Malaysia":
-//                    response.sendRedirect("B/MY/bathroom.jsp");
-//                    break;
-//                case "Indonesia":
-//                    response.sendRedirect("B/IDN/bathroom.jsp");
-//                    break;
-                default:
-                    response.sendRedirect("B/bathroom.jsp");
-                    break;
-            }
-            
+            String categoryEncoded = URLEncoder.encode(category);
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "furniture.jsp?cat=" +categoryEncoded);
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

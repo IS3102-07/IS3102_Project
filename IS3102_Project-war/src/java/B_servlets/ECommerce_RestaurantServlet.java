@@ -29,11 +29,16 @@ public class ECommerce_RestaurantServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
+            }
+            
             
             List<MenuItemEntity> menuItems = restaurantManagementBean.listAllMenuItem();
             session.setAttribute("menuItems", menuItems);
             
-            response.sendRedirect("B/restaurant.jsp");
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "restaurant.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

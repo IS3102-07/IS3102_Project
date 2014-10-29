@@ -1,9 +1,8 @@
 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
-<jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
         <script>
             function validatePassword() {
@@ -41,22 +40,7 @@
                 </div>
             </section>
             <div class="container">
-                <jsp:include page="../displayMessageLong.jsp" />
-                <%
-                    String errMsg = request.getParameter("errMsg");
-                    String goodMsg = request.getParameter("goodMsg");
-                    if (errMsg == null && goodMsg == null) {
-                        out.println("");
-                    } else if ((errMsg != null) && (goodMsg == null)) {
-                        if (!errMsg.equals("")) {
-                            out.println(errMsg);
-                        }
-                    } else if ((errMsg == null && goodMsg != null)) {
-                        if (!goodMsg.equals("")) {
-                            out.println(goodMsg);
-                        }
-                    }
-                %>
+                <jsp:include page="/displayMessageLong.jsp" />
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row featured-boxes login">
@@ -64,7 +48,7 @@
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Forgot Password</h4>
-                                        <form action="../ECommerce_SecurityChallengeServlet">
+                                        <form action="/IS3102_Project-war/ECommerce_SecurityChallengeServlet">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">

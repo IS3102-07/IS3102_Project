@@ -16,8 +16,12 @@ public class ECommerce_LogoutServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                URLprefix = "";
+            }
             session.invalidate();
-            response.sendRedirect("B/memberLogin.jsp?goodMsg=Logout Successfully.");
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberLogin.jsp?goodMsg=Logout Successfully.");
         } finally {
             out.close();
         }

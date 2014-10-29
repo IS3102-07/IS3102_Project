@@ -6,7 +6,7 @@
 <html> <!--<![endif]-->
 
 
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
         <div class="body">
             <jsp:include page="menu2.jsp" />
@@ -31,13 +31,13 @@
                     </section>
 
                     <div class="container">
-                        <jsp:include page="../displayMessageLong.jsp" />
+                        <jsp:include page="/displayMessageLong.jsp" />
 
                         <div class="row">
                             <div class="col-md-6">
 
                                 <h2 class="short"><strong>Contact</strong> Us</h2>
-                                <form role="form" action="../ECommerce_ContactUsServlet">
+                                <form role="form" action="/IS3102_Project-war/ECommerce_ContactUsServlet">
                                     <div class="row">
                                         <div class="form-group">
                                             <div class="col-md-6">
@@ -108,14 +108,14 @@
             <jsp:include page="footer.html" />
         </div>
         <!-- Theme Initializer -->
-        <script src="../js/theme.plugins.js"></script>
-        <script src="../js/theme.js"></script>
+        <script src="/IS3102_Project-war//js/theme.plugins.js"></script>
+        <script src="/IS3102_Project-war//js/theme.js"></script>
 
         <!-- Current Page JS -->
-        <script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-        <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-        <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-        <script src="../js/views/view.home.js"></script>   
+        <script src="/IS3102_Project-war//vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+        <script src="/IS3102_Project-war//vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+        <script src="/IS3102_Project-war//vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+        <script src="/IS3102_Project-war//js/views/view.home.js"></script>   
     </div>
 
     <script>

@@ -23,29 +23,41 @@ public class ECommerce_ResetPasswordServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
     @EJB
     private SystemSecurityBeanLocal systemSecurityBean;
-    
+
     private String result;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
             HttpSession session;
             session = request.getSession();
 
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                URLprefix="";
+            }
             String email = request.getParameter("email");
             String resetCode = request.getParameter("resetCode");
             String password = request.getParameter("password");
-            
-            if (systemSecurityBean.validatePasswordResetForMember(email, resetCode) ) {
+
+            if (systemSecurityBean.validatePasswordResetForMember(email, resetCode)) {
                 accountManagementBean.resetMemberPassword(email, password);
                 result = "?goodMsg=Reset Password Successful. Please login with your new password.";
-                response.sendRedirect("./A1/staffLogin.jsp" + result);
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberLogin.jsp" + result);
             } else {
-                result = "?errMsg=Reset Password Unsuccessful. Please key in the correct reset code.";
-                response.sendRedirect("./A1/staffResetPasswordCode.jsp" + result);
+                result = "?errMsg=Reset Password Unsuccessful. Please try again or contact support.";
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberResetPassword.jsp" + result);
             }
 
         } catch (Exception ex) {
-            response.sendRedirect("A1/error.jsp?errMsg="+ex);
+            HttpSession session;
+            session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                URLprefix = "";
+            }
+            result = "An error has occured, plese try again or contact support for assistance.";
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberResetPassword.jsp" + result);
             ex.printStackTrace();
         }
     }

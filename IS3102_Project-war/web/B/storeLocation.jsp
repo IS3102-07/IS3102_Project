@@ -2,7 +2,7 @@
 <%@page import="EntityManager.StoreEntity"%>
 <jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
 
         <script src="https://maps.googleapis.com/maps/api/js"></script>
@@ -86,14 +86,14 @@
                 <jsp:include page="footer.html" />
 
                 <!-- Theme Initializer -->
-                <script src="../js/theme.plugins.js"></script>
-                <script src="../js/theme.js"></script>
+                <script src="/IS3102_Project-war/js/theme.plugins.js"></script>
+                <script src="/IS3102_Project-war/js/theme.js"></script>
 
                 <!-- Current Page JS -->
-                <script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-                <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-                <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-                <script src="../js/views/view.home.js"></script>
+                <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+                <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+                <script src="/IS3102_Project-war/vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+                <script src="/IS3102_Project-war/js/views/view.home.js"></script>
             </div>
     </body>
 </html>

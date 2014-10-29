@@ -29,12 +29,16 @@ public class ECommerce_StockAvailability extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
+            }
             String storeIDstring = (String) request.getParameter("storeID");
             String SKU = (String) request.getParameter("sku");
             if ((storeIDstring == null || storeIDstring.equals(""))&& (SKU == null || SKU.equals(""))) {
-                response.sendRedirect("B/index.jsp");
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "index.jsp");
             } else if (storeIDstring == null || storeIDstring.equals("")) {
-                response.sendRedirect("B/productDetails.jsp?sku=" + SKU);
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "productDetails.jsp?sku=" + SKU);
             }
             Long storeID = Long.parseLong(storeIDstring);
             StoreEntity storeEntity = fmb.getStoreByID(storeID);
@@ -42,7 +46,7 @@ public class ECommerce_StockAvailability extends HttpServlet {
             String itemQty = skimb.checkItemQty(warehouseEntity.getId(), SKU) + "";
             session.setAttribute("storeEntity", storeEntity);
 
-            response.sendRedirect("B/productDetails.jsp?sku=" + SKU + "&itemQty=" + itemQty + "&storeID=" + storeEntity.getId());
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "productDetails.jsp?sku=" + SKU + "&itemQty=" + itemQty + "&storeID=" + storeEntity.getId());
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

@@ -5,11 +5,11 @@
 <%@page import="java.util.List;"%>
 <jsp:include page="checkCountry.jsp" />
 <html> 
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
         <script>
             function pdpaWindow() {
-                var myWindow = window.open(": http://localhost:8080/IS3102_Project-war/B/pdpa.jsp");
+                var myWindow = window.open("http://localhost:8080/IS3102_Project-war/B/pdpa.jsp");
             }
         </script>
         <jsp:include page="menu2.jsp" />
@@ -24,7 +24,8 @@
                 </div>
             </section>
             <div class="container">
-                <jsp:include page="../displayMessageLong.jsp" />
+                <%%>
+                <jsp:include page="/displayMessageLong.jsp" />
                 <!-- /.warning -->
                 <div class="col-md-12">
                     <%
@@ -48,7 +49,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div id="overview" class="tab-pane active">
-                                    <form role="form" action="../ECommerce_MemberEditProfileServlet">
+                                    <form role="form" action="/IS3102_Project-war/ECommerce_MemberEditProfileServlet">
                                         <h4>Personal Information</h4>
                                         <div class="form-group">
                                             <label>Name</label>
@@ -91,6 +92,9 @@
                                                     out.println(member.getSecurityAnswer());
                                                 }%>">
                                         </div>
+                                        <div class="form-group">
+                                            <input type="checkbox" name="serviceLevelAgreement"> Allow us to use your particulars to serve you better<br/>Checking the box above indicates that you agree to our <a href=#" onclick="pdpaWindow()">personal data protection policy.</a>
+                                        </div>
                                         <hr class="more-spaced "/>
                                         <h4>Change Password</h4>
                                         <div class="form-group">
@@ -100,11 +104,6 @@
                                         <div class="form-group">
                                             <label>Re-enter New Password</label>
                                             <input class="form-control" type="password"  name="repassword" id="repassword">
-                                        </div>
-                                        <div class="panel-footer" style="padding-bottom: 0px;">
-                                            <div class="row">
-                                                <input type="checkbox" name="serviceLevelAgreement">Accept our <a href=#" onclick="pdpaWindow()">service level agreement.</a>
-                                            </div>
                                         </div>
                                         <div class="panel-footer" style="padding-bottom: 0px;">
                                             <div class="row">
@@ -120,69 +119,67 @@
 
                                     </form>
                                 </div>
-                                <div id="loyaltyProgram" class="tab-pane" onclick="">
+                                <div id="loyaltyProgram" class="tab-pane active">
+                                    <h4>My Loyalty Rewards</h4>
                                     <div class="row">
+                                        <div class="col-md-6">
+                                            <h2 class="short">Loyalty Tiers</h2>
+                                            <%
+                                                int a = 100;
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h2 class="short">Loyalty Tiers</h2>
-                                                <%
-                                                    int a = 100;
-
-                                                    for (int i = 0; i < loyaltyTiers.size(); i++) {
+                                                for (int i = 0; i < loyaltyTiers.size(); i++) {
 
 
-                                                %>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="progress">
-                                                            <br/>
-                                                            Tier : <%=loyaltyTiers.get(i).getTier()%> <br/>
-                                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=a%>%; color:red; background-image: 'none';
-                                                                 background-color: 'red'" >
-                                                                <%=loyaltyTiers.get(i).getAmtOfSpendingRequired()%>
-                                                            </div>
+                                            %>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="progress">
+                                                        <br/>
+                                                        Tier : <%=loyaltyTiers.get(i).getTier()%> <br/>
+                                                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=a%>%; color:red; background-image: 'none';
+                                                             background-color: 'red'" >
+                                                            <%=loyaltyTiers.get(i).getAmtOfSpendingRequired()%>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <%
-                                                        a = a - (100 / loyaltyTiers.size());
-                                                    }
-                                                %>
                                             </div>
+                                            <%
+                                                    a = a - (100 / loyaltyTiers.size());
+                                                }
+                                            %>
+                                        </div>
 
-                                            <div class="col-md-6">
-                                                <h2 class="short">My Loyalty Points</h2>
+                                        <div class="col-md-6">
+                                            <h2 class="short">My Loyalty Points</h2>
 
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="progress">
-                                                            <br/>
-                                                            My Points : <%=member.getLoyaltyPoints()%> <br/>      
-                                                        </div>
-                                                        <%
-                                                            Double barPercentage = (nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()) / nextLoyaltyTier.getAmtOfSpendingRequired();
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="progress">
+                                                        <br/>
+                                                        My Points : <%=member.getLoyaltyPoints()%> <br/>      
+                                                    </div>
+                                                    <%
+                                                        Double barPercentage = (nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()) / nextLoyaltyTier.getAmtOfSpendingRequired();
 
-                                                            Double barRemainder = 1 - barPercentage;
-                                                        %>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
+                                                        Double barRemainder = 1 - barPercentage;
+                                                    %>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="progress">
+                                                                <br/>
+                                                                Current Tier : <%=member.getLoyaltyTier().getTier()%> <br/>
+
                                                                 <div class="progress">
-                                                                    <br/>
-                                                                    Current Tier : <%=member.getLoyaltyTier().getTier()%> <br/>
-
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-success" style="width: <%=barRemainder*100%>%">
-                                                                            <span class="sr-only">35% Complete (success)</span>
-                                                                            <%=member.getLoyaltyPoints()%>
-                                                                        </div>
-                                                                        <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%=barPercentage*100%>%">
-                                                                            <span class="sr-only">20% Complete (warning)</span>
-                                                                            <%=nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()%>
-                                                                        </div>
+                                                                    <div class="progress-bar progress-bar-success" style="width: <%=barRemainder * 100%>%">
+                                                                        <span class="sr-only">35% Complete (success)</span>
+                                                                        <%=member.getLoyaltyPoints()%>
                                                                     </div>
-                                                                    Next Tier : <%=nextLoyaltyTier.getTier()%>
+                                                                    <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%=barPercentage * 100%>%">
+                                                                        <span class="sr-only">20% Complete (warning)</span>
+                                                                        <%=nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()%>
+                                                                    </div>
                                                                 </div>
+                                                                Next Tier : <%=nextLoyaltyTier.getTier()%>
                                                             </div>
                                                         </div>
                                                     </div>
