@@ -187,7 +187,7 @@
                                                                                     <div class="plan">
                                                                                         <h3>Monetary<span><%=averageMemberMonetaryValue%></span></h3>
                                                                                         <ul>
-                                                                                            <li><b>Average Monetary</b> <%=averageMemberMonetaryValue%></li>
+                                                                                            <li><b>Average Monetary</b> $<%=averageMemberMonetaryValue%></li>
                                                                                             <li><b>25th Percentile</b> <%=averageMemberMonetaryValue / 2%></li>
                                                                                             <li><b>75th Percentile</b> <%=(averageMemberMonetaryValue / 2) + averageMemberMonetaryValue%></li>
                                                                                             <li><b>Monetary</b> is the average total spending per member</li>
@@ -243,7 +243,7 @@
                                                                                         <%=memberRecencyValue.get(i)%>
                                                                                     </td>
                                                                                     <td
-                                                                                        <% if (memberFrequencyValue.get(i) < (averageMemberFrequency / 2)) {
+                                                                                        <% if (memberFrequencyValue.get(i) <= (averageMemberFrequency / 2)) {
                                                                                         %>bgcolor="#FF0000"<%
                                                                                         } else if (memberFrequencyValue.get(i) > ((averageMemberFrequency / 2) + averageMemberFrequency)) {
                                                                                         %>
@@ -331,12 +331,12 @@
                                                                     <td>
                                                                         <%
                                                                             Double customerRetentionRate = (Double) session.getAttribute("customerRetentionRate");
-                                                                            DecimalFormat df = new DecimalFormat("#.00"); 
+                                                                            DecimalFormat df = new DecimalFormat("#.00");
                                                                         %>
-                                                                        <% out.print(df.format(customerRetentionRate*100)); %>%
+                                                                        <% out.print(df.format(customerRetentionRate * 100));%>%
                                                                     </td>
                                                                     <td>
-                                                                        
+
                                                                     </td>
                                                                     <td>
                                                                         Total Revenue
@@ -347,21 +347,22 @@
                                                                         Orders per Year
                                                                     </td>
                                                                     <td>
-                                                                        Cost of Sales
+
                                                                     </td>
                                                                     <td>
-                                                                        Acquisition/Mkt. Cost
+
                                                                     </td>
                                                                     <td>
-                                                                        Marketing Costs
+
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
-                                                                        Avg Order Size
+                                                                        Avg Order Price
                                                                     </td>
                                                                     <td>
-                                                                        testing 321
+                                                                        <% Double averageOrdersPerAcquiredYear = (Double) session.getAttribute("averageOrdersPerAcquiredYear"); %>
+                                                                        <% out.print(df.format(averageOrdersPerAcquiredYear));%>
                                                                     </td>
                                                                     <td>
                                                                         testing 321
@@ -384,62 +385,8 @@
                                                                         testing 321
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Costs
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Cost of Sales
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Acquisition/Mkt. Cost
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Marketing Costs
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
+
+
                                                                 <tr>
                                                                     <td>
                                                                         Total Costs
@@ -456,7 +403,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td>
-                                                                        Gross Profit
+                                                                        Profit Margin
                                                                     </td>
                                                                     <td>
                                                                         testing 321
@@ -468,48 +415,7 @@
                                                                         testing 321
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Discount Rate
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Net Present Value
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Cumulative NPV Profit
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
+                                                                
                                                                 <tr>
                                                                     <td>
                                                                         Customer LTV

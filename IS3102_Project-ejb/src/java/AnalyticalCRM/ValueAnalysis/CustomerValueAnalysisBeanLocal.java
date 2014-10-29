@@ -16,7 +16,7 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
-    
+    public Double averageOrdersPerAcquiredYear();
     public Double getCustomerRetentionRate();
     public Integer getAverageCustomerRecency();
     public Integer getAverageCustomerFrequency();
