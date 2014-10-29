@@ -1,4 +1,4 @@
-package A6_servlets;
+package A3_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import HelperClasses.ReturnHelper;
@@ -10,31 +10,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SupplierItemInfoManagement_UpdateSupplierItemInfoServlet extends HttpServlet {
+public class SupplierItemInfoManagement_AddSupplierItemInfoServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal ItemManagementBean;
-    private String result;
+    private ItemManagementBeanLocal itemManagementBeanLocal;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            String supplierItemId = request.getParameter("id");
+        try{
+            String sku = request.getParameter("sku");
+            String supplierId = request.getParameter("supplierId");
             String costPrice = request.getParameter("costPrice");
             String lotSize = request.getParameter("lotSize");
             String leadTime = request.getParameter("leadTime");
-            ReturnHelper rh = ItemManagementBean.editSupplierItemInfo(Long.parseLong(supplierItemId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
-
-            if (!rh.getIsSuccess()) {
-                result = "?errMsg=" + rh.getMessage() + "&id=" + supplierItemId;
-                response.sendRedirect("A6/supplierItemInfoManagement_update.jsp" + result);
+            ReturnHelper helper = itemManagementBeanLocal.addSupplierItemInfo(sku, Long.parseLong(supplierId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
+           
+            if (!helper.getIsSuccess()) {
+                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
             } else {
-                result = "?errMsg=" + rh.getMessage();
-                response.sendRedirect("SupplierItemInfoManagement_Servlet" + result);
+                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
             }
-        } catch (Exception ex) {
-            out.println(ex);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=An error has occurred. Please try again.");
         }
     }
 

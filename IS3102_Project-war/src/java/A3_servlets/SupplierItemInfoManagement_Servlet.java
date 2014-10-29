@@ -1,4 +1,4 @@
-package A6_servlets;
+package A3_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.SupplierEntity;
@@ -37,19 +37,19 @@ public class SupplierItemInfoManagement_Servlet extends HttpServlet {
             session.setAttribute("listOfSuppliers", listOfSuppliers);
 
             if (errMsg == null && goodMsg == null) {
-                response.sendRedirect("A6/supplierItemInfoManagement.jsp");
+                response.sendRedirect("A3/supplierItemInfoManagement.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {
                 if (!errMsg.equals("")) {
-                    response.sendRedirect("A6/supplierItemInfoManagement.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A3/supplierItemInfoManagement.jsp?errMsg=" + errMsg);
                 }
             } else if ((errMsg == null && goodMsg != null)) {
                 if (!goodMsg.equals("")) {
-                    response.sendRedirect("A6/supplierItemInfoManagement.jsp?goodMsg=" + goodMsg);
+                    response.sendRedirect("A3/supplierItemInfoManagement.jsp?goodMsg=" + goodMsg);
                 }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
-            response.sendRedirect("A6/supplierItemInfoManagement.jsp?errMsg=An error has occured, please try again.");
+            response.sendRedirect("A3/supplierItemInfoManagement.jsp?errMsg=An error has occured, please try again.");
         }
     }
 

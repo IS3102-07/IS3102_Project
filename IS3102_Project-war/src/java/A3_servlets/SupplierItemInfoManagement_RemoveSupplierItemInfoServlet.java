@@ -1,5 +1,5 @@
 
-package A6_servlets;
+package A3_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class SupplierItemInfoManagement_RemoveSupplierItemInfoServlet extends Ht
             }
         } catch (Exception ex) {
             out.println(ex);
-            response.sendRedirect("A6/supplierItemInfoManagement.jsp?errMsg=An error has occured, please try again.");
+            response.sendRedirect("A3/supplierItemInfoManagement.jsp?errMsg=An error has occured, please try again.");
         }
     }
 
