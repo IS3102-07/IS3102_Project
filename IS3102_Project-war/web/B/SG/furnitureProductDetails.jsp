@@ -88,23 +88,21 @@
                                         String price = "Unavailable";
                                         for (Item_CountryEntity curr : itemCountryPrices) {
                                             if (curr.getItem().getSKU().equals(furniture.getSKU())) {
-                                                price = "$"+curr.getRetailPrice()+"0";
+                                                price = "$" + curr.getRetailPrice() + "0";
                                             }
                                         }
                                     %>
 
                                     <p class="price"><h4 class="amount"><%=price%></h4></p>
-
-                                    <p1>
+                                    <p class="taller">
+                                        <%if (furniture.getDescription() != null) {
+                                                out.println(furniture.getDescription());
+                                            }%>
+                                    </p>
+                                    <p>
                                         Height: <%=furniture.getHeight()%><br/>
                                         Length: <%=furniture.getLength()%><br/>
                                         Width: <%=furniture.getWidth()%>
-                                    </p1>
-
-                                    <p class="taller">
-                                        <%if (furniture.getDescription() != null) {
-                                                furniture.getDescription();
-                                            }%>
                                     </p>
                                     <div class="product_meta">
                                         <span class="posted_in">Category: <a rel="tag" href="#"><%=furniture.getCategory()%></a></span>
@@ -134,6 +132,7 @@
                                                 </select><br/><br/>
                                                 <input type="submit" class="btn btn-primary btn-icon" value="Check Item Availability"/>
                                                 <input type="hidden" name="sku" value="<%=sku%>"/>
+                                                <input type="hidden" name="type" value="Retail Product"/>
                                             </form>
                                         </div>
                                         <%

@@ -39,9 +39,6 @@
                 </li>
                 <%}%>
                 <li>
-                    <a href="/IS3102_Project-war/ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
-                </li>
-                <li>
                     <a href="/IS3102_Project-war/ECommerce_WishListServlet"><i class="icon icon-shopping-cart"></i>My Wish List</a>
                 </li>
                 <li>
@@ -64,12 +61,11 @@
         <div class="container">
             <nav class="nav-main mega-menu">
                 <ul class="nav nav-pills nav-main" id="mainMenu">
-                    <li class="dropdown active">
-                        <a href="allProductsCatalog.jsp">All Products</a>
+                    <li class="dropdown">
+                        <a href="/IS3102_Project-war/ECommerce_AllFurnituresServlet">Furnitures</a>
                     </li>
                     <li>
-                        <a href="#">Promotion</a>
-                    </li>
+                        <a href="/IS3102_Project-war/ECommerce_AllRetailProductsServlet">Retail Products</a>
                     <li>
                         <a href="virtualStore.jsp">Virtual Store</a>
                     </li>
@@ -88,7 +84,6 @@
                             <li><a href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Study")%>"><i class="icon icon-map-marker"></i> Study</a></li>
                             <li><a href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Children")%>"><i class="icon icon-map-marker"></i> Children</a></li>
                             <li><a href="/IS3102_Project-war/ECommerce_AllRetailProductsServlet"><i class="icon icon-coffee"></i> Retail Products</a></li>
-                            <li><a href="/IS3102_Project-war/ECommerce_AllFoodsServlet"><i class="icon icon-cutlery"></i> Restaurant Menu</a></li>
                         </ul>
                     </li>
                 </ul>

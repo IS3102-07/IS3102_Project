@@ -15,7 +15,6 @@
         displayWishlistOption = true;
     }
     String category = URLDecoder.decode(request.getParameter("cat"));
-    System.out.println("!!!!???!"+category);
     if (category == null) {
         pageContext.forward("/ECommerce_SelectCountry");
     }
@@ -64,7 +63,7 @@
                                     <span class="product-thumb-info">
                                         <span class="product-thumb-info-image">
                                             <span class="product-thumb-info-act">                                                
-                                                <span class="product-thumb-info-act-left"><a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"  style="color: white"><em>View Details</em></a></span>
+                                                <span class="product-thumb-info-act-left"><a href="furnitureProductDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"  style="color: white"><em>View Details</em></a></span>
                                             </span>
                                             <img alt="" class="img-responsive" src="<%=furnitures.get(i).getImageURL()%>">
                                         </span>
@@ -89,7 +88,7 @@
 
                                             %>
                                             <br/>
-                                            <a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
+                                            <a href="furnitureProductDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
 
                                         </span>
                                         <%

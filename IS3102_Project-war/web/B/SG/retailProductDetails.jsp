@@ -88,7 +88,7 @@
                                         String price = "Unavailable";
                                         for (Item_CountryEntity curr : itemCountryPrices) {
                                             if (curr.getItem().getSKU().equals(retailProduct.getSKU())) {
-                                                price = "$"+curr.getRetailPrice()+"0";
+                                                price = "$" + curr.getRetailPrice() + "0";
                                             }
                                         }
                                     %>
@@ -97,7 +97,7 @@
 
                                     <p class="taller">
                                         <%if (retailProduct.getDescription() != null) {
-                                                retailProduct.getDescription();
+                                                out.println(retailProduct.getDescription());
                                             }%>
                                     </p>
                                     <div class="product_meta">
@@ -128,6 +128,7 @@
                                                 </select><br/><br/>
                                                 <input type="submit" class="btn btn-primary btn-icon" value="Check Item Availability"/>
                                                 <input type="hidden" name="sku" value="<%=sku%>"/>
+                                                <input type="hidden" name="type" value="Retail Product"/>
                                             </form>
                                         </div>
                                         <%

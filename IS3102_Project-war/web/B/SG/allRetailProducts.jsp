@@ -66,9 +66,6 @@
 
                                             <h4><%=retailProducts.get(i).getName()%></h4>
 
-                                            <span class="product-thumb-info-act-left"><em>Height: <%=retailProducts.get(i).getHeight()%></em></span><br/>
-                                            <span class="product-thumb-info-act-left"><em>Length: <%=retailProducts.get(i).getLength()%></em></span><br/>
-                                            <span class="product-thumb-info-act-left"><em>Width: <%=retailProducts.get(i).getWidth()%></em></span><br/>
                                             <%
                                                 for (int j = 0; j < item_countryList.size(); j++) {
                                                     if (item_countryList.get(j).getItem().getId().equals(retailProducts.get(i).getId())) {

@@ -84,60 +84,20 @@
                                     <%
                                         }
                                     %>
-
-                                    <p1>
+                                    <p class="taller">
+                                        <%if (furniture.getDescription() != null) {
+                                                out.println(furniture.getDescription());
+                                            }%>
+                                    </p>
+                                    <p>
                                         Height: <%=furniture.getHeight()%><br/>
                                         Length: <%=furniture.getLength()%><br/>
                                         Width: <%=furniture.getWidth()%>
-                                    </p1>
-
-                                    <p class="taller">
-                                        <%if (furniture.getDescription() != null) {
-                                                furniture.getDescription();
-                                            }%>
                                     </p>
                                     <div class="product_meta">
                                         <span class="posted_in">Category: <a rel="tag" href="#"><%=furniture.getCategory()%></a></span>
                                     </div>
                                     <br/><br/>
-
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <form action="/IS3102_Project-war/ECommerce_StockAvailability">
-                                                View Item Availability<br/>
-                                                <select style="color: black;" name="storeID">
-                                                    <option> </option>
-                                                    <%String storeIDstring = (request.getParameter("storeID"));
-                                                        Long storeID = 1L;
-                                                        if (storeIDstring != null) {
-                                                            storeID = Long.parseLong(storeIDstring);
-                                                        }
-                                                        for (int i = 0; i < storesInCountry.size(); i++) {
-                                                            if (!storesInCountry.get(i).getId().equals(storeID)) {%>
-                                                    <option value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
-                                                    <%} else {%>
-                                                    <option selected value="<%=storesInCountry.get(i).getId()%>"><%=storesInCountry.get(i).getName()%></option>
-                                                    <%
-                                                            }
-                                                        }
-                                                    %>
-                                                </select><br/><br/>
-                                                <input type="submit" class="btn btn-primary btn-icon" value="Check Item Availability"/>
-                                                <input type="hidden" name="sku" value="<%=sku%>"/>
-                                            </form>
-                                        </div>
-                                        <%
-                                            String itemQty = (String) (request.getParameter("itemQty"));
-                                            if (itemQty != null) {
-                                        %>
-                                        <div class="col-md-6">
-                                            Status: <%if (Integer.parseInt(itemQty) > 0) {%>Available<%} else {%>Unavailable<%}%>
-                                            <br/>
-                                            Remaining Qty: <%=itemQty%>
-                                            <%}%>
-
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 

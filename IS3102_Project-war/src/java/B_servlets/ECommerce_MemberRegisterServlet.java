@@ -52,7 +52,7 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
                 if (reCaptchaResponse.isValid()) {
                     accountManagementBean.registerMember(null, null, null, email, null, null, null, null, password);
                     systemSecurityBean.sendActivationEmailForMember(email);
-                    result = "?goodMsg=You have registered successfully.";
+                    result = "?goodMsg=You have registered successfully. Check your email to activate your account!";
                     response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberLogin.jsp" + result);
                 } else {
                     result = "?errMsg=You have entered an wrong Captcha code.";

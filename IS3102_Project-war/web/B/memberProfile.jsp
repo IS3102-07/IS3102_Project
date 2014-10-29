@@ -115,8 +115,6 @@
                                                 <input type="hidden" value="<%=member.getEmail()%>" name="email"/>
                                             </div>
                                         </div>
-
-
                                     </form>
                                 </div>
                                 <div id="loyaltyProgram" class="tab-pane">
@@ -157,7 +155,6 @@
                                                     </div>
                                                     <%
                                                         Double barPercentage = (nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()) / nextLoyaltyTier.getAmtOfSpendingRequired();
-
                                                         Double barRemainder = 1 - barPercentage;
                                                     %>
                                                     <div class="row">

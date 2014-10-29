@@ -15,7 +15,6 @@
         displayWishlistOption = true;
     }
     String category = URLDecoder.decode(request.getParameter("cat"));
-    System.out.println("!!!!???!"+category);
     if (category == null) {
         pageContext.forward("/ECommerce_SelectCountry");
     }
