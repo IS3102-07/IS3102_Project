@@ -10,7 +10,7 @@
         <script>
             function viewSalesRecordDetails(id) {
                 viewSalesRecord.id.value = id;
-                document.viewSalesRecord.action = "../MemberManagement_SalesRecordServlet";
+                document.viewSalesRecord.action = "../SalesRecordManagement_SalesRecordDetailsServlet";
                 document.viewSalesRecord.submit();
             }
         </script>

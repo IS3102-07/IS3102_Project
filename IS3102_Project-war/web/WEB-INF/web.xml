@@ -1021,6 +1021,10 @@
         <servlet-name>SalesRecordManagement_viewSalesRecordServlet</servlet-name>
         <servlet-class>A4_servlets.SalesRecordManagement_viewSalesRecordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_SalesRecordDetailsServlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_SalesRecordDetailsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2040,6 +2044,10 @@
     <servlet-mapping>
         <servlet-name>SalesRecordManagement_viewSalesRecordServlet</servlet-name>
         <url-pattern>/SalesRecordManagement_viewSalesRecordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_SalesRecordDetailsServlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_SalesRecordDetailsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
