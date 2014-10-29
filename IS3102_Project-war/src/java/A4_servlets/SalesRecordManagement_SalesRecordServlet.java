@@ -35,7 +35,7 @@ public class SalesRecordManagement_SalesRecordServlet extends HttpServlet {
                 session.setAttribute("store", store);
                 response.sendRedirect("SalesRecordManagement_viewSalesRecordServlet");
             } else {
-                request.setAttribute("alertMessage", "You are not allowed to access the store.");
+                session.setAttribute("alertMessage", "You are not allowed to access the store.");
                 response.sendRedirect("SalesRecordManagement_Servlet");
             }
         } catch (Exception ex) {
