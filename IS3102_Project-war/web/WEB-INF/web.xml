@@ -735,19 +735,19 @@
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_Servlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_Servlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MRP_main_GET</servlet-name>
