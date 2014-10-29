@@ -88,6 +88,9 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
 
             Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
             session.setAttribute("averageMemberMonetaryValue", averageMemberMonetaryValue);
+            
+            Integer customerRetentionRate = customerValueAnalysisBean.getCustomerRetentionRate();
+            session.setAttribute("customerRetentionRate", customerRetentionRate);
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/valueAnalysis.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {
