@@ -120,7 +120,7 @@
                                                             <td>
                                                                 <%=listOfCountryItemPricing.get(i).getRetailPrice()%>
                                                                 <div hidden id="updateItemPricing<%=listOfCountryItemPricing.get(i).getId()%>" style="float:right">
-                                                                    <input type="number" step="any" class="form-control" style="width:80px;" id="price<%=listOfCountryItemPricing.get(i).getId()%>" required/>
+                                                                    <input type="number" min="0" max="99999" step="any" class="form-control" style="width:80px;" id="price<%=listOfCountryItemPricing.get(i).getId()%>" required/>
                                                                     <input class="btn btn-primary" type="button" value="Submit" onclick="update(<%=listOfCountryItemPricing.get(i).getId()%>)"/>
                                                                 </div>
                                                             </td>
@@ -192,7 +192,7 @@
                                                                 Price:&nbsp;
                                                             </td>
                                                             <td>
-                                                                <input type="number" step="any" class="form-control" name="price" required/>
+                                                                <input type="number" min="0" max="99999" step="any" class="form-control" name="price" required/>
                                                             </td>
                                                         </tr>
                                                     </table>
