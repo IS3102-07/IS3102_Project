@@ -1,43 +1,41 @@
 package A4_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.RegionalOfficeEntity;
+import EntityManager.StoreEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class SalesRecordManagement_Servlet extends HttpServlet {
+/**
+ *
+ * @author Administrator
+ */
+public class SalesRecordManagement_ajax_Servlet extends HttpServlet {
 
     @EJB
-    private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    private FacilityManagementBeanLocal fmBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        
+        System.out.println("SalesRecordManagement_ajax_Servlet is called");
+        Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
+        System.out.println("regionalOfficeId: " + regionalOfficeId);
+        List<StoreEntity> storeList = fmBean.getStoreListByRegionalOffice(regionalOfficeId);
+        
+        System.out.println("List.size(): "+ storeList.size());
 
-        try {
-            HttpSession session;
-            session = request.getSession();
-
-            List<RegionalOfficeEntity> regionalOffices = facilityManagementBeanLocal.viewListOfRegionalOffice();
-            
-            if (regionalOffices == null) {
-                regionalOffices = new ArrayList<>();
+        try (PrintWriter out = response.getWriter()) {
+            for (StoreEntity store : storeList) {
+                System.out.println("store.getName: "+store.getName());
+                out.write(store.getName()+";");
             }
-
-            session.setAttribute("regionalOffices", regionalOffices);
-
-            response.sendRedirect("A4/salesRecordManagement.jsp");
-
-        } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
         }
     }
 

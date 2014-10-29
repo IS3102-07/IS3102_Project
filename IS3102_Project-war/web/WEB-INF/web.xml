@@ -1009,6 +1009,10 @@
         <servlet-name>SalesRecordManagement_Servlet</servlet-name>
         <servlet-class>A4_servlets.SalesRecordManagement_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_ajax_Servlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_ajax_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2016,6 +2020,10 @@
     <servlet-mapping>
         <servlet-name>SalesRecordManagement_Servlet</servlet-name>
         <url-pattern>/SalesRecordManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_ajax_Servlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_ajax_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
