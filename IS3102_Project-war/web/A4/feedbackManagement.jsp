@@ -46,7 +46,7 @@
                                                         <tr>               
                                                             <th>Feedback Id</th>
                                                             <th>Subject</th>
-                                                            <th>Name</th>
+                                                            <th>Customer Name</th>
                                                             <th>Email</th>
                                                             <th>Message</th>                                                      
                                                         </tr>
