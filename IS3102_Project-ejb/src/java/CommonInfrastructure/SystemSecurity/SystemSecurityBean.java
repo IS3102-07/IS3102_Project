@@ -313,7 +313,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
                         + "Here is your activation code to be keyed in in order to reset your member account password :\n\n"
                         + "Email: " + email + "\n\n"
                         + "Activation Code: " + passwordReset + "\n\n"
-                        + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/B/memberResetPasswordCode.jsp?email=" + email;
+                        + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/B/memberResetPassword.jsp?email=" + email;
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();

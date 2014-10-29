@@ -530,10 +530,6 @@
         <servlet-class>B_servlets.ECommerce_ActivateMemberServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_PromotionServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_PromotionServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ECommerce_StoresServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_StoresServlet</servlet-class>
     </servlet>
@@ -774,10 +770,6 @@
         <servlet-class>A2_servlets.MRP_purchaseOrder</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_TablesDesksServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>MemberManagement_MemberServlet</servlet-name>
         <servlet-class>A1_servlets.MemberManagement_MemberServlet</servlet-class>
     </servlet>
@@ -810,10 +802,6 @@
         <servlet-class>B_servlets.ECommerce_FurnitureCategoryServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_BedsMattressesServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>A8/KitchenSaleForecast_index</servlet-name>
         <jsp-file>/A8/KitchenSaleForecast_index.jsp</jsp-file>
     </servlet>
@@ -824,34 +812,6 @@
     <servlet>
         <servlet-name>A8/KitchenSaleForecast_main</servlet-name>
         <jsp-file>/A8/KitchenSaleForecast_main.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_LightingsServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_LightingsServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_SofasChairServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_SofasChairServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_CabinetsStorageServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_CabinetsStorageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_ChildrenServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_ChildrenServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_StudyServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_StudyServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_RestaurantServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_RestaurantServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_PointOfSalesServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RestaurantManagement_AddRawIngredient</servlet-name>
@@ -1550,10 +1510,6 @@
         <url-pattern>/ECommerce_ActivateMemberServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_PromotionServlet</servlet-name>
-        <url-pattern>/ECommerce_PromotionServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ECommerce_StoresServlet</servlet-name>
         <url-pattern>/ECommerce_StoresServlet</url-pattern>
     </servlet-mapping>
@@ -1794,10 +1750,6 @@
         <url-pattern>/MRP_purchaseOrder/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
-        <url-pattern>/ECommerce_TablesDesksServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>MemberManagement_MemberServlet</servlet-name>
         <url-pattern>/MemberManagement_MemberServlet</url-pattern>
     </servlet-mapping>
@@ -1830,10 +1782,6 @@
         <url-pattern>/ECommerce_FurnitureCategoryServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
-        <url-pattern>/ECommerce_BedsMattressesServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>A8/KitchenSaleForecast_index</servlet-name>
         <url-pattern>/A8/KitchenSaleForecast_index</url-pattern>
     </servlet-mapping>
@@ -1844,34 +1792,6 @@
     <servlet-mapping>
         <servlet-name>A8/KitchenSaleForecast_main</servlet-name>
         <url-pattern>/A8/KitchenSaleForecast_main</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_LightingsServlet</servlet-name>
-        <url-pattern>/ECommerce_LightingsServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_SofasChairServlet</servlet-name>
-        <url-pattern>/ECommerce_SofasChairServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_CabinetsStorageServlet</servlet-name>
-        <url-pattern>/ECommerce_CabinetsStorageServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_ChildrenServlet</servlet-name>
-        <url-pattern>/ECommerce_ChildrenServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_StudyServlet</servlet-name>
-        <url-pattern>/ECommerce_StudyServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_RestaurantServlet</servlet-name>
-        <url-pattern>/ECommerce_RestaurantServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
-        <url-pattern>/ECommerce_PointOfSalesServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RestaurantManagement_AddRawIngredient</servlet-name>

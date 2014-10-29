@@ -39,7 +39,7 @@ public class ECommerce_AllFoodsServlet extends HttpServlet {
             if (URLprefix == null) {
                 response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
             }
-            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "resturant.jsp");
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "restaurant.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
