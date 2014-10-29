@@ -21,7 +21,7 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
     @EJB
     private LoyaltyAndRewardsBeanLocal loyaltyRewardsBean;
-    
+
     private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,28 +30,29 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
         try {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            
+
             Cookie cookie = new Cookie("memberId", email);
             cookie.setMaxAge(60 * 60); //1 hour
             response.addCookie(cookie);
 
-            List <LoyaltyTierEntity> loyaltyTiers = loyaltyRewardsBean.getAllLoyaltyTiers();
+            List<LoyaltyTierEntity> loyaltyTiers = loyaltyRewardsBean.getAllLoyaltyTiers();
             MemberEntity memberEntity = accountManagementBean.loginMember(email, password);
-            
-            System.out.println("Loyalty Points : " + memberEntity.getLoyaltyPoints());
-            
+
+            HttpSession session;
+            session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                URLprefix = "";
+            }
             if (memberEntity != null) {
-                HttpSession session;
-                session = request.getSession();
                 LoyaltyTierEntity nextLoyaltyTier = loyaltyRewardsBean.getMemberNextTier(memberEntity.getId());
                 session.setAttribute("nextLoyaltyTier", nextLoyaltyTier);
                 session.setAttribute("member", memberEntity);
                 session.setAttribute("loyaltyTiers", loyaltyTiers);
-                //out.println("<h1>" + "can login" + "</h1>");
-                response.sendRedirect("B/memberProfile.jsp");
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberProfile.jsp");
             } else {
                 result = "Login fail. Please try again.";
-                response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberLogin.jsp?errMsg=" + result);
             }
 
         } catch (Exception ex) {

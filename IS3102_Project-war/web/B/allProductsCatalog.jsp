@@ -3,7 +3,7 @@
 <%@page import="EntityManager.RetailProductEntity"%>
 <jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
         <script>
             function checkAll(source) {
@@ -36,7 +36,7 @@
                                     <div class="col-md-4">
                                         <div class="featured-box featured-box-primary">
                                             <div class="box-content">
-                                                <a href="../ECommerce_AllFurnituresServlet"><i class="icon-featured icon icon-archive"> </i>
+                                                <a href="/IS3102_Project-war/ECommerce_AllFurnituresServlet"><i class="icon-featured icon icon-archive"> </i>
                                                     <h4>Furnitures</h4>
                                                 </a>
                                             </div>
@@ -45,8 +45,8 @@
                                     <div class="col-md-4">
                                         <div class="featured-box featured-box-tertiary">
                                             <div class="box-content">
-                                                <a href="../ECommerce_AllRetailProductsServlet"><i class="icon-featured icon icon-coffee"> </i>
-                                                    <h4>Food Products</h4>
+                                                <a href="/IS3102_Project-war/ECommerce_AllRetailProductsServlet"><i class="icon-featured icon icon-coffee"> </i>
+                                                    <h4>Retail Products</h4>
                                                 </a>
                                             </div>
                                         </div>
@@ -54,7 +54,7 @@
                                     <div class="col-md-4">
                                         <div class="featured-box featured-box-fiveneary">
                                             <div class="box-content">
-                                                <a href="../ECommerce_AllFoodsServlet"><i class="icon-featured icon icon-cutlery"> </i>
+                                                <a href="/IS3102_Project-war/ECommerce_AllFoodsServlet"><i class="icon-featured icon icon-cutlery"> </i>
                                                     <h4>Restaurant Menu</h4>
                                                 </a>
                                             </div>
@@ -75,14 +75,14 @@
                 <jsp:include page="footer.html" />
             </div>
             <!-- Theme Initializer -->
-            <script src="../js/theme.plugins.js"></script>
-            <script src="../js/theme.js"></script>
+            <script src="/IS3102_Project-war//js/theme.plugins.js"></script>
+            <script src="/IS3102_Project-war//js/theme.js"></script>
 
             <!-- Current Page JS -->
-            <script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-            <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-            <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-            <script src="../js/views/view.home.js"></script>   
+            <script src="/IS3102_Project-war//vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+            <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+            <script src="/IS3102_Project-war//vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+            <script src="/IS3102_Project-war//js/views/view.home.js"></script>   
         </div>
     </body>
 </html>

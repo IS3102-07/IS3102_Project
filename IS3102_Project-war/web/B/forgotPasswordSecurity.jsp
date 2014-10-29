@@ -2,9 +2,8 @@
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
 <%@page import="EntityManager.MemberEntity"%>
-<jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
         <script>
             function validatePassword() {
@@ -13,7 +12,6 @@
                 var ok = true;
                 if ((password != null && repassword != null) || (password != "" && repassword != "")) {
                     if (password != repassword) {
-                        //alert("Passwords Do not match");
                         document.getElementById("password").style.borderColor = "#E34234";
                         document.getElementById("repassword").style.borderColor = "#E34234";
                         alert("Passwords do not match. Please key again.");
@@ -42,26 +40,10 @@
                 </div>
             </section>
             <%
-                MemberEntity member = (MemberEntity) (session.getAttribute("member"));
+                MemberEntity member = (MemberEntity) (session.getAttribute("memberForgetPassword"));
             %>
             <div class="container">
-                <jsp:include page="../displayMessageLong.jsp" />
-                <%
-                    String email = request.getParameter("email");
-                    String errMsg = request.getParameter("errMsg");
-                    String goodMsg = request.getParameter("goodMsg");
-                    if (errMsg == null && goodMsg == null) {
-                        out.println("");
-                    } else if ((errMsg != null) && (goodMsg == null)) {
-                        if (!errMsg.equals("")) {
-                            out.println(errMsg);
-                        }
-                    } else if ((errMsg == null && goodMsg != null)) {
-                        if (!goodMsg.equals("")) {
-                            out.println(goodMsg);
-                        }
-                    }
-                %>
+                <jsp:include page="/displayMessageLong.jsp" />
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row featured-boxes login">
@@ -70,7 +52,7 @@
                                     <div class="box-content">
                                         <h4>Forgot Password</h4>
                                         <h5>Security Challenge Question</h5>
-                                        <form action="../ECommerce_SendResetPasswordServlet">
+                                        <form action="/IS3102_Project-war/ECommerce_SendResetPasswordServlet">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">

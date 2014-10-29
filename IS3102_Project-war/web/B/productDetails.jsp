@@ -21,7 +21,7 @@
     }
 %>
 <html> <!--<![endif]-->
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
         <%
             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
@@ -78,7 +78,7 @@
                                                 if (displayWishlistOption == true) {
                                             %>
 
-                                    <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                    <a href="/IS3102_Project-war/ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                         <input type="button" name="btnEdit" class="btn btn-primary" id="<%=furniture.getSKU()%>" value="Add To Wishlist"/>
                                     </a>
                                     <%
@@ -105,7 +105,7 @@
 
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <form action="../ECommerce_StockAvailability">
+                                            <form action="/IS3102_Project-war/ECommerce_StockAvailability">
                                                 View Item Availability<br/>
                                                 <select style="color: black;" name="storeID">
                                                     <option> </option>

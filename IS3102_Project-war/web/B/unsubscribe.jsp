@@ -2,7 +2,7 @@
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
 <html> <!--<![endif]-->
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
 
         <jsp:include page="menu2.jsp" />
@@ -17,7 +17,7 @@
                 </div>
             </section>
             <div class="container">
-                <jsp:include page="../displayMessageLong.jsp" />
+                <jsp:include page="/displayMessageLong.jsp" />
                 <br/>
                 <div class="row">
                     <div class="col-md-12">

@@ -14,23 +14,26 @@ public class ECommerce_NewsletterSubscribeServlet extends HttpServlet {
 
     @EJB
     private ECommerceBeanLocal ecb;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         System.out.println("ECommerce_NewsletterSubscribeServlet");
-        
+
         try {
             HttpSession session;
             session = request.getSession();
-            
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
+            }
             String email = request.getParameter("email");
             System.out.println(email);
-            
+
             Boolean test = ecb.addEmailToSubscription(email);
-            
-            response.sendRedirect("B/index.jsp");
+
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "index.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -33,33 +33,11 @@ public class ECommerce_AllFurnituresServlet extends HttpServlet {
             session.setAttribute("furnitures", furnitures);
             session.setAttribute("item_countryList", item_countryList);
 
-            String country = (String) session.getAttribute("countryName");
-            if (country == null) {
-                country = "";
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
             }
-            switch (country) {
-//                case "France":
-//                    response.sendRedirect("B/FRA/allFurnitureProducts.jsp");
-//                    break;
-//                case "USA":
-//                    response.sendRedirect("B/USA/allFurnitureProducts.jsp");
-//                    break;
-//                case "China":
-//                    response.sendRedirect("B/CN/allFurnitureProducts.jsp");
-//                    break;
-//                case "Singapore":
-//                    response.sendRedirect("B/SG/allFurnitureProducts.jsp");
-//                    break;
-//                case "Malaysia":
-//                    response.sendRedirect("B/MY/allFurnitureProducts.jsp");
-//                    break;
-//                case "Indonesia":
-//                    response.sendRedirect("B/IDN/allFurnitureProducts.jsp");
-//                    break;
-                default:
-                    response.sendRedirect("B/allFurnitureProducts.jsp");
-                    break;
-            }
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "allFurnitureProducts.jsp");
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
