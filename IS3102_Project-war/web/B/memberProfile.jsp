@@ -82,9 +82,9 @@
                                         <div class="form-group">
                                             <label>Set Challenge Question</label>
                                             <select name="securityQuestion">
-                                                <option value="1">What is your mother's maiden name?</option>
-                                                <option value="2">What is your first pet's name?</option>
-                                                <option value="3">What is your favourite animal?</option>
+                                                <option value="1" <%if(member.getSecurityQuestion()==1) out.println("selected");%>>What is your mother's maiden name?</option>
+                                                <option value="2" <%if(member.getSecurityQuestion()==2) out.println("selected");%>>What is your first pet's name?</option>
+                                                <option value="3" <%if(member.getSecurityQuestion()==3) out.println("selected");%>>What is your favourite animal?</option>
                                             </select>
                                             <input class="form-control" type="text" required="true" name="securityAnswer" value="<%if (member.getSecurityAnswer() == null) {
                                                     out.println("");

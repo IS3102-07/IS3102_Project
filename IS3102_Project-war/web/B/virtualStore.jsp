@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
@@ -53,37 +54,37 @@
                                         <img src="/IS3102_Project-war/img/islandFurnitureStoreMap.jpg" alt="Store Map" usemap="#storeMap" width="1050" height="768" id="storeMap">
 
                                         <map name="storeMap">
-                                            <area  alt="" title="tablesdesks" href="/IS3102_Project-war/ECommerce_TablesDesksServlet" shape="rect" coords="284,197,488,247" style="outline:none;" target="_self" onclick="/IS3102_Project-war/ECommerce_TablesDesksServlet" onmouseover="if (document.images)
+                                            <area  alt="" title="tablesdesks" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Tables & Desks")%>" shape="rect" coords="284,197,488,247" style="outline:none;" target="_self" onclick="/IS3102_Project-war/ECommerce_TablesDesksServlet" onmouseover="if (document.images)
                                                                 document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapTablesDesks.jpg';" onmouseout="if (document.images)
                                                                             document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="retailproducts" href="/IS3102_Project-war/ECommerce_RetailProductsServlet" shape="rect" coords="159,20,557,73" style="outline:none;" target="_self" onclick="/IS3102_Project-war/ECommerce_RetailProductsServlet" onmouseover="if (document.images)
+                                            <area  alt="" title="retailproducts" href="/IS3102_Project-war/ECommerce_AllRetailProductsServlet" shape="rect" coords="159,20,557,73" style="outline:none;" target="_self" onclick="/IS3102_Project-war/ECommerce_RetailProductsServlet" onmouseover="if (document.images)
                                                                 document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapRetailProducts.jpg';" onmouseout="if (document.images)
                                                                             document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="bathroom" href="/IS3102_Project-war/ECommerce_BathroomServlet" shape="rect" coords="121,167,183,289" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="bathroom" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Bathroom")%>" shape="rect" coords="121,167,183,289" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapBathroom.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="bedsmattresses" href="/IS3102_Project-war/ECommerce_BedsMattressesServlet" shape="rect" coords="123,329,182,546" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="bedsmattresses" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Beds & Mattresses")%>" shape="rect" coords="123,329,182,546" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapBedsMattresses.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="lightings" href="/IS3102_Project-war/ECommerce_LightingsServlet" shape="rect" coords="250,447,393,491" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="lightings" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Lightings")%>" shape="rect" coords="250,447,393,491" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapLightings.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="sofaschair" href="/IS3102_Project-war/ECommerce_SofasChairServlet" shape="rect" coords="258,313,419,358" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="sofaschair" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Sofas & Chair")%>" shape="rect" coords="258,313,419,358" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapSofasChairs.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';" />
-                                            <area  alt="" title="cabinetsStorage" href="/IS3102_Project-war/ECommerce_CabinetsStorageServlet" shape="rect" coords="508,368,622,546" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="cabinetsStorage" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Cabinets & Storage")%>" shape="rect" coords="508,368,622,546" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapCabinetsStorage.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"    />
-                                            <area  alt="" title="children" href="/IS3102_Project-war/ECommerce_ChildrenServlet" shape="rect" coords="636,75,891,229" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="children" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Children")%>" shape="rect" coords="636,75,891,229" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapChildren.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="study" href="/IS3102_Project-war/ECommerce_StudyServlet" shape="rect" coords="585,77,628,220" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="study" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Study")%>" shape="rect" coords="585,77,628,220" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapStudy.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="restaurant" href="/IS3102_Project-war/ECommerce_RestaurantServlet" shape="rect" coords="709,268,925,531" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="restaurant" href="/IS3102_Project-war/ECommerce_AllFoodsServlet" shape="rect" coords="709,268,925,531" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapRestaurant.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="pointOfSales" href="/IS3102_Project-war/ECommerce_PointOfSalesServlet" shape="rect" coords="351,557,986,751" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="pointOfSales" href="#" shape="rect" coords="351,557,986,751" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapPointOfSales.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
                                             <area shape="rect" coords="1048,766,1050,768" alt="Image Map" style="outline:none;" title="Image Map" href="http://www.image-maps.com/index.php?aff=mapped_users_0" />
