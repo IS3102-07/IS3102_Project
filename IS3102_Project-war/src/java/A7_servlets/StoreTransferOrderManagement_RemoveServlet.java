@@ -1,37 +1,36 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.TransferOrderEntity;
-import HelperClasses.ItemStorageBinHelper;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class StoreTransferOrderLineItemManagement_OriginBinItemsServlet extends HttpServlet {
-    
+public class StoreTransferOrderManagement_RemoveServlet extends HttpServlet {
+
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            HttpSession session = request.getSession();
-            String transferOrderId = request.getParameter("id");
-            TransferOrderEntity TO = simbl.viewTransferOrder(Long.parseLong(transferOrderId));
-            List<ItemStorageBinHelper> listOfLineItems = simbl.getBinItemList(TO.getOrigin().getId());
-            session.setAttribute("listOfLineItems", listOfLineItems);
-            response.sendRedirect("A4/transferOrderLineItemManagement.jsp?id=" + transferOrderId);
-            
+
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    simbl.deleteTransferOrder(Long.parseLong(deleteArr[i]));
+                }
+                response.sendRedirect("StoreTransferOrderManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            } else {
+                response.sendRedirect("A4/transferOrderManagement_Servlet.jsp?errMsg=Nothing is selected.");
+            }
+
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            out.println(ex);
         }
     }
 

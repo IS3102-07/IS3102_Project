@@ -1,9 +1,12 @@
-package A4_servlets;
+package A7_servlets;
 
+import EntityManager.StorageBinEntity;
+import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,36 +14,45 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreStorageBinManagement_AddServlet extends HttpServlet {
+public class StoreTransferOrderManagement_Servlet extends HttpServlet {
 
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
-    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
             HttpSession session;
             session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            String name = request.getParameter("name");
-            String type = request.getParameter("type");
-            String length = request.getParameter("length");
-            String width = request.getParameter("width");
-            String height = request.getParameter("height");
 
-            boolean canUpdate = simbl.createStorageBin(warehouseEntity.getId(), name, type, Integer.parseInt(length), Integer.parseInt(width), Integer.parseInt(height));
-            if (!canUpdate) {
-                result = "?errMsg=The selected storage bin type already exist. Only one inbound and outbound storage bin can exist per warehouse. If the size of the bin was changed, update there the bin details accordingly instead of creating a new one. Alternatively, delete the bin first before trying to create one.";
-                response.sendRedirect("A4/storageBinManagement_Add.jsp" + result);
+            if (warehouseEntity == null) {
+                response.sendRedirect("A7/storeWarehouseManagement_view.jsp");
             } else {
-                result = "?errMsg=Storage Bin added successfully.&id=" + warehouseEntity.getWarehouseName();
-                response.sendRedirect("StoreStorageBinManagement_Servlet" + result);
-            }
+                List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
+                session.setAttribute("storageBins", storageBins);
 
+                List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                session.setAttribute("transferOrders", transferOrders);
+
+                if (errMsg == null && goodMsg == null) {
+                    response.sendRedirect("A4/transferOrderManagement.jsp");
+                } else if ((errMsg != null) && (goodMsg == null)) {
+                    if (!errMsg.equals("")) {
+                        response.sendRedirect("A4/transferOrderManagement.jsp?errMsg=" + errMsg);
+                    }
+                } else if ((errMsg == null && goodMsg != null)) {
+                    if (!goodMsg.equals("")) {
+                        response.sendRedirect("A4/transferOrderManagement.jsp?goodMsg=" + goodMsg);
+                    }
+                }
+            }
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

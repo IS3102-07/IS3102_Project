@@ -1,9 +1,11 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.WarehouseEntity;
+import EntityManager.TransferOrderEntity;
+import HelperClasses.ItemStorageBinHelper;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,37 +13,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreTransferOrderManagement_AddServlet extends HttpServlet {
-
+public class StoreTransferOrderLineItemManagement_OriginBinItemsServlet extends HttpServlet {
+    
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
-    private String result;
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         try {
-            HttpSession session;
-            session = request.getSession();
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            String origin = request.getParameter("origin");
-            String target = request.getParameter("target");
-
-            if (origin.equals(target)) {
-                result = "?errMsg=Invalid movement, Origin and Target are the same.";
-                response.sendRedirect("A4/transferOrderManagement_Add.jsp" + result);
-            } else {
-                boolean canUpdate = simbl.createTransferOrder(warehouseEntity.getId(), Long.parseLong(origin), Long.parseLong(target), null);
-                if (!canUpdate) {
-                    result = "?errMsg=Ops error, please try again.";
-                    response.sendRedirect("A4/transferOrderManagement_Add.jsp" + result);
-                } else {
-                    result = "?goodMsg=Transfer Order created successfully.&id=" + warehouseEntity.getWarehouseName();
-                    response.sendRedirect("StoreTransferOrderManagement_Servlet" + result);
-                }
-            }
+            HttpSession session = request.getSession();
+            String transferOrderId = request.getParameter("id");
+            TransferOrderEntity TO = simbl.viewTransferOrder(Long.parseLong(transferOrderId));
+            List<ItemStorageBinHelper> listOfLineItems = simbl.getBinItemList(TO.getOrigin().getId());
+            session.setAttribute("listOfLineItems", listOfLineItems);
+            response.sendRedirect("A7/transferOrderLineItemManagement.jsp?id=" + transferOrderId);
+            
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

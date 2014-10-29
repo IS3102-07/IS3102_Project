@@ -1,4 +1,4 @@
-package A4_servlets;
+package A7_servlets;
 
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.TransferOrderEntity;
@@ -89,16 +89,16 @@ public class RetailWarehouseManagement_Servlet extends HttpServlet {
                 if (destination.equals("storeWarehouseManagement.jsp")) {
                     WarehouseEntity warehouseEntity = facilityManagementBeanLocal.getWarehouseById(Long.parseLong(warehouseId));
                     session.setAttribute("warehouseEntity", warehouseEntity);
-                    response.sendRedirect("A4/storeWarehouseManagement.jsp");
+                    response.sendRedirect("A7/storeWarehouseManagement.jsp");
                 }
             } else {
                 List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getStoreWarehouseList();
                 session.setAttribute("warehouses", warehouses);
 
                 if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A4/storeWarehouseManagement_view.jsp");
+                    response.sendRedirect("A7/storeWarehouseManagement_view.jsp");
                 } else {
-                    response.sendRedirect("A4/storeWarehouseManagement_view.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A7/storeWarehouseManagement_view.jsp?errMsg=" + errMsg);
                 }
             }
         } catch (Exception ex) {
