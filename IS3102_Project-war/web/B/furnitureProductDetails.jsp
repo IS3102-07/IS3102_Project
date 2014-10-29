@@ -85,8 +85,6 @@
                                         }
                                     %>
 
-                                    <p class="price"><h4 class="amount">$22</h4></p>
-
                                     <p1>
                                         Height: <%=furniture.getHeight()%><br/>
                                         Length: <%=furniture.getLength()%><br/>

@@ -9,7 +9,7 @@
     <body>
         <script>
             function pdpaWindow() {
-                var myWindow = window.open("http://localhost:8080/IS3102_Project-war/B/pdpa.jsp");
+                var myWindow = window.open("http://localhost:8080/IS3102_Project-war/B/pdpa.html");
             }
         </script>
         <jsp:include page="menu2.jsp" />
@@ -93,7 +93,7 @@
                                                 }%>">
                                         </div>
                                         <div class="form-group">
-                                            <input type="checkbox" name="serviceLevelAgreement"> Allow us to use your particulars to serve you better<br/>Checking the box above indicates that you agree to our <a href=#" onclick="pdpaWindow()">personal data protection policy.</a>
+                                            <input type="checkbox" name="serviceLevelAgreement"> Allow us to use your particulars to serve you better<br/>Checking the box above indicates that you agree to our <a onclick="pdpaWindow()">personal data protection policy.</a>
                                         </div>
                                         <hr class="more-spaced "/>
                                         <h4>Change Password</h4>
@@ -119,22 +119,19 @@
 
                                     </form>
                                 </div>
-                                <div id="loyaltyProgram" class="tab-pane active">
+                                <div id="loyaltyProgram" class="tab-pane">
                                     <h4>My Loyalty Rewards</h4>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <h2 class="short">Loyalty Tiers</h2>
                                             <%
                                                 int a = 100;
-
                                                 for (int i = 0; i < loyaltyTiers.size(); i++) {
-
-
                                             %>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="progress">
-                                                        <br/>
+                                                            <br/>
                                                         Tier : <%=loyaltyTiers.get(i).getTier()%> <br/>
                                                         <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=a%>%; color:red; background-image: 'none';
                                                              background-color: 'red'" >

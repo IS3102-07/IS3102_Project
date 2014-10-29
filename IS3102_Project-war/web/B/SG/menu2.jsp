@@ -18,6 +18,9 @@
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
+                    <a href="/IS3102_Project-war/ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
+                </li>
+                <li>
                     <a href="memberLogin.jsp"><i class="icon icon-unlock-alt"></i>Login/Register</a>
                 </li>
                 <li>

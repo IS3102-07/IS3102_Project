@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@page import="EntityManager.FurnitureEntity"%>
 <%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="java.util.List"%>
@@ -12,6 +13,11 @@
         displayWishlistOption = false;
     } else {
         displayWishlistOption = true;
+    }
+    String category = URLDecoder.decode(request.getParameter("cat"));
+    System.out.println("!!!!???!"+category);
+    if (category == null) {
+        pageContext.forward("/ECommerce_SelectCountry");
     }
 %>
 <html> <!--<![endif]-->
@@ -39,7 +45,7 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <h2 class="shorter"><strong>All Furnitures</strong></h2>
+                                <h2 class="shorter"><strong><%=category%></strong></h2>
                                 <p>Showing <%=furnitures.size()%> results.</p>
                             </div>
                         </div>
