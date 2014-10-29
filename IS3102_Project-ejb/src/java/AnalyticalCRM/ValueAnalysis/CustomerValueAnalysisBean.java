@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import EntityManager.MemberEntity;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
@@ -33,7 +34,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("\nCustomer Value Analysis Server (EJB) created.");
     }
     @Override
-    public Integer getCustomerRetentionRate() {
+    public Double getCustomerRetentionRate() {
         System.out.println("getCustomerRetentionRate()");       
 
         Integer numOfMembers = 0;
@@ -44,6 +45,8 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
+                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
+                 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
@@ -55,7 +58,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-
+                        System.out.println("Number of days from churn date is " + days);
                         if (days > 0) {
                             numOfMembersNotChurn++;
                             break;
@@ -65,12 +68,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     System.out.println("This member has NO purchases records");
                 }
             }
-            System.out.println("Customer retention rate is : " + numOfMembersNotChurn / numOfMembers );
-            return numOfMembersNotChurn / numOfMembers;
+            DecimalFormat df = new DecimalFormat("#.00"); 
+            System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
+            return  ((double)numOfMembersNotChurn / (double)numOfMembers);
         } catch (Exception ex) {
-            System.out.println("\nServer failed to list recency:\n" + ex);
+            
+            System.out.println("\nServer failed to list retention rate:\n" + ex);
+            ex.printStackTrace();
         }
-        return 10;
+        return  ((double)numOfMembersNotChurn / (double)numOfMembers);
     }
 
     @Override
