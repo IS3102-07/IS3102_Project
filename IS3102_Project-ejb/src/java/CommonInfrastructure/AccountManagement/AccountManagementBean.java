@@ -1014,6 +1014,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             RoleEntity admin = this.searchRole("Administrator", "System");
             RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
             RoleEntity storeManager = this.searchRole("Store Manager", "Facility");
+
             if (roles.contains(admin)) {
                 System.out.println("current user in role: " + admin.getName());
                 return true;

@@ -17,6 +17,7 @@ public class SalesRecordManagement_SalesRecordServlet extends HttpServlet {
 
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    @EJB
     private AccountManagementBeanLocal accountManagementBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,16 +30,13 @@ public class SalesRecordManagement_SalesRecordServlet extends HttpServlet {
             StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
 
             StoreEntity store = facilityManagementBeanLocal.getStoreByName(storeName);
-            
+           
             if (accountManagementBeanLocal.canStaffAccessToTheStore(currentUser.getId(), store.getId())) {
-                System.out.println("hi11111");
-                session.setAttribute("storeId", store.getId());
+                session.setAttribute("store", store);
                 response.sendRedirect("SalesRecordManagement_viewSalesRecordServlet");
             } else {
-                System.out.println("hi21111");
                 request.setAttribute("alertMessage", "You are not allowed to access the store.");
                 response.sendRedirect("SalesRecordManagement_Servlet");
-
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
