@@ -1,7 +1,7 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
+import HelperClasses.ItemStorageBinHelper;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreStorageBinManagement_Servlet extends HttpServlet {
+public class RetailInventoryControl_Servlet extends HttpServlet {
 
     @EJB
-    private StoreAndKitchenInventoryManagementBeanLocal simbl;
+    private StoreAndKitchenInventoryManagementBeanLocal manufacturingInventoryControlBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -28,18 +28,21 @@ public class StoreStorageBinManagement_Servlet extends HttpServlet {
             String errMsg = request.getParameter("errMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
             if (warehouseEntity == null) {
-                response.sendRedirect("A7/storeWarehouseManagement_view.jsp");
+                response.sendRedirect("ManufacturingWarehouseManagement_Servlet");
             } else {
-                List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
-                session.setAttribute("storageBins", storageBins);
+                List<ItemStorageBinHelper> itemStorageBinHelpers = manufacturingInventoryControlBean.getItemList(warehouseEntity.getId());
+                System.out.println("Retrieving itemStorageBinHelpers list...");
+                System.out.println("Size of itemStorageBinHelpers: " + itemStorageBinHelpers.size());
+                session.setAttribute("itemStorageBinHelpers", itemStorageBinHelpers);
                 if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A7/storageBinManagement.jsp");
+                    response.sendRedirect("A7/retailInventoryControlManagement.jsp");
                 } else {
-                    response.sendRedirect("A7/storageBinManagement.jsp?errMsg=" + errMsg);
+                    response.sendRedirect("A7/retailInventoryControlManagement.jsp?errMsg=" + errMsg);
                 }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

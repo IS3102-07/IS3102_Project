@@ -1,48 +1,38 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.WarehouseEntity;
-import HelperClasses.ItemStorageBinHelper;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class RetailInventoryControl_Servlet extends HttpServlet {
+public class RetailInventoryControl_RemoveServlet extends HttpServlet {
 
     @EJB
-    private StoreAndKitchenInventoryManagementBeanLocal manufacturingInventoryControlBean;
+    private StoreAndKitchenInventoryManagementBeanLocal simbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            HttpSession session;
-            session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            if (warehouseEntity == null) {
-                response.sendRedirect("ManufacturingWarehouseManagement_Servlet");
+
+            String lineItemID = request.getParameter("lineItemID");
+            String storageBinID = request.getParameter("storageBinId");
+            System.out.println("remove servlet storageBinID " + storageBinID);
+            System.out.println("remove servlet lineItemID " + lineItemID);
+
+            if (storageBinID != null && lineItemID != null) {
+                simbl.emptyStorageBin(Long.parseLong(lineItemID), Long.parseLong(storageBinID));
+                response.sendRedirect("RetailInventoryControl_Servlet?goodMsg=Successfully removed all instance of the selected item from storage bin.");
             } else {
-                List<ItemStorageBinHelper> itemStorageBinHelpers = manufacturingInventoryControlBean.getItemList(warehouseEntity.getId());
-                System.out.println("Retrieving itemStorageBinHelpers list...");
-                System.out.println("Size of itemStorageBinHelpers: " + itemStorageBinHelpers.size());
-                session.setAttribute("itemStorageBinHelpers", itemStorageBinHelpers);
-                if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A7/retailInventoryControlManagement.jsp");
-                } else {
-                    response.sendRedirect("A7/retailInventoryControlManagement.jsp?errMsg=" + errMsg);
-                }
+                response.sendRedirect("A7/retailInventoryControlManagement.jsp?errMsg=Nothing is selected.");
             }
+
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
-            ex.printStackTrace();
+            out.println(ex);
         }
     }
 

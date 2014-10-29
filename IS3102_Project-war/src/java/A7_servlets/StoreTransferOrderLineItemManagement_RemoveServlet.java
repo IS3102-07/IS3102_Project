@@ -1,9 +1,11 @@
-package A4_servlets;
+package A7_servlets;
 
+import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreTransferOrderManagement_AddServlet extends HttpServlet {
+public class StoreTransferOrderLineItemManagement_RemoveServlet extends HttpServlet {
 
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
@@ -24,24 +26,19 @@ public class StoreTransferOrderManagement_AddServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-            String origin = request.getParameter("origin");
-            String target = request.getParameter("target");
-
-            if (origin.equals(target)) {
-                result = "?errMsg=Invalid movement, Origin and Target are the same.";
-                response.sendRedirect("A4/transferOrderManagement_Add.jsp" + result);
+            String transferOrderId = request.getParameter("id");
+            boolean canUpdate = simbl.removeLineItemFromTransferOrder(Long.parseLong(transferOrderId));
+            if (!canUpdate) {
+                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
+                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             } else {
-                boolean canUpdate = simbl.createTransferOrder(warehouseEntity.getId(), Long.parseLong(origin), Long.parseLong(target), null);
-                if (!canUpdate) {
-                    result = "?errMsg=Ops error, please try again.";
-                    response.sendRedirect("A4/transferOrderManagement_Add.jsp" + result);
-                } else {
-                    result = "?goodMsg=Transfer Order created successfully.&id=" + warehouseEntity.getWarehouseName();
-                    response.sendRedirect("StoreTransferOrderManagement_Servlet" + result);
-                }
+                List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
+                session.setAttribute("transferOrders", transferOrders);
+                result = "?goodMsg=Item removed successfully.&id="+transferOrderId;
+                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
             }
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

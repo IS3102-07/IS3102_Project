@@ -1,8 +1,7 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.StaffEntity;
 import EntityManager.TransferOrderEntity;
-import EntityManager.WarehouseEntity;
+import HelperClasses.ItemStorageBinHelper;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,48 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreTransferOrderLineItemManagement_UpdateServlet extends HttpServlet {
-
+public class StoreTransferOrderLineItemManagement_OriginBinItemsServlet extends HttpServlet {
+    
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
-    private String result;
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         try {
-            HttpSession session;
-            session = request.getSession();
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+            HttpSession session = request.getSession();
             String transferOrderId = request.getParameter("id");
-            String status = request.getParameter("status");
-            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
-
-            result = "?goodMsg=Line item added successfully.&id=" + transferOrderId;
-
-            boolean canUpdate = false;
-            if (status.equals("Completed")) {
-                canUpdate = simbl.markTransferOrderAsCompleted(Long.parseLong(transferOrderId), staff.getName());
-                result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
-                //response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
-            } else if (status.equals("Unfulfillable")) {
-                result = "?goodMsg=Transfer order status updated successfully.&id=" + transferOrderId;
-                canUpdate = simbl.markTransferOrderAsUnfulfilled(Long.parseLong(transferOrderId));
-                //response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
-            } else if (status.equals("Pending")) {
-                result = "?errMsg=Status not selected.";
-                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
-            }
-            if (!canUpdate) {
-
-                result = "?errMsg=Invalid request. Items not found or destination bin cannot contain the item (full or wrong bin type).&id=" + transferOrderId;
-                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
-            } else {
-                List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
-                session.setAttribute("transferOrders", transferOrders);
-                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
-            }
-
+            TransferOrderEntity TO = simbl.viewTransferOrder(Long.parseLong(transferOrderId));
+            List<ItemStorageBinHelper> listOfLineItems = simbl.getBinItemList(TO.getOrigin().getId());
+            session.setAttribute("listOfLineItems", listOfLineItems);
+            response.sendRedirect("A7/transferOrderLineItemManagement.jsp?id=" + transferOrderId);
+            
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

@@ -1,5 +1,6 @@
-package A4_servlets;
+package A7_servlets;
 
+import EntityManager.StorageBinEntity;
 import EntityManager.TransferOrderEntity;
 import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
@@ -13,33 +14,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class StoreTransferOrderLineItemManagement_Servlet extends HttpServlet {
+public class StoreTransferOrderManagement_Servlet extends HttpServlet {
 
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
-    private String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
             HttpSession session;
             session = request.getSession();
-            String transferOrderId = request.getParameter("id");
-            String sku = request.getParameter("sku");
-            String quantity = request.getParameter("quantity");
-
+            String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
 
-            boolean canUpdate = simbl.addLineItemToTransferOrder(Long.parseLong(transferOrderId), sku, Integer.parseInt(quantity));
-            if (!canUpdate) {
-                result = "?errMsg=Item not found. Please try again.&id="+transferOrderId;
-                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
+            if (warehouseEntity == null) {
+                response.sendRedirect("A7/storeWarehouseManagement_view.jsp");
             } else {
+                List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
+                session.setAttribute("storageBins", storageBins);
+
                 List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
                 session.setAttribute("transferOrders", transferOrders);
-                result = "?goodMsg=Line Item added successfully.&id="+transferOrderId;
-                response.sendRedirect("A7/transferOrderLineItemManagement.jsp" + result);
+
+                if (errMsg == null && goodMsg == null) {
+                    response.sendRedirect("A4/transferOrderManagement.jsp");
+                } else if ((errMsg != null) && (goodMsg == null)) {
+                    if (!errMsg.equals("")) {
+                        response.sendRedirect("A4/transferOrderManagement.jsp?errMsg=" + errMsg);
+                    }
+                } else if ((errMsg == null && goodMsg != null)) {
+                    if (!goodMsg.equals("")) {
+                        response.sendRedirect("A4/transferOrderManagement.jsp?goodMsg=" + goodMsg);
+                    }
+                }
             }
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

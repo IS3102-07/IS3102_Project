@@ -1,58 +1,36 @@
-package A4_servlets;
+package A7_servlets;
 
-import EntityManager.StorageBinEntity;
-import EntityManager.TransferOrderEntity;
-import EntityManager.WarehouseEntity;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class StoreTransferOrderManagement_Servlet extends HttpServlet {
+public class StoreTransferOrderManagement_RemoveServlet extends HttpServlet {
 
     @EJB
     private StoreAndKitchenInventoryManagementBeanLocal simbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        response.setContentType("text/html;charset=UTF-8");
         try {
-            HttpSession session;
-            session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            String goodMsg = request.getParameter("goodMsg");
-            WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
 
-            if (warehouseEntity == null) {
-                response.sendRedirect("A7/storeWarehouseManagement_view.jsp");
-            } else {
-                List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
-                session.setAttribute("storageBins", storageBins);
-
-                List<TransferOrderEntity> transferOrders = simbl.viewAllTransferOrderByWarehouseId(warehouseEntity.getId());
-                session.setAttribute("transferOrders", transferOrders);
-
-                if (errMsg == null && goodMsg == null) {
-                    response.sendRedirect("A4/transferOrderManagement.jsp");
-                } else if ((errMsg != null) && (goodMsg == null)) {
-                    if (!errMsg.equals("")) {
-                        response.sendRedirect("A4/transferOrderManagement.jsp?errMsg=" + errMsg);
-                    }
-                } else if ((errMsg == null && goodMsg != null)) {
-                    if (!goodMsg.equals("")) {
-                        response.sendRedirect("A4/transferOrderManagement.jsp?goodMsg=" + goodMsg);
-                    }
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    simbl.deleteTransferOrder(Long.parseLong(deleteArr[i]));
                 }
+                response.sendRedirect("StoreTransferOrderManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            } else {
+                response.sendRedirect("A4/transferOrderManagement_Servlet.jsp?errMsg=Nothing is selected.");
             }
+
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            out.println(ex);
         }
     }
 
