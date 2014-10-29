@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Add Line Item
+                                Add Combo Item
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
@@ -39,7 +39,7 @@
                                     <i class="icon icon-cogs"></i> <a href="comboManagement_Update.jsp?id=<%=combo.getId()%>">Combo ID: <%=combo.getId()%></a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-edit"></i> Add Line Item
+                                    <i class="icon icon-edit"></i> Add Combo Item
                                 </li>
                             </ol>
                         </div>
@@ -53,7 +53,7 @@
                         <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"> Combo ID: <%=combo.getId()%> - Add Line Item </h3>
+                                    <h3 class="panel-title"> Combo ID: <%=combo.getId()%> - Add Combo Item </h3>
                                 </div>
                                 <div class="panel-body">
                                     <form role="form" action="../ComboLineItemManagement_AddServlet">
@@ -63,7 +63,7 @@
                                         </div>
                                      
                                         <div class="form-group">
-                                            <input type="submit" value="Add Line Item" class="btn btn-lg btn-primary btn-block">
+                                            <input type="submit" value="Add Combo Item" class="btn btn-lg btn-primary btn-block">
                                         </div>  
                                         <input type="hidden" value="<%=combo.getId()%>" name="id">
                                     </form>

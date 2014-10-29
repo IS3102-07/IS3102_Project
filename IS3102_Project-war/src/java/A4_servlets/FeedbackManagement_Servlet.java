@@ -1,11 +1,10 @@
 package A4_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
-import EntityManager.StaffEntity;
-import EntityManager.StoreEntity;
+import EntityManager.FeedbackEntity;
+import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,31 +12,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class SalesRecordManagement_SalesRecordServlet extends HttpServlet {
+public class FeedbackManagement_Servlet extends HttpServlet {
 
     @EJB
-    private FacilityManagementBeanLocal facilityManagementBeanLocal;
-    @EJB
-    private AccountManagementBeanLocal accountManagementBeanLocal;
+private CustomerServiceBeanLocal CustomerServiceBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
             HttpSession session;
             session = request.getSession();
-            String storeName = request.getParameter("storeName");
-            StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
+            String errMsg = request.getParameter("errMsg");
 
-            StoreEntity store = facilityManagementBeanLocal.getStoreByName(storeName);
-           
-            if (accountManagementBeanLocal.canStaffAccessToTheStore(currentUser.getId(), store.getId())) {
-                session.setAttribute("store", store);
-                response.sendRedirect("SalesRecordManagement_viewSalesRecordServlet");
+            List<FeedbackEntity> feedbacks = CustomerServiceBeanLocal.viewFeedback();
+            session.setAttribute("feedbacks", feedbacks);
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A4/feedbackManagement.jsp");
             } else {
-                session.setAttribute("alertMessage", "You are not allowed to access the store.");
-                response.sendRedirect("SalesRecordManagement_Servlet");
+                response.sendRedirect("A4/feedbackManagement.jsp?errMsg=" + errMsg);
             }
+
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

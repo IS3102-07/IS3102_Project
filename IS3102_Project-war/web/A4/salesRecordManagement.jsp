@@ -91,10 +91,10 @@
         <!-- /#wrapper -->
 
         <%
-            if (request.getAttribute("alertMessage") != null) {
+            if (session.getAttribute("alertMessage") != null) {
         %>
         <script>
-            alert("<%= request.getAttribute("alertMessage")%>");
+            alert("<%= session.getAttribute("alertMessage")%>");
         </script>
         <%
             }

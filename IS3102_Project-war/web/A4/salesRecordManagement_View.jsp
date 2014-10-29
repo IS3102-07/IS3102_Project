@@ -10,7 +10,7 @@
         <script>
             function viewSalesRecordDetails(id) {
                 viewSalesRecord.id.value = id;
-                document.viewSalesRecord.action = "../MemberManagement_SalesRecordServlet";
+                document.viewSalesRecord.action = "../SalesRecordManagement_SalesRecordDetailsServlet";
                 document.viewSalesRecord.submit();
             }
         </script>
@@ -28,7 +28,7 @@
                                     <i class="icon icon-user"></i> <a href="customerServiceManagement.jsp"> Customer Service </a>                                 
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-inbox"></i> View Sales Record</a>                                 
+                                    <i class="icon icon-align-center"></i> View Sales Record</a>                                 
                                 </li>
                             </ol>
                         </div>

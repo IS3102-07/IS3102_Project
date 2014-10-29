@@ -114,7 +114,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Line item Management</h3>
+                                    <h3 class="panel-title">Combo item Management</h3>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="comboManagement">
@@ -123,8 +123,8 @@
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <input  type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addComboLineItem('<%=combo.getId()%>')"/>
-                                                        <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary">Remove Line Item</button></a>
+                                                        <input  type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Combo Item" onclick="javascript:addComboLineItem('<%=combo.getId()%>')"/>
+                                                        <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary">Remove Combo Item</button></a>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -161,8 +161,8 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <input  type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Line Item" onclick="javascript:addComboLineItem('<%=combo.getId()%>')"/>
-                                                <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary">Remove Line Item</button></a>
+                                                <input  type="button" name="btnAddLineItem" class="btn btn-primary" value="Add Combo Item" onclick="javascript:addComboLineItem('<%=combo.getId()%>')"/>
+                                                <a href="#removeLineItem" data-toggle="modal"><button class="btn btn-primary">Remove Combo Item</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@
                         <h4>Alert</h4>
                     </div>
                     <div class="modal-body">
-                        <p id="messageBox">Line Item will be removed. Are you sure?</p>
+                        <p id="messageBox">Combo Item will be removed. Are you sure?</p>
                     </div>
                     <div class="modal-footer">                        
                         <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeComboLineItem()"  />

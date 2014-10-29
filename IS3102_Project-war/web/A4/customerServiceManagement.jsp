@@ -32,6 +32,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="featured-box featured-box-secundary">
+                                    <div class="box-content">
+                                        <a href="../FeedbackManagement_Servlet"><i class="icon-featured icon icon-users"> </i>
+                                            <h4>Feedback Management</h4>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             
                         </div>
                         

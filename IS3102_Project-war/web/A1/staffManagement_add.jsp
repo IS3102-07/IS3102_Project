@@ -42,6 +42,10 @@
                                     <input class="form-control" name="name"  type="text" required="true">
                                 </div>
                                 <div class="form-group">
+                                    <label>Identification No</label>
+                                    <input class="form-control" type="text" required="true" name="identificationNo" >
+                                </div>
+                                <div class="form-group">
                                     <label>E-mail Address</label>
                                     <input class="form-control" required="true" type="email" name="email" >
                                 </div>
