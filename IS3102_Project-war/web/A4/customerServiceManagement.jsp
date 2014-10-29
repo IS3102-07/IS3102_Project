@@ -17,7 +17,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-primary">
                                     <div class="box-content">
-                                        <a href="../RawMaterialManagement_RawMaterialServlet"><i class="icon-featured icon icon-align-center"> </i>
+                                        <a href="../SalesRecordManagement_Servlet"><i class="icon-featured icon icon-align-center"> </i>
                                             <h4>Sales Record Management</h4>
                                         </a>
                                     </div>

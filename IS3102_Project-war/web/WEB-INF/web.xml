@@ -1006,8 +1006,8 @@
         <servlet-class>A6_servlets.ComboLineItemManagement_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CustomerServiceManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.CustomerServiceManagement_Servlet</servlet-class>
+        <servlet-name>SalesRecordManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -2014,8 +2014,8 @@
         <url-pattern>/ComboLineItemManagement_RemoveServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CustomerServiceManagement_Servlet</servlet-name>
-        <url-pattern>/CustomerServiceManagement_Servlet</url-pattern>
+        <servlet-name>SalesRecordManagement_Servlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
