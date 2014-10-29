@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@page import="EntityManager.FurnitureEntity"%>
 <%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="java.util.List"%>
@@ -12,6 +13,10 @@
         displayWishlistOption = false;
     } else {
         displayWishlistOption = true;
+    }
+    String category = URLDecoder.decode(request.getParameter("cat"));
+    if (category == null) {
+        pageContext.forward("/ECommerce_SelectCountry");
     }
 %>
 <html> <!--<![endif]-->
@@ -30,7 +35,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2>Perabot</h2>
+                                    <h2>Furnitures</h2>
                                 </div>
                             </div>
                         </div>
@@ -39,7 +44,7 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <h2 class="shorter"><strong>Semua Perabot</strong></h2>
+                                <h2 class="shorter"><strong><%=category%></strong></h2>
                             </div>
                         </div>
                         <div class="row">
@@ -88,8 +93,7 @@
                                         %>
                                     </span>
                                 </li>
-                                <%
-                                                        break;
+                                <%                                     break;
                                                     }
                                                 }
                                             }

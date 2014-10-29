@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
@@ -31,7 +32,7 @@
                                      data-y="180"
                                      data-speed="300"
                                      data-start="500"
-                                     data-easing="easeOutExpo">DO YOU NEED NEW</div>
+                                     data-easing="easeOutExpo">你需要新</div>
 
                                 <div class="tp-caption sft stb visible-lg"
                                      data-x="372"
@@ -45,14 +46,14 @@
                                      data-y="210"
                                      data-speed="300"
                                      data-start="1500"
-                                     data-easing="easeOutExpo">FURNITURE?</div>
+                                     data-easing="easeOutExpo">家具?</div>
 
                                 <div class="tp-caption bottom-label sft stb"
                                      data-x="80"
                                      data-y="280"
                                      data-speed="500"
                                      data-start="2000"
-                                     data-easing="easeOutExpo">Check out our options and features.</div>
+                                     data-easing="easeOutExpo">看看我们的选项和功能。</div>
 
                                 <div class="tp-caption randomrotate"
                                      data-x="800"
@@ -94,21 +95,21 @@
                                      data-y="300"
                                      data-speed="500"
                                      data-start="3450"
-                                     data-easing="easeOutExpo" style="font-size: 37px;">Build</div>
+                                     data-easing="easeOutExpo" style="font-size: 37px;">建</div>
 
                                 <div class="tp-caption blackboard-text lfb "
                                      data-x="555"
                                      data-y="350"
                                      data-speed="500"
                                      data-start="3650"
-                                     data-easing="easeOutExpo" style="font-size: 47px;">your</div>
+                                     data-easing="easeOutExpo" style="font-size: 47px;">您</div>
 
                                 <div class="tp-caption blackboard-text lfb "
                                      data-x="580"
                                      data-y="400"
                                      data-speed="500"
                                      data-start="3850"
-                                     data-easing="easeOutExpo" style="font-size: 32px;">own furniture :)</div>
+                                     data-easing="easeOutExpo" style="font-size: 32px;">自己的家具:)</div>
                             </li>
                             <li data-transition="fade" data-slotamount="5" data-masterspeed="1000" >
 
@@ -126,28 +127,28 @@
                                      data-y="180"
                                      data-speed="1500"
                                      data-start="1000"
-                                     data-easing="easeOutExpo" style="font-size: 30px;">Our Products</div>
+                                     data-easing="easeOutExpo" style="font-size: 30px;">我们的产品</div>
 
                                 <div class="tp-caption blackboard-text fade "
                                      data-x="180"
                                      data-y="220"
                                      data-speed="1500"
                                      data-start="1200"
-                                     data-easing="easeOutExpo" style="font-size: 40px;">Are Aesthetically<br/>Pleasing!</div>
+                                     data-easing="easeOutExpo" style="font-size: 40px;">在美学<br/>愉快!</div>
 
                                 <div class="tp-caption main-label sft stb"
                                      data-x="580"
                                      data-y="190"
                                      data-speed="300"
                                      data-start="1500"
-                                     data-easing="easeOutExpo">Island Furniture</div>
+                                     data-easing="easeOutExpo">岛家具</div>
 
                                 <div class="tp-caption bottom-label sft stb"
                                      data-x="580"
                                      data-y="250"
                                      data-speed="500"
                                      data-start="2000"
-                                     data-easing="easeOutExpo">Find Out More Below!</div>
+                                     data-easing="easeOutExpo">了解更多信息下面！</div>
                             </li>
                         </ul>
                     </div>
@@ -157,14 +158,14 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <p>
-                                    The fastest way to grow your home with the leader in <em>Furniture.</em>
-                                    <span>Check out our furnitures and retail products.</span>
+                                    以最快的方式来拓展您的家与领先的 <em>家具.</em>
+                                    <span>看看我们的家具和零售产品.</span>
                                 </p>
                             </div>
                             <div class="col-md-4">
                                 <div class="get-started">
-                                    <a href="allProductsCatalog.jsp" class="btn btn-lg btn-primary">Get Started Now!</a>
-                                    <div class="learn-more">or <a href="allProductsCatalog.jsp">learn more.</a></div>
+                                    <a href="allProductsCatalog.jsp" class="btn btn-lg btn-primary">现在就开始吧!</a>
+                                    <div class="learn-more">或 <a href="allProductsCatalog.jsp">了解更多.</a></div>
                                 </div>
                             </div>
                         </div>
@@ -175,20 +176,20 @@
                         <div class="row center">
                             <div class="col-md-12">
                                 <h2 class="short word-rotator-title">
-                                    Our products are
+                                    我们的产品
                                     <strong class="inverted">
                                         <span class="word-rotate">
                                             <span class="word-rotate-items">
-                                                <span>incredibly</span>
-                                                <span>especially</span>
-                                                <span>extremely</span>
+                                                <span>令人难以置信</span>
+                                                <span>尤其</span>
+                                                <span>极</span>
                                             </span>
                                         </span>
                                     </strong>
-                                    beautiful and fits all design.
+                                    美丽，适合所有的设计。
                                 </h2>
                                 <p class="featured lead">
-                                    Island Furniture is the leading furniture and retail products player in the market. Our novel designs are meant to help transform your home into your ideal design.
+                                    岛家具是国内领先的家具零售播放器产品在市场上.我们新颖的设计是为了帮助改变你的家变成你理想的设计.
                                 </p>
                             </div>
                         </div>
@@ -204,7 +205,7 @@
 
                         <div class="row">
                             <div class="col-md-8">
-                                <h2>Our <strong>Services</strong></h2>
+                                <h2>我们的<strong>服务</strong></h2>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="feature-box">
@@ -212,8 +213,8 @@
                                                 <i class="icon icon-group"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Customer Support</h4>
-                                                <p class="tall">Customers come first.</p>
+                                                <h4 class="shorter">客户支持</h4>
+                                                <p class="tall">客户是第一位的。</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -221,8 +222,8 @@
                                                 <i class="icon icon-file"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Free Assembly</h4>
-                                                <p class="tall">All products will be assembled free.</p>
+                                                <h4 class="shorter">自由组装</h4>
+                                                <p class="tall">所有产品都将装配自由。</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -230,8 +231,8 @@
                                                 <i class="icon icon-google-plus"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">1 Year Warranty</h4>
-                                                <p class="tall">All our products come with 1 year warranty.</p>
+                                                <h4 class="shorter">1年保修</h4>
+                                                <p class="tall">我们所有的产品都有1年保修。</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -239,8 +240,8 @@
                                                 <i class="icon icon-adjust"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Colors</h4>
-                                                <p class="tall">Furnitures have different colours.</p>
+                                                <h4 class="shorter">颜色</h4>
+                                                <p class="tall">家具有不同的颜色。</p>
                                             </div>
                                         </div>
                                     </div>
@@ -250,8 +251,8 @@
                                                 <i class="icon icon-film"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Professional Design</h4>
-                                                <p class="tall">Designed by state of the art technologies.</p>
+                                                <h4 class="shorter">专业设计</h4>
+                                                <p class="tall">通过最先进的技术状态设计的。</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -259,8 +260,8 @@
                                                 <i class="icon icon-user"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Kitchen</h4>
-                                                <p class="tall">We sell top Asian cuisines.</p>
+                                                <h4 class="shorter">厨房</h4>
+                                                <p class="tall">我们销售的顶级亚洲美食。</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -268,8 +269,8 @@
                                                 <i class="icon icon-bars"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">Technology</h4>
-                                                <p class="tall">Download our mobile app now.</p>
+                                                <h4 class="shorter">技术</h4>
+                                                <p class="tall">立即下载我们的移动应用程序。</p>
                                             </div>
                                         </div>
                                         <div class="feature-box">
@@ -277,15 +278,15 @@
                                                 <i class="icon icon-desktop"></i>
                                             </div>
                                             <div class="feature-box-info">
-                                                <h4 class="shorter">High Quality</h4>
-                                                <p class="tall">All products come with qualitative design.</p>
+                                                <h4 class="shorter">高质量</h4>
+                                                <p class="tall">所有产品均配备了质的设计。</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <h2>and more...</h2>
+                                <h2>更多...</h2>
 
                                 <div class="panel-group" id="accordion">
                                     <div class="panel panel-default">
@@ -293,13 +294,13 @@
                                             <h4 class="panel-title">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                                                     <i class="icon icon-usd"></i>
-                                                    Pricing Tables
+                                                    价格表
                                                 </a>
                                             </h4>
                                         </div>
                                         <div id="collapseOne" class="accordion-body collapse in">
                                             <div class="panel-body">
-                                                Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.
+                                                只要地球的质量，它建立舒适，易于任何人SAPIEN是很重要的。这只是大量仇恨的人对宏观的流行文化。
                                             </div>
                                         </div>
                                     </div>
@@ -308,13 +309,13 @@
                                             <h4 class="panel-title">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                                                     <i class="icon icon-comment"></i>
-                                                    Contact Forms
+                                                    联系表格
                                                 </a>
                                             </h4>
                                         </div>
                                         <div id="collapseTwo" class="accordion-body collapse">
                                             <div class="panel-body">
-                                                Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+                                                Donec马萨得力士，韦尔condimentum三重坐阿梅德，QUIS facilisis SAPIEN。
                                             </div>
                                         </div>
                                     </div>
@@ -323,13 +324,13 @@
                                             <h4 class="panel-title">
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                                                     <i class="icon icon-laptop"></i>
-                                                    Portfolio Pages
+                                                    投资组合页面
                                                 </a>
                                             </h4>
                                         </div>
                                         <div id="collapseThree" class="accordion-body collapse">
                                             <div class="panel-body">
-                                                Donec tellus massa, tristique sit amet condimentum vel, facilisis quis sapien.
+                                                Donec马萨得力士，韦尔condimentum三重坐阿梅德，QUIS facilisis SAPIEN。
                                             </div>
                                         </div>
                                     </div>
@@ -342,18 +343,18 @@
                         <div class="row center">
                             <div class="col-md-12">
                                 <h2 class="short word-rotator-title">
-                                    We're not the only ones
+                                    我们不是唯一的
                                     <strong>
                                         <span class="word-rotate">
                                             <span class="word-rotate-items">
-                                                <span>excited</span>
-                                                <span>happy</span>
+                                                <span>兴奋</span>
+                                                <span>快乐</span>
                                             </span>
                                         </span>
                                     </strong>
-                                    about Island Furniture...
+                                    关于岛家具...
                                 </h2>
-                                <h4 class="lead tall">5,500 customers in 100 countries use Island Furniture. Meet our customers.</h4>
+                                <h4 class="lead tall">5,500的客户在100个国家用岛家具。满足我们的客户。</h4>
                             </div>
                         </div>
                     </div>

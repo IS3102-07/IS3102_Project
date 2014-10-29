@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="EntityManager.MemberEntity"%>
 <%String URLprefix = (String) session.getAttribute("URLprefix");
@@ -18,13 +19,13 @@
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
-                    <a href="/IS3102_Project-war/ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
+                    <a href="/IS3102_Project-war/ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>存储位置</a>
                 </li>
                 <li>
-                    <a href="memberLogin.jsp"><i class="icon icon-unlock-alt"></i>Login/Register</a>
+                    <a href="memberLogin.jsp"><i class="icon icon-unlock-alt"></i>登录/注册</a>
                 </li>
                 <li>
-                    <a href="contactUs.jsp"><i class="icon icon-shopping-cart"></i>Contact Us</a>
+                    <a href="contactUs.jsp"><i class="icon icon-shopping-cart"></i>联系我们</a>
                 </li>
             </ul>
             <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
@@ -42,19 +43,19 @@
                 </li>
                 <%}%>
                 <li>
-                    <a href="/IS3102_Project-war/ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
+                    <a href="/IS3102_Project-war/ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>存储位置</a>
                 </li>
                 <li>
-                    <a href="/IS3102_Project-war/ECommerce_WishListServlet"><i class="icon icon-shopping-cart"></i>My Wish List</a>
+                    <a href="/IS3102_Project-war/ECommerce_WishListServlet"><i class="icon icon-shopping-cart"></i>我的愿望清单</a>
                 </li>
                 <li>
-                    <a href="/IS3102_Project-war/B/<%=URLprefix%>memberProfile.jsp"><i class="icon icon-user"></i>Profile</a>
+                    <a href="/IS3102_Project-war/B/<%=URLprefix%>memberProfile.jsp"><i class="icon icon-user"></i>轮廓</a>
                 </li>
                 <li>
-                    <a href="contactUs.jsp"><i class="icon icon-shopping-cart"></i>Contact Us</a>
+                    <a href="contactUs.jsp"><i class="icon icon-shopping-cart"></i>联系我们</a>
                 </li>
                 <li>
-                    <a href="/IS3102_Project-war/ECommerce_LogoutServlet"><i class="icon icon-unlock-alt"></i>Logout</a>
+                    <a href="/IS3102_Project-war/ECommerce_LogoutServlet"><i class="icon icon-unlock-alt"></i>注销</a>
                 </li>
             </ul>
             <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
@@ -68,17 +69,17 @@
             <nav class="nav-main mega-menu">
                 <ul class="nav nav-pills nav-main" id="mainMenu">
                     <li class="dropdown">
-                        <a href="/IS3102_Project-war/ECommerce_AllFurnituresServlet">Furnitures</a>
+                        <a href="/IS3102_Project-war/ECommerce_AllFurnituresServlet">家具</a>
                     </li>
                     <li>
-                        <a href="/IS3102_Project-war/ECommerce_AllRetailProductsServlet">Retail Products</a>
+                        <a href="/IS3102_Project-war/ECommerce_AllRetailProductsServlet">零售产品</a>
                     </li>
                     <li>
-                        <a href="virtualStore.jsp">Virtual Store</a>
+                        <a href="virtualStore.jsp">虚拟商店</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#">
-                            All Departments
+                            各部门
                             <i class="icon icon-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu">
