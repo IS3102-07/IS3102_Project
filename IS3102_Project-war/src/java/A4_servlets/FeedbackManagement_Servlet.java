@@ -1,43 +1,41 @@
-package A6_servlets;
+package A4_servlets;
 
-import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
-import EntityManager.ComboLineItemEntity;
+import EntityManager.FeedbackEntity;
+import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ComboLineItemManagement_AddServlet extends HttpServlet {
+public class FeedbackManagement_Servlet extends HttpServlet {
 
     @EJB
-    private RestaurantManagementBeanLocal RestaurantManagementBean;
-    private String result;
+private CustomerServiceBeanLocal CustomerServiceBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            String comboId = request.getParameter("id");
-            String sku = request.getParameter("sku");
 
-            ComboLineItemEntity comboLineItemEntity = RestaurantManagementBean.createComboLineItem(sku);
-            boolean canUpdate = false;
-            if (comboLineItemEntity != null) {
-                canUpdate = RestaurantManagementBean.addLineItemToCombo(Long.parseLong(comboId), comboLineItemEntity.getId());
-            }
-            if (!canUpdate) {
-                result = "?errMsg=Add menu item failed. Please check SKU.&id=" + comboId;
-                response.sendRedirect("A6/comboManagement_AddLineItem.jsp" + result);
+        try {
+            HttpSession session;
+            session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+
+            List<FeedbackEntity> feedbacks = CustomerServiceBeanLocal.viewFeedback();
+            session.setAttribute("feedbacks", feedbacks);
+            if (errMsg == null || errMsg.equals("")) {
+                response.sendRedirect("A4/feedbackManagement.jsp");
             } else {
-                result = "?goodMsg=Line item added successfully.&id=" + comboId;
-                response.sendRedirect("ComboLineItemManagement_Servlet" + result);
+                response.sendRedirect("A4/feedbackManagement.jsp?errMsg=" + errMsg);
             }
 
         } catch (Exception ex) {
-            out.println(ex);
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

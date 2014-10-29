@@ -31,7 +31,7 @@
                                     <i class="icon icon-user"></i> <a href="customerServiceManagement.jsp"> Customer Service </a>                                 
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-inbox"></i> <a href="salesRecordManagement_View.jsp?id=<%=salesRecord.getStore().getId()%>">View Sales Record</a>                                 
+                                    <i class="icon icon-align-center"></i> <a href="salesRecordManagement_View.jsp?id=<%=salesRecord.getStore().getId()%>">View Sales Record</a>                                 
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-envelope"></i> View Sales Record Details</a>                                 
