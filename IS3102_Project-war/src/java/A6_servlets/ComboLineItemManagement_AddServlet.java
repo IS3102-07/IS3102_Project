@@ -29,7 +29,7 @@ public class ComboLineItemManagement_AddServlet extends HttpServlet {
                 canUpdate = RestaurantManagementBean.addLineItemToCombo(Long.parseLong(comboId), comboLineItemEntity.getId());
             }
             if (!canUpdate) {
-                result = "?errMsg=Add combo failed. Please check SKU.&id=" + comboId;
+                result = "?errMsg=Add combo item failed. Please check SKU.&id=" + comboId;
                 response.sendRedirect("A6/comboManagement_AddLineItem.jsp" + result);
             } else {
                 result = "?goodMsg=Line item added successfully.&id=" + comboId;
