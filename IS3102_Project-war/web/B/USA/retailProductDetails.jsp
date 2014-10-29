@@ -1,7 +1,6 @@
-<%@page import="java.net.URLEncoder"%>
 <%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="EntityManager.StoreEntity"%>
-<%@page import="EntityManager.FurnitureEntity"%>
+<%@page import="EntityManager.RetailProductEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,15 +25,15 @@
     <jsp:include page="/B/header.html" />
     <body>
         <%
-            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
-            FurnitureEntity furniture = new FurnitureEntity();
+            List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProducts"));
+            RetailProductEntity retailProduct = new RetailProductEntity();
             List<StoreEntity> storesInCountry = (List<StoreEntity>) session.getAttribute("storesInCountry");
             List<Item_CountryEntity> itemCountryPrices = (List<Item_CountryEntity>) session.getAttribute("item_countryList");
 
-            if (furnitures != null) {
-                for (int i = 0; i < furnitures.size(); i++) {
-                    if (furnitures.get(i).getSKU().equals(sku)) {
-                        furniture = furnitures.get(i);
+            if (retailProducts != null) {
+                for (int i = 0; i < retailProducts.size(); i++) {
+                    if (retailProducts.get(i).getSKU().equals(sku)) {
+                        retailProduct = retailProducts.get(i);
                     }
                 }
             }
@@ -55,7 +54,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2>Furnitures</h2>
+                                    <h2>Retail Products</h2>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +67,7 @@
                             <div class="col-md-6">
                                 <div>
                                     <div class="thumbnail">
-                                        <img alt="" class="img-responsive img-rounded" src="<%=furniture.getImageURL()%>">
+                                        <img alt="" class="img-responsive img-rounded" src="<%=retailProduct.getImageURL()%>">
                                     </div>
                                 </div>
                             </div>
@@ -76,37 +75,33 @@
                             <div class="col-md-6">
                                 <div class="summary entry-summary">
 
-                                    <h2 class="shorter"><strong><%=furniture.getName()%></strong></h2>
+                                    <h2 class="shorter"><strong><%=retailProduct.getName()%></strong></h2>
                                             <%
                                                 if (displayWishlistOption == true) {
                                             %>
 
-                                    <a href="/IS3102_Project-war/ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                        <input type="button" name="btnEdit" class="btn btn-primary" id="<%=furniture.getSKU()%>" value="Add To Wishlist"/>
+                                    <a href="/IS3102_Project-war/ECommerce_AddFurnitureToListServlet?SKU=<%=retailProduct.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                        <input type="button" name="btnEdit" class="btn btn-primary" id="<%=retailProduct.getSKU()%>" value="Add To Wishlist"/>
                                     </a>
                                     <%
                                         }
                                         String price = "Unavailable";
                                         for (Item_CountryEntity curr : itemCountryPrices) {
-                                            if (curr.getItem().getSKU().equals(furniture.getSKU())) {
+                                            if (curr.getItem().getSKU().equals(retailProduct.getSKU())) {
                                                 price = "$" + curr.getRetailPrice() + "0";
                                             }
                                         }
                                     %>
 
                                     <p class="price"><h4 class="amount"><%=price%></h4></p>
+
                                     <p class="taller">
-                                        <%if (furniture.getDescription() != null) {
-                                                out.println(furniture.getDescription());
+                                        <%if (retailProduct.getDescription() != null) {
+                                                out.println(retailProduct.getDescription());
                                             }%>
                                     </p>
-                                    <p>
-                                        Height: <%=furniture.getHeight()%><br/>
-                                        Length: <%=furniture.getLength()%><br/>
-                                        Width: <%=furniture.getWidth()%>
-                                    </p>
                                     <div class="product_meta">
-                                        <span class="posted_in">Category: <a rel="tag" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode(furniture.getCategory())%>"><%=furniture.getCategory()%></a></span>
+                                        <span class="posted_in">Category: <a rel="tag" href="#"><%=retailProduct.getCategory()%></a></span>
                                     </div>
                                     <br/><br/>
 

@@ -82,9 +82,21 @@
                                         <div class="form-group">
                                             <label>Set Challenge Question</label>
                                             <select name="securityQuestion">
-                                                <option value="1" <%if(member.getSecurityQuestion()==1) out.println("selected");%>>What is your mother's maiden name?</option>
-                                                <option value="2" <%if(member.getSecurityQuestion()==2) out.println("selected");%>>What is your first pet's name?</option>
-                                                <option value="3" <%if(member.getSecurityQuestion()==3) out.println("selected");%>>What is your favourite animal?</option>
+                                                <%int securityQn = 0;
+                                                    if (member.getSecurityQuestion() == null) {
+                                                        securityQn = 0;
+                                                    } else {
+                                                        securityQn = member.getSecurityQuestion();
+                                                    }%>
+                                                <option value="1" <%if (securityQn == 1) {
+                                                        out.println("selected");
+                                                    }%>>What is your mother's maiden name?</option>
+                                                <option value="2" <%if (securityQn == 2) {
+                                                        out.println("selected");
+                                                    }%>>What is your first pet's name?</option>
+                                                <option value="3" <%if (securityQn == 3) {
+                                                        out.println("selected");
+                                                    }%>>What is your favourite animal?</option>
                                             </select>
                                             <input class="form-control" type="text" required="true" name="securityAnswer" value="<%if (member.getSecurityAnswer() == null) {
                                                     out.println("");
@@ -129,7 +141,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="progress">
-                                                            <br/>
+                                                        <br/>
                                                         Tier : <%=loyaltyTiers.get(i).getTier()%> <br/>
                                                         <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=a%>%; color:red; background-image: 'none';
                                                              background-color: 'red'" >

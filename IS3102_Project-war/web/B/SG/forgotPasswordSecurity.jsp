@@ -51,6 +51,8 @@
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Forgot Password</h4>
+                                        <%
+                                            if (member.getSecurityQuestion() != null) {%>
                                         <h5>Security Challenge Question</h5>
                                         <form action="/IS3102_Project-war/ECommerce_SendResetPasswordServlet">
                                             <div class="row">
@@ -65,7 +67,6 @@
                                                             } else if (member.getSecurityQuestion() == 3) {
                                                                 out.println("What is your favourite animal?");
                                                             }
-
                                                         %>
                                                     </div>
                                                 </div>
@@ -85,6 +86,9 @@
                                                 <input type="hidden" value="<%=member.getEmail()%>" name="email"/>
                                             </div>
                                         </form>
+                                        <%} else {%>
+                                        <p>This account password cannot be reset online. Please contact support for assistance.</p>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>                            
@@ -94,6 +98,5 @@
             </div>
         </div>
         <jsp:include page="footer.html" />
-
     </body>
 </html>

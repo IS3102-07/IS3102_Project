@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="EntityManager.StoreEntity"%>
 <%@page import="EntityManager.FurnitureEntity"%>
 <%@page import="java.util.List"%>
@@ -95,7 +96,7 @@
                                         Width: <%=furniture.getWidth()%>
                                     </p>
                                     <div class="product_meta">
-                                        <span class="posted_in">Category: <a rel="tag" href="#"><%=furniture.getCategory()%></a></span>
+                                        <span class="posted_in">Category: <a rel="tag" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode(furniture.getCategory())%>"><%=furniture.getCategory()%></a></span>
                                     </div>
                                     <br/><br/>
                                 </div>

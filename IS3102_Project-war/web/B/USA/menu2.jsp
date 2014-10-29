@@ -18,6 +18,9 @@
         <nav>
             <ul class="nav nav-pills nav-top">
                 <li>
+                    <a href="/IS3102_Project-war/ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
+                </li>
+                <li>
                     <a href="memberLogin.jsp"><i class="icon icon-unlock-alt"></i>Login/Register</a>
                 </li>
                 <li>
@@ -38,6 +41,9 @@
                     <a>Welcome <%=member.getName()%>!</a>
                 </li>
                 <%}%>
+                <li>
+                    <a href="/IS3102_Project-war/ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Store Location</a>
+                </li>
                 <li>
                     <a href="/IS3102_Project-war/ECommerce_WishListServlet"><i class="icon icon-shopping-cart"></i>My Wish List</a>
                 </li>
@@ -67,6 +73,9 @@
                     <li>
                         <a href="/IS3102_Project-war/ECommerce_AllRetailProductsServlet">Retail Products</a>
                     </li>
+                    <li>
+                        <a href="virtualStore.jsp">Virtual Store</a>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#">
                             All Departments
@@ -83,9 +92,6 @@
                             <li><a href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Children")%>"><i class="icon icon-map-marker"></i> Children</a></li>
                             <li><a href="/IS3102_Project-war/ECommerce_AllRetailProductsServlet"><i class="icon icon-coffee"></i> Retail Products</a></li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="selectCountry.jsp">Change Country</a>
                     </li>
                 </ul>
             </nav>
