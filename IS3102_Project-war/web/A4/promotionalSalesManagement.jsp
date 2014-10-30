@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="EntityManager.PromotionEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
@@ -118,16 +119,20 @@
                                                                 <%=promotions.get(i).getItem().getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=promotions.get(i).getCountry()%>
+                                                                <%=promotions.get(i).getCountry().getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=promotions.get(i).getDiscountRate()%>
+                                                                <%=promotions.get(i).getDiscountRate()%>%
                                                             </td>
                                                             <td>
-                                                                <%=promotions.get(i).getStartDate()%>
+                                                                <% SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+                                                                    String date = DATE_FORMAT.format(promotions.get(i).getStartDate());%>
+                                                                <%=date%>
                                                             </td>
                                                             <td>
-                                                                <%=promotions.get(i).getEndDate()%>
+                                                                <% 
+                                                                    String date1 = DATE_FORMAT.format(promotions.get(i).getEndDate());%>
+                                                                <%=date1%>
                                                             </td>
                                                             <td>
                                                                 <%=promotions.get(i).getDescription()%>
@@ -193,7 +198,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

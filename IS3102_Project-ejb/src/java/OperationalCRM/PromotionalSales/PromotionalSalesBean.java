@@ -50,8 +50,6 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
         try {
             PromotionEntity promotion = new PromotionEntity(item, country, discountRate, startDate, endDate, imageURL, description);
             em.persist(promotion);
-            em.flush();
-            em.merge(promotion);
             System.out.println("Promotion added successfully.");
             return true;
         } catch (Exception ex) {
