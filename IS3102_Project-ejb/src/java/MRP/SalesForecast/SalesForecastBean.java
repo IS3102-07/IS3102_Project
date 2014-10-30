@@ -5,6 +5,7 @@ import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
+import EntityManager.SalesFigureLineItemEntity;
 import EntityManager.SalesRecordEntity;
 import EntityManager.StoreEntity;
 import java.util.ArrayList;
@@ -54,6 +55,23 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                         SalesFigureEntity saleFigure = (SalesFigureEntity) q1.getResultList().get(0);
                         saleFigure.setQuantity(saleFigure.getQuantity() + lineItem.getQuantity());
                         em.merge(saleFigure);
+
+                        Query q2 = em.createQuery("select l from SalesFigureLineItemEntity l where l.saleFigure.id = ?1 and l.SKU = ?2 ")
+                                .setParameter(1, saleFigure.getId())
+                                .setParameter(2, lineItem.getItem().getSKU());
+                        
+                        if (!q2.getResultList().isEmpty()) {
+                            SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity)q2.getResultList().get(0);
+                            salesFigureLineItem.setQuantity(salesFigureLineItem.getQuantity() + lineItem.getQuantity());  
+                            em.merge(salesFigureLineItem);
+                        } else {
+                            SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
+                            salesFigureLineItem.setSaleFigure(saleFigure);;
+                            salesFigureLineItem.setSKU(lineItem.getItem().getSKU());
+                            salesFigureLineItem.setQuantity(lineItem.getQuantity());
+                            em.persist(salesFigureLineItem);
+                        }
+
                     } else {
                         SalesFigureEntity salesFigure = new SalesFigureEntity();
                         salesFigure.setStore(saleRecord.getStore());
@@ -61,6 +79,12 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                         salesFigure.setSchedule(schedule);
                         salesFigure.setQuantity(lineItem.getQuantity());
                         em.persist(salesFigure);
+                        
+                        SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
+                        salesFigureLineItem.setSaleFigure(salesFigure);;
+                        salesFigureLineItem.setSKU(lineItem.getItem().getSKU());
+                        salesFigureLineItem.setQuantity(lineItem.getQuantity());
+                        em.persist(salesFigureLineItem);
                     }
                 }
             }
@@ -222,19 +246,19 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 SimpleRegression simpleRegression = new SimpleRegression();
 
                 for (int i = 0; i < salesFigureList.size(); i++) {
-                    
+
                     System.out.println("debug...... salesFigureList.get(i).getSchedule().getYear(): " + salesFigureList.get(i).getSchedule().getYear());
                     System.out.println("debug...... salesFigureList.get(i).getSchedule().getMonth(): " + salesFigureList.get(i).getSchedule().getMonth());
-                    
-                    simpleRegression.addData(salesFigureList.size()-i, salesFigureList.get(i).getQuantity());                    
+
+                    simpleRegression.addData(salesFigureList.size() - i, salesFigureList.get(i).getQuantity());
                 }
-                
+
                 double slope = simpleRegression.getSlope();
-                double intercept = simpleRegression.getIntercept();                
+                double intercept = simpleRegression.getIntercept();
                 double forecastQuantity = slope * (salesFigureList.size() + 1) + intercept;
-                
-                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, Math.round((float)forecastQuantity));
-                
+
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, Math.round((float) forecastQuantity));
+
                 return saleForecast;
 
             } catch (Exception ex) {
