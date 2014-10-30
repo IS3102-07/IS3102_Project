@@ -347,7 +347,8 @@
                                                                         Orders per Year
                                                                     </td>
                                                                     <td>
-
+                                                                        <% Double averageOrdersPerAcquiredYear = (Double) session.getAttribute("averageOrdersPerAcquiredYear"); %>
+                                                                        <% out.print(df.format(averageOrdersPerAcquiredYear));%>
                                                                     </td>
                                                                     <td>
 
@@ -361,8 +362,7 @@
                                                                         Avg Order Price
                                                                     </td>
                                                                     <td>
-                                                                        <% Double averageOrdersPerAcquiredYear = (Double) session.getAttribute("averageOrdersPerAcquiredYear"); %>
-                                                                        <% out.print(df.format(averageOrdersPerAcquiredYear));%>
+                                                                        
                                                                     </td>
                                                                     <td>
                                                                         testing 321
