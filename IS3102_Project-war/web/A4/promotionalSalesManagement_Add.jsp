@@ -72,6 +72,10 @@
                                     <label>Description</label>
                                     <input class="form-control" type="text" required="true" name="description" >
                                 </div>
+                                    <div>
+                                        <input type="file" name="javafile">
+                                    </div>
+                                    <br>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block" onclick="addPromotion()">
                                 </div>
