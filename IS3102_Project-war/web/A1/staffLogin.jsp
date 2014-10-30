@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block" data-loading-text="Loading...">
+                                        <input type="submit" value="Login" class="btn btn-lg btn-primary btn-block">
                                     </div>
                                 </div>
                             </form>
