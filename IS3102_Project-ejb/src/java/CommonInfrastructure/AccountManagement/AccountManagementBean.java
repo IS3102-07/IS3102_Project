@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.jws.WebParam;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
@@ -1389,5 +1390,4 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
     public void persist(Object object) {
         em.persist(object);
     }
-
 }
