@@ -359,6 +359,9 @@
                     <li>
                         <a href="../A4/customerServiceManagement.jsp">Customer Service</a>
                     </li>
+                    <li>
+                        <a href="../PromotionalSalesManagement_Servlet">Promotional Sales</a>
+                    </li>
                 </ul>
             </li>
             <% }

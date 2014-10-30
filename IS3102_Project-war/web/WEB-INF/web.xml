@@ -997,6 +997,10 @@
         <servlet-name>SalesForecast_ajax_servlet</servlet-name>
         <servlet-class>A2_servlets.SalesForecast_ajax_servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PromotionalSalesManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.PromotionalSalesManagement_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1992,6 +1996,10 @@
     <servlet-mapping>
         <servlet-name>SalesForecast_ajax_servlet</servlet-name>
         <url-pattern>/SalesForecast_ajax_servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PromotionalSalesManagement_Servlet</servlet-name>
+        <url-pattern>/PromotionalSalesManagement_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
