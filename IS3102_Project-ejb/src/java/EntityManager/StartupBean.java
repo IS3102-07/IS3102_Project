@@ -73,6 +73,9 @@ public class StartupBean {
                 roleEntity = new RoleEntity();
                 roleEntity.create("Global Manager", "Organization");
                 em.persist(roleEntity);
+                roleEntity = new RoleEntity();
+                roleEntity.create("Picker", "Facility");
+                em.persist(roleEntity);
                 System.out.println("RolesEntity init success.");
             } catch (Exception ex) {
                 System.out.println("Skipping creating of roles:\n" + ex);

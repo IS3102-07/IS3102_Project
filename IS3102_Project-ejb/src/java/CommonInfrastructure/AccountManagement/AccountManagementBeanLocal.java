@@ -127,5 +127,4 @@ public interface AccountManagementBeanLocal {
     
     public List<SalesRecordEntity> listAllSalesRecord();
 
-
 }
