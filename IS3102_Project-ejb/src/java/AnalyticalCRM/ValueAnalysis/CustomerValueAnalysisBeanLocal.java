@@ -16,6 +16,7 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
+    public Integer numOfMembersInIncomeGroup(Integer startIncome, Integer endIncome);
     public Double averageOrderPrice();
     public Double averageOrdersPerAcquiredYear();
     public Double getCustomerRetentionRate();
@@ -28,7 +29,8 @@ public interface CustomerValueAnalysisBeanLocal {
     public Integer getCustomerRecency(Long memberId);
     public Integer numOfMembersInAgeGroup(Integer startAge, Integer endAge);
     public Integer averageCummulativeSpending();
-    public Integer totalCummulativeSpending(Integer startAge, Integer endAge);
+    public Integer totalCummulativeSpendingOfAge(Integer startAge, Integer endAge);
+    public Integer totalCummulativeSpendingOfIncome(Integer startIncome, Integer endIncome);
     public Double totalMemberRevenue();
     public Double totalNonMemberRevenue();
     public Integer customerLifetimeValueOfMember(Long memberId);
