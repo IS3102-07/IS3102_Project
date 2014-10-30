@@ -24,6 +24,8 @@ public class PromotionEntity implements Serializable {
 
     @OneToOne
     private ItemEntity item;
+    @OneToOne
+    private CountryEntity country;
     private Double discountRate;
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -34,14 +36,24 @@ public class PromotionEntity implements Serializable {
 
     public PromotionEntity(){}
     
-    public PromotionEntity(ItemEntity item, Double discountRate, Date startDate, Date endDate, String imageURL, String description) {
+    public PromotionEntity(ItemEntity item, CountryEntity country, Double discountRate, Date startDate, Date endDate, String imageURL, String description) {
         this.item = item;
+        this.country = country;
         this.discountRate = discountRate;
         this.startDate = startDate;
         this.endDate = endDate;
         this.imageURL = imageURL;
         this.description = description;
     }
+
+    public CountryEntity getCountry() {
+        return country;
+    }
+
+    public void setCountry(CountryEntity country) {
+        this.country = country;
+    }
+    
     public ItemEntity getItem() {
         return item;
     }
