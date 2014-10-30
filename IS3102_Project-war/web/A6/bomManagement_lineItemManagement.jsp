@@ -1,3 +1,4 @@
+<%@page import="EntityManager.RawMaterialEntity"%>
 <%@page import="EntityManager.LineItemEntity"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.FurnitureEntity"%>
@@ -28,14 +29,14 @@
                     }
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
-                       window.event.returnValue = true;
-                        document.lineItemManagement.submit();
+                    window.event.returnValue = true;
+                    document.lineItemManagement.submit();
                 } else {
-          
-                        window.event.returnValue = true;
-                        document.lineItemManagement.action = "../BomManagement_RemoveLineItemBomServlet";
-                        document.lineItemManagement.submit();
-                    
+
+                    window.event.returnValue = true;
+                    document.lineItemManagement.action = "../BomManagement_RemoveLineItemBomServlet";
+                    document.lineItemManagement.submit();
+
                 }
             }
         </script>
@@ -138,7 +139,17 @@
                                                 <div class="form-group">
                                                     <div class="col-md-3"><br>
                                                         Raw Material SKU: 
-                                                        <input type="text" class="form-control" name="sku"/><br>
+                                                        <select required="true" name="sku" class="form-control">
+                                                            <option></option>
+                                                            <%
+                                                                List<RawMaterialEntity> rawMaterials = (List<RawMaterialEntity>) (session.getAttribute("rawMaterials"));
+                                                                if (rawMaterials != null) {
+                                                                    for (int i = 0; i < rawMaterials.size(); i++) {
+                                                                        out.println("<option value='" + rawMaterials.get(i).getSKU() + "'>" + rawMaterials.get(i).getSKU() + " : " + rawMaterials.get(i).getName() + "</option>");
+                                                                    }
+                                                                }
+                                                            %>
+                                                        </select>
                                                         Quantity: 
                                                         <input type ="number" class="form-control" name="qty"/><br>
                                                         <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="addLineItem()"  />
