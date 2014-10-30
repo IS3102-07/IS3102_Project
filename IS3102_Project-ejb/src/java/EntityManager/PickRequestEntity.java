@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class PickRequestEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,13 +23,42 @@ public class PickRequestEntity implements Serializable {
     @OneToOne
     private SalesRecordEntity salesRecord;
     private String queueNo;
-    private String status;
+    private String pickStatus;//Queued,In-progress,Completed
+    private String collectionStatus;//Picking,Ready for Collection,Collected,Uncollected
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSubmitted;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCompleted;
     @OneToOne
     private StoreEntity store;
+
+    public PickRequestEntity() {
+    }
+
+    public PickRequestEntity(PickerEntity picker, SalesRecordEntity salesRecord, String queueNo) {
+        this.picker = picker;
+        this.salesRecord = salesRecord;
+        this.queueNo = queueNo;
+        this.pickStatus = "Queued";
+        this.collectionStatus = "";
+        this.dateSubmitted = new Date();
+    }
+
+    public String getPickStatus() {
+        return pickStatus;
+    }
+
+    public void setPickStatus(String pickStatus) {
+        this.pickStatus = pickStatus;
+    }
+
+    public String getCollectionStatus() {
+        return collectionStatus;
+    }
+
+    public void setCollectionStatus(String collectionStatus) {
+        this.collectionStatus = collectionStatus;
+    }
 
     public PickerEntity getPicker() {
         return picker;
@@ -54,14 +84,6 @@ public class PickRequestEntity implements Serializable {
         this.queueNo = queueNo;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public Date getDateSubmitted() {
         return dateSubmitted;
     }
@@ -85,7 +107,6 @@ public class PickRequestEntity implements Serializable {
     public void setStore(StoreEntity store) {
         this.store = store;
     }
-    
 
     public Long getId() {
         return id;
@@ -112,5 +133,5 @@ public class PickRequestEntity implements Serializable {
             return false;
         }
         return true;
-    }    
+    }
 }

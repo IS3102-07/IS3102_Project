@@ -11,16 +11,24 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class PickerEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @OneToOne
     private StaffEntity picker;
-    
-    @OneToMany(mappedBy="picker")
+
+    @OneToMany(mappedBy = "picker")
     private List<PickRequestEntity> listOfJob;
+
+    public PickerEntity() {
+    }
+
+    public PickerEntity(StaffEntity staff) {
+        this.picker = staff;
+    }
 
     public List<PickRequestEntity> getListOfJob() {
         return listOfJob;
@@ -38,7 +46,6 @@ public class PickerEntity implements Serializable {
         this.picker = picker;
     }
 
-    
     public Long getId() {
         return id;
     }
@@ -65,5 +72,5 @@ public class PickerEntity implements Serializable {
             return false;
         }
         return true;
-    }   
+    }
 }

@@ -51,7 +51,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public Long pickerLoginStaff(String email, String password) {
         Long staffID = null;
@@ -84,37 +84,87 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
 
     @Override
     public PickRequestEntity getPickRequest(Long pickerID) {
+        System.out.println("getPickRequest() called");
+        try {
+
+        } catch (Exception ex) {
+            System.out.println("getPickRequest(): error");
+            ex.printStackTrace();
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public Integer getPickRequestQueueSize(Long pickerID){
+    public Integer getPickRequestQueueSize(Long pickerID) {
+        System.out.println("getPickRequestQueueSize() called");
+        try {
+
+        } catch (Exception ex) {
+            System.out.println("getPickRequestQueueSize(): error");
+            ex.printStackTrace();
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Boolean acceptPickRequest(Long pickerID, Long pickRequestID) {
+        System.out.println("acceptPickRequest() called");
+        try {
+
+        } catch (Exception ex) {
+            System.out.println("acceptPickRequest(): error");
+            ex.printStackTrace();
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Boolean completePickRequest(Long pickRequestID) {
+        System.out.println("completePickRequest() called");
+        try {
+
+        } catch (Exception ex) {
+            System.out.println("completePickRequest(): error");
+            ex.printStackTrace();
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Boolean pickerLogoff(Long pickerID) {
+        System.out.println("pickerLogoff() called");
+        try {
+
+        } catch (Exception ex) {
+            System.out.println("pickerLogoff(): error");
+            ex.printStackTrace();
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public Boolean addPickRequest(Long salesRecordID){
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Boolean addPickRequest(Long salesRecordID) {
+        System.out.println("addPickRequest() called");
+        try {
+            SalesRecordEntity salesRecordEntity = em.getReference(SalesRecordEntity.class, salesRecordID);
+            //PickRequestEntity pickRequestEntity = new PickRequestEntity(picker, salesRecordEntity, queueNo);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("addPickRequest(): error");
+            ex.printStackTrace();
+            return false;
+        }
     }
-    
+
     @Override
     public List<PickRequestEntity> getAllPickRequestInStore(Long storeID) {
+        System.out.println("getAllPickRequestInStore() called");
+        try {
+
+        } catch (Exception ex) {
+            System.out.println("getAllPickRequestInStore(): error");
+            ex.printStackTrace();
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }
