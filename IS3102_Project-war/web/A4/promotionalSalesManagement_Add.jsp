@@ -3,12 +3,7 @@
 <%@page import="EntityManager.FurnitureEntity"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
-    <script>
-        function addPromotion() {
-            document.promotionManagement.action = "../PromotionalSalesManagement_AddServlet";
-            document.promotionManagement.submit();
-        }
-    </script>
+   
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -37,7 +32,7 @@
                     <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" method="POST" enctype="multipart/form-data" name="promotionManagement">                        
+                            <form role="form" method="POST" enctype="multipart/form-data" action="../PromotionalSalesManagement_AddServlet"">                        
                                 <div class="form-group">
                                     <label>Item SKU</label>
                                     <input class="form-control" required="true" type="text" name="sku" >
@@ -77,7 +72,7 @@
                                     </div>
                                     <br>
                                 <div class="form-group">
-                                    <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block" onclick="addPromotion()">
+                                    <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="A4/promotionalSalesManagement_Add.jsp" name="source">
                             </form>

@@ -13,11 +13,10 @@ import javax.persistence.Query;
 
 @Stateless
 public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
-    
+
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
-    
-    
+
     @Override
     public List<PromotionEntity> getAllPromotions() {
         System.out.println("getAllPromotions() called");
@@ -29,7 +28,7 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
             return new ArrayList();
         }
     }
-     
+
     @Override
     public CountryEntity getCountryByCountryId(Long id) {
         System.out.println("getCountryByCountryId() called with id: " + id);
@@ -44,9 +43,9 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
             return null;
         }
     }
-    
-    public Boolean createPromotion(ItemEntity item, CountryEntity country, Double discountRate, Date startDate, Date endDate, String imageURL, String description){
-          System.out.println("createPromotion() called");
+
+    public Boolean createPromotion(ItemEntity item, CountryEntity country, Double discountRate, Date startDate, Date endDate, String imageURL, String description) {
+        System.out.println("createPromotion() called");
         try {
             PromotionEntity promotion = new PromotionEntity(item, country, discountRate, startDate, endDate, imageURL, description);
             em.persist(promotion);
@@ -55,13 +54,13 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
         } catch (Exception ex) {
             System.out.println("\nServer failed to add new promotion:\n" + ex);
             return false;
-        }         
+        }
     }
-    
-    public Boolean deletePromotion(Long id){
+
+    public Boolean deletePromotion(Long id) {
         System.out.println("deletePromotion() called with id:" + id);
         try {
-            PromotionEntity promotion = em.find(PromotionEntity.class, id);           
+            PromotionEntity promotion = em.find(PromotionEntity.class, id);
             em.remove(promotion);
             System.out.println("deletePromotion() is successful.");
             return true;
@@ -70,4 +69,56 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
             return false;
         }
     }
+
+    public Boolean checkIfPromotionCreated(String sku, Long countryId, Date date) {
+        System.out.println("checkIfPromotionCreated() called");
+        try {
+            List<PromotionEntity> promotions = getAllPromotions();
+            for (int i = 0; i < promotions.size(); i++) {
+                if (promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId() == countryId && promotions.get(i).getEndDate().after(date)) {
+                    return false;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to check if promotion created before");
+            return true;
+        }
+        return true;
+    }
+
+    public Boolean editPromotion(Long id, ItemEntity item, CountryEntity country, Double discountRate, Date startDate, Date endDate, String imageURL, String description) {
+        System.out.println("editPromotion is called with promotion id" + id);
+        try {
+            PromotionEntity promotion = em.find(PromotionEntity.class, id);
+            promotion.setItem(item);
+            promotion.setCountry(country);
+            promotion.setDiscountRate(discountRate);
+            promotion.setStartDate(startDate);
+            promotion.setEndDate(endDate);
+            promotion.setImageURL(imageURL);
+            promotion.setDescription(description);
+            em.flush();
+            System.out.println("\nServer edited promotion:\n" + id);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to edit promotion");
+            return false;
+        }
+    }
+     public Boolean checkIfPromotionCreated(Long id, String sku, Long countryId, Date date){
+          System.out.println("checkIfPromotionCreated() called" + id);
+          try {
+            List<PromotionEntity> promotions = getAllPromotions();
+            for (int i = 0; i < promotions.size(); i++) {
+                if (promotions.get(i).getId()!=id && promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId() == countryId && promotions.get(i).getEndDate().after(date)) {
+                    return false;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to check if promotion created before");
+            return true;
+        }
+        return true;
+    
+     }
 }

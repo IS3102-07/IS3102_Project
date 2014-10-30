@@ -6,12 +6,7 @@
 <%@page import="EntityManager.FurnitureEntity"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
-    <script>
-        function updatePromotion() {
-            document.promotionManagement.action = "../PromotionalSalesManagement_UpdateServlet";
-            document.promotionManagement.submit();
-        }
-    </script>
+
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -35,6 +30,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
+                    <jsp:include page="../displayMessage.jsp" />
                     <%
                         try {
                             String id = request.getParameter("id");
@@ -46,29 +42,32 @@
                                 }
                             }
                     %>
-                    <jsp:include page="../displayMessage.jsp" />
                     <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" method="POST" enctype="multipart/form-data" name="promotionManagement">                        
+                            <form role="form" method="POST" enctype="multipart/form-data" action="../PromotionalSalesManagement_UpdateServlet">                        
                                 <div class="form-group">
                                     <label>Item SKU</label>
                                     <input class="form-control" required="true" type="text" name="sku" value="<%=promotion.getItem().getSKU()%>">
                                 </div>
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <select required="true" name="country" value="<%=promotion.getCountry().getName()%>" class="form-control">
-                                        <option></option>
+                                    <select required="true" name="country" class="form-control">
+                                        <option value="<%=(promotion.getCountry().getId())%>"><%=promotion.getCountry().getName()%></option>
                                         <%
                                             List<CountryEntity> countries = (List<CountryEntity>) (session.getAttribute("countries"));
                                             if (countries != null) {
-                                                for (int i = 0; i < countries.size(); i++) {
-                                                    out.println("<option value='" + countries.get(i).getId() + "'>" + countries.get(i).getName() + "</option>");
+                                                for (CountryEntity country : countries) {
+                                                    if (!country.getName().equals(promotion.getCountry().getName())) {
+                                        %>
+                                        <option value="<%= country.getId()%>"> <%= country.getName()%> </option>
+                                        <% 
+                                                    }
                                                 }
                                             }
                                             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                                            String formatedDate = df.format(promotion.getStartDate());
-                                            String formatedDate1 = df.format(promotion.getEndDate());
+                                                        String formatedDate = df.format(promotion.getStartDate());
+                                                        String formatedDate1 = df.format(promotion.getEndDate());
                                         %>
                                     </select>                                
                                 </div>
@@ -93,8 +92,9 @@
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block" onclick="updatePromotion()">
+                                    <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
+                                <input type="hidden" value="<%=promotion.getId()%>" name="id">
                                 <input type="hidden" value="A4/promotionalSalesManagement_Update.jsp" name="source">
                             </form>
                         </div>
@@ -103,7 +103,7 @@
                     </div>
                     <%} catch (Exception ex) {
 
-                            //response.sendRedirect("../FurnitureManagement_FurnitureServlet");
+                            response.sendRedirect("../PromotionalSalesManagement_Servlet");
                         }%>
                 </div>
 

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 @MultipartConfig
-public class PromotionalSalesManagement_AddServlet extends HttpServlet {
+public class PromotionalSalesManagement_UpdateServlet extends HttpServlet {
 
     @EJB
     private PromotionalSalesBeanLocal promotionalSalesBeanLocal;
@@ -35,6 +35,7 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            String id = request.getParameter("id");
             String sku = request.getParameter("sku");
             String countryId = request.getParameter("country");
             String source = request.getParameter("source");
@@ -50,7 +51,7 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
             String datestring = formatter.format(date1);
 
             if (date1.before(date)) {
-                result = "?errMsg=Failed to add promotion. End date is earlier than start date.";
+                result = "?errMsg=Failed to update promotion. End date is earlier than start date.";
                 response.sendRedirect(source + result);
             }
 
@@ -58,11 +59,11 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
                 String fileName = sku + datestring + ".jpg";
                 String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
-                if (promotionalSalesBeanLocal.checkIfPromotionCreated(sku, Long.parseLong(countryId), date)) {
+                if (promotionalSalesBeanLocal.checkIfPromotionCreated(Long.parseLong(id), sku, Long.parseLong(countryId), date)) {
                     ItemEntity item = itemManagementBeanLocal.getItemBySKU(sku);
                     CountryEntity country = promotionalSalesBeanLocal.getCountryByCountryId(Long.parseLong(countryId));
-                    promotionalSalesBeanLocal.createPromotion(item, country, Double.parseDouble(discountRate), date, date1, imageURL, description);
-                    result = "?goodMsg=Promotion has been created successfully.";
+                    promotionalSalesBeanLocal.editPromotion(Long.parseLong(id), item, country, Double.parseDouble(discountRate), date, date1, imageURL, description);
+                    result = "?goodMsg=Promotion has been edited successfully.";
 
                     if (file != null) {
                         String s = file.getHeader("content-disposition");
@@ -83,9 +84,9 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
                     result = "?errMsg=There is already a promotion for the item at the country with an end date later than the start date entered";
                     response.sendRedirect(source + result);
                 }
-
+                
             } else {
-                result = "?errMsg=Failed to add promotion, SKU: " + sku + " does not exist.";
+                result = "?errMsg=Failed to edit promotion, SKU: " + sku + " does not exist.";
                 response.sendRedirect(source + result);
             }
         } catch (Exception ex) {
