@@ -33,7 +33,7 @@
                     <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" action="../MenuItemManagement_AddMenuItemServlet">
+                            <form role="form" method="POST" enctype="multipart/form-data" action="../MenuItemManagement_AddMenuItemServlet">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" name="name"  type="text" required="true">
@@ -72,6 +72,10 @@
                                     <label>Height per item</label>
                                     <input class="form-control" type="number" required="true" min="1" step="1" name="height" >
                                 </div>
+                                <div>
+                                    <input type="file" name="javafile">
+                                </div>
+                                <br/>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>

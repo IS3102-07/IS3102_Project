@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../MenuItemManagement_UpdateMenuItemServlet">
+                            <form role="form" method="POST" enctype="multipart/form-data" action="../MenuItemManagement_UpdateMenuItemServlet">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" required="true" name="name" type="text" value="<%=menuItem.getName()%>">
@@ -81,6 +81,9 @@
                                     <label>Height per item</label>
                                     <input class="form-control" type="text" required="true" name="height" value="<%=menuItem.getHeight()%>" disabled>
                                 </div>
+                                <div>
+                                        <input type="file" name="javafile">
+                                </div><br/>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
