@@ -8,6 +8,29 @@
     <jsp:include page="/B/header.html" />
     <body>
         <script>
+            function validatePassword() {
+                var password = document.getElementById("password").value;
+                var repassword = document.getElementById("repassword").value;
+                var ok = true;
+                if ((password != null && repassword != null) || (password != "" && repassword != "")) {
+                    if (password != repassword) {
+                        //alert("Passwords Do not match");
+                        document.getElementById("password").style.borderColor = "#E34234";
+                        document.getElementById("repassword").style.borderColor = "#E34234";
+                        alert("Passwords do not match. Please key again.");
+                        ok = false;
+                    } else if (password == repassword) {
+                        if (password.length < 8) {
+                            alert("Passwords too short. At least 8 characters.");
+                            ok = false;
+                        }
+                    }
+                } else {
+                    return ok;
+                }
+                return ok;
+            }
+     
             function pdpaWindow() {
                 var myWindow = window.open("http://localhost:8080/IS3102_Project-war/B/pdpa.html");
             }
@@ -49,7 +72,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div id="overview" class="tab-pane active">
-                                    <form role="form" action="/IS3102_Project-war/ECommerce_MemberEditProfileServlet">
+                                    <form role="form" action="/IS3102_Project-war/ECommerce_MemberEditProfileServlet" onsubmit="return validatePassword()">
                                         <h4>Personal Information</h4>
                                         <div class="form-group">
                                             <label>Name</label>

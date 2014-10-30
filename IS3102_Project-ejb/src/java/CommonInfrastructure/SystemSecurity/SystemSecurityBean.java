@@ -306,12 +306,12 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
             if (msg != null) {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
-                msg.setSubject("Island Furniture Staff Account Password Reset");
+                msg.setSubject("Island Furniture Member Account Password Reset");
                 String messageText = "Greetings from Island Furniture... \n\n"
                         + "Here is your activation code to be keyed in in order to reset your member account password :\n\n"
                         + "Email: " + email + "\n\n"
                         + "Activation Code: " + passwordReset + "\n\n"
-                        + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/B/memberResetPassword.jsp?email=" + email;
+                        + "Link to reset your password: http://localhost:8080/IS3102_Project-war/B/memberResetPassword.jsp?email=" + email;
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();

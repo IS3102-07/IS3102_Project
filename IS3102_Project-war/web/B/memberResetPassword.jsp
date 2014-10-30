@@ -34,7 +34,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2>Login / Register</h2>
+                            <h2>Forgot Password</h2>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Forgot Password</h4>
-                                        <form action="/IS3102_Project-war/ECommerce_ResetPasswordServlet">
+                                        <form role="form" action="/IS3102_Project-war/ECommerce_ResetPasswordServlet" onsubmit="return validatePassword()">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">
@@ -69,7 +69,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-12">
                                                         <label>Enter your new password</label>
-                                                        <input type="password" name="password" class="form-control input-lg" required>
+                                                        <input type="password" name="password" id="password" class="form-control input-lg" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -77,7 +77,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-12">
                                                         <label>Enter your new password</label>
-                                                        <input type="password" name="repassword" class="form-control input-lg" required>
+                                                        <input type="password" name="repassword" id="repassword" class="form-control input-lg" required>
                                                     </div>
                                                 </div>
                                             </div>
