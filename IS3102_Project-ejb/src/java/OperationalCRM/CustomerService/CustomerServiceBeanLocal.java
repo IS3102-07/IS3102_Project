@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package OperationalCRM.CustomerService;
 
+import EntityManager.FeedbackEntity;
+import EntityManager.SalesRecordEntity;
+import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author Jason
- */
 @Local
 public interface CustomerServiceBeanLocal {
-    
+
+    public List<SalesRecordEntity> viewSalesRecord(Long storeId);
+
+    public List<FeedbackEntity> viewFeedback();
+
 }

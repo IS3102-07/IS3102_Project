@@ -26,6 +26,10 @@ public class ECommerce_SelectCountry extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String country = request.getParameter("Country");
+            if (country == null) {
+                response.sendRedirect("/B/selectCountry.jsp");
+                return;
+            }
             Long countryID = facilityManagementBeanLocal.getCountryID(country);
             List<CountryEntity> fullCountryList = facilityManagementBeanLocal.getListOfCountries();
             CountryEntity selectedCountry = null;
@@ -44,31 +48,31 @@ public class ECommerce_SelectCountry extends HttpServlet {
             switch (country) {
                 case "France":
                     session.setAttribute("URLprefix", "FRA/");
-                    response.sendRedirect("B/FRA/index.jsp");
+                    response.sendRedirect("/IS3102_Project-war/B/FRA/index.jsp");
                     break;
                 case "USA":
                     session.setAttribute("URLprefix", "USA/");
-                    response.sendRedirect("B/USA/index.jsp");
+                    response.sendRedirect("/IS3102_Project-war/B/USA/index.jsp");
                     break;
                 case "China":
                     session.setAttribute("URLprefix", "CN/");
-                    response.sendRedirect("B/CN/index.jsp");
+                    response.sendRedirect("/IS3102_Project-war/B/CN/index.jsp");
                     break;
                 case "Singapore":
                     session.setAttribute("URLprefix", "SG/");
-                    response.sendRedirect("B/SG/index.jsp");
+                    response.sendRedirect("/IS3102_Project-war/B/SG/index.jsp");
                     break;
                 case "Malaysia":
                     session.setAttribute("URLprefix", "MY/");
-                    response.sendRedirect("B/MY/index.jsp");
+                    response.sendRedirect("/IS3102_Project-war/B/MY/index.jsp");
                     break;
                 case "Indonesia":
                     session.setAttribute("URLprefix", "IDN/");
-                    response.sendRedirect("B/IDN/index.jsp");
+                    response.sendRedirect("/IS3102_Project-war/B/IDN/index.jsp");
                     break;
                 default:
                     session.setAttribute("URLprefix", "");
-                    response.sendRedirect("B/index.jsp");
+                    response.sendRedirect("/IS3102_Project-war/B/index.jsp");
                     break;
             }
 

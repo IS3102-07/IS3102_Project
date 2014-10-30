@@ -30,11 +30,15 @@ public class ECommerce_RetailProductsServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
+            }
             
             List<RetailProductEntity> retailProducts = itemManagementBean.listAllRetailProduct();
             session.setAttribute("retailProducts", retailProducts);
             
-            response.sendRedirect("B/retailProducts.jsp");
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "retailProducts.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

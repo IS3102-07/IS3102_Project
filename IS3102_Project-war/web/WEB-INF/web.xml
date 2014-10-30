@@ -530,10 +530,6 @@
         <servlet-class>B_servlets.ECommerce_ActivateMemberServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_PromotionServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_PromotionServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ECommerce_StoresServlet</servlet-name>
         <servlet-class>B_servlets.ECommerce_StoresServlet</servlet-class>
     </servlet>
@@ -571,59 +567,59 @@
     </servlet>
     <servlet>
         <servlet-name>StoreStorageBinManagement_AddServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreStorageBinManagement_AddServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreStorageBinManagement_AddServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreStorageBinManagement_RemoveServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreStorageBinManagement_RemoveServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreStorageBinManagement_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreStorageBinManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.StoreStorageBinManagement_Servlet</servlet-class>
+        <servlet-class>A7_servlets.StoreStorageBinManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreStorageBinManagement_UpdateServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreStorageBinManagement_UpdateServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreStorageBinManagement_UpdateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RetailInventoryControl_RemoveServlet</servlet-name>
-        <servlet-class>A4_servlets.RetailInventoryControl_RemoveServlet</servlet-class>
+        <servlet-class>A7_servlets.RetailInventoryControl_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RetailInventoryControl_Servlet</servlet-name>
-        <servlet-class>A4_servlets.RetailInventoryControl_Servlet</servlet-class>
+        <servlet-class>A7_servlets.RetailInventoryControl_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RetailWarehouseManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.RetailWarehouseManagement_Servlet</servlet-class>
+        <servlet-class>A7_servlets.RetailWarehouseManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderLineItemManagement_OriginBinItemsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_RemoveServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_RemoveServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderLineItemManagement_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_Servlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderLineItemManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderLineItemManagement_UpdateServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderLineItemManagement_UpdateServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderLineItemManagement_UpdateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderManagement_AddServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderManagement_AddServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderManagement_AddServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderManagement_RemoveServlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderManagement_RemoveServlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderManagement_RemoveServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoreTransferOrderManagement_Servlet</servlet-name>
-        <servlet-class>A4_servlets.StoreTransferOrderManagement_Servlet</servlet-class>
+        <servlet-class>A7_servlets.StoreTransferOrderManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ECommerce_ContactUsServlet</servlet-name>
@@ -735,19 +731,19 @@
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_Servlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_Servlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_AddSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_UpdateSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-name>
-        <servlet-class>A6_servlets.SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-class>
+        <servlet-class>A3_servlets.SupplierItemInfoManagement_RemoveSupplierItemInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MRP_main_GET</servlet-name>
@@ -772,10 +768,6 @@
     <servlet>
         <servlet-name>MRP_purchaseOrder</servlet-name>
         <servlet-class>A2_servlets.MRP_purchaseOrder</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_TablesDesksServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MemberManagement_MemberServlet</servlet-name>
@@ -806,12 +798,8 @@
         <servlet-class>B_servlets.ECommerce_RetailProductsServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_BathroomServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_BathroomServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_BedsMattressesServlet</servlet-class>
+        <servlet-name>ECommerce_FurnitureCategoryServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_FurnitureCategoryServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>A8/KitchenSaleForecast_index</servlet-name>
@@ -824,34 +812,6 @@
     <servlet>
         <servlet-name>A8/KitchenSaleForecast_main</servlet-name>
         <jsp-file>/A8/KitchenSaleForecast_main.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_LightingsServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_LightingsServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_SofasChairServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_SofasChairServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_CabinetsStorageServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_CabinetsStorageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_ChildrenServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_ChildrenServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_StudyServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_StudyServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_RestaurantServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_RestaurantServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_PointOfSalesServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RestaurantManagement_AddRawIngredient</servlet-name>
@@ -1004,6 +964,34 @@
     <servlet>
         <servlet-name>ComboLineItemManagement_RemoveServlet</servlet-name>
         <servlet-class>A6_servlets.ComboLineItemManagement_RemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_ajax_Servlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_ajax_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_SalesRecordServlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_SalesRecordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_viewSalesRecordServlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_viewSalesRecordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesRecordManagement_SalesRecordDetailsServlet</servlet-name>
+        <servlet-class>A4_servlets.SalesRecordManagement_SalesRecordDetailsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FeedbackManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.FeedbackManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PickerLogin_Servlet</servlet-name>
+        <servlet-class>A4_servlets.PickerLogin_Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -1534,10 +1522,6 @@
         <url-pattern>/ECommerce_ActivateMemberServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_PromotionServlet</servlet-name>
-        <url-pattern>/ECommerce_PromotionServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ECommerce_StoresServlet</servlet-name>
         <url-pattern>/ECommerce_StoresServlet</url-pattern>
     </servlet-mapping>
@@ -1778,10 +1762,6 @@
         <url-pattern>/MRP_purchaseOrder/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_TablesDesksServlet</servlet-name>
-        <url-pattern>/ECommerce_TablesDesksServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>MemberManagement_MemberServlet</servlet-name>
         <url-pattern>/MemberManagement_MemberServlet</url-pattern>
     </servlet-mapping>
@@ -1810,12 +1790,8 @@
         <url-pattern>/ECommerce_RetailProductsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ECommerce_BathroomServlet</servlet-name>
-        <url-pattern>/ECommerce_BathroomServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_BedsMattressesServlet</servlet-name>
-        <url-pattern>/ECommerce_BedsMattressesServlet</url-pattern>
+        <servlet-name>ECommerce_FurnitureCategoryServlet</servlet-name>
+        <url-pattern>/ECommerce_FurnitureCategoryServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>A8/KitchenSaleForecast_index</servlet-name>
@@ -1828,34 +1804,6 @@
     <servlet-mapping>
         <servlet-name>A8/KitchenSaleForecast_main</servlet-name>
         <url-pattern>/A8/KitchenSaleForecast_main</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_LightingsServlet</servlet-name>
-        <url-pattern>/ECommerce_LightingsServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_SofasChairServlet</servlet-name>
-        <url-pattern>/ECommerce_SofasChairServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_CabinetsStorageServlet</servlet-name>
-        <url-pattern>/ECommerce_CabinetsStorageServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_ChildrenServlet</servlet-name>
-        <url-pattern>/ECommerce_ChildrenServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_StudyServlet</servlet-name>
-        <url-pattern>/ECommerce_StudyServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_RestaurantServlet</servlet-name>
-        <url-pattern>/ECommerce_RestaurantServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_PointOfSalesServlet</servlet-name>
-        <url-pattern>/ECommerce_PointOfSalesServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RestaurantManagement_AddRawIngredient</servlet-name>
@@ -2008,6 +1956,43 @@
     <servlet-mapping>
         <servlet-name>ComboLineItemManagement_RemoveServlet</servlet-name>
         <url-pattern>/ComboLineItemManagement_RemoveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_Servlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_ajax_Servlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_ajax_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_SalesRecordServlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_SalesRecordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_viewSalesRecordServlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_viewSalesRecordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesRecordManagement_SalesRecordDetailsServlet</servlet-name>
+        <url-pattern>/SalesRecordManagement_SalesRecordDetailsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeedbackManagement_Servlet</servlet-name>
+        <url-pattern>/FeedbackManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Viewpoint Secure URLs</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <servlet-mapping>
+        <servlet-name>PickerLogin_Servlet</servlet-name>
+        <url-pattern>/PickerLogin_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

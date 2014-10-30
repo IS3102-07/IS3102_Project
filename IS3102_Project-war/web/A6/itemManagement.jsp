@@ -71,17 +71,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-md-4">
-                                <div class="featured-box featured-box-sevenary">
-                                    <div class="box-content">
-                                        <a href="../SupplierItemInfoManagement_Servlet"><i class="icon-featured icon icon-truck"> </i>
-                                            <h4>Supplier Item Info Management</h4>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!-- /.container-fluid -->

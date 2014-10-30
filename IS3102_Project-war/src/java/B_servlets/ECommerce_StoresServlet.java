@@ -36,11 +36,15 @@ public class ECommerce_StoresServlet extends HttpServlet {
             
             HttpSession session;
             session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
+            }
             
             List<StoreEntity> stores = faciltyManagementBean.viewListOfStore();
             session.setAttribute("stores", stores);
 
-            response.sendRedirect("B/storeLocation.jsp");
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "storeLocation.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

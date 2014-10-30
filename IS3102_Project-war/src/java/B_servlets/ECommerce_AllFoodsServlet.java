@@ -1,7 +1,9 @@
 package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
 import EntityManager.FurnitureEntity;
+import EntityManager.MenuItemEntity;
 import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +21,7 @@ import java.util.List;
 public class ECommerce_AllFoodsServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
+    private RestaurantManagementBeanLocal restaurantManagementBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,10 +33,13 @@ public class ECommerce_AllFoodsServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             
-            List<RetailProductEntity> retailProducts = itemManagementBean.listAllRetailProduct();
-            session.setAttribute("retailProducts", retailProducts);
-            
-            response.sendRedirect("B/allRetailProducts.jsp");
+            List<MenuItemEntity> menuItems = restaurantManagementBeanLocal.listAllMenuItem();
+            session.setAttribute("menuItems", menuItems);
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
+            }
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "restaurant.jsp");
             
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

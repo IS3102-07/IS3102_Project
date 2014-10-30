@@ -357,7 +357,7 @@
                         <a href="../LoyaltyManagement_Servlet">Loyalty & Rewards</a>
                     </li>
                     <li>
-                        <a href="#">Customer Service</a>
+                        <a href="../A4/customerServiceManagement.jsp">Customer Service</a>
                     </li>
                 </ul>
             </li>

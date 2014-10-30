@@ -26,37 +26,15 @@ public class ECommerce_AllRetailProductsServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
-            
+
             List<RetailProductEntity> retailProducts = itemManagementBean.listAllRetailProduct();
             session.setAttribute("retailProducts", retailProducts);
-            
-            String country = (String) session.getAttribute("countryName");
-            if (country == null) {
-                country = "";
+
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
             }
-            switch (country) {
-//                case "France":
-//                    response.sendRedirect("B/FRA/allRetailProducts.jsp");
-//                    break;
-//                case "USA":
-//                    response.sendRedirect("B/USA/allRetailProducts.jsp");
-//                    break;
-//                case "China":
-//                    response.sendRedirect("B/CN/allRetailProducts.jsp");
-//                    break;
-//                case "Singapore":
-//                    response.sendRedirect("B/SG/allRetailProducts.jsp");
-//                    break;
-//                case "Malaysia":
-//                    response.sendRedirect("B/MY/allRetailProducts.jsp");
-//                    break;
-//                case "Indonesia":
-//                    response.sendRedirect("B/IDN/allRetailProducts.jsp");
-//                    break;
-                default:
-                    response.sendRedirect("B/allRetailProducts.jsp");
-                    break;
-            }
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "allRetailProducts.jsp");
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
         }

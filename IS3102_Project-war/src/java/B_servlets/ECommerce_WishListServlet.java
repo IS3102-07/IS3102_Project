@@ -51,6 +51,10 @@ public class ECommerce_WishListServlet extends HttpServlet {
 
             HttpSession session;
             session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
+            }
 
             WishListEntity wishList = ecb.getWishList(email);
             session.setAttribute("wishList", wishList);
@@ -63,7 +67,7 @@ public class ECommerce_WishListServlet extends HttpServlet {
             if (errMsg == null) {
                 errMsg = "";
             }
-            response.sendRedirect("B/wishList.jsp?errMsg=" + errMsg);
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "wishList.jsp?errMsg=" + errMsg);
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

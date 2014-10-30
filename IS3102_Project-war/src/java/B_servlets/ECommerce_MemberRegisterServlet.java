@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.tanesha.recaptcha.ReCaptchaImpl;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
@@ -25,6 +26,12 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session;
+            session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
+            }
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             boolean isExist = accountManagementBean.checkMemberEmailExists(email);
@@ -32,7 +39,7 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
 
             if (isExist) {
                 result = "Email already exist. Please try again.";
-                response.sendRedirect("B/memberLogin.jsp?errMsg=" + result);
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberLogin.jsp?errMsg=" + result);
             } else {
                 String remoteAddr = request.getRemoteAddr();
                 ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
@@ -45,62 +52,56 @@ public class ECommerce_MemberRegisterServlet extends HttpServlet {
                 if (reCaptchaResponse.isValid()) {
                     accountManagementBean.registerMember(null, null, null, email, null, null, null, null, password);
                     systemSecurityBean.sendActivationEmailForMember(email);
-                    result = "?goodMsg=You have registered successfully.";
-                    response.sendRedirect("B/memberLogin.jsp" + result);
+                    result = "?goodMsg=You have registered successfully. Check your email to activate your account!";
+                    response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberLogin.jsp" + result);
                 } else {
                     result = "?errMsg=You have entered an wrong Captcha code.";
-                    response.sendRedirect("B/memberLogin.jsp" + result);
+                    response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberLogin.jsp" + result);
                 }
             }
         } catch (Exception ex) {
             out.println(ex);
-        ex.printStackTrace();
+            ex.printStackTrace();
         }
     }
-        
-        
+
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-        /**
-         * Handles the HTTP <code>GET</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doGet
-        (HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            processRequest(request, response);
-        }
-
-        /**
-         * Handles the HTTP <code>POST</code> method.
-         *
-         * @param request servlet request
-         * @param response servlet response
-         * @throws ServletException if a servlet-specific error occurs
-         * @throws IOException if an I/O error occurs
-         */
-        @Override
-        protected void doPost
-        (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            processRequest(request, response);
-        }
-
-        /**
-         * Returns a short description of the servlet.
-         *
-         * @return a String containing servlet description
-         */
-        @Override
-        public String getServletInfo
-
-        
-            () {
-        return "Short description";
-        }// </editor-fold>
-
+        processRequest(request, response);
     }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

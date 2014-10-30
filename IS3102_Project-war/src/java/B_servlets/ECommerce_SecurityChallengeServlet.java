@@ -26,16 +26,20 @@ public class ECommerce_SecurityChallengeServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                URLprefix="";
+            }
             String email = request.getParameter("email");
 
             boolean ifExist = accountManagementBean.checkMemberEmailExists(email);
             if (ifExist) {                
                 MemberEntity member = accountManagementBean.getMemberByEmail(email);
-                session.setAttribute("member", member);
-                response.sendRedirect("./B/forgotPasswordSecurity.jsp?email=" + result);
+                session.setAttribute("memberForgetPassword", member);
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "forgotPasswordSecurity.jsp?email=" +email);
             } else {
-                result = "?errMsg=Staff email does not exist.";
-                response.sendRedirect("./B/forgotPassword.jsp" + result);
+                result = "?errMsg=Account does not exist.";
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "forgotPassword.jsp" + result);
             }
         } catch (Exception ex) {
             System.out.println(ex);

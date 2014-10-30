@@ -5,14 +5,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
         <script>
             var totalPrice = 0;
             for (var i = 0, n = wishList.getItems().size; i < n; i++) {
-                    totalPrice += wishList.getItems().get(i).get
-                }
-            
+                totalPrice += wishList.getItems().get(i).get
+            }
+
             function removeItem() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -23,11 +23,11 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.wishList.action = "../ECommerce_WishListServlet";
+                    document.wishList.action = "/IS3102_Project-war/ECommerce_WishListServlet";
                     document.wishList.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.wishList.action = "../ECommerce_RemoveItemFromListServlet";
+                    document.wishList.action = "/IS3102_Project-war/ECommerce_RemoveItemFromListServlet";
                     document.wishList.submit();
                 }
             }
@@ -96,19 +96,7 @@
                                     <div class="featured-box featured-box-secundary featured-box-cart">
                                         <div class="box-content">
                                             <form method="post" action="" name="wishList">
-                                                <%
-                                                    String errMsg = request.getParameter("errMsg");
-                                                    if (errMsg == null) {
-                                                        out.println("Successfully added item to wishlist.");
-                                                    } else if (errMsg != null) {
-                                                        if (!errMsg.equals("")) {
-                                                            out.println(errMsg);
-                                                        }
-                                                    } else if (errMsg == "") {
-                                                        out.println("Successfully added item to wishlist.");
-                                                    }
-
-                                                %>
+                                                <jsp:include page="/displayMessageLong.jsp" />
                                                 <table cellspacing="0" class="shop_table cart">
                                                     <thead>
                                                         <tr>                                                                
@@ -122,80 +110,42 @@
                                                                 Product
                                                             </th>
 
-                                                            <th class="product-price">
-                                                                Price
-                                                            </th>
                                                             <th class="product-quantity">
                                                                 Quantity
-                                                            </th>
-                                                            <th class="product-subtotal">
-                                                                Total
                                                             </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <%WishListEntity wishList = (WishListEntity) (session.getAttribute("wishList"));
+                                                            List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                                                            List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
+                                                            try {
+                                                                if (wishList != null && wishList.getItems().size() > 0) {
+                                                                    for (int i = 0; i < wishList.getItems().size(); i++) {
+                                                        %>
                                                         <tr class="cart_table_item">
 
-                                                            <%WishListEntity wishList = (WishListEntity) (session.getAttribute("wishList"));
-                                                                List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
-                                                                List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
-                                                                try {
-                                                                    if (wishList != null) {
-                                                                        for (int i = 0; i < wishList.getItems().size(); i++) {
-                                                            %>
+
                                                             <td class="product-remove">
                                                                 <input type="checkbox" name="delete" value="<%=wishList.getItems().get(i).getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
                                                                 <a href="shop-product-sidebar.html">
-                                                                    <img width="100" height="100" alt="" class="img-responsive" src="../img/products/<%=i % 5%>.JPG">
+                                                                    <img width="100" height="100" alt="" class="img-responsive" src="/IS3102_Project-war/img/products/<%=i % 5%>.JPG">
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
                                                                 <a href="shop-product-sidebar.html"><%=wishList.getItems().get(i).getName()%></a>
                                                             </td>
 
-                                                            <td class="product-price">
-                                                                $<span class="amount" id="price<%=wishList.getItems().get(i).getId()%>">
-                                                                    <%
-                                                                        for (int j = 0; j < item_countryList.size(); j++) {
-                                                                            if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
-                                                                    %>
-                                                                    <%=item_countryList.get(j).getRetailPrice()%>
-
-                                                                    <%
-                                                                                break;
-                                                                            }
-                                                                        }
-
-                                                                    %>
-                                                                </span>
-                                                            </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
                                                                     <div class="quantity">
-                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=wishList.getItems().get(i).getId()%>)">
+                                                                        <input type="button" class="minus" value="-">
                                                                         <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=wishList.getItems().get(i).getId()%>">
-                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=wishList.getItems().get(i).getId()%>)">
+                                                                        <input type="button" class="plus" value="+">
                                                                     </div>
                                                                 </form>
-                                                            </td>
-                                                            <td class="product-subtotal">
-                                                                $<span class="amount" id="totalPrice<%=wishList.getItems().get(i).getId()%>">
-                                                                    <%
-                                                                        for (int j = 0; j < item_countryList.size(); j++) {
-                                                                            if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
-                                                                    %>
-                                                                    <%=item_countryList.get(j).getRetailPrice()%>
-
-                                                                    <%
-                                                                                break;
-                                                                            }
-                                                                        }
-
-                                                                    %>
-                                                                </span>
-
                                                             </td>
                                                         </tr>
 
@@ -205,16 +155,11 @@
                                                                 System.out.println(ex);
                                                             }
                                                         %>
-
-
-                                                        <tr>
-                                                            <td>
-                                                                <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Item</button></a>
-                                                            </td>
-                                                            
-                                                        </tr>
                                                     </tbody>
                                                 </table>
+                                                <%if (wishList != null && wishList.getItems().size() > 0) {%>
+                                                <div align="left"><a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Item(s)</button></a></div>
+                                                <%}%>
                                             </form>
                                         </div>
                                     </div>
@@ -245,7 +190,7 @@
                             <h4>Alert</h4>
                         </div>
                         <div class="modal-body">
-                            <p id="messageBox">Item will be removed. Are you sure?</p>
+                            <p id="messageBox">The selected item(s) will be removed from your wishlist. Are you sure?</p>
                         </div>
                         <div class="modal-footer">                        
                             <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeItem()"  />
@@ -259,14 +204,14 @@
             <jsp:include page="footer.html" />
 
             <!-- Theme Initializer -->
-            <script src="../js/theme.plugins.js"></script>
-            <script src="../js/theme.js"></script>
+            <script src="/IS3102_Project-war/js/theme.plugins.js"></script>
+            <script src="/IS3102_Project-war/js/theme.js"></script>
 
             <!-- Current Page JS -->
-            <script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-            <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-            <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-            <script src="../js/views/view.home.js"></script>   
+            <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+            <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+            <script src="/IS3102_Project-war/vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+            <script src="/IS3102_Project-war/js/views/view.home.js"></script>   
         </div>
     </body>
 </html>

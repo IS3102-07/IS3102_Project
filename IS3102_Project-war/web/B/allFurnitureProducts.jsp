@@ -15,7 +15,7 @@
     }
 %>
 <html> <!--<![endif]-->
-    <jsp:include page="header.html" />
+    <jsp:include page="/B/header.html" />
     <body>
         <%
             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
@@ -39,7 +39,7 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <h2 class="shorter"><strong>Shop</strong></h2>
+                                <h2 class="shorter"><strong>All Furnitures</strong></h2>
                                 <p>Showing <%=furnitures.size()%> results.</p>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                     <span class="product-thumb-info">
                                         <span class="product-thumb-info-image">
                                             <span class="product-thumb-info-act">                                                
-                                                <span class="product-thumb-info-act-left"><a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"  style="color: white"><em>View Details</em></a></span>
+                                                <span class="product-thumb-info-act-left"><a href="furnitureProductDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"  style="color: white"><em>View Details</em></a></span>
                                             </span>
                                             <img alt="" class="img-responsive" src="<%=furnitures.get(i).getImageURL()%>">
                                         </span>
@@ -83,14 +83,14 @@
 
                                             %>
                                             <br/>
-                                            <a href="productDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
+                                            <a href="furnitureProductDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
 
                                         </span>
                                         <%
                                             if (displayWishlistOption == true) {
                                         %>
 
-                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                        <a href="/IS3102_Project-war/ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                             <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Wishlist"/>
                                         </a>
                                         <%

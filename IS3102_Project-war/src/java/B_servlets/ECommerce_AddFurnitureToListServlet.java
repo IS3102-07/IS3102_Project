@@ -46,11 +46,11 @@ public class ECommerce_AddFurnitureToListServlet extends HttpServlet {
             
             String sku = request.getParameter("SKU");
 
-            Boolean testing = ecb.addItemToWishlist(sku, member.getId()); //got problem here
+            Boolean addResult = ecb.addItemToWishlist(sku, member.getId());
             System.out.println("ECommerce_AddFurnitureToListServlet: Ends successfully.");
             
             result = "Item added successfully.";
-            if (testing) {
+            if (addResult) {
                 response.sendRedirect("ECommerce_WishListServlet?errMsg=" + result);
             } else {
                 result = "Item already added to cart.";

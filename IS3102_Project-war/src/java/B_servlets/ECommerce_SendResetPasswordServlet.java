@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ECommerce_SendResetPasswordServlet extends HttpServlet {
 
@@ -23,20 +24,27 @@ public class ECommerce_SendResetPasswordServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession session;
+            session = request.getSession();
+            String URLprefix = (String) session.getAttribute("URLprefix");
+            if (URLprefix == null) {
+                URLprefix="";
+            }
             String email = request.getParameter("email");
             String securityAnswer = request.getParameter("securityAnswer");
 
             MemberEntity member = accountManagementBean.getMemberByEmail(email);
-            if (securityAnswer == member.getSecurityAnswer()) {
+            if (securityAnswer.equals(member.getSecurityAnswer())) {
                 systemSecurityBean.sendPasswordResetEmailForMember(email);
-                result = "?goodMsg=Send email successful." + email;
-                response.sendRedirect("./B/memberResetPassword.jsp" + result);
+                result = "?goodMsg=Password reset code sent. Check your email for the code to be filled in below.";
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberResetPassword.jsp" + result);
+            } else {
+                result = "?errMsg=Security answer is not correct.";
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "forgotPasswordSecurity.jsp" + result);
             }
 
         } catch (Exception ex) {
-            System.out.println(ex);
-        } finally {
-            System.out.close();
+            ex.printStackTrace();
         }
     }
 
