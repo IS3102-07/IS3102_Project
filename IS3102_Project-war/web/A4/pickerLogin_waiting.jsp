@@ -6,10 +6,7 @@
 </head>
 <body style="margin-top: 0px;">
     <script>
-        function validatePassword() {
-            document.LoginForm.action = "../PickerLogin_Servlet";
-            document.LoginForm.submit();
-        }
+
     </script>
     <div class="body" >
         <div class="header-container">
@@ -24,9 +21,7 @@
 
         <div role="main" class="main">
             <div class="container">
-                <jsp:include page="../displayMessageLong.jsp" />
-
-                <form role="form" name="LoginForm"  onsubmit="validatePassword()">
+                <form role="form" name="LoginForm" onsubmit="../PickerLogin_Servlet">
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-12">

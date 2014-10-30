@@ -35,6 +35,65 @@ public class Analytical_SegmentationMarketingServlet extends HttpServlet {
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
             session.setAttribute("members", members);
             
+            Integer cummulativeSpendingAgeGrp1 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(17, 26);
+            Integer cummulativeSpendingAgeGrp2 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(25, 41);
+            Integer cummulativeSpendingAgeGrp3 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(40, 56);
+            Integer cummulativeSpendingAgeGrp4 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(55, 76);
+            
+            session.setAttribute("cummulativeSpendingAgeGrp1", cummulativeSpendingAgeGrp1);
+            session.setAttribute("cummulativeSpendingAgeGrp2", cummulativeSpendingAgeGrp2);
+            session.setAttribute("cummulativeSpendingAgeGrp3", cummulativeSpendingAgeGrp3);
+            session.setAttribute("cummulativeSpendingAgeGrp4", cummulativeSpendingAgeGrp4);
+            
+            Integer numOfMembersInAgeGroup1 = customerValueAnalysisBean.numOfMembersInAgeGroup(17, 26);
+            Integer numOfMembersInAgeGroup2 = customerValueAnalysisBean.numOfMembersInAgeGroup(25, 41);
+            Integer numOfMembersInAgeGroup3 = customerValueAnalysisBean.numOfMembersInAgeGroup(40, 56);
+            Integer numOfMembersInAgeGroup4 = customerValueAnalysisBean.numOfMembersInAgeGroup(55, 76);
+
+            session.setAttribute("numOfMembersInAgeGroup1", numOfMembersInAgeGroup1);
+            session.setAttribute("numOfMembersInAgeGroup2", numOfMembersInAgeGroup2);
+            session.setAttribute("numOfMembersInAgeGroup3", numOfMembersInAgeGroup3);
+            session.setAttribute("numOfMembersInAgeGroup4", numOfMembersInAgeGroup4);
+            
+            Integer numOfMembersInIncomeGroup1 = customerValueAnalysisBean.numOfMembersInIncomeGroup(0, 30000);
+            Integer numOfMembersInIncomeGroup2 = customerValueAnalysisBean.numOfMembersInIncomeGroup(20000, 60000);
+            Integer numOfMembersInIncomeGroup3 = customerValueAnalysisBean.numOfMembersInIncomeGroup(30000, 100000);
+            Integer numOfMembersInIncomeGroup4 = customerValueAnalysisBean.numOfMembersInIncomeGroup(40000, 250000);
+
+            session.setAttribute("numOfMembersInIncomeGroup1", numOfMembersInIncomeGroup1);
+            session.setAttribute("numOfMembersInIncomeGroup2", numOfMembersInIncomeGroup2);
+            session.setAttribute("numOfMembersInIncomeGroup3", numOfMembersInIncomeGroup3);
+            session.setAttribute("numOfMembersInIncomeGroup4", numOfMembersInIncomeGroup4);
+            
+            Integer cummulativeSpendingIncomeGrp1 = customerValueAnalysisBean.totalCummulativeSpendingOfIncome(0, 30000);
+            Integer cummulativeSpendingIncomeGrp2 = customerValueAnalysisBean.totalCummulativeSpendingOfIncome(20000, 60000);
+            Integer cummulativeSpendingIncomeGrp3 = customerValueAnalysisBean.totalCummulativeSpendingOfIncome(30000, 100000);
+            Integer cummulativeSpendingIncomeGrp4 = customerValueAnalysisBean.totalCummulativeSpendingOfIncome(40000, 250000);
+            
+            session.setAttribute("cummulativeSpendingIncomeGrp1", cummulativeSpendingIncomeGrp1);
+            session.setAttribute("cummulativeSpendingIncomeGrp2", cummulativeSpendingIncomeGrp2);
+            session.setAttribute("cummulativeSpendingIncomeGrp3", cummulativeSpendingIncomeGrp3);
+            session.setAttribute("cummulativeSpendingIncomeGrp4", cummulativeSpendingIncomeGrp4);
+            
+            Integer numOfMembersInJoinDateGroup1 = customerValueAnalysisBean.numOfMembersInIncomeGroup(0, 30000);
+            Integer numOfMembersInJoinDateGroup2 = customerValueAnalysisBean.numOfMembersInIncomeGroup(20000, 60000);
+            Integer numOfMembersInJoinDateGroup3 = customerValueAnalysisBean.numOfMembersInIncomeGroup(30000, 100000);
+            Integer numOfMembersInJoinDateGroup4 = customerValueAnalysisBean.numOfMembersInIncomeGroup(40000, 250000);
+
+            session.setAttribute("numOfMembersInJoinDateGroup1", numOfMembersInIncomeGroup1);
+            session.setAttribute("numOfMembersInJoinDateGroup2", numOfMembersInIncomeGroup2);
+            session.setAttribute("numOfMembersInJoinDateGroup3", numOfMembersInIncomeGroup3);
+            session.setAttribute("numOfMembersInJoinDateGroup4", numOfMembersInIncomeGroup4);
+            
+            Integer cummulativeSpendingJoinDateGrp1 = customerValueAnalysisBean.totalCummulativeSpendingOfIncome(0, 30000);
+            Integer cummulativeSpendingJoinDateGrp2 = customerValueAnalysisBean.totalCummulativeSpendingOfIncome(20000, 60000);
+            Integer cummulativeSpendingJoinDateGrp3 = customerValueAnalysisBean.totalCummulativeSpendingOfIncome(30000, 100000);
+            Integer cummulativeSpendingJoinDateGrp4 = customerValueAnalysisBean.totalCummulativeSpendingOfIncome(40000, 250000);
+            
+            session.setAttribute("cummulativeSpendingJoinDateGrp1", cummulativeSpendingJoinDateGrp1);
+            session.setAttribute("cummulativeSpendingJoinDateGrp2", cummulativeSpendingJoinDateGrp2);
+            session.setAttribute("cummulativeSpendingJoinDateGrp3", cummulativeSpendingJoinDateGrp3);
+            session.setAttribute("cummulativeSpendingJoinDateGrp4", cummulativeSpendingJoinDateGrp4);
 
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/segmentationMarketing.jsp");

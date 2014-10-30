@@ -361,6 +361,25 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
     
     @Override
+    public Integer totalCummulativeSpendingOfJoinDate(Integer startDate, Integer endDate) {
+        System.out.println("totalCummulativeSpendingOfJoinDate()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            Long numOfDaysBetween = date.getTime() - member.getJoinDate().getTime();
+            days = (int) (long) TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS);
+            if (days > startDate && days < endDate) {
+                totalCummulativeSpending += member.getCummulativeSpending();
+            }
+        }
+        System.out.println("totalCummulativeSpending is : " + totalCummulativeSpending);
+        return totalCummulativeSpending;
+    }
+    
+    @Override
     public Integer totalCummulativeSpendingOfIncome(Integer startIncome, Integer endIncome) {
         System.out.println("totalCummulativeSpendingOfIncome()");
         List<MemberEntity> members = accountManagementBean.listAllMember();

@@ -16,6 +16,7 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
+    public Integer totalCummulativeSpendingOfJoinDate(Integer startDate, Integer endDate);
     public Integer numOfMembersInIncomeGroup(Integer startIncome, Integer endIncome);
     public Double averageOrderPrice();
     public Double averageOrdersPerAcquiredYear();
