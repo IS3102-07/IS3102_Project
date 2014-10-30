@@ -1,3 +1,4 @@
+<%@page import="EntityManager.RawIngredientEntity"%>
 <%@page import="EntityManager.LineItemEntity"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.MenuItemEntity"%>
@@ -138,7 +139,17 @@
                                                 <div class="form-group">
                                                     <div class="col-md-3"><br>
                                                         Raw Ingredient SKU: 
-                                                        <input type="text" class="form-control" name="sku"/><br>
+                                                        <select required="true" name="sku" class="form-control">
+                                                            <option></option>
+                                                            <%
+                                                                List<RawIngredientEntity> rawIngredients = (List<RawIngredientEntity>) (session.getAttribute("rawIngredients"));
+                                                                if (rawIngredients != null) {
+                                                                    for (int i = 0; i < rawIngredients.size(); i++) {
+                                                                        out.println("<option value='" + rawIngredients.get(i).getSKU() + "'>" + rawIngredients.get(i).getSKU() + " : " + rawIngredients.get(i).getName() + "</option>");
+                                                                    }
+                                                                }
+                                                            %>
+                                                        </select>
                                                         Quantity: 
                                                         <input type ="number" class="form-control" name="qty"/><br>
                                                         <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="addLineItem()"  />

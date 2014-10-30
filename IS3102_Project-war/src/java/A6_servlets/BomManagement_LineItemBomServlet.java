@@ -3,6 +3,7 @@ package A6_servlets;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.BillOfMaterialEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.RawMaterialEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -29,11 +30,13 @@ public class BomManagement_LineItemBomServlet extends HttpServlet {
             Long bomId = Long.parseLong(request.getParameter("id"));
             BillOfMaterialEntity bom = itemManagementBean.viewSingleBOM(bomId);
             List<LineItemEntity> bomListLineOfItems = bom.getListOfLineItems();
+            List<RawMaterialEntity> rawMaterials = itemManagementBean.listAllRawMaterials();
 
             HttpSession session = request.getSession();
             session.setAttribute("bomListLineOfItems", bomListLineOfItems);
             session.setAttribute("bomId", bomId);
-      
+            session.setAttribute("rawMaterials", rawMaterials);
+
             
              if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/bomManagement_lineItemManagement.jsp?bomName=" + bom.getName());

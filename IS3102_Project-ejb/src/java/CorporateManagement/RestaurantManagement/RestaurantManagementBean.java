@@ -10,6 +10,7 @@ import EntityManager.RecipeEntity;
 import EntityManager.SupplierEntity;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -59,14 +60,24 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
     }
 
     @Override
-    public boolean removeRawIngredients(String SKU) {
-        System.out.println("removeRawIngredient() called with SKU:" + SKU);
+    public boolean removeRawIngredients(String id) {
+        System.out.println("removeRawIngredient() called with SKU:" + id);
         try {
-            RawIngredientEntity rawIngredientEntity = em.getReference(RawIngredientEntity.class, Long.valueOf(SKU));
+            RawIngredientEntity rawIngredientEntity = em.getReference(RawIngredientEntity.class, Long.valueOf(id));
             rawIngredientEntity.setIsDeleted(true);
             em.merge(rawIngredientEntity);
             em.flush();
             System.out.println("removeRawIngredient(): Raw ingridient removed succesfully");
+            List<RecipeEntity> recipes = listAllRecipe();
+            for (int i = 0; i < recipes.size(); i++) {
+                List<LineItemEntity> lineItems = recipes.get(i).getListOfLineItems();
+                for (LineItemEntity lineItem : lineItems) {
+                    if (Objects.equals(lineItem.getItem().getId(), Long.valueOf(id))) {
+                        deleteLineItemFromRecipe(lineItem.getId(), recipes.get(i).getId());
+                    }
+                    break;
+                }
+            }
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("removeRawIngredient(): Failed to find SKU");

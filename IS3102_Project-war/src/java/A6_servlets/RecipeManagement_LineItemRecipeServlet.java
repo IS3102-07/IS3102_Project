@@ -2,6 +2,7 @@ package A6_servlets;
 
 import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
 import EntityManager.LineItemEntity;
+import EntityManager.RawIngredientEntity;
 import EntityManager.RecipeEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,11 +30,12 @@ public class RecipeManagement_LineItemRecipeServlet extends HttpServlet {
             Long recipeId = Long.parseLong(request.getParameter("id"));
             RecipeEntity recipe = restaurantManagementBean.viewSingleRecipe(recipeId);
             List<LineItemEntity> recipeListLineOfItems = recipe.getListOfLineItems();
+            List<RawIngredientEntity> rawIngredients = restaurantManagementBean.listAllRawIngredients();
 
             HttpSession session = request.getSession();
             session.setAttribute("recipeListLineOfItems", recipeListLineOfItems);
             session.setAttribute("recipeId", recipeId);
-      
+            session.setAttribute("rawIngredients", rawIngredients);
             
              if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A6/recipeManagement_lineItemManagement.jsp?recipeName=" + recipe.getName());

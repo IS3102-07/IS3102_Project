@@ -15,7 +15,9 @@ import EntityManager.SupplierEntity;
 import EntityManager.Supplier_ItemEntity;
 import HelperClasses.ReturnHelper;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Remove;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -64,14 +66,24 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     }
 
     @Override
-    public boolean removeRawMaterial(String SKU) {
-        System.out.println("removeRawMaterial() called with SKU:" + SKU);
+    public boolean removeRawMaterial(String id) {
+        System.out.println("removeRawMaterial() called with id:" + id);
         try {
-            RawMaterialEntity rawMaterialEntity = em.getReference(RawMaterialEntity.class, Long.valueOf(SKU));
+            RawMaterialEntity rawMaterialEntity = em.getReference(RawMaterialEntity.class, Long.valueOf(id));
             rawMaterialEntity.setIsDeleted(true);
             em.merge(rawMaterialEntity);
             em.flush();
-            System.out.println("removeRawMaterial(): Furniture removed succesfully");
+            System.out.println("removeRawMaterial(): Raw Material removed succesfully");
+            List<BillOfMaterialEntity> boms = listAllBOM();
+            for (int i = 0; i < boms.size(); i++) {
+                List<LineItemEntity> lineItems = boms.get(i).getListOfLineItems();
+                for (LineItemEntity lineItem : lineItems) {
+                    if (Objects.equals(lineItem.getItem().getId(), Long.valueOf(id))) {
+                        deleteLineItemFromBOM(lineItem.getId(), boms.get(i).getId());
+                    }
+                    break;
+                }
+            }
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("removeRawMaterial(): Failed to find SKU");
