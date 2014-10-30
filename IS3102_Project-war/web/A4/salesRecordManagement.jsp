@@ -17,10 +17,10 @@
                             <h1 class="page-header">Sales Record Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-user"><a href="../A4/customerServiceManagement.jsp"></i> Customer Service</a>
+                                    <i class="icon icon-user"><a href="../A4/customerServiceManagement.jsp"></i> Customer Service
                                 </li>  
                                 <li>
-                                    <i class="icon icon-align-center"></i> Sales Record Management</a>
+                                    <i class="icon icon-align-center"></i> Sales Record Management
                                 </li>                                
                             </ol>
                         </div>
