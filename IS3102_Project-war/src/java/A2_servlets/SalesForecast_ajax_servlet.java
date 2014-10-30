@@ -46,7 +46,7 @@ public class SalesForecast_ajax_servlet extends HttpServlet {
 
             case "/average":
                 try (PrintWriter out = response.getWriter()) {
-                    SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroupId, schedulelId);
+                    SaleForecastEntity saleForecast = sfBean.getSalesForecastMovingAverage(storeId, productGroupId, schedulelId);
                     out.write(";"+saleForecast.getQuantity()+";");                    
                 }
                 break;

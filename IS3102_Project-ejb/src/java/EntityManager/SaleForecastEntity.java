@@ -30,7 +30,7 @@ public class SaleForecastEntity implements Serializable {
     private MonthScheduleEntity schedule;
     @ManyToOne
     private MenuItemEntity menuItem;
-    
+    private String method;
     private Integer quantity;
     
     public SaleForecastEntity(){}    
@@ -56,6 +56,14 @@ public class SaleForecastEntity implements Serializable {
     public void setSchedule(MonthScheduleEntity schedule) {
         this.schedule = schedule;
     }    
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
     
     public Integer getQuantity() {
         return quantity;

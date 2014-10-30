@@ -106,8 +106,7 @@ public class SaleForecast_Servlet extends HttpServlet {
                     List<ProductGroupEntity> productGroupList = imBean.getAllProductGroup();
                     List<SaleForecastEntity> saleForecastList = new ArrayList<>();
                     for (ProductGroupEntity productGroup : productGroupList) {
-                        SaleForecastEntity saleForecast = sfBean.getSalesForecastLinearRegression(storeId, productGroup.getId(), schedulelId);
-//                        SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
+                        SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
                         saleForecastList.add(saleForecast);
                     }
 
@@ -128,33 +127,7 @@ public class SaleForecast_Servlet extends HttpServlet {
                 Long productGroupId = Long.parseLong(request.getParameter("productGroupId"));
                 session.setAttribute("productGroupId", productGroupId);
                 nextPage = "/SaleForecast_Servlet/ViewSaleFigure_GET";
-                break;
-                
-            case "/AverageMethod":
-                try {
-                    Long storeId = (long) session.getAttribute("sf_storeId");
-                    Long schedulelId = (long) session.getAttribute("scheduleId");
-                    List<ProductGroupEntity> productGroupList = imBean.getAllProductGroup();
-                    List<SaleForecastEntity> saleForecastList = new ArrayList<>();
-                    for (ProductGroupEntity productGroup : productGroupList) {
-                        SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
-//                        SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
-                        saleForecastList.add(saleForecast);
-                    }
-
-                    store = fmBean.viewStoreEntity(storeId);
-                    MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
-
-                    request.setAttribute("store", store);
-                    request.setAttribute("schedule", schedule);
-                    request.setAttribute("saleForecastList", saleForecastList);
-                                        
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                nextPage = "/A2/SaleForecast_main";
-                break;
-                
+                break;                                
 
             case "/ViewSaleFigure_GET":
                 productGroupId = (long) session.getAttribute("productGroupId");                
