@@ -162,6 +162,10 @@ public class MemberEntity implements Serializable {
     public Boolean getIsDeleted() {
         return isDeleted;
     }
+    
+    public Integer getIncome() {
+        return this.income;
+    }
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;

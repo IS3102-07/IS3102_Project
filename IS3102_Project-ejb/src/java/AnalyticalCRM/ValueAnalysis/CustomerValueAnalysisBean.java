@@ -346,13 +346,28 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
 
     @Override
-    public Integer totalCummulativeSpending(Integer startAge, Integer endAge) {
-        System.out.println("totalCummulativeSpending()");
+    public Integer totalCummulativeSpendingOfAge(Integer startAge, Integer endAge) {
+        System.out.println("totalCummulativeSpendingOfAge()");
         List<MemberEntity> members = accountManagementBean.listAllMember();
 
         int totalCummulativeSpending = 0;
         for (MemberEntity member : members) {
             if (member.getAge() > startAge && member.getAge() < endAge) {
+                totalCummulativeSpending += member.getCummulativeSpending();
+            }
+        }
+        System.out.println("totalCummulativeSpending is : " + totalCummulativeSpending);
+        return totalCummulativeSpending;
+    }
+    
+    @Override
+    public Integer totalCummulativeSpendingOfIncome(Integer startIncome, Integer endIncome) {
+        System.out.println("totalCummulativeSpendingOfIncome()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            if (member.getIncome() > startIncome && member.getIncome() < endIncome) {
                 totalCummulativeSpending += member.getCummulativeSpending();
             }
         }
@@ -380,6 +395,20 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         int numOfmembersInGroup = 0;
         for (int i = 0; i < members.size(); i++) {
             if (members.get(i).getAge() > startAge && members.get(i).getAge() < endAge) {
+                numOfmembersInGroup++;
+            }
+        }
+        return numOfmembersInGroup;
+    }
+    
+    @Override
+    public Integer numOfMembersInIncomeGroup(Integer startIncome, Integer endIncome) {
+        System.out.println("numOfMembersInIncomeGroup()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+
+        int numOfmembersInGroup = 0;
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getIncome() > startIncome && members.get(i).getIncome() < endIncome) {
                 numOfmembersInGroup++;
             }
         }
