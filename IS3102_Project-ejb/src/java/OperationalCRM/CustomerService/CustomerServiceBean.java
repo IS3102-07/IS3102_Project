@@ -69,6 +69,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
                     out.println(new Date().toString() + ";" + staffID + ";pickerLoginStaff();" + staffID + ";");
                     out.close();
                     PickerEntity pickerEntity = new PickerEntity();
+                    pickerEntity.setPicker(staffEntity);
                     pickerEntity.setListOfJob(new ArrayList<>());
                     em.persist(pickerEntity);
                     return pickerEntity.getId();
@@ -83,6 +84,11 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
 
     @Override
     public PickRequestEntity getPickRequest(Long pickerID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public Integer getPickRequestQueueSize(Long pickerID){
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -101,5 +107,14 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
+    public Boolean addPickRequest(Long salesRecordID){
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<PickRequestEntity> getAllPickRequestInStore(Long storeID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
