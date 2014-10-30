@@ -149,6 +149,9 @@
                                                         <li>
                                                             <a href="#clv" data-toggle="tab">CLV</a>
                                                         </li>
+                                                        <li>
+                                                            <a href="#products" data-toggle="tab">Products</a>
+                                                        </li>
                                                     </ul>
                                                     <div class="tab-content">
                                                         <div id="rfm" class="tab-pane active">
@@ -432,6 +435,8 @@
                                                                 </tr>
                                                             </table>
                                                         </div>
+                                                                    <div id="products" class="tab-pane">
+                                                                    </div>
                                                     </div>
                                                 </div>
                                             </div>
