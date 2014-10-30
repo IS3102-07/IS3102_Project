@@ -993,6 +993,10 @@
         <servlet-name>PickerLogin_Servlet</servlet-name>
         <servlet-class>A4_servlets.PickerLogin_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SalesForecast_ajax_servlet</servlet-name>
+        <servlet-class>A2_servlets.SalesForecast_ajax_servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -1993,6 +1997,10 @@
     <servlet-mapping>
         <servlet-name>PickerLogin_Servlet</servlet-name>
         <url-pattern>/PickerLogin_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesForecast_ajax_servlet</servlet-name>
+        <url-pattern>/SalesForecast_ajax_servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
