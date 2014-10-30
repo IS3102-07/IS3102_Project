@@ -110,14 +110,8 @@
                                                                 Product
                                                             </th>
 
-                                                            <th class="product-price">
-                                                                Price
-                                                            </th>
                                                             <th class="product-quantity">
                                                                 Quantity
-                                                            </th>
-                                                            <th class="product-subtotal">
-                                                                Total
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -144,45 +138,14 @@
                                                                 <a href="shop-product-sidebar.html"><%=wishList.getItems().get(i).getName()%></a>
                                                             </td>
 
-                                                            <td class="product-price">
-                                                                $<span class="amount" id="price<%=wishList.getItems().get(i).getId()%>">
-                                                                    <%
-                                                                        for (int j = 0; j < item_countryList.size(); j++) {
-                                                                            if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
-                                                                    %>
-                                                                    <%=item_countryList.get(j).getRetailPrice()%>
-
-                                                                    <%
-                                                                                break;
-                                                                            }
-                                                                        }
-
-                                                                    %>
-                                                                </span>
-                                                            </td>
                                                             <td class="product-quantity">
                                                                 <form enctype="multipart/form-data" method="post" class="cart">
                                                                     <div class="quantity">
-                                                                        <input type="button" class="minus" value="-" onclick="minus(<%=wishList.getItems().get(i).getId()%>)">
+                                                                        <input type="button" class="minus" value="-">
                                                                         <input type="text" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1" id="<%=wishList.getItems().get(i).getId()%>">
-                                                                        <input type="button" class="plus" value="+" onclick="plus(<%=wishList.getItems().get(i).getId()%>)">
+                                                                        <input type="button" class="plus" value="+">
                                                                     </div>
                                                                 </form>
-                                                            </td>
-                                                            <td class="product-subtotal">
-                                                                $<span class="amount" id="totalPrice<%=wishList.getItems().get(i).getId()%>">
-                                                                    <%
-                                                                        for (int j = 0; j < item_countryList.size(); j++) {
-                                                                            if (item_countryList.get(j).getItem().getId().equals(furnitures.get(i).getId())) {
-                                                                    %>
-                                                                    <%=item_countryList.get(j).getRetailPrice()%>
-
-                                                                    <%
-                                                                                break;
-                                                                            }
-                                                                        }
-                                                                    %>
-                                                                </span>
                                                             </td>
                                                         </tr>
 

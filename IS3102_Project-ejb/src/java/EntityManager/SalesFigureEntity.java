@@ -1,11 +1,15 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class SalesFigureEntity implements Serializable {
@@ -22,12 +26,23 @@ public class SalesFigureEntity implements Serializable {
     private ProductGroupEntity productGroup;
     @ManyToOne
     private MenuItemEntity menuItem;
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy="saleFigure")
+    private List<SalesFigureLineItemEntity> lineItemList;  
     
-    public SalesFigureEntity(){}
-    
+    public SalesFigureEntity(){
+        this.lineItemList = new ArrayList<>();
+    }    
     
     public MonthScheduleEntity getSchedule() {
         return schedule;
+    }
+
+    public List<SalesFigureLineItemEntity> getLineItemList() {
+        return lineItemList;
+    }
+
+    public void setLineItemList(List<SalesFigureLineItemEntity> lineItemList) {
+        this.lineItemList = lineItemList;
     }
 
     public void setSchedule(MonthScheduleEntity schedule) {

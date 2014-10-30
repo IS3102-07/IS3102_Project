@@ -42,7 +42,7 @@ public class ECommerce_FurnitureCategoryServlet extends HttpServlet {
                 response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
             }
             String categoryEncoded = URLEncoder.encode(category);
-            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "furniture.jsp?cat=" +categoryEncoded);
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "furnitureCategory.jsp?cat=" +categoryEncoded);
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

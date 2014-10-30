@@ -49,6 +49,33 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
                 session.setAttribute("nextLoyaltyTier", nextLoyaltyTier);
                 session.setAttribute("member", memberEntity);
                 session.setAttribute("loyaltyTiers", loyaltyTiers);
+                if (memberEntity.getCountry() != null) {
+                    String country = memberEntity.getCountry().getName();
+                    switch (country) {
+                        case "France":
+                            session.setAttribute("URLprefix", "FRA/");
+                            break;
+                        case "USA":
+                            session.setAttribute("URLprefix", "USA/");
+                            break;
+                        case "China":
+                            session.setAttribute("URLprefix", "CN/");
+                            break;
+                        case "Singapore":
+                            session.setAttribute("URLprefix", "SG/");
+                            break;
+                        case "Malaysia":
+                            session.setAttribute("URLprefix", "MY/");
+                            break;
+                        case "Indonesia":
+                            session.setAttribute("URLprefix", "IDN/");
+                            break;
+                        default:
+                            session.setAttribute("URLprefix", "");
+                            break;
+                    }
+                }
+                session.setAttribute("URLprefix", URLprefix);
                 response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberProfile.jsp");
             } else {
                 result = "Login fail. Please try again.";
