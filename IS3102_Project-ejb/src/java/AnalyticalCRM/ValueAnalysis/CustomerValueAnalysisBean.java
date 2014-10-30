@@ -81,6 +81,55 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return  ((double)numOfOrders / (double)numOfMembers);
     }
+    
+    @Override
+    public Double averageOrderPrice() {
+        System.out.println("averageOrderPrice()");       
+
+        Integer numOfOrders = 0;
+        Integer numOfMembers = 0;
+        Integer numOfMembersNotChurn = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+            numOfMembers = members.size();
+            for (MemberEntity member : members) {
+                Calendar c = Calendar.getInstance();
+                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
+                 
+                c.setTime(member.getJoinDate());
+                c.add(Calendar.DATE, 365);
+                Date churnDate = c.getTime();
+                System.out.println("Inside members list");
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    System.out.println("This member has purchases records of " + member.getPurchases().size());
+                    
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        System.out.println("Looping through purchases");
+                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                        System.out.println("Number of days from churn date is " + days);
+                        if (days > 0) {
+                            numOfMembersNotChurn++;
+                            numOfOrders++;
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println("This member has NO purchases records");
+                }
+            }
+            DecimalFormat df = new DecimalFormat("#.00"); 
+            System.out.println("average order per year is " + numOfOrders);
+            return  ((double)numOfOrders / (double)numOfMembers);
+        } catch (Exception ex) {
+            
+            System.out.println("\nServer failed to list orders per year:\n" + ex);
+            ex.printStackTrace();
+        }
+        return  ((double)numOfOrders / (double)numOfMembers);
+    }
+    
     @Override
     public Double getCustomerRetentionRate() {
         System.out.println("getCustomerRetentionRate()");       
