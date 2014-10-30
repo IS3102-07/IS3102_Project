@@ -25,11 +25,16 @@ public class LoyaltyManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+
 
             List<LoyaltyTierEntity> loyaltyTiers = loyaltyAndRewardsBeanLocal.getAllLoyaltyTiers();
             session.setAttribute("loyaltyTiers", loyaltyTiers);
-            if (errMsg == null || errMsg.equals("")) {
+            
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A4/loyaltyManagement.jsp");
+            } else if ((errMsg == null) && (goodMsg != null)) {
+                response.sendRedirect("A4/loyaltyManagement.jsp?goodMsg="+ goodMsg);
             } else {
                 response.sendRedirect("A4/loyaltyManagement.jsp?errMsg=" + errMsg);
             }

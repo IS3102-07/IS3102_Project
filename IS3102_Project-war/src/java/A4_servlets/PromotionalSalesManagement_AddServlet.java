@@ -50,7 +50,7 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
             String datestring = formatter.format(date1); 
 
             if (date1.before(date)){
-                result = "?errMsg=Failed to add promotion. End Date is earlier than start date.";
+                result = "?errMsg=Failed to add promotion. End date is earlier than start date.";
                 response.sendRedirect(source + result);
             }
             

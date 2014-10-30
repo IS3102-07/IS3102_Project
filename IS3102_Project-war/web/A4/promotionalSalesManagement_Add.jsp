@@ -37,7 +37,7 @@
                     <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" name="promotionManagement">                        
+                            <form role="form" method="POST" enctype="multipart/form-data" name="promotionManagement">                        
                                 <div class="form-group">
                                     <label>Item SKU</label>
                                     <input class="form-control" required="true" type="text" name="sku" >

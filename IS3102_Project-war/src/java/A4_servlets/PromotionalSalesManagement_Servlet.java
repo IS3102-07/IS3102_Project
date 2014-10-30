@@ -25,11 +25,14 @@ public class PromotionalSalesManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
-
+            String goodMsg = request.getParameter("goodMsg");
             List<PromotionEntity> promotions = promotionalSalesBeanLocal.getAllPromotions();
             session.setAttribute("promotions", promotions);
-            if (errMsg == null || errMsg.equals("")) {
+            
+            if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A4/promotionalSalesManagement.jsp");
+            } else if ((errMsg == null) && (goodMsg != null)) {
+                response.sendRedirect("A4/promotionalSalesManagement.jsp?goodMsg="+ goodMsg);
             } else {
                 response.sendRedirect("A4/promotionalSalesManagement.jsp?errMsg=" + errMsg);
             }
