@@ -58,10 +58,10 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             session.setAttribute("memberFrequencyValue", memberFrequencyValue);
             session.setAttribute("memberMonetaryValue", memberMonetaryValue);
 
-            Integer cummulativeSpendingAgeGrp1 = customerValueAnalysisBean.totalCummulativeSpending(17, 26);
-            Integer cummulativeSpendingAgeGrp2 = customerValueAnalysisBean.totalCummulativeSpending(25, 41);
-            Integer cummulativeSpendingAgeGrp3 = customerValueAnalysisBean.totalCummulativeSpending(40, 56);
-            Integer cummulativeSpendingAgeGrp4 = customerValueAnalysisBean.totalCummulativeSpending(55, 76);
+            Integer cummulativeSpendingAgeGrp1 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(17, 26);
+            Integer cummulativeSpendingAgeGrp2 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(25, 41);
+            Integer cummulativeSpendingAgeGrp3 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(40, 56);
+            Integer cummulativeSpendingAgeGrp4 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(55, 76);
             Integer averageCummulativeSpending = customerValueAnalysisBean.averageCummulativeSpending();
 
             session.setAttribute("cummulativeSpendingAgeGrp1", cummulativeSpendingAgeGrp1);
