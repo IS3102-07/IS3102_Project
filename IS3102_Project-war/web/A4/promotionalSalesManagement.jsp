@@ -9,7 +9,7 @@
         <script>
             function updatePromotion(id) {
                 promotionManagement.id.value = id;
-                document.promotionManagement.action = "promotionManagement_Update.jsp";
+                document.promotionManagement.action = "promotionSalesManagement_Update.jsp";
                 document.promotionManagement.submit();
             }
             function removePromotion() {
@@ -22,17 +22,17 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.promotionManagement.action = "../PromotionManagement_Servlet";
+                    document.promotionManagement.action = "../PromotionalSalesManagement_Servlet";
                     document.promotionManagement.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.promotionManagement.action = "../PromotionManagement_RemoveServlet";
+                    document.promotionManagement.action = "../PromotionalSalesManagement_RemoveServlet";
                     document.promotionManagement.submit();
                 }
             }
             function addPromotion() {
                 window.event.returnValue = true;
-                document.promotionManagement.action = "promotionManagement_Add.jsp";
+                document.promotionManagement.action = "promotionalSalesManagement_Add.jsp";
                 document.promotionManagement.submit();
             }
             function checkAll(source) {

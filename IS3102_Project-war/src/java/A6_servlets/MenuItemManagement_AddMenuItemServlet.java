@@ -1,13 +1,17 @@
 package A6_servlets;
 
 import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 public class MenuItemManagement_AddMenuItemServlet extends HttpServlet {
 
@@ -23,15 +27,34 @@ public class MenuItemManagement_AddMenuItemServlet extends HttpServlet {
             String name = request.getParameter("name");
             String category = request.getParameter("category");
             String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
             Integer _length = Integer.parseInt(request.getParameter("length"));
             Integer width = Integer.parseInt(request.getParameter("width"));
             Integer height = Integer.parseInt(request.getParameter("height"));
             String source = request.getParameter("source");
+            Part file = request.getPart("javafile");
+
 
             if (!restaurantManagementBean.checkSKUExists(SKU)) {
+                String fileName = SKU + ".jpg";
+                String imageURL = "/IS3102_Project-war/img/products/" + fileName;
+                
                 restaurantManagementBean.addMenuItem(SKU, name, category, description, imageURL, _length, width, height);
                 result = "?goodMsg=Menu item with SKU: " + SKU + " has been created successfully.";
+                
+                if (file != null) {
+                    String s = file.getHeader("content-disposition");
+                    InputStream fileInputStream = file.getInputStream();
+                    OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+
+                    System.out.println("fileOutputStream  " + fileOutputStream);
+                    int nextByte;
+                    while ((nextByte = fileInputStream.read()) != -1) {
+                        fileOutputStream.write(nextByte);
+                    }
+                    fileOutputStream.close();
+                    fileInputStream.close();
+                }
+                
                 response.sendRedirect("MenuItemManagement_MenuItemServlet" + result);
             } else {
                 result = "?errMsg=Failed to add menu item, SKU: " + SKU + " already exist.";

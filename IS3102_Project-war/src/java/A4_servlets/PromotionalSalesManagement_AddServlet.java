@@ -1,65 +1,56 @@
-package A6_servlets;
+package A4_servlets;
 
-import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
-import java.io.FileOutputStream;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.CountryEntity;
+import EntityManager.ItemEntity;
+import OperationalCRM.PromotionalSales.PromotionalSalesBeanLocal;
+import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
-public class MenuItemManagement_UpdateMenuItemServlet extends HttpServlet {
+public class PromotionalSalesManagement_AddServlet extends HttpServlet {
 
     @EJB
-    private RestaurantManagementBeanLocal restaurantManagementBean;
-    private String result;
+    private PromotionalSalesBeanLocal promotionalSalesBeanLocal;
+    @EJB 
+    private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocal;   
+    @EJB 
+    private ItemManagementBeanLocal itemManagementBeanLocal;  
+    String result;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String SKU  = request.getParameter("SKU");
-            String name = request.getParameter("name");
-            String category = request.getParameter("category");
+            String sku = request.getParameter("sku");
+            String countryId = request.getParameter("country");
+            String source = request.getParameter("source");
+            String discountRate = request.getParameter("discountRate");
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
             String description = request.getParameter("description");
-            String id = request.getParameter("id");
-            
-            Part file = request.getPart("javafile");
+            String imageURL = request.getParameter("imageURL");
 
-            String fileName = SKU + ".jpg";
-            String imageURL = "/IS3102_Project-war/img/products/" + fileName;
-
-            if (file != null) {
-                String s = file.getHeader("content-disposition");
-                InputStream fileInputStream = file.getInputStream();
-                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
-
-                System.out.println("fileOutputStream  " + fileOutputStream);
-                int nextByte;
-                while ((nextByte = fileInputStream.read()) != -1) {
-                    fileOutputStream.write(nextByte);
-                }
-                fileOutputStream.close();
-                fileInputStream.close();
-            }
-            
-            
-            boolean canUpdate = restaurantManagementBean.editMenuItem(id, SKU, name, category, description, imageURL);
-            if (!canUpdate) {
-                result = "?errMsg=Please try again.";
-                response.sendRedirect("menuItemManagement_update.jsp" + result);
+            if (inboundAndOutboundLogisticsBeanLocal.checkSKUExists(sku)){
+                ItemEntity item = itemManagementBeanLocal.getItemBySKU(sku);
+                CountryEntity country = promotionalSalesBeanLocal.getCountryByCountryId(Long.parseLong(countryId));
+                promotionalSalesBeanLocal.createPromotion(item,country,Double.parseDouble(discountRate),Date.parse(startDate),Date.parse(endDate),description);
+                result = "?goodMsg=Promotion has been created successfully.";
+                response.sendRedirect("PromotionalSalesManagement_Servlet" + result);
             } else {
-                result = "?goodMsg=Menu item updated successfully.";
-                response.sendRedirect("MenuItemManagement_MenuItemServlet" + result);
+                result = "?errMsg=Failed to add promotion, SKU: " + sku + " does not exist.";
+                response.sendRedirect(source + result);
             }
         } catch (Exception ex) {
             out.println(ex);
-
+        } finally {
+            out.close();
         }
     }
 
