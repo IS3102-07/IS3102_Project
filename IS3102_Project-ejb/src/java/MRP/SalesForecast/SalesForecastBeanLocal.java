@@ -14,6 +14,8 @@ public interface SalesForecastBeanLocal {
     
         public SaleForecastEntity getSalesForecast(Long storeId, Long productGroupId, Long scheduleId);
     
+        public SaleForecastEntity getSalesForecastMovingAverage(Long storeId, Long productGroupId, Long scheduleId);
+    
         public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long productGroupId, Integer year);
         
         public Boolean updateSalesFigureBySalesRecord(Long salesRecordId);

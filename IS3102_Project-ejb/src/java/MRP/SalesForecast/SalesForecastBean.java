@@ -59,10 +59,10 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                         Query q2 = em.createQuery("select l from SalesFigureLineItemEntity l where l.saleFigure.id = ?1 and l.SKU = ?2 ")
                                 .setParameter(1, saleFigure.getId())
                                 .setParameter(2, lineItem.getItem().getSKU());
-                        
+
                         if (!q2.getResultList().isEmpty()) {
-                            SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity)q2.getResultList().get(0);
-                            salesFigureLineItem.setQuantity(salesFigureLineItem.getQuantity() + lineItem.getQuantity());  
+                            SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity) q2.getResultList().get(0);
+                            salesFigureLineItem.setQuantity(salesFigureLineItem.getQuantity() + lineItem.getQuantity());
                             em.merge(salesFigureLineItem);
                         } else {
                             SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
@@ -79,7 +79,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                         salesFigure.setSchedule(schedule);
                         salesFigure.setQuantity(lineItem.getQuantity());
                         em.persist(salesFigure);
-                        
+
                         SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
                         salesFigureLineItem.setSaleFigure(salesFigure);;
                         salesFigureLineItem.setSKU(lineItem.getItem().getSKU());
@@ -115,7 +115,8 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
     }
 
     @Override
-    public SaleForecastEntity getSalesForecast(Long storeId, Long productGroupId, Long scheduleId) {
+    public SaleForecastEntity getSalesForecastMovingAverage(Long storeId, Long productGroupId, Long scheduleId) {
+        System.out.println("getSalesForecastMovingAverage is called.");
         try {
             Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                     .setParameter(1, productGroupId)
@@ -161,7 +162,9 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 }
 
                 SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, amount / 3);
-                System.out.println("debug......" + " saleForecast is returned ");
+                saleForecast.setMethod("A");
+                em.persist(saleForecast);
+                
                 return saleForecast;
 
             } catch (Exception ex) {
@@ -191,6 +194,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
         return new ArrayList<>();
     }
 
+    @Override
     public SaleForecastEntity getSalesForecastLinearRegression(Long storeId, Long productGroupId, Long scheduleId) {
         System.out.println("debug......" + "getSalesForecastLinearRegression is called.");
         try {
@@ -213,9 +217,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                 List<SalesFigureEntity> salesFigureList = new ArrayList<>();
 
-                MonthScheduleEntity lastSchedule = schedule;
-                System.out.println("debug...... lastSchedule.getYear(): " + lastSchedule.getYear());
-                System.out.println("debug...... lastSchedule.getMonth(): " + lastSchedule.getMonth());
+                MonthScheduleEntity lastSchedule = schedule;                
 
                 Query q1 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                         .setParameter(1, productGroupId)
@@ -229,8 +231,6 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                 while (this.getTheBeforeOne(lastSchedule) != null) {
                     lastSchedule = this.getTheBeforeOne(lastSchedule);
-                    System.out.println("debug...... lastSchedule.getYear(): " + lastSchedule.getYear());
-                    System.out.println("debug...... lastSchedule.getMonth(): " + lastSchedule.getMonth());
 
                     Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                             .setParameter(1, productGroupId)
@@ -245,11 +245,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                 SimpleRegression simpleRegression = new SimpleRegression();
 
-                for (int i = 0; i < salesFigureList.size(); i++) {
-
-                    System.out.println("debug...... salesFigureList.get(i).getSchedule().getYear(): " + salesFigureList.get(i).getSchedule().getYear());
-                    System.out.println("debug...... salesFigureList.get(i).getSchedule().getMonth(): " + salesFigureList.get(i).getSchedule().getMonth());
-
+                for (int i = 0; i < salesFigureList.size(); i++) {                    
                     simpleRegression.addData(salesFigureList.size() - i, salesFigureList.get(i).getQuantity());
                 }
 
@@ -258,7 +254,9 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 double forecastQuantity = slope * (salesFigureList.size() + 1) + intercept;
 
                 SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, Math.round((float) forecastQuantity));
-
+                saleForecast.setMethod("R");
+                em.persist(saleForecast);
+                
                 return saleForecast;
 
             } catch (Exception ex) {
@@ -268,6 +266,26 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 return saleForecast;
             }
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public SaleForecastEntity getSalesForecast(Long storeId, Long productGroupId, Long scheduleId) {
+        System.out.println("getSalesForecast is called");
+        try {
+            Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                    .setParameter(1, productGroupId)
+                    .setParameter(2, storeId)
+                    .setParameter(3, scheduleId);
+
+            if (!q.getResultList().isEmpty()) {
+                return (SaleForecastEntity)q.getResultList().get(0);
+            } else {
+                return this.getSalesForecastLinearRegression(storeId, productGroupId, scheduleId);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -88,8 +88,8 @@
                                                             <td style="width: 20%"><p id="<%= s.getProductGroup().getId() %>"><%= s.getQuantity()%></p></td>                                                            
                                                             <td style="width: 30%">
                                                                 <div class="btn-group btn-toggle"> 
-                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getRegressionSaleForecast(this)" class="btn btn-default active">Regression Method</span>
-                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getSaleForecast(this)" class="btn btn-default">Average Method</span>
+                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getRegressionSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("R")){ out.print("active"); } %>">Regression Method</span>
+                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getSaleForecast(this)" class="btn btn-default <% if(!s.getMethod().equals("R")){ out.print("active"); } %> ">Average Method</span>
                                                                 </div>                                                                                                                                                                                                                                                 
                                                             </td>                                                            
                                                             <td style="width: 30%">
