@@ -206,8 +206,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
                 msg.setSubject("Island Furniture Member Account Activation");
                 String messageText = "Greetings from Island Furniture... \n\n"
                         + "Here is your activation code to be keyed in in order to activate your member account :\n\n"
-                        + "Email: " + email + "\n\n"
-                        + "Activation Code: " + activationCode + "\n\n"
                         + "Link to activate your member account: http://localhost:8080/IS3102_Project-war/ECommerce_ActivateMemberServlet?email=" + email + "&activateCode=" + activationCode;
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);

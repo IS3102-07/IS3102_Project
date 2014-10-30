@@ -127,7 +127,7 @@ public class ECommerceBean implements ECommerceBeanLocal {
             if (msg != null) {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
-                msg.setSubject("Island Furniture Staff Account Activation");
+                msg.setSubject("Island Furniture Monthly Newsletter");
                 String messageText = "Greetings from Island Furniture... \n\n"
                         + "You have been successfully added to our monthly newsletter! :\n\n"
                         + "Click here to unsubscribe: http://localhost:8080/IS3102_Project-war/ECommerce_UnsubscribeServlet?email=" + email;
@@ -181,9 +181,9 @@ public class ECommerceBean implements ECommerceBeanLocal {
                         if (msg != null) {
                             msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
                             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(subscriber.getEmail(), false));
-                            msg.setSubject("Island Furniture Staff Account Activation");
+                            msg.setSubject("Island Furniture Staff Monthly Newsletter");
                             String messageText = "Greetings from Island Furniture... \n\n"
-                                    + "Here is your monthly enewsletter :\n\n"
+                                    + "Here is your monthly newsletter :\n\n"
                                     + "Promotion for this week is as follow"
                                     + "Click here to unsubscribe: http://localhost:8080/IS3102_Project-war/ECommerce_UnsubscribeServlet?email=" + subscriber.getEmail();
                             msg.setText(messageText);
