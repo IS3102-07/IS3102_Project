@@ -16,4 +16,6 @@ public interface PromotionalSalesBeanLocal {
 
     public Boolean createPromotion(ItemEntity item, CountryEntity country, Double discountRate, Date startDate, Date endDate, String imageURL, String description);
 
+    public Boolean deletePromotion(Long id);
+
 }

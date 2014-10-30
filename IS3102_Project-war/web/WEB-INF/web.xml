@@ -1005,6 +1005,10 @@
         <servlet-name>PromotionalSalesManagement_AddServlet</servlet-name>
         <servlet-class>A4_servlets.PromotionalSalesManagement_AddServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PromotionalSalesManagement_RemoveServlet</servlet-name>
+        <servlet-class>A4_servlets.PromotionalSalesManagement_RemoveServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2008,6 +2012,10 @@
     <servlet-mapping>
         <servlet-name>PromotionalSalesManagement_AddServlet</servlet-name>
         <url-pattern>/PromotionalSalesManagement_AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PromotionalSalesManagement_RemoveServlet</servlet-name>
+        <url-pattern>/PromotionalSalesManagement_RemoveServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

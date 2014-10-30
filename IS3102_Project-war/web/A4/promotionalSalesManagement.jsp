@@ -10,7 +10,7 @@
         <script>
             function updatePromotion(id) {
                 promotionManagement.id.value = id;
-                document.promotionManagement.action = "promotionSalesManagement_Update.jsp";
+                document.promotionManagement.action = "promotionalSalesManagement_Update.jsp";
                 document.promotionManagement.submit();
             }
             function removePromotion() {
@@ -67,7 +67,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Add a new Promotion or remove an existing Promotion");
+                                            out.println("Add a new promotion or remove an existing promotion");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);

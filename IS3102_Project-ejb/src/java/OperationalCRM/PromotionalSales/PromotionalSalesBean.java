@@ -57,4 +57,17 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
             return false;
         }         
     }
+    
+    public Boolean deletePromotion(Long id){
+        System.out.println("deletePromotion() called with id:" + id);
+        try {
+            PromotionEntity promotion = em.find(PromotionEntity.class, id);           
+            em.remove(promotion);
+            System.out.println("deletePromotion() is successful.");
+            return true;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to remove promotion():\n" + ex);
+            return false;
+        }
+    }
 }
