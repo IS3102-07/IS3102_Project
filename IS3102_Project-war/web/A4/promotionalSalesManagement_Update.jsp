@@ -31,24 +31,29 @@
                     </div>
                     <!-- /.row -->
                     <jsp:include page="../displayMessage.jsp" />
+                   
                     <%
                         try {
                             String id = request.getParameter("id");
+                            System.out.println(id);
                             List<PromotionEntity> promotions = (List<PromotionEntity>) (session.getAttribute("promotions"));
+                            System.out.println(promotions.size());
                             PromotionEntity promotion = new PromotionEntity();
                             for (int i = 0; i < promotions.size(); i++) {
                                 if (promotions.get(i).getId() == Integer.parseInt(id)) {
                                     promotion = promotions.get(i);
                                 }
                             }
+                        
                     %>
+                       
                     <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
                             <form role="form" method="POST" enctype="multipart/form-data" action="../PromotionalSalesManagement_UpdateServlet">                        
                                 <div class="form-group">
                                     <label>Item SKU</label>
-                                    <input class="form-control" required="true" type="text" name="sku" value="<%=promotion.getItem().getSKU()%>">
+                                    <input class="form-control" required="true" type="text" name="sku" value="<%=promotion.getItem().getSKU()%>" >
                                 </div>
                                 <div class="form-group">
                                     <label>Country</label>
@@ -103,7 +108,7 @@
                     </div>
                     <%} catch (Exception ex) {
 
-                            response.sendRedirect("../PromotionalSalesManagement_Servlet");
+                            //response.sendRedirect("../PromotionalSalesManagement_Servlet");
                         }%>
                 </div>
 
