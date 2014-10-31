@@ -5,6 +5,7 @@ import EntityManager.PickerEntity;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +27,8 @@ public class PickerRefreshJob_Servlet extends HttpServlet {
 
             PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
 
-            //PickRequestEntity pickRequest = customerServiceBeanLocal.getPickRequests(picker.getId());
-            //session.setAttribute("PickRequestEntity", pickRequest);
+            LinkedList<PickRequestEntity> pickRequestLinkedList = customerServiceBeanLocal.getPickRequests(picker.getId());
+            session.setAttribute("pickRequestLinkedList", pickRequestLinkedList);
 
         } catch (Exception ex) {
             out.println(ex);
