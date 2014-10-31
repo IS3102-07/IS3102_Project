@@ -379,7 +379,40 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("totalCummulativeSpending is : " + totalCummulativeSpending);
         return totalCummulativeSpending;
     }
-    
+    @Override
+    public Double getROfAge() {
+        System.out.println("getROfAge()");
+        SimpleRegression regression = new SimpleRegression();
+        
+        regression.addData(10,10);
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            regression.addData(member.getAge(), member.getCummulativeSpending());
+        }
+        System.out.println("Get R is : " + regression.getR());
+        return regression.getR();
+    }
+    @Override
+    public Double getStdErrorOfAge() {
+        System.out.println("getStdErrorOfAge()");
+        SimpleRegression regression = new SimpleRegression();
+        
+        regression.addData(10,10);
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            regression.addData(member.getAge(), member.getCummulativeSpending());
+        }
+        System.out.println("Get R is : " + regression.getSlopeStdErr());
+        return regression.getR();
+    }
     @Override
     public Double getRSquaredOfAge() {
         System.out.println("getRSquaredOfAge()");
@@ -397,6 +430,58 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("Get R squared is : " + regression.getRSquare());
         return regression.getRSquare();
     }
+    @Override
+    public Double getROfIncome() {
+        System.out.println("getROfIncome()");
+        SimpleRegression regression = new SimpleRegression();
+        
+        regression.addData(10,10);
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            regression.addData(member.getIncome(), member.getCummulativeSpending());
+        }
+        System.out.println("Get R is : " + regression.getR());
+        return regression.getR();
+    }
+    @Override
+    public Double getStdErrorOfIncome() {
+        System.out.println("getStdErrorOfIncome()");
+        SimpleRegression regression = new SimpleRegression();
+        
+        regression.addData(10,10);
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            regression.addData(member.getIncome(), member.getCummulativeSpending());
+        }
+        System.out.println("Get R is : " + regression.getSlopeStdErr());
+        return regression.getR();
+    }
+    @Override
+    public Double getRSquaredOfIncome() {
+        System.out.println("getRSquaredOfIncome()");
+        SimpleRegression regression = new SimpleRegression();
+        
+        regression.addData(10,10);
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            regression.addData(member.getIncome(), member.getCummulativeSpending());
+        }
+        System.out.println("Get R squared is : " + regression.getRSquare());
+        return regression.getRSquare();
+    }
+    
     @Override
     public Integer totalCummulativeSpendingOfIncome(Integer startIncome, Integer endIncome) {
         System.out.println("totalCummulativeSpendingOfIncome()");

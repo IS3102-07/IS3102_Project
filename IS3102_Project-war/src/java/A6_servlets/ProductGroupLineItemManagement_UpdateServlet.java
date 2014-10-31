@@ -27,7 +27,6 @@ public class ProductGroupLineItemManagement_UpdateServlet extends HttpServlet {
             String productGroupId = request.getParameter("id");
             String lineitemId = request.getParameter("lineitemId");
             String sku = request.getParameter("sku");
-            String percent = request.getParameter("percent");
 
             //    result = "A6/productGroupManagement_UpdateLineItem.jsp?errMsg=Item successfully updated.&id=" + productGroupId + "&lineItemId=" + lineitemId;
             //out.println("<h1>" + result + "</h1>");
@@ -38,7 +37,7 @@ public class ProductGroupLineItemManagement_UpdateServlet extends HttpServlet {
                 result = "?errMsg=SKU is not a funriture.&id=" + productGroupId + "&lineItemId=" + lineitemId;
                 response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);
             } else {
-                boolean canUpdate = ItemManagementBean.editProductGroupLineItem(Long.parseLong(productGroupId), Long.parseLong(lineitemId), sku, Double.parseDouble(percent)/100);
+                boolean canUpdate = ItemManagementBean.editProductGroupLineItem(Long.parseLong(productGroupId), Long.parseLong(lineitemId), sku, 0.01);
                 if (!canUpdate) {
                     result = "?errMsg=Unable to update product group: Total percentage exceeds 100.&id=" + productGroupId + "&lineItemId=" + lineitemId;
                     response.sendRedirect("A6/productGroupManagement_UpdateLineItem.jsp" + result);

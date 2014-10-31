@@ -126,7 +126,7 @@
                                                             <th>Broadcasted Date</th>
                                                                 <% if (roleCanEditAnnouncement) {%>
                                                             <th>Expiry Date</th>
-                                                            <th>Update</th>
+                                                            <th>Action</th>
                                                                 <%}%>
                                                         </tr>
                                                     </thead>

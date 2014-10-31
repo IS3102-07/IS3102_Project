@@ -1,40 +1,34 @@
-package A6_servlets;
+package A4_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.ProductGroupLineItemEntity;
+import EntityManager.PickRequestEntity;
+import EntityManager.PickerEntity;
+import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ProductGroupLineItemManagement_AddServlet extends HttpServlet {
+public class PickerRefreshJob_Servlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal ItemManagementBean;
-    private String result;
+    CustomerServiceBeanLocal customerServiceBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String productGroupId = request.getParameter("id");
-            String sku = request.getParameter("sku");
+            HttpSession session;
+            session = request.getSession();
 
-            ProductGroupLineItemEntity productGroupLineItemEntity = ItemManagementBean.createProductGroupLineItem(sku, 0.01);
-            boolean canUpdate = false;
-            if (productGroupLineItemEntity != null) {
-                canUpdate = ItemManagementBean.addLineItemToProductGroup(Long.parseLong(productGroupId), productGroupLineItemEntity.getId());
-            }
-            if (!canUpdate) {
-                result = "?errMsg=Add product group failed. Please check SKU and percentage.&id=" + productGroupId;
-                response.sendRedirect("A6/productGroupManagement_AddLineItem.jsp" + result);
-            } else {
-                result = "?goodMsg=Line item added successfully.&id=" + productGroupId;
-                response.sendRedirect("ProductGroupLineItemManagement_Servlet" + result);
-            }
+            PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
+
+            LinkedList<PickRequestEntity> pickRequestLinkedList = customerServiceBeanLocal.getPickRequests(picker.getId());
+            session.setAttribute("pickRequestLinkedList", pickRequestLinkedList);
 
         } catch (Exception ex) {
             out.println(ex);

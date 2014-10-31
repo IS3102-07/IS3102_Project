@@ -1,7 +1,24 @@
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="EntityManager.PromotionEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
+<%
+    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+    boolean roleCanEditAnnouncement = false;
+    if (staffEntity != null) {
+        List<RoleEntity> roles = staffEntity.getRoles();
+        Long[] approvedRolesID = new Long[]{1L, 2L, 5L};
+        for (RoleEntity roleEntity : roles) {
+            for (Long ID : approvedRolesID) {
+                if (roleEntity.getId().equals(ID)) {
+                    roleCanEditAnnouncement = true;
+                    break;
+                }
+            }
+        }
+    }
+%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -83,38 +100,47 @@
                                 <form name="promotionManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
+                                            <%if (roleCanEditAnnouncement) {%>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Promotion" onclick="addPromotion()"  />
                                                     <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Promotion</button></a>
                                                 </div>
                                             </div>
+                                            <%}%>
                                             <br>
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
+                                                            <%if (roleCanEditAnnouncement) {%>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                                <%}%>
                                                             <th>Item Name</th>
                                                             <th>Country</th>
                                                             <th>Discount Rate</th>
                                                             <th>Start Date</th>
                                                             <th>End Date</th>
                                                             <th>Description</th>
+                                                                <% if (roleCanEditAnnouncement) {%>
                                                             <th>Action</th>
+                                                                <%}%>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
                                                             List<PromotionEntity> promotions = (List<PromotionEntity>) (session.getAttribute("promotions"));
-                                                            if (promotions != null) {
+                                                            if (promotions
+                                                                    != null) {
                                                                 for (int i = 0; i < promotions.size(); i++) {
 
                                                         %>
                                                         <tr>
+                                                            <%if (roleCanEditAnnouncement) {%>
                                                             <td>
                                                                 <input type="checkbox" name="delete" value="<%=promotions.get(i).getId()%>" />
                                                             </td>
+                                                            <%}%>
                                                             <td>
                                                                 <%=promotions.get(i).getItem().getName()%>
                                                             </td>
@@ -130,16 +156,18 @@
                                                                 <%=date%>
                                                             </td>
                                                             <td>
-                                                                <% 
+                                                                <%
                                                                     String date1 = DATE_FORMAT.format(promotions.get(i).getEndDate());%>
                                                                 <%=date1%>
                                                             </td>
                                                             <td>
                                                                 <%=promotions.get(i).getDescription()%>
                                                             </td>
+                                                            <%if (roleCanEditAnnouncement) {%>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=promotions.get(i).getId()%>" value="Update" onclick="javascript:updatePromotion('<%=promotions.get(i).getId()%>')"/>
                                                             </td>
+                                                            <%}%>
                                                         </tr>
                                                         <%
                                                                 }
@@ -150,12 +178,14 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
+                                            <%if (roleCanEditAnnouncement) {%>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Promotion" onclick="addPromotion()"  />                                                    
                                                     <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Promotion</button></a>
                                                 </div>
                                             </div>
+                                            <%}%>
                                             <input type="hidden" name="id" value="">    
                                         </div>
 

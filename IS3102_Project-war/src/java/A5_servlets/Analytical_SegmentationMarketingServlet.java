@@ -98,6 +98,21 @@ public class Analytical_SegmentationMarketingServlet extends HttpServlet {
             Double getRSquaredOfAge = customerValueAnalysisBean.getRSquaredOfAge();
             session.setAttribute("getRSquaredOfAge", getRSquaredOfAge);
 
+            Double getROfAge = customerValueAnalysisBean.getROfAge();
+            session.setAttribute("getROfAge", getROfAge);
+            
+            Double getStdErrorOfAge = customerValueAnalysisBean.getStdErrorOfAge();
+            session.setAttribute("getStdErrorOfAge", getStdErrorOfAge);
+            
+            Double getRSquaredOfIncome = customerValueAnalysisBean.getRSquaredOfIncome();
+            session.setAttribute("getRSquaredOfIncome", getRSquaredOfIncome);
+
+            Double getROfIncome = customerValueAnalysisBean.getROfIncome();
+            session.setAttribute("getROfIncome", getROfIncome);
+            
+            Double getStdErrorOfIncome = customerValueAnalysisBean.getStdErrorOfIncome();
+            session.setAttribute("getStdErrorOfIncome", getStdErrorOfIncome);
+            
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/segmentationMarketing.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {

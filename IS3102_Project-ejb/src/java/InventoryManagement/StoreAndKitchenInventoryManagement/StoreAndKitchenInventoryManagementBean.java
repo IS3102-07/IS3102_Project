@@ -1,5 +1,6 @@
 package InventoryManagement.StoreAndKitchenInventoryManagement;
 
+import Config.Config;
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
@@ -1542,8 +1543,14 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     }
 
     @Override
-    public Boolean removeItemFromInventory(Long storeID, String SKU, Integer qty) {
+    public Boolean removeItemFromInventory(Long storeID, String SKU, Integer qty, Boolean picker) {
         ItemEntity itemEntity = getItemBySKU(SKU);
+        //If needs self collection, don't remove first
+        if (!picker && itemEntity.getVolume() > Config.minVolumeForCollectionAreaItems) {
+            return true;
+        } else if (picker && itemEntity.getVolume() > Config.minVolumeForCollectionAreaItems) {
+            return true;
+        }
         Boolean removeStatus = false;
         switch (itemEntity.getType()) {
             case "Furniture":

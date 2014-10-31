@@ -101,47 +101,79 @@
                                                                     <li class="active">
                                                                         <a href="#Demographics" data-toggle="tab"><i class="icon icon-user"></i> Demographics</a>
                                                                     </li>
-                                                                    <li>
-                                                                        <a href="#income" data-toggle="tab">Income</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="#joinDate" data-toggle="tab">Join Date</a>
-                                                                    </li>
+
                                                                 </ul>
                                                                 <div class="tab-content">
                                                                     <div id="Demographics" class="tab-pane active">
-                                                                        
+
                                                                         <div class="panel-body">
                                                                             <div class="table-responsive">
                                                                                 <div class="col-md-6">
                                                                                     <h4>Age Group</h4>
                                                                                     <div id="ageGroupChart"></div>
-                                                                                    <% 
-                                                Double getRSquaredOfAge = (Double) session.getAttribute("getRSquaredOfAge");
-                                                                                    out.println(getRSquaredOfAge);
-                                                                                            %>
+                                                                                    Model Summary<br/>
+                                                                                    <table class="table">
+                                                                                        <tr>                                                                                            
+                                                                                            <td>R</td>
+                                                                                            <td>R Square</td>
+                                                                                            <td>Std. Error of the Estimate</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <%
+                                                                                                    DecimalFormat df = new DecimalFormat("#.000");
+                                                                                                    Double getROfAge = (Double) session.getAttribute("getROfAge");
+                                                                                                    out.println(df.format(getROfAge));
+                                                                                                %>
+                                                                                            </td>
+                                                                                            <td><%
+                                                                                                Double getRSquaredOfAge = (Double) session.getAttribute("getRSquaredOfAge");
+                                                                                                out.println(df.format(getRSquaredOfAge));
+                                                                                                %></td>
+                                                                                            <td>
+                                                                                                <%
+                                                                                                    Double getStdErrorOfAge = (Double) session.getAttribute("getStdErrorOfAge");
+                                                                                                    out.println(df.format(getStdErrorOfAge));
+                                                                                                %></td>
+                                                                                        </tr>
+                                                                                    </table>
+
                                                                                 </div>
                                                                                 <div class="col-md-6">
                                                                                     <h4>Income Group</h4>
                                                                                     <div id="incomeGroupChart"></div>
+                                                                                    Model Summary<br/>
+                                                                                    <table class="table">
+                                                                                        <tr>                                                                                            
+                                                                                            <td>R</td>
+                                                                                            <td>R Square</td>
+                                                                                            <td>Std. Error of the Estimate</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <%
+                                                                                                    Double getROfIncome = (Double) session.getAttribute("getROfIncome");
+                                                                                                    out.println(df.format(getROfIncome));
+                                                                                                %>
+                                                                                            </td>
+                                                                                            <td><%
+                                                                                                Double getRSquaredOfIncome = (Double) session.getAttribute("getRSquaredOfIncome");
+                                                                                                out.println(df.format(getRSquaredOfIncome));
+                                                                                                %></td>
+                                                                                            <td>
+                                                                                                <%
+                                                                                                    Double getStdErrorOfIncome = (Double) session.getAttribute("getStdErrorOfIncome");
+                                                                                                    out.println(df.format(getStdErrorOfIncome));
+                                                                                                %></td>
+                                                                                        </tr>
+                                                                                    </table>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div id="income" class="tab-pane">
-                                                                        <h4>Income Group Chart</h4>
-                                                                        <div class="panel-body">
-                                                                            <div class="table-responsive">
-                                                                                <div class="col-md-12">
-                                                                                    <div id="incomeGroupChart"></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div id="joinDate" class="tab-pane">
-                                                                        <h4>Join Date</h4>
 
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
+
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -160,31 +192,53 @@
                                                         <option value="fiat">Fiat</option>
                                                         <option value="audi">Audi</option>
                                                     </select>
-                                                    <table class="table table-hover">
+                                                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
+                                                        <table class="table table-bordered" id="dataTables-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                                    <th>Name</th>
+                                                                    <th>Age</th>
+                                                                    <th>Income</th>
+                                                                    <th>Monetary Value</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <%
+                                                                    
+                                                                    if (members != null) {
+                                                                        for (int i = 0; i < members.size(); i++) {
+                                                                            MemberEntity member = members.get(i);
+                                                                %>
+                                                                <tr>                   
+                                                                    <td>
+                                                                        <input type="checkbox" name="delete" value="<%=member.getId()%>" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=member.getName()%>
+                                                                    </td>
+                                                                    <td>
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        
+                                                                    </td>
 
-                                                        <tr>
-                                                            <td>Id</td>
-                                                            <td>Last Purchase</td>
-                                                        </tr>
-                                                        <tbody>
-
-                                                            <%
-                                                                for (int i = 0; i < members.size(); i++) {
-                                                            %>
-                                                            <tr>
-                                                                <td> 
-                                                                    <%=members.get(i).getId()%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=members.get(i).getName()%>
-                                                                </td>
-                                                            </tr>
-                                                            <%
-                                                                }
-                                                            %>
-
-                                                        </tbody>
-                                                    </table>
+                                                                    <td>
+                                                                        <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=member.getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=member.getId()%>')"/>
+                                                                    </td>
+                                                                </tr>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -212,7 +266,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+                    $(document).ready(function() {
             $('#dataTables-example').dataTable();
             });
                     new Morris.Bar({
@@ -242,12 +296,10 @@
                             xkey: 'y',
                             ykeys: ['a', 'b'],
                             labels: ['Total Revenue', 'Num Of Members']
-                    });
-                    
-        </script>
-        
+                    });</script>
+
         <script>
-            new Morris.Bar({
+                    new Morris.Bar({
                     // ID of the element in which to draw the chart.
                     element: 'incomeGroupChart',
                             // Chart data records -- each entry in this array corresponds to a point on

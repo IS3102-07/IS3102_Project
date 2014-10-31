@@ -66,7 +66,7 @@ public interface StoreAndKitchenInventoryManagementBeanLocal {
     
     public Boolean checkIfStorageBinIsOfAppropriateItemType(Long storageBinId, String SKU);
     
-    public Boolean removeItemFromInventory(Long storeID, String SKU, Integer qty);
+    public Boolean removeItemFromInventory(Long storeID, String SKU, Integer qty, Boolean picker);
     public Boolean removeItemFromFurnitureMarketplace(Long storeID, String SKU, Integer qty);
     public Boolean removeItemFromRetailOutlet(Long storeID, String SKU, Integer qty);
     public Boolean removeItemFromKitchen(Long storeID, String SKU, Integer qty);

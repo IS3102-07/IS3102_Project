@@ -3,6 +3,7 @@ package A4_servlets;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
+import EntityManager.PromotionEntity;
 import OperationalCRM.PromotionalSales.PromotionalSalesBeanLocal;
 import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
 import java.io.FileOutputStream;
@@ -12,12 +13,14 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 @MultipartConfig
@@ -34,7 +37,7 @@ public class PromotionalSalesManagement_UpdateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
+        try {       
             String id = request.getParameter("id");
             String sku = request.getParameter("sku");
             String countryId = request.getParameter("country");
@@ -43,8 +46,9 @@ public class PromotionalSalesManagement_UpdateServlet extends HttpServlet {
             String startDate = request.getParameter("startDate");
             String endDate = request.getParameter("endDate");
             String description = request.getParameter("description");
-            Part file = request.getPart("javafile");
-
+            Part file = request.getPart("javafile");            
+           
+            
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatter.parse(startDate);
             Date date1 = formatter.parse(endDate);
@@ -52,10 +56,10 @@ public class PromotionalSalesManagement_UpdateServlet extends HttpServlet {
 
             if (date1.before(date)) {
                 result = "?errMsg=Failed to update promotion. End date is earlier than start date.";
-                response.sendRedirect(source + result);
+                response.sendRedirect("PromotionalSalesManagement_Servlet" + result);
             }
 
-            if (inboundAndOutboundLogisticsBeanLocal.checkSKUExists(sku)) {
+            else if (inboundAndOutboundLogisticsBeanLocal.checkSKUExists(sku)) {
                 String fileName = sku + datestring + ".jpg";
                 String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
@@ -81,13 +85,13 @@ public class PromotionalSalesManagement_UpdateServlet extends HttpServlet {
 
                     response.sendRedirect("PromotionalSalesManagement_Servlet" + result);
                 } else {
-                    result = "?errMsg=There is already a promotion for the item at the country with an end date later than the start date entered";
-                    response.sendRedirect(source + result);
+                    result = "?errMsg=Failed to update promotion. There is already a promotion for the item at the country with an end date later than the start date entered";
+                    response.sendRedirect("PromotionalSalesManagement_Servlet" + result);
                 }
                 
             } else {
-                result = "?errMsg=Failed to edit promotion, SKU: " + sku + " does not exist.";
-                response.sendRedirect(source + result);
+                result = "?errMsg=Failed to update promotion, SKU: " + sku + " does not exist.";
+                response.sendRedirect("PromotionalSalesManagement_Servlet" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

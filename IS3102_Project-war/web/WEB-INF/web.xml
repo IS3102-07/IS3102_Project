@@ -1013,6 +1013,14 @@
         <servlet-name>PromotionalSalesManagement_UpdateServlet</servlet-name>
         <servlet-class>A4_servlets.PromotionalSalesManagement_UpdateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PickerLogout_Servlet</servlet-name>
+        <servlet-class>A4_servlets.PickerLogout_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PickerRefreshJob_Servlet</servlet-name>
+        <servlet-class>A4_servlets.PickerRefreshJob_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2024,6 +2032,14 @@
     <servlet-mapping>
         <servlet-name>PromotionalSalesManagement_UpdateServlet</servlet-name>
         <url-pattern>/PromotionalSalesManagement_UpdateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PickerLogout_Servlet</servlet-name>
+        <url-pattern>/PickerLogout_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PickerRefreshJob_Servlet</servlet-name>
+        <url-pattern>/PickerRefreshJob_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

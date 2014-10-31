@@ -120,8 +120,7 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                 switch (currentItemType) { //only remove if is one of the following items type
                     case "Furniture":
                     case "Retail Product":
-                    case "Raw Material":
-                        storeInventoryManagementBean.removeItemFromInventory(storeID, itemsPurchasedSKU.get(itemsToRemove - 1), itemsPurchasedQty.get(itemsToRemove - 1));
+                        storeInventoryManagementBean.removeItemFromInventory(storeID, itemsPurchasedSKU.get(itemsToRemove - 1), itemsPurchasedQty.get(itemsToRemove - 1), false);
                 }
             }
         } catch (Exception ex) {

@@ -2,11 +2,13 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,9 +24,11 @@ public class PickRequestEntity implements Serializable {
     private PickerEntity picker;
     @OneToOne
     private SalesRecordEntity salesRecord;
+    @OneToMany
+    private List<LineItemEntity> items;
     private String queueNo;
-    private String pickStatus;//Queued,In-progress,Completed
-    private String collectionStatus;//Picking,Ready for Collection,Collected,Uncollected
+    private Integer pickStatus;//1.Queued,2.In-progress,3.Completed
+    private Integer collectionStatus;//1.Picking,2.Ready for Collection,3.Uncollected,4.Collected
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSubmitted;
     @Temporal(TemporalType.TIMESTAMP)
@@ -35,28 +39,57 @@ public class PickRequestEntity implements Serializable {
     public PickRequestEntity() {
     }
 
-    public PickRequestEntity(PickerEntity picker, SalesRecordEntity salesRecord, String queueNo) {
+    public PickRequestEntity(PickerEntity picker, SalesRecordEntity salesRecord,List<LineItemEntity> items, String queueNo) {
         this.picker = picker;
         this.salesRecord = salesRecord;
+        this.items = items;
         this.queueNo = queueNo;
-        this.pickStatus = "Queued";
-        this.collectionStatus = "";
+        this.pickStatus = 1;
+        this.collectionStatus = 1;
         this.dateSubmitted = new Date();
     }
 
     public String getPickStatus() {
-        return pickStatus;
+        switch (pickStatus) {
+            case 1:
+                return "Queued";
+            case 2:
+                return "In-progress";
+            case 3:
+                return "Completed";
+            default:
+                return "Unavailable";
+        }
     }
 
-    public void setPickStatus(String pickStatus) {
+    public List<LineItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<LineItemEntity> items) {
+        this.items = items;
+    }
+
+    public void setPickStatus(Integer pickStatus) {
         this.pickStatus = pickStatus;
     }
 
     public String getCollectionStatus() {
-        return collectionStatus;
+        switch (collectionStatus) {
+            case 1:
+                return "Picking";
+            case 2:
+                return "Ready for Collection";
+            case 3:
+                return "Uncollected";
+            case 4:
+                return "Collected";
+            default:
+                return "Unavailable";
+        }
     }
 
-    public void setCollectionStatus(String collectionStatus) {
+    public void setCollectionStatus(Integer collectionStatus) {
         this.collectionStatus = collectionStatus;
     }
 

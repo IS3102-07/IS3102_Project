@@ -6,6 +6,7 @@ import EntityManager.PromotionEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,11 +31,11 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
     }
 
     @Override
-    public CountryEntity getCountryByCountryId(Long id) {
-        System.out.println("getCountryByCountryId() called with id: " + id);
+    public CountryEntity getCountryByCountryId(Long countryID) {
+        System.out.println("getCountryByCountryId() called with id: " + countryID);
         try {
             Query q = em.createQuery("Select c from CountryEntity c where c.id=:id");
-            q.setParameter("id", id);
+            q.setParameter("id", countryID);
             CountryEntity country = (CountryEntity) q.getSingleResult();
             System.out.println("getCountryByCountryId() is successful.");
             return country;
@@ -70,6 +71,7 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
         }
     }
 
+    @Override
     public Boolean checkIfPromotionCreated(String sku, Long countryId, Date date) {
         System.out.println("checkIfPromotionCreated() called");
         try {
@@ -105,12 +107,15 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
             return false;
         }
     }
-     public Boolean checkIfPromotionCreated(Long id, String sku, Long countryId, Date date){
-          System.out.println("checkIfPromotionCreated() called" + id);
-          try {
+
+    @Override
+    public Boolean checkIfPromotionCreated(Long id, String sku, Long countryId, Date date) {
+        System.out.println("checkIfPromotionCreated() called" + id);
+        try {
             List<PromotionEntity> promotions = getAllPromotions();
             for (int i = 0; i < promotions.size(); i++) {
-                if (promotions.get(i).getId()!=id && promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId() == countryId && promotions.get(i).getEndDate().after(date)) {
+                if (!Objects.equals(promotions.get(i).getId(), id) && promotions.get(i).getItem().getSKU().equals(sku) && Objects.equals(promotions.get(i).getCountry().getId(), countryId) && promotions.get(i).getEndDate().after(date)) {
+                    System.out.println(promotions.get(i).getId());
                     return false;
                 }
             }
@@ -119,6 +124,6 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
             return true;
         }
         return true;
-    
-     }
+
+    }
 }

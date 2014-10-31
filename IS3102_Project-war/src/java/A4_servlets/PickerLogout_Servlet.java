@@ -1,43 +1,25 @@
-package A6_servlets;
+package A4_servlets;
 
-import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
-import EntityManager.ProductGroupLineItemEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ProductGroupLineItemManagement_AddServlet extends HttpServlet {
-
-    @EJB
-    private ItemManagementBeanLocal ItemManagementBean;
-    private String result;
+public class PickerLogout_Servlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String productGroupId = request.getParameter("id");
-            String sku = request.getParameter("sku");
-
-            ProductGroupLineItemEntity productGroupLineItemEntity = ItemManagementBean.createProductGroupLineItem(sku, 0.01);
-            boolean canUpdate = false;
-            if (productGroupLineItemEntity != null) {
-                canUpdate = ItemManagementBean.addLineItemToProductGroup(Long.parseLong(productGroupId), productGroupLineItemEntity.getId());
-            }
-            if (!canUpdate) {
-                result = "?errMsg=Add product group failed. Please check SKU and percentage.&id=" + productGroupId;
-                response.sendRedirect("A6/productGroupManagement_AddLineItem.jsp" + result);
-            } else {
-                result = "?goodMsg=Line item added successfully.&id=" + productGroupId;
-                response.sendRedirect("ProductGroupLineItemManagement_Servlet" + result);
-            }
-
-        } catch (Exception ex) {
-            out.println(ex);
+            HttpSession session;
+            session = request.getSession();
+            session.invalidate();
+            response.sendRedirect("A4/pickerLogin.jsp?goodMsg=Logout Successful.");
+        } finally {
+            out.close();
         }
     }
 

@@ -1,5 +1,6 @@
 package A4_servlets;
 
+import EntityManager.PickerEntity;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,12 +25,14 @@ public class PickerLogin_Servlet extends HttpServlet {
 
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-
+            out.println("<h1>" + "0" + "</h1>");
             if (customerServiceBeanLocal.pickerLoginStaff(email, password) == null) {
                 response.sendRedirect("A4/pickerLogin.jsp?errMsg=Invalid Login Credential.");
             } else {
-                Long pickerID = customerServiceBeanLocal.pickerLoginStaff(email, password);
-                session.setAttribute("pickerID", pickerID);
+                out.println("<h1>" + "1" + "</h1>");
+                PickerEntity picker = customerServiceBeanLocal.pickerLoginStaff(email, password);
+                out.println("<h1>" + "2" + "</h1>");
+                session.setAttribute("picker", picker);
                 response.sendRedirect("A4/pickerLogin_waiting.jsp");
             }
 
