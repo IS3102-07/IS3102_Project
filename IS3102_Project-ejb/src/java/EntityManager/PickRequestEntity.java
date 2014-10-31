@@ -23,8 +23,8 @@ public class PickRequestEntity implements Serializable {
     @OneToOne
     private SalesRecordEntity salesRecord;
     private String queueNo;
-    private String pickStatus;//Queued,In-progress,Completed
-    private String collectionStatus;//Picking,Ready for Collection,Collected,Uncollected
+    private Integer pickStatus;//1.Queued,2.In-progress,3.Completed
+    private Integer collectionStatus;//1.Picking,2.Ready for Collection,3.Uncollected,4.Collected
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSubmitted;
     @Temporal(TemporalType.TIMESTAMP)
@@ -39,24 +39,44 @@ public class PickRequestEntity implements Serializable {
         this.picker = picker;
         this.salesRecord = salesRecord;
         this.queueNo = queueNo;
-        this.pickStatus = "Queued";
-        this.collectionStatus = "";
+        this.pickStatus = 1;
+        this.collectionStatus = 1;
         this.dateSubmitted = new Date();
     }
 
     public String getPickStatus() {
-        return pickStatus;
+        switch (pickStatus) {
+            case 1:
+                return "Queued";
+            case 2:
+                return "In-progress";
+            case 3:
+                return "Completed";
+            default:
+                return "Unavailable";
+        }
     }
 
-    public void setPickStatus(String pickStatus) {
+    public void setPickStatus(Integer pickStatus) {
         this.pickStatus = pickStatus;
     }
 
     public String getCollectionStatus() {
-        return collectionStatus;
+        switch (collectionStatus) {
+            case 1:
+                return "Picking";
+            case 2:
+                return "Ready for Collection";
+            case 3:
+                return "Uncollected";
+            case 4:
+                return "Collected";
+            default:
+                return "Unavailable";
+        }
     }
 
-    public void setCollectionStatus(String collectionStatus) {
+    public void setCollectionStatus(Integer collectionStatus) {
         this.collectionStatus = collectionStatus;
     }
 

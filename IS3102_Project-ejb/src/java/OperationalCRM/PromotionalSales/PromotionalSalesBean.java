@@ -31,11 +31,11 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
     }
 
     @Override
-    public CountryEntity getCountryByCountryId(Long id) {
-        System.out.println("getCountryByCountryId() called with id: " + id);
+    public CountryEntity getCountryByCountryId(Long countryID) {
+        System.out.println("getCountryByCountryId() called with id: " + countryID);
         try {
             Query q = em.createQuery("Select c from CountryEntity c where c.id=:id");
-            q.setParameter("id", id);
+            q.setParameter("id", countryID);
             CountryEntity country = (CountryEntity) q.getSingleResult();
             System.out.println("getCountryByCountryId() is successful.");
             return country;
