@@ -94,34 +94,16 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     }
 
     @Override
-    public PickRequestEntity getPickRequest(Long pickerID) {
+    public List<PickRequestEntity> getPickRequests(Long pickerID) {
         System.out.println("getPickRequest() called");
         try {
             PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
             LinkedList<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
-            if (pickRequestEntities.size() == 0) {
-                return null;
-            } else {
-                return pickRequestEntities.get(0);
-            }
+            return pickRequestEntities;
         } catch (Exception ex) {
             System.out.println("getPickRequest(): error");
             ex.printStackTrace();
             return null;
-        }
-    }
-
-    @Override
-    public Integer getPickRequestQueueSize(Long pickerID) {
-        System.out.println("getPickRequestQueueSize() called");
-        try {
-            PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
-            LinkedList<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
-            return pickRequestEntities.size();
-        } catch (Exception ex) {
-            System.out.println("getPickRequestQueueSize(): error");
-            ex.printStackTrace();
-            return 0;
         }
     }
 
