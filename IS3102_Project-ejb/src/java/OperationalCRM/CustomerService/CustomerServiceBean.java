@@ -4,7 +4,6 @@ import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import Config.Config;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.FeedbackEntity;
-import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.PickRequestEntity;
 import EntityManager.PickerEntity;
@@ -94,7 +93,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     }
 
     @Override
-    public List<PickRequestEntity> getPickRequests(Long pickerID) {
+    public LinkedList<PickRequestEntity> getPickRequests(Long pickerID) {
         System.out.println("getPickRequest() called");
         try {
             PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
@@ -144,7 +143,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
                 }
             }
             //Update store inventory
-//            List<ItemEntity> itemsInPickRequest = 
+//            List<ItemEntity> itemsInPickRequest = TODO
 //            for (int itemsToRemove = itemsPurchasedSKU.size(); itemsToRemove > 0; itemsToRemove--) {
 //                String currentItemSKU = itemsPurchasedSKU.get(itemsToRemove - 1);
 //                String currentItemType = imbl.getItemBySKU(currentItemSKU).getType();
