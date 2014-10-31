@@ -4,6 +4,8 @@ import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import Config.Config;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.FeedbackEntity;
+import EntityManager.ItemEntity;
+import EntityManager.LineItemEntity;
 import EntityManager.PickRequestEntity;
 import EntityManager.PickerEntity;
 import EntityManager.RoleEntity;
@@ -33,7 +35,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     StoreAndKitchenInventoryManagementBeanLocal simbl;
     @EJB
     ItemManagementBeanLocal imbl;
-    
+
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
@@ -62,7 +64,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     }
 
     @Override
-    public Long pickerLoginStaff(String email, String password) {
+    public PickerEntity pickerLoginStaff(String email, String password) {
         Long staffID = null;
         try {
             StaffEntity staffEntity = ambl.loginStaff(email, password);
@@ -81,7 +83,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
                     pickerEntity.setPicker(staffEntity);
                     pickerEntity.setListOfJob(new LinkedList<>());
                     em.persist(pickerEntity);
-                    return pickerEntity.getId();
+                    return pickerEntity;
                 }
             }
             return null;
@@ -151,7 +153,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             //Remove from the picker queue
             PickerEntity pickerEntity = pickRequestEntity.getPicker();
             LinkedList<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
-            for (int i=0;i<pickRequestEntities.size();i++) {
+            for (int i = 0; i < pickRequestEntities.size(); i++) {
                 if (pickRequestEntities.get(i).getId().equals(pickRequestID)) {
                     pickRequestEntities.remove(i);
                     em.merge(pickerEntity);
@@ -161,7 +163,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             }
             //Update store inventory
 //            List<ItemEntity> itemsInPickRequest = 
-//             for (int itemsToRemove = itemsPurchasedSKU.size(); itemsToRemove > 0; itemsToRemove--) {
+//            for (int itemsToRemove = itemsPurchasedSKU.size(); itemsToRemove > 0; itemsToRemove--) {
 //                String currentItemSKU = itemsPurchasedSKU.get(itemsToRemove - 1);
 //                String currentItemType = imbl.getItemBySKU(currentItemSKU).getType();
 //                switch (currentItemType) { //only remove if is one of the following items type
@@ -230,10 +232,17 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
                 }
             }
 
+            //Create the items to be picked
+            List<LineItemEntity> itemsToBePicked = new ArrayList<LineItemEntity>();
+            for (LineItemEntity curr : salesRecordEntity.getItemsPurchased()) {
+                if (curr.getItem().getVolume() > Config.minVolumeForCollectionAreaItems) {
+                    itemsToBePicked.add(curr);
+                }
+            }
             //Create the PickRequest 
             String receiptNo = salesRecordEntity.getReceiptNo();
             String queueNo = receiptNo.substring(receiptNo.length() - 4);
-            PickRequestEntity pickRequestEntity = new PickRequestEntity(pickerWithLeastJobInQueue, salesRecordEntity, queueNo);
+            PickRequestEntity pickRequestEntity = new PickRequestEntity(pickerWithLeastJobInQueue, salesRecordEntity, itemsToBePicked, queueNo);
             em.persist(pickRequestEntity);
 
             //Check the picker queue to slot the pick request in (by date)

@@ -2,11 +2,13 @@ package EntityManager;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,6 +24,8 @@ public class PickRequestEntity implements Serializable {
     private PickerEntity picker;
     @OneToOne
     private SalesRecordEntity salesRecord;
+    @OneToMany
+    private List<LineItemEntity> items;
     private String queueNo;
     private Integer pickStatus;//1.Queued,2.In-progress,3.Completed
     private Integer collectionStatus;//1.Picking,2.Ready for Collection,3.Uncollected,4.Collected
@@ -35,9 +39,10 @@ public class PickRequestEntity implements Serializable {
     public PickRequestEntity() {
     }
 
-    public PickRequestEntity(PickerEntity picker, SalesRecordEntity salesRecord, String queueNo) {
+    public PickRequestEntity(PickerEntity picker, SalesRecordEntity salesRecord,List<LineItemEntity> items, String queueNo) {
         this.picker = picker;
         this.salesRecord = salesRecord;
+        this.items = items;
         this.queueNo = queueNo;
         this.pickStatus = 1;
         this.collectionStatus = 1;
@@ -55,6 +60,14 @@ public class PickRequestEntity implements Serializable {
             default:
                 return "Unavailable";
         }
+    }
+
+    public List<LineItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<LineItemEntity> items) {
+        this.items = items;
     }
 
     public void setPickStatus(Integer pickStatus) {
