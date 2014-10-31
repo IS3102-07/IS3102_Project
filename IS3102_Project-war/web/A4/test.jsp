@@ -8,7 +8,7 @@
         <h2>Auto Refresh Header Example</h2>
         <%
             // Set refresh, autoload time as 5 seconds
-            response.setIntHeader("Refresh", 5);
+            response.setIntHeader("Refresh", 1);
             // Get current time
             Calendar calendar = new GregorianCalendar();
             String am_pm;
