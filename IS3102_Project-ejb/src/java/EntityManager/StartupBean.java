@@ -392,6 +392,7 @@ public class StartupBean {
             Query q4 = em.createQuery("select m from MenuItemEntity m");
             List<MenuItemEntity> menuItemList = (List<MenuItemEntity>) q4.getResultList();
 
+            
             int index = 1;
             int ind = 1;
             for (StoreEntity store : storeList) {
@@ -402,7 +403,7 @@ public class StartupBean {
                             saleFigure.setStore(store);
                             saleFigure.setProductGroup(productGroup);
                             saleFigure.setSchedule(schedule);
-                            
+                                                                      
                             if ((index % 4) == 0) {
                                 saleFigure.setQuantity(30 + index*3);
                             } else if ((index % 4) == 1) {
@@ -411,7 +412,11 @@ public class StartupBean {
                                 saleFigure.setQuantity(30 + index*3);
                             } else {
                                 saleFigure.setQuantity(35 + index*3);
-                            }                                                        
+                            }       
+                            
+                            if(schedule.getMonth() == 9){
+                                saleFigure.setQuantity(saleFigure.getQuantity() + 50);
+                            }                            
                             index++;
                             em.persist(saleFigure);
                         } catch (Exception ex) {

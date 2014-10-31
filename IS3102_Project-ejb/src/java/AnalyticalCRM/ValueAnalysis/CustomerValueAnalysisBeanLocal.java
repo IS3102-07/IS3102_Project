@@ -8,6 +8,7 @@ package AnalyticalCRM.ValueAnalysis;
 
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
+import EntityManager.MemberEntity;
 import EntityManager.RetailProductEntity;
 import EntityManager.SalesRecordEntity;
 import java.util.Date;
@@ -16,6 +17,9 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
+    public Double getFurnitureTotalRevenue(Long furnitureId);
+    public List<ItemEntity> sortBestSellingFurniture();
+    public Boolean sendMemberLoyaltyPoints(List<MemberEntity> members, Integer loyaltyPoints);
     public Double getStdErrorOfIncome();
     public Double getROfIncome();
     public Double getRSquaredOfIncome();

@@ -84,15 +84,16 @@
                                                             index ++;
                                                         %>
                                                         <tr id="<%=index%>">                                                            
-                                                            <td style="width: 20%" ><%= s.getProductGroup().getProductGroupName()%></td>                                                        
-                                                            <td style="width: 20%"><p id="<%= s.getProductGroup().getId() %>"><%= s.getQuantity()%></p></td>                                                            
-                                                            <td style="width: 30%">
+                                                            <td style="width: 15%" ><%= s.getProductGroup().getProductGroupName()%></td>                                                        
+                                                            <td style="width: 15%"><p id="<%= s.getProductGroup().getId() %>"><%= s.getQuantity()%></p></td>                                                            
+                                                            <td style="width: 45%">
                                                                 <div class="btn-group btn-toggle"> 
-                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getRegressionSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("R")){ out.print("active"); } %>">Regression Method</span>
-                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getSaleForecast(this)" class="btn btn-default <% if(!s.getMethod().equals("R")){ out.print("active"); } %> ">Average Method</span>
+                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getMultipleRegressionSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("M")){ out.print("active"); } %> ">Multiple Linear Regression</span>
+                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getRegressionSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("R")){ out.print("active"); } %>">Simple Linear Regression</span>
+                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("A")){ out.print("active"); } %> ">Average Method</span>                                                                    
                                                                 </div>                                                                                                                                                                                                                                                 
                                                             </td>                                                            
-                                                            <td style="width: 30%">
+                                                            <td style="width: 25%">
                                                                 <button class="btn btn-primary" name="productGroupId" value="<%= s.getProductGroup().getId()%>">View historical data</button>
                                                             </td>
                                                         </tr>
@@ -141,19 +142,7 @@
                 $('#dataTable2').dataTable();                
             }
             );
-        </script>
-        
-        <script>
-            function getRegressionSaleForecast(a) {                
-                var productGroupId = $(a).attr('id');                                              
-                $.get('../SalesForecast_ajax_servlet/regression', {productGroupId: productGroupId}, function (responseText) {                         
-                    var val = responseText.trim().split(';');                    
-                    $(a).closest('tr').find('td:eq(1)').html(val[1]);
-                    $(a).addClass('active');
-                    $(a).closest('td').find('span:eq(1)').removeClass('active');
-                });
-            }
-        </script>
+        </script>                
         
         <script>
             function getSaleForecast(a) {                
@@ -163,6 +152,33 @@
                     $(a).closest('tr').find('td:eq(1)').html(val[1]);
                     $(a).addClass('active');
                     $(a).closest('td').find('span:eq(0)').removeClass('active');
+                    $(a).closest('td').find('span:eq(1)').removeClass('active');
+                });
+            }
+        </script>
+        
+        <script>
+            function getRegressionSaleForecast(a) {                
+                var productGroupId = $(a).attr('id');                                              
+                $.get('../SalesForecast_ajax_servlet/regression', {productGroupId: productGroupId}, function (responseText) {                         
+                    var val = responseText.trim().split(';');                    
+                    $(a).closest('tr').find('td:eq(1)').html(val[1]);
+                    $(a).addClass('active');
+                    $(a).closest('td').find('span:eq(0)').removeClass('active');
+                    $(a).closest('td').find('span:eq(2)').removeClass('active');
+                });
+            }
+        </script>
+        
+        <script>
+            function getMultipleRegressionSaleForecast(a) {                
+                var productGroupId = $(a).attr('id');                                              
+                $.get('../SalesForecast_ajax_servlet/multiple', {productGroupId: productGroupId}, function (responseText) {                         
+                    var val = responseText.trim().split(';');                    
+                    $(a).closest('tr').find('td:eq(1)').html(val[1]);
+                    $(a).addClass('active');
+                    $(a).closest('td').find('span:eq(1)').removeClass('active');
+                    $(a).closest('td').find('span:eq(2)').removeClass('active');
                 });
             }
         </script>
