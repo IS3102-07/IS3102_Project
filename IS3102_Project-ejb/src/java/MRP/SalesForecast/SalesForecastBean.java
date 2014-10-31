@@ -15,6 +15,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 @Stateless
@@ -164,7 +165,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, amount / 3);
                 saleForecast.setMethod("A");
                 em.persist(saleForecast);
-                
+
                 return saleForecast;
 
             } catch (Exception ex) {
@@ -217,7 +218,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                 List<SalesFigureEntity> salesFigureList = new ArrayList<>();
 
-                MonthScheduleEntity lastSchedule = schedule;                
+                MonthScheduleEntity lastSchedule = schedule;
 
                 Query q1 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                         .setParameter(1, productGroupId)
@@ -245,7 +246,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                 SimpleRegression simpleRegression = new SimpleRegression();
 
-                for (int i = 0; i < salesFigureList.size(); i++) {                    
+                for (int i = 0; i < salesFigureList.size(); i++) {
                     simpleRegression.addData(salesFigureList.size() - i, salesFigureList.get(i).getQuantity());
                 }
 
@@ -256,7 +257,130 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, Math.round((float) forecastQuantity));
                 saleForecast.setMethod("R");
                 em.persist(saleForecast);
-                
+
+                return saleForecast;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, 0);
+                System.out.println("debug......" + " exception is catched");
+                return saleForecast;
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public SaleForecastEntity getSalesForecastMultipleLinearRegression(Long storeId, Long productGroupId, Long scheduleId) {
+        System.out.println("debug......" + "getSalesForecastMultipleLinearRegression is called.");
+        try {
+            Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                    .setParameter(1, productGroupId)
+                    .setParameter(2, storeId)
+                    .setParameter(3, scheduleId);
+
+            if (!q.getResultList().isEmpty()) {
+                em.remove(q.getResultList().get(0));
+                em.flush();
+            }
+
+            // if not exist, then create it
+            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+
+            try {
+
+                List<SalesFigureEntity> salesFigureList = new ArrayList<>();
+
+                MonthScheduleEntity lastSchedule = schedule;
+
+                Query q1 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                        .setParameter(1, productGroupId)
+                        .setParameter(2, storeId)
+                        .setParameter(3, lastSchedule.getId());
+
+                if (!q1.getResultList().isEmpty()) {
+                    SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q1.getResultList().get(0);
+                    salesFigureList.add(salesFigureEntity);
+                }
+
+                while (this.getTheBeforeOne(lastSchedule) != null) {
+                    lastSchedule = this.getTheBeforeOne(lastSchedule);
+
+                    Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                            .setParameter(1, productGroupId)
+                            .setParameter(2, storeId)
+                            .setParameter(3, lastSchedule.getId());
+
+                    if (!q2.getResultList().isEmpty()) {
+                        SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
+                        salesFigureList.add(salesFigureEntity);
+                    }
+                }
+
+                OLSMultipleLinearRegression regression = new OLSMultipleLinearRegression();
+
+                double[] y = new double[salesFigureList.size()];
+                double[][] x = new double[salesFigureList.size()][];
+                for (int i = 0; i < salesFigureList.size(); i++) {
+                    y[i] = salesFigureList.get(i).getQuantity();
+
+                    switch (salesFigureList.get(i).getSchedule().getMonth()) {
+                        case 1:
+                            x[i] = new double[]{i, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 2:
+                            x[i] = new double[]{i, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 3:
+                            x[i] = new double[]{i, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 4:
+                            x[i] = new double[]{i, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 5:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 6:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 7:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0};
+                            break;
+                        case 8:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0};
+                            break;
+                        case 9:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
+                            break;
+                        case 10:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0};
+                            break;
+                        case 11:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
+                            break;
+                        case 12:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+                            break;
+                    }
+                }
+                regression.newSampleData(y, x);
+                double[] coefficient = regression.estimateRegressionParameters();
+                System.out.println("coefficient.length: " + coefficient.length);
+                for (int i = 0; i < coefficient.length; i++) {
+                    System.out.println("coefficient[i]: " + coefficient[i]);
+                }
+                double forecastQuantity = coefficient[0] - coefficient[1] + coefficient[schedule.getMonth()+1];
+
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, Math.round((float) forecastQuantity));
+                saleForecast.setMethod("M");
+                em.persist(saleForecast);
+
+                System.out.println("schedule.getId(): " + schedule.getId());
+
                 return saleForecast;
 
             } catch (Exception ex) {
@@ -282,7 +406,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(3, scheduleId);
 
             if (!q.getResultList().isEmpty()) {
-                return (SaleForecastEntity)q.getResultList().get(0);
+                return (SaleForecastEntity) q.getResultList().get(0);
             } else {
                 return this.getSalesForecastLinearRegression(storeId, productGroupId, scheduleId);
             }
