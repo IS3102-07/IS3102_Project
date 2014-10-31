@@ -35,9 +35,7 @@
                     <%
                         try {
                             String id = request.getParameter("id");
-                            System.out.println(id);
                             List<PromotionEntity> promotions = (List<PromotionEntity>) (session.getAttribute("promotions"));
-                            System.out.println(promotions.size());
                             PromotionEntity promotion = new PromotionEntity();
                             for (int i = 0; i < promotions.size(); i++) {
                                 if (promotions.get(i).getId() == Integer.parseInt(id)) {
