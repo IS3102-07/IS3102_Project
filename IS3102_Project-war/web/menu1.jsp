@@ -341,6 +341,9 @@
                             roleCanView = true;
                             break;
                         }
+                        if(roleEntity.getId().equals(5L)) {//Marketing Director 
+                            roleCanView2 = false;
+                        }
                     }
                     if (roleCanView) {
                         break;
@@ -349,19 +352,22 @@
                 if (roleCanView) {
             %>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#pperationalCRM">
+                <a href="javascript:;" data-toggle="collapse" data-target="#operationalCRM">
                     <i class="icon icon-cogs"></i> Operational CRM <i class="icon icon-caret-down"></i>
                 </a>
-                <ul id="pperationalCRM" class="collapse">
+                <ul id="operationalCRM" class="collapse">
+                    <% if (roleCanView2) { %>
                     <li>
                         <a href="../LoyaltyManagement_Servlet">Loyalty & Rewards</a>
                     </li>
                     <li>
                         <a href="../A4/customerServiceManagement.jsp">Customer Service</a>
-                    </li>
+                    </li>                    
+                    <%}%>
                     <li>
                         <a href="../PromotionalSalesManagement_Servlet">Promotional Sales</a>
                     </li>
+                   
                 </ul>
             </li>
             <% }
