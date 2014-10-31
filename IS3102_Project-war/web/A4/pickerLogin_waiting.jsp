@@ -1,11 +1,13 @@
+<%@page import="EntityManager.PickerEntity"%>
 <%@ page import="java.io.*,java.util.*" %>
 <%
-    Long pickerID = (Long) (session.getAttribute("pickerID"));
-    if (pickerID == null) {
+    PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
+    if (picker == null) {
 %>
 <jsp:forward page="A4/pickerLogin.jsp?errMsg=Session Expired." />
 <%
     }
+
 %>
 
 <html>
