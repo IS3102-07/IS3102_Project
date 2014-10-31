@@ -1,7 +1,7 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.LinkedList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,25 +16,37 @@ public class PickerEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @OneToOne
+    private StoreEntity store;
 
     @OneToOne
     private StaffEntity picker;
 
     @OneToMany(mappedBy = "picker")
-    private List<PickRequestEntity> listOfJob;
+    private LinkedList<PickRequestEntity> listOfJob;
 
     public PickerEntity() {
     }
 
-    public PickerEntity(StaffEntity staff) {
+    public PickerEntity(StaffEntity staff, StoreEntity store) {
         this.picker = staff;
+        this.store = store;
     }
 
-    public List<PickRequestEntity> getListOfJob() {
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public void setStore(StoreEntity store) {
+        this.store = store;
+    }
+
+    public LinkedList<PickRequestEntity> getListOfJob() {
         return listOfJob;
     }
 
-    public void setListOfJob(List<PickRequestEntity> listOfJob) {
+    public void setListOfJob(LinkedList<PickRequestEntity> listOfJob) {
         this.listOfJob = listOfJob;
     }
 

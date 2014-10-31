@@ -1,5 +1,6 @@
 package StoreTransaction.RetailInventory;
 
+import Config.Config;
 import javax.ejb.Stateless;
 import EntityManager.ItemEntity;
 import EntityManager.RawMaterialEntity;
@@ -193,7 +194,7 @@ public class RetailInventoryBean implements RetailInventoryBeanLocal {
             SalesRecordEntity salesRecordEntity = (SalesRecordEntity) q.getSingleResult();
             List<LineItemEntity> lineItemEntities = salesRecordEntity.getItemsPurchased();
             for (LineItemEntity curr:lineItemEntities) {
-                if (curr.getItem().getVolume()>360000)
+                if (curr.getItem().getVolume()>Config.minVolumeForCollectionAreaItems)
                     return true;
             }
             return false;

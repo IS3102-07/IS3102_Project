@@ -16,7 +16,7 @@ public interface CustomerServiceBeanLocal {
     // Check if staff is correct role, add him to the picker list, returns picker ID
     public Long pickerLoginStaff(String email, String password);
     
-    public PickRequestEntity getPickRequest(Long pickerID);
+    public PickRequestEntity getPickRequest(Long pickerID);//returns null if there is nothing in his queue
     public Integer getPickRequestQueueSize(Long pickerID);
     
     public Boolean acceptPickRequest(Long pickerID, Long pickRequestID);
