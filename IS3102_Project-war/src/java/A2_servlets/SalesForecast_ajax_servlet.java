@@ -50,6 +50,13 @@ public class SalesForecast_ajax_servlet extends HttpServlet {
                     out.write(";"+saleForecast.getQuantity()+";");                    
                 }
                 break;
+                
+            case "/multiple":
+                try (PrintWriter out = response.getWriter()) {
+                    SaleForecastEntity saleForecast = sfBean.getSalesForecastMultipleLinearRegression(storeId, productGroupId, schedulelId);
+                    out.write(";"+saleForecast.getQuantity()+";");                    
+                }
+                break;
         }
 
     }

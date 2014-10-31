@@ -21,4 +21,6 @@ public interface SalesForecastBeanLocal {
         public Boolean updateSalesFigureBySalesRecord(Long salesRecordId);
         
         public SaleForecastEntity getSalesForecastLinearRegression(Long storeId, Long productGroupId, Long scheduleId);
+        
+        public SaleForecastEntity getSalesForecastMultipleLinearRegression(Long storeId, Long productGroupId, Long scheduleId);
 }
