@@ -31,6 +31,27 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
     }
 
     @Override
+    public List<PromotionEntity> getAllActivePromotionsInCountry(Long countryID) {
+        System.out.println("getAllPromotions() called");
+        try {
+            Query q = em.createQuery("SELECT p FROM PromotionEntity p where p.country.id=:countryID");
+            q.setParameter("countryID", countryID);
+            List<PromotionEntity> allPromotionsInCountry = q.getResultList();
+            List<PromotionEntity> activePromotionsInCountry = new ArrayList<>();
+            Date currentDate = new Date();
+            for (PromotionEntity curr : allPromotionsInCountry) {
+                if ((curr.getStartDate().before(currentDate) && curr.getEndDate().after(currentDate)) || curr.getStartDate().equals(currentDate) || curr.getEndDate().equals(currentDate)) {
+                    activePromotionsInCountry.add(curr);
+                }
+            }
+            return activePromotionsInCountry;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ArrayList();
+        }
+    }
+
+    @Override
     public CountryEntity getCountryByCountryId(Long countryID) {
         System.out.println("getCountryByCountryId() called with id: " + countryID);
         try {
@@ -45,6 +66,7 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
         }
     }
 
+    @Override
     public Boolean createPromotion(ItemEntity item, CountryEntity country, Double discountRate, Date startDate, Date endDate, String imageURL, String description) {
         System.out.println("createPromotion() called");
         try {
@@ -58,6 +80,7 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
         }
     }
 
+    @Override
     public Boolean deletePromotion(Long id) {
         System.out.println("deletePromotion() called with id:" + id);
         try {
@@ -72,12 +95,29 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
     }
 
     @Override
-    public Boolean checkIfPromotionCreated(String sku, Long countryId, Date date) {
+    public Double getPromotionRate(String sku, Long countryId, Date date) {
+        System.out.println("getPromotionRate() called");
+        try {
+            List<PromotionEntity> promotions = getAllPromotions();
+            for (int i = 0; i < promotions.size(); i++) {
+                if (promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId().equals(countryId) && ((promotions.get(i).getStartDate().before(date) && promotions.get(i).getEndDate().after(date)) || promotions.get(i).getStartDate().equals(date) || promotions.get(i).getEndDate().equals(date))) {
+                    return promotions.get(i).getDiscountRate();
+                }
+            }
+            return 0.0;//cannot find promo
+        } catch (Exception ex) {
+            System.out.println("getPromotionRate(): Error");
+            return 0.0;
+        }
+    }
+
+    @Override
+    public Boolean checkIfPromotionCreated(String sku, Long countryId, Date startDate, Date endDate) {
         System.out.println("checkIfPromotionCreated() called");
         try {
             List<PromotionEntity> promotions = getAllPromotions();
             for (int i = 0; i < promotions.size(); i++) {
-                if (promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId() == countryId && promotions.get(i).getEndDate().after(date)) {
+                if (promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId().equals(countryId) && promotions.get(i).getEndDate().after(startDate)) {
                     return false;
                 }
             }
@@ -88,6 +128,7 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
         return true;
     }
 
+    @Override
     public Boolean editPromotion(Long id, ItemEntity item, CountryEntity country, Double discountRate, Date startDate, Date endDate, String imageURL, String description) {
         System.out.println("editPromotion is called with promotion id" + id);
         try {
@@ -109,12 +150,12 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
     }
 
     @Override
-    public Boolean checkIfPromotionCreated(Long id, String sku, Long countryId, Date date) {
+    public Boolean checkIfPromotionCreated(Long id, String sku, Long countryId, Date startDate, Date endDate) {
         System.out.println("checkIfPromotionCreated() called" + id);
         try {
             List<PromotionEntity> promotions = getAllPromotions();
             for (int i = 0; i < promotions.size(); i++) {
-                if (!Objects.equals(promotions.get(i).getId(), id) && promotions.get(i).getItem().getSKU().equals(sku) && Objects.equals(promotions.get(i).getCountry().getId(), countryId) && promotions.get(i).getEndDate().after(date)) {
+                if (!Objects.equals(promotions.get(i).getId(), id) && promotions.get(i).getItem().getSKU().equals(sku) && Objects.equals(promotions.get(i).getCountry().getId(), countryId) && promotions.get(i).getEndDate().after(startDate)) {
                     System.out.println(promotions.get(i).getId());
                     return false;
                 }
@@ -124,6 +165,5 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
             return true;
         }
         return true;
-
     }
 }

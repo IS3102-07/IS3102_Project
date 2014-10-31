@@ -542,10 +542,6 @@
         <servlet-class>B_servlets.ECommerce_AllRetailProductsServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
-        <servlet-class>B_servlets.ECommerce_AllFoodsServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>A1/AccessRight_edit</servlet-name>
         <jsp-file>/A1/AccessRight_edit.jsp</jsp-file>
     </servlet>
@@ -1560,10 +1556,6 @@
     <servlet-mapping>
         <servlet-name>ECommerce_WishListServlet</servlet-name>
         <url-pattern>/ECommerce_WishListServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ECommerce_AllFoodsServlet</servlet-name>
-        <url-pattern>/ECommerce_AllFoodsServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>A1/AccessRight_edit</servlet-name>

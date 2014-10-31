@@ -39,17 +39,17 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
             String countryId = request.getParameter("country");
             String source = request.getParameter("source");
             String discountRate = request.getParameter("discountRate");
-            String startDate = request.getParameter("startDate");
-            String endDate = request.getParameter("endDate");
+            String startDateS = request.getParameter("startDate");
+            String endDateS = request.getParameter("endDate");
             String description = request.getParameter("description");
             Part file = request.getPart("javafile");
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(startDate);
-            Date date1 = formatter.parse(endDate);
-            String datestring = formatter.format(date1);
+            Date startDate = formatter.parse(startDateS);
+            Date endDate = formatter.parse(endDateS);
+            String datestring = formatter.format(endDate);
 
-            if (date1.before(date)) {
+            if (endDate.before(startDate)) {
                 result = "?errMsg=Failed to add promotion. End date is earlier than start date.";
                 response.sendRedirect(source + result);
             }
@@ -58,10 +58,10 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
                 String fileName = sku + datestring + ".jpg";
                 String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
-                    if (promotionalSalesBeanLocal.checkIfPromotionCreated(sku, Long.parseLong(countryId), date)) {
+                    if (promotionalSalesBeanLocal.checkIfPromotionCreated(sku, Long.parseLong(countryId), startDate, endDate)) {
                     ItemEntity item = itemManagementBeanLocal.getItemBySKU(sku);
                     CountryEntity country = promotionalSalesBeanLocal.getCountryByCountryId(Long.parseLong(countryId));
-                    promotionalSalesBeanLocal.createPromotion(item, country, Double.parseDouble(discountRate), date, date1, imageURL, description);
+                    promotionalSalesBeanLocal.createPromotion(item, country, Double.parseDouble(discountRate), startDate, endDate, imageURL, description);
                     result = "?goodMsg=Promotion has been created successfully.";
 
                      if (file != null) {

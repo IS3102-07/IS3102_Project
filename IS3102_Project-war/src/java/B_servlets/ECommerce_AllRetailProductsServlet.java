@@ -1,7 +1,10 @@
 package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.Item_CountryEntity;
+import EntityManager.PromotionEntity;
 import EntityManager.RetailProductEntity;
+import OperationalCRM.PromotionalSales.PromotionalSalesBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,7 +18,9 @@ import java.util.List;
 public class ECommerce_AllRetailProductsServlet extends HttpServlet {
 
     @EJB
-    private ItemManagementBeanLocal itemManagementBean;
+    private ItemManagementBeanLocal imbl;
+    @EJB
+    private PromotionalSalesBeanLocal psbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,8 +32,13 @@ public class ECommerce_AllRetailProductsServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
 
-            List<RetailProductEntity> retailProducts = itemManagementBean.listAllRetailProduct();
+            List<RetailProductEntity> retailProducts = imbl.listAllRetailProduct();
             session.setAttribute("retailProducts", retailProducts);
+            Long countryID = (Long) session.getAttribute("countryID");
+            List<Item_CountryEntity> item_countryList = imbl.listAllItemsOfCountry(countryID);
+            List<PromotionEntity> promotions = psbl.getAllActivePromotionsInCountry(countryID);
+            session.setAttribute("item_countryList", item_countryList);
+            session.setAttribute("promotions", promotions);
 
             String URLprefix = (String) session.getAttribute("URLprefix");
             if (URLprefix == null) {

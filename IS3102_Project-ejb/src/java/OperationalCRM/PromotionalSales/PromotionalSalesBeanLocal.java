@@ -11,6 +11,8 @@ import javax.ejb.Local;
 public interface PromotionalSalesBeanLocal {
 
     public List<PromotionEntity> getAllPromotions();
+    
+    public List<PromotionEntity> getAllActivePromotionsInCountry(Long countryID);
 
     public CountryEntity getCountryByCountryId(Long id);
 
@@ -18,10 +20,12 @@ public interface PromotionalSalesBeanLocal {
 
     public Boolean deletePromotion(Long id);
     
-    public Boolean checkIfPromotionCreated(String sku, Long countryId, Date date);
+    public Double getPromotionRate(String sku, Long countryId, Date date);
+    
+    public Boolean checkIfPromotionCreated(String sku, Long countryId, Date startDate, Date endDate);
 
     public Boolean editPromotion(Long id,ItemEntity item, CountryEntity country, Double discountRate, Date startDate, Date endDate, String imageURL, String description);
 
-    public Boolean checkIfPromotionCreated(Long id, String sku, Long countryId, Date date);
+    public Boolean checkIfPromotionCreated(Long id, String sku, Long countryId, Date startDate, Date endDate);
 
 }
