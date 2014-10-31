@@ -94,6 +94,9 @@ public class Analytical_SegmentationMarketingServlet extends HttpServlet {
             session.setAttribute("cummulativeSpendingJoinDateGrp2", cummulativeSpendingJoinDateGrp2);
             session.setAttribute("cummulativeSpendingJoinDateGrp3", cummulativeSpendingJoinDateGrp3);
             session.setAttribute("cummulativeSpendingJoinDateGrp4", cummulativeSpendingJoinDateGrp4);
+            
+            Double getRSquaredOfAge = customerValueAnalysisBean.getRSquaredOfAge();
+            session.setAttribute("getRSquaredOfAge", getRSquaredOfAge);
 
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/segmentationMarketing.jsp");

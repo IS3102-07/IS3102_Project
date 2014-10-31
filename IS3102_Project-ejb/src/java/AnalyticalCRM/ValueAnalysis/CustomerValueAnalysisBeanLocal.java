@@ -16,6 +16,7 @@ import javax.ejb.Local;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
+    public Double getRSquaredOfAge();
     public Integer totalCummulativeSpendingOfJoinDate(Integer startDate, Integer endDate);
     public Integer numOfMembersInIncomeGroup(Integer startIncome, Integer endIncome);
     public Double averageOrderPrice();

@@ -116,6 +116,10 @@
                                                                                 <div class="col-md-6">
                                                                                     <h4>Age Group</h4>
                                                                                     <div id="ageGroupChart"></div>
+                                                                                    <% 
+                                                Double getRSquaredOfAge = (Double) session.getAttribute("getRSquaredOfAge");
+                                                                                    out.println(getRSquaredOfAge);
+                                                                                            %>
                                                                                 </div>
                                                                                 <div class="col-md-6">
                                                                                     <h4>Income Group</h4>

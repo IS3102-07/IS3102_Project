@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.Query;
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 @Stateful
 public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal {
@@ -33,10 +34,10 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     public CustomerValueAnalysisBean() {
         System.out.println("\nCustomer Value Analysis Server (EJB) created.");
     }
-    
+
     @Override
     public Double averageOrdersPerAcquiredYear() {
-        System.out.println("averageOrdersPerAcquiredYear()");       
+        System.out.println("averageOrdersPerAcquiredYear()");
 
         Integer numOfOrders = 0;
         Integer numOfMembers = 0;
@@ -48,14 +49,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
                 System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
-                 
+
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
                 System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                     System.out.println("This member has purchases records of " + member.getPurchases().size());
-                    
+
                     for (int i = 0; i < member.getPurchases().size(); i++) {
                         System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
@@ -71,20 +72,20 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00"); 
+            DecimalFormat df = new DecimalFormat("#.00");
             System.out.println("average order per year is " + numOfOrders);
-            return  ((double)numOfOrders / (double)numOfMembers);
+            return ((double) numOfOrders / (double) numOfMembers);
         } catch (Exception ex) {
-            
+
             System.out.println("\nServer failed to list orders per year:\n" + ex);
             ex.printStackTrace();
         }
-        return  ((double)numOfOrders / (double)numOfMembers);
+        return ((double) numOfOrders / (double) numOfMembers);
     }
-    
+
     @Override
     public Double averageOrderPrice() {
-        System.out.println("averageOrderPrice()");       
+        System.out.println("averageOrderPrice()");
 
         Integer numOfOrders = 0;
         Integer numOfMembers = 0;
@@ -96,14 +97,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
                 System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
-                 
+
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
                 System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                     System.out.println("This member has purchases records of " + member.getPurchases().size());
-                    
+
                     for (int i = 0; i < member.getPurchases().size(); i++) {
                         System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
@@ -119,20 +120,20 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00"); 
+            DecimalFormat df = new DecimalFormat("#.00");
             System.out.println("average order per year is " + numOfOrders);
-            return  ((double)numOfOrders / (double)numOfMembers);
+            return ((double) numOfOrders / (double) numOfMembers);
         } catch (Exception ex) {
-            
+
             System.out.println("\nServer failed to list orders per year:\n" + ex);
             ex.printStackTrace();
         }
-        return  ((double)numOfOrders / (double)numOfMembers);
+        return ((double) numOfOrders / (double) numOfMembers);
     }
-    
+
     @Override
     public Double getCustomerRetentionRate() {
-        System.out.println("getCustomerRetentionRate()");       
+        System.out.println("getCustomerRetentionRate()");
 
         Integer numOfMembers = 0;
         Integer numOfMembersNotChurn = 0;
@@ -143,14 +144,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
                 System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
-                 
+
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
                 System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                     System.out.println("This member has purchases records of " + member.getPurchases().size());
-                    
+
                     for (int i = 0; i < member.getPurchases().size(); i++) {
                         System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
@@ -165,15 +166,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00"); 
+            DecimalFormat df = new DecimalFormat("#.00");
             System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
-            return  ((double)numOfMembersNotChurn / (double)numOfMembers);
+            return ((double) numOfMembersNotChurn / (double) numOfMembers);
         } catch (Exception ex) {
-            
+
             System.out.println("\nServer failed to list retention rate:\n" + ex);
             ex.printStackTrace();
         }
-        return  ((double)numOfMembersNotChurn / (double)numOfMembers);
+        return ((double) numOfMembersNotChurn / (double) numOfMembers);
     }
 
     @Override
@@ -359,12 +360,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("totalCummulativeSpending is : " + totalCummulativeSpending);
         return totalCummulativeSpending;
     }
-    
+
     @Override
     public Integer totalCummulativeSpendingOfJoinDate(Integer startDate, Integer endDate) {
         System.out.println("totalCummulativeSpendingOfJoinDate()");
         List<MemberEntity> members = accountManagementBean.listAllMember();
-DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         Integer days = 0;
         int totalCummulativeSpending = 0;
@@ -379,6 +380,23 @@ DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return totalCummulativeSpending;
     }
     
+    @Override
+    public Double getRSquaredOfAge() {
+        System.out.println("getRSquaredOfAge()");
+        SimpleRegression regression = new SimpleRegression();
+        
+        regression.addData(10,10);
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            regression.addData(member.getAge(), member.getCummulativeSpending());
+        }
+        System.out.println("Get R squared is : " + regression.getRSquare());
+        return regression.getRSquare();
+    }
     @Override
     public Integer totalCummulativeSpendingOfIncome(Integer startIncome, Integer endIncome) {
         System.out.println("totalCummulativeSpendingOfIncome()");
@@ -419,7 +437,7 @@ DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         }
         return numOfmembersInGroup;
     }
-    
+
     @Override
     public Integer numOfMembersInIncomeGroup(Integer startIncome, Integer endIncome) {
         System.out.println("numOfMembersInIncomeGroup()");
