@@ -1,7 +1,8 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class PickerEntity implements Serializable {
     private StaffEntity picker;
 
     @OneToMany(mappedBy = "picker")
-    private LinkedList<PickRequestEntity> listOfJob;
+    private List<PickRequestEntity> listOfJob;
 
     public PickerEntity() {
     }
@@ -32,6 +33,7 @@ public class PickerEntity implements Serializable {
     public PickerEntity(StaffEntity staff, StoreEntity store) {
         this.picker = staff;
         this.store = store;
+        this.listOfJob = new ArrayList<>();
     }
 
     public StoreEntity getStore() {
@@ -42,11 +44,11 @@ public class PickerEntity implements Serializable {
         this.store = store;
     }
 
-    public LinkedList<PickRequestEntity> getListOfJob() {
+    public List<PickRequestEntity> getListOfJob() {
         return listOfJob;
     }
 
-    public void setListOfJob(LinkedList<PickRequestEntity> listOfJob) {
+    public void setListOfJob(List<PickRequestEntity> listOfJob) {
         this.listOfJob = listOfJob;
     }
 

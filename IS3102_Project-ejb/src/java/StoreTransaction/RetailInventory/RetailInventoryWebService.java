@@ -89,7 +89,6 @@ public class RetailInventoryWebService {
 
     @WebMethod
     public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") String telNo) {
-        //TODO not connecting to the URL dunno why
         try {
             String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
             System.out.println("Sending SMS: " + telNo + ": " +  URLEncoder.encode(smsMessage));

@@ -66,10 +66,15 @@ public interface StoreAndKitchenInventoryManagementBeanLocal {
     
     public Boolean checkIfStorageBinIsOfAppropriateItemType(Long storageBinId, String SKU);
     
-    public Boolean removeItemFromInventory(Long storeID, String SKU, Integer qty, Boolean picker);
+    public Boolean removeItemsFromInventory(Long storeID, String SKU, Integer qty, Boolean picker);
     public Boolean removeItemFromFurnitureMarketplace(Long storeID, String SKU, Integer qty);
     public Boolean removeItemFromRetailOutlet(Long storeID, String SKU, Integer qty);
     public Boolean removeItemFromKitchen(Long storeID, String SKU, Integer qty);
+    public Boolean removeItemFromPallets(Long storeID, String SKU, Integer qty);
+    public Boolean removeItemFromShelfs(Long storeID, String SKU, Integer qty);
+    public List<StorageBinEntity> findShelfsThatContainsItem(Long warehouseId, String SKU);
+    public List<StorageBinEntity> findPalletsThatContainsItem(Long warehouseId, String SKU);
+    public Boolean removeItemFromBin(Long storageBinID, String SKU);
     
     public List<TransferOrderEntity> viewLatestCompletedTransferOrders(Long warehouseId);
 }

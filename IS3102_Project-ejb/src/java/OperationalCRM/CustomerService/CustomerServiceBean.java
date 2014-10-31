@@ -93,11 +93,11 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     }
 
     @Override
-    public LinkedList<PickRequestEntity> getPickRequests(Long pickerID) {
+    public List<PickRequestEntity> getPickRequests(Long pickerID) {
         System.out.println("getPickRequest() called");
         try {
             PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
-            LinkedList<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
+            List<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
             return pickRequestEntities;
         } catch (Exception ex) {
             System.out.println("getPickRequest(): error");
@@ -133,7 +133,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             em.merge(pickRequestEntity);
             //Remove from the picker queue
             PickerEntity pickerEntity = pickRequestEntity.getPicker();
-            LinkedList<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
+            List<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
             for (int i = 0; i < pickRequestEntities.size(); i++) {
                 if (pickRequestEntities.get(i).getId().equals(pickRequestID)) {
                     pickRequestEntities.remove(i);
@@ -143,17 +143,17 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
                 }
             }
             //Update store inventory
-//            List<ItemEntity> itemsInPickRequest = TODO
-//            for (int itemsToRemove = itemsPurchasedSKU.size(); itemsToRemove > 0; itemsToRemove--) {
-//                String currentItemSKU = itemsPurchasedSKU.get(itemsToRemove - 1);
-//                String currentItemType = imbl.getItemBySKU(currentItemSKU).getType();
-//                switch (currentItemType) { //only remove if is one of the following items type
-//                    case "Furniture":
-//                    case "Retail Product":
-//                    case "Raw Material":
-//                        simbl.removeItemFromInventory(storeID, itemsPurchasedSKU.get(itemsToRemove - 1), itemsPurchasedQty.get(itemsToRemove - 1), true);
-//                }
-//            }
+            Long storeID = pickRequestEntity.getStore().getId();
+            List<LineItemEntity> itemsInPickRequest = pickRequestEntity.getItems();
+            for (int itemsToRemove = itemsInPickRequest.size(); itemsToRemove > 0; itemsToRemove--) {
+                String currentItemType = itemsInPickRequest.get(itemsToRemove - 1).getItem().getType();
+                switch (currentItemType) { //only remove if is one of the following items type
+                    case "Furniture":
+                    case "Retail Product":
+                    case "Raw Material":
+                        simbl.removeItemsFromInventory(storeID, itemsInPickRequest.get(itemsToRemove - 1).getItem().getSKU(), itemsInPickRequest.get(itemsToRemove - 1).getQuantity(), true);
+                }
+            }
             System.out.println("completePickRequest(): failed");
             return false;
         } catch (Exception ex) {
@@ -168,7 +168,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
         System.out.println("pickerLogoff() called");
         try {
             PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
-            LinkedList<PickRequestEntity> pickerTaskQueue = pickerEntity.getListOfJob();
+            List<PickRequestEntity> pickerTaskQueue = pickerEntity.getListOfJob();
             //Remove him from the list of picker in the store
             em.remove(pickerEntity);
             //Reassign all the pick request in his queue to someone else
@@ -227,7 +227,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             em.persist(pickRequestEntity);
 
             //Check the picker queue to slot the pick request in (by date)
-            LinkedList<PickRequestEntity> pickerTaskQueue = pickerWithLeastJobInQueue.getListOfJob();
+            List<PickRequestEntity> pickerTaskQueue = pickerWithLeastJobInQueue.getListOfJob();
             Long currentPickRequestTime = salesRecordEntity.getCreatedDate().getTime();
             int pickerQueueIndex = 0;
             //If picker does not have anything, just add

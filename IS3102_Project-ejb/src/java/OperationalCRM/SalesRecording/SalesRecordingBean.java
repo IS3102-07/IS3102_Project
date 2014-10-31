@@ -1,12 +1,12 @@
 package OperationalCRM.SalesRecording;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import Config.Config;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.CountryEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.MemberEntity;
-import EntityManager.QRPhoneSyncEntity;
 import EntityManager.SalesRecordEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
@@ -14,7 +14,12 @@ import HelperClasses.ReturnHelper;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import MRP.SalesForecast.SalesForecastBeanLocal;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -120,12 +125,18 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                 switch (currentItemType) { //only remove if is one of the following items type
                     case "Furniture":
                     case "Retail Product":
-                        storeInventoryManagementBean.removeItemFromInventory(storeID, itemsPurchasedSKU.get(itemsToRemove - 1), itemsPurchasedQty.get(itemsToRemove - 1), false);
+                        storeInventoryManagementBean.removeItemsFromInventory(storeID, itemsPurchasedSKU.get(itemsToRemove - 1), itemsPurchasedQty.get(itemsToRemove - 1), false);
                 }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            //TODO log that inventory cannot be updated, continue to let customer checkout
+            //log that inventory cannot be updated, continue to let customer checkout
+            try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+            out.println(new Date().toString() + ";" + storeID + ";createSalesRecord(); Failed creation of sales record.");
+            out.close();
+            } catch (Exception ex2){
+            }
         }
         return true;
     }

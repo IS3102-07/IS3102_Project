@@ -4,7 +4,6 @@ import EntityManager.FeedbackEntity;
 import EntityManager.PickRequestEntity;
 import EntityManager.PickerEntity;
 import EntityManager.SalesRecordEntity;
-import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -18,7 +17,7 @@ public interface CustomerServiceBeanLocal {
     // Check if staff is correct role, add him to the picker list, returns picker, null if invalid
     public PickerEntity pickerLoginStaff(String email, String password);
     
-    public LinkedList<PickRequestEntity> getPickRequests(Long pickerID);
+    public List<PickRequestEntity> getPickRequests(Long pickerID);
     
     public Boolean acceptPickRequest(Long pickerID, Long pickRequestID);
     
