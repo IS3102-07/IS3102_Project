@@ -133,7 +133,6 @@
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>SKU</th>
                                                             <th>Furniture Name</th>
-                                                            <th>Percentage</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -152,10 +151,7 @@
                                                             </td>
                                                             <td>
                                                                 <%=lineItems.get(i).getItem().getName()%>
-                                                            </td>
-                                                            <td>
-                                                                <%=lineItems.get(i).getPercent() * 100 %> %
-                                                            </td>
+                                                            </td>                                                          
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePGLineItem('<%=lineItems.get(i).getId()%>')"/>
                                                             </td>
