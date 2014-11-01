@@ -1,14 +1,20 @@
 package A6_servlets;
 
 import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+@MultipartConfig
 public class ComboManagement_UpdateServlet extends HttpServlet {
 
     @EJB
@@ -18,12 +24,14 @@ public class ComboManagement_UpdateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {           
+        try {
             String id = request.getParameter("id");
             String name = request.getParameter("name");
             String sku = request.getParameter("sku");
             String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
+            Part file = request.getPart("javafile");
+            String fileName = sku + ".jpg";
+            String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
             boolean canUpdate = RestaurantManagementBean.editCombo(Long.parseLong(id), sku, name, description, imageURL);
 
@@ -32,6 +40,19 @@ public class ComboManagement_UpdateServlet extends HttpServlet {
                 response.sendRedirect("A6/comboManagement_Update.jsp" + result);
             } else {
                 result = "?goodMsg=Combo updated successfully.&id=" + id;
+                if (file != null) {
+                    String s = file.getHeader("content-disposition");
+                    InputStream fileInputStream = file.getInputStream();
+                    OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+
+                    System.out.println("fileOutputStream  " + fileOutputStream);
+                    int nextByte;
+                    while ((nextByte = fileInputStream.read()) != -1) {
+                        fileOutputStream.write(nextByte);
+                    }
+                    fileOutputStream.close();
+                    fileInputStream.close();
+                }
                 response.sendRedirect("ComboLineItemManagement_Servlet" + result);
             }
         } catch (Exception ex) {

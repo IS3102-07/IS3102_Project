@@ -62,11 +62,6 @@ public class Item_CountryEntity implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "em.ItemPriceEntity[ id=" + id + " ]";
-    }
-
     /**
      * @return the item
      */

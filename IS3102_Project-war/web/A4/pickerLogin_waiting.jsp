@@ -2,30 +2,19 @@
 <%@page import="EntityManager.PickerEntity"%>
 <%@ page import="java.io.*,java.util.*" %>
 <%
-    response.setIntHeader("Refresh", 5);
     PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
     if (picker == null) {
 %>
 <jsp:forward page="pickerLogin.jsp?errMsg=Session Expired." />
-<%
-    }
-
-    LinkedList<PickRequestEntity> pickRequestLinkedList = (LinkedList<PickRequestEntity>) (session.getAttribute("pickRequestLinkedList"));
-    if (pickRequestLinkedList == null || pickRequestLinkedList.size() == 0) {
-
-    } else {
-
-%>
-<jsp:forward page="A4/pickerLogin.jsp?errMsg=Session Expired." />
-<%}%>
-
-
-
+<% } %>
 <html>
     <head>
         <jsp:include page="../header1.html" />
+        <meta http-equiv="refresh" content="3; url=../PickerRefreshJob_Servlet">
     </head>
     <body class="dark">
+
+
         <div role="main" class="main">
 
             <div class="header-container">
@@ -40,24 +29,22 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-9" >
-
                         <h2>No <strong>Jobs</strong> At the moment</h2>
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-3">
                                 <p class="lead">
-                                    No jobs available... No jobs available... No jobs available... No jobs available...  
+                                    No jobs available...
                                 </p>
                             </div>
                         </div>
-
                         <hr class="tall">
                     </div>
 
                     <div class="col-md-3">
                         <aside class="sidebar">
                             <form action="../PickerLogout_Servlet">
-                                <input type="submit" value="Logout" class="btn btn-lg btn-primary btn-block" style="min-height: 500px; font-size: 50px;">
+                                <input type="submit" value="Logout" class="btn btn-lg btn-primary btn-block" style="min-height: 150px; font-size: 50px;">
                             </form>
                         </aside>
                     </div>

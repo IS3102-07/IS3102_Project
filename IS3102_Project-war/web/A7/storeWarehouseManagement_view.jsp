@@ -1,5 +1,19 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="EntityManager.AccessRightEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
+<%
+    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+    List<AccessRightEntity> accessRights = staffEntity.getAccessRightList();
+    ArrayList<Long> warehouseId = new ArrayList();
+    for (int i = 0; i < accessRights.size(); i++) {
+        if (accessRights.get(i).getWarehouse() != null) {
+            warehouseId.add(accessRights.get(i).getWarehouse().getId());
+        }
+    }
+    Boolean canAccess = false;
+%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -74,9 +88,19 @@
                                                             </td>
                                                             <td>
                                                                 <%=warehouses.get(i).getTelephone()%>
-                                                            </td>
+                                                            </td>                                                          
                                                             <td>
+                                                                <% canAccess = false;
+                                                                    for (int j = 0; j < warehouseId.size(); j++) {
+                                                                        if (warehouseId.get(j) == warehouses.get(i).getId()) {
+                                                                            canAccess = true;
+                                                                        }
+                                                                    }
+                                                                    if (canAccess) {%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateStoreWarehouse('<%=warehouses.get(i).getId()%>', 'storeWarehouseManagement.jsp')"/>
+                                                                <%} else {%>
+                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
+                                                                <%}%>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -114,7 +138,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

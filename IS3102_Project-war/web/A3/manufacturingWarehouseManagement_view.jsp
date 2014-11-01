@@ -1,11 +1,24 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="EntityManager.AccessRightEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
+<%
+    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+    List<AccessRightEntity> accessRights = staffEntity.getAccessRightList();
+    ArrayList<Long> warehouseId = new ArrayList();
+    for (int i=0; i<accessRights.size();i++){
+        if (accessRights.get(i).getWarehouse()!=null)
+        warehouseId.add(accessRights.get(i).getWarehouse().getId());
+    }
+    Boolean canAccess = false;
+%>
 <html lang="en">
-
+    
     <jsp:include page="../header2.html" />
 
     <body>
-        <script>
+        <script>           
             function updateManufacturingWarehouse(id, destination) {
                 window.location.href = "../ManufacturingWarehouseManagement_Servlet?id=" + id + "&destination=" + destination;
             }
@@ -76,7 +89,16 @@
                                                                 <%=warehouses.get(i).getTelephone()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', 'manufacturingWarehouseManagement.jsp')"/>
+                                                                <% canAccess = false;
+                                                                for (int j=0; j<warehouseId.size();j++){
+                                                                    if (warehouseId.get(j) == warehouses.get(i).getId())
+                                                                        canAccess = true;
+                                                                      }
+                                                                if (canAccess){%>
+                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', 'manufacturingWarehouseManagement.jsp')"/>                                                                                                                            
+                                                                <%} else {%>
+                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
+                                                                 <%}%>
                                                             </td>
                                                         </tr>
                                                         <%
