@@ -35,12 +35,8 @@ public class ComboManagement_AddServlet extends HttpServlet {
             String fileName = SKU + ".jpg";
             String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
-            ComboEntity combo = RestaurantManagementBean.createCombo(SKU, name, description, imageURL);
-
-            if (combo == null) {
-                result = "?errMsg=Combo SKU already exist.";
-                response.sendRedirect("A6/comboManagement_Add.jsp" + result);
-            } else {
+            if (!RestaurantManagementBean.checkSKUExists(SKU)) {
+                RestaurantManagementBean.createCombo(SKU, name, description, imageURL);
                 result = "?goodMsg=Combo created successfully";
                 if (file != null) {
                     String s = file.getHeader("content-disposition");
@@ -56,7 +52,11 @@ public class ComboManagement_AddServlet extends HttpServlet {
                     fileInputStream.close();
                 }
                 response.sendRedirect("ComboManagement_ComboServlet" + result);
+            } else {
+                result = "?errMsg=Combo SKU already exist.";
+                response.sendRedirect("A6/comboManagement_Add.jsp" + result);
             }
+
         } catch (Exception ex) {
             out.println(ex);
         }

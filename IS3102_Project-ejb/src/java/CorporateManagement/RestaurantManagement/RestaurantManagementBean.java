@@ -399,15 +399,12 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
 
     @Override
     public ComboEntity createCombo(String SKU, String name, String description, String imageURL) {
-        try {
-            Query q = em.createQuery("select c from ItemEntity c where c.SKU = ?1").setParameter(1, SKU);
-            if (q.getResultList().isEmpty()) {
+        try {         
                 ComboEntity combo = new ComboEntity(SKU, name, description, imageURL);
                 em.persist(combo);
-                return combo;
-            } else {
-                return null;
-            }
+                em.flush();
+                em.merge(combo);
+                return combo;           
         } catch (Exception ex) {
             ex.printStackTrace();
         }
