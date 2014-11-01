@@ -28,8 +28,6 @@ public class Analytical_ValueAnalysisRFMServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            String goodMsg = request.getParameter("goodMsg");
             System.out.println("Analytical_ValueAnalysisRFMServlet");
 
             List<MemberEntity> members = accountManagementBean.listAllMember();
@@ -45,9 +43,7 @@ public class Analytical_ValueAnalysisRFMServlet extends HttpServlet {
             for (MemberEntity member : members) {
                 memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
             }
-            for (int i = 0; i < members.size(); i++) {
-                System.out.println(members.get(i).getId() + "||||||" + memberRecencyValue.get(i));
-            }
+            
             session.setAttribute("members", members);
             session.setAttribute("memberRecencyValue", memberRecencyValue);
             session.setAttribute("memberFrequencyValue", memberFrequencyValue);

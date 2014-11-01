@@ -731,6 +731,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
                 List<AccessRightEntity> accessRights = new ArrayList();
                 accessRights = rolesToBeRemoved.get(i).getAccessRightList();
                 for (int j=0;j<accessRights.size();j++)
+                    if (accessRights.get(j).getId()==staffID)
                     em.remove(accessRights.get(j));
             }
             staffEntity.setRoles(newRoles);
