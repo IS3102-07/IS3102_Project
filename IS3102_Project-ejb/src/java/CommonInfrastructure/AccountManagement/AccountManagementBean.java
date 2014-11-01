@@ -1249,7 +1249,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
             List<RoleEntity> roles = staffEntity.getRoles();
             for (RoleEntity role : roles) {
-                if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
+                if (role.getName().equals("Warehouse Manager")) {
                     return true;
                 }
             }
