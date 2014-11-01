@@ -28,6 +28,8 @@ public interface CustomerServiceBeanLocal {
     //Following methods are called by checkout process
     public Boolean addPickRequest(Long salesRecordID);
     
+    public Boolean updatePickRequest(Long pickRequestID);
+    
     //Following methods are for the main console showing status
     public List<PickRequestEntity> getAllPickRequestInStore(Long storeID);
 }
