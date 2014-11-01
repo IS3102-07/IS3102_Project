@@ -728,7 +728,10 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             }
             //Loop all the removed roles and remove the access right
             for(int i=0;i<rolesToBeRemoved.size();i++) {
-                //Xiaodong TODO
+                List<AccessRightEntity> accessRights = new ArrayList();
+                accessRights = rolesToBeRemoved.get(i).getAccessRightList();
+                for (int j=0;j<accessRights.size();j++)
+                    em.remove(accessRights.get(j));
             }
             staffEntity.setRoles(newRoles);
             em.merge(staffEntity);
