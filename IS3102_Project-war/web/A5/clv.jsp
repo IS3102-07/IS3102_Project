@@ -92,7 +92,7 @@
 
                                             %>
                                             <!-- /.table-responsive -->
-                                            
+
 
                                         </div>
 
@@ -100,194 +100,164 @@
 
                                         <div class="row">
                                             <div class="col-lg-12">
-                                            
-                                                        
-                                                            <h4>Customer Lifetime Value</h4>
-                                                            <table class="table">
-                                                                <tr>
-                                                                    <td>
-
-                                                                    </td>
-                                                                    <td>
-                                                                        Acquisition Year
-                                                                    </td>
-                                                                    <td>
-                                                                        Second Year
-                                                                    </td>
-                                                                    <td>
-                                                                        Third Year
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Customers
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=members.size()%>
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Retention Rate
-                                                                    </td>
-                                                                    <td>
-                                                                        <%
-                                                                            Double customerRetentionRate = (Double) session.getAttribute("customerRetentionRate");
-                                                                            DecimalFormat df = new DecimalFormat("#.00");
-                                                                        %>
-                                                                        <% out.print(df.format(customerRetentionRate * 100));%>%
-                                                                    </td>
-                                                                    <td>
-
-                                                                    </td>
-                                                                    <td>
-                                                                        Total Revenue
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Orders per Year
-                                                                    </td>
-                                                                    <td>
-                                                                        <% Double averageOrdersPerAcquiredYear = (Double) session.getAttribute("averageOrdersPerAcquiredYear"); %>
-                                                                        <% out.print(df.format(averageOrdersPerAcquiredYear));%>
-                                                                    </td>
-                                                                    <td>
-
-                                                                    </td>
-                                                                    <td>
-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Avg Order Price
-                                                                    </td>
-                                                                    <td>
-                                                                        
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Total Revenue
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
 
 
-                                                                <tr>
-                                                                    <td>
-                                                                        Total Costs
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Profit Margin
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                
-                                                                <tr>
-                                                                    <td>
-                                                                        Customer LTV
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                                    <div id="products" class="tab-pane">
-                                                                    </div>
-                                                    </div>
-                                                </div>
+                                                <h4>Customer Lifetime Value</h4>
+                                                <h4>Customer Lifetime Value</h4>
+                                                <table class="table">
+                                                    <tr>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            Acquisition Year
+                                                        </td>
+                                                        <td>
+                                                            Second Year
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Customers
+                                                        </td>
+                                                        <td>
+                                                            <%                                                                            Double customerRetentionRate = (Double) session.getAttribute("customerRetentionRate");
+                                                                DecimalFormat df = new DecimalFormat("#.00");
+                                                                DecimalFormat noDecimal = new DecimalFormat("#");
+                                                            %>
+                                                            <%=members.size()%>
+                                                        </td>
+                                                        <td>
+                                                            <%=noDecimal.format(customerRetentionRate * members.size())%>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Retention Rate
+                                                        </td>
+                                                        <td>
+                                                            <%
+
+
+                                                            %>
+                                                            <% out.print(df.format(customerRetentionRate * 100));%>%
+                                                        </td>
+                                                        <td>
+
+                                                            <%
+                                                                Double getRetainedCustomerRetentionRate = (Double) session.getAttribute("getRetainedCustomerRetentionRate");
+                                                            %>
+                                                            <% out.print(df.format(getRetainedCustomerRetentionRate * 100));%>%
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Orders per Year
+                                                        </td>
+                                                        <td>
+                                                            <% Double averageOrdersPerAcquiredYear = (Double) session.getAttribute("averageOrdersPerAcquiredYear"); %>
+                                                            <% out.print(df.format(averageOrdersPerAcquiredYear));%>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            Avg Order Price
+                                                        </td>
+                                                        <td>
+                                                            <% Double averageOrderPriceInAcquiredYear = (Double) session.getAttribute("averageOrderPriceInAcquiredYear"); %>
+                                                            <% out.print(df.format(averageOrderPriceInAcquiredYear));%>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            Profit Margin
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" onclick="changeLTV()" value="20"/>%
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            Customer LTV
+                                                        </td>
+                                                        <td>
+                                                            <p id="acquiredYearLTV">
+                                                                <% out.print(df.format(averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear * 0.2));%>
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            testing 321
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div id="products" class="tab-pane">
                                             </div>
                                         </div>
-                                        <input type="hidden" name="id" value="">    
                                     </div>
                             </div>
-                            <!-- /.panel-body -->
-                            </form>
                         </div>
-                        <!-- /.panel -->
+                        <input type="hidden" name="id" value="">    
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.row -->
+                <!-- /.panel-body -->
+                </form>
             </div>
-            <!-- /.container-fluid -->
+            <!-- /.panel -->
         </div>
-        <!-- /#page-wrapper -->
+        <!-- /.col-lg-12 -->
     </div>
-    <!-- /#wrapper -->
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
 
-    <div role="dialog" class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Alert</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="messageBox">Staff will be removed. Are you sure?</p>
-                </div>
-                <div class="modal-footer">                        
-                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStaff()"  />
-                    <a class="btn btn-default" data-dismiss ="modal">Close</a>
-                </div>
+<div role="dialog" class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p id="messageBox">Staff will be removed. Are you sure?</p>
+            </div>
+            <div class="modal-footer">                        
+                <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStaff()"  />
+                <a class="btn btn-default" data-dismiss ="modal">Close</a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-        $(document).ready(function() {
-            $('#dataTables-example').dataTable();
-        });
-        
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable();
+    });
 
-    </script>
+
+</script>
 </body>
 </html>
