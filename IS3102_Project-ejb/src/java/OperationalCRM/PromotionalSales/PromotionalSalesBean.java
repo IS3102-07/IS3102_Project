@@ -117,7 +117,7 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
         try {
             List<PromotionEntity> promotions = getAllPromotions();
             for (int i = 0; i < promotions.size(); i++) {
-                if (promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId().equals(countryId) && promotions.get(i).getEndDate().after(startDate)) {
+                if (promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId().equals(countryId) && ((promotions.get(i).getEndDate().after(startDate) && promotions.get(i).getStartDate().before(endDate)) || (promotions.get(i).getEndDate().equals(startDate) || promotions.get(i).getStartDate().equals(endDate)||promotions.get(i).getEndDate().equals(endDate) || promotions.get(i).getStartDate().equals(startDate)))) {
                     return false;
                 }
             }
@@ -155,8 +155,8 @@ public class PromotionalSalesBean implements PromotionalSalesBeanLocal {
         try {
             List<PromotionEntity> promotions = getAllPromotions();
             for (int i = 0; i < promotions.size(); i++) {
-                if (!Objects.equals(promotions.get(i).getId(), id) && promotions.get(i).getItem().getSKU().equals(sku) && Objects.equals(promotions.get(i).getCountry().getId(), countryId) && promotions.get(i).getEndDate().after(startDate)) {
-                    System.out.println(promotions.get(i).getId());
+                if (!Objects.equals(promotions.get(i).getId(), id) && promotions.get(i).getItem().getSKU().equals(sku) && promotions.get(i).getCountry().getId().equals(countryId) && ((promotions.get(i).getEndDate().after(startDate) && promotions.get(i).getStartDate().before(endDate)) || (promotions.get(i).getEndDate().equals(startDate) || promotions.get(i).getStartDate().equals(endDate)||promotions.get(i).getEndDate().equals(endDate) || promotions.get(i).getStartDate().equals(startDate)))) {
+                    System.out.println(promotions.get(i).getId()); 
                     return false;
                 }
             }
