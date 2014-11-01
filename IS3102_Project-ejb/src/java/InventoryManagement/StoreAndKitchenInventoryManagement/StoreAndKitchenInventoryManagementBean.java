@@ -764,14 +764,32 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     }
 
     @Override
-    public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU
-    ) {
+    public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU) {
         System.out.println("findStorageBinsThatContainsItem() called");
         try {
             Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.items.SKU=:SKU");
             q.setParameter("id", warehouseId);
             q.setParameter("SKU", SKU);
             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
+            List<StorageBinEntity> storageBins = q.getResultList();
+            return storageBins;
+        } catch (EntityNotFoundException ex) {
+            System.out.println("Failed findStorageBinThatContainsItem, warehouse or item not found.");
+            return null;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to findStorageBinThatContainsItem:\n" + ex);
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public List<StorageBinEntity> findRetailStorageBinsThatContainsItem(Long warehouseId, String SKU) {
+        System.out.println("findStorageBinsThatContainsItem() called");
+        try {
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.items.SKU=:SKU and (sb.type='Shelf' OR sb.type='Pallet')");
+            q.setParameter("id", warehouseId);
+            q.setParameter("SKU", SKU);
             List<StorageBinEntity> storageBins = q.getResultList();
             return storageBins;
         } catch (EntityNotFoundException ex) {
