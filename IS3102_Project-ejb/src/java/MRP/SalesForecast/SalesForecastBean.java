@@ -1,6 +1,9 @@
 package MRP.SalesForecast;
 
+import EntityManager.ComboEntity;
+import EntityManager.ComboLineItemEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.MenuItemEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
 import EntityManager.SaleForecastEntity;
@@ -43,17 +46,59 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
             for (LineItemEntity lineItem : saleRecord.getItemsPurchased()) {
                 System.out.println("saleRecord.getItemsPurchased().size(): " + saleRecord.getItemsPurchased().size());
                 System.out.println(lineItem.getItem().getSKU() + ": " + lineItem.getQuantity());
-                Query q = em.createQuery("select l.productGroup from ProductGroupLineItemEntity l where l.item.SKU = ?1")
-                        .setParameter(1, lineItem.getItem().getSKU());
-                if (!q.getResultList().isEmpty()) {
-                    ProductGroupEntity productGroup = (ProductGroupEntity) q.getResultList().get(0);
-                    Query q1 = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.id = ?2 and s.productGroup.id = ?3")
+
+                if (lineItem.getItem().getType().equals("Combo")) {
+                    ComboEntity combo = (ComboEntity) lineItem.getItem();
+                    for (ComboLineItemEntity cl : combo.getLineItemList()) {
+                        Query qe = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.id = ?2 and s.menuItem.SKU = ?3")
+                                .setParameter(1, saleRecord.getStore())
+                                .setParameter(2, schedule.getId())
+                                .setParameter(3, cl.getMenuItem().getSKU());
+
+                        if (!qe.getResultList().isEmpty()) {
+                            SalesFigureEntity saleFigure = (SalesFigureEntity) qe.getResultList().get(0);
+                            saleFigure.setQuantity(saleFigure.getQuantity() + cl.getQuantity());
+                            em.merge(saleFigure);
+
+                            Query q2 = em.createQuery("select l from SalesFigureLineItemEntity l where l.saleFigure.id = ?1 and l.SKU = ?2 ")
+                                    .setParameter(1, saleFigure.getId())
+                                    .setParameter(2, cl.getMenuItem().getSKU());
+
+                            if (!q2.getResultList().isEmpty()) {
+                                SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity) q2.getResultList().get(0);
+                                salesFigureLineItem.setQuantity(salesFigureLineItem.getQuantity() + cl.getQuantity());
+                                em.merge(salesFigureLineItem);
+                            } else {
+                                SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
+                                salesFigureLineItem.setSaleFigure(saleFigure);;
+                                salesFigureLineItem.setSKU(cl.getMenuItem().getSKU());
+                                salesFigureLineItem.setQuantity(cl.getQuantity());
+                                em.persist(salesFigureLineItem);
+                            }
+
+                        } else {
+                            SalesFigureEntity salesFigure = new SalesFigureEntity();
+                            salesFigure.setStore(saleRecord.getStore());
+                            salesFigure.setMenuItem(cl.getMenuItem());
+                            salesFigure.setSchedule(schedule);
+                            salesFigure.setQuantity(cl.getQuantity());
+                            em.persist(salesFigure);
+
+                            SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
+                            salesFigureLineItem.setSaleFigure(salesFigure);;
+                            salesFigureLineItem.setSKU(cl.getMenuItem().getSKU());
+                            salesFigureLineItem.setQuantity(cl.getQuantity());
+                            em.persist(salesFigureLineItem);
+                        }
+                    }
+                } else if (lineItem.getItem().getType().equals("Menu Item")) {
+                    Query qe = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.id = ?2 and s.menuItem.SKU = ?3")
                             .setParameter(1, saleRecord.getStore())
                             .setParameter(2, schedule.getId())
-                            .setParameter(3, productGroup.getId());
+                            .setParameter(3, lineItem.getItem().getSKU());
 
-                    if (!q1.getResultList().isEmpty()) {
-                        SalesFigureEntity saleFigure = (SalesFigureEntity) q1.getResultList().get(0);
+                    if (!qe.getResultList().isEmpty()) {
+                        SalesFigureEntity saleFigure = (SalesFigureEntity) qe.getResultList().get(0);
                         saleFigure.setQuantity(saleFigure.getQuantity() + lineItem.getQuantity());
                         em.merge(saleFigure);
 
@@ -76,7 +121,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     } else {
                         SalesFigureEntity salesFigure = new SalesFigureEntity();
                         salesFigure.setStore(saleRecord.getStore());
-                        salesFigure.setProductGroup(productGroup);
+                        salesFigure.setMenuItem((MenuItemEntity) lineItem.getItem());
                         salesFigure.setSchedule(schedule);
                         salesFigure.setQuantity(lineItem.getQuantity());
                         em.persist(salesFigure);
@@ -87,7 +132,54 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                         salesFigureLineItem.setQuantity(lineItem.getQuantity());
                         em.persist(salesFigureLineItem);
                     }
-                }
+
+                } else {
+                    Query q = em.createQuery("select l.productGroup from ProductGroupLineItemEntity l where l.item.SKU = ?1")
+                            .setParameter(1, lineItem.getItem().getSKU());
+                    if (!q.getResultList().isEmpty()) {
+                        ProductGroupEntity productGroup = (ProductGroupEntity) q.getResultList().get(0);
+                        Query q1 = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.id = ?2 and s.productGroup.id = ?3")
+                                .setParameter(1, saleRecord.getStore())
+                                .setParameter(2, schedule.getId())
+                                .setParameter(3, productGroup.getId());
+
+                        if (!q1.getResultList().isEmpty()) {
+                            SalesFigureEntity saleFigure = (SalesFigureEntity) q1.getResultList().get(0);
+                            saleFigure.setQuantity(saleFigure.getQuantity() + lineItem.getQuantity());
+                            em.merge(saleFigure);
+
+                            Query q2 = em.createQuery("select l from SalesFigureLineItemEntity l where l.saleFigure.id = ?1 and l.SKU = ?2 ")
+                                    .setParameter(1, saleFigure.getId())
+                                    .setParameter(2, lineItem.getItem().getSKU());
+
+                            if (!q2.getResultList().isEmpty()) {
+                                SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity) q2.getResultList().get(0);
+                                salesFigureLineItem.setQuantity(salesFigureLineItem.getQuantity() + lineItem.getQuantity());
+                                em.merge(salesFigureLineItem);
+                            } else {
+                                SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
+                                salesFigureLineItem.setSaleFigure(saleFigure);;
+                                salesFigureLineItem.setSKU(lineItem.getItem().getSKU());
+                                salesFigureLineItem.setQuantity(lineItem.getQuantity());
+                                em.persist(salesFigureLineItem);
+                            }
+
+                        } else {
+                            SalesFigureEntity salesFigure = new SalesFigureEntity();
+                            salesFigure.setStore(saleRecord.getStore());
+                            salesFigure.setProductGroup(productGroup);
+                            salesFigure.setSchedule(schedule);
+                            salesFigure.setQuantity(lineItem.getQuantity());
+                            em.persist(salesFigure);
+
+                            SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
+                            salesFigureLineItem.setSaleFigure(salesFigure);;
+                            salesFigureLineItem.setSKU(lineItem.getItem().getSKU());
+                            salesFigureLineItem.setQuantity(lineItem.getQuantity());
+                            em.persist(salesFigureLineItem);
+                        }
+                    }
+                } // else
             }
             return true;
         } catch (Exception ex) {
@@ -373,7 +465,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 for (int i = 0; i < coefficient.length; i++) {
                     System.out.println("coefficient[i]: " + coefficient[i]);
                 }
-                double forecastQuantity = coefficient[0] - coefficient[1] + coefficient[schedule.getMonth()+1];
+                double forecastQuantity = coefficient[0] - coefficient[1] + coefficient[schedule.getMonth() + 1];
 
                 SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, Math.round((float) forecastQuantity));
                 saleForecast.setMethod("M");

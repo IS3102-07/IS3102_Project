@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PickerLogout_Servlet extends HttpServlet {
+public class PickerAcceptJob_Servlet extends HttpServlet {
 
     @EJB
     CustomerServiceBeanLocal customerServiceBean;
@@ -23,15 +23,16 @@ public class PickerLogout_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
 
+            String pickRequestId = request.getParameter("pickRequestId");
+
             PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
-            customerServiceBean.pickerLogoff(picker.getId());
 
-            session.invalidate();
-            response.sendRedirect("A4/pickerLogin.jsp?goodMsg=Logout Successful.");
+            customerServiceBean.acceptPickRequest(picker.getId(), Long.parseLong(pickRequestId));
 
-            out.close();
+            response.sendRedirect("PickerRefreshJob_Servlet");
+
         } catch (Exception ex) {
-            ex.printStackTrace();
+            out.println(ex);
         }
     }
 

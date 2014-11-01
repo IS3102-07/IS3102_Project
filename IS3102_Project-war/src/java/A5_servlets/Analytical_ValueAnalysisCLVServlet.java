@@ -1,9 +1,12 @@
-package A4_servlets;
+package A5_servlets;
 
-import EntityManager.PickerEntity;
-import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
+import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,27 +14,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PickerLogout_Servlet extends HttpServlet {
+public class Analytical_ValueAnalysisCLVServlet extends HttpServlet {
 
     @EJB
-    CustomerServiceBeanLocal customerServiceBean;
+    private CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
         try {
             HttpSession session;
             session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+            System.out.println("Analytical_ValueAnalysisServlet");
 
-            PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
-            customerServiceBean.pickerLogoff(picker.getId());
+            List<MemberEntity> members = accountManagementBean.listAllMember();
 
-            session.invalidate();
-            response.sendRedirect("A4/pickerLogin.jsp?goodMsg=Logout Successful.");
+            session.setAttribute("members", members);
+            Double customerRetentionRate = customerValueAnalysisBean.getCustomerRetentionRate();
+            session.setAttribute("customerRetentionRate", customerRetentionRate);
 
-            out.close();
+            Double averageOrdersPerAcquiredYear = customerValueAnalysisBean.averageOrdersPerAcquiredYear();
+            session.setAttribute("averageOrdersPerAcquiredYear", averageOrdersPerAcquiredYear);
+            
+            Double averageOrderPriceInAcquiredYear = customerValueAnalysisBean.averageOrderPriceInAcquiredYear();
+            session.setAttribute("averageOrderPriceInAcquiredYear",averageOrderPriceInAcquiredYear);
+            
+            List<MemberEntity> retainedMembers = customerValueAnalysisBean.getRetainedMembers();
+            Double getRetainedCustomerRetentionRate = customerValueAnalysisBean.getRetainedCustomerRetentionRate(retainedMembers);
+            session.setAttribute("getRetainedCustomerRetentionRate",getRetainedCustomerRetentionRate);
+
+            response.sendRedirect("A5/clv.jsp");
+
         } catch (Exception ex) {
-            ex.printStackTrace();
+            out.println("\n\n " + ex.getMessage());
         }
     }
 

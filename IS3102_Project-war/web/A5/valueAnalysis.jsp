@@ -105,9 +105,6 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-6">
-
-                                                    Total Number of Customers : <%=members.size()%> <br/>
-
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Total Revenue : <%=totalCustomerRevenue + totalNonCustomerRevenue%></h3>
@@ -119,324 +116,40 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div id="myfirstchart"></div>
+                                                    Total Number of Customers : <%=members.size()%> <br/>
                                                 </div>
 
-
-                                                <% Integer averageMemberRecency = (Integer) session.getAttribute("averageMemberRecency");
-                                                    Integer averageMemberFrequency = (Integer) session.getAttribute("averageMemberFrequency");
-                                                    Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
-                                                %>
-
-
-
                                             </div>
-
-                                        </div>
-
-
-
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="tabs">
-                                                    <ul class="nav nav-tabs">
-                                                        <li class="active">
-                                                            <a href="#rfm" data-toggle="tab"><i class="icon icon-user"></i> RFM</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#clv" data-toggle="tab">CLV</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#products" data-toggle="tab">Products</a>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="tab-content">
-                                                        <div id="rfm" class="tab-pane active">
-
-                                                            <h4>Recency, Frequency & Monetary Value</h4>
-                                                            <div class="panel-body">
-                                                                <div class="table-responsive">
-
-                                                                    <div class="col-lg-12">
-                                                                        <div class="row">
-
-                                                                            <div class="pricing-table">
-                                                                                <div class="col-md-4">
-                                                                                    <div class="plan">
-                                                                                        <h3>Recency<span><%=averageMemberRecency%></span></h3>
-                                                                                        <ul>
-                                                                                            <li><b>Average Recency</b> <%=averageMemberRecency%> days</li>
-                                                                                            <li><b>25th Percentile</b> <%=averageMemberRecency / 2%></li>
-                                                                                            <li><b>75th Percentile</b> <%=(averageMemberRecency / 2) + averageMemberRecency%></li>
-                                                                                            <li><b>Recency</b> is the average last purchase per member away from today</li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-4">
-                                                                                    <div class="plan">
-                                                                                        <h3>Frequency<span><%=averageMemberFrequency%></span></h3>
-                                                                                        <ul>
-                                                                                            <li><b>Average Frequency</b> <%=averageMemberFrequency%> purchases</li>
-                                                                                            <li><b>25th Percentile</b> <%=averageMemberFrequency / 2%></li>
-                                                                                            <li><b>75th Percentile</b> <%=(averageMemberFrequency / 2) + averageMemberFrequency%></li>
-                                                                                            <li><b>Frequency</b> is the number of purchases per member through their membership</li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-4">
-                                                                                    <div class="plan">
-                                                                                        <h3>Monetary<span><%=averageMemberMonetaryValue%></span></h3>
-                                                                                        <ul>
-                                                                                            <li><b>Average Monetary</b> $<%=averageMemberMonetaryValue%></li>
-                                                                                            <li><b>25th Percentile</b> <%=averageMemberMonetaryValue / 2%></li>
-                                                                                            <li><b>75th Percentile</b> <%=(averageMemberMonetaryValue / 2) + averageMemberMonetaryValue%></li>
-                                                                                            <li><b>Monetary</b> is the average total spending per member</li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <br>
-                                                                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
-                                                                        <table class="table table-bordered" id="dataTables-example">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                                                    <th>Name</th>
-                                                                                    <th>Recency</th>
-                                                                                    <th>Frequency</th>
-                                                                                    <th>Monetary Value</th>
-                                                                                    <th>Action</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <%
-                                                                                    List<Integer> memberRecencyValue = (List<Integer>) session.getAttribute("memberRecencyValue");
-                                                                                    List<Integer> memberFrequencyValue = (List<Integer>) session.getAttribute("memberFrequencyValue");
-                                                                                    List<Integer> memberMonetaryValue = (List<Integer>) session.getAttribute("memberMonetaryValue");
-                                                                                    if (members != null) {
-                                                                                        for (int i = 0; i < members.size(); i++) {
-                                                                                            MemberEntity member = members.get(i);
-                                                                                %>
-                                                                                <tr>                   
-                                                                                    <td>
-                                                                                        <input type="checkbox" name="delete" value="<%=member.getId()%>" />
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%=member.getName()%>
-                                                                                    </td>
-                                                                                    <td <% if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
-                                                                                        %>bgcolor="#0066FF"<%
-                                                                                        } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
-                                                                                        %>
-                                                                                        bgcolor="#FF0000"
-                                                                                        <% } else { %>
-                                                                                        bgcolor="#00FF00"
-                                                                                        <%
-                                                                                            }
-                                                                                        %>
-                                                                                        >
-                                                                                        <%=memberRecencyValue.get(i)%>
-                                                                                    </td>
-                                                                                    <td
-                                                                                        <% if (memberFrequencyValue.get(i) <= (averageMemberFrequency / 2)) {
-                                                                                        %>bgcolor="#FF0000"<%
-                                                                                        } else if (memberFrequencyValue.get(i) > ((averageMemberFrequency / 2) + averageMemberFrequency)) {
-                                                                                        %>
-                                                                                        bgcolor="#0066FF"
-                                                                                        <% } else { %>
-                                                                                        bgcolor="#00FF00"
-                                                                                        <%
-                                                                                            }
-                                                                                        %>
-                                                                                        >
-                                                                                        <%=memberFrequencyValue.get(i)%>
-                                                                                    </td>
-                                                                                    <td
-                                                                                        <% if (memberMonetaryValue.get(i) < (averageMemberMonetaryValue / 2)) {
-                                                                                        %>bgcolor="#FF0000"<%
-                                                                                        } else if (memberMonetaryValue.get(i) > ((averageMemberMonetaryValue / 2) + averageMemberMonetaryValue)) {
-                                                                                        %>
-                                                                                        bgcolor="#0066FF"
-                                                                                        <% } else { %>
-                                                                                        bgcolor="#00FF00"
-                                                                                        <%
-                                                                                            }
-                                                                                        %>
-                                                                                        >
-                                                                                        <%=memberMonetaryValue.get(i)%>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=member.getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=member.getId()%>')"/>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <%
-                                                                                        }
-                                                                                    }
-                                                                                %>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <!-- /.table-responsive -->
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">                                                 
-                                                                            <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Send Loyalty Points</button></a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <input type="hidden" name="id" value="">    
-                                                                </div>
-
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-4">
+                                                        <div class="featured-box featured-box-secundary">
+                                                            <div class="box-content">
+                                                                <a href="../Analytical_ValueAnalysisRFMServlet"><i class="icon-featured icon icon-user"> </i>
+                                                                    <h4>Recency Frequency Monetary Value</h4>
+                                                                </a>
                                                             </div>
                                                         </div>
-                                                        <div id="clv" class="tab-pane">
-                                                            <h4>Customer Lifetime Value</h4>
-                                                            <table class="table">
-                                                                <tr>
-                                                                    <td>
-
-                                                                    </td>
-                                                                    <td>
-                                                                        Acquisition Year
-                                                                    </td>
-                                                                    <td>
-                                                                        Second Year
-                                                                    </td>
-                                                                    <td>
-                                                                        Third Year
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Customers
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=members.size()%>
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Retention Rate
-                                                                    </td>
-                                                                    <td>
-                                                                        <%
-                                                                            Double customerRetentionRate = (Double) session.getAttribute("customerRetentionRate");
-                                                                            DecimalFormat df = new DecimalFormat("#.00");
-                                                                        %>
-                                                                        <% out.print(df.format(customerRetentionRate * 100));%>%
-                                                                    </td>
-                                                                    <td>
-
-                                                                    </td>
-                                                                    <td>
-                                                                        Total Revenue
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Orders per Year
-                                                                    </td>
-                                                                    <td>
-                                                                        <% Double averageOrdersPerAcquiredYear = (Double) session.getAttribute("averageOrdersPerAcquiredYear"); %>
-                                                                        <% out.print(df.format(averageOrdersPerAcquiredYear));%>
-                                                                    </td>
-                                                                    <td>
-
-                                                                    </td>
-                                                                    <td>
-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Avg Order Price
-                                                                    </td>
-                                                                    <td>
-                                                                        
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Total Revenue
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-
-
-                                                                <tr>
-                                                                    <td>
-                                                                        Total Costs
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        Profit Margin
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                                
-                                                                <tr>
-                                                                    <td>
-                                                                        Customer LTV
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                    <td>
-                                                                        testing 321
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="featured-box featured-box-secundary">
+                                                            <div class="box-content">
+                                                                <a href="../Analytical_ValueAnalysisCLVServlet"><i class="icon-featured icon icon-user"> </i>
+                                                                    <h4>Customer Lifetime Value</h4>
+                                                                </a>
+                                                            </div>
                                                         </div>
-                                                                    <div id="products" class="tab-pane">
-                                                                    </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="featured-box featured-box-primary">
+                                                            <div class="box-content">
+                                                                <a href="../MemberManagement_MemberServlet"><i class="icon-featured icon icon-user"></i>
+                                                                    <h4>Member Management</h4>
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -481,21 +194,7 @@
         $(document).ready(function() {
             $('#dataTables-example').dataTable();
         });
-        new Morris.Bar({
-            // ID of the element in which to draw the chart.
-            element: 'myfirstchart',
-            // Chart data records -- each entry in this array corresponds to a point on
-            // the chart.
-            data: [
-                {y: '18-25', a: <%=cummulativeSpendingAgeGrp1%>, b: <%=numOfMembersInAgeGroup1%>, c: 1},
-                {y: '26-40', a: <%=cummulativeSpendingAgeGrp2%>, b: <%=numOfMembersInAgeGroup2%>, c: 2},
-                {y: '41-55', a: <%=cummulativeSpendingAgeGrp3%>, b: <%=numOfMembersInAgeGroup2%>, c: 3},
-                {y: '56-75', a: <%=cummulativeSpendingAgeGrp4%>, b: <%=numOfMembersInAgeGroup1%>, c: 4}
-            ],
-            xkey: 'y',
-            ykeys: ['a', 'b', 'c'],
-            labels: ['Total Cummulative Spending', 'Total Number Of Members', 'Age Group']
-        });
+
 
         new Morris.Donut({
             element: 'morris-donut-chart',

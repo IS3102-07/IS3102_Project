@@ -1021,6 +1021,18 @@
         <servlet-name>PickerJobList_Servlet</servlet-name>
         <servlet-class>A4_servlets.PickerJobList_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Analytical_ValueAnalysisRFMServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_ValueAnalysisRFMServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Analytical_ValueAnalysisCLVServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_ValueAnalysisCLVServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PickerAcceptJob_Servlet</servlet-name>
+        <servlet-class>A4_servlets.PickerAcceptJob_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2040,6 +2052,18 @@
     <servlet-mapping>
         <servlet-name>PickerJobList_Servlet</servlet-name>
         <url-pattern>/PickerJobList_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_ValueAnalysisRFMServlet</servlet-name>
+        <url-pattern>/Analytical_ValueAnalysisRFMServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_ValueAnalysisCLVServlet</servlet-name>
+        <url-pattern>/Analytical_ValueAnalysisCLVServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PickerAcceptJob_Servlet</servlet-name>
+        <url-pattern>/PickerAcceptJob_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

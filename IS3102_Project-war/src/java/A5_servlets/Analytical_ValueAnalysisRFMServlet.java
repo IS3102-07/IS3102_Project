@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class Analytical_ValueAnalysisServlet extends HttpServlet {
+public class Analytical_ValueAnalysisRFMServlet extends HttpServlet {
 
     @EJB
     private CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
@@ -28,12 +28,7 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            System.out.println("Analytical_ValueAnalysisServlet");
-            Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
-            Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
-            System.out.println(totalCustomerRevenue);
-            session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
-            session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
+            System.out.println("Analytical_ValueAnalysisRFMServlet");
 
             List<MemberEntity> members = accountManagementBean.listAllMember();
             List<Integer> memberRecencyValue = new ArrayList();
@@ -48,35 +43,11 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             for (MemberEntity member : members) {
                 memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
             }
-            for (int i = 0; i < members.size(); i++) {
-                System.out.println(members.get(i).getId() + "||||||" + memberRecencyValue.get(i));
-            }
+            
             session.setAttribute("members", members);
             session.setAttribute("memberRecencyValue", memberRecencyValue);
             session.setAttribute("memberFrequencyValue", memberFrequencyValue);
             session.setAttribute("memberMonetaryValue", memberMonetaryValue);
-
-            Integer cummulativeSpendingAgeGrp1 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(17, 26);
-            Integer cummulativeSpendingAgeGrp2 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(25, 41);
-            Integer cummulativeSpendingAgeGrp3 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(40, 56);
-            Integer cummulativeSpendingAgeGrp4 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(55, 76);
-            Integer averageCummulativeSpending = customerValueAnalysisBean.averageCummulativeSpending();
-
-            session.setAttribute("cummulativeSpendingAgeGrp1", cummulativeSpendingAgeGrp1);
-            session.setAttribute("cummulativeSpendingAgeGrp2", cummulativeSpendingAgeGrp2);
-            session.setAttribute("cummulativeSpendingAgeGrp3", cummulativeSpendingAgeGrp3);
-            session.setAttribute("cummulativeSpendingAgeGrp4", cummulativeSpendingAgeGrp4);
-            session.setAttribute("averageCummulativeSpending", averageCummulativeSpending);
-
-            Integer numOfMembersInAgeGroup1 = customerValueAnalysisBean.numOfMembersInAgeGroup(17, 26);
-            Integer numOfMembersInAgeGroup2 = customerValueAnalysisBean.numOfMembersInAgeGroup(25, 41);
-            Integer numOfMembersInAgeGroup3 = customerValueAnalysisBean.numOfMembersInAgeGroup(40, 56);
-            Integer numOfMembersInAgeGroup4 = customerValueAnalysisBean.numOfMembersInAgeGroup(55, 76);
-
-            session.setAttribute("numOfMembersInAgeGroup1", numOfMembersInAgeGroup1);
-            session.setAttribute("numOfMembersInAgeGroup2", numOfMembersInAgeGroup2);
-            session.setAttribute("numOfMembersInAgeGroup3", numOfMembersInAgeGroup3);
-            session.setAttribute("numOfMembersInAgeGroup4", numOfMembersInAgeGroup4);
 
             Integer averageMemberRecency = customerValueAnalysisBean.getAverageCustomerRecency();
             session.setAttribute("averageMemberRecency", averageMemberRecency);
@@ -87,13 +58,7 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
             session.setAttribute("averageMemberMonetaryValue", averageMemberMonetaryValue);
 
-            Double customerRetentionRate = customerValueAnalysisBean.getCustomerRetentionRate();
-            session.setAttribute("customerRetentionRate", customerRetentionRate);
-
-            Double averageOrdersPerAcquiredYear = customerValueAnalysisBean.averageOrdersPerAcquiredYear();
-            session.setAttribute("averageOrdersPerAcquiredYear", averageOrdersPerAcquiredYear);
-
-            response.sendRedirect("A5/valueAnalysis.jsp");
+            response.sendRedirect("A5/rfm.jsp");
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
