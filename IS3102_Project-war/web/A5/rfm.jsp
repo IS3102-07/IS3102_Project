@@ -23,12 +23,12 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.staffManagement.action = "../StaffManagement_StaffServlet";
-                    document.staffManagement.submit();
+                    document.rfm.action = "../Analytical_ValueAnalysisServlet";
+                    document.rfm.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
-                    document.staffManagement.submit();
+                    document.rfm.action = "../Analytical_ValueAnalysisSendLoyaltyServlet";
+                    document.rfm.submit();
                 }
             }
             function removeStaff() {
@@ -41,12 +41,12 @@
                 }
                 if (checkboxes.length == 0 || numOfTicks == 0) {
                     window.event.returnValue = true;
-                    document.staffManagement.action = "../StaffManagement_StaffServlet";
-                    document.staffManagement.submit();
+                    document.rfm.action = "../StaffManagement_StaffServlet";
+                    document.rfm.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
-                    document.staffManagement.submit();
+                    document.rfm.action = "../StaffManagement_RemoveStaffServlet";
+                    document.rfm.submit();
                 }
             }
             function addStaff() {
@@ -90,7 +90,7 @@
                                    Recency, Frequency & Monetary
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="staffManagement">
+                                <form name="rfm">
                                    
                                             <%
                                                 List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));

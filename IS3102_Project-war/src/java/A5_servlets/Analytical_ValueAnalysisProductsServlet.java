@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package A5_servlets;
 
 import java.io.IOException;
@@ -12,31 +6,26 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
+import EntityManager.LineItemEntity;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpSession;
 
-public class Analytical_ValueAnalysisSendLoyaltyServlet extends HttpServlet {
+public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
 
     @EJB
-    SystemSecurityBeanLocal systemSecurityBean;
-    
+    CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             HttpSession session = request.getSession();
-            
-            String[] deleteArr = request.getParameterValues("delete");
-            if (deleteArr != null) {
-                for (int i = 0; i < deleteArr.length; i++) {
-                    systemSecurityBean.discountMemberLoyaltyPoints(deleteArr[i]);
-                }
-                response.sendRedirect("Analytical_ValueAnalysisRFMServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
-            } else {
-                response.sendRedirect("A5/valueAnalysis.jsp?errMsg=Nothing is selected.");
-            }
+           List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
+           session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
+           
+           response.sendRedirect("");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
