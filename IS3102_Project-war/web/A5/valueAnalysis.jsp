@@ -148,7 +148,7 @@
                                                         <div class="featured-box featured-box-primary">
                                                             <div class="box-content">
                                                                 <a href="../MemberManagement_MemberServlet"><i class="icon-featured icon icon-user"></i>
-                                                                    <h4>Member Management</h4>
+                                                                    <h4>Items Analysis</h4>
                                                                 </a>
                                                             </div>
                                                         </div>

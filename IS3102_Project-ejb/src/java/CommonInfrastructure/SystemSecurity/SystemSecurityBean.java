@@ -44,31 +44,6 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
         String activationCode = "";
         StaffEntity staff = null;
         try {
-            Query q = em.createQuery("SELECT t FROM StaffEntity t");
-
-            for (Object o : q.getResultList()) {
-                StaffEntity i = (StaffEntity) o;
-                if (i.getEmail().equalsIgnoreCase(email)) {
-                    activationCode += i.getActivationCode();
-                    staff = em.find(StaffEntity.class, i.getId());
-
-                    System.out.println("\nServer returns activation code of staff:\n" + activationCode);
-
-                    String passwordSalt = accountManagementBean.generatePasswordSalt();
-                    String passwordHash = accountManagementBean.generatePasswordHash(passwordSalt, activationCode);
-
-                    staff.setPasswordHash(passwordHash);
-                    staff.setPasswordSalt(passwordSalt);
-                    em.merge(staff);
-                }
-            }
-
-        } catch (Exception ex) {
-            System.out.println("\nServer failed to retrieve activationCode:\n" + ex);
-            return false;
-        }
-
-        try {
             Properties props = new Properties();
             props.put("mail.transport.protocol", "smtp");
             props.put("mail.smtp.host", emailServerName);
