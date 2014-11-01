@@ -6,15 +6,16 @@
 <%@page import="java.util.List"%>
 <%
     StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
-     boolean roleCanAccessWarehouse = false;
+     boolean roleIsAdmin = false;
      boolean roleIsRegionalManager = false;
+     boolean roleIsWarehouseManager = false;
     if (staffEntity != null) {
         List<RoleEntity> roles = staffEntity.getRoles();
         Long[] approvedRolesID = new Long[]{1L};
         for (RoleEntity roleEntity : roles) {
             for (Long ID : approvedRolesID) {
                 if (roleEntity.getId().equals(ID)) {
-                    roleCanAccessWarehouse = true;
+                    roleIsAdmin = true;
                     break;
                 }
             }
@@ -32,6 +33,18 @@
             }
         }
     }
+    if (staffEntity != null) {
+        List<RoleEntity> roles = staffEntity.getRoles();
+        Long[] approvedRolesID = new Long[]{4L};
+        for (RoleEntity roleEntity : roles) {
+            for (Long ID : approvedRolesID) {
+                if (roleEntity.getId().equals(ID)) {
+                    roleIsWarehouseManager = true;
+                    break;
+                }
+            }
+        }
+    }
     
     List<AccessRightEntity> accessRights = staffEntity.getAccessRightList();
     ArrayList<Long> warehouseId = new ArrayList();
@@ -42,10 +55,12 @@
         if (accessRights.get(i).getRegionalOffice()!=null)
         regionalOfficeId.add(accessRights.get(i).getRegionalOffice().getId());
         }
+        if (roleIsWarehouseManager){
         if (accessRights.get(i).getWarehouse()!=null)
         warehouseId.add(accessRights.get(i).getWarehouse().getId());
+        }
     }
-    Boolean canAccess = false;
+    Boolean canAccessByWarehouseManager = false;
     Boolean canAccessByRegionalManager = false;
 %>
 <html lang="en">
@@ -124,17 +139,17 @@
                                                                 <%=warehouses.get(i).getTelephone()%>
                                                             </td>                                                          
                                                             <td>
-                                                                <% canAccessByRegionalManager = false;
+                                                              <% canAccessByRegionalManager = false;
                                                                 for (int k=0; k<regionalOfficeId.size();k++){
                                                                     if (regionalOfficeId.get(k) == warehouses.get(i).getManufaturingFacility().getRegionalOffice().getId())
                                                                         canAccessByRegionalManager = true;
                                                                       }
-                                                                    canAccess = false;
+                                                                    canAccessByWarehouseManager = false;
                                                                 for (int j=0; j<warehouseId.size();j++){
                                                                     if (warehouseId.get(j) == warehouses.get(i).getId())
-                                                                        canAccess = true;
+                                                                        canAccessByWarehouseManager = true;
                                                                       }
-                                                                if (canAccess||roleCanAccessWarehouse||canAccessByRegionalManager){%>
+                                                                if (canAccessByWarehouseManager||roleIsAdmin||canAccessByRegionalManager){%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', 'manufacturingWarehouseManagement.jsp')"/>                                                                                                                            
                                                                 <%} else {%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
