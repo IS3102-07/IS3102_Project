@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class Analytical_ValueAnalysisServlet extends HttpServlet {
+public class Analytical_ValueAnalysisRFMServlet extends HttpServlet {
 
     @EJB
     private CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
@@ -28,20 +28,37 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            System.out.println("Analytical_ValueAnalysisServlet");
-            Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
-            Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
-            System.out.println(totalCustomerRevenue);
-            session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
-            session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
+            System.out.println("Analytical_ValueAnalysisRFMServlet");
 
-            Integer numOfMembers = accountManagementBean.listAllMember().size();
-            session.setAttribute("numOfMembers", numOfMembers);
+            List<MemberEntity> members = accountManagementBean.listAllMember();
+            List<Integer> memberRecencyValue = new ArrayList();
+            for (MemberEntity member : members) {
+                memberRecencyValue.add(customerValueAnalysisBean.getCustomerRecency(member.getId()));
+            }
+            List<Integer> memberFrequencyValue = new ArrayList();
+            for (MemberEntity member : members) {
+                memberFrequencyValue.add(customerValueAnalysisBean.getCustomerFrequency(member.getId()));
+            }
+            List<Integer> memberMonetaryValue = new ArrayList();
+            for (MemberEntity member : members) {
+                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
+            }
             
-            Integer numOfTransactions = customerValueAnalysisBean.getTotalNumberOfSalesRecord();
-            session.setAttribute("numOfTransactions",numOfTransactions);
- 
-            response.sendRedirect("A5/valueAnalysis.jsp");
+            session.setAttribute("members", members);
+            session.setAttribute("memberRecencyValue", memberRecencyValue);
+            session.setAttribute("memberFrequencyValue", memberFrequencyValue);
+            session.setAttribute("memberMonetaryValue", memberMonetaryValue);
+
+            Integer averageMemberRecency = customerValueAnalysisBean.getAverageCustomerRecency();
+            session.setAttribute("averageMemberRecency", averageMemberRecency);
+
+            Integer averageMemberFrequency = customerValueAnalysisBean.getAverageCustomerFrequency();
+            session.setAttribute("averageMemberFrequency", averageMemberFrequency);
+
+            Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
+            session.setAttribute("averageMemberMonetaryValue", averageMemberMonetaryValue);
+
+            response.sendRedirect("A5/rfm.jsp");
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());

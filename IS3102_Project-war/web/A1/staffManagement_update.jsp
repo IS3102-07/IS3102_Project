@@ -88,27 +88,7 @@
                                     <label>Roles Assignment</label><br/>
                                     <%
                                         List<RoleEntity> roles = (List<RoleEntity>) session.getAttribute("staffUpdateRoles");
-                                        boolean role1, role2, role3, role4, role5, role6, role7;
-                                        role1 = role2 = role3 = role4 = role5 = role6 = role7 = false;
-
-                                        for (RoleEntity currentRole : roles) {
-                                            System.out.println(currentRole.getName());
-                                            if (currentRole.getId().toString().equals("1")) {
-                                                role1 = true;
-                                            } else if (currentRole.getId().toString().equals("2")) {
-                                                role2 = true;
-                                            } else if (currentRole.getId().toString().equals("3")) {
-                                                role3 = true;
-                                            } else if (currentRole.getId().toString().equals("4")) {
-                                                role4 = true;
-                                            } else if (currentRole.getId().toString().equals("5")) {
-                                                role5 = true;
-                                            } else if (currentRole.getId().toString().equals("6")) {
-                                                role6 = true;
-                                            } else if (currentRole.getId().toString().equals("7")) {
-                                                role7 = true;
-                                            }
-                                        }
+                              
                                     %>
                                     <table class="table table-hover">
                                         <%
@@ -117,7 +97,12 @@
                                         %>
                                         <tr>
                                             <td><input type="checkbox" name="roles" value="<%= role.getId() %>" <%if (roles.contains(role)) {%>checked<%}%>/> <%= role.getName() %> </td>
+                                            <%if (role.getId().toString().equals("2")||role.getId().toString().equals("3")||role.getId().toString().equals("4")||role.getId().toString().equals("5")||role.getId().toString().equals("7")||role.getId().toString().equals("8")||role.getId().toString().equals("9")||role.getId().toString().equals("10")||role.getId().toString().equals("12")){%>
                                             <td><span class="btn btn-default"><a href="../AccessRight_Servlet/AccessRight_GET?staffId=<%= staff.getId() %>&roleId=<%= role.getId() %>">Customize Access Right</a></span></td>
+                                            <%}
+                                            else{%>
+                                            <td><input type="button" name="btnEdit" value="Cutomize Access Rights" class="btn btn-default"  disabled/>
+                                            <%}%>
                                         </tr>
                                         <%
                                             }

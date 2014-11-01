@@ -1,15 +1,9 @@
 package A4_servlets;
 
-import EntityManager.LineItemEntity;
-import EntityManager.PickRequestEntity;
 import EntityManager.PickerEntity;
-import EntityManager.StorageBinEntity;
-import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,13 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PickerRefreshJob_Servlet extends HttpServlet {
+public class PickerAcceptJob_Servlet extends HttpServlet {
 
     @EJB
-    CustomerServiceBeanLocal customerServiceBeanLocal;
-
-    @EJB
-    StoreAndKitchenInventoryManagementBeanLocal storeAndKitchenInventoryManagementBean;
+    CustomerServiceBeanLocal customerServiceBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -31,25 +22,15 @@ public class PickerRefreshJob_Servlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-
             PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
 
-            List<PickRequestEntity> pickRequestLinkedList = customerServiceBeanLocal.getPickRequests(picker.getId());
-            session.setAttribute("pickRequestLinkedList", pickRequestLinkedList);
-
-            if (pickRequestLinkedList != null && pickRequestLinkedList.size() > 0) {
-                Long warehouseID = picker.getStore().getWarehouse().getId();
-                List<LineItemEntity> itemsToBePicked = pickRequestLinkedList.get(0).getItems();
-                List<List<StorageBinEntity>> storageBinsList = new ArrayList<>();
-                for (int i = 0; i < itemsToBePicked.size(); i++) {
-                    String SKU = itemsToBePicked.get(i).getItem().getSKU();
-                    List<StorageBinEntity> storageBinsThatHasCurrentSKU = storeAndKitchenInventoryManagementBean.findRetailStorageBinsThatContainsItem(warehouseID, SKU);
-                    storageBinsList.add(storageBinsThatHasCurrentSKU);
-                }
-                session.setAttribute("storageBinsList", storageBinsList);
-                response.sendRedirect("A4/pickerStartJob.jsp");
+            if (picker == null) {
+                String result = "Login fail. Please try again.";
+                response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
             } else {
-                response.sendRedirect("A4/pickerLogin_waiting.jsp");
+                String pickRequestId = request.getParameter("pickRequestId");
+                customerServiceBean.acceptPickRequest(picker.getId(), Long.parseLong(pickRequestId));
+                response.sendRedirect("PickerRefreshJob_Servlet");
             }
 
         } catch (Exception ex) {

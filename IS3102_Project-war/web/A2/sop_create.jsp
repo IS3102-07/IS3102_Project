@@ -47,23 +47,25 @@
                     <!-- /.row -->                    
 
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="row">                             
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-6">
                                             <%  StoreHelper storeHelper = (StoreHelper) request.getAttribute("storeHelper");%>
                                             <h4><b> Store:  </b><%= storeHelper.store.getName()%></h4>
                                         </div>                                                
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-6">
                                             <% MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule");%>
                                             <h4><b> Period: </b><%= schedule.getYear()%> - <%= schedule.getMonth()%> </h4>
-                                        </div>                                      
-                                        <div class="col-lg-3">
+                                        </div>                                                                              
+                                    </div>                  
+                                    <div class="row">                             
+                                        <div class="col-lg-6">
                                             <% ProductGroupEntity productGroup = (ProductGroupEntity) request.getAttribute("productGroup");%>
                                             <h4><b> Product Group:  </b><%= productGroup.getName()%></h4>
                                         </div>
-                                        <div class="col-lg-3">                                            
+                                        <div class="col-lg-6">                                            
                                             <h4><b> Lot Size:  </b><%= productGroup.getLotSize()%></h4>
                                         </div>
                                     </div>                                        
@@ -103,6 +105,21 @@
                             <!-- /.panel -->
                         </div>
                         <!-- /.col-lg-12 -->
+                        <div class="col-lg-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Past Target Inventory Level</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="flot-chart">
+                                        <div class="flot-chart-content" id="flot-bar-chart"></div>
+                                    </div>
+                                    <div class="text-right">
+                                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.row -->
                 </div>
@@ -132,8 +149,8 @@
 
                 var productionPlan = saleForecast - currentInventory + targetInventoty;
                 if (productionPlan % lotSize !== 0) {
-                    productionPlan = ( Math.floor(productionPlan / lotSize) + 1) * lotSize;
-                } 
+                    productionPlan = (Math.floor(productionPlan / lotSize) + 1) * lotSize;
+                }
                 $('#input_productionPlan').val(productionPlan);
                 $('#input_targetInventoty').val(productionPlan + currentInventory - saleForecast);
             });
@@ -143,8 +160,36 @@
         <script>
             $(document).ready(function () {
                 $('#dataTables-example').dataTable();
+                barChart();
             }
             );
+        </script>
+
+        <script>
+            <% List<Integer> pastTargetInventoryLevel = (List<Integer>)request.getAttribute("pastTargetInventoryLevel"); %>
+            function barChart() {
+                Morris.Bar({
+                    element: 'flot-bar-chart',
+                    data: [
+                        <%  int i = 0;
+                            for(Integer a: pastTargetInventoryLevel){    
+                            i ++;    
+                        %>
+                            {
+                            device: '<%= schedule.getYear() + "-" + (schedule.getMonth()-i) %>',
+                            geekbench: <%= a %>
+                            },
+                        <% } %>
+                        ],
+                    xkey: 'device',
+                    ykeys: ['geekbench'],
+                    labels: ['Geekbench'],
+                    barRatio: 0.4,
+                    xLabelAngle: 35,
+                    hideHover: 'auto',
+                    resize: true
+                });
+            }
         </script>
     </body>
 </html>

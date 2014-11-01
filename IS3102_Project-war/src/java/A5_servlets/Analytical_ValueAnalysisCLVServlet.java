@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class Analytical_ValueAnalysisServlet extends HttpServlet {
+public class Analytical_ValueAnalysisCLVServlet extends HttpServlet {
 
     @EJB
     private CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
@@ -28,20 +28,32 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
+            String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
             System.out.println("Analytical_ValueAnalysisServlet");
-            Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
-            Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
-            System.out.println(totalCustomerRevenue);
-            session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
-            session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
 
-            Integer numOfMembers = accountManagementBean.listAllMember().size();
-            session.setAttribute("numOfMembers", numOfMembers);
+            List<MemberEntity> members = accountManagementBean.listAllMember();
+
+            session.setAttribute("members", members);
+            Double customerRetentionRate = customerValueAnalysisBean.getCustomerRetentionRate();
+            session.setAttribute("customerRetentionRate", customerRetentionRate);
+
+            Double averageOrdersPerAcquiredYear = customerValueAnalysisBean.averageOrdersPerAcquiredYear();
+            session.setAttribute("averageOrdersPerAcquiredYear", averageOrdersPerAcquiredYear);
             
-            Integer numOfTransactions = customerValueAnalysisBean.getTotalNumberOfSalesRecord();
-            session.setAttribute("numOfTransactions",numOfTransactions);
- 
-            response.sendRedirect("A5/valueAnalysis.jsp");
+            Double averageOrderPriceInAcquiredYear = customerValueAnalysisBean.averageOrderPriceInAcquiredYear();
+            session.setAttribute("averageOrderPriceInAcquiredYear",averageOrderPriceInAcquiredYear);
+            
+            List<MemberEntity> retainedMembers = customerValueAnalysisBean.getRetainedMembers();
+            Double getRetainedCustomerRetentionRate = customerValueAnalysisBean.getRetainedCustomerRetentionRate(retainedMembers);
+            session.setAttribute("getRetainedCustomerRetentionRate",getRetainedCustomerRetentionRate);
+
+            Double averageOrdersPerRetainedMember = customerValueAnalysisBean.averageOrdersPerRetainedMember();
+            session.setAttribute("averageOrdersPerRetainedMember",averageOrdersPerRetainedMember);
+            
+            Double averageOrderPriceForRetainedMembers = customerValueAnalysisBean.averageOrderPriceForRetainedMembers();
+            session.setAttribute("averageOrderPriceForRetainedMembers",averageOrderPriceForRetainedMembers);
+            response.sendRedirect("A5/clv.jsp");
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
