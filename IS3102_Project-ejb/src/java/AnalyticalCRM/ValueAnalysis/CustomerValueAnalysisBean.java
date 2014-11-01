@@ -47,6 +47,13 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
     
     @Override
+    public Integer getTotalNumberOfSalesRecord() {
+        Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+            return salesRecords.size();
+    }
+    
+    @Override
     public Double getRetainedCustomerRetentionRate(List<MemberEntity> retainedMembers) {
         System.out.println("getRetainedCustomerRetentionRate()");
 
@@ -57,20 +64,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 730);
                 Date churnDate = c.getTime();
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        System.out.println("Number of days from churn date is " + days);
                         if (days > 0 && days < 365) {
                             numOfMembersNotChurn++;
                             break;
@@ -84,7 +86,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
             return ((double) numOfMembersNotChurn / (double) numOfMembers);
         } catch (Exception ex) {
-
             System.out.println("\nServer failed to list retention rate:\n" + ex);
             ex.printStackTrace();
         }
@@ -770,12 +771,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (SalesRecordEntity salesRecord : salesRecords) {
                 if (salesRecord.getMember() == null) {
                     profit += salesRecord.getAmountDue() + salesRecord.getAmountPaid();
+                } else {
+                    
                 }
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list all non member sales records:\n" + ex);
+            return profit;
         }
-
         return profit;
     }
 
