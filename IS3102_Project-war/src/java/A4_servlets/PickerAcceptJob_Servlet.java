@@ -27,7 +27,7 @@ public class PickerAcceptJob_Servlet extends HttpServlet {
 
             PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
 
-            customerServiceBean.acceptPickRequest(picker.getId(), Long.MIN_VALUE);
+            customerServiceBean.acceptPickRequest(picker.getId(), Long.parseLong(pickRequestId));
 
             response.sendRedirect("PickerRefreshJob_Servlet");
 
