@@ -188,17 +188,22 @@ public class RetailInventoryBean implements RetailInventoryBeanLocal {
 
     @Override
     public Boolean checkIfCustomerNeedToWaitForPicker(String receiptNo) {
+        System.out.println("checkIfCustomerNeedToWaitForPicker() called");
         try {
             Query q = em.createQuery("Select i from SalesRecordEntity i where i.receiptNo=:receiptNo");
             q.setParameter("receiptNo", receiptNo);
             SalesRecordEntity salesRecordEntity = (SalesRecordEntity) q.getSingleResult();
             List<LineItemEntity> lineItemEntities = salesRecordEntity.getItemsPurchased();
             for (LineItemEntity curr:lineItemEntities) {
-                if (curr.getItem().getVolume()>Config.minVolumeForCollectionAreaItems)
+                if (curr.getItem().getVolume()>Config.minVolumeForCollectionAreaItems) {
+                    System.out.println("checkIfCustomerNeedToWaitForPicker(): Yes");
                     return true;
+                }
             }
+            System.out.println("checkIfCustomerNeedToWaitForPicker(): No");
             return false;
         } catch (Exception ex) {
+            System.out.println("checkIfCustomerNeedToWaitForPicker(): Error");
             ex.printStackTrace();
             return null;
         }

@@ -150,7 +150,7 @@
                                                                         canAccessByWarehouseManager = true;
                                                                       }
                                                                 if (canAccessByWarehouseManager||roleIsAdmin||canAccessByRegionalManager){%>
-                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', 'manufacturingWarehouseManagement.jsp')"/>                                                                                                                            
+                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateStoreWarehouse('<%=warehouses.get(i).getId()%>', 'storeWarehouseManagement.jsp')"/>                                                                                                                            
                                                                 <%} else {%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
                                                                  <%}%>

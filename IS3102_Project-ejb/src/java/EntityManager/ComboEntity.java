@@ -29,7 +29,7 @@ public class ComboEntity extends ItemEntity implements Serializable {
     }
     
     public ComboEntity(String SKU, String name, String description, String imageURL){
-        super.setSKU(SKU);
+        super(SKU, 1, 1, 1);
         super.setName(name);
         super.setDescription(description);
         this.imageURL = imageURL;

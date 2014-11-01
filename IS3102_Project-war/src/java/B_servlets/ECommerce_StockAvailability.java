@@ -53,8 +53,10 @@ public class ECommerce_StockAvailability extends HttpServlet {
 
             if (type.equals("Furniture")) {
                 response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "furnitureProductDetails.jsp?sku=" + SKU + "&itemQty=" + itemQty + "&storeID=" + storeEntity.getId());
+                return;
             } else if (type.equals("Retail Product")) {
                 response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "retailProductDetails.jsp?sku=" + SKU + "&itemQty=" + itemQty + "&storeID=" + storeEntity.getId());
+                return;
             }
 
         } catch (Exception ex) {
