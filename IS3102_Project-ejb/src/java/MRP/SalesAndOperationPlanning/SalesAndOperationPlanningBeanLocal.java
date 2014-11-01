@@ -57,6 +57,8 @@ public interface SalesAndOperationPlanningBeanLocal {
     
     public Boolean generatePurchaseOrdersForRetailProduct(Long storeId, Long scheduleId);    
     
+    public List<Integer> getPastTargetInventoryLevel(Long storeId, Long scheduleId, Long productGroupId);        
+    
     @Remove
     public void remove();
 }

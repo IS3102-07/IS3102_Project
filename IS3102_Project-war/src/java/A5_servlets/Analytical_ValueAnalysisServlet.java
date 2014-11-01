@@ -35,64 +35,12 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
             session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
 
-            List<MemberEntity> members = accountManagementBean.listAllMember();
-            List<Integer> memberRecencyValue = new ArrayList();
-            for (MemberEntity member : members) {
-                memberRecencyValue.add(customerValueAnalysisBean.getCustomerRecency(member.getId()));
-            }
-            List<Integer> memberFrequencyValue = new ArrayList();
-            for (MemberEntity member : members) {
-                memberFrequencyValue.add(customerValueAnalysisBean.getCustomerFrequency(member.getId()));
-            }
-            List<Integer> memberMonetaryValue = new ArrayList();
-            for (MemberEntity member : members) {
-                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
-            }
-            for (int i = 0; i < members.size(); i++) {
-                System.out.println(members.get(i).getId() + "||||||" + memberRecencyValue.get(i));
-            }
-            session.setAttribute("members", members);
-            session.setAttribute("memberRecencyValue", memberRecencyValue);
-            session.setAttribute("memberFrequencyValue", memberFrequencyValue);
-            session.setAttribute("memberMonetaryValue", memberMonetaryValue);
-
-            Integer cummulativeSpendingAgeGrp1 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(17, 26);
-            Integer cummulativeSpendingAgeGrp2 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(25, 41);
-            Integer cummulativeSpendingAgeGrp3 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(40, 56);
-            Integer cummulativeSpendingAgeGrp4 = customerValueAnalysisBean.totalCummulativeSpendingOfAge(55, 76);
-            Integer averageCummulativeSpending = customerValueAnalysisBean.averageCummulativeSpending();
-
-            session.setAttribute("cummulativeSpendingAgeGrp1", cummulativeSpendingAgeGrp1);
-            session.setAttribute("cummulativeSpendingAgeGrp2", cummulativeSpendingAgeGrp2);
-            session.setAttribute("cummulativeSpendingAgeGrp3", cummulativeSpendingAgeGrp3);
-            session.setAttribute("cummulativeSpendingAgeGrp4", cummulativeSpendingAgeGrp4);
-            session.setAttribute("averageCummulativeSpending", averageCummulativeSpending);
-
-            Integer numOfMembersInAgeGroup1 = customerValueAnalysisBean.numOfMembersInAgeGroup(17, 26);
-            Integer numOfMembersInAgeGroup2 = customerValueAnalysisBean.numOfMembersInAgeGroup(25, 41);
-            Integer numOfMembersInAgeGroup3 = customerValueAnalysisBean.numOfMembersInAgeGroup(40, 56);
-            Integer numOfMembersInAgeGroup4 = customerValueAnalysisBean.numOfMembersInAgeGroup(55, 76);
-
-            session.setAttribute("numOfMembersInAgeGroup1", numOfMembersInAgeGroup1);
-            session.setAttribute("numOfMembersInAgeGroup2", numOfMembersInAgeGroup2);
-            session.setAttribute("numOfMembersInAgeGroup3", numOfMembersInAgeGroup3);
-            session.setAttribute("numOfMembersInAgeGroup4", numOfMembersInAgeGroup4);
-
-            Integer averageMemberRecency = customerValueAnalysisBean.getAverageCustomerRecency();
-            session.setAttribute("averageMemberRecency", averageMemberRecency);
-
-            Integer averageMemberFrequency = customerValueAnalysisBean.getAverageCustomerFrequency();
-            session.setAttribute("averageMemberFrequency", averageMemberFrequency);
-
-            Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
-            session.setAttribute("averageMemberMonetaryValue", averageMemberMonetaryValue);
-
-            Double customerRetentionRate = customerValueAnalysisBean.getCustomerRetentionRate();
-            session.setAttribute("customerRetentionRate", customerRetentionRate);
-
-            Double averageOrdersPerAcquiredYear = customerValueAnalysisBean.averageOrdersPerAcquiredYear();
-            session.setAttribute("averageOrdersPerAcquiredYear", averageOrdersPerAcquiredYear);
-
+            Integer numOfMembers = accountManagementBean.listAllMember().size();
+            session.setAttribute("numOfMembers", numOfMembers);
+            
+            Integer numOfTransactions = customerValueAnalysisBean.getTotalNumberOfSalesRecord();
+            session.setAttribute("numOfTransactions",numOfTransactions);
+ 
             response.sendRedirect("A5/valueAnalysis.jsp");
 
         } catch (Exception ex) {

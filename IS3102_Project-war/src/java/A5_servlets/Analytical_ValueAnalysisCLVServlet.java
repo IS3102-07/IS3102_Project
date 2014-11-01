@@ -48,6 +48,11 @@ public class Analytical_ValueAnalysisCLVServlet extends HttpServlet {
             Double getRetainedCustomerRetentionRate = customerValueAnalysisBean.getRetainedCustomerRetentionRate(retainedMembers);
             session.setAttribute("getRetainedCustomerRetentionRate",getRetainedCustomerRetentionRate);
 
+            Double averageOrdersPerRetainedMember = customerValueAnalysisBean.averageOrdersPerRetainedMember();
+            session.setAttribute("averageOrdersPerRetainedMember",averageOrdersPerRetainedMember);
+            
+            Double averageOrderPriceForRetainedMembers = customerValueAnalysisBean.averageOrderPriceForRetainedMembers();
+            session.setAttribute("averageOrderPriceForRetainedMembers",averageOrderPriceForRetainedMembers);
             response.sendRedirect("A5/clv.jsp");
 
         } catch (Exception ex) {
