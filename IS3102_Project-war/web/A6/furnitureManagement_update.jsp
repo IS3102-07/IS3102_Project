@@ -79,12 +79,14 @@ a<%@page import="EntityManager.CountryEntity"%>
                                     </div>
                                     <div>
                                         <input type="file" name="javafile">
-                                    </div><br/>
+                                    </div>
+                                    <br/>
                                     <div class="form-group">
                                         <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                     </div>
                                     <input type="hidden" value="<%=furniture.getId()%>" name="id">
                                     <input type="hidden" value="<%=furniture.getName()%>" name="furnitureName">
+                                    <input type="hidden" value="<%=furniture.getSKU()%>" name="SKU">
                                 </fieldset>
                             </form>
                         </div>

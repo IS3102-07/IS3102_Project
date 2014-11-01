@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import java.util.List;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class MemberEntity implements Serializable {
@@ -56,9 +57,9 @@ public class MemberEntity implements Serializable {
     private Integer securityQuestion;
     @Lob
     private String securityAnswer;
-    
     private Integer age;
     private Integer income;
+    @Lob
     private String occupation;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date joinDate;
@@ -175,6 +176,7 @@ public class MemberEntity implements Serializable {
         return getId();
     }
 
+    @XmlTransient
     public List<SalesRecordEntity> getPurchases() {
         return purchases;
     }

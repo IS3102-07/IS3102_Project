@@ -1,7 +1,9 @@
 package A4_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.AccessRightEntity;
 import EntityManager.PickRequestEntity;
-import EntityManager.PickerEntity;
+import EntityManager.StaffEntity;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,27 +15,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PickerRefreshJob_Servlet extends HttpServlet {
+public class PickerJobList_Servlet extends HttpServlet {
 
     @EJB
-    CustomerServiceBeanLocal customerServiceBeanLocal;
+    CustomerServiceBeanLocal customerServiceBean;
+
+    @EJB
+    AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+
             HttpSession session;
             session = request.getSession();
 
-            PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
-
-            List<PickRequestEntity> pickRequestLinkedList = customerServiceBeanLocal.getPickRequests(picker.getId());
-            session.setAttribute("pickRequestLinkedList", pickRequestLinkedList);
-
-            if (pickRequestLinkedList != null && pickRequestLinkedList.size() > 0) {
-                response.sendRedirect("A4/pickerStartJob.jsp");
+            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
+            if (staff != null) {
+                if (accountManagementBean.checkIfStaffIsStoreManager(staff.getId())) {
+                    AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);
+                    Long storeID = accessRightEntity.getStore().getId();
+                    List<PickRequestEntity> pickRequests = customerServiceBean.getAllPickRequestInStore(storeID);
+                    session.setAttribute("pickRequests", pickRequests);
+                    response.sendRedirect("A4/pickerJobList.jsp");
+                } else {//no store manager role
+                    response.sendRedirect("A1/workspace.jsp");
+                }
             } else {
-                response.sendRedirect("A4/pickerLogin_waiting.jsp");
+                String result = "Login fail. Please try again.";
+                response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
             }
 
         } catch (Exception ex) {

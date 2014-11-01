@@ -156,6 +156,7 @@ public abstract class ItemEntity implements Serializable {
         return "em.ItemEntity[ id=" + id + " ]";
     }
 
+    @XmlTransient
     public List<Item_CountryEntity> getItemCountryList() {
         return itemCountryList;
     }

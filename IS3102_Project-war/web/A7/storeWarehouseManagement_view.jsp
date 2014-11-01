@@ -1,5 +1,68 @@
+<%@page import="EntityManager.RoleEntity"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="EntityManager.AccessRightEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
+<%
+    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+     boolean roleIsAdmin = false;
+     boolean roleIsRegionalManager = false;
+     boolean roleIsWarehouseManager = false;
+    if (staffEntity != null) {
+        List<RoleEntity> roles = staffEntity.getRoles();
+        Long[] approvedRolesID = new Long[]{1L};
+        for (RoleEntity roleEntity : roles) {
+            for (Long ID : approvedRolesID) {
+                if (roleEntity.getId().equals(ID)) {
+                    roleIsAdmin = true;
+                    break;
+                }
+            }
+        }
+    }
+    if (staffEntity != null) {
+        List<RoleEntity> roles = staffEntity.getRoles();
+        Long[] approvedRolesID = new Long[]{2L};
+        for (RoleEntity roleEntity : roles) {
+            for (Long ID : approvedRolesID) {
+                if (roleEntity.getId().equals(ID)) {
+                    roleIsRegionalManager = true;
+                    break;
+                }
+            }
+        }
+    }
+    if (staffEntity != null) {
+        List<RoleEntity> roles = staffEntity.getRoles();
+        Long[] approvedRolesID = new Long[]{3L};
+        for (RoleEntity roleEntity : roles) {
+            for (Long ID : approvedRolesID) {
+                if (roleEntity.getId().equals(ID)) {
+                    roleIsWarehouseManager = true;
+                    break;
+                }
+            }
+        }
+    }
+    
+    List<AccessRightEntity> accessRights = staffEntity.getAccessRightList();
+    ArrayList<Long> warehouseId = new ArrayList();
+    ArrayList<Long> regionalOfficeId = new ArrayList();
+    
+    for (int i=0; i<accessRights.size();i++){
+        if (roleIsRegionalManager){
+        if (accessRights.get(i).getRegionalOffice()!=null)
+        regionalOfficeId.add(accessRights.get(i).getRegionalOffice().getId());
+        }
+        if (roleIsWarehouseManager){
+        if (accessRights.get(i).getWarehouse()!=null)
+        warehouseId.add(accessRights.get(i).getWarehouse().getId());
+        }
+    }
+    Boolean canAccessByWarehouseManager = false;
+    Boolean canAccessByRegionalManager = false;
+%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -74,9 +137,23 @@
                                                             </td>
                                                             <td>
                                                                 <%=warehouses.get(i).getTelephone()%>
-                                                            </td>
+                                                            </td>                                                          
                                                             <td>
-                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateStoreWarehouse('<%=warehouses.get(i).getId()%>', 'storeWarehouseManagement.jsp')"/>
+                                                              <% canAccessByRegionalManager = false;
+                                                                for (int k=0; k<regionalOfficeId.size();k++){
+                                                                    if (regionalOfficeId.get(k) == warehouses.get(i).getManufaturingFacility().getRegionalOffice().getId())
+                                                                        canAccessByRegionalManager = true;
+                                                                      }
+                                                                    canAccessByWarehouseManager = false;
+                                                                for (int j=0; j<warehouseId.size();j++){
+                                                                    if (warehouseId.get(j) == warehouses.get(i).getId())
+                                                                        canAccessByWarehouseManager = true;
+                                                                      }
+                                                                if (canAccessByWarehouseManager||roleIsAdmin||canAccessByRegionalManager){%>
+                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', 'manufacturingWarehouseManagement.jsp')"/>                                                                                                                            
+                                                                <%} else {%>
+                                                                <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
+                                                                 <%}%>
                                                             </td>
                                                         </tr>
                                                         <%
@@ -114,7 +191,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

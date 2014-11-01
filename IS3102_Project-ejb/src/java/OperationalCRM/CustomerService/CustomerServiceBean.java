@@ -175,7 +175,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             for (PickRequestEntity curr : pickerTaskQueue) {
                 curr.setPicker(null);
                 em.merge(curr);
-                addPickRequest(curr.getSalesRecord().getId());
+                updatePickRequest(curr.getId());
             }
             return true;
         } catch (Exception ex) {
@@ -185,6 +185,65 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
         }
     }
 
+    @Override
+    public Boolean updatePickRequest(Long pickRequestID) {
+        System.out.println("updatePickRequest() called");
+        try {
+            PickRequestEntity pickRequestEntity = em.getReference(PickRequestEntity.class, pickRequestID);
+            Long salesRecordID = pickRequestEntity.getSalesRecord().getId();
+            SalesRecordEntity salesRecordEntity = em.getReference(SalesRecordEntity.class, salesRecordID);
+
+            //Find the store
+            StoreEntity storeEntity = em.getReference(StoreEntity.class, salesRecordEntity.getStore().getId());
+
+            //Find the list of pickers in the store
+            Query q = em.createQuery("SELECT p FROM PickerEntity p WHERE p.store.id=:storeID");
+            q.setParameter("storeID", storeEntity.getId());
+            List<PickerEntity> pickers = q.getResultList();
+
+            // If no pickers available in this store, return false
+            //!!!! SHOULD NOT OCCUR DURING DEMO, PICKER HAVE TO LOGIN FIRST!!
+            if (pickers.size() == 0) {
+                return false;
+            }
+
+            //Find picker with least amount of job in queue
+            PickerEntity pickerWithLeastJobInQueue = pickers.get(0);
+            for (PickerEntity curr : pickers) {
+                if (curr.getListOfJob().size() < pickerWithLeastJobInQueue.getListOfJob().size()) {
+                    pickerWithLeastJobInQueue = curr;
+                }
+            }
+
+            //Update the pick request to the new person
+            pickRequestEntity.setPicker(pickerWithLeastJobInQueue);
+            em.merge(pickRequestEntity);
+
+            //Check the picker queue to slot the pick request in (by date)
+            List<PickRequestEntity> pickerTaskQueue = pickerWithLeastJobInQueue.getListOfJob();
+            Long currentPickRequestTime = salesRecordEntity.getCreatedDate().getTime();
+            //If picker does not have anything, just add
+            if (pickerTaskQueue.size() == 0) {
+                pickerTaskQueue.add(pickRequestEntity);
+                em.merge(pickerWithLeastJobInQueue);
+            } else { // otherwise loop thru his queue and slot it in (based on sale order date)   
+                for (int i = 0; i < pickerTaskQueue.size(); i++) {
+                    // If the current one in queue is newer, slow the pick request before it
+                    if (pickerTaskQueue.get(i).getSalesRecord().getCreatedDate().getTime() > currentPickRequestTime) {
+                        //Add to the picker queue
+                        pickerTaskQueue.add(i, pickRequestEntity);
+                        em.merge(pickerWithLeastJobInQueue);
+                    }
+                }
+            }
+            return true;
+        } catch (Exception ex) {
+            System.out.println("addPickRequest(): error");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
     @Override
     public Boolean addPickRequest(Long salesRecordID) {
         System.out.println("addPickRequest() called");
@@ -229,7 +288,6 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             //Check the picker queue to slot the pick request in (by date)
             List<PickRequestEntity> pickerTaskQueue = pickerWithLeastJobInQueue.getListOfJob();
             Long currentPickRequestTime = salesRecordEntity.getCreatedDate().getTime();
-            int pickerQueueIndex = 0;
             //If picker does not have anything, just add
             if (pickerTaskQueue.size() == 0) {
                 pickerTaskQueue.add(pickRequestEntity);
@@ -256,7 +314,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     public List<PickRequestEntity> getAllPickRequestInStore(Long storeID) {
         System.out.println("getAllPickRequestInStore() called");
         try {
-            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store=:storeID ORDER BY p.pickStatus ASC,p.dateSubmitted ASC");
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store.id:storeID ORDER BY p.pickStatus ASC,p.dateSubmitted ASC");
             q.setParameter("storeID", storeID);
             return q.getResultList();
         } catch (Exception ex) {

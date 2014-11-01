@@ -24,7 +24,7 @@
                 document.comboManagement.action = "comboManagement_AddLineItem.jsp";
                 document.comboManagement.submit();
             }
-           
+
             function removeComboLineItem() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -81,7 +81,7 @@
                                     <h3 class="panel-title">  Combo ID: <%=combo.getId()%></h3> 
                                 </div>
                                 <div class="panel-body">
-                                    <form role="form" action="../ComboManagement_UpdateServlet">
+                                    <form role="form" method="POST" enctype="multipart/form-data" action="../ComboManagement_UpdateServlet">
                                         <div class="form-group">
                                             <label>SKU: </label>
                                             <input class="form-control"  type="text" required="true" value="<%=combo.getSKU()%>" disabled/>
@@ -94,11 +94,11 @@
                                             <label>Description: </label>
                                             <input class="form-control"  type="text" required="true" name="description" value="<%=combo.getDescription()%>">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Image URL: </label>
-                                            <input class="form-control"  type="text" required="true" name="imageURL" value="<%=combo.getImageURL()%>">
+                                        <div>
+                                            <input type="file" name="javafile">
                                         </div>
-                                                                           
+                                        <br/>
+
                                         <div class="form-group">
                                             <input type="submit" value="Update Combo" class="btn btn-lg btn-primary btn-block">
                                         </div>  
@@ -147,7 +147,7 @@
                                                                 <input type="checkbox" name="delete" value="<%=lineItems.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=lineItems.get(i).getMenuItem().getSKU() %>
+                                                                <%=lineItems.get(i).getMenuItem().getSKU()%>
                                                             </td>
                                                             <td>
                                                                 <%=lineItems.get(i).getMenuItem().getName()%>
@@ -202,7 +202,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

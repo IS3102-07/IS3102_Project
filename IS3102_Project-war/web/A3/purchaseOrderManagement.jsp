@@ -125,7 +125,7 @@
                                                     </script>
                                                     <%
                                                                 for (RoleEntity role : listOfRoles) {
-                                                                    if (role.getName().equals("Manufacturing Facility Warehouse Manager")) {
+                                                                    if (role.getName().equals("Warehouse Manager")) {
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
