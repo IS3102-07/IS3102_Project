@@ -32,10 +32,10 @@ public class AccountManagementWebService {
 
     @EJB
     AccountManagementBeanLocal AccountManagementBeanLocal;
-
+    
     @EJB
     SystemSecurityBeanLocal systemSecurityBean;
-
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -64,23 +64,9 @@ public class AccountManagementWebService {
             return null;
         }
     }
-
+    
     @WebMethod
-    public Boolean kioskRegisterMember(@WebParam(name = "name") String name, @WebParam(name = "address") String address, @WebParam(name = "DOB") Date DOB, @WebParam(name = "email") String email, @WebParam(name = "phone") String phone, @WebParam(name = "city") String city, @WebParam(name = "zipCode") String zipCode, @WebParam(name = "password") String password, @WebParam(name = "storeID") Long storeID) {
-        System.out.println("kioskRegisterMember() called");
-        try {
-            StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
-            CountryEntity country = storeEntity.getCountry();
-            return AccountManagementBeanLocal.registerMember(name, address, DOB, email, phone, country, city, zipCode, password);
-        } catch (Exception ex) {
-            System.out.println("kioskRegisterMember(): Error");
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    @WebMethod
-    public List<ItemHelper> getMemberShoppingList(@WebParam(name = "email") String email) {
+    public List<ItemHelper> getMemberShoppingList(@WebParam(name="email") String email) {
         try {
 //            MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
 //            if (memberEntity == null)
@@ -93,24 +79,24 @@ public class AccountManagementWebService {
             ItemEntity item;
             Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU and i.isDeleted=false");
             q.setParameter("SKU", "F1");
-            item = (ItemEntity) q.getSingleResult();
-            lineItemEntity.setItem(item);
-            lineItemEntity.setQuantity(20);
-            em.persist(lineItemEntity);
-            List<LineItemEntity> lineItemEntitys = new ArrayList<LineItemEntity>();
-            lineItemEntitys.add(lineItemEntity);
-            shoppingListEntity.setItems(lineItemEntitys);
-            em.persist(shoppingListEntity);
-            MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
-            memberEntity.setShoppingList(shoppingListEntity);
-            em.merge(memberEntity);
-
-            ShoppingListEntity shoppingListEntity1 = memberEntity.getShoppingList();
-            List<ItemHelper> itemHelpers = new ArrayList<>();
-            for (LineItemEntity curr : shoppingListEntity1.getItems()) {
-                itemHelpers.add(new ItemHelper(curr.getItem().getId(), curr.getItem().getSKU(), curr.getItem().getName(), curr.getQuantity()));
-            }
-            return itemHelpers;
+             item = (ItemEntity) q.getSingleResult();
+             lineItemEntity.setItem(item);
+             lineItemEntity.setQuantity(20);
+             em.persist(lineItemEntity);
+             List<LineItemEntity> lineItemEntitys = new ArrayList<LineItemEntity>();
+             lineItemEntitys.add(lineItemEntity);
+             em.persist(shoppingListEntity);
+             MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
+             memberEntity.setShoppingList(lineItemEntitys);
+             em.merge(memberEntity);
+             
+             
+              List<LineItemEntity> shoppingListEntity1 = memberEntity.getShoppingList();
+             List<ItemHelper> itemHelpers = new ArrayList<>();
+             for(LineItemEntity curr: shoppingListEntity1){
+                 itemHelpers.add(new ItemHelper(curr.getItem().getId(), curr.getItem().getSKU(), curr.getItem().getName(), curr.getQuantity()));
+             }
+             return itemHelpers;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
