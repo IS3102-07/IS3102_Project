@@ -770,12 +770,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (SalesRecordEntity salesRecord : salesRecords) {
                 if (salesRecord.getMember() == null) {
                     profit += salesRecord.getAmountDue() + salesRecord.getAmountPaid();
+                } else {
+                    
                 }
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list all non member sales records:\n" + ex);
+            return profit;
         }
-
         return profit;
     }
 
