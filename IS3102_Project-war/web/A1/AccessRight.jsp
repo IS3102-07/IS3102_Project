@@ -60,6 +60,7 @@
                                 <div class="panel-body">
 
                                     <form role="form" action="../AccessRight_Servlet/AccessRight_POST">
+                                        
                                         <div class="form-group">
                                             <label for="">Regional Office</label>
                                             <select id="" class="form-control" name="regionalOffice">
