@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.jws.WebParam;
@@ -711,35 +712,51 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
 
             StaffEntity staffEntity = em.find(StaffEntity.class, staffID);
             List<RoleEntity> rolesToBeRemoved = staffEntity.getRoles();
-            staffEntity.setRoles(new ArrayList());//blank their roles
             List<RoleEntity> newRoles = new ArrayList<RoleEntity>();
             String rolesIdList = "";
+            System.out.println(roleIDs.size());
             for (int i = 0; i < roleIDs.size(); i++) {
                 RoleEntity currRole = em.getReference(RoleEntity.class, roleIDs.get(i));
+                System.out.println(currRole.getName());
                 newRoles.add(currRole);
                 rolesIdList.concat(roleIDs.get(i).toString() + ",");
                 //Find all the roles that is removed
+                System.out.println(rolesToBeRemoved.size() + "sdddd");
+
                 for (int j = 0; j < rolesToBeRemoved.size(); j++) {
-                    if (rolesToBeRemoved.get(j).getId().equals(currRole)) {
+                    if (rolesToBeRemoved.get(j).getId() == currRole.getId()) {
                         rolesToBeRemoved.remove(j);//exist in both the new & old one, so is not removed
                         break;
                     }
                 }
             }
+            System.out.println(rolesToBeRemoved.size() + "ssssss");
             //Loop all the removed roles and remove the access right
-            for(int i=0;i<rolesToBeRemoved.size();i++) {
-                List<AccessRightEntity> accessRights = new ArrayList();
-                accessRights = rolesToBeRemoved.get(i).getAccessRightList();
-                for (int j=0;j<accessRights.size();j++)
-                    if (accessRights.get(j).getId()==staffID)
-                    em.remove(accessRights.get(j));
+            for (int i = 0; i < rolesToBeRemoved.size(); i++) {
+                System.out.println("aaa");
+                List<AccessRightEntity> accessRights = rolesToBeRemoved.get(i).getAccessRightList();
+                for (int j = 0; j < accessRights.size(); j++) {
+                     System.out.println(accessRights.get(j).getStaff().getId()+"+++"+staffID);
+                    if (Objects.equals(accessRights.get(j).getStaff().getId(), staffID)) {
+                        System.out.println("delete");
+                        em.remove(accessRights.get(j));
+                    }
+                }
             }
-            staffEntity.setRoles(newRoles);
+            staffEntity.setRoles(new ArrayList());//blank their roles
             em.merge(staffEntity);
             em.flush();
+
+            staffEntity.setRoles(newRoles);
+            System.out.println(newRoles.size() + "sssssss");
+            em.merge(staffEntity);
+            em.flush();
+
+            System.out.println(newRoles.size() + "aaaa");
             for (RoleEntity role : newRoles) {
                 em.merge(role);
             }
+
             System.out.println("Roles successfully updated for staff id:" + staffID);
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
             out.println(new Date().toString() + ";" + callerStaffID + ";editStaffRole();" + rolesIdList + ";");
