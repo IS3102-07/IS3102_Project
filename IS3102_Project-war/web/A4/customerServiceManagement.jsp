@@ -26,7 +26,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../FurnitureManagement_FurnitureServlet"><i class="icon-featured icon icon-archive"> </i>
+                                        <a target="_blank" href="../PickerJobList_Servlet"><i class="icon-featured icon icon-archive"> </i>
                                             <h4>Picking Management</h4>
                                         </a>
                                     </div>

@@ -16,12 +16,12 @@ public class PromotionalSalesWebService {
 
     @EJB
     PromotionalSalesBeanLocal psbl;
-    
+
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
-    
+
     @WebMethod
-    public Double getPromotionRate(@WebParam(name = "SKU")String sku, @WebParam(name = "storeID")Long storeID, @WebParam(name = "date")Date date){
+    public Double getPromotionRate(@WebParam(name = "SKU") String sku, @WebParam(name = "storeID") Long storeID, @WebParam(name = "date") Date date) {
         try {
             StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
             Long countryId = storeEntity.getCountry().getId();
