@@ -710,17 +710,30 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
         try {
 
             StaffEntity staffEntity = em.find(StaffEntity.class, staffID);
+            List<RoleEntity> rolesToBeRemoved = staffEntity.getRoles();
             staffEntity.setRoles(new ArrayList());//blank their roles
-            List<RoleEntity> roles = new ArrayList<RoleEntity>();
+            List<RoleEntity> newRoles = new ArrayList<RoleEntity>();
             String rolesIdList = "";
             for (int i = 0; i < roleIDs.size(); i++) {
-                roles.add(em.getReference(RoleEntity.class, roleIDs.get(i)));
+                RoleEntity currRole = em.getReference(RoleEntity.class, roleIDs.get(i));
+                newRoles.add(currRole);
                 rolesIdList.concat(roleIDs.get(i).toString() + ",");
+                //Find all the roles that is removed
+                for (int j = 0; j < rolesToBeRemoved.size(); j++) {
+                    if (rolesToBeRemoved.get(j).getId().equals(currRole)) {
+                        rolesToBeRemoved.remove(j);//exist in both the new & old one, so is not removed
+                        break;
+                    }
+                }
             }
-            staffEntity.setRoles(roles);
+            //Loop all the removed roles and remove the access right
+            for(int i=0;i<rolesToBeRemoved.size();i++) {
+                //Xiaodong TODO
+            }
+            staffEntity.setRoles(newRoles);
             em.merge(staffEntity);
             em.flush();
-            for (RoleEntity role : roles) {
+            for (RoleEntity role : newRoles) {
                 em.merge(role);
             }
             System.out.println("Roles successfully updated for staff id:" + staffID);

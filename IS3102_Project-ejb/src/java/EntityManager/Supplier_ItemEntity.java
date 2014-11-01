@@ -111,9 +111,4 @@ public class Supplier_ItemEntity implements Serializable {
     public void setSupplier(SupplierEntity supplier) {
         this.supplier = supplier;
     }
-
-    @Override
-    public String toString() {
-        return "em.ItemPriceEntity[ id=" + id + " ]";
-    }
 }
