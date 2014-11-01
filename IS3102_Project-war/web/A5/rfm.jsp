@@ -54,8 +54,11 @@
                                 <li>
                                     <i class="icon icon-users"></i> <a href="analytical.jsp">Analytical CRM</a>
                                 </li>
+                                <li>
+                                    <i class="icon icon-users"></i> <a href="../Analytical_ValueAnalysisServlet">Value Analysis</a>
+                                </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Value Analysis
+                                    <i class="icon icon-users"></i> Recency, Frequency & Monetary
                                 </li>
                             </ol>
                         </div>
@@ -66,53 +69,26 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <%
-                                        String errMsg = request.getParameter("errMsg");
-                                        String goodMsg = request.getParameter("goodMsg");
-                                        if (errMsg == null && goodMsg == null) {
-                                            out.println("List of Analytics");
-                                        } else if ((errMsg != null) && (goodMsg == null)) {
-                                            if (!errMsg.equals("")) {
-                                                out.println(errMsg);
-                                            }
-                                        } else if ((errMsg == null && goodMsg != null)) {
-                                            if (!goodMsg.equals("")) {
-                                                out.println(goodMsg);
-                                            }
-                                        }
-                                    %>
+                                   Recency, Frequency & Monetary
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="staffManagement">
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <br>
+                                   
                                             <%
                                                 List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));
                                             %>
                                             <!-- /.table-responsive -->
-
-
-
-
 
                                             <% Integer averageMemberRecency = (Integer) session.getAttribute("averageMemberRecency");
                                                 Integer averageMemberFrequency = (Integer) session.getAttribute("averageMemberFrequency");
                                                 Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
                                             %>
 
-
-
-                                        </div>
-
-                                    </div>
-
-
-
+                                        
+                                  
                                     <div class="row">
                                         <div class="col-lg-12">
 
-                                            <h4>Recency, Frequency & Monetary Value</h4>
                                             <div class="panel-body">
                                                 <div class="table-responsive">
 

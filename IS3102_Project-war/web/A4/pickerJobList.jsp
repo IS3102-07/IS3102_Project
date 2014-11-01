@@ -1,11 +1,11 @@
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.PickRequestEntity"%>
-<%@page import="EntityManager.PickerEntity"%>
 <%@ page import="java.io.*,java.util.*" %>
 <%
-    PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
-    if (picker == null) {
+    StaffEntity staff = (StaffEntity) (session.getAttribute("staffEntity"));
+    if (staff == null) {
 %>
-<jsp:forward page="pickerLogin.jsp?errMsg=Session Expired." />
+<jsp:forward page="../A1/staffLogin.jsp?errMsg=Session Expired." />
 <% }%>
 <html>
     <head>

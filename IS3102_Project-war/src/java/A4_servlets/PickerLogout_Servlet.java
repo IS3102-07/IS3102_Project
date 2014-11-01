@@ -1,7 +1,10 @@
 package A4_servlets;
 
+import EntityManager.PickerEntity;
+import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,16 +13,25 @@ import javax.servlet.http.HttpSession;
 
 public class PickerLogout_Servlet extends HttpServlet {
 
+    @EJB
+    CustomerServiceBeanLocal customerServiceBean;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             HttpSession session;
             session = request.getSession();
+
+            PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
+            customerServiceBean.pickerLogoff(picker.getId());
+
             session.invalidate();
             response.sendRedirect("A4/pickerLogin.jsp?goodMsg=Logout Successful.");
-        } finally {
+
             out.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
