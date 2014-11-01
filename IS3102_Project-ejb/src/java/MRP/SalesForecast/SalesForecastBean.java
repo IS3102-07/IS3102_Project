@@ -48,6 +48,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 System.out.println(lineItem.getItem().getSKU() + ": " + lineItem.getQuantity());
 
                 if (lineItem.getItem().getType().equals("Combo")) {
+                    System.out.println("lineItem.getItem().getType().equals(\"Combo\")");
                     ComboEntity combo = (ComboEntity) lineItem.getItem();
                     for (ComboLineItemEntity cl : combo.getLineItemList()) {
                         Query qe = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.id = ?2 and s.menuItem.SKU = ?3")
@@ -57,7 +58,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                         if (!qe.getResultList().isEmpty()) {
                             SalesFigureEntity saleFigure = (SalesFigureEntity) qe.getResultList().get(0);
-                            saleFigure.setQuantity(saleFigure.getQuantity() + cl.getQuantity());
+                            saleFigure.setQuantity(saleFigure.getQuantity() + lineItem.getQuantity());
                             em.merge(saleFigure);
 
                             Query q2 = em.createQuery("select l from SalesFigureLineItemEntity l where l.saleFigure.id = ?1 and l.SKU = ?2 ")
@@ -66,13 +67,13 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                             if (!q2.getResultList().isEmpty()) {
                                 SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity) q2.getResultList().get(0);
-                                salesFigureLineItem.setQuantity(salesFigureLineItem.getQuantity() + cl.getQuantity());
+                                salesFigureLineItem.setQuantity(salesFigureLineItem.getQuantity() + lineItem.getQuantity());
                                 em.merge(salesFigureLineItem);
                             } else {
                                 SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
                                 salesFigureLineItem.setSaleFigure(saleFigure);;
                                 salesFigureLineItem.setSKU(cl.getMenuItem().getSKU());
-                                salesFigureLineItem.setQuantity(cl.getQuantity());
+                                salesFigureLineItem.setQuantity(lineItem.getQuantity());
                                 em.persist(salesFigureLineItem);
                             }
 
@@ -80,18 +81,19 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                             SalesFigureEntity salesFigure = new SalesFigureEntity();
                             salesFigure.setStore(saleRecord.getStore());
                             salesFigure.setMenuItem(cl.getMenuItem());
-                            salesFigure.setSchedule(schedule);
-                            salesFigure.setQuantity(cl.getQuantity());
+                            salesFigure.setSchedule(schedule);                            
+                            salesFigure.setQuantity(lineItem.getQuantity());
                             em.persist(salesFigure);
 
                             SalesFigureLineItemEntity salesFigureLineItem = new SalesFigureLineItemEntity();
                             salesFigureLineItem.setSaleFigure(salesFigure);;
                             salesFigureLineItem.setSKU(cl.getMenuItem().getSKU());
-                            salesFigureLineItem.setQuantity(cl.getQuantity());
+                            salesFigureLineItem.setQuantity(lineItem.getQuantity());
                             em.persist(salesFigureLineItem);
                         }
                     }
                 } else if (lineItem.getItem().getType().equals("Menu Item")) {
+                    System.out.println("lineItem.getItem().getType().equals(\"Menu Item\")");
                     Query qe = em.createQuery("select s from SalesFigureEntity s where s.store = ?1 and s.schedule.id = ?2 and s.menuItem.SKU = ?3")
                             .setParameter(1, saleRecord.getStore())
                             .setParameter(2, schedule.getId())
