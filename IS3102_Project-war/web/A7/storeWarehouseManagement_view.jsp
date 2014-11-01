@@ -35,7 +35,7 @@
     }
     if (staffEntity != null) {
         List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{4L};
+        Long[] approvedRolesID = new Long[]{3L};
         for (RoleEntity roleEntity : roles) {
             for (Long ID : approvedRolesID) {
                 if (roleEntity.getId().equals(ID)) {
