@@ -139,8 +139,8 @@
                                                     <div class="col-md-4">
                                                         <div class="featured-box featured-box-secundary">
                                                             <div class="box-content">
-                                                                <a href="../RoleManagement_RoleServlet"><i class="icon-featured icon icon-user"> </i>
-                                                                    <h4>Roles Management</h4>
+                                                                <a href="../Analytical_ValueAnalysisCLVServlet"><i class="icon-featured icon icon-user"> </i>
+                                                                    <h4>Customer Lifetime Value</h4>
                                                                 </a>
                                                             </div>
                                                         </div>
