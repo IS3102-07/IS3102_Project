@@ -31,11 +31,11 @@ public class Analytical_ValueAnalysisSendLoyaltyServlet extends HttpServlet {
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    systemSecurityBean
+                    systemSecurityBean.discountMemberLoyaltyPoints(deleteArr[i]);
                 }
-                response.sendRedirect("StaffManagement_StaffServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("Analytical_ValueAnalysisRFMServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
-                response.sendRedirect("A1/staffManagement.jsp?errMsg=Nothing is selected.");
+                response.sendRedirect("A5/valueAnalysis.jsp?errMsg=Nothing is selected.");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
