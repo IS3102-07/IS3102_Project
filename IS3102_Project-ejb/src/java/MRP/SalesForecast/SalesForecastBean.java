@@ -187,7 +187,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
         }
         return false;
     }
-
+    
     public MonthScheduleEntity getTheBeforeOne(MonthScheduleEntity schedule) {
         try {
             if (schedule.getMonth() == 1) {

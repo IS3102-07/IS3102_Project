@@ -13,6 +13,7 @@ import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.StoreEntity;
 import EntityManager.Supplier_ItemEntity;
+import MRP.SalesForecast.SalesForecastBeanLocal;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +32,9 @@ import javax.persistence.Query;
  */
 @Stateless
 public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningBeanLocal {
+
+    @EJB
+    private SalesForecastBeanLocal salesForecastBean;
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
@@ -299,7 +303,7 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                             .setParameter(1, store.getRegionalOffice().getId())
                             .setParameter(2, lineItem.getItem().getSKU());
                     Supplier_ItemEntity supplier_ItemEntity = (Supplier_ItemEntity) q3.getSingleResult();
-                    
+
                     PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), new Date(schedule.getYear(), schedule.getMonth(), 1));
                     purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), lineItem.getItem().getSKU(), sop.getProductionPlan());
                 }
@@ -309,5 +313,30 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
             ex.printStackTrace();
         }
         return false;
+    }
+
+    // salesForecastBean
+    @Override
+    public List<Integer> getPastTargetInventoryLevel(Long storeId, Long scheduleId, Long productGroupId) {
+        try {
+            
+            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);            
+            List pastTargetInventoryLevel = new ArrayList();
+            for (int i = 0; i < 6; i++) {
+                schedule = salesForecastBean.getTheBeforeOne(schedule);                
+                Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2 AND sop.productGroup.id = ?3")
+                        .setParameter(1, storeId)
+                        .setParameter(2, schedule.getId())
+                        .setParameter(3, productGroupId);
+                if (!q.getResultList().isEmpty()) {
+                    SaleAndOperationPlanEntity sop = (SaleAndOperationPlanEntity) q.getResultList().get(0);
+                    pastTargetInventoryLevel.add(sop.getTargetInventoryLevel());
+                }
+            }
+            return pastTargetInventoryLevel;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }
