@@ -105,9 +105,6 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-6">
-
-                                                    Total Number of Customers : <%=members.size()%> <br/>
-
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Total Revenue : <%=totalCustomerRevenue + totalNonCustomerRevenue%></h3>
@@ -121,7 +118,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div id="myfirstchart"></div>
+                                                    Total Number of Customers : <%=members.size()%> <br/>
                                                 </div>
 
                                             </div>
@@ -197,21 +194,7 @@
         $(document).ready(function() {
             $('#dataTables-example').dataTable();
         });
-        new Morris.Bar({
-            // ID of the element in which to draw the chart.
-            element: 'myfirstchart',
-            // Chart data records -- each entry in this array corresponds to a point on
-            // the chart.
-            data: [
-                {y: '18-25', a: <%=cummulativeSpendingAgeGrp1%>, b: <%=numOfMembersInAgeGroup1%>, c: 1},
-                {y: '26-40', a: <%=cummulativeSpendingAgeGrp2%>, b: <%=numOfMembersInAgeGroup2%>, c: 2},
-                {y: '41-55', a: <%=cummulativeSpendingAgeGrp3%>, b: <%=numOfMembersInAgeGroup2%>, c: 3},
-                {y: '56-75', a: <%=cummulativeSpendingAgeGrp4%>, b: <%=numOfMembersInAgeGroup1%>, c: 4}
-            ],
-            xkey: 'y',
-            ykeys: ['a', 'b', 'c'],
-            labels: ['Total Cummulative Spending', 'Total Number Of Members', 'Age Group']
-        });
+
 
         new Morris.Donut({
             element: 'morris-donut-chart',

@@ -28,8 +28,6 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            String errMsg = request.getParameter("errMsg");
-            String goodMsg = request.getParameter("goodMsg");
             System.out.println("Analytical_ValueAnalysisServlet");
             Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
             Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
@@ -50,8 +48,8 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             for (MemberEntity member : members) {
                 memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
             }
-            for (int i=0;i<members.size();i++) {
-                System.out.println(members.get(i).getId()+"||||||"+memberRecencyValue.get(i));
+            for (int i = 0; i < members.size(); i++) {
+                System.out.println(members.get(i).getId() + "||||||" + memberRecencyValue.get(i));
             }
             session.setAttribute("members", members);
             session.setAttribute("memberRecencyValue", memberRecencyValue);
@@ -88,23 +86,14 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
 
             Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
             session.setAttribute("averageMemberMonetaryValue", averageMemberMonetaryValue);
-            
+
             Double customerRetentionRate = customerValueAnalysisBean.getCustomerRetentionRate();
             session.setAttribute("customerRetentionRate", customerRetentionRate);
-            
+
             Double averageOrdersPerAcquiredYear = customerValueAnalysisBean.averageOrdersPerAcquiredYear();
-            session.setAttribute("averageOrdersPerAcquiredYear",averageOrdersPerAcquiredYear);
-            if (errMsg == null && goodMsg == null) {
-                response.sendRedirect("A5/valueAnalysis.jsp");
-            } else if ((errMsg != null) && (goodMsg == null)) {
-                if (!errMsg.equals("")) {
-                    response.sendRedirect("A5/valueAnalysis.jsp?errMsg=" + errMsg);
-                }
-            } else if ((errMsg == null && goodMsg != null)) {
-                if (!goodMsg.equals("")) {
-                    response.sendRedirect("A5/valueAnalysis.jsp?goodMsg=" + goodMsg);
-                }
-            }
+            session.setAttribute("averageOrdersPerAcquiredYear", averageOrdersPerAcquiredYear);
+
+            response.sendRedirect("A5/valueAnalysis.jsp");
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
