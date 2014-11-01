@@ -109,8 +109,18 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    Total Number of Customers : <%=numOfMembers%> <br/>
-                                                    Total Number of Transactions : <% Integer numOfTransactions = (Integer) session.getAttribute("numOfTransactions"); out.println(numOfTransactions); %>
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>Item</td><td>Value</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Number of Customers :</td><td><%=numOfMembers%></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Number of Transactions :</td><td><% Integer numOfTransactions = (Integer) session.getAttribute("numOfTransactions"); out.println(numOfTransactions); %></td>
+                                                        </tr>
+                                                    </table>
+                                                      
                                                 </div>
 
                                             </div>

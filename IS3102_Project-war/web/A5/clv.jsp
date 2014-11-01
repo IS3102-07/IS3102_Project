@@ -43,7 +43,6 @@
                                     <!-- /.table-responsive -->
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h4>Customer Lifetime Value</h4>
                                             <table class="table">
                                                 <tr>
                                                     <td>
