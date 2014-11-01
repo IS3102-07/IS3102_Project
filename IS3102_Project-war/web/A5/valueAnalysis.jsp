@@ -90,17 +90,8 @@
                                             <%
                                                 Double totalCustomerRevenue = (Double) session.getAttribute("totalCustomerRevenue");
                                                 Double totalNonCustomerRevenue = (Double) session.getAttribute("totalNonCustomerRevenue");
-                                                Integer cummulativeSpendingAgeGrp1 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp1");
-                                                Integer cummulativeSpendingAgeGrp2 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp2");
-                                                Integer cummulativeSpendingAgeGrp3 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp3");
-                                                Integer cummulativeSpendingAgeGrp4 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp4");
-                                                Integer averageCummulativeSpending = (Integer) session.getAttribute("averageCummulativeSpending");
-                                                List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));
+                                                Integer numOfMembers = (Integer) (session.getAttribute("numOfMembers"));
 
-                                                Integer numOfMembersInAgeGroup1 = (Integer) session.getAttribute("numOfMembersInAgeGroup1");
-                                                Integer numOfMembersInAgeGroup2 = (Integer) session.getAttribute("numOfMembersInAgeGroup2");
-                                                Integer numOfMembersInAgeGroup3 = (Integer) session.getAttribute("numOfMembersInAgeGroup3");
-                                                Integer numOfMembersInAgeGroup4 = (Integer) session.getAttribute("numOfMembersInAgeGroup4");
                                             %>
                                             <!-- /.table-responsive -->
                                             <div class="row">
@@ -118,7 +109,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    Total Number of Customers : <%=members.size()%> <br/>
+                                                    Total Number of Customers : <%=numOfMembers%> <br/>
+                                                    Total Number of Transactions : <% Integer numOfTransactions = (Integer) session.getAttribute("numOfTransactions"); out.println(numOfTransactions); %>
                                                 </div>
 
                                             </div>
