@@ -314,7 +314,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     public List<PickRequestEntity> getAllPickRequestInStore(Long storeID) {
         System.out.println("getAllPickRequestInStore() called");
         try {
-            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store=:storeID ORDER BY p.pickStatus ASC,p.dateSubmitted ASC");
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store.id:storeID ORDER BY p.pickStatus ASC,p.dateSubmitted ASC");
             q.setParameter("storeID", storeID);
             return q.getResultList();
         } catch (Exception ex) {
