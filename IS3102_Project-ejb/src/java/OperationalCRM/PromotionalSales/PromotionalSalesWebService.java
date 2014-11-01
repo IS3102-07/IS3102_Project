@@ -14,7 +14,7 @@ public class PromotionalSalesWebService {
     @EJB
     PromotionalSalesBeanLocal psbl;
     
-    @WebMethod(operationName = "hello")
+    @WebMethod
     public Double getPromotionRate(@WebParam(name = "SKU")String sku, @WebParam(name = "countryID")Long countryId, @WebParam(name = "date")Date date){
         return psbl.getPromotionRate(sku, countryId, date);
     }
