@@ -15,7 +15,6 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateful;
 
-@Stateful
 @Local
 public interface CustomerValueAnalysisBeanLocal {
 

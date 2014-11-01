@@ -143,7 +143,7 @@
                                                     </td>
                                                     <td>
                                                         <p id="acquiredYearLTV">
-                                                            <% out.print(df.format(averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear * 0.2));%>
+                                                            <%out.print(df.format(averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear * 0.2));%>
                                                         </p>
                                                     </td>
                                                     <td>
@@ -201,17 +201,18 @@
     });
 
     function minus() {
-        var clv = document.getElementById("profitMargin").innerHTML;
-        alert(clv);
-        if (quantity > 1) {
-            document.getElementById("profitMargin").innerHtml = clv--;
-            document.getElementById("acquiredYearLTV").innerHTML = clv * document.getElementById("retentionRate").value;
+        var profitMargin = document.getElementById("profitMargin").value;
+        if (profitMargin > 1) {
+            document.getElementById("profitMargin").value--;
+            var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value/100);
+            document.getElementById("acquiredYearLTV").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
         }
     }
     function plus() {
-        var clv = document.getElementById("profitMargin").innerHTML;
-        document.getElementById("profitMargin").innerHtml = clv++;
-        document.getElementById("acquiredYearLTV").innerHTML = clv * document.getElementById("retentionRate").value;
+        var profitMargin = document.getElementById("profitMargin").value;
+        document.getElementById("profitMargin").value++;
+        var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value/100);
+        document.getElementById("acquiredYearLTV").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
     }
 </script>
 </body>
