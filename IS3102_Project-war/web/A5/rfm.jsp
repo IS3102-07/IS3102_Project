@@ -13,6 +13,24 @@
                 document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
                 document.staffManagement.submit();
             }
+            function sendLoyaltyPoints() {
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = true;
+                    document.staffManagement.action = "../StaffManagement_StaffServlet";
+                    document.staffManagement.submit();
+                } else {
+                    window.event.returnValue = true;
+                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
+                    document.staffManagement.submit();
+                }
+            }
             function removeStaff() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -258,10 +276,11 @@
                         <h4>Alert</h4>
                     </div>
                     <div class="modal-body">
-                        <p id="messageBox">Staff will be removed. Are you sure?</p>
+                        <p id="messageBox">Enter Loyalty Amount : 
+                            <input type="number" name="loyaltyPoints"></p>
                     </div>
                     <div class="modal-footer">                        
-                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStaff()"  />
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="sendLoyaltyPoints()"  />
                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
                     </div>
                 </div>
