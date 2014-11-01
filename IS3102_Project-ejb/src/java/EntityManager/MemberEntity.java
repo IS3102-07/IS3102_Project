@@ -64,8 +64,10 @@ public class MemberEntity implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date joinDate;
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    private ShoppingListEntity shoppingList;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<LineItemEntity> shoppingList;
+//    @OneToOne(cascade = {CascadeType.ALL})
+//    private ShoppingListEntity shoppingList;
     @OneToOne(cascade = {CascadeType.ALL})
     private WishListEntity wishList;
 
@@ -101,7 +103,7 @@ public class MemberEntity implements Serializable {
         setPasswordReset();
         this.isDeleted = false;
         this.wishList = new WishListEntity();
-        this.shoppingList = new ShoppingListEntity();
+        this.shoppingList = new ArrayList();
         this.purchases = new ArrayList<SalesRecordEntity>();
         this.cummulativeSpending = 0.0;
     }
@@ -152,13 +154,14 @@ public class MemberEntity implements Serializable {
         this.cummulativeSpending = cummulativeSpending;
     }
 
-    public ShoppingListEntity getShoppingList() {
+    public List<LineItemEntity> getShoppingList() {
         return shoppingList;
     }
 
-    public void setShoppingList(ShoppingListEntity shoppingList) {
+    public void setShoppingList(List<LineItemEntity> shoppingList) {
         this.shoppingList = shoppingList;
     }
+
 
     public Boolean getIsDeleted() {
         return isDeleted;
