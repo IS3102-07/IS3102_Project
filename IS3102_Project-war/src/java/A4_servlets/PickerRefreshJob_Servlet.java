@@ -30,6 +30,12 @@ public class PickerRefreshJob_Servlet extends HttpServlet {
             List<PickRequestEntity> pickRequestLinkedList = customerServiceBeanLocal.getPickRequests(picker.getId());
             session.setAttribute("pickRequestLinkedList", pickRequestLinkedList);
 
+            if (pickRequestLinkedList != null && pickRequestLinkedList.size() > 0) {
+                response.sendRedirect("A4/pickerStartJob.jsp");
+            } else {
+                response.sendRedirect("A4/pickerLogin_waiting.jsp");
+            }
+
         } catch (Exception ex) {
             out.println(ex);
         }
