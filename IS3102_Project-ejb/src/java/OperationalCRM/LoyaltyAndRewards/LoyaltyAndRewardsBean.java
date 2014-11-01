@@ -1,10 +1,10 @@
 package OperationalCRM.LoyaltyAndRewards;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.LineItemEntity;
 import EntityManager.LoyaltyTierEntity;
 import EntityManager.MemberEntity;
 import EntityManager.QRPhoneSyncEntity;
-import EntityManager.ShoppingListEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.ReturnHelper;
 import java.util.ArrayList;
@@ -267,12 +267,12 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     }
 
     @Override
-    public ShoppingListEntity getMemberShoppingList(String email) {
+    public List<LineItemEntity> getMemberShoppingList(String email) {
         try {
             Query q = em.createQuery("SELECT m from MemberEntity m where m.email=:email");
             q.setParameter("email", email);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-            ShoppingListEntity shoppingListEntity = memberEntity.getShoppingList();
+            List<LineItemEntity> shoppingListEntity = memberEntity.getShoppingList();
             return shoppingListEntity;
         } catch (Exception ex) {
             ex.printStackTrace();

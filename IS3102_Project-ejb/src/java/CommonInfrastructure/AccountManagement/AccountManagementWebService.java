@@ -85,16 +85,15 @@ public class AccountManagementWebService {
              em.persist(lineItemEntity);
              List<LineItemEntity> lineItemEntitys = new ArrayList<LineItemEntity>();
              lineItemEntitys.add(lineItemEntity);
-             shoppingListEntity.setItems(lineItemEntitys);
              em.persist(shoppingListEntity);
              MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
-             memberEntity.setShoppingList(shoppingListEntity);
+             memberEntity.setShoppingList(lineItemEntitys);
              em.merge(memberEntity);
              
              
-             ShoppingListEntity shoppingListEntity1 = memberEntity.getShoppingList();
+              List<LineItemEntity> shoppingListEntity1 = memberEntity.getShoppingList();
              List<ItemHelper> itemHelpers = new ArrayList<>();
-             for(LineItemEntity curr: shoppingListEntity1.getItems()){
+             for(LineItemEntity curr: shoppingListEntity1){
                  itemHelpers.add(new ItemHelper(curr.getItem().getId(), curr.getItem().getSKU(), curr.getItem().getName(), curr.getQuantity()));
              }
              return itemHelpers;
