@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col-lg-6">
 
-                            <form role="form" action="../RetailProductManagement_UpdateRetailProductServlet">
+                            <form role="form" method="POST" enctype="multipart/form-data" action="../RetailProductManagement_UpdateRetailProductServlet">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" required="true" name="name" type="text" value="<%=retailProduct.getName()%>">
@@ -60,11 +60,7 @@
                                 <div class="form-group">
                                     <label>Description</label>
                                     <input class="form-control" type="text"  name="description"required="true" value="<%=retailProduct.getDescription()%>" >
-                                </div>
-                                <div class="form-group">
-                                    <label>Image URL</label>
-                                    <input class="form-control" type="text" required="true" name="imageURL" value="<%=retailProduct.getImageURL()%>">
-                                </div>
+                                </div>                             
                                 <div class="form-group">
                                     <label>SKU</label>
                                     <input class="form-control" type="text" required="true" name="SKU" value="<%=retailProduct.getSKU()%>" disabled>
@@ -80,21 +76,22 @@
                                 <div class="form-group">
                                     <label>Height per item</label>
                                     <input class="form-control" type="text" required="true" name="height" value="<%=retailProduct.getWidth()%>" disabled>
-                                </div>
-                                 <div class="form-group">
-                                    <label>Supplier</label>
-                                </div>
+                                </div>                              
+                                <div>
+                                    <input type="file" name="javafile">
+                                </div><br/>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="<%=retailProduct.getId()%>" name="id">
+                                <input type="hidden" value="<%=retailProduct.getSKU()%>" name="SKU">
                                 <input type="hidden" value="<%=retailProduct.getName()%>" name="retailProductName">
                             </form>
                         </div>
                         <!-- /.row -->
                     </div>
                     <%} catch (Exception ex) {
-                        
+
                             //response.sendRedirect("../RetailProductManagement_RetailProductServlet");
                         }%>
                 </div>

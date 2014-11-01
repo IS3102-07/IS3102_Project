@@ -36,20 +36,6 @@ public class FurnitureManagement_UpdateFurnitureServlet extends HttpServlet {
             String fileName = SKU + ".jpg";
             String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
-            if (file != null) {
-                String s = file.getHeader("content-disposition");
-                InputStream fileInputStream = file.getInputStream();
-                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
-
-                System.out.println("fileOutputStream  " + fileOutputStream);
-                int nextByte;
-                while ((nextByte = fileInputStream.read()) != -1) {
-                    fileOutputStream.write(nextByte);
-                }
-                fileOutputStream.close();
-                fileInputStream.close();
-            }
-
             boolean canUpdate = itemManagementBean.editFurniture(id, SKU, name, category, description, imageURL);
 
             if (!canUpdate) {
@@ -57,6 +43,19 @@ public class FurnitureManagement_UpdateFurnitureServlet extends HttpServlet {
                 response.sendRedirect("furnitureManagement_update.jsp" + result);
             } else {
                 result = "?goodMsg=Furniture updated successfully.";
+                if (file != null) {
+                    String s = file.getHeader("content-disposition");
+                    InputStream fileInputStream = file.getInputStream();
+                    OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+
+                    System.out.println("fileOutputStream  " + fileOutputStream);
+                    int nextByte;
+                    while ((nextByte = fileInputStream.read()) != -1) {
+                        fileOutputStream.write(nextByte);
+                    }
+                    fileOutputStream.close();
+                    fileInputStream.close();
+                }
                 response.sendRedirect("FurnitureManagement_FurnitureServlet" + result);
             }
         } catch (Exception ex) {

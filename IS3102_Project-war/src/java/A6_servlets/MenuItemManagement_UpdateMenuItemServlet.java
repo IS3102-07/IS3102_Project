@@ -25,38 +25,36 @@ public class MenuItemManagement_UpdateMenuItemServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String SKU  = request.getParameter("SKU");
+            String SKU = request.getParameter("SKU");
             String name = request.getParameter("name");
             String category = request.getParameter("category");
             String description = request.getParameter("description");
             String id = request.getParameter("id");
-            
+
             Part file = request.getPart("javafile");
 
             String fileName = SKU + ".jpg";
             String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
-            if (file != null) {
-                String s = file.getHeader("content-disposition");
-                InputStream fileInputStream = file.getInputStream();
-                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
-
-                System.out.println("fileOutputStream  " + fileOutputStream);
-                int nextByte;
-                while ((nextByte = fileInputStream.read()) != -1) {
-                    fileOutputStream.write(nextByte);
-                }
-                fileOutputStream.close();
-                fileInputStream.close();
-            }
-            
-            
             boolean canUpdate = restaurantManagementBean.editMenuItem(id, SKU, name, category, description, imageURL);
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("menuItemManagement_update.jsp" + result);
             } else {
                 result = "?goodMsg=Menu item updated successfully.";
+                if (file != null) {
+                    String s = file.getHeader("content-disposition");
+                    InputStream fileInputStream = file.getInputStream();
+                    OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+
+                    System.out.println("fileOutputStream  " + fileOutputStream);
+                    int nextByte;
+                    while ((nextByte = fileInputStream.read()) != -1) {
+                        fileOutputStream.write(nextByte);
+                    }
+                    fileOutputStream.close();
+                    fileInputStream.close();
+                }
                 response.sendRedirect("MenuItemManagement_MenuItemServlet" + result);
             }
         } catch (Exception ex) {

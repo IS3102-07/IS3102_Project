@@ -114,6 +114,7 @@
                                                             <th>Combo</th>
                                                             <th>Description</th>
                                                             <th>SKU</th>
+                                                            <th>Image URL</th>
                                                             <th>Menu Item SKUs</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -135,6 +136,9 @@
                                                             </td>
                                                             <td>
                                                                 <%=combos.get(i).getSKU()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=combos.get(i).getImageURL()%>
                                                             </td>
                                                             <td>
                                                                 <%

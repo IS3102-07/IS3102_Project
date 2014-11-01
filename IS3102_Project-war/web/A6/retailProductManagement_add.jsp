@@ -29,12 +29,12 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    
+
                     <jsp:include page="../displayMessage.jsp" />
                     <!-- /.warning -->
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" action="../RetailProductManagement_AddRetailProductServlet">
+                            <form role="form" method="POST" enctype="multipart/form-data" action="../RetailProductManagement_AddRetailProductServlet">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" name="name"  type="text" required="true">
@@ -46,10 +46,6 @@
                                 <div class="form-group">
                                     <label>Description</label>
                                     <input class="form-control" required="true" type="text" name="description">
-                                </div>
-                                <div class="form-group">
-                                    <label>Image URL</label>
-                                    <input class="form-control" type="text" required="true" name="imageURL" >
                                 </div>
                                 <div class="form-group">
                                     <label>SKU</label>
@@ -67,6 +63,10 @@
                                     <label>Height per item</label>
                                     <input class="form-control" type="number" required="true" min="1" step="1" name="height" >
                                 </div>
+                                <div>
+                                    <input type="file" name="javafile">
+                                </div>
+                                <br/>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>

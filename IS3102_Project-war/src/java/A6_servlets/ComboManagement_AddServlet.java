@@ -3,14 +3,20 @@ package A6_servlets;
 import CorporateManagement.RestaurantManagement.RestaurantManagementBeanLocal;
 import EntityManager.ComboEntity;
 import EntityManager.ProductGroupEntity;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+@MultipartConfig
 public class ComboManagement_AddServlet extends HttpServlet {
 
     @EJB
@@ -24,14 +30,31 @@ public class ComboManagement_AddServlet extends HttpServlet {
             String SKU = request.getParameter("sku");
             String name = request.getParameter("name");
             String description = request.getParameter("description");
-            String imageURL = request.getParameter("imageURL");
+
+            Part file = request.getPart("javafile");
+            String fileName = SKU + ".jpg";
+            String imageURL = "/IS3102_Project-war/img/products/" + fileName;
+
             ComboEntity combo = RestaurantManagementBean.createCombo(SKU, name, description, imageURL);
 
             if (combo == null) {
                 result = "?errMsg=Combo SKU already exist.";
-                 response.sendRedirect("A6/comboManagement_Add.jsp" + result);
+                response.sendRedirect("A6/comboManagement_Add.jsp" + result);
             } else {
                 result = "?goodMsg=Combo created successfully";
+                if (file != null) {
+                    String s = file.getHeader("content-disposition");
+                    InputStream fileInputStream = file.getInputStream();
+                    OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+
+                    System.out.println("fileOutputStream  " + fileOutputStream);
+                    int nextByte;
+                    while ((nextByte = fileInputStream.read()) != -1) {
+                        fileOutputStream.write(nextByte);
+                    }
+                    fileOutputStream.close();
+                    fileInputStream.close();
+                }
                 response.sendRedirect("ComboManagement_ComboServlet" + result);
             }
         } catch (Exception ex) {

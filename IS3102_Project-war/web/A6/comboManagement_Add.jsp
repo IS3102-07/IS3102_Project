@@ -38,7 +38,7 @@
                                     <h3 class="panel-title">  Combo</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form role="form" action="../ComboManagement_AddServlet">
+                                    <form role="form" method="POST" enctype="multipart/form-data" action="../ComboManagement_AddServlet">
                                         <div class="form-group">
                                             <label>SKU: </label>
                                             <input class="form-control" name="sku" type="text" required="true"/>
@@ -51,11 +51,10 @@
                                             <label>Description: </label>
                                             <input class="form-control" name="description" type="text" required="true"/>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Image URL: </label>
-                                            <input class="form-control" name="imageURL" type="text" required="true"/>
+                                        <div>
+                                            <input type="file" name="javafile">
                                         </div>
-                                        
+                                        <br/>
                                         <div class="form-group">
                                             <input type="submit" value="Create Combo" class="btn btn-lg btn-primary btn-block">
                                         </div>  
