@@ -464,7 +464,6 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
             if (q.getResultList().isEmpty()) {
                 ComboEntity combo = em.find(ComboEntity.class, comboId);
                 lineItem.setCombo(combo);
-                combo.setType(lineItem.getMenuItem().getType());
                 combo.getLineItemList().add(lineItem);
                 em.merge(combo);
                 return true;

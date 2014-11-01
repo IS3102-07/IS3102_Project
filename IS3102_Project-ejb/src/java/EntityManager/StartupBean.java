@@ -197,6 +197,7 @@ public class StartupBean {
                 sopBean.createSchedule(2014, 8, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2014, 9, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2014, 10, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 11, 0, 5, 5, 5, 5);
 
                 System.out.println("Created country & schedule entities.");
             } catch (Exception ex) {
