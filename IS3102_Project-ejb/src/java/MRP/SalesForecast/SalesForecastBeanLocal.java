@@ -2,6 +2,7 @@
 package MRP.SalesForecast;
 
 import EntityManager.ItemEntity;
+import EntityManager.MonthScheduleEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.StoreEntity;
@@ -23,4 +24,6 @@ public interface SalesForecastBeanLocal {
         public SaleForecastEntity getSalesForecastLinearRegression(Long storeId, Long productGroupId, Long scheduleId);
         
         public SaleForecastEntity getSalesForecastMultipleLinearRegression(Long storeId, Long productGroupId, Long scheduleId);
+        
+        public MonthScheduleEntity getTheBeforeOne(MonthScheduleEntity schedule);
 }

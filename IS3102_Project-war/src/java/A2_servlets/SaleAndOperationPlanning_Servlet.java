@@ -188,7 +188,10 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
 
                     SaleForecastEntity salesForecast = sfBean.getSalesForecast(storeId, productGroupId, schedulelId);
                     request.setAttribute("saleForecast", salesForecast);
-
+                    
+                    List<Integer> pastTargetInventoryLevel = sopBean.getPastTargetInventoryLevel(storeId, schedulelId, productGroupId);
+                    request.setAttribute("pastTargetInventoryLevel", pastTargetInventoryLevel);
+                    
                     int currentInventoryLevel = 0;
                     for (ProductGroupLineItemEntity lineitem : productGroup.getLineItemList()) {
                         currentInventoryLevel += simBean.checkItemQty(storeHelper.store.getWarehouse().getId(), lineitem.getItem().getSKU());
