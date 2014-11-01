@@ -89,6 +89,8 @@
                                 </div>
                                 <input type="hidden" value="<%=menuItem.getId()%>" name="id">
                                 <input type="hidden" value="<%=menuItem.getName()%>" name="menuItemName">
+                               <input type="hidden" value="<%=menuItem.getSKU()%>" name="SKU">
+
                             </form>
                         </div>
                         <!-- /.row -->

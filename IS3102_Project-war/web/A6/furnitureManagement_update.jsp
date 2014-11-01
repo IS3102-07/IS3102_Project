@@ -85,6 +85,7 @@ a<%@page import="EntityManager.CountryEntity"%>
                                     </div>
                                     <input type="hidden" value="<%=furniture.getId()%>" name="id">
                                     <input type="hidden" value="<%=furniture.getName()%>" name="furnitureName">
+                                    <input type="hidden" value="<%=furniture.getSKU()%>" name="SKU">
                                 </fieldset>
                             </form>
                         </div>
