@@ -40,7 +40,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
     }
 
     public Boolean discountMemberLoyaltyPoints(String email) {
-        System.out.println("Server called sendActivationEmailForStaff():" + email);
+        System.out.println("Server called discountMemberLoyaltyPoints():" + email);
         String activationCode = "";
         StaffEntity staff = null;
         try {

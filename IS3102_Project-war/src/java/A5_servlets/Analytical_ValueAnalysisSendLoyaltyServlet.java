@@ -12,15 +12,31 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import javax.ejb.EJB;
 
 public class Analytical_ValueAnalysisSendLoyaltyServlet extends HttpServlet {
 
+    @EJB
+    SystemSecurityBeanLocal systemSecurityBean;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession();
             
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    systemSecurityBean
+                }
+                response.sendRedirect("StaffManagement_StaffServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            } else {
+                response.sendRedirect("A1/staffManagement.jsp?errMsg=Nothing is selected.");
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
