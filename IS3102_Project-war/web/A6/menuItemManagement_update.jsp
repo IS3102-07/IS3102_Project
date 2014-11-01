@@ -83,12 +83,15 @@
                                 </div>
                                 <div>
                                         <input type="file" name="javafile">
-                                </div><br/>
+                                </div>
+                                <br/>
                                 <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="<%=menuItem.getId()%>" name="id">
                                 <input type="hidden" value="<%=menuItem.getName()%>" name="menuItemName">
+                               <input type="hidden" value="<%=menuItem.getSKU()%>" name="SKU">
+
                             </form>
                         </div>
                         <!-- /.row -->

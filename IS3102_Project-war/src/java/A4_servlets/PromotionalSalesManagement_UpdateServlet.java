@@ -85,7 +85,7 @@ public class PromotionalSalesManagement_UpdateServlet extends HttpServlet {
 
                     response.sendRedirect("PromotionalSalesManagement_Servlet" + result);
                 } else {
-                    result = "?errMsg=Failed to update promotion. There is already a promotion for the item at the country with an end date later than the start date entered";
+                    result = "?errMsg=Failed to update promotion. There is an overlapping promotion occuring within the dates selected";
                     response.sendRedirect("PromotionalSalesManagement_Servlet" + result);
                 }
                 

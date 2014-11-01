@@ -99,6 +99,7 @@
                                 </div>
                                 <input type="hidden" value="<%=promotion.getId()%>" name="id">
                                 <input type="hidden" value="A4/promotionalSalesManagement_Update.jsp" name="source">
+
                             </form>
                         </div>
                         <!-- /.row -->
