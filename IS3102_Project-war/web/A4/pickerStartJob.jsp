@@ -1,3 +1,4 @@
+<%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="EntityManager.PickRequestEntity"%>
 <%@page import="EntityManager.PickerEntity"%>
 <%@ page import="java.io.*,java.util.*" %>
@@ -37,15 +38,19 @@
                         </thead>
                         <tbody>
                             <%
-                                List<PickRequestEntity> pickRequests = (List<PickRequestEntity>) (session.getAttribute("pickRequests"));
-                                if (pickRequests != null) {
-                                    PickRequestEntity pickRequest = pickRequests.get(0);
+                                List<PickRequestEntity> pickRequestLinkedList = (List<PickRequestEntity>) (session.getAttribute("pickRequestLinkedList"));
+                                List<List<StorageBinEntity>> storageBinsList = (List<List<StorageBinEntity>>) (session.getAttribute("storageBinsList"));
+                                if (pickRequestLinkedList != null) {
+                                    PickRequestEntity pickRequest = pickRequestLinkedList.get(0);
                                     for (int i = 0; i < pickRequest.getItems().size(); i++) {
-                                        //Storage bin location
+                                        String storageBinsString = "";
+                                        for(int j=0;j<storageBinsList.get(i).size();j++) {
+                                            storageBinsString += storageBinsList.get(i).get(j).getName()+","+ storageBinsList.get(i).get(j).getType()+"<br/>";
+                                        }
                             %>
                             <tr>
                                 <td>
-                                    <%=pickRequest.getItems().get(i).getItem().getSKU()%>
+                                    <%=storageBinsString%>
                                 </td>
                                 <td>
                                     <%=pickRequest.getItems().get(i).getItem().getSKU()%>

@@ -43,6 +43,7 @@ public interface StoreAndKitchenInventoryManagementBeanLocal {
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination);
     public Integer checkItemQty(Long warehouseId, String SKU);
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU);
+    public List<StorageBinEntity> findRetailStorageBinsThatContainsItem(Long warehouseId, String SKU);
     public Integer getTotalVolumeOfInboundStorageBin(Long warehouseID);
     public Integer getTotalVolumeOfOutboundStorageBin(Long warehouseID);
     public Integer getTotalVolumeOfShelfStorageBin(Long warehouseID);
