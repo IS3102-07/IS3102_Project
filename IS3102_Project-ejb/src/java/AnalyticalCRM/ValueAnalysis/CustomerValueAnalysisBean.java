@@ -47,6 +47,13 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
     
     @Override
+    public Integer getTotalNumberOfSalesRecord() {
+        Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+            return salesRecords.size();
+    }
+    
+    @Override
     public Double getRetainedCustomerRetentionRate(List<MemberEntity> retainedMembers) {
         System.out.println("getRetainedCustomerRetentionRate()");
 

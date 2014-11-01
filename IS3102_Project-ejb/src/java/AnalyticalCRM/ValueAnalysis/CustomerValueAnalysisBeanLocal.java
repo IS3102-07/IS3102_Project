@@ -19,6 +19,8 @@ import javax.ejb.Local;
 @Local
 public interface CustomerValueAnalysisBeanLocal {
     
+    public Integer getTotalNumberOfSalesRecord();
+    
     public Double getRetainedCustomerRetentionRate(List<MemberEntity> retainedMembers);
     public List<MemberEntity> getRetainedMembers();
     public Double averageOrderPriceInAcquiredYear();
