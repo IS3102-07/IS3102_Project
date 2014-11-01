@@ -66,6 +66,7 @@
                                 <div class="panel-body">
 
                                     <form role="form" action="../AccessRight_Servlet/AccessRight_edit_POST">
+                                        <%if (role.getId() == 2L || (role.getId() == 7L)) {%>
                                         <div class="form-group">
                                             <label for="">Regional Office</label>
                                             <select id="" class="form-control" name="regionalOffice">
@@ -81,12 +82,14 @@
                                                     }
                                                 %>
                                             </select>                                            
-                                        </div>                                        
+                                        </div>                
+                                        <%}%> 
+                                        <%if (role.getId() == 4L || (role.getId() == 5L) || (role.getId() == 9L) || (role.getId() == 10L) || (role.getId() == 12L)) {%>
                                         <div class="form-group">
                                             <label for="">Store</label>
                                             <select id="" class="form-control" name="store">
                                                 <%
-                                                    select = "";
+                                                    String select = "";
                                                     out.print("<option value=''></option>");
 
                                                     for (StoreEntity s : storeList) {
@@ -98,12 +101,14 @@
                                                     }
                                                 %>
                                             </select>                                            
-                                        </div>       
+                                        </div>   
+                                        <%}%> 
+                                        <%if (role.getId() == 8L) {%>
                                         <div class="form-group">
                                             <label for="">Manufacturing Facility</label>
                                             <select id="" class="form-control" name="manufacturingFacility">
                                                 <%
-                                                    select = "";
+                                                    String select = "";
                                                     out.print("<option value=''></option>");
 
                                                     for (ManufacturingFacilityEntity m : manufacturingFacilityList) {
@@ -115,12 +120,14 @@
                                                     }
                                                 %>
                                             </select>                                            
-                                        </div>       
+                                        </div>   
+                                        <%}%>
+                                        <%if (role.getId() == 3L) {%>
                                         <div class="form-group">
                                             <label for="">Warehouse</label>
                                             <select id="" class="form-control" name="warehouse">
                                                 <%
-                                                    select = "";
+                                                    String select = "";
                                                     out.print("<option value=''></option>");
 
                                                     for (WarehouseEntity w : warehouseList) {
@@ -133,8 +140,12 @@
                                                 %>
                                             </select>                                            
                                         </div>       
-
+                                        <%}%>
                                         <button type="submit" class="btn btn-default">Submit</button>
+                                        <input type="hidden" value="" name="regionalOffice">
+                                        <input type="hidden" value="" name="warehouse">
+                                        <input type="hidden" value="" name="manufacturingFacility">
+                                        <input type="hidden" value="" name="store">
                                     </form>
 
                                 </div>                               
@@ -155,7 +166,7 @@
         <script>
             function getStore() {
                 var regionalOfficeId = $("#select_regionalOffice").find('option:selected').val();
-                $.get('../SOP_ajax_Servlet', {regionalOfficeId: regionalOfficeId}, function (responseText) {
+                $.get('../SOP_ajax_Servlet', {regionalOfficeId: regionalOfficeId}, function(responseText) {
                     var stores = responseText.trim().split(';');
                     var x = document.getElementById("select_store");
                     while (x.length > 0) {
@@ -172,7 +183,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             }
             );

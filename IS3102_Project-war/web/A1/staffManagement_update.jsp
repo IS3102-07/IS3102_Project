@@ -101,7 +101,7 @@
                                             <td><span class="btn btn-default"><a href="../AccessRight_Servlet/AccessRight_GET?staffId=<%= staff.getId() %>&roleId=<%= role.getId() %>">Customize Access Right</a></span></td>
                                             <%}
                                             else{%>
-                                            <td></td>
+                                            <td><input type="button" name="btnEdit" value="Cutomize Access Rights" class="btn btn-default"  disabled/>
                                             <%}%>
                                         </tr>
                                         <%
