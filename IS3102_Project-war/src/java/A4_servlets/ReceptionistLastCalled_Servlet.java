@@ -1,9 +1,13 @@
 package A4_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import EntityManager.AccessRightEntity;
+import EntityManager.PickRequestEntity;
 import EntityManager.StaffEntity;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,29 +15,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PickerCollectedJob_Servlet extends HttpServlet {
+public class ReceptionistLastCalled_Servlet extends HttpServlet {
 
     @EJB
     CustomerServiceBeanLocal customerServiceBean;
+    @EJB
+    AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-               try {
+        try {
+
             HttpSession session;
             session = request.getSession();
-            StaffEntity picker = (StaffEntity) (session.getAttribute("picker"));
-            if (picker == null) {
-                String result = "Login fail. Please try again.";
-                response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
-            } else {
-                String pickRequestId = request.getParameter("pickRequestId");
-                //Boolean result = customerServiceBean.markPickRequestAsCollected(Long.parseLong(pickRequestId));
-                response.sendRedirect("A4/pickerLogin_waiting.jsp");
+            StaffEntity staff = (StaffEntity) session.getAttribute("receptionist");
+            if (staff != null) {
+                if (accountManagementBean.checkIfStaffIsStoreManager(staff.getId()) || accountManagementBean.checkIfStaffIsReceptionist(staff.getId())) {
+                    AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);
+                    Long storeID = accessRightEntity.getStore().getId();
+                    List<PickRequestEntity> pickRequests = customerServiceBean.getLastCalledPickRequestInStoreForReceptionist(storeID);
+                    session.setAttribute("pickRequests", pickRequests);
+                    response.sendRedirect("A4/receptionistJobList.jsp");
+                }
+            } else {//no store manager or receptionist role
+                String result = "Account does not have store manager or receptionist role.";
+                response.sendRedirect("A4/receptionistLastCalledLogin.jsp?errMsg=" + result);
             }
         } catch (Exception ex) {
-            out.println(ex);
-            response.sendRedirect("A4/pickerLogin_waiting.jsp");
+            String result = "An error has occured, please try again.";
+            response.sendRedirect("A4/receptionistLastCalledLogin.jsp?errMsg=" + result);
         }
     }
 

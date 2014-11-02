@@ -11,29 +11,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PickerCollectedJob_Servlet extends HttpServlet {
+public class ReceptionistLastCalledLogin_Servlet extends HttpServlet {
 
     @EJB
-    CustomerServiceBeanLocal customerServiceBean;
+    CustomerServiceBeanLocal customerServiceBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-               try {
+        try {
             HttpSession session;
             session = request.getSession();
-            StaffEntity picker = (StaffEntity) (session.getAttribute("picker"));
-            if (picker == null) {
-                String result = "Login fail. Please try again.";
-                response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
+
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            StaffEntity receptionist = customerServiceBeanLocal.receptionistLoginStaff(email, password);
+            if (receptionist == null) {
+                response.sendRedirect("A4/receptionistLastCalledLogin.jsp?errMsg=Invalid Login Credential.");
             } else {
-                String pickRequestId = request.getParameter("pickRequestId");
-                //Boolean result = customerServiceBean.markPickRequestAsCollected(Long.parseLong(pickRequestId));
-                response.sendRedirect("A4/pickerLogin_waiting.jsp");
+                receptionist = customerServiceBeanLocal.receptionistLoginStaff(email, password);
+                session.setAttribute("receptionist", receptionist);
+                response.sendRedirect("/ReceptionistLastCalled_Servlet");
             }
         } catch (Exception ex) {
             out.println(ex);
-            response.sendRedirect("A4/pickerLogin_waiting.jsp");
         }
     }
 

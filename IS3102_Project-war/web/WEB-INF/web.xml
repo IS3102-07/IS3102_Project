@@ -65,6 +65,10 @@
         <servlet-class>A6_servlets.FurnitureManagement_FurnitureServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ReceptionistCallQueue_Servlet</servlet-name>
+        <servlet-class>A4_servlets.ReceptionistCallQueue_Servlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>StaffManagement_AddStaffServlet</servlet-name>
         <servlet-class>A1_servlets.StaffManagement_AddStaffServlet</servlet-class>
     </servlet>
@@ -2136,6 +2140,10 @@
     <servlet-mapping>
         <servlet-name>ReceptionistLastCalledLogin_Servlet</servlet-name>
         <url-pattern>/ReceptionistLastCalledLogin_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReceptionistCallQueue_Servlet</servlet-name>
+        <url-pattern>/ReceptionistCallQueue_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

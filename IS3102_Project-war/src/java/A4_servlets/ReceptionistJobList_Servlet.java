@@ -31,7 +31,7 @@ public class ReceptionistJobList_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
 
-            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
+            StaffEntity staff = (StaffEntity) session.getAttribute("receptionist");
             if (staff != null) {
                 if (accountManagementBean.checkIfStaffIsReceptionist(staff.getId())|| accountManagementBean.checkIfStaffIsStoreManager(staff.getId())) {
                     AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);

@@ -31,7 +31,7 @@ public class PickerJobList_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
 
-            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
+            StaffEntity staff = (StaffEntity) session.getAttribute("picker");
             if (staff != null) {
                 if (accountManagementBean.checkIfStaffIsStoreManager(staff.getId())|| accountManagementBean.checkIfStaffIsPicker(staff.getId())) {
                     AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);
@@ -49,7 +49,8 @@ public class PickerJobList_Servlet extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            out.println(ex);
+            String result = "An error has occured, please try again.";
+            response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
         }
     }
 
