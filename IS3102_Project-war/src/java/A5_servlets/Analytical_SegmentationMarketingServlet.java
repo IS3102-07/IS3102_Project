@@ -107,6 +107,25 @@ public class Analytical_SegmentationMarketingServlet extends HttpServlet {
             Integer numOfMembersInCountry2 = customerValueAnalysisBean.numOfMembersInCountry("Malaysia");
             session.setAttribute("numOfMembersInCountry2", numOfMembersInCountry2);
             
+            Integer getRevenueOfJoinDate1 = customerValueAnalysisBean.getRevenueOfJoinDate(1);
+            Integer getRevenueOfJoinDate2 = customerValueAnalysisBean.getRevenueOfJoinDate(2);
+            Integer getRevenueOfJoinDate3 = customerValueAnalysisBean.getRevenueOfJoinDate(3);
+            Integer getRevenueOfJoinDate4 = customerValueAnalysisBean.getRevenueOfJoinDate(4);
+            
+            session.setAttribute("getRevenueOfJoinDate1",getRevenueOfJoinDate1);
+            session.setAttribute("getRevenueOfJoinDate2",getRevenueOfJoinDate2);
+            session.setAttribute("getRevenueOfJoinDate3",getRevenueOfJoinDate3);
+            session.setAttribute("getRevenueOfJoinDate4",getRevenueOfJoinDate4);
+            
+            Integer numOfMembersInJoinDate1 = customerValueAnalysisBean.numOfMembersInJoinDate(1);
+            Integer numOfMembersInJoinDate2 = customerValueAnalysisBean.numOfMembersInJoinDate(2);
+            Integer numOfMembersInJoinDate3 = customerValueAnalysisBean.numOfMembersInJoinDate(3);
+            Integer numOfMembersInJoinDate4 = customerValueAnalysisBean.numOfMembersInJoinDate(4);
+            
+            session.setAttribute("numOfMembersInJoinDate1",numOfMembersInJoinDate1);
+            session.setAttribute("numOfMembersInJoinDate2",numOfMembersInJoinDate2);
+            session.setAttribute("numOfMembersInJoinDate3",numOfMembersInJoinDate3);
+            session.setAttribute("numOfMembersInJoinDate4",numOfMembersInJoinDate4);
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/segmentationMarketing.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {

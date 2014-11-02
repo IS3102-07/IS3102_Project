@@ -117,7 +117,7 @@
                                                                                 <div class="col-md-6">
                                                                                     <h4>Income Group</h4>
                                                                                     <div id="incomeGroupChart"></div>
-                                                                                    <div id="marriageChart"></div>
+                                                                                    <div id="joinDateChart"></div>
                                                                                 </div>
 
                                                                             </div>
@@ -129,20 +129,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    List Customers Income : 
-                                                    <select name="cars">
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="fiat">Fiat</option>
-                                                        <option value="audi">Audi</option>
-                                                    </select>
-                                                    List Customers Last Purchase : 
-                                                    <select name="cars">
-                                                        <option value="volvo">Volvo</option>
-                                                        <option value="saab">Saab</option>
-                                                        <option value="fiat">Fiat</option>
-                                                        <option value="audi">Audi</option>
-                                                    </select>
+                                                    
                                                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
                                                         <table class="table table-bordered" id="dataTables-example">
                                                             <thead>
@@ -297,6 +284,36 @@
                     data: [
                     {y: 'Singapore', a: <%=totalCummulativeSpendingOfCountry1%>, b: <%=numOfMembersInCountry1%>, c: 1},
                     {y: 'Malaysia', a: <%=totalCummulativeSpendingOfCountry2%>, b: <%=numOfMembersInCountry2%>, c: 2},
+                    ],
+                            xkey: 'y',
+                            ykeys: ['a', 'b'],
+                            labels: ['Total Revenue', 'Num Of Members']
+                    });
+        </script>
+        <script>
+                    new Morris.Bar({
+                    // ID of the element in which to draw the chart.
+                    element: 'joinDateChart',
+                            // Chart data records -- each entry in this array corresponds to a point on
+                            // the chart.
+
+            <%
+                Integer getRevenueOfJoinDate1 = (Integer) session.getAttribute("getRevenueOfJoinDate1");
+                Integer getRevenueOfJoinDate2 = (Integer) session.getAttribute("getRevenueOfJoinDate2");
+                Integer getRevenueOfJoinDate3 = (Integer) session.getAttribute("getRevenueOfJoinDate3");
+                Integer getRevenueOfJoinDate4 = (Integer) session.getAttribute("getRevenueOfJoinDate4");
+
+                Integer numOfMembersInJoinDate1 = (Integer) session.getAttribute("numOfMembersInJoinDate1");
+                Integer numOfMembersInJoinDate2 = (Integer) session.getAttribute("numOfMembersInJoinDate2");
+                Integer numOfMembersInJoinDate3 = (Integer) session.getAttribute("numOfMembersInJoinDate3");
+                Integer numOfMembersInJoinDate4 = (Integer) session.getAttribute("numOfMembersInJoinDate4");
+
+            %>
+                    data: [
+                    {y: '1 year', a: <%=getRevenueOfJoinDate1%>, b: <%=numOfMembersInJoinDate1%>, c: 1},
+                    {y: '2 years', a: <%=getRevenueOfJoinDate2%>, b: <%=numOfMembersInJoinDate2%>, c: 2},
+                    {y: '3 years', a: <%=getRevenueOfJoinDate3%>, b: <%=numOfMembersInJoinDate3%>, c: 3},
+                    {y: '4 years', a: <%=getRevenueOfJoinDate4%>, b: <%=numOfMembersInJoinDate4%>, c: 4},
                     ],
                             xkey: 'y',
                             ykeys: ['a', 'b'],

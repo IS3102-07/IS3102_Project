@@ -47,6 +47,79 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
 
     @Override
+    public Integer getRevenueOfJoinDate(Integer year) {
+        System.out.println("getRevenueOfJoinDate()");
+
+        Integer numOfMembers = 0;
+        Integer numOfMembersNotChurn = 0;
+        Double totalRevenue = (double) 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+            numOfMembers = members.size();
+            for (MemberEntity member : members) {
+                Calendar c = Calendar.getInstance();
+
+                c.setTime(member.getJoinDate());
+                c.add(Calendar.DATE, (-365 * year));
+                Date churnDate = c.getTime();
+                if (member.getJoinDate().getTime() > churnDate.getTime()) {
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            totalRevenue += member.getPurchases().get(i).getAmountDue();
+                        }
+                    } else {
+                        System.out.println("This member has NO purchases records");
+                    }
+                }
+            }
+            DecimalFormat df = new DecimalFormat("#.00");
+            System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
+            return totalRevenue.intValue();
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list retention rate:\n" + ex);
+            ex.printStackTrace();
+            return totalRevenue.intValue();
+        }
+    }
+
+    @Override
+    public Integer numOfMembersInJoinDate(Integer year) {
+        System.out.println("numOfMembersInJoinDate()");
+
+        Integer numOfMembers = 0;
+        Integer numOfMembersNotChurn = 0;
+        Double totalRevenue = (double) 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+            numOfMembers = members.size();
+            for (MemberEntity member : members) {
+                Calendar c = Calendar.getInstance();
+
+                c.setTime(member.getJoinDate());
+                c.add(Calendar.DATE, (365*year));
+                Date churnDate = c.getTime();
+
+                System.out.println("Churn date is " + churnDate);
+                Long days = member.getJoinDate().getTime() - churnDate.getTime();
+                days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                if (days > 0 && days < (365 * year)) {
+                    numOfMembersNotChurn++;
+                    break;
+                }
+            }
+            DecimalFormat df = new DecimalFormat("#.00");
+            System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
+            return numOfMembersNotChurn;
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list retention rate:\n" + ex);
+            ex.printStackTrace();
+            return numOfMembersNotChurn;
+        }
+    }
+
+    @Override
     public Integer getTotalNumberOfSalesRecord() {
         Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
         List<SalesRecordEntity> salesRecords = q.getResultList();
@@ -861,6 +934,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("totalCummulativeSpendingOfCountry is : " + totalCummulativeSpending);
         return totalCummulativeSpending;
     }
+
     @Override
     public Integer averageCummulativeSpending() {
         System.out.println("averageCummulativeSpending()");
@@ -914,6 +988,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return numOfmembersInGroup;
     }
+
     @Override
     public Double totalMemberRevenue() {
         System.out.println("totalMemberRevenue()");
