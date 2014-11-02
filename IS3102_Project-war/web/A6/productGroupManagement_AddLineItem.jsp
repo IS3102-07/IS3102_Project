@@ -59,7 +59,7 @@
                                     <form role="form" action="../ProductGroupLineItemManagement_AddServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text"  >
+                                            <input id="auto" class="form-control" name="sku" type="text"  >
                                         </div>
                                         
                                         <div class="form-group">
@@ -78,6 +78,37 @@
             <!-- /#container fluid -->
         </div>
         <!-- /#wrapper -->
+        
+        <script>
+            $(function() {
+              var availableTags = [
+                "F1",
+                "F2",
+                "F3",
+                "BASIC",
+                "C",
+                "C++",
+                "Clojure",
+                "COBOL",
+                "ColdFusion",
+                "Erlang",
+                "Fortran",
+                "Groovy",
+                "Haskell",
+                "Java",
+                "JavaScript",
+                "Lisp",
+                "Perl",
+                "PHP",
+                "Python",
+                "Ruby",
+                "Scala",
+                "Scheme"
+              ];
+              $( "#auto" ).autocomplete({ source: availableTags });
+            });
+        </script>
+        
     </body>
 </html>
 <%}%>
