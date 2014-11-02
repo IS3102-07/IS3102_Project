@@ -174,7 +174,7 @@ public class StartupBean {
                 em.persist(country);
                 country = new CountryEntity("China", "RMB", 6.13, 86);
                 em.persist(country);
-                //Create schedule
+                //Create schedule                
                 sopBean.createSchedule(2013, 1, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2013, 2, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2013, 3, 5, 5, 5, 5, 0);
@@ -392,33 +392,55 @@ public class StartupBean {
             Query q4 = em.createQuery("select m from MenuItemEntity m");
             List<MenuItemEntity> menuItemList = (List<MenuItemEntity>) q4.getResultList();
 
-            
             int index = 1;
             int ind = 1;
             for (StoreEntity store : storeList) {
                 for (MonthScheduleEntity schedule : scheduleList) {
-                    for (ProductGroupEntity productGroup : productGroupList) {
+                    for (int i = 0; i < productGroupList.size(); i++) {
                         try {
                             SalesFigureEntity saleFigure = new SalesFigureEntity();
                             saleFigure.setStore(store);
-                            saleFigure.setProductGroup(productGroup);
+                            saleFigure.setProductGroup(productGroupList.get(i));
                             saleFigure.setSchedule(schedule);
-                                                                      
+
                             if ((index % 4) == 0) {
-                                saleFigure.setQuantity(30 + index*3);
+                                saleFigure.setQuantity(30 + index * 3);
                             } else if ((index % 4) == 1) {
-                                saleFigure.setQuantity(25 + index*3);
+                                saleFigure.setQuantity(25 + index * 3);
                             } else if ((index % 4) == 2) {
-                                saleFigure.setQuantity(30 + index*3);
+                                saleFigure.setQuantity(30 + index * 3);
                             } else {
-                                saleFigure.setQuantity(35 + index*3);
-                            }       
-                            
-                            if(schedule.getMonth() == 9){
+                                saleFigure.setQuantity(35 + index * 3);
+                            }
+
+                            if (schedule.getMonth() == 9) {
                                 saleFigure.setQuantity(saleFigure.getQuantity() + 50);
-                            }                            
+                            }
                             index++;
                             em.persist(saleFigure);
+                                                        
+                            if(i==0){
+                                SalesFigureLineItemEntity l = new SalesFigureLineItemEntity();
+                                l.setSKU("F1");
+                                l.setQuantity(saleFigure.getQuantity() / 2);
+                                l.setSaleFigure(saleFigure);  
+                                em.persist(l);
+                                
+                                SalesFigureLineItemEntity l1 = new SalesFigureLineItemEntity();
+                                l1.setSKU("F3");
+                                l1.setQuantity(saleFigure.getQuantity() - (saleFigure.getQuantity() / 2));
+                                l1.setSaleFigure(saleFigure);
+                                em.persist(l1);
+                            }
+                            if(i==1){
+                                SalesFigureLineItemEntity l = new SalesFigureLineItemEntity();
+                                l.setSKU("F2");
+                                l.setQuantity(saleFigure.getQuantity());
+                                l.setSaleFigure(saleFigure);
+                                em.persist(l);
+                            }
+                            if(i==2){}
+
                         } catch (Exception ex) {
                         }
                     }

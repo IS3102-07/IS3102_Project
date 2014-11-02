@@ -149,7 +149,7 @@ public class SaleForecast_Servlet extends HttpServlet {
                     list1 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 3);
                     list2 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 2);
                     list3 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 1);
-                }
+                }                
                 request.setAttribute("productGroup", productGroup);
                 request.setAttribute("store", store);
                 request.setAttribute("schedule", schedule);

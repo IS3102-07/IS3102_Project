@@ -1,3 +1,4 @@
+<%@page import="EntityManager.SalesFigureLineItemEntity"%>
 <%@page import="EntityManager.SalesFigureEntity"%>
 <%@page import="EntityManager.StoreEntity"%>
 <%@page import="EntityManager.ProductGroupEntity"%>
@@ -130,14 +131,14 @@
                 {
                 period: '<% if(s.getSchedule().getMonth()>=10){ out.print(s.getSchedule().getYear()+"-"+s.getSchedule().getMonth()); }
                 else{ out.print(s.getSchedule().getYear()+"-0"+s.getSchedule().getMonth()); } %>',
-                <%= s.getProductGroup().getName() %>: <%= s.getQuantity() %>,
+                <%= s.getProductGroup().getName() %>: <%= s.getQuantity() %>,                
                 },
             <%                
             }
             %>
                 ],
                 xkey: 'period',
-                ykeys: ['<%= productGroup.getName()%>'],
+                ykeys:  ['<%= productGroup.getName()%>'],
                 labels: ['<%= productGroup.getName()%>'],
                 pointSize: 2,
                 hideHover: 'auto',
@@ -156,14 +157,21 @@
                 period: '<% if(s.getSchedule().getMonth()>=10){ out.print(s.getSchedule().getYear()+"-"+s.getSchedule().getMonth()); }
                 else{ out.print(s.getSchedule().getYear()+"-0"+s.getSchedule().getMonth()); } %>',
                 <%= s.getProductGroup().getName() %>: <%= s.getQuantity() %>,
+                <% for(SalesFigureLineItemEntity li: s.getLineItemList()){ %>
+                <%= li.getSKU() %>: <%= li.getQuantity() %>,    
+                <% } %>
                 },
             <%                
             }
             %>
                 ],
                 xkey: 'period',
-                ykeys: ['<%= productGroup.getName()%>'],
-                labels: ['<%= productGroup.getName()%>'],
+                ykeys: ['<%= productGroup.getName()%>',
+                        <% for(SalesFigureLineItemEntity li: saleDate2.get(0).getLineItemList()){  out.print("'"+li.getSKU()+"',"); } %>
+                        ],
+                labels: ['<%= productGroup.getName()%>',
+                        <% for(SalesFigureLineItemEntity li: saleDate2.get(0).getLineItemList()){  out.print("'"+li.getSKU()+"',"); } %>
+                        ],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
@@ -181,14 +189,21 @@
                 period: '<% if(s.getSchedule().getMonth()>=10){ out.print(s.getSchedule().getYear()+"-"+s.getSchedule().getMonth()); }
                 else{ out.print(s.getSchedule().getYear()+"-0"+s.getSchedule().getMonth()); } %>',
                 <%= s.getProductGroup().getName() %>: <%= s.getQuantity() %>,
+                <% for(SalesFigureLineItemEntity li: s.getLineItemList()){ %>
+                <%= li.getSKU() %>: <%= li.getQuantity() %>,    
+                <% } %>
                 },
             <%                
             }
             %>
                 ],
                 xkey: 'period',
-                ykeys: ['<%= productGroup.getName()%>'],
-                labels: ['<%= productGroup.getName()%>'],
+                ykeys: ['<%= productGroup.getName()%>',
+                        <% for(SalesFigureLineItemEntity li: saleDate3.get(0).getLineItemList()){out.print("'"+li.getSKU()+"',"); } %>
+                        ],
+                labels: ['<%= productGroup.getName()%>',
+                        <% for(SalesFigureLineItemEntity li: saleDate3.get(0).getLineItemList()){out.print("'"+li.getSKU()+"',"); } %>
+                        ],
                 pointSize: 2,
                 hideHover: 'auto',
                 resize: true
