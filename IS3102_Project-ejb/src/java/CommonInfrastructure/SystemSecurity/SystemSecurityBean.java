@@ -39,8 +39,11 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
 
     }
 
-    public Boolean discountMemberLoyaltyPoints(String email, Integer loyaltyPoints) {
-        System.out.println("Server called discountMemberLoyaltyPoints():" + email);
+    public Boolean discountMemberLoyaltyPoints(String memberId, Integer loyaltyPoints) {
+        System.out.println("Server called discountMemberLoyaltyPoints():" + memberId);
+        MemberEntity member = em.find(MemberEntity.class, Long.valueOf(memberId).longValue());
+        member.setLoyaltyPoints(member.getLoyaltyPoints()+loyaltyPoints);
+        em.merge(member);
         String activationCode = "";
         StaffEntity staff = null;
         try {
@@ -57,13 +60,11 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
             Message msg = new MimeMessage(session);
             if (msg != null) {
                 msg.setFrom(InternetAddress.parse(emailFromAddress, false)[0]);
-                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
-                msg.setSubject("Island Furniture Staff Account Activation");
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(member.getEmail(), false));
+                msg.setSubject("Island Furniture Loyalty Points Added");
                 String messageText = "Greetings from Island Furniture... \n\n"
                         + "We have added loyalty points to your account : " + loyaltyPoints + "\n\n"
-                        + "Email: " + email + "\n\n"
-                        + "Activation Code: " + activationCode + "\n\n"
-                        + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/A1/staffActivateAccount.jsp";
+                        + "Link to our site: http://localhost:8080/IS3102_Project-war/B/index.jsp";
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
                 Date timeStamp = new Date();

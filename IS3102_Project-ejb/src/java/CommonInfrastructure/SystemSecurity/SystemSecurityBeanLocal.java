@@ -5,7 +5,7 @@ import javax.ejb.Local;
 
 @Local
 public interface SystemSecurityBeanLocal {
-    public Boolean discountMemberLoyaltyPoints(String email, Integer loyaltyPoints);
+    public Boolean discountMemberLoyaltyPoints(String memberId, Integer loyaltyPoints);
     
     public Boolean sendActivationEmailForStaff(String email);
     public Boolean sendActivationEmailForMember(String email);

@@ -88,8 +88,8 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         } catch (Exception ex) {
             System.out.println("\nServer failed to list retention rate:\n" + ex);
             ex.printStackTrace();
+            return ((double) numOfMembersNotChurn / (double) numOfMembers);
         }
-        return ((double) numOfMembersNotChurn / (double) numOfMembers);
     }
 
     @Override

@@ -174,7 +174,7 @@
                                                 <div class="table-responsive">
 
                                                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
-                                                        <table class="table table-bordered" id="dataTables-example">
+                                                        <table class="table table-bordered" id="dataTables-example2">
                                                             <thead>
                                                                 <tr>
                                                                     <th><input type="checkbox"onclick="checkAll(this)" /></th>
@@ -255,6 +255,7 @@
         <script>
             $(document).ready(function() {
                 $('#dataTables-example').dataTable();
+                $('#dataTables-example2').dataTable();
             });
         </script>
     </body>

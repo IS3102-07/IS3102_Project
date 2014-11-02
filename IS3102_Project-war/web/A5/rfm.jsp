@@ -281,7 +281,7 @@
                                     </div>
                                     </div>
                                     <!-- /.panel-body -->
-                                </form>
+                                
                             </div>
                             <!-- /.panel -->
                         </div>
@@ -312,7 +312,7 @@
                 </div>
             </div>
         </div>
-
+</form>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function() {
