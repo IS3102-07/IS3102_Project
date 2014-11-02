@@ -12,7 +12,6 @@ import EntityManager.MenuItemEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.PurchaseOrderEntity;
 import EntityManager.RawIngredientEntity;
-import EntityManager.RawMaterialEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.StoreEntity;
@@ -27,6 +26,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 /**
  *
@@ -34,6 +35,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecastingAndPlanningBeanLocal {
+
     @EJB
     private RetailProductsAndRawMaterialsPurchasingBeanLocal purchaseBean;
     @EJB
@@ -59,59 +61,284 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
 
         return null;
     }
-    
-    
+        
     @Override
     public SaleForecastEntity getSalesForecast(Long storeId, Long menuItemId, Long scheduleId) {
+        System.out.println("getSalesForecast is called");
         try {
             Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                     .setParameter(1, menuItemId)
                     .setParameter(2, storeId)
-                    .setParameter(3, scheduleId);            
+                    .setParameter(3, scheduleId);
 
-            if (q.getResultList().isEmpty()) {                
-                System.out.println("q.getResultList().isEmpty()");
-                // if not exist, then create it
-                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
-                StoreEntity store = em.find(StoreEntity.class, storeId);
-                MenuItemEntity menuItem = em.find(MenuItemEntity.class, menuItemId);                                
-                MonthScheduleEntity lastSchedule = schedule;
-                
-                try {
-                    int amount = 0;
-                    for (int i = 0; i < 3; i++) {                        
-
-                        lastSchedule = this.getTheBeforeOne(lastSchedule);                        
-                        Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
-                                .setParameter(1, menuItemId)
-                                .setParameter(2, storeId)
-                                .setParameter(3, lastSchedule.getId());
-
-                        if (!q2.getResultList().isEmpty()) {                            
-                            System.out.println("!q2.getResultList().isEmpty()");
-                            SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
-                            amount += salesFigureEntity.getQuantity();
-                        }
-                    }
-                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, amount / 3);                                        
-                    em.persist(saleForecast);                    
-                    return saleForecast;
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, 0);                    
-                    return saleForecast;
-                }
-
-            } else {
+            if (!q.getResultList().isEmpty()) {
                 return (SaleForecastEntity) q.getResultList().get(0);
+            } else {
+                return this.getSalesForecastLinearRegression(storeId, menuItemId, scheduleId);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
     }
-    
-    
+
+    @Override
+    public SaleForecastEntity getSalesForecastMovingAverage(Long storeId, Long menuItemId, Long scheduleId) {
+        try {
+            Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                    .setParameter(1, menuItemId)
+                    .setParameter(2, storeId)
+                    .setParameter(3, scheduleId);
+
+            if (!q.getResultList().isEmpty()) {
+                em.remove(q.getResultList().get(0));
+                em.flush();
+            }
+
+            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            MenuItemEntity menuItem = em.find(MenuItemEntity.class, menuItemId);
+            
+            MonthScheduleEntity lastSchedule = schedule;
+
+            try {
+                int amount = 0;
+                for (int i = 0; i < 3; i++) {
+
+                    lastSchedule = this.getTheBeforeOne(lastSchedule);
+                    
+                    Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                            .setParameter(1, menuItemId)
+                            .setParameter(2, storeId)
+                            .setParameter(3, lastSchedule.getId());
+
+                    if (!q2.getResultList().isEmpty()) {
+                        System.out.println("!q2.getResultList().isEmpty()");
+                        
+                        SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
+                        amount += salesFigureEntity.getQuantity();
+                    }
+                }                               
+                
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, amount / 3);
+                saleForecast.setMethod("A");
+                em.persist(saleForecast);
+                
+                return saleForecast;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, 0);
+                return saleForecast;
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public SaleForecastEntity getSalesForecastLinearRegression(Long storeId, Long menuItemId, Long scheduleId) {
+        System.out.println("debug......" + "getSalesForecastLinearRegression is called.");
+        try {
+            Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                    .setParameter(1, menuItemId)
+                    .setParameter(2, storeId)
+                    .setParameter(3, scheduleId);
+
+            if (!q.getResultList().isEmpty()) {
+                em.remove(q.getResultList().get(0));
+                em.flush();
+            }
+
+            // if not exist, then create it
+            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            MenuItemEntity menuItem = em.find(MenuItemEntity.class, menuItemId);
+
+            try {
+
+                List<SalesFigureEntity> salesFigureList = new ArrayList<>();
+
+                MonthScheduleEntity lastSchedule = schedule;
+
+                Query q1 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                        .setParameter(1, menuItemId)
+                        .setParameter(2, storeId)
+                        .setParameter(3, lastSchedule.getId());
+
+                if (!q1.getResultList().isEmpty()) {
+                    SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q1.getResultList().get(0);
+                    salesFigureList.add(salesFigureEntity);
+                }
+
+                while (this.getTheBeforeOne(lastSchedule) != null) {
+                    lastSchedule = this.getTheBeforeOne(lastSchedule);
+
+                    Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                            .setParameter(1, menuItemId)
+                            .setParameter(2, storeId)
+                            .setParameter(3, lastSchedule.getId());
+
+                    if (!q2.getResultList().isEmpty()) {
+                        SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
+                        salesFigureList.add(salesFigureEntity);
+                    }
+                }
+
+                SimpleRegression simpleRegression = new SimpleRegression();
+
+                for (int i = 0; i < salesFigureList.size(); i++) {
+                    simpleRegression.addData(salesFigureList.size() - i, salesFigureList.get(i).getQuantity());
+                }
+
+                double slope = simpleRegression.getSlope();
+                double intercept = simpleRegression.getIntercept();
+                double forecastQuantity = slope * (salesFigureList.size() + 1) + intercept;
+
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, Math.round((float) forecastQuantity));
+                saleForecast.setMethod("R");
+                em.persist(saleForecast);
+
+                return saleForecast;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, 0);
+                System.out.println("debug......" + " exception is catched");
+                return saleForecast;
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public SaleForecastEntity getSalesForecastMultipleLinearRegression(Long storeId, Long menuItemId, Long scheduleId) {
+        System.out.println("debug......" + "getSalesForecastMultipleLinearRegression is called.");
+        try {
+            Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                    .setParameter(1, menuItemId)
+                    .setParameter(2, storeId)
+                    .setParameter(3, scheduleId);
+
+            if (!q.getResultList().isEmpty()) {
+                em.remove(q.getResultList().get(0));
+                em.flush();
+            }
+
+            // if not exist, then create it
+            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+            StoreEntity store = em.find(StoreEntity.class, storeId);
+            MenuItemEntity menuItem = em.find(MenuItemEntity.class, menuItemId);
+
+            try {
+
+                List<SalesFigureEntity> salesFigureList = new ArrayList<>();
+
+                MonthScheduleEntity lastSchedule = schedule;
+
+                Query q1 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                        .setParameter(1, menuItemId)
+                        .setParameter(2, storeId)
+                        .setParameter(3, lastSchedule.getId());
+
+                if (!q1.getResultList().isEmpty()) {
+                    SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q1.getResultList().get(0);
+                    salesFigureList.add(salesFigureEntity);
+                }
+
+                while (this.getTheBeforeOne(lastSchedule) != null) {
+                    lastSchedule = this.getTheBeforeOne(lastSchedule);
+
+                    Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.menuItem.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                            .setParameter(1, menuItemId)
+                            .setParameter(2, storeId)
+                            .setParameter(3, lastSchedule.getId());
+
+                    if (!q2.getResultList().isEmpty()) {
+                        SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
+                        salesFigureList.add(salesFigureEntity);
+                    }
+                }
+
+                OLSMultipleLinearRegression regression = new OLSMultipleLinearRegression();
+
+                double[] y = new double[salesFigureList.size()];
+                double[][] x = new double[salesFigureList.size()][];
+                for (int i = 0; i < salesFigureList.size(); i++) {
+                    y[i] = salesFigureList.get(i).getQuantity();
+
+                    switch (salesFigureList.get(i).getSchedule().getMonth()) {
+                        case 1:
+                            x[i] = new double[]{i, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 2:
+                            x[i] = new double[]{i, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 3:
+                            x[i] = new double[]{i, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 4:
+                            x[i] = new double[]{i, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 5:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 6:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
+                            break;
+                        case 7:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0};
+                            break;
+                        case 8:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0};
+                            break;
+                        case 9:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0};
+                            break;
+                        case 10:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0};
+                            break;
+                        case 11:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
+                            break;
+                        case 12:
+                            x[i] = new double[]{i, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+                            break;
+                    }
+                }
+                regression.newSampleData(y, x);
+                double[] coefficient = regression.estimateRegressionParameters();
+                System.out.println("coefficient.length: " + coefficient.length);
+                for (int i = 0; i < coefficient.length; i++) {
+                    System.out.println("coefficient[i]: " + coefficient[i]);
+                }
+                double forecastQuantity = coefficient[0] - coefficient[1] + coefficient[schedule.getMonth() + 1];
+
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, Math.round((float) forecastQuantity));
+                saleForecast.setMethod("M");
+                em.persist(saleForecast);
+
+                System.out.println("schedule.getId(): " + schedule.getId());
+
+                return saleForecast;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                SaleForecastEntity saleForecast = new SaleForecastEntity(store, menuItem, schedule, 0);
+                System.out.println("debug......" + " exception is catched");
+                return saleForecast;
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, String menuItemSKU, Integer year) {
         try {
@@ -125,8 +352,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         }
         return new ArrayList<>();
     }
-    
-    
+
     @Override
     public Boolean generateMasterProductionSchedules(Long storeId) {
         System.out.println("generateMasterProductionSchedules is called.");
@@ -134,15 +360,15 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
             Query q = em.createQuery("select s from MonthScheduleEntity s");
             List<MonthScheduleEntity> scheduleList = q.getResultList();
             if (!scheduleList.isEmpty()) {
-                StoreEntity store = em.find(StoreEntity.class, storeId);                
+                StoreEntity store = em.find(StoreEntity.class, storeId);
                 MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
 
                 Query q0 = em.createQuery("select mr from MaterialRequirementEntity mr");
-                for(MaterialRequirementEntity mr: (List<MaterialRequirementEntity>)q0.getResultList()){
+                for (MaterialRequirementEntity mr : (List<MaterialRequirementEntity>) q0.getResultList()) {
                     em.remove(mr);
                 }
                 em.flush();
-                
+
                 // clear former MPSs
                 Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2")
                         .setParameter(1, storeId)
@@ -160,8 +386,8 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                 List<SaleForecastEntity> sfList = (List<SaleForecastEntity>) q2.getResultList();
                 System.out.println("sfList.size(): " + sfList.size());
 
-                for (SaleForecastEntity sf : sfList) {                    
-                                        
+                for (SaleForecastEntity sf : sfList) {
+
                     Query q3 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2 and mps.menuItem.SKU = ?3")
                             .setParameter(1, storeId)
                             .setParameter(2, lastSchedule.getId())
@@ -183,7 +409,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     int days_month = lastSchedule.getWorkDays_firstWeek() + lastSchedule.getWorkDays_secondWeek() + lastSchedule.getWorkDays_thirdWeek()
                             + lastSchedule.getWorkDays_forthWeek() + lastSchedule.getWorkDays_fifthWeek();
 
-                    int amount = sf.getQuantity();                    
+                    int amount = sf.getQuantity();
 
                     int amount_week1 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_firstWeek() / days_month);
                     int amount_week2 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_secondWeek() / days_month);
@@ -214,15 +440,14 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         }
         return false;
     }
-    
-    
+
     @Override
     public List<MasterProductionScheduleEntity> getMasterProductionSchedules(Long storeId) {
         try {
             Query q = em.createQuery("select s from MonthScheduleEntity s");
             List<MonthScheduleEntity> scheduleList = q.getResultList();
             if (!scheduleList.isEmpty()) {
-                StoreEntity store = em.find(StoreEntity.class, storeId);    
+                StoreEntity store = em.find(StoreEntity.class, storeId);
                 MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
                 Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2")
                         .setParameter(1, storeId)
@@ -234,26 +459,25 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         }
         return new ArrayList<>();
     }
-    
-    
+
     @Override
     public Boolean generateMaterialRequirementPlan(Long storeId) {
         System.out.println("generateMaterialRequirementPlan is called.");
         try {
-            StoreEntity store = em.find(StoreEntity.class, storeId); 
+            StoreEntity store = em.find(StoreEntity.class, storeId);
             Query q = em.createQuery("select s from MonthScheduleEntity s");
             List<MonthScheduleEntity> scheduleList = q.getResultList();
             MonthScheduleEntity schedule = scheduleList.get(scheduleList.size() - 1);
             Calendar calendar = Calendar.getInstance();
             calendar.clear();
             calendar.set(Calendar.YEAR, schedule.getYear());
-            calendar.set(Calendar.MONTH, schedule.getMonth()-1);
+            calendar.set(Calendar.MONTH, schedule.getMonth() - 1);
 
             Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.store.id = ?1 and mps.schedule.id = ?2")
                     .setParameter(1, storeId)
                     .setParameter(2, schedule.getId());
             List<MasterProductionScheduleEntity> mpsList = (List<MasterProductionScheduleEntity>) q1.getResultList();
-            
+
             for (MasterProductionScheduleEntity mps : mpsList) {
                 for (LineItemEntity lineItem : mps.getMenuItem().getRecipe().getListOfLineItems()) {
                     Query q2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id = ?3 and mr.mps.id = ?4")
@@ -269,9 +493,9 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     em.flush();
                 }
             }
-            
+
             for (MasterProductionScheduleEntity mps : mpsList) {
-                for (LineItemEntity lineItem : mps.getMenuItem().getRecipe().getListOfLineItems()) {   
+                for (LineItemEntity lineItem : mps.getMenuItem().getRecipe().getListOfLineItems()) {
 
                     Query query1 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
                             .setParameter(1, storeId)
@@ -282,14 +506,14 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         MaterialRequirementEntity MR1 = new MaterialRequirementEntity();
                         MR1.setStore(store);
                         MR1.setMps(mps);
-                        MR1.setRawIngredient((RawIngredientEntity) lineItem.getItem());                        
+                        MR1.setRawIngredient((RawIngredientEntity) lineItem.getItem());
                         MR1.setQuantity(mps.getAmount_week1() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                         MR1.setSchedule(schedule);
                         MR1.setDay(1);
                         em.persist(MR1);
                     } else {
                         MaterialRequirementEntity MR1 = (MaterialRequirementEntity) query1.getResultList().get(0);
-                        MR1.setQuantity(MR1.getQuantity() + mps.getAmount_week1() * lineItem.getQuantity());                        
+                        MR1.setQuantity(MR1.getQuantity() + mps.getAmount_week1() * lineItem.getQuantity());
                         em.merge(MR1);
                     }
 
@@ -301,7 +525,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                             .setParameter(2, lineItem.getItem().getSKU())
                             .setParameter(3, schedule.getId())
                             .setParameter(4, calendar.get(Calendar.DAY_OF_MONTH));
-                    
+
                     if (query2.getResultList().isEmpty()) {
                         MaterialRequirementEntity MR2 = new MaterialRequirementEntity();
                         MR2.setStore(store);
@@ -313,7 +537,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         em.persist(MR2);
                     } else {
                         MaterialRequirementEntity MR2 = (MaterialRequirementEntity) query2.getResultList().get(0);
-                        MR2.setQuantity(MR2.getQuantity() + mps.getAmount_week2() * lineItem.getQuantity());                        
+                        MR2.setQuantity(MR2.getQuantity() + mps.getAmount_week2() * lineItem.getQuantity());
                         em.merge(MR2);
                     }
 
@@ -336,7 +560,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         em.persist(MR3);
                     } else {
                         MaterialRequirementEntity MR3 = (MaterialRequirementEntity) query3.getResultList().get(0);
-                        MR3.setQuantity(MR3.getQuantity() + mps.getAmount_week3() * lineItem.getQuantity());                        
+                        MR3.setQuantity(MR3.getQuantity() + mps.getAmount_week3() * lineItem.getQuantity());
                         em.merge(MR3);
                     }
 
@@ -359,7 +583,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         em.persist(MR4);
                     } else {
                         MaterialRequirementEntity MR4 = (MaterialRequirementEntity) query4.getResultList().get(0);
-                        MR4.setQuantity(MR4.getQuantity() + mps.getAmount_week4() * lineItem.getQuantity());                        
+                        MR4.setQuantity(MR4.getQuantity() + mps.getAmount_week4() * lineItem.getQuantity());
                         em.merge(MR4);
                     }
 
@@ -395,10 +619,10 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         }
         return false;
     }
-    
+
     public List<MaterialRequirementEntity> getMaterialRequirementEntityList(Long storeId) {
         try {
-            StoreEntity store = em.find(StoreEntity.class, storeId); 
+            StoreEntity store = em.find(StoreEntity.class, storeId);
             Query q = em.createQuery("select s from MonthScheduleEntity s");
             List<MonthScheduleEntity> scheduleList = q.getResultList();
             MonthScheduleEntity schedule = scheduleList.get(scheduleList.size() - 1);
@@ -412,12 +636,12 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         }
         return new ArrayList<>();
     }
-    
+
     @Override
     public Boolean generatePurchaseOrderFromMaterialRequirement(Long storeId) {
         System.out.println("generatePurchaseOrderFromMaterialRequirement is called.");
         try {
-            StoreEntity store = em.find(StoreEntity.class, storeId); 
+            StoreEntity store = em.find(StoreEntity.class, storeId);
             Query q = em.createQuery("select s from MonthScheduleEntity s");
             List<MonthScheduleEntity> scheduleList = q.getResultList();
             MonthScheduleEntity schedule = scheduleList.get(scheduleList.size() - 1);
@@ -468,5 +692,5 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         }
         return false;
     }
-    
+
 }

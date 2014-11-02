@@ -234,13 +234,9 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
             try {
                 int amount = 0;
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 3; i++) {                    
 
-                    System.out.println("debug...... i=" + i);
-
-                    lastSchedule = this.getTheBeforeOne(lastSchedule);
-
-                    System.out.println("debug...... lastSchedule.getId: " + lastSchedule.getId());
+                    lastSchedule = this.getTheBeforeOne(lastSchedule);                    
 
                     Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                             .setParameter(1, productGroupId)
@@ -248,7 +244,6 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                             .setParameter(3, lastSchedule.getId());
 
                     if (!q2.getResultList().isEmpty()) {
-
                         System.out.println("debug......" + "q2.getResultList() is not Empty()");
 
                         SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
@@ -367,6 +362,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
         return null;
     }
 
+    @Override
     public SaleForecastEntity getSalesForecastMultipleLinearRegression(Long storeId, Long productGroupId, Long scheduleId) {
         System.out.println("debug......" + "getSalesForecastMultipleLinearRegression is called.");
         try {
