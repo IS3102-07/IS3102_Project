@@ -40,14 +40,14 @@ public class StoreTransferOrderManagement_Servlet extends HttpServlet {
                 session.setAttribute("transferOrders", transferOrders);
 
                 if (errMsg == null && goodMsg == null) {
-                    response.sendRedirect("A4/transferOrderManagement.jsp");
+                    response.sendRedirect("A7/transferOrderManagement.jsp");
                 } else if ((errMsg != null) && (goodMsg == null)) {
                     if (!errMsg.equals("")) {
-                        response.sendRedirect("A4/transferOrderManagement.jsp?errMsg=" + errMsg);
+                        response.sendRedirect("A7/transferOrderManagement.jsp?errMsg=" + errMsg);
                     }
                 } else if ((errMsg == null && goodMsg != null)) {
                     if (!goodMsg.equals("")) {
-                        response.sendRedirect("A4/transferOrderManagement.jsp?goodMsg=" + goodMsg);
+                        response.sendRedirect("A7/transferOrderManagement.jsp?goodMsg=" + goodMsg);
                     }
                 }
             }

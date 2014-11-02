@@ -1,3 +1,6 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="EntityManager.PromotionEntity"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="EntityManager.StoreEntity"%>
@@ -30,11 +33,19 @@
             FurnitureEntity furniture = new FurnitureEntity();
             List<StoreEntity> storesInCountry = (List<StoreEntity>) session.getAttribute("storesInCountry");
             List<Item_CountryEntity> itemCountryPrices = (List<Item_CountryEntity>) session.getAttribute("item_countryList");
-
             if (furnitures != null) {
                 for (int i = 0; i < furnitures.size(); i++) {
                     if (furnitures.get(i).getSKU().equals(sku)) {
                         furniture = furnitures.get(i);
+                    }
+                }
+            }
+            PromotionEntity promotion = null;
+            List<PromotionEntity> promotions = (List<PromotionEntity>) session.getAttribute("promotions");
+            if (promotions != null) {
+                for (int i = 0; i < promotions.size(); i++) {
+                    if (promotions.get(i).getItem().getSKU().equals(sku)) {
+                        promotion = promotions.get(i);
                     }
                 }
             }
@@ -55,7 +66,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2>Furnitures</h2>
+                                    <h2>Perabot</h2>
                                 </div>
                             </div>
                         </div>
@@ -87,18 +98,31 @@
                                     <%
                                         }
                                         String price = "Unavailable";
+                                        String promoPrice = "";
+                                        String promoEndDate = "";
                                         for (Item_CountryEntity curr : itemCountryPrices) {
                                             if (curr.getItem().getSKU().equals(furniture.getSKU())) {
-                                                price = "$" + curr.getRetailPrice() + "0";
+                                                if (promotion == null) {
+                                                    price = curr.getRetailPrice() + "0 " + curr.getCountry().getCurrency();
+                                                } else {
+                                                    price = curr.getRetailPrice() + "0 " + curr.getCountry().getCurrency();
+                                                    promoPrice = curr.getRetailPrice() * (100 - promotion.getDiscountRate()) / 100 + "0 " + curr.getCountry().getCurrency();
+                                                    DateFormat df = new SimpleDateFormat("MMM dd");
+                                                    promoEndDate = df.format(promotion.getEndDate());
+                                                }
                                             }
                                         }
                                     %>
-
+                                    <%if (promotion == null) {%>
                                     <p class="price"><h4 class="amount"><%=price%></h4></p>
+                                    <%} else {%>
+                                    <p class="price"><h4 class="amount"><s><%=price%></s><br/><%=promoPrice%> (Promo! Till <%=promoEndDate%>)</h4></p>
+                                            <%}%>
                                     <p class="taller">
                                         <%if (furniture.getDescription() != null) {
                                                 out.println(furniture.getDescription());
-                                            }%>
+                                            }
+                                        %>
                                     </p>
                                     <p>
                                         Height: <%=furniture.getHeight()%><br/>
@@ -133,7 +157,7 @@
                                                 </select><br/><br/>
                                                 <input type="submit" class="btn btn-primary btn-icon" value="Check Item Availability"/>
                                                 <input type="hidden" name="sku" value="<%=sku%>"/>
-                                                <input type="hidden" name="type" value="Retail Product"/>
+                                                <input type="hidden" name="type" value="Furniture"/>
                                             </form>
                                         </div>
                                         <%

@@ -1,3 +1,7 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="EntityManager.PromotionEntity"%>
+<%@page import="java.net.URLEncoder"%>
 <%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="EntityManager.StoreEntity"%>
 <%@page import="EntityManager.RetailProductEntity"%>
@@ -29,11 +33,19 @@
             RetailProductEntity retailProduct = new RetailProductEntity();
             List<StoreEntity> storesInCountry = (List<StoreEntity>) session.getAttribute("storesInCountry");
             List<Item_CountryEntity> itemCountryPrices = (List<Item_CountryEntity>) session.getAttribute("item_countryList");
-
             if (retailProducts != null) {
                 for (int i = 0; i < retailProducts.size(); i++) {
                     if (retailProducts.get(i).getSKU().equals(sku)) {
                         retailProduct = retailProducts.get(i);
+                    }
+                }
+            }
+            PromotionEntity promotion = null;
+            List<PromotionEntity> promotions = (List<PromotionEntity>) session.getAttribute("promotions");
+            if (promotions != null) {
+                for (int i = 0; i < promotions.size(); i++) {
+                    if (promotions.get(i).getItem().getSKU().equals(sku)) {
+                        promotion = promotions.get(i);
                     }
                 }
             }
@@ -86,19 +98,36 @@
                                     <%
                                         }
                                         String price = "Unavailable";
+                                        String promoPrice = "";
+                                        String promoEndDate = "";
                                         for (Item_CountryEntity curr : itemCountryPrices) {
                                             if (curr.getItem().getSKU().equals(retailProduct.getSKU())) {
-                                                price = "$" + curr.getRetailPrice() + "0";
+                                                if (promotion == null) {
+                                                    price = curr.getRetailPrice() + "0 " + curr.getCountry().getCurrency();
+                                                } else {
+                                                    price = curr.getRetailPrice() + "0 " + curr.getCountry().getCurrency();
+                                                    promoPrice = curr.getRetailPrice() * (100 - promotion.getDiscountRate()) / 100 + "0 " + curr.getCountry().getCurrency();
+                                                    DateFormat df = new SimpleDateFormat("MMM dd");
+                                                    promoEndDate = df.format(promotion.getEndDate());
+                                                }
                                             }
                                         }
                                     %>
-
+                                    <%if (promotion == null) {%>
                                     <p class="price"><h4 class="amount"><%=price%></h4></p>
-
+                                    <%} else {%>
+                                    <p class="price"><h4 class="amount"><s><%=price%></s><br/><%=promoPrice%> (Promo! Till <%=promoEndDate%>)</h4></p>
+                                            <%}%>
                                     <p class="taller">
                                         <%if (retailProduct.getDescription() != null) {
                                                 out.println(retailProduct.getDescription());
-                                            }%>
+                                            }
+                                        %>
+                                    </p>
+                                    <p>
+                                        Height: <%=retailProduct.getHeight()%><br/>
+                                        Length: <%=retailProduct.getLength()%><br/>
+                                        Width: <%=retailProduct.getWidth()%>
                                     </p>
                                     <div class="product_meta">
                                         <span class="posted_in">Category: <a rel="tag" href="#"><%=retailProduct.getCategory()%></a></span>

@@ -166,13 +166,15 @@ public class StartupBean {
                 //Create countries
                 CountryEntity country = new CountryEntity("Singapore", "SGD", 0.75, 65);
                 em.persist(country);
-                country = new CountryEntity("Malaysia", "RM", 3.0, 60);
+                country = new CountryEntity("Malaysia", "MYR", 3.0, 60);
                 em.persist(country);
-                country = new CountryEntity("Indonesia", "RUPIAH", 100.0, 62);
+                country = new CountryEntity("Indonesia", "IDR", 100.0, 62);
                 em.persist(country);
-                country = new CountryEntity("United States", "(\"", 1.0, 1);
+                country = new CountryEntity("United States", "USD", 1.0, 1);
                 em.persist(country);
                 country = new CountryEntity("China", "RMB", 6.13, 86);
+                em.persist(country);
+                country = new CountryEntity("France", "EUR", 6.13, 86);
                 em.persist(country);
                 //Create schedule                
                 sopBean.createSchedule(2013, 1, 5, 5, 5, 5, 0);
@@ -197,6 +199,7 @@ public class StartupBean {
                 sopBean.createSchedule(2014, 8, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2014, 9, 5, 5, 5, 5, 0);
                 sopBean.createSchedule(2014, 10, 5, 5, 5, 5, 0);
+                sopBean.createSchedule(2014, 11, 0, 5, 5, 5, 5);
 
                 System.out.println("Created country & schedule entities.");
             } catch (Exception ex) {

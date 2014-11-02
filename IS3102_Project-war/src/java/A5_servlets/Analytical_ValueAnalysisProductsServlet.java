@@ -1,50 +1,33 @@
 package A5_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
-import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
+import EntityManager.LineItemEntity;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 
-public class Analytical_ValueAnalysisServlet extends HttpServlet {
+public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
 
     @EJB
-    private CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
-    @EJB
-    private AccountManagementBeanLocal accountManagementBean;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
-            HttpSession session;
-            session = request.getSession();
-            System.out.println("Analytical_ValueAnalysisServlet");
-            Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
-            Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
-            System.out.println(totalCustomerRevenue);
-            session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
-            session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
-
-            Integer numOfMembers = accountManagementBean.listAllMember().size();
-            session.setAttribute("numOfMembers", numOfMembers);
-            
-            Integer numOfTransactions = customerValueAnalysisBean.getTotalNumberOfSalesRecord();
-            session.setAttribute("numOfTransactions",numOfTransactions);
- 
-            response.sendRedirect("A5/valueAnalysis.jsp");
-
+            HttpSession session = request.getSession();
+           List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
+           session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
+           
+           response.sendRedirect("");
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

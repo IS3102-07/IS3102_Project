@@ -1,5 +1,6 @@
 package OperationalCRM.LoyaltyAndRewards;
 
+import EntityManager.LineItemEntity;
 import EntityManager.LoyaltyTierEntity;
 import EntityManager.MemberEntity;
 import EntityManager.ShoppingListEntity;
@@ -20,10 +21,9 @@ public interface LoyaltyAndRewardsBeanLocal {
     public ReturnHelper deleteLoyaltyTier(Long tierID);
     public LoyaltyTierEntity getLoyaltyTierByName(String name);
     public List<LoyaltyTierEntity> getAllLoyaltyTiers();
-    
+    public List<LineItemEntity> getMemberShoppingList(String email);
     public Boolean createSyncWithPhoneRequest(String qrCode);
     public String getSyncWithPhoneStatus(String qrCode);
-    public ShoppingListEntity getMemberShoppingList(String email);
     public Boolean tieMemberToSyncRequest(String email, String qrCode);
     
     public LoyaltyTierEntity getMemberNextTier(Long memberID);

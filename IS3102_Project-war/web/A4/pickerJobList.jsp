@@ -10,7 +10,7 @@
 <html>
     <head>
         <jsp:include page="../header1.html" />
-        <meta http-equiv="refresh" content="3; url=../PickerRefreshJob_Servlet">
+        <meta http-equiv="refresh" content="3; url=../PickerJobList_Servlet">
     </head>
     <body class="dark">
 

@@ -262,6 +262,7 @@ public class ManufacturingWarehouseManagementBean implements ManufacturingWareho
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to markTransferOrderAsCompleted:\n" + ex);
+            ex.printStackTrace();
             return false;
         }
     }

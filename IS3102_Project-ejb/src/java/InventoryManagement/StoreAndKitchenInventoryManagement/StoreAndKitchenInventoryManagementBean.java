@@ -297,7 +297,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean markTransferOrderAsCompleted(Long transferOrderId, String submittedBy) {
-        System.out.println("markTransferOrderAsCompleted() called");
+        System.out.println("markTransferOrderAsCompleted() for store called");
         try {
             transferOrder = em.getReference(TransferOrderEntity.class, transferOrderId);
             Integer quantityToMove = transferOrder.getLineItem().getQuantity();
@@ -334,7 +334,8 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
             em.flush();
             return true;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to markTransferOrderAsCompleted:\n" + ex);
+            System.out.println("\nServer failed to markTransferOrderAsCompleted for store:\n" + ex);
+            ex.printStackTrace();
             return false;
         }
     }

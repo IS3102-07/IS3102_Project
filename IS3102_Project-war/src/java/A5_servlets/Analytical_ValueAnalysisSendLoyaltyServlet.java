@@ -1,50 +1,44 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package A5_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
-import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import javax.ejb.EJB;
 
-public class Analytical_ValueAnalysisServlet extends HttpServlet {
+public class Analytical_ValueAnalysisSendLoyaltyServlet extends HttpServlet {
 
     @EJB
-    private CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
-    @EJB
-    private AccountManagementBeanLocal accountManagementBean;
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    SystemSecurityBeanLocal systemSecurityBean;
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         try {
-            HttpSession session;
-            session = request.getSession();
-            System.out.println("Analytical_ValueAnalysisServlet");
-            Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
-            Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
-            System.out.println(totalCustomerRevenue);
-            session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
-            session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
-
-            Integer numOfMembers = accountManagementBean.listAllMember().size();
-            session.setAttribute("numOfMembers", numOfMembers);
+            HttpSession session = request.getSession();
             
-            Integer numOfTransactions = customerValueAnalysisBean.getTotalNumberOfSalesRecord();
-            session.setAttribute("numOfTransactions",numOfTransactions);
- 
-            response.sendRedirect("A5/valueAnalysis.jsp");
-
+            String[] deleteArr = request.getParameterValues("delete");
+            if (deleteArr != null) {
+                for (int i = 0; i < deleteArr.length; i++) {
+                    systemSecurityBean.discountMemberLoyaltyPoints(deleteArr[i]);
+                }
+                response.sendRedirect("Analytical_ValueAnalysisRFMServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            } else {
+                response.sendRedirect("A5/valueAnalysis.jsp?errMsg=Nothing is selected.");
+            }
         } catch (Exception ex) {
-            out.println("\n\n " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
