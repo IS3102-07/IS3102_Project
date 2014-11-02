@@ -2,7 +2,7 @@
 <%@page import="EntityManager.PickRequestEntity"%>
 <%@ page import="java.io.*,java.util.*" %>
 <%
-    StaffEntity staff = (StaffEntity) (session.getAttribute("staffEntity"));
+    StaffEntity staff = (StaffEntity) (session.getAttribute("receptionist"));
     if (staff == null) {
 %>
 <jsp:forward page="../A1/staffLogin.jsp?errMsg=Session Expired." />
@@ -24,13 +24,61 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="container" style="font-size: 300px;">
-                <%String queueNo = request.getParameter("queueNo");
-                    if (queueNo != null) {
-                        out.println(queueNo);
-                    }
-                %>
+
+
+            <div class="container">
+
+                <div class="row">
+                    <table class="table table-striped table-bordered" i>
+                        <thead>
+                            <tr>
+                                <th>Queue No.</th>
+                                <th>Status</th>
+                                <th>Picker</th>
+                                <th>Date/Time Called</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                List<PickRequestEntity> pickRequests = (List<PickRequestEntity>) (session.getAttribute("pickRequests"));
+                                if (pickRequests != null) {
+                                    for (int i = 0; i < pickRequests.size(); i++) {
+                            %>
+                            <tr>
+                                <td>
+                                    <%= pickRequests.get(i).getQueueNo()%>
+                                </td>
+                                <td>
+                                    <%=pickRequests.get(i).getCollectionStatus()%>
+                                </td>
+                                <td>
+                                    <% StaffEntity picker = pickRequests.get(i).getPicker();
+                                        if (picker != null) {
+                                            out.println(picker.getName());
+                                        } else {
+                                            out.println("Unassigned");
+                                        }
+                                    %>
+                                </td>
+                                <td>
+                                    <% String date = pickRequests.get(i).getDateCalled().toString();
+                                    if (date!=null) {
+                                        out.println(date);
+                                    } else {
+                                        out.println("Please wait...");
+                                    }
+                                    %>
+                                </td>
+                            </tr>
+                            <%
+                                    }
+                                }
+                            %>
+                        </tbody>
+                    </table>
+
+                    <hr class="tall">
+                </div>
             </div>
         </div>
     </body>

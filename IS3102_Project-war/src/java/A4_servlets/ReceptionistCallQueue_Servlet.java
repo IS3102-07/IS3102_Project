@@ -22,7 +22,7 @@ public class ReceptionistCallQueue_Servlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
+            StaffEntity staff = (StaffEntity) session.getAttribute("receptionist");
 
             String requestType = request.getParameter("requestType");
             String pickRequestID = request.getParameter("pickRequestID");
@@ -30,14 +30,15 @@ public class ReceptionistCallQueue_Servlet extends HttpServlet {
             if (staff != null && pickRequestID != null && requestType != null) {
 
                 if (requestType.equals("1")) {
+                    System.out.println("customerServiceBean.callCustomer");
                     customerServiceBean.callCustomer(Long.parseLong(pickRequestID));
                 } else if (requestType.equals("2")) {
                     customerServiceBean.markPickRequestAsUnCollected(Long.parseLong(pickRequestID));
                 } else if (requestType.equals("3")) {
                     String barcode = request.getParameter("barcode");
-                    customerServiceBean.markPickRequestForCollection(Long.parseLong(barcode));
+                    customerServiceBean.markPickRequestForCollection(barcode);
                 }
-                response.sendRedirect("ReceptionistLogin_Servlet");
+                response.sendRedirect("ReceptionistJobList_Servlet");
             } else {
                 String result = "Session Expired.";
                 response.sendRedirect("A4/receptionistLogin.jsp?errMsg=" + result);

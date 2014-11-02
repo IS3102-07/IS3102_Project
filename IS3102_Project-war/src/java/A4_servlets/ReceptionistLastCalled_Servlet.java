@@ -33,10 +33,13 @@ public class ReceptionistLastCalled_Servlet extends HttpServlet {
             if (staff != null) {
                 if (accountManagementBean.checkIfStaffIsStoreManager(staff.getId()) || accountManagementBean.checkIfStaffIsReceptionist(staff.getId())) {
                     AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);
+                    if (accessRightEntity == null) {
+                        accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 10L);
+                    }
                     Long storeID = accessRightEntity.getStore().getId();
                     List<PickRequestEntity> pickRequests = customerServiceBean.getLastCalledPickRequestInStoreForReceptionist(storeID);
                     session.setAttribute("pickRequests", pickRequests);
-                    response.sendRedirect("A4/receptionistJobList.jsp");
+                    response.sendRedirect("A4/receptionistLastCalledQueueNo.jsp");
                 }
             } else {//no store manager or receptionist role
                 String result = "Account does not have store manager or receptionist role.";

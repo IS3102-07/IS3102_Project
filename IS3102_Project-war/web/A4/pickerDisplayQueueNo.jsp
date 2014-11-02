@@ -13,6 +13,7 @@
 <html>
     <head>
         <jsp:include page="../header1.html" />
+        <meta http-equiv="refresh" content="3; url=../PickerCompleteJobRefresh_Servlet?pickRequestId=<%=pickRequest.getId()%>">
     </head>
     <body class="dark">
 

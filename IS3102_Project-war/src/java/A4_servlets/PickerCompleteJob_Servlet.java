@@ -30,6 +30,7 @@ public class PickerCompleteJob_Servlet extends HttpServlet {
             } else {
                 String pickRequestId = request.getParameter("pickRequestId");
                 PickRequestEntity pickRequestEntity = customerServiceBean.completePickRequest(Long.parseLong(pickRequestId));
+                session.setAttribute("pickRequest", pickRequestEntity);
                 response.sendRedirect("A4/pickerDisplayQueueNo.jsp?queueNo="+pickRequestEntity.getQueueNo());
             }
 

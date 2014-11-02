@@ -33,14 +33,17 @@ public class ReceptionistJobList_Servlet extends HttpServlet {
 
             StaffEntity staff = (StaffEntity) session.getAttribute("receptionist");
             if (staff != null) {
-                if (accountManagementBean.checkIfStaffIsReceptionist(staff.getId())|| accountManagementBean.checkIfStaffIsStoreManager(staff.getId())) {
+                if (accountManagementBean.checkIfStaffIsReceptionist(staff.getId()) || accountManagementBean.checkIfStaffIsStoreManager(staff.getId())) {
                     AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);
+                    if (accessRightEntity == null) {
+                        accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 10L);
+                    }
                     Long storeID = accessRightEntity.getStore().getId();
                     List<PickRequestEntity> pickRequests = customerServiceBean.getPickRequestInStoreForReceptionist(storeID);
                     session.setAttribute("pickRequests", pickRequests);
                     response.sendRedirect("A4/receptionistJobList.jsp");
                 } else {//no store manager or receptionist role
-                     String result = "Account does not have Store Manager or Receptionist Role.";
+                    String result = "Account does not have Store Manager or Receptionist Role.";
                     response.sendRedirect("A4/receptionistLogin.jsp?errMsg=" + result);
                 }
             } else {

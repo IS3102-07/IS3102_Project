@@ -7,7 +7,7 @@
     <body class="dark">
         <script>
             function validatePassword() {
-                document.LoginForm.action = "../ReceptionistLogin_Servlet";
+                document.LoginForm.action = "../ReceptionistLastCalledLogin_Servlet";
                 document.LoginForm.submit();
             }
         </script>

@@ -32,7 +32,7 @@ public class ReceptionistLogin_Servlet extends HttpServlet {
             } else {
                 receptionist = customerServiceBeanLocal.receptionistLoginStaff(email, password);
                 session.setAttribute("receptionist", receptionist);
-                response.sendRedirect("/ReceptionistJobList_Servlet");
+                response.sendRedirect("ReceptionistJobList_Servlet");
             }
         } catch (Exception ex) {
             out.println(ex);

@@ -28,7 +28,7 @@ public class PickerCollectedJob_Servlet extends HttpServlet {
                 response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
             } else {
                 String pickRequestId = request.getParameter("pickRequestId");
-                //Boolean result = customerServiceBean.markPickRequestAsCollected(Long.parseLong(pickRequestId));
+                Boolean result = customerServiceBean.markPickRequestAsCollected(Long.parseLong(pickRequestId));
                 response.sendRedirect("A4/pickerLogin_waiting.jsp");
             }
         } catch (Exception ex) {

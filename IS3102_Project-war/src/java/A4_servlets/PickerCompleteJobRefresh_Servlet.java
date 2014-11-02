@@ -1,5 +1,6 @@
 package A4_servlets;
 
+import EntityManager.PickRequestEntity;
 import EntityManager.StaffEntity;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
@@ -11,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ReceptionistLastCalledLogin_Servlet extends HttpServlet {
+public class PickerCompleteJobRefresh_Servlet extends HttpServlet {
 
     @EJB
-    CustomerServiceBeanLocal customerServiceBeanLocal;
+    CustomerServiceBeanLocal customerServiceBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -22,20 +23,21 @@ public class ReceptionistLastCalledLogin_Servlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-
-            StaffEntity receptionist = customerServiceBeanLocal.receptionistLoginStaff(email, password);
-            if (receptionist == null) {
-                response.sendRedirect("A4/receptionistLastCalledLogin.jsp?errMsg=Invalid Login Credential.");
+            StaffEntity picker = (StaffEntity) (session.getAttribute("picker"));
+            if (picker == null) {
+                String result = "Login fail. Please try again.";
+                response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
             } else {
-                receptionist = customerServiceBeanLocal.receptionistLoginStaff(email, password);
-                session.setAttribute("receptionist", receptionist);
-                response.sendRedirect("ReceptionistLastCalled_Servlet");
+                String pickRequestId = request.getParameter("pickRequestId");
+                PickRequestEntity pickRequestEntity = customerServiceBean.getPickRequest(Long.parseLong(pickRequestId));
+                session.setAttribute("pickRequest", pickRequestEntity);
+                response.sendRedirect("A4/pickerDisplayQueueNo.jsp?queueNo="+pickRequestEntity.getQueueNo());
             }
+
         } catch (Exception ex) {
             out.println(ex);
+            response.sendRedirect("A4/pickerLogin_waiting.jsp");
+            ex.printStackTrace();
         }
     }
 

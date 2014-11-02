@@ -31,10 +31,13 @@ public class PickerJobList_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
 
-            StaffEntity staff = (StaffEntity) session.getAttribute("picker");
+            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
             if (staff != null) {
                 if (accountManagementBean.checkIfStaffIsStoreManager(staff.getId())|| accountManagementBean.checkIfStaffIsPicker(staff.getId())) {
                     AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);
+                    if (accessRightEntity == null) {
+                        accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 12L);
+                    }
                     Long storeID = accessRightEntity.getStore().getId();
                     List<PickRequestEntity> pickRequests = customerServiceBean.getAllPickRequestInStore(storeID);
                     session.setAttribute("pickRequests", pickRequests);

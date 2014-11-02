@@ -2,10 +2,10 @@
 <%@page import="EntityManager.PickRequestEntity"%>
 <%@ page import="java.io.*,java.util.*" %>
 <%
-    StaffEntity staff = (StaffEntity) (session.getAttribute("staffEntity"));
+    StaffEntity staff = (StaffEntity) (session.getAttribute("receptionist"));
     if (staff == null) {
 %>
-<jsp:forward page="../A1/staffLogin.jsp?errMsg=Session Expired." />
+<jsp:forward page="../A4/receptionistLogin.jsp?errMsg=Session Expired." />
 <% }%>
 <html>
     <head>
@@ -28,12 +28,14 @@
 
             <div class="container">
 
-                <form role="form" name="LoginForm" >
+                <form role="form" name="LoginForm"  action="../ReceptionistCallQueue_Servlet?requestType=3"">
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-12">
                                 <label>Scan Barcode</label>
-                                <input type="text" name="barcode" class="form-control input-lg" autofocus="true" required="true" onchange="../ReceptionistCallQueue_Servlet?requestType=3">
+                                <input type="text" name="barcode" class="form-control input-lg" autofocus="true" required="true">
+                                <input type="hidden" name="requestType" value="3">
+                                <input type="hidden" name="pickRequestID" value=" ">
                             </div>
                         </div>
                     </div>
@@ -80,9 +82,7 @@
                                 <td>
                                     <a  href="../ReceptionistCallQueue_Servlet?requestType=1&pickRequestID=<%=pickRequests.get(i).getId()%>">
                                         <input type="button" value="Call" class="btn btn-lg btn-primary btn-block">
-                                    </a>
-                                </td>
-                                <td>
+                                    </a>&nbsp;
                                     <a  href="../ReceptionistCallQueue_Servlet?requestType=2&pickRequestID=<%=pickRequests.get(i).getId()%>">
                                         <input type="button" value="Uncollected"  class="btn btn-lg btn-primary btn-block">
                                     </a>
