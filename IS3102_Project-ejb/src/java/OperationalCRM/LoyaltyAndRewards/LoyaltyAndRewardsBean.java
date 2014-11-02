@@ -140,6 +140,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             StoreEntity storeEntity;
             //Deduct his points if he used any
             memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints() - pointsUsed);
+            em.merge(memberEntity);
             //Calculate points earned
             try {
                 storeEntity = em.getReference(StoreEntity.class, storeID);
