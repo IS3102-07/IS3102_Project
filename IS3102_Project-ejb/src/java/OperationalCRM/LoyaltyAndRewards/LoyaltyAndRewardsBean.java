@@ -153,6 +153,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
                     loyaltyPointsEarned = loyaltyPointsEarned * 15;
                 int points = memberEntity.getLoyaltyPoints() + loyaltyPointsEarned;
                 memberEntity.setLoyaltyPoints(points);
+                em.merge(memberEntity);
             } catch (Exception ex) {
                 System.out.println("createSalesRecord(): Error in retriving country");
                 return new ReturnHelper(false, "System error in retriving country information.");
