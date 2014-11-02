@@ -189,7 +189,7 @@
                         <h4>Alert</h4>
                     </div>
                     <div class="modal-body">
-                        <p id="messageBox"><b>Explanation on the sales forecast method:<br>1.Linear Regression Method use all historical data without incorporate sale shock. <br> 2.Multiple Linear Regression Method use all data and can take seasonal effect into consideration. <br> 3.Average Method should be used when short term historical data are more trustful.</b></p>
+                        <p id="messageBox" style="color: #000"><b>Explanation on the sales forecast method:<br>1.Linear Regression Method use all historical data without incorporate sale shock. <br> 2.Multiple Linear Regression Method use all data and can take seasonal effect into consideration. <br> 3.Average Method should be used when short term historical data are more trustful.</b></p>
                     </div>
                     <div class="modal-footer">                        
                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
