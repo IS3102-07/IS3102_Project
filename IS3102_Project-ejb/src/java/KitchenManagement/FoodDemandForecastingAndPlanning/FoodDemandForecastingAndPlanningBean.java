@@ -154,7 +154,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                 em.flush();
 
                 // generate MPSs
-                Query q2 = em.createQuery("select sf from SaleForecastEntity sf where sf.schedule.id = ?1 and sf.store.id = ?2")
+                Query q2 = em.createQuery("select sf from SaleForecastEntity sf where sf.schedule.id = ?1 and sf.store.id = ?2 and sf.menuItem is not null")
                         .setParameter(1, lastSchedule.getId())
                         .setParameter(2, storeId);
                 List<SaleForecastEntity> sfList = (List<SaleForecastEntity>) q2.getResultList();

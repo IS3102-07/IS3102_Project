@@ -17,6 +17,8 @@ import MRP.SalesForecast.SalesForecastBeanLocal;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -170,8 +172,29 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
 
     @Override
     public List<MonthScheduleEntity> getScheduleList() {
-        Query q = em.createQuery("select s from MonthScheduleEntity s ORDER BY s.year DESC,s.month DESC");
-        return q.getResultList();
+        Query q = em.createQuery("select s from MonthScheduleEntity s");
+        List<MonthScheduleEntity> scheduleList = (List<MonthScheduleEntity>) q.getResultList();
+        Collections.sort(scheduleList, new CustomeComparator_schedule());
+        return scheduleList;
+    }
+    
+    private class CustomeComparator_schedule implements Comparator<MonthScheduleEntity> {
+        @Override
+        public int compare(MonthScheduleEntity s1, MonthScheduleEntity s2) {
+            if(s1.getYear() > s2.getYear() ){
+                return -1;
+            } else if( s1.getYear() < s2.getYear() ) {
+                return 1;
+            } else{
+                if(s1.getMonth() > s2.getMonth() ){
+                    return -1;
+                } else if(s1.getMonth() < s2.getMonth() ){
+                    return 1;
+                } else{
+                    return 0;
+                }
+            }
+        }
     }
 
     @Override
