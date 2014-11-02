@@ -111,62 +111,13 @@
                                                                                 <div class="col-md-6">
                                                                                     <h4>Age Group</h4>
                                                                                     <div id="ageGroupChart"></div>
-                                                                                    Model Summary<br/>
-                                                                                    <table class="table">
-                                                                                        <tr>                                                                                            
-                                                                                            <td>R</td>
-                                                                                            <td>R Square</td>
-                                                                                            <td>Std. Error of the Estimate</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <%
-                                                                                                    DecimalFormat df = new DecimalFormat("#.000");
-                                                                                                    Double getROfAge = (Double) session.getAttribute("getROfAge");
-                                                                                                    out.println(df.format(getROfAge));
-                                                                                                %>
-                                                                                            </td>
-                                                                                            <td><%
-                                                                                                Double getRSquaredOfAge = (Double) session.getAttribute("getRSquaredOfAge");
-                                                                                                out.println(df.format(getRSquaredOfAge));
-                                                                                                %></td>
-                                                                                            <td>
-                                                                                                <%
-                                                                                                    Double getStdErrorOfAge = (Double) session.getAttribute("getStdErrorOfAge");
-                                                                                                    out.println(df.format(getStdErrorOfAge));
-                                                                                                %></td>
-                                                                                        </tr>
-                                                                                    </table>
+                                                                                    <div id="countryChart"></div>
 
                                                                                 </div>
                                                                                 <div class="col-md-6">
                                                                                     <h4>Income Group</h4>
                                                                                     <div id="incomeGroupChart"></div>
-                                                                                    Model Summary<br/>
-                                                                                    <table class="table">
-                                                                                        <tr>                                                                                            
-                                                                                            <td>R</td>
-                                                                                            <td>R Square</td>
-                                                                                            <td>Std. Error of the Estimate</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <%
-                                                                                                    Double getROfIncome = (Double) session.getAttribute("getROfIncome");
-                                                                                                    out.println(df.format(getROfIncome));
-                                                                                                %>
-                                                                                            </td>
-                                                                                            <td><%
-                                                                                                Double getRSquaredOfIncome = (Double) session.getAttribute("getRSquaredOfIncome");
-                                                                                                out.println(df.format(getRSquaredOfIncome));
-                                                                                                %></td>
-                                                                                            <td>
-                                                                                                <%
-                                                                                                    Double getStdErrorOfIncome = (Double) session.getAttribute("getStdErrorOfIncome");
-                                                                                                    out.println(df.format(getStdErrorOfIncome));
-                                                                                                %></td>
-                                                                                        </tr>
-                                                                                    </table>
+                                                                                    <div id="marriageChart"></div>
                                                                                 </div>
 
                                                                             </div>
@@ -219,17 +170,17 @@
                                                                         <%=member.getName()%>
                                                                     </td>
                                                                     <td>
-                                                                        
+                                                                        <%=member.getAge()%>
                                                                     </td>
                                                                     <td>
-                                                                        
+                                                                        <%=member.getIncome()%>
                                                                     </td>
                                                                     <td>
                                                                         
                                                                     </td>
 
                                                                     <td>
-                                                                        <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=member.getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=member.getId()%>')"/>
+                                                                        
                                                                     </td>
                                                                 </tr>
                                                                 <%
@@ -322,6 +273,30 @@
                     {y: '60,000', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: 2},
                     {y: '100,000', a: <%=cummulativeSpendingIncomeGrp3%>, b: <%=numOfMembersInIncomeGroup3%>, c: 3},
                     {y: '250,000', a: <%=cummulativeSpendingIncomeGrp4%>, b: <%=numOfMembersInIncomeGroup4%>, c: 4}
+                    ],
+                            xkey: 'y',
+                            ykeys: ['a', 'b'],
+                            labels: ['Total Revenue', 'Num Of Members']
+                    });
+        </script>
+        <script>
+                    new Morris.Bar({
+                    // ID of the element in which to draw the chart.
+                    element: 'countryChart',
+                            // Chart data records -- each entry in this array corresponds to a point on
+                            // the chart.
+
+            <%
+                Integer totalCummulativeSpendingOfCountry1 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry1");
+                Integer cummulativeSpendingIncomeGrp2 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp2");
+
+                Integer numOfMembersInCountryGroup1 = (Integer) session.getAttribute("numOfMembersInIncomeGroup1");
+                Integer numOfMembersInIncomeGroup2 = (Integer) session.getAttribute("numOfMembersInIncomeGroup2");
+
+            %>
+                    data: [
+                    {y: 'Singapore', a: <%=totalCummulativeSpendingOfCountry1%>, b: <%=numOfMembersInIncomeGroup1%>, c: 1},
+                    {y: 'Malaysia', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: 2},
                     ],
                             xkey: 'y',
                             ykeys: ['a', 'b'],

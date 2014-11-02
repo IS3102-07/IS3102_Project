@@ -119,8 +119,8 @@
                                                                         <h3>Recency<span><%=averageMemberRecency%></span></h3>
                                                                         <ul>
                                                                             <li><b>Average Recency</b> <%=averageMemberRecency%> days</li>
-                                                                            <li><b>25th Percentile</b> <%=averageMemberRecency / 2%></li>
-                                                                            <li><b>75th Percentile</b> <%=(averageMemberRecency / 2) + averageMemberRecency%></li>
+                                                                            <li><b>25th Percentile</b> <%=(averageMemberRecency / 2) + averageMemberRecency%></li>
+                                                                            <li><b>75th Percentile</b> <%=averageMemberRecency / 2%></li>
                                                                             <li><b>Recency</b> is the average last purchase per member away from today</li>
                                                                         </ul>
                                                                     </div>
@@ -183,12 +183,12 @@
                                                                         <%=member.getName()%>
                                                                     </td>
                                                                     <td <% if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
-                                                                        %>bgcolor="#0066FF"<%
+                                                                        %>bgcolor="#00FF33"<%
                                                                         } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
                                                                         %>
-                                                                        bgcolor="#FF0000"
+                                                                        bgcolor="red"
                                                                         <% } else { %>
-                                                                        bgcolor="#00FF00"
+                                                                        bgcolor="orange"
                                                                         <%
                                                                             }
                                                                         %>
@@ -197,12 +197,12 @@
                                                                     </td>
                                                                     <td
                                                                         <% if (memberFrequencyValue.get(i) <= (averageMemberFrequency / 2)) {
-                                                                        %>bgcolor="#FF0000"<%
+                                                                        %>bgcolor="red"<%
                                                                         } else if (memberFrequencyValue.get(i) > ((averageMemberFrequency / 2) + averageMemberFrequency)) {
                                                                         %>
-                                                                        bgcolor="#0066FF"
+                                                                        bgcolor="#00FF33"
                                                                         <% } else { %>
-                                                                        bgcolor="#00FF00"
+                                                                        bgcolor="orange"
                                                                         <%
                                                                             }
                                                                         %>
@@ -211,12 +211,12 @@
                                                                     </td>
                                                                     <td
                                                                         <% if (memberMonetaryValue.get(i) < (averageMemberMonetaryValue / 2)) {
-                                                                        %>bgcolor="#FF0000"<%
+                                                                        %>bgcolor="red"<%
                                                                         } else if (memberMonetaryValue.get(i) > ((averageMemberMonetaryValue / 2) + averageMemberMonetaryValue)) {
                                                                         %>
-                                                                        bgcolor="#0066FF"
+                                                                        bgcolor="#00FF33"
                                                                         <% } else { %>
-                                                                        bgcolor="#00FF00"
+                                                                        bgcolor="orange"
                                                                         <%
                                                                             }
                                                                         %>

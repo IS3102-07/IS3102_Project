@@ -848,6 +848,20 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
 
     @Override
+    public Integer totalCummulativeSpendingOfCountry(String country) {
+        System.out.println("totalCummulativeSpendingOfCountry()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            if (member.getCity().equalsIgnoreCase(country)) {
+                totalCummulativeSpending += member.getCummulativeSpending();
+            }
+        }
+        System.out.println("totalCummulativeSpendingOfCountry is : " + totalCummulativeSpending);
+        return totalCummulativeSpending;
+    }
+    @Override
     public Integer averageCummulativeSpending() {
         System.out.println("averageCummulativeSpending()");
         List<MemberEntity> members = accountManagementBean.listAllMember();
