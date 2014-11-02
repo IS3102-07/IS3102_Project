@@ -182,14 +182,14 @@
                 });
             }
         </script>
-              <div role="dialog" class="modal fade" id="myModal">
+        <div role="dialog" class="modal fade" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4>Alert</h4>
                     </div>
                     <div class="modal-body">
-                        <p id="messageBox">Explanation on the sales forecast method:<br> 1.Multiple Linear Regression Method should be used when <br> 2.Linear Regression Method shoule be used when <br> 3.Average Method should be used when </p>
+                        <p id="messageBox"><b>Explanation on the sales forecast method:<br>1.Linear Regression Method use all historical data without incorporate sale shock. <br> 2.Multiple Linear Regression Method use all data and can take seasonal effect into consideration. <br> 3.Average Method should be used when short term historical data are more trustful.</b></p>
                     </div>
                     <div class="modal-footer">                        
                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
