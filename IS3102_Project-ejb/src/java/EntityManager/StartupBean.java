@@ -164,17 +164,17 @@ public class StartupBean {
             }
             try {
                 //Create countries
-                CountryEntity country = new CountryEntity("Singapore", "SGD", 0.75, 65);
+                CountryEntity country = new CountryEntity("Singapore", "SGD", 1.25, 65);
                 em.persist(country);
                 country = new CountryEntity("Malaysia", "MYR", 3.0, 60);
                 em.persist(country);
-                country = new CountryEntity("Indonesia", "IDR", 100.0, 62);
+                country = new CountryEntity("Indonesia", "IDR", 120.0, 62);
                 em.persist(country);
                 country = new CountryEntity("United States", "USD", 1.0, 1);
                 em.persist(country);
                 country = new CountryEntity("China", "RMB", 6.13, 86);
                 em.persist(country);
-                country = new CountryEntity("France", "EUR", 6.13, 86);
+                country = new CountryEntity("France", "EUR", 0.798, 86);
                 em.persist(country);
                 //Create schedule                
                 sopBean.createSchedule(2013, 1, 5, 5, 5, 5, 0);
@@ -295,11 +295,8 @@ public class StartupBean {
                 q = em.createQuery("SELECT t FROM RegionalOfficeEntity t where t.name='Asia Pacific Regional Office'");
                 RegionalOfficeEntity regionalOfficeEntity = (RegionalOfficeEntity) q.getSingleResult();
                 SupplierEntity supplierEntity = new SupplierEntity("Supplier 1", "67911580", "supplier1@email.com", "231 Bukit Panjang Road", regionalOfficeEntity);
-                CountryEntity country = new CountryEntity();
-                country.setCountryCode(12);
-                country.setCurrency("BN");
-                country.setExchangeRate(0.75);
-                country.setName("Brunei");
+                q = em.createQuery("SELECT c from CountryEntity c where c.name='Singapore");
+                CountryEntity country = (CountryEntity) q.getSingleResult();
                 em.persist(country);
                 supplierEntity.setCountry(country);
                 em.persist(supplierEntity);
