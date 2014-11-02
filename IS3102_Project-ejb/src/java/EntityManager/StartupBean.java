@@ -86,11 +86,11 @@ public class StartupBean {
                 LoyaltyTierEntity loyaltyTierEntity;
                 loyaltyTierEntity = new LoyaltyTierEntity("Gold", 5000.0);
                 em.persist(loyaltyTierEntity);
-                goldLoyaltyTierID = loyaltyTierEntity.getId();
                 loyaltyTierEntity = new LoyaltyTierEntity("Silver", 3000.0);
                 em.persist(loyaltyTierEntity);
                 loyaltyTierEntity = new LoyaltyTierEntity("Bronze", 1000.0);
                 em.persist(loyaltyTierEntity);
+                goldLoyaltyTierID = loyaltyTierEntity.getId();
                 loyaltyTierEntity = new LoyaltyTierEntity("Classic", 0.0);
                 em.persist(loyaltyTierEntity);
 
@@ -295,7 +295,7 @@ public class StartupBean {
                 q = em.createQuery("SELECT t FROM RegionalOfficeEntity t where t.name='Asia Pacific Regional Office'");
                 RegionalOfficeEntity regionalOfficeEntity = (RegionalOfficeEntity) q.getSingleResult();
                 SupplierEntity supplierEntity = new SupplierEntity("Supplier 1", "67911580", "supplier1@email.com", "231 Bukit Panjang Road", regionalOfficeEntity);
-                q = em.createQuery("SELECT c from CountryEntity c where c.name='Singapore");
+                q = em.createQuery("SELECT c from CountryEntity c where c.name='Singapore'");
                 CountryEntity country = (CountryEntity) q.getSingleResult();
                 em.persist(country);
                 supplierEntity.setCountry(country);

@@ -1,6 +1,6 @@
 package A4_servlets;
 
-import EntityManager.PickerEntity;
+import EntityManager.StaffEntity;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PickerLogout_Servlet extends HttpServlet {
+public class PickerCollectedJob_Servlet extends HttpServlet {
 
     @EJB
     CustomerServiceBeanLocal customerServiceBean;
@@ -19,19 +19,21 @@ public class PickerLogout_Servlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
+               try {
             HttpSession session;
             session = request.getSession();
-
-            PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
-            customerServiceBean.pickerLogoff(picker.getId());
-
-            session.invalidate();
-            response.sendRedirect("A4/pickerLogin.jsp?goodMsg=Logout Successful.");
-
-            out.close();
+            StaffEntity picker = (StaffEntity) (session.getAttribute("picker"));
+            if (picker == null) {
+                String result = "Login fail. Please try again.";
+                response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
+            } else {
+                String pickRequestId = request.getParameter("pickRequestId");
+                Boolean result = customerServiceBean.markPickRequestAsCollected(Long.parseLong(pickRequestId));
+                response.sendRedirect("A4/pickerLogin_waiting.jsp");
+            }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            out.println(ex);
+            response.sendRedirect("A4/pickerLogin_waiting.jsp");
         }
     }
 

@@ -1011,11 +1011,11 @@
     </servlet>
     <servlet>
         <servlet-name>PickerLogout_Servlet</servlet-name>
-        <servlet-class>A4_servlets.PickerLogout_Servlet</servlet-class>
+        <servlet-class>A4_servlets.unused_servlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PickerRefreshJob_Servlet</servlet-name>
-        <servlet-class>A4_servlets.PickerRefreshJob_Servlet</servlet-class>
+        <servlet-name>PickerCollectedJob_Servlet</servlet-name>
+        <servlet-class>A4_servlets.PickerCollectedJob_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PickerJobList_Servlet</servlet-name>
@@ -2070,8 +2070,8 @@
         <url-pattern>/PickerLogout_Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PickerRefreshJob_Servlet</servlet-name>
-        <url-pattern>/PickerRefreshJob_Servlet</url-pattern>
+        <servlet-name>PickerCollectedJob_Servlet</servlet-name>
+        <url-pattern>/PickerCollectedJob_Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PickerJobList_Servlet</servlet-name>

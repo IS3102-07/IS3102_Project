@@ -1,6 +1,7 @@
 package EntityManager;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -53,7 +54,9 @@ public class StoreEntity implements Serializable {
     @ManyToOne(cascade = {CascadeType.REMOVE})
     private CountryEntity country;
     @OneToMany(mappedBy="store")
-    private List<SalesRecordEntity> salesRecords;    
+    private List<SalesRecordEntity> salesRecords;
+    @OneToMany(mappedBy="store")
+    private List<PickRequestEntity> pickRequest;
     private Boolean isDeleted;
     
     public StoreEntity() {}
@@ -69,6 +72,7 @@ public class StoreEntity implements Serializable {
         this.setEmail(email);
         this.country = country;
         this.postalCode = postalCode;
+        this.pickRequest = new ArrayList<>();
     }
     
     @XmlTransient
@@ -90,6 +94,14 @@ public class StoreEntity implements Serializable {
 
     public void setItems(List<Store_ItemEntity> items) {
         this.items = items;
+    }
+
+    public List<PickRequestEntity> getPickRequest() {
+        return pickRequest;
+    }
+
+    public void setPickRequest(List<PickRequestEntity> pickRequest) {
+        this.pickRequest = pickRequest;
     }
 
     public void setSalesRecords(List<SalesRecordEntity> salesRecords) {

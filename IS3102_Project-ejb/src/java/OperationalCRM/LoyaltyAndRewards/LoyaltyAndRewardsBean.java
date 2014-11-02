@@ -136,21 +136,20 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             Query q = em.createQuery("select m from MemberEntity m where m.email=:email and m.isDeleted=false");
             q.setParameter("email", email);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-            memberEntity.setCummulativeSpending(memberEntity.getCummulativeSpending() + amountPaid);
+            StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
+            memberEntity.setCummulativeSpending((memberEntity.getCummulativeSpending() + amountPaid)/storeEntity.getCountry().getExchangeRate());
             //Retrieve country for currency & exchange rate
-            StoreEntity storeEntity;
             //Deduct his points if he used any
             memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints() - pointsUsed);
             em.merge(memberEntity);
             //Calculate points earned
             try {
-                storeEntity = em.getReference(StoreEntity.class, storeID);
                 int loyaltyPointsEarned = (int) Math.round(amountPaid / storeEntity.getCountry().getExchangeRate());
                 if (memberEntity.getLoyaltyTier().getTier().equals("Bronze")) {
                     loyaltyPointsEarned = loyaltyPointsEarned * 5;
-                if (memberEntity.getLoyaltyTier().getTier().equals("Silver"))
+                } else if (memberEntity.getLoyaltyTier().getTier().equals("Silver")) {
                     loyaltyPointsEarned = loyaltyPointsEarned * 10;
-                if (memberEntity.getLoyaltyTier().getTier().equals("Gold"))
+                } else if (memberEntity.getLoyaltyTier().getTier().equals("Gold")) {
                     loyaltyPointsEarned = loyaltyPointsEarned * 15;
                 }
                 int points = memberEntity.getLoyaltyPoints() + loyaltyPointsEarned;

@@ -1,13 +1,15 @@
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="EntityManager.PickRequestEntity"%>
-<%@page import="EntityManager.PickerEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <%@ page import="java.io.*,java.util.*" %>
 <%
-    PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
+    StaffEntity picker = (StaffEntity) (session.getAttribute("picker"));
     if (picker == null) {
 %>
 <jsp:forward page="pickerLogin.jsp?errMsg=Session Expired." />
-<% }%>
+<% }
+    PickRequestEntity pickRequest = (PickRequestEntity) (session.getAttribute("pickRequest"));
+%>
 <html>
     <head>
         <jsp:include page="../header1.html" />
@@ -38,15 +40,12 @@
                         </thead>
                         <tbody>
                             <%
-                                List<PickRequestEntity> pickRequestLinkedList = (List<PickRequestEntity>) (session.getAttribute("pickRequestLinkedList"));
                                 List<List<StorageBinEntity>> storageBinsList = (List<List<StorageBinEntity>>) (session.getAttribute("storageBinsList"));
-                                if (pickRequestLinkedList != null) {
-                                    PickRequestEntity pickRequest = pickRequestLinkedList.get(0);
-                                    for (int i = 0; i < pickRequest.getItems().size(); i++) {
-                                        String storageBinsString = "";
-                                        for (int j = 0; j < storageBinsList.get(i).size(); j++) {
-                                            storageBinsString += storageBinsList.get(i).get(j).getName() + "," + storageBinsList.get(i).get(j).getType() + "<br/>";
-                                        }
+                                for (int i = 0; i < pickRequest.getItems().size(); i++) {
+                                    String storageBinsString = "";
+                                    for (int j = 0; j < storageBinsList.get(i).size(); j++) {
+                                        storageBinsString += storageBinsList.get(i).get(j).getName() + "," + storageBinsList.get(i).get(j).getType() + "<br/>";
+                                    }
                             %>
                             <tr>
                                 <td>
@@ -67,19 +66,11 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <a  href="../PickerAcceptJob_Servlet?pickRequestId=<%=pickRequest.getId()%>">
-                                <input type="button" value="Accept"  style="min-height: 150px; font-size: 50px;"  class="btn btn-lg btn-primary btn-block">
+                            <a  href="../PickerCompleteJob_Servlet?pickRequestId=<%=pickRequest.getId()%>">
+                                <input type="button" value="Done"  style="min-height: 150px; font-size: 50px;"  class="btn btn-lg btn-primary btn-block">
                             </a>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 10px;">
-                        <div class="col-md-12">
-                            <a href="../PickerLogout_Servlet" >
-                                <input type="button" value="Logout"  style="min-height: 150px; font-size: 50px;" class="btn btn-lg btn-primary btn-block">
-                            </a>
-                        </div>
-                    </div>
-                    <%}%>
                 </div>
             </div>
         </div>

@@ -7,7 +7,9 @@
     if (picker == null) {
 %>
 <jsp:forward page="pickerLogin.jsp?errMsg=Session Expired." />
-<% }%>
+<% }
+    PickRequestEntity pickRequest = (PickRequestEntity) (session.getAttribute("pickRequest"));
+%>
 <html>
     <head>
         <jsp:include page="../header1.html" />
@@ -27,12 +29,15 @@
 
 
             <div class="container">
-                <jsp:include page="../displayMessageLong.jsp" />
                 <div class="row">
+                    <% String queueNo = request.getParameter("queueNo");%>
+                    Display BIG BIG queue
+                    <hr class="tall">
+
                     <div class="row">
                         <div class="col-md-12">
-                            <a  href="../PickerAcceptJob_Servlet">
-                                <input type="button" value="Start Picking"  style="min-height: 150px; font-size: 50px;"  class="btn btn-lg btn-primary btn-block">
+                            <a  href="../PickerCompleteJob_Servlet?pickRequestId=<%=pickRequest.getId()%>">
+                                <input type="button" value="<%=queueNo%>"  style="min-height: 150px; font-size: 50px;"  class="btn btn-lg btn-primary btn-block">
                             </a>
                         </div>
                     </div>

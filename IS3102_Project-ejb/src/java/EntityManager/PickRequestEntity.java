@@ -21,14 +21,14 @@ public class PickRequestEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private PickerEntity picker;
+    private StaffEntity picker;
     @OneToOne
     private SalesRecordEntity salesRecord;
     @OneToMany
     private List<LineItemEntity> items;
     private String queueNo;
     private Integer pickStatus;//1.Queued,2.In-progress,3.Completed
-    private Integer collectionStatus;//1.Picking,2.Ready for Collection,3.Uncollected,4.Collected
+    private Integer collectionStatus;//1.Picking,2.Ready for Collection,3.Called,4.Uncollected,5.Collected
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSubmitted;
     @Temporal(TemporalType.TIMESTAMP)
@@ -39,8 +39,8 @@ public class PickRequestEntity implements Serializable {
     public PickRequestEntity() {
     }
 
-    public PickRequestEntity(PickerEntity picker, SalesRecordEntity salesRecord,List<LineItemEntity> items, String queueNo) {
-        this.picker = picker;
+    public PickRequestEntity(StoreEntity store, SalesRecordEntity salesRecord,List<LineItemEntity> items, String queueNo) {
+        this.store = store;
         this.salesRecord = salesRecord;
         this.items = items;
         this.queueNo = queueNo;
@@ -81,8 +81,10 @@ public class PickRequestEntity implements Serializable {
             case 2:
                 return "Ready for Collection";
             case 3:
-                return "Uncollected";
+                return "Called";
             case 4:
+                return "Uncollected";
+            case 5:
                 return "Collected";
             default:
                 return "Unavailable";
@@ -93,11 +95,11 @@ public class PickRequestEntity implements Serializable {
         this.collectionStatus = collectionStatus;
     }
 
-    public PickerEntity getPicker() {
+    public StaffEntity getPicker() {
         return picker;
     }
 
-    public void setPicker(PickerEntity picker) {
+    public void setPicker(StaffEntity picker) {
         this.picker = picker;
     }
 

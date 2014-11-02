@@ -1,9 +1,15 @@
 package A4_servlets;
 
-import EntityManager.PickerEntity;
+import EntityManager.LineItemEntity;
+import EntityManager.PickRequestEntity;
+import EntityManager.StaffEntity;
+import EntityManager.StorageBinEntity;
+import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +21,8 @@ public class PickerAcceptJob_Servlet extends HttpServlet {
 
     @EJB
     CustomerServiceBeanLocal customerServiceBean;
+    @EJB
+    StoreAndKitchenInventoryManagementBeanLocal storeAndKitchenInventoryManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -22,17 +30,27 @@ public class PickerAcceptJob_Servlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
-            PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
-            out.write("<hh1>Hello</h1>");
+            StaffEntity picker = (StaffEntity) (session.getAttribute("picker"));
             if (picker == null) {
                 String result = "Login fail. Please try again.";
                 response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
             } else {
-                String pickRequestId = request.getParameter("pickRequestId");
-                if (customerServiceBean.acceptPickRequest(picker.getId(), Long.parseLong(pickRequestId))) {
-                    response.sendRedirect("");
+                PickRequestEntity  pickRequestEntity = customerServiceBean.getNextPickRequest(picker.getId());
+                if (pickRequestEntity == null) {
+                    response.sendRedirect("A4/pickerLogin_waiting.jsp?errMsg=Unable to get a job currently, try again later.");
                 } else {
-                    response.sendRedirect("PickerRefreshJob_Servlet");
+                    //Find storage bins that has the item
+                    Long warehouseID = pickRequestEntity.getStore().getWarehouse().getId();
+                    List<LineItemEntity> itemsToBePicked = pickRequestEntity.getItems();
+                    List<List<StorageBinEntity>> storageBinsList = new ArrayList<>();
+                    for (int i = 0; i < itemsToBePicked.size(); i++) {
+                        String SKU = itemsToBePicked.get(i).getItem().getSKU();
+                        List<StorageBinEntity> storageBinsThatHasCurrentSKU = storeAndKitchenInventoryManagementBean.findRetailStorageBinsThatContainsItem(warehouseID, SKU);
+                        storageBinsList.add(storageBinsThatHasCurrentSKU);
+                    }
+                    session.setAttribute("storageBinsList", storageBinsList);
+                    session.setAttribute("pickRequest", pickRequestEntity);
+                    response.sendRedirect("A4/pickerJobDetails.jsp");
                 }
 
             }

@@ -768,11 +768,22 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU) {
         System.out.println("findStorageBinsThatContainsItem() called");
         try {
-            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.items.SKU=:SKU");
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id");
             q.setParameter("id", warehouseId);
-            q.setParameter("SKU", SKU);
             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
-            List<StorageBinEntity> storageBins = q.getResultList();
+            q.setParameter("id", warehouseId);
+            List<StorageBinEntity> resultStorageBins = q.getResultList();
+            List<StorageBinEntity> storageBins = new ArrayList<>();
+            for (int i = 0; i < resultStorageBins.size(); i++) {
+                StorageBinEntity storageBinEntity = resultStorageBins.get(i);
+                List<LineItemEntity> lineItems = storageBinEntity.getLineItems();
+                for (int j = 0; j < lineItems.size(); j++) {
+                    if (lineItems.get(j).getItem().getSKU().equals(SKU)) {
+                        System.out.println("findRetailStorageBinsThatContainsItem(): Found");
+                        storageBins.add(storageBinEntity);
+                    }
+                }
+            }
             return storageBins;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed findStorageBinThatContainsItem, warehouse or item not found.");
@@ -783,21 +794,32 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
             return null;
         }
     }
-    
+
     @Override
     public List<StorageBinEntity> findRetailStorageBinsThatContainsItem(Long warehouseId, String SKU) {
-        System.out.println("findStorageBinsThatContainsItem() called");
+        System.out.println("findRetailStorageBinsThatContainsItem() called");
         try {
-            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.items.SKU=:SKU and (sb.type='Shelf' OR sb.type='Pallet')");
+            //Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.lineItems.item.SKU=:SKU and (sb.type='Shelf' OR sb.type='Pallet')");
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and (sb.type='Shelf' OR sb.type='Pallet')");
             q.setParameter("id", warehouseId);
-            q.setParameter("SKU", SKU);
-            List<StorageBinEntity> storageBins = q.getResultList();
+            List<StorageBinEntity> resultStorageBins = q.getResultList();
+            List<StorageBinEntity> storageBins = new ArrayList<>();
+            for (int i = 0; i < resultStorageBins.size(); i++) {
+                StorageBinEntity storageBinEntity = resultStorageBins.get(i);
+                List<LineItemEntity> lineItems = storageBinEntity.getLineItems();
+                for (int j = 0; j < lineItems.size(); j++) {
+                    if (lineItems.get(j).getItem().getSKU().equals(SKU)) {
+                        System.out.println("findRetailStorageBinsThatContainsItem(): Found");
+                        storageBins.add(storageBinEntity);
+                    }
+                }
+            }
             return storageBins;
         } catch (EntityNotFoundException ex) {
-            System.out.println("Failed findStorageBinThatContainsItem, warehouse or item not found.");
+            System.out.println("Failed findRetailStorageBinsThatContainsItem, warehouse or item not found.");
             return null;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to findStorageBinThatContainsItem:\n" + ex);
+            System.out.println("\nServer failed to findRetailStorageBinsThatContainsItem:\n" + ex);
             ex.printStackTrace();
             return null;
         }
@@ -1651,7 +1673,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
             return false;
         }
     }
-    
+
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Boolean removeItemFromShelfs(Long storeID, String SKU, Integer qty) {
@@ -1795,10 +1817,21 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     public List<StorageBinEntity> findShelfsThatContainsItem(Long warehouseId, String SKU) {
         System.out.println("findShelfsThatContainsItem() called");
         try {
-            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.type='Shelf' and sb.items.SKU=:SKU");
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.type='Shelf'");
             q.setParameter("id", warehouseId);
-            q.setParameter("SKU", SKU);
-            List<StorageBinEntity> storageBins = q.getResultList();
+            q.setParameter("id", warehouseId);
+            List<StorageBinEntity> resultStorageBins = q.getResultList();
+            List<StorageBinEntity> storageBins = new ArrayList<>();
+            for (int i = 0; i < resultStorageBins.size(); i++) {
+                StorageBinEntity storageBinEntity = resultStorageBins.get(i);
+                List<LineItemEntity> lineItems = storageBinEntity.getLineItems();
+                for (int j = 0; j < lineItems.size(); j++) {
+                    if (lineItems.get(j).getItem().getSKU().equals(SKU)) {
+                        System.out.println("findRetailStorageBinsThatContainsItem(): Found");
+                        storageBins.add(storageBinEntity);
+                    }
+                }
+            }
             return storageBins;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed findShelfsThatContainsItem, warehouse or item not found.");
@@ -1814,10 +1847,21 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     public List<StorageBinEntity> findPalletsThatContainsItem(Long warehouseId, String SKU) {
         System.out.println("findPalletsThatContainsItem() called");
         try {
-            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.type='Pallet' and sb.items.SKU=:SKU");
+            Query q = em.createQuery("Select sb from StorageBinEntity sb where sb.warehouse.id=:id and sb.type='Pallet'");
             q.setParameter("id", warehouseId);
-            q.setParameter("SKU", SKU);
-            List<StorageBinEntity> storageBins = q.getResultList();
+            q.setParameter("id", warehouseId);
+            List<StorageBinEntity> resultStorageBins = q.getResultList();
+            List<StorageBinEntity> storageBins = new ArrayList<>();
+            for (int i = 0; i < resultStorageBins.size(); i++) {
+                StorageBinEntity storageBinEntity = resultStorageBins.get(i);
+                List<LineItemEntity> lineItems = storageBinEntity.getLineItems();
+                for (int j = 0; j < lineItems.size(); j++) {
+                    if (lineItems.get(j).getItem().getSKU().equals(SKU)) {
+                        System.out.println("findRetailStorageBinsThatContainsItem(): Found");
+                        storageBins.add(storageBinEntity);
+                    }
+                }
+            }
             return storageBins;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed findPalletsThatContainsItem, warehouse or item not found.");

@@ -53,7 +53,7 @@
                                         <%=pickRequests.get(i).getPickStatus()%>
                                     </td>
                                     <td>
-                                        <%=pickRequests.get(i).getPicker().getPicker().getName()%>
+                                        <%=pickRequests.get(i).getPicker().getName()%>
                                     </td>
                                     <td>
                                         <%=pickRequests.get(i).getDateSubmitted()%>
