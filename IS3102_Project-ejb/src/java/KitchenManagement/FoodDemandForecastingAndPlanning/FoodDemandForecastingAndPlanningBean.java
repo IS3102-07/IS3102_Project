@@ -273,7 +273,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
             for (MasterProductionScheduleEntity mps : mpsList) {
                 for (LineItemEntity lineItem : mps.getMenuItem().getRecipe().getListOfLineItems()) {   
 
-                    Query query1 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                    Query query1 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
                             .setParameter(1, storeId)
                             .setParameter(2, lineItem.getItem().getSKU())
                             .setParameter(3, schedule.getId())
@@ -296,7 +296,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     calendar.set(Calendar.WEEK_OF_MONTH, 2);
                     calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
                     System.out.println("calendar.get(Calendar.DAY_OF_MONTH) week2 :" + calendar.get(Calendar.DAY_OF_MONTH));
-                    Query query2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                    Query query2 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
                             .setParameter(1, storeId)
                             .setParameter(2, lineItem.getItem().getSKU())
                             .setParameter(3, schedule.getId())
@@ -320,7 +320,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     calendar.set(Calendar.WEEK_OF_MONTH, 3);
                     calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
                     System.out.println("calendar.get(Calendar.DAY_OF_MONTH) week3 :" + calendar.get(Calendar.DAY_OF_MONTH));
-                    Query query3 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                    Query query3 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
                             .setParameter(1, storeId)
                             .setParameter(2, lineItem.getItem().getSKU())
                             .setParameter(3, schedule.getId())
@@ -343,7 +343,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     calendar.set(Calendar.WEEK_OF_MONTH, 4);
                     calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
                     System.out.println("calendar.get(Calendar.DAY_OF_MONTH) week4 :" + calendar.get(Calendar.DAY_OF_MONTH));
-                    Query query4 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                    Query query4 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
                             .setParameter(1, storeId)
                             .setParameter(2, lineItem.getItem().getSKU())
                             .setParameter(3, schedule.getId())
@@ -367,7 +367,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         calendar.set(Calendar.WEEK_OF_MONTH, 5);
                         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
                         System.out.println("calendar.get(Calendar.DAY_OF_MONTH) week5 :" + calendar.get(Calendar.DAY_OF_MONTH));
-                        Query query5 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawMaterial.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
+                        Query query5 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
                                 .setParameter(1, storeId)
                                 .setParameter(2, lineItem.getItem().getSKU())
                                 .setParameter(3, schedule.getId())
