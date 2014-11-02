@@ -16,18 +16,19 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
 
     @EJB
     CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             HttpSession session = request.getSession();
-           List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
-           session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
-           
-           List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
-           session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
-           response.sendRedirect("A5/products.jsp");
+            List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
+            session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
+
+            List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
+            session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
+            response.sendRedirect("A5/products.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

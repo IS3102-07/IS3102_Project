@@ -19,7 +19,7 @@
                     <!-- /.row -->
                     <div class="row featured-boxes">
                         <div class="col-md-12">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
                                         <a href="../Analytical_ValueAnalysisServlet"><i class="icon-featured icon icon-user"> </i>
@@ -28,20 +28,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
                                         <a href="../Analytical_SegmentationMarketingServlet"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Segmentation Marketing</h4>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="featured-box featured-box-primary">
-                                    <div class="box-content">
-                                        <a href="../Analytical_QueryAndReportingServlet"><i class="icon-featured icon icon-user"></i>
-                                        <h4>Query And Reporting</h4>
                                         </a>
                                     </div>
                                 </div>
