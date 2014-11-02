@@ -31,13 +31,13 @@
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Sales Forecast</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">index</a>
                                 </li>   
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_schedule_GET">Schedule</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Dashboard</a>
+                                    <i class="icon icon-list"></i>  <a href="#">Sales Forecast</a>
                                 </li>
                             </ol>
                         </div>

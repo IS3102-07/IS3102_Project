@@ -1045,6 +1045,10 @@
         <servlet-name>SKU_ajax_servlet</servlet-name>
         <servlet-class>A2_servlets.SKU_ajax_servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>kitchen_ajax_servlet</servlet-name>
+        <servlet-class>A8_servlets.kitchen_ajax_servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2088,6 +2092,10 @@
     <servlet-mapping>
         <servlet-name>SKU_ajax_servlet</servlet-name>
         <url-pattern>/SKU_ajax_servlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>kitchen_ajax_servlet</servlet-name>
+        <url-pattern>/kitchen_ajax_servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
