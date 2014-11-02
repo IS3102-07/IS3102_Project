@@ -41,7 +41,10 @@
                                     <label>Description</label>
                                     <input class="form-control" required="true" type="text" name="description" >
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Broad Lot Size</label>
+                                    <input class="form-control" required="true" type="number" name="lotSize" >
+                                </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>

@@ -226,12 +226,13 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
     }
 
     @Override
-    public boolean createRecipe(String name, String description) {//
+    public boolean createRecipe(String name, String description, Integer lotSize) {//
         System.out.println("createRecipe() called with name:" + name);
         try {
             RecipeEntity recipeEntity = new RecipeEntity();
             recipeEntity.setDescription(description);
             recipeEntity.setName(name);
+            recipeEntity.setBroadLotSize(lotSize);
             em.persist(recipeEntity);
 
             System.out.println("Recipie Name \"" + name + "\" registered successfully as id:" + recipeEntity.getId());
@@ -243,12 +244,13 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
     }
 
     @Override
-    public boolean editRecipe(Long recipeId, String name, String description) {//
+    public boolean editRecipe(Long recipeId, String name, String description, Integer lotSize) {//
         System.out.println("editRecipe() called with name:" + name + "and description: " + description);
         try {
             RecipeEntity recipeEntity = em.find(RecipeEntity.class, recipeId);
             recipeEntity.setName(name);
             recipeEntity.setDescription(description);
+            recipeEntity.setBroadLotSize(lotSize);
             em.persist(recipeEntity);
             System.out.println("editRecipe() is successful.");
             return true;

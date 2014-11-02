@@ -56,6 +56,10 @@
                                     <input class="form-control" type="text"  name="description" required="true" value="<%=recipe.getDescription()%>" >
                                 </div>
                                 <div class="form-group">
+                                    <label>Broad Lot Size</label>
+                                    <input class="form-control" required="true" type="number" name="lotSize" value="<%=recipe.getBroadLotSize() %>" >
+                                </div>
+                                <div class="form-group">
                                     <input type="submit" value="Update" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="<%=recipe.getId()%>" name="id">

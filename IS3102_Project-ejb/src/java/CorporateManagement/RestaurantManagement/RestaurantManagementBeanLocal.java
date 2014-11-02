@@ -34,9 +34,9 @@ public interface RestaurantManagementBeanLocal {
 
     public List<MenuItemEntity> listAllMenuItemWithoutRecipe();
 
-    public boolean createRecipe(String name, String description);
+    public boolean createRecipe(String name, String description, Integer lotSize);
 
-    public boolean editRecipe(Long recipeId, String name, String description);
+    public boolean editRecipe(Long recipeId, String name, String description, Integer lotSize);
 
     public boolean deleteRecipe(Long recipeId);
 

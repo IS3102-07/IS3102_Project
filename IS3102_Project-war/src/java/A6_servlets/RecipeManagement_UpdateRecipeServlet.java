@@ -22,7 +22,8 @@ public class RecipeManagement_UpdateRecipeServlet extends HttpServlet {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String id = request.getParameter("id");
-            boolean canUpdate = restaurantManagementBean.editRecipe(Long.parseLong(id), name, description);
+            Integer lotSize = Integer.parseInt(request.getParameter("lotSize"));
+            boolean canUpdate = restaurantManagementBean.editRecipe(Long.parseLong(id), name, description, lotSize);
             if (!canUpdate) {
                 result = "?errMsg=Please try again.";
                 response.sendRedirect("recipeManagement_update.jsp" + result);

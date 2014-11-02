@@ -34,12 +34,14 @@ public class RecipeManagement_AddRecipeServlet extends HttpServlet {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String source = request.getParameter("source");
+            Integer lotSize = Integer.parseInt(request.getParameter("lotSize"));
+            
             boolean ifExist = false;
             if (ifExist) {
                 result = "?errMsg=Registration fail. Recipe already registered.";
                 response.sendRedirect(source + result);
             } else {
-                restaurantManagementBeanLocal.createRecipe(name, description);
+                restaurantManagementBeanLocal.createRecipe(name, description, lotSize);
                 result = "?goodMsg= Recipe has been added successfully.";
                 response.sendRedirect("RecipeManagement_RecipeServlet" + result);
             }
