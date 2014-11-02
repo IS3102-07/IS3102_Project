@@ -2,6 +2,7 @@ package A5_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
+import EntityManager.LineItemEntity;
 import EntityManager.MemberEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,6 +42,18 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             Integer numOfTransactions = customerValueAnalysisBean.getTotalNumberOfSalesRecord();
             session.setAttribute("numOfTransactions",numOfTransactions);
  
+            List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
+            Integer totalFurnitureSold = 0;
+            for (LineItemEntity lineItem : sortBestSellingFurniture) {
+                totalFurnitureSold += lineItem.getQuantity();
+            } 
+            session.setAttribute("totalFurnitureSold", totalFurnitureSold);    
+            List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
+            Integer retailProductSold = 0;
+            for (LineItemEntity lineItem : sortBestSellingRetailProducts) {
+                retailProductSold += lineItem.getQuantity();
+            }
+            session.setAttribute("retailProductSold", retailProductSold);
             response.sendRedirect("A5/valueAnalysis.jsp");
 
         } catch (Exception ex) {

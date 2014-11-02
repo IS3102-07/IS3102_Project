@@ -163,7 +163,7 @@
                                                                     <th>Recency</th>
                                                                     <th>Frequency</th>
                                                                     <th>Monetary Value</th>
-                                                                    <th>Action</th>
+                                                                    <th>Total Value</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -225,7 +225,33 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=member.getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=member.getId()%>')"/>
+                                                                        <%
+                                                                        Integer weightedValue = 0;
+                                                                        if (memberMonetaryValue.get(i) < (averageMemberMonetaryValue/2)) {
+                                                                            weightedValue += 1;
+                                                                        } else if (memberMonetaryValue.get(i) > ((averageMemberMonetaryValue / 2) + averageMemberMonetaryValue)) {
+                                                                            weightedValue += 3;
+                                                                        } else {
+                                                                            weightedValue += 2;
+                                                                        }
+                                                                        
+                                                                        if (memberFrequencyValue.get(i) <= (averageMemberFrequency / 2)) {
+                                                                            weightedValue += 1;
+                                                                        } else if (memberFrequencyValue.get(i) > ((averageMemberFrequency / 2) + averageMemberFrequency)) {
+                                                                            weightedValue += 3;
+                                                                        } else {
+                                                                            weightedValue += 2;
+                                                                        }
+                                                                        
+                                                                        if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
+                                                                            weightedValue += 3;
+                                                                        } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
+                                                                            weightedValue += 1;
+                                                                        } else {
+                                                                            weightedValue +=2;
+                                                                        }
+                                                                        out.print(weightedValue + "/9");
+                                                                        %>
                                                                     </td>
                                                                 </tr>
                                                                 <%

@@ -32,7 +32,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
     @EJB
     AccountManagementBeanLocal accountManagementBean;
-    
+
     @EJB
     ItemManagementBeanLocal itemManagementBean;
 
@@ -45,14 +45,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
         return true;
     }
-    
+
     @Override
     public Integer getTotalNumberOfSalesRecord() {
         Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
-            List<SalesRecordEntity> salesRecords = q.getResultList();
-            return salesRecords.size();
+        List<SalesRecordEntity> salesRecords = q.getResultList();
+        return salesRecords.size();
     }
-    
+
     @Override
     public Double getRetainedCustomerRetentionRate(List<MemberEntity> retainedMembers) {
         System.out.println("getRetainedCustomerRetentionRate()");
@@ -91,6 +91,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return ((double) numOfMembersNotChurn / (double) numOfMembers);
     }
+
     @Override
     public List<LineItemEntity> sortBestSellingFurniture() {
         System.out.println("sortBestSellingFurniture()");
@@ -133,7 +134,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return sortedFurnitures;
     }
-    
+
     @Override
     public List<LineItemEntity> sortBestSellingRetailProducts() {
         System.out.println("sortBestSellingRetailProducts()");
@@ -176,12 +177,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return sortedRetailProducts;
     }
-    
+
     @Override
     public Double getFurnitureTotalRevenue(Long furnitureId) {
         return (double) 10;
     }
-    
+
     @Override
     public List<MemberEntity> getRetainedMembers() {
         System.out.println("getRetainedMembers()");
@@ -261,7 +262,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         if (days > 0) {
                             numOfMembersNotChurn++;
                             numOfOrders++;
-                            break;
                         }
                     }
                 } else {
@@ -309,7 +309,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         if (days > 0 && days < 365) {
                             numOfMembersNotChurn++;
                             numOfOrders++;
-                            break;
                         }
                     }
                 } else {
@@ -325,9 +324,9 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             ex.printStackTrace();
             return ((double) numOfOrders / (double) numOfMembers);
         }
-        
+
     }
-    
+
     @Override
     public Double averageOrderPriceInAcquiredYear() {
         System.out.println("averageOrderPriceInAcquiredYear()");
@@ -376,7 +375,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return ((double) totalPriceOfOrders / (double) numOfOrders);
     }
-    
+
     @Override
     public Double averageOrderPriceForRetainedMembers() {
         System.out.println("averageOrderPriceForRetainedMembers()");
@@ -425,6 +424,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return ((double) totalPriceOfOrders / (double) numOfOrders);
     }
+
     @Override
     public Double averageOrderPrice() {
         System.out.println("averageOrderPrice()");
@@ -512,7 +512,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
             return ((double) numOfMembersNotChurn / (double) numOfMembers);
         } catch (Exception ex) {
-            
+
             System.out.println("\nServer failed to list retention rate:\n" + ex);
             ex.printStackTrace();
             return ((double) numOfMembersNotChurn / (double) numOfMembers);
@@ -913,7 +913,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 if (salesRecord.getMember() == null) {
                     profit += salesRecord.getAmountDue() + salesRecord.getAmountPaid();
                 } else {
-                    
+
                 }
             }
         } catch (Exception ex) {

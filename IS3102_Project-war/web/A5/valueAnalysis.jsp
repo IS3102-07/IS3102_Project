@@ -108,15 +108,21 @@
                                                 <div class="col-md-6">
                                                     <table class="table">
                                                         <thead>
-                                                        <tr>
+                                                        
                                                             <td>Item</td><td>Value</td>
-                                                        </tr>
+                                                        
                                                         </thead>
                                                         <tr>
                                                             <td>Total Number of Customers :</td><td><%=numOfMembers%></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Total Number of Transactions :</td><td><% Integer numOfTransactions = (Integer) session.getAttribute("numOfTransactions"); out.println(numOfTransactions); %></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Number of Furnitures Sold : </td><td><% Integer totalFurnitureSold = (Integer) session.getAttribute("totalFurnitureSold"); out.println(totalFurnitureSold); %></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Number of Retail Products Sold :</td><td><% Integer retailProductSold = (Integer) session.getAttribute("retailProductSold"); out.println(retailProductSold); %></td>
                                                         </tr>
                                                     </table>
                                                       

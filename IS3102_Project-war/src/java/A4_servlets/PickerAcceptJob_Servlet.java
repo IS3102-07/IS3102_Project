@@ -23,14 +23,18 @@ public class PickerAcceptJob_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             PickerEntity picker = (PickerEntity) (session.getAttribute("picker"));
-
+            out.write("<hh1>Hello</h1>");
             if (picker == null) {
                 String result = "Login fail. Please try again.";
                 response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
             } else {
                 String pickRequestId = request.getParameter("pickRequestId");
-                customerServiceBean.acceptPickRequest(picker.getId(), Long.parseLong(pickRequestId));
-                response.sendRedirect("PickerRefreshJob_Servlet");
+                if (customerServiceBean.acceptPickRequest(picker.getId(), Long.parseLong(pickRequestId))) {
+                    response.sendRedirect("");
+                } else {
+                    response.sendRedirect("PickerRefreshJob_Servlet");
+                }
+
             }
 
         } catch (Exception ex) {

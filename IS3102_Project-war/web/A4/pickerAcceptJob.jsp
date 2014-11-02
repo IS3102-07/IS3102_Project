@@ -67,15 +67,8 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <a  href="../PickerAcceptJob_Servlet?pickRequestId=<%=pickRequest.getId()%>">
-                                <input type="button" value="Accept"  style="min-height: 150px; font-size: 50px;"  class="btn btn-lg btn-primary btn-block">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px;">
-                        <div class="col-md-12">
-                            <a href="../PickerLogout_Servlet" >
-                                <input type="button" value="Logout"  style="min-height: 150px; font-size: 50px;" class="btn btn-lg btn-primary btn-block">
+                            <a  href="../PickerCompleteJob_Servlet?pickRequestId=<%=pickRequest.getId()%>">
+                                <input type="button" value="Complete"  style="min-height: 150px; font-size: 50px;"  class="btn btn-lg btn-primary btn-block">
                             </a>
                         </div>
                     </div>
