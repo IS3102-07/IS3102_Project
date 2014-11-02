@@ -1061,6 +1061,14 @@
         <servlet-name>ReceptionistLogin_Servlet</servlet-name>
         <servlet-class>A4_servlets.ReceptionistLogin_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReceptionistLastCalled_Servlet</servlet-name>
+        <servlet-class>A4_servlets.ReceptionistLastCalled_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReceptionistLastCalledLogin_Servlet</servlet-name>
+        <servlet-class>A4_servlets.ReceptionistLastCalledLogin_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2120,6 +2128,14 @@
     <servlet-mapping>
         <servlet-name>ReceptionistLogin_Servlet</servlet-name>
         <url-pattern>/ReceptionistLogin_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReceptionistLastCalled_Servlet</servlet-name>
+        <url-pattern>/ReceptionistLastCalled_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReceptionistLastCalledLogin_Servlet</servlet-name>
+        <url-pattern>/ReceptionistLastCalledLogin_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
