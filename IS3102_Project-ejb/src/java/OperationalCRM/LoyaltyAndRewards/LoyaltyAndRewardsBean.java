@@ -144,6 +144,12 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             try {
                 storeEntity = em.getReference(StoreEntity.class, storeID);
                 int loyaltyPointsEarned = (int) Math.round(amountPaid / storeEntity.getCountry().getExchangeRate());
+                if (memberEntity.getLoyaltyTier().getTier().equals("Bronze"))
+                    loyaltyPointsEarned = loyaltyPointsEarned * 5;
+                else if (memberEntity.getLoyaltyTier().getTier().equals("Silver"))
+                    loyaltyPointsEarned = loyaltyPointsEarned * 10;
+                else if (memberEntity.getLoyaltyTier().getTier().equals("Gold"))
+                    loyaltyPointsEarned = loyaltyPointsEarned * 15;
                 memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints() + loyaltyPointsEarned);
             } catch (Exception ex) {
                 System.out.println("createSalesRecord(): Error in retriving country");
