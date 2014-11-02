@@ -33,11 +33,13 @@ public class ReceptionistCallQueue_Servlet extends HttpServlet {
                     customerServiceBean.callCustomer(Long.parseLong(pickRequestID));
                 } else if (requestType.equals("2")) {
                     customerServiceBean.markPickRequestAsUnCollected(Long.parseLong(pickRequestID));
+                } else if (requestType.equals("3")) {
+
                 }
                 response.sendRedirect("ReceptionistLogin_Servlet");
             } else {
                 String result = "Session Expired.";
-                response.sendRedirect("A1/receptionistLogin.jsp?errMsg=" + result);
+                response.sendRedirect("A4/receptionistLogin.jsp?errMsg=" + result);
             }
         } catch (Exception ex) {
             out.println(ex);

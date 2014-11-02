@@ -27,62 +27,74 @@
 
 
             <div class="container">
-                <div class="row">
-
-                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                                <tr>
-                                    <th>Queue No.</th>
-                                    <th>Status</th>
-                                    <th>Picker</th>
-                                    <th>Date/Time</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    List<PickRequestEntity> pickRequests = (List<PickRequestEntity>) (session.getAttribute("pickRequests"));
-                                    if (pickRequests != null) {
-                                        for (int i = 0; i < pickRequests.size(); i++) {
-                                %>
-                                <tr>
-                                    <td>
-                                        <%= pickRequests.get(i).getQueueNo()%>
-                                    </td>
-                                    <td>
-                                        <%=pickRequests.get(i).getCollectionStatus()%>
-                                    </td>
-                                    <td>
-                                        <% StaffEntity picker = pickRequests.get(i).getPicker();
-                                            if (picker != null) {
-                                                out.println(picker.getName());
-                                            } else {
-                                                out.println("Unassigned");
-                                            }
-                                        %>
-                                    </td>
-                                    <td>
-                                        <%=pickRequests.get(i).getDateSubmitted()%>
-                                    </td>
-                                    <td>
-                                        <a  href="../ReceptionistCallQueue_Servlet?requestType=1&pickRequestID=<%=pickRequests.get(i).getId()%>">
-                                            <input type="button" value="Call" class="btn btn-lg btn-primary btn-block">
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a  href="../ReceptionistCallQueue_Servlet?requestType=2&pickRequestID=<%=pickRequests.get(i).getId()%>">
-                                            <input type="button" value="Uncollected"  class="btn btn-lg btn-primary btn-block">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <%
-                                        }
-                                    }
-                                %>
-                            </tbody>
-                        </table>
+                
+                <form role="form" name="LoginForm" onfocus="../ReceptionistCallQueue_Servlet?requestType=3">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Scan Barcode</label>
+                                <input type="text" name="barcode" class="form-control input-lg" required="true">
+                            </div>
+                        </div>
                     </div>
+                </form>
+                
+                <br>
+
+                <div class="row">
+                    <table class="table table-striped table-bordered" i>
+                        <thead>
+                            <tr>
+                                <th>Queue No.</th>
+                                <th>Status</th>
+                                <th>Picker</th>
+                                <th>Date/Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                List<PickRequestEntity> pickRequests = (List<PickRequestEntity>) (session.getAttribute("pickRequests"));
+                                if (pickRequests != null) {
+                                    for (int i = 0; i < pickRequests.size(); i++) {
+                            %>
+                            <tr>
+                                <td>
+                                    <%= pickRequests.get(i).getQueueNo()%>
+                                </td>
+                                <td>
+                                    <%=pickRequests.get(i).getCollectionStatus()%>
+                                </td>
+                                <td>
+                                    <% StaffEntity picker = pickRequests.get(i).getPicker();
+                                        if (picker != null) {
+                                            out.println(picker.getName());
+                                        } else {
+                                            out.println("Unassigned");
+                                        }
+                                    %>
+                                </td>
+                                <td>
+                                    <%=pickRequests.get(i).getDateSubmitted()%>
+                                </td>
+                                <td>
+                                    <a  href="../ReceptionistCallQueue_Servlet?requestType=1&pickRequestID=<%=pickRequests.get(i).getId()%>">
+                                        <input type="button" value="Call" class="btn btn-lg btn-primary btn-block">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a  href="../ReceptionistCallQueue_Servlet?requestType=2&pickRequestID=<%=pickRequests.get(i).getId()%>">
+                                        <input type="button" value="Uncollected"  class="btn btn-lg btn-primary btn-block">
+                                    </a>
+                                </td>
+                            </tr>
+                            <%
+                                    }
+                                }
+                            %>
+                        </tbody>
+                    </table>
+
                     <hr class="tall">
                 </div>
             </div>

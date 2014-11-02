@@ -41,11 +41,11 @@ public class ReceptionistJobList_Servlet extends HttpServlet {
                     response.sendRedirect("A4/receptionistJobList.jsp");
                 } else {//no store manager or receptionist role
                      String result = "Account does not have store manager or receptionist role.";
-                    response.sendRedirect("A1/receptionistLogin.jsp?errMsg=" + result);
+                    response.sendRedirect("A4/receptionistLogin.jsp?errMsg=" + result);
                 }
             } else {
                 String result = "Session Expired.";
-                response.sendRedirect("A1/receptionistLogin.jsp?errMsg=" + result);
+                response.sendRedirect("A4/receptionistLogin.jsp?errMsg=" + result);
             }
 
         } catch (Exception ex) {
