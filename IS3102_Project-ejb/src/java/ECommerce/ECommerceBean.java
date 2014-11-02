@@ -3,7 +3,6 @@ package ECommerce;
 import EntityManager.FeedbackEntity;
 import EntityManager.ItemEntity;
 import EntityManager.MemberEntity;
-import EntityManager.ShoppingListEntity;
 import EntityManager.SubscriptionEntity;
 import EntityManager.WishListEntity;
 import java.util.Date;

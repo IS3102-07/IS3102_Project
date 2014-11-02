@@ -102,17 +102,16 @@
                                                         </div>
                                                         <div class="panel-body">
                                                             <div id="morris-donut-chart"></div>
-                                                            <div class="text-right">
-                                                                <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <table class="table">
+                                                        <thead>
                                                         <tr>
                                                             <td>Item</td><td>Value</td>
                                                         </tr>
+                                                        </thead>
                                                         <tr>
                                                             <td>Total Number of Customers :</td><td><%=numOfMembers%></td>
                                                         </tr>
@@ -147,7 +146,7 @@
                                                     <div class="col-md-4">
                                                         <div class="featured-box featured-box-primary">
                                                             <div class="box-content">
-                                                                <a href="../MemberManagement_MemberServlet"><i class="icon-featured icon icon-user"></i>
+                                                                <a href="../Analytical_ValueAnalysisProductsServlet"><i class="icon-featured icon icon-user"></i>
                                                                     <h4>Items Analysis</h4>
                                                                 </a>
                                                             </div>
