@@ -147,7 +147,7 @@
                                                     <div class="col-md-4">
                                                         <div class="featured-box featured-box-primary">
                                                             <div class="box-content">
-                                                                <a href="../MemberManagement_MemberServlet"><i class="icon-featured icon icon-user"></i>
+                                                                <a href="../Analytical_ValueAnalysisProductsServlet"><i class="icon-featured icon icon-user"></i>
                                                                     <h4>Items Analysis</h4>
                                                                 </a>
                                                             </div>
