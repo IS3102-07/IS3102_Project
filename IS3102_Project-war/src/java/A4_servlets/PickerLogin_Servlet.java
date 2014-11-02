@@ -26,10 +26,11 @@ public class PickerLogin_Servlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
 
-            if (customerServiceBeanLocal.pickerLoginStaff(email, password) == null) {
+            PickerEntity picker = customerServiceBeanLocal.pickerLoginStaff(email, password);
+            if (picker == null) {
                 response.sendRedirect("A4/pickerLogin.jsp?errMsg=Invalid Login Credential.");
             } else {
-                PickerEntity picker = customerServiceBeanLocal.pickerLoginStaff(email, password);
+                picker = customerServiceBeanLocal.pickerLoginStaff(email, password);
 
                 session.setAttribute("picker", picker);
                 response.sendRedirect("A4/pickerLogin_waiting.jsp");
