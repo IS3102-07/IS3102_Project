@@ -170,6 +170,7 @@
                                                                     <th>Num of Orders</th>
                                                                     <th>Average Order Price</th>
                                                                     <th>Monetary Value</th>
+                                                                    <th>Cummulative Customer Value</th>
                                                                     <th>CLV</th>
                                                                 </tr>
                                                             </thead>
@@ -210,6 +211,9 @@
                                                                     
                                                                     <td>
                                                                         <% out.print(df.format(customerRetentionRate * totalSalesOfMember * 0.2)); %>
+                                                                    </td>
+                                                                    <td>
+                                                                        
                                                                     </td>
                                                                 </tr>
                                                                 <%

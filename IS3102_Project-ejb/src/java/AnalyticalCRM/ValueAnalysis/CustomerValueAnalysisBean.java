@@ -848,6 +848,20 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
 
     @Override
+    public Integer totalCummulativeSpendingOfCountry(String country) {
+        System.out.println("totalCummulativeSpendingOfCountry()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+
+        int totalCummulativeSpending = 0;
+        for (MemberEntity member : members) {
+            if (member.getCity().equalsIgnoreCase(country)) {
+                totalCummulativeSpending += member.getCummulativeSpending();
+            }
+        }
+        System.out.println("totalCummulativeSpendingOfCountry is : " + totalCummulativeSpending);
+        return totalCummulativeSpending;
+    }
+    @Override
     public Integer averageCummulativeSpending() {
         System.out.println("averageCummulativeSpending()");
         List<MemberEntity> members = accountManagementBean.listAllMember();
@@ -887,6 +901,19 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         return numOfmembersInGroup;
     }
 
+    @Override
+    public Integer numOfMembersInCountry(String country) {
+        System.out.println("numOfMembersInCountry()");
+        List<MemberEntity> members = accountManagementBean.listAllMember();
+
+        int numOfmembersInGroup = 0;
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getCity().equalsIgnoreCase(country)) {
+                numOfmembersInGroup++;
+            }
+        }
+        return numOfmembersInGroup;
+    }
     @Override
     public Double totalMemberRevenue() {
         System.out.println("totalMemberRevenue()");
