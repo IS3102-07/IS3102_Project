@@ -147,9 +147,9 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
                 int loyaltyPointsEarned = (int) Math.round(amountPaid / storeEntity.getCountry().getExchangeRate());
                 if (memberEntity.getLoyaltyTier().getTier().equals("Bronze"))
                     loyaltyPointsEarned = loyaltyPointsEarned * 5;
-                else if (memberEntity.getLoyaltyTier().getTier().equals("Silver"))
+                if (memberEntity.getLoyaltyTier().getTier().equals("Silver"))
                     loyaltyPointsEarned = loyaltyPointsEarned * 10;
-                else if (memberEntity.getLoyaltyTier().getTier().equals("Gold"))
+                if (memberEntity.getLoyaltyTier().getTier().equals("Gold"))
                     loyaltyPointsEarned = loyaltyPointsEarned * 15;
                 int points = memberEntity.getLoyaltyPoints() + loyaltyPointsEarned;
                 memberEntity.setLoyaltyPoints(points);
