@@ -17,6 +17,8 @@ import javax.ejb.Stateful;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
+    
+    public Integer numOfMembersInCountry(String country);
 
     public Integer totalCummulativeSpendingOfCountry(String country);
     

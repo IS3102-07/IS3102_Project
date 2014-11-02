@@ -98,6 +98,15 @@ public class Analytical_SegmentationMarketingServlet extends HttpServlet {
             Integer totalCummulativeSpendingOfCountry1 = customerValueAnalysisBean.totalCummulativeSpendingOfCountry("Singapore");
             session.setAttribute("totalCummulativeSpendingOfCountry1", totalCummulativeSpendingOfCountry1);
             
+            Integer numOfMembersInCountry1 = customerValueAnalysisBean.numOfMembersInCountry("Singapore");
+            session.setAttribute("numOfMembersInCountry1", numOfMembersInCountry1);
+            
+            Integer totalCummulativeSpendingOfCountry2 = customerValueAnalysisBean.totalCummulativeSpendingOfCountry("Malaysia");
+            session.setAttribute("totalCummulativeSpendingOfCountry2", totalCummulativeSpendingOfCountry2);
+            
+            Integer numOfMembersInCountry2 = customerValueAnalysisBean.numOfMembersInCountry("Malaysia");
+            session.setAttribute("numOfMembersInCountry2", numOfMembersInCountry2);
+            
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A5/segmentationMarketing.jsp");
             } else if ((errMsg != null) && (goodMsg == null)) {

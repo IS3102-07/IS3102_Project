@@ -176,7 +176,7 @@
                                                                         <%=member.getIncome()%>
                                                                     </td>
                                                                     <td>
-                                                                        
+                                                                        <%=member.getCity()%>
                                                                     </td>
 
                                                                     <td>
@@ -288,15 +288,15 @@
 
             <%
                 Integer totalCummulativeSpendingOfCountry1 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry1");
-                Integer cummulativeSpendingIncomeGrp2 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp2");
+                Integer totalCummulativeSpendingOfCountry2 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry2");
 
-                Integer numOfMembersInCountryGroup1 = (Integer) session.getAttribute("numOfMembersInIncomeGroup1");
-                Integer numOfMembersInIncomeGroup2 = (Integer) session.getAttribute("numOfMembersInIncomeGroup2");
+                Integer numOfMembersInCountry1 = (Integer) session.getAttribute("numOfMembersInCountry1");
+                Integer numOfMembersInCountry2 = (Integer) session.getAttribute("numOfMembersInCountry2");
 
             %>
                     data: [
-                    {y: 'Singapore', a: <%=totalCummulativeSpendingOfCountry1%>, b: <%=numOfMembersInIncomeGroup1%>, c: 1},
-                    {y: 'Malaysia', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: 2},
+                    {y: 'Singapore', a: <%=totalCummulativeSpendingOfCountry1%>, b: <%=numOfMembersInCountry1%>, c: 1},
+                    {y: 'Malaysia', a: <%=totalCummulativeSpendingOfCountry2%>, b: <%=numOfMembersInCountry2%>, c: 2},
                     ],
                             xkey: 'y',
                             ykeys: ['a', 'b'],
