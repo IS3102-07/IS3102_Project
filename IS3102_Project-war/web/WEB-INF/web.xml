@@ -1061,6 +1061,10 @@
         <servlet-name>ReceptionistLogin_Servlet</servlet-name>
         <servlet-class>A4_servlets.ReceptionistLogin_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReceptionistCallQueue_Servlet</servlet-name>
+        <servlet-class>A4_servlets.ReceptionistCallQueue_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2120,6 +2124,10 @@
     <servlet-mapping>
         <servlet-name>ReceptionistLogin_Servlet</servlet-name>
         <url-pattern>/ReceptionistLogin_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReceptionistCallQueue_Servlet</servlet-name>
+        <url-pattern>/ReceptionistCallQueue_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

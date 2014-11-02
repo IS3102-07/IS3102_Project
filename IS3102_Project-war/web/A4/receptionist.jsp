@@ -66,7 +66,14 @@
                                         <%=pickRequests.get(i).getDateSubmitted()%>
                                     </td>
                                     <td>
-                                        CALL Uncollected
+                                        <a  href="../ReceptionistCallQueue_Servlet?requestType=1&pickRequestID=<%=pickRequests.get(i).getId()%>">
+                                            <input type="button" value="Call" class="btn btn-lg btn-primary btn-block">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a  href="../ReceptionistCallQueue_Servlet?requestType=2&pickRequestID=<%=pickRequests.get(i).getId()%>">
+                                            <input type="button" value="Uncollected"  class="btn btn-lg btn-primary btn-block">
+                                        </a>
                                     </td>
                                 </tr>
                                 <%

@@ -1,13 +1,9 @@
 package A4_servlets;
 
-import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
-import EntityManager.AccessRightEntity;
-import EntityManager.PickRequestEntity;
 import EntityManager.StaffEntity;
 import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,39 +11,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ReceptionistJobList_Servlet extends HttpServlet {
+public class ReceptionistCallQueue_Servlet extends HttpServlet {
 
     @EJB
     CustomerServiceBeanLocal customerServiceBean;
-
-    @EJB
-    AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-
             HttpSession session;
             session = request.getSession();
-
             StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
-            if (staff != null) {
-                if (accountManagementBean.checkIfStaffIsReceptionist(staff.getId())|| accountManagementBean.checkIfStaffIsStoreManager(staff.getId())) {
-                    AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);
-                    Long storeID = accessRightEntity.getStore().getId();
-                    List<PickRequestEntity> pickRequests = customerServiceBean.getPickRequestInStoreForReceptionist(storeID);
-                    session.setAttribute("pickRequests", pickRequests);
-                    response.sendRedirect("A4/receptionistJobList.jsp");
-                } else {//no store manager or receptionist role
-                     String result = "Account does not have store manager or receptionist role.";
-                    response.sendRedirect("A1/receptionistLogin.jsp?errMsg=" + result);
+
+            String requestType = request.getParameter("requestType");
+            String pickRequestID = request.getParameter("pickRequestID");
+
+            if (staff != null && pickRequestID != null && requestType != null) {
+
+                if (requestType.equals("1")) {
+                    customerServiceBean.callCustomer(Long.parseLong(pickRequestID));
+                } else if (requestType.equals("2")) {
+                    customerServiceBean.markPickRequestAsUnCollected(Long.parseLong(pickRequestID));
                 }
+                response.sendRedirect("ReceptionistLogin_Servlet");
             } else {
                 String result = "Session Expired.";
                 response.sendRedirect("A1/receptionistLogin.jsp?errMsg=" + result);
             }
-
         } catch (Exception ex) {
             out.println(ex);
         }
