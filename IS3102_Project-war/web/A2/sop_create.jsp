@@ -150,6 +150,7 @@
                 var productionPlan = saleForecast - currentInventory + targetInventoty;
                 if (productionPlan % lotSize !== 0) {
                     productionPlan = (Math.floor(productionPlan / lotSize) + 1) * lotSize;
+                    alert("Productiion Plan has to be multiple of lot size. Target Inventory has been changed automatically.");
                 }
                 $('#input_productionPlan').val(productionPlan);
                 $('#input_targetInventoty').val(productionPlan + currentInventory - saleForecast);
@@ -183,7 +184,7 @@
                         ],
                     xkey: 'device',
                     ykeys: ['geekbench'],
-                    labels: ['Geekbench'],
+                    labels: ['Target inventory level'],
                     barRatio: 0.4,
                     xLabelAngle: 35,
                     hideHover: 'auto',
