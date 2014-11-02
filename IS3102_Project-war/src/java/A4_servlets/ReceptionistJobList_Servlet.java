@@ -40,7 +40,7 @@ public class ReceptionistJobList_Servlet extends HttpServlet {
                     session.setAttribute("pickRequests", pickRequests);
                     response.sendRedirect("A4/receptionistJobList.jsp");
                 } else {//no store manager or receptionist role
-                     String result = "Account does not have store manager or receptionist role.";
+                     String result = "Account does not have Store Manager or Receptionist Role.";
                     response.sendRedirect("A4/receptionistLogin.jsp?errMsg=" + result);
                 }
             } else {

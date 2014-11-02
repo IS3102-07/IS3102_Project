@@ -255,11 +255,11 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     }
     
     @Override
-    public Boolean markPickRequestForCollection(Long pickRequestID) {
+    public Boolean markPickRequestForCollection(Long salesRecordID) {
         System.out.println("markPickRequestForCollection() called");
         try {
-            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.id=:pickRequestID");
-            q.setParameter("pickRequestID", pickRequestID);
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.salesRecord.receiptNo=:salesRecordID");
+            q.setParameter("salesRecordID", salesRecordID);
             PickRequestEntity pickRequestEntity = (PickRequestEntity) q.getSingleResult();
             pickRequestEntity.setCollectionStatus(4);//Collecting
             em.merge(pickRequestEntity);
