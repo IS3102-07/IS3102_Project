@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
 @Stateful
@@ -35,6 +36,55 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
     @EJB
     ItemManagementBeanLocal itemManagementBean;
+    
+        
+    public Double getEstimatedCustomerLife(){        
+        return 1/(1 - this.getAverageRetentionRate());
+    }    
+    
+    public Double getAverageRetentionRate() {
+        try {
+            Double retentionRate_09 = this.getRetentionRateByYear(2009);
+            Double retentionRate_10 = this.getRetentionRateByYear(2010);
+            Double retentionRate_11 = this.getRetentionRateByYear(2011);
+            Double retentionRate_12 = this.getRetentionRateByYear(2012);
+            Double retentionRate_13 = this.getRetentionRateByYear(2013);
+            
+            return (retentionRate_09 + retentionRate_10 + retentionRate_11 + retentionRate_12 + retentionRate_13)/5 ;
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private Double getRetentionRateByYear(Integer year) {
+        try {
+            int numberOfCustomerRetained = 0;
+            Calendar cal = Calendar.getInstance();
+            cal.clear();
+
+            cal.set(Calendar.YEAR, year + 1);
+            cal.set(Calendar.MONTH, 1);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+
+            Query q = em.createQuery("SELECT m FROM MemberEntity m where m.joinDate < 1").setParameter(1, cal, TemporalType.DATE);
+            List<MemberEntity> members = q.getResultList();
+            for (MemberEntity m : members) {
+
+                Query q1 = em.createQuery("select s from SalesRecordEntity s where s.member.id = ?1 and s.createdDate > ?2 ")
+                        .setParameter(1, m.getId())
+                        .setParameter(2, cal, TemporalType.DATE);
+                if (!q1.getResultList().isEmpty()) {
+                    numberOfCustomerRetained++;
+                }
+            }
+            return (1.0 * numberOfCustomerRetained / q.getResultList().size());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     public CustomerValueAnalysisBean() {
         System.out.println("\nCustomer Value Analysis Server (EJB) created.");
