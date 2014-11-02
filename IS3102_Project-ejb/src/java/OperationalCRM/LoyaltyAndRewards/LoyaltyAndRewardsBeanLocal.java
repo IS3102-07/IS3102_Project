@@ -3,7 +3,6 @@ package OperationalCRM.LoyaltyAndRewards;
 import EntityManager.LineItemEntity;
 import EntityManager.LoyaltyTierEntity;
 import EntityManager.MemberEntity;
-import EntityManager.ShoppingListEntity;
 import HelperClasses.ReturnHelper;
 import java.util.List;
 import javax.ejb.Local;

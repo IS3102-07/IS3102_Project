@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -115,9 +116,9 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             if (!tiers.isEmpty() && tiers.get(tiers.size() - 1).getAmtOfSpendingRequired().equals(memberCurrentTier.getAmtOfSpendingRequired())) {
                 return null;
             }//list already sorted in asc order
-            for (int i = 0; i < tiers.size()-1; i++) {
+            for (int i = 0; i < tiers.size() - 1; i++) {
                 if (tiers.get(i).getAmtOfSpendingRequired().equals(memberCurrentTier.getAmtOfSpendingRequired())) {
-                    return tiers.get(i+1);//next tier
+                    return tiers.get(i + 1);//next tier
                 }
             }
             return null;//shouldn't be able to reach here
@@ -140,17 +141,21 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             StoreEntity storeEntity;
             //Deduct his points if he used any
             memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints() - pointsUsed);
+            em.merge(memberEntity);
             //Calculate points earned
             try {
                 storeEntity = em.getReference(StoreEntity.class, storeID);
                 int loyaltyPointsEarned = (int) Math.round(amountPaid / storeEntity.getCountry().getExchangeRate());
-                if (memberEntity.getLoyaltyTier().getTier().equals("Bronze"))
+                if (memberEntity.getLoyaltyTier().getTier().equals("Bronze")) {
                     loyaltyPointsEarned = loyaltyPointsEarned * 5;
-                else if (memberEntity.getLoyaltyTier().getTier().equals("Silver"))
+                if (memberEntity.getLoyaltyTier().getTier().equals("Silver"))
                     loyaltyPointsEarned = loyaltyPointsEarned * 10;
-                else if (memberEntity.getLoyaltyTier().getTier().equals("Gold"))
+                if (memberEntity.getLoyaltyTier().getTier().equals("Gold"))
                     loyaltyPointsEarned = loyaltyPointsEarned * 15;
-                memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints() + loyaltyPointsEarned);
+                }
+                int points = memberEntity.getLoyaltyPoints() + loyaltyPointsEarned;
+                memberEntity.setLoyaltyPoints(points);
+                em.merge(memberEntity);
             } catch (Exception ex) {
                 System.out.println("createSalesRecord(): Error in retriving country");
                 return new ReturnHelper(false, "System error in retriving country information.");
@@ -256,15 +261,14 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     public String getSyncWithPhoneStatus(String qrCode) {
         System.out.println("getSyncWithPhoneStatus() called with qrCode:" + qrCode);
         try {
-            em.flush();
             Query q = em.createQuery("SELECT p from QRPhoneSyncEntity p where p.qrCode=:qrCode");
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             q.setParameter("qrCode", qrCode);
             QRPhoneSyncEntity phoneSyncEntity = (QRPhoneSyncEntity) q.getSingleResult();
-            if (phoneSyncEntity == null || phoneSyncEntity.getMemberEmail() == null) {
-                return null;
-            } else {
-                return phoneSyncEntity.getMemberEmail();
-            }
+            return phoneSyncEntity.getMemberEmail();
+        } catch (NoResultException nre) {
+            System.out.println("getSyncWithPhoneStatus(): No result");
+            return null;
         } catch (Exception ex) {
             System.out.println("getSyncWithPhoneStatus(): Error");
             ex.printStackTrace();

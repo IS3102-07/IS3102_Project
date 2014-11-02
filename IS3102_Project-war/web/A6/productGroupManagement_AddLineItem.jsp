@@ -59,9 +59,9 @@
                                     <form role="form" action="../ProductGroupLineItemManagement_AddServlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text"  >
+                                            <input id="auto" class="form-control" name="sku" type="text"  >
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <input type="submit" value="Add Line Item" class="btn btn-lg btn-primary btn-block">
                                         </div>  
@@ -78,6 +78,22 @@
             <!-- /#container fluid -->
         </div>
         <!-- /#wrapper -->
+
+        <script>
+            $(function () {
+                var array1 = [];
+                $.get('../SKU_ajax_servlet/*', function (responseText) {
+                    var arr = responseText.trim().split(';');
+                    arr.pop();
+                    for (var i = 0; i < arr.length; i++) {
+                        array1.push(arr[i]);
+                    }
+                });
+
+                $("#auto").autocomplete({source: array1});
+            });
+        </script>
+
     </body>
 </html>
 <%}%>

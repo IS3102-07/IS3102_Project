@@ -269,6 +269,9 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
 
                 ProductGroupEntity productGroup = sopBean.getProductGroupBySOP(sopId);
                 request.setAttribute("productGroup", productGroup);
+                
+                List<Integer> pastTargetInventoryLevel = sopBean.getPastTargetInventoryLevel(storeId, schedulelId, productGroup.getId());
+                request.setAttribute("pastTargetInventoryLevel", pastTargetInventoryLevel);
 
                 nextPage = "/A2/sop_edit";
                 break;
