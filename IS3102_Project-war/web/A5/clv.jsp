@@ -77,8 +77,8 @@
                                                         Retention Rate
                                                     </td>
                                                     <td>
-                                                        <p id="retentionRate">
-                                                            <% out.print(df.format(customerRetentionRate * 100));%></p>%
+                                                        
+                                                            <% out.print(df.format(customerRetentionRate * 100));%>%
 
                                                     </td>
                                                     <td>
@@ -131,7 +131,9 @@
                                                         <input type="button" class="plus" value="+" onclick="plus()">
                                                     </td>
                                                     <td>
-
+                                                        <input type="button" class="minus" value="-" onclick="minus2()">
+                                                        <input type="number" value="20" id="profitMargin2"/>%
+                                                        <input type="button" class="plus" value="+" onclick="plus2()">
                                                     </td>
 
                                                 </tr>
@@ -142,11 +144,13 @@
                                                     </td>
                                                     <td>
                                                         <p id="acquiredYearLTV">
-                                                            <%out.print(df.format(averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear * 0.2));%>
+                                                            <%out.print(df.format(averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear * 0.2 * customerRetentionRate));%>
                                                         </p>
                                                     </td>
                                                     <td>
-                                                        testing 321
+                                                        <p id="acquiredYearLTV2">
+                                                            <%out.print(df.format(averageOrdersPerRetainedMember * averageOrderPriceForRetainedMembers * 0.2 * getRetainedCustomerRetentionRate));%>
+                                                        </p>
                                                     </td>
 
                                                 </tr>
@@ -262,15 +266,30 @@
         var profitMargin = document.getElementById("profitMargin").value;
         if (profitMargin > 1) {
             document.getElementById("profitMargin").value--;
-            var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value/100);
+            var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value/100) * <%=customerRetentionRate%>;
             document.getElementById("acquiredYearLTV").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
         }
     }
     function plus() {
         var profitMargin = document.getElementById("profitMargin").value;
         document.getElementById("profitMargin").value++;
-        var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value/100);
+        var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value/100) * <%=customerRetentionRate%>;
         document.getElementById("acquiredYearLTV").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
+    }
+    
+    function minus2() {
+        var profitMargin = document.getElementById("profitMargin2").value;
+        if (profitMargin > 1) {
+            document.getElementById("profitMargin2").value--;
+            var acquiredYearLTV = <%=averageOrdersPerRetainedMember * averageOrderPriceForRetainedMembers %> * (document.getElementById("profitMargin2").value/100) * <%=getRetainedCustomerRetentionRate%>;
+            document.getElementById("acquiredYearLTV2").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
+        }
+    }
+    function plus2() {
+        var profitMargin = document.getElementById("profitMargin2").value;
+        document.getElementById("profitMargin2").value++;
+        var acquiredYearLTV = <%=averageOrdersPerRetainedMember  * averageOrderPriceForRetainedMembers %> * (document.getElementById("profitMargin2").value/100) * <%=getRetainedCustomerRetentionRate%>;
+        document.getElementById("acquiredYearLTV2").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
     }
 </script>
 </body>
