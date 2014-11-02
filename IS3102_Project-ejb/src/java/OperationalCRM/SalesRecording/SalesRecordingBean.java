@@ -13,6 +13,7 @@ import EntityManager.StoreEntity;
 import HelperClasses.ReturnHelper;
 import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
 import MRP.SalesForecast.SalesForecastBeanLocal;
+import OperationalCRM.CustomerService.CustomerServiceBeanLocal;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -45,6 +46,8 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
     private StoreAndKitchenInventoryManagementBeanLocal storeInventoryManagementBean;
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
+    @EJB
+    private CustomerServiceBeanLocal customerServiceBean;
 
     @Override
     public Boolean createSalesRecord(String staffEmail, String staffPassword, Long storeID, String posName, List<String> itemsPurchasedSKU, List<Integer> itemsPurchasedQty, Double amountDue, Double amountPaid, Double amountPaidUsingPoints, Integer loyaltyPointsDeducted, String memberEmail, String receiptNo) {
@@ -108,6 +111,12 @@ public class SalesRecordingBean implements SalesRecordingBeanLocal {
                 em.merge(memberEntity);
             }
 
+            //Create pick request
+            em.flush();
+            em.refresh(salesRecordEntity);
+            em.flush();
+            customerServiceBean.addPickRequest(salesRecordEntity.getId());
+            
             //update sales figures as well
             salesForecastBean.updateSalesFigureBySalesRecord(salesRecordEntity.getId());
             storeEntity.getSalesRecords().add(salesRecordEntity);//tie the record to the store
