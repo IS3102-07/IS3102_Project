@@ -370,7 +370,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             return ((double) totalPriceOfOrders / (double) numOfOrders);
         } catch (Exception ex) {
 
-            System.out.println("\nServer failed to list avg order price per year:\n" + ex);
+            System.out.println("\nServer failed to list avg order price per acquired year:\n" + ex);
             ex.printStackTrace();
         }
         return ((double) totalPriceOfOrders / (double) numOfOrders);
@@ -407,7 +407,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         if (days > 0 && days < 365) {
                             totalPriceOfOrders += member.getPurchases().get(i).getAmountDue();
                             numOfOrders++;
-                            break;
                         }
                     }
                 } else {
@@ -419,7 +418,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             return ((double) totalPriceOfOrders / (double) numOfOrders);
         } catch (Exception ex) {
 
-            System.out.println("\nServer failed to list avg order price per year:\n" + ex);
+            System.out.println("\nServer failed to list avg order price per retained member year:\n" + ex);
             ex.printStackTrace();
         }
         return ((double) totalPriceOfOrders / (double) numOfOrders);
@@ -494,9 +493,9 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                     System.out.println("This member has purchases records of " + member.getPurchases().size());
 
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                    for (SalesRecordEntity record : member.getPurchases()) {
                         System.out.println("Looping through purchases");
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                        Long days = churnDate.getTime() - record.getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                         System.out.println("Number of days from churn date is " + days);
                         if (days > 0) {
@@ -556,6 +555,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list recency:\n" + ex);
+            ex.printStackTrace();
         }
         System.out.println("Average recency days is : " + totalDays / numOfDaysWithRecord);
 
@@ -583,6 +583,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list recency:\n" + ex);
+            ex.printStackTrace();
         }
         System.out.println("Average frequency is : " + frequency / numOfPurchases);
 
@@ -615,6 +616,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list monetary value:\n" + ex);
+            ex.printStackTrace();
         }
         System.out.println("Average monetary value : " + amountOfPurchase / numOfPurchases);
 
@@ -918,6 +920,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list all non member sales records:\n" + ex);
+            ex.printStackTrace();
             return profit;
         }
         return profit;
