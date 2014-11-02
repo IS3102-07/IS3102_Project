@@ -39,6 +39,10 @@ public interface CustomerServiceBeanLocal {
     public Boolean markPickRequestAsCollected(Long pickRequestID);
 
     public Boolean markPickRequestAsUnCollected(Long pickRequestID);
+    
+    public Boolean markPickRequestForCollection(Long pickRequestID);
 
     public StaffEntity receptionistLoginStaff(String email, String password);
+    
+    public List<PickRequestEntity> getLastCalledPickRequestInStoreForReceptionist(Long storeID);
 }

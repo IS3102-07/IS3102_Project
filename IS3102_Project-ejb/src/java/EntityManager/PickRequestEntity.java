@@ -28,18 +28,20 @@ public class PickRequestEntity implements Serializable {
     private List<LineItemEntity> items;
     private String queueNo;
     private Integer pickStatus;//1.Queued,2.In-progress,3.Completed
-    private Integer collectionStatus;//1.Picking,2.Ready for Collection,3.Called,4.Uncollected,5.Collected
+    private Integer collectionStatus;//1.Picking,2.Ready for Collection,3.Called,4.Collecting,5.Uncollected,6.Collected
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSubmitted;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCompleted;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCalled;
     @OneToOne
     private StoreEntity store;
 
     public PickRequestEntity() {
     }
 
-    public PickRequestEntity(StoreEntity store, SalesRecordEntity salesRecord,List<LineItemEntity> items, String queueNo) {
+    public PickRequestEntity(StoreEntity store, SalesRecordEntity salesRecord, List<LineItemEntity> items, String queueNo) {
         this.store = store;
         this.salesRecord = salesRecord;
         this.items = items;
@@ -60,6 +62,14 @@ public class PickRequestEntity implements Serializable {
             default:
                 return "Unavailable";
         }
+    }
+
+    public Date getDateCalled() {
+        return dateCalled;
+    }
+
+    public void setDateCalled(Date dateCalled) {
+        this.dateCalled = dateCalled;
     }
 
     public List<LineItemEntity> getItems() {
@@ -83,8 +93,10 @@ public class PickRequestEntity implements Serializable {
             case 3:
                 return "Called";
             case 4:
-                return "Uncollected";
+                return "Collecting";
             case 5:
+                return "Uncollected";
+            case 6:
                 return "Collected";
             default:
                 return "Unavailable";

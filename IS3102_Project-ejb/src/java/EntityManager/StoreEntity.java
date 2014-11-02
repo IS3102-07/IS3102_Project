@@ -57,7 +57,6 @@ public class StoreEntity implements Serializable {
     private List<SalesRecordEntity> salesRecords;
     @OneToMany(mappedBy="store")
     private List<PickRequestEntity> pickRequest;
-    private String latestCalledPickRequestQueueNo;
     private Boolean isDeleted;
     
     public StoreEntity() {}
@@ -79,14 +78,6 @@ public class StoreEntity implements Serializable {
     @XmlTransient
     public List<SalesRecordEntity> getSalesRecords() {
         return salesRecords;
-    }
-
-    public String getLatestCalledPickRequestQueueNo() {
-        return latestCalledPickRequestQueueNo;
-    }
-
-    public void setLatestCalledPickRequestQueueNo(String latestCalledPickRequestQueueNo) {
-        this.latestCalledPickRequestQueueNo = latestCalledPickRequestQueueNo;
     }
 
     public String getPostalCode() {

@@ -90,19 +90,6 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
         }
     }
 
-//    @Override
-//    public List<PickRequestEntity> getPickRequests(Long pickerID) {
-//        System.out.println("getPickRequest() called");
-//        try {
-//            PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
-//            List<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
-//            return pickRequestEntities;
-//        } catch (Exception ex) {
-//            System.out.println("getPickRequest(): error");
-//            ex.printStackTrace();
-//            return null;
-//        }
-//    }
     @Override
     public PickRequestEntity getNextPickRequest(Long staffID) {
         System.out.println("acceptPickRequest() called");
@@ -240,7 +227,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.id=:pickRequestID");
             q.setParameter("pickRequestID", pickRequestID);
             PickRequestEntity pickRequestEntity = (PickRequestEntity) q.getSingleResult();
-            pickRequestEntity.setCollectionStatus(5);//Collected
+            pickRequestEntity.setCollectionStatus(6);//Collected
             em.merge(pickRequestEntity);
             return true;
         } catch (Exception ex) {
@@ -257,11 +244,28 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.id=:pickRequestID");
             q.setParameter("pickRequestID", pickRequestID);
             PickRequestEntity pickRequestEntity = (PickRequestEntity) q.getSingleResult();
-            pickRequestEntity.setCollectionStatus(4);//Uncollected
+            pickRequestEntity.setCollectionStatus(5);//Uncollected
             em.merge(pickRequestEntity);
             return true;
         } catch (Exception ex) {
             System.out.println("markPickRequestAsUnCollected(): error");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+    @Override
+    public Boolean markPickRequestForCollection(Long pickRequestID) {
+        System.out.println("markPickRequestForCollection() called");
+        try {
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.id=:pickRequestID");
+            q.setParameter("pickRequestID", pickRequestID);
+            PickRequestEntity pickRequestEntity = (PickRequestEntity) q.getSingleResult();
+            pickRequestEntity.setCollectionStatus(4);//Collecting
+            em.merge(pickRequestEntity);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("markPickRequestForCollection(): error");
             ex.printStackTrace();
             return false;
         }
@@ -273,12 +277,14 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
         try {
             PickRequestEntity pickRequestEntity = em.getReference(PickRequestEntity.class, pickRequestID);
             pickRequestEntity.setCollectionStatus(3);//Called
+            pickRequestEntity.setDateCalled(new Date());
             em.merge(pickRequestEntity);
+            return true;
         } catch (Exception ex) {
             System.out.println("callCustomer(): Error");
             ex.printStackTrace();
+            return false;
         }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -304,6 +310,20 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             System.out.println("receptionistLoginStaff(): error");
             ex.printStackTrace();
             return null;
+        }
+    }
+    
+    @Override
+    public List<PickRequestEntity> getLastCalledPickRequestInStoreForReceptionist(Long storeID) {
+        System.out.println("getLastCalledPickRequestInStoreForReceptionist() called");
+        try {
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store.id=:storeID AND p.collectionStatus=3 AND p.collectionStatus=4 AND p.collectionStatus=5 AND p.collectionStatus=6 AND ORDER BY p.collectionStatus ASC");
+            q.setParameter("storeID", storeID);
+            return q.getResultList();
+        } catch (Exception ex) {
+            System.out.println("getLastCalledPickRequestInStoreForReceptionist(): error");
+            ex.printStackTrace();
+            return new ArrayList();
         }
     }
 }
