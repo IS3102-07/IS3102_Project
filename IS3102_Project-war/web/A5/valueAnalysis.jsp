@@ -102,17 +102,16 @@
                                                         </div>
                                                         <div class="panel-body">
                                                             <div id="morris-donut-chart"></div>
-                                                            <div class="text-right">
-                                                                <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <table class="table">
+                                                        <thead>
                                                         <tr>
                                                             <td>Item</td><td>Value</td>
                                                         </tr>
+                                                        </thead>
                                                         <tr>
                                                             <td>Total Number of Customers :</td><td><%=numOfMembers%></td>
                                                         </tr>

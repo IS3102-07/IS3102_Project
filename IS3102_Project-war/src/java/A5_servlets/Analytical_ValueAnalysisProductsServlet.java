@@ -25,6 +25,8 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
            List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
            session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
            
+           List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
+           session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
            response.sendRedirect("A5/products.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();

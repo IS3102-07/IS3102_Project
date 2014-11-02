@@ -18,6 +18,8 @@ import javax.ejb.Stateful;
 @Local
 public interface CustomerValueAnalysisBeanLocal {
 
+    public List<LineItemEntity> sortBestSellingRetailProducts();
+    
     public Double averageOrderPriceForRetainedMembers();
 
     public Double averageOrdersPerRetainedMember();
