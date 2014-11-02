@@ -1041,6 +1041,10 @@
         <servlet-name>Analytical_ValueAnalysisProductsServlet</servlet-name>
         <servlet-class>A5_servlets.Analytical_ValueAnalysisProductsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SKU_ajax_servlet</servlet-name>
+        <servlet-class>A2_servlets.SKU_ajax_servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2080,6 +2084,10 @@
     <servlet-mapping>
         <servlet-name>Analytical_ValueAnalysisProductsServlet</servlet-name>
         <url-pattern>/Analytical_ValueAnalysisProductsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SKU_ajax_servlet</servlet-name>
+        <url-pattern>/SKU_ajax_servlet/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

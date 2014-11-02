@@ -46,7 +46,7 @@
                     </style>
 
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="row">                             
@@ -102,6 +102,21 @@
                             <!-- /.panel -->
                         </div>
                         <!-- /.col-lg-12 -->
+                        <div class="col-lg-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Past Target Inventory Level</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="flot-chart">
+                                        <div class="flot-chart-content" id="flot-bar-chart"></div>
+                                    </div>
+                                    <div class="text-right">
+                                        <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.row -->
                 </div>
@@ -132,6 +147,7 @@
                 var productionPlan = saleForecast - currentInventory + targetInventory;
                 if (productionPlan % lotSize !== 0) {
                     productionPlan = ( Math.floor(productionPlan / lotSize) + 1) * lotSize;
+                    alert("Productiion Plan has to be multiple of lot size. Target Inventory has been changed automatically.");
                 } 
                 $('#input_productionPlan').val(productionPlan);
                 $('#input_targetInventoty').val(productionPlan + currentInventory - saleForecast);
@@ -142,8 +158,37 @@
         <script>
             $(document).ready(function () {
                 $('#dataTables-example').dataTable();
+                barChart();
             }
             );
         </script>
+        
+        <script>
+            <% List<Integer> pastTargetInventoryLevel = (List<Integer>)request.getAttribute("pastTargetInventoryLevel"); %>
+            function barChart() {
+                Morris.Bar({
+                    element: 'flot-bar-chart',
+                    data: [
+                        <%  int i = 0;
+                            for(Integer a: pastTargetInventoryLevel){    
+                            i ++;    
+                        %>
+                            {
+                            device: '<%= schedule.getYear() + "-" + (schedule.getMonth()-i) %>',
+                            inventory: <%= a %>
+                            },
+                        <% } %>
+                        ],
+                    xkey: 'device',
+                    ykeys: ['inventory'],
+                    labels: ['target inventory level'],
+                    barRatio: 0.4,
+                    xLabelAngle: 35,
+                    hideHover: 'auto',
+                    resize: true
+                });
+            }
+        </script>
+        
     </body>
 </html>
