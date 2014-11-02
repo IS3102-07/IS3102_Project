@@ -39,7 +39,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
 
     }
 
-    public Boolean discountMemberLoyaltyPoints(String email) {
+    public Boolean discountMemberLoyaltyPoints(String email, Integer loyaltyPoints) {
         System.out.println("Server called discountMemberLoyaltyPoints():" + email);
         String activationCode = "";
         StaffEntity staff = null;
@@ -60,7 +60,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
                 msg.setSubject("Island Furniture Staff Account Activation");
                 String messageText = "Greetings from Island Furniture... \n\n"
-                        + "Here is your activation code to be keyed in in order to activate your staff account :\n\n"
+                        + "We have added loyalty points to your account : " + loyaltyPoints + "\n\n"
                         + "Email: " + email + "\n\n"
                         + "Activation Code: " + activationCode + "\n\n"
                         + "Link to activate your staff account: http://localhost:8080/IS3102_Project-war/A1/staffActivateAccount.jsp";

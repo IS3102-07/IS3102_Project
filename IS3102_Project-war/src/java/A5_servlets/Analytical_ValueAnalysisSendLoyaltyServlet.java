@@ -29,9 +29,10 @@ public class Analytical_ValueAnalysisSendLoyaltyServlet extends HttpServlet {
             HttpSession session = request.getSession();
             
             String[] deleteArr = request.getParameterValues("delete");
+            Integer loyaltyPoints = Integer.valueOf(request.getParameter("loyaltyPoints"));
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
-                    systemSecurityBean.discountMemberLoyaltyPoints(deleteArr[i]);
+                    systemSecurityBean.discountMemberLoyaltyPoints(deleteArr[i], loyaltyPoints);
                 }
                 response.sendRedirect("Analytical_ValueAnalysisRFMServlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
