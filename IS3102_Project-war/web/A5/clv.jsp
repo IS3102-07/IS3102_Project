@@ -156,6 +156,65 @@
                                         </div>
                                     </div>
                             </div>
+                                                        
+                                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
+                                                        <table class="table table-bordered" id="dataTables-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                                    <th>Name</th>
+                                                                    <th>Num of Orders</th>
+                                                                    <th>Average Order Price</th>
+                                                                    <th>Monetary Value</th>
+                                                                    <th>CLV</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <%
+                                                                    
+                                                                    if (members != null) {
+                                                                        for (int i = 0; i < members.size(); i++) {
+                                                                            MemberEntity member = members.get(i);
+                                                                %>
+                                                                <tr>                   
+                                                                    <td>
+                                                                        <input type="checkbox" name="delete" value="<%=member.getId()%>" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=member.getName()%>
+                                                                    </td>
+                                                                    <td>
+                                                                       <% 
+                                                                       out.print(member.getPurchases().size());
+                                                                       %>
+                                                                    </td>
+                                                                    <td>
+                                                                     <%
+                                                                       Double totalSalesOfMember = (double) 0;
+                                                                       for (int j = 0; j < member.getPurchases().size(); j++) {
+                                                                           totalSalesOfMember += member.getPurchases().get(j).getAmountDue();
+                                                                       }
+                                                                       out.print(df.format(totalSalesOfMember / member.getPurchases().size()));
+                                                                       %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%
+                                                                       
+                                                                       out.print(totalSalesOfMember);
+                                                                       %>
+                                                                    </td>
+                                                                    
+                                                                    <td>
+                                                                        <% out.print(df.format(customerRetentionRate * totalSalesOfMember * 0.2)); %>
+                                                                    </td>
+                                                                </tr>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                         </div>
                     </div>
                     <input type="hidden" name="id" value="">    
