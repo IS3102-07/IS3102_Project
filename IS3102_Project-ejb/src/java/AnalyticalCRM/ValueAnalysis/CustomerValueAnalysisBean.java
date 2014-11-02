@@ -98,21 +98,27 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 Calendar c = Calendar.getInstance();
 
                 c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, (-365 * year));
+                c.add(Calendar.DATE, (365*year));
                 Date churnDate = c.getTime();
-                if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                    numOfMembers++;
+
+                System.out.println("Churn date is " + churnDate);
+                Long days = member.getJoinDate().getTime() - churnDate.getTime();
+                days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                if (days > 0 && days < (365 * year)) {
+                    numOfMembersNotChurn++;
+                    break;
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
             System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
-            return numOfMembers;
+            return numOfMembersNotChurn;
         } catch (Exception ex) {
             System.out.println("\nServer failed to list retention rate:\n" + ex);
             ex.printStackTrace();
-            return numOfMembers;
+            return numOfMembersNotChurn;
         }
     }
+
     @Override
     public Integer getTotalNumberOfSalesRecord() {
         Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
