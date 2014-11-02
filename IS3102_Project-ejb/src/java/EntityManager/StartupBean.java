@@ -326,11 +326,11 @@ public class StartupBean {
 
         try {
             //Create item
-            FurnitureEntity furnitureEntity = new FurnitureEntity("F1", "Table 1", "Tables & Desks", "Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 100, 74, 60);
+            FurnitureEntity furnitureEntity = new FurnitureEntity("F_TD_01", "Table 1", "Tables & Desks", "Pre-drilled holes for legs, for easy assembly. Adjustable feet make the table stand steady also on uneven floors", "imageURL", 100, 74, 60);
             em.persist(furnitureEntity);
-            furnitureEntity = new FurnitureEntity("F2", "Bed 1", "Beds & Mattresses", "Get all-over This mattress is approved for children.Get all-over suppoall-over support and comfort with a resilient foam mattress.", "imageURL", 200, 10, 90);
+            furnitureEntity = new FurnitureEntity("F_BM_21", "Bed 1", "Beds & Mattresses", "Get all-over This mattress is approved for children.Get all-over suppoall-over support and comfort with a resilient foam mattress.", "imageURL", 200, 10, 90);
             em.persist(furnitureEntity);
-            furnitureEntity = new FurnitureEntity("F3", "Table 2", "Tables & Desks", "The table top in tempered glass is stain resistant and easy to clean. Adjustable feet make the table stand steady also on uneven floors.", "imageURL", 99, 71, 52);
+            furnitureEntity = new FurnitureEntity("F_TD_02", "Table 2", "Tables & Desks", "The table top in tempered glass is stain resistant and easy to clean. Adjustable feet make the table stand steady also on uneven floors.", "imageURL", 99, 71, 52);
             em.persist(furnitureEntity);
             RawMaterialEntity rawMaterialEntity1 = new RawMaterialEntity("RM1", "Steel", "Metal", "A piece of steel", 1, 1, 1);
             em.persist(rawMaterialEntity1);
