@@ -40,7 +40,7 @@ public interface CustomerServiceBeanLocal {
 
     public Boolean markPickRequestAsUnCollected(Long pickRequestID);
     
-    public Boolean markPickRequestForCollection(Long pickRequestID);
+    public Boolean markPickRequestForCollection(Long salesRecordID);
 
     public StaffEntity receptionistLoginStaff(String email, String password);
     

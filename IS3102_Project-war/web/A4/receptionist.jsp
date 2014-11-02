@@ -27,18 +27,18 @@
 
 
             <div class="container">
-                
-                <form role="form" name="LoginForm" onfocus="../ReceptionistCallQueue_Servlet?requestType=3">
+
+                <form role="form" name="LoginForm" >
                     <div class="row">
                         <div class="form-group">
                             <div class="col-md-12">
                                 <label>Scan Barcode</label>
-                                <input type="text" name="barcode" class="form-control input-lg" required="true">
+                                <input type="text" name="barcode" class="form-control input-lg" autofocus="true" required="true" onchange="../ReceptionistCallQueue_Servlet?requestType=3">
                             </div>
                         </div>
                     </div>
                 </form>
-                
+
                 <br>
 
                 <div class="row">

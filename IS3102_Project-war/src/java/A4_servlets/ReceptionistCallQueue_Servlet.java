@@ -34,7 +34,8 @@ public class ReceptionistCallQueue_Servlet extends HttpServlet {
                 } else if (requestType.equals("2")) {
                     customerServiceBean.markPickRequestAsUnCollected(Long.parseLong(pickRequestID));
                 } else if (requestType.equals("3")) {
-
+                    String barcode = request.getParameter("barcode");
+                    customerServiceBean.markPickRequestForCollection(Long.parseLong(barcode));
                 }
                 response.sendRedirect("ReceptionistLogin_Servlet");
             } else {
