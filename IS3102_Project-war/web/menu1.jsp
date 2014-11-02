@@ -392,13 +392,7 @@
                 </a>
                 <ul id="analyticalCRM" class="collapse">
                     <li>
-                        <a href="../A5/analytical.jsp">Value Analysis</a>
-                    </li>
-                    <li>
-                        <a href="../A5/segmentationMarketing.jsp">Segmentation Marketing</a>
-                    </li>
-                    <li>
-                        <a href="../A5/queryAndReporting.jsp">Query And Reporting</a>
+                        <a href="../A5/analytical.jsp">Analytics</a>
                     </li>
                 </ul>
             </li>
