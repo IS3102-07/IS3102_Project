@@ -61,7 +61,7 @@
                                             <label>SKU</label>
                                             <input id="auto" class="form-control" name="sku" type="text"  >
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <input type="submit" value="Add Line Item" class="btn btn-lg btn-primary btn-block">
                                         </div>  
@@ -78,37 +78,22 @@
             <!-- /#container fluid -->
         </div>
         <!-- /#wrapper -->
-        
+
         <script>
-            $(function() {
-              var availableTags = [
-                "F1",
-                "F2",
-                "F3",
-                "BASIC",
-                "C",
-                "C++",
-                "Clojure",
-                "COBOL",
-                "ColdFusion",
-                "Erlang",
-                "Fortran",
-                "Groovy",
-                "Haskell",
-                "Java",
-                "JavaScript",
-                "Lisp",
-                "Perl",
-                "PHP",
-                "Python",
-                "Ruby",
-                "Scala",
-                "Scheme"
-              ];
-              $( "#auto" ).autocomplete({ source: availableTags });
+            $(function () {
+                var array1 = [];
+                $.get('../SKU_ajax_servlet/*', function (responseText) {
+                    var arr = responseText.trim().split(';');
+                    arr.pop();
+                    for (var i = 0; i < arr.length; i++) {
+                        array1.push(arr[i]);
+                    }
+                });
+
+                $("#auto").autocomplete({source: array1});
             });
         </script>
-        
+
     </body>
 </html>
 <%}%>
