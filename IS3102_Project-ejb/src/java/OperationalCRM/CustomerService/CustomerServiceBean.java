@@ -3,10 +3,10 @@ package OperationalCRM.CustomerService;
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import Config.Config;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.AccessRightEntity;
 import EntityManager.FeedbackEntity;
 import EntityManager.LineItemEntity;
 import EntityManager.PickRequestEntity;
-import EntityManager.PickerEntity;
 import EntityManager.RoleEntity;
 import EntityManager.SalesRecordEntity;
 import EntityManager.StaffEntity;
@@ -17,7 +17,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -38,6 +37,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
+    @Override
     public List<SalesRecordEntity> viewSalesRecord(Long storeId) {
         System.out.println("View sales record is called()" + storeId);
         try {
@@ -50,6 +50,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
         }
     }
 
+    @Override
     public List<FeedbackEntity> viewFeedback() {
         System.out.println("View feedback is called()");
         try {
@@ -63,85 +64,82 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     }
 
     @Override
-    public PickerEntity pickerLoginStaff(String email, String password) {
+    public StaffEntity pickerLoginStaff(String email, String password) {
+        System.out.println("pickerLoginStaff() called");
         Long staffID = null;
         try {
             StaffEntity staffEntity = ambl.loginStaff(email, password);
             if (staffEntity == null) {
                 return null;
             }
-            // Check roles, only admin, receptionist or store manager can login into picker
+            // Check roles, only picker role can login
             List<RoleEntity> roles = staffEntity.getRoles();
             for (RoleEntity role : roles) {
-                if (role.getId().equals(1L) || role.getId().equals(4L) || role.getId().equals(12L)) {
+                if (role.getId().equals(12L)) {//Picker role
                     staffID = staffEntity.getId();
                     PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
                     out.println(new Date().toString() + ";" + staffID + ";pickerLoginStaff();" + staffID + ";");
                     out.close();
-                    PickerEntity pickerEntity = new PickerEntity();
-                    pickerEntity.setPicker(staffEntity);
-                    pickerEntity.setListOfJob(new LinkedList<>());
-                    em.persist(pickerEntity);
-                    return pickerEntity;
+                    return staffEntity;
                 }
             }
             return null;
         } catch (Exception ex) {
+            System.out.println("pickerLoginStaff(): error");
             ex.printStackTrace();
             return null;
         }
     }
 
+//    @Override
+//    public List<PickRequestEntity> getPickRequests(Long pickerID) {
+//        System.out.println("getPickRequest() called");
+//        try {
+//            PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
+//            List<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
+//            return pickRequestEntities;
+//        } catch (Exception ex) {
+//            System.out.println("getPickRequest(): error");
+//            ex.printStackTrace();
+//            return null;
+//        }
+//    }
     @Override
-    public List<PickRequestEntity> getPickRequests(Long pickerID) {
-        System.out.println("getPickRequest() called");
-        try {
-            PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
-            List<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
-            return pickRequestEntities;
-        } catch (Exception ex) {
-            System.out.println("getPickRequest(): error");
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public Boolean acceptPickRequest(Long pickerID, Long pickRequestID) {
+    public PickRequestEntity getNextPickRequest(Long staffID) {
         System.out.println("acceptPickRequest() called");
         try {
-            PickRequestEntity pickRequestEntity = em.getReference(PickRequestEntity.class, pickRequestID);
-            pickRequestEntity.setDateCompleted(new Date());
-            pickRequestEntity.setPickStatus(2);//2.In-progress
+            StaffEntity staffEntity = em.getReference(StaffEntity.class, staffID);
+            //Get the store which the picker belong to
+            AccessRightEntity accessRightEntity = ambl.isAccessRightExist(staffID, 12L);//Picker role
+            Long storeID = accessRightEntity.getStore().getId();
+            //Get pick requests which are not picked yet
+            Query q = em.createQuery("SELECT p from PickRequestEntity p where p.store.id=:storeID AND p.pickStatus=1 BY p.dateSubmitted ASC");
+            q.setParameter("storeID", storeID);
+            List<PickRequestEntity> pickRequestEntities = (List<PickRequestEntity>) q.getResultList();
+            //Get the oldestt one
+            PickRequestEntity pickRequestEntity = pickRequestEntities.get(0);
+            pickRequestEntity.setPickStatus(2);//Update pick status to 2.In-progress
+            pickRequestEntity.setCollectionStatus(1);//Update collection status to 1.Picking
             em.merge(pickRequestEntity);
-            return true;
+            return pickRequestEntity;
         } catch (Exception ex) {
             System.out.println("acceptPickRequest(): error");
             ex.printStackTrace();
-            return false;
+            return null;
         }
     }
 
     @Override
-    public Boolean completePickRequest(Long pickRequestID) {
+    public PickRequestEntity completePickRequest(Long pickRequestID) {
         System.out.println("completePickRequest() called");
         try {
             PickRequestEntity pickRequestEntity = em.getReference(PickRequestEntity.class, pickRequestID);
             //Update status
             pickRequestEntity.setDateCompleted(new Date());
             pickRequestEntity.setPickStatus(3);//3.Completed
+            pickRequestEntity.setCollectionStatus(2);//2.Ready for Collection
             em.merge(pickRequestEntity);
-            //Remove from the picker queue
-            PickerEntity pickerEntity = pickRequestEntity.getPicker();
-            List<PickRequestEntity> pickRequestEntities = pickerEntity.getListOfJob();
-            for (int i = 0; i < pickRequestEntities.size(); i++) {
-                if (pickRequestEntities.get(i).getId().equals(pickRequestID)) {
-                    pickRequestEntities.remove(i);
-                    em.merge(pickerEntity);
-                    System.out.println("completePickRequest() success");
-                    return true;
-                }
-            }
+
             //Update store inventory
             Long storeID = pickRequestEntity.getStore().getId();
             List<LineItemEntity> itemsInPickRequest = pickRequestEntity.getItems();
@@ -154,96 +152,15 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
                         simbl.removeItemsFromInventory(storeID, itemsInPickRequest.get(itemsToRemove - 1).getItem().getSKU(), itemsInPickRequest.get(itemsToRemove - 1).getQuantity(), true);
                 }
             }
-            System.out.println("completePickRequest(): failed");
-            return false;
+            System.out.println("completePickRequest(): success");
+            return pickRequestEntity;
         } catch (Exception ex) {
             System.out.println("completePickRequest(): error");
             ex.printStackTrace();
-            return false;
+            return null;
         }
     }
 
-    @Override
-    public Boolean pickerLogoff(Long pickerID) {
-        System.out.println("pickerLogoff() called");
-        try {
-            PickerEntity pickerEntity = em.getReference(PickerEntity.class, pickerID);
-            List<PickRequestEntity> pickerTaskQueue = pickerEntity.getListOfJob();
-            //Remove him from the list of picker in the store
-            em.remove(pickerEntity);
-            //Reassign all the pick request in his queue to someone else
-            for (PickRequestEntity curr : pickerTaskQueue) {
-                curr.setPicker(null);
-                em.merge(curr);
-                updatePickRequest(curr.getId());
-            }
-            return true;
-        } catch (Exception ex) {
-            System.out.println("pickerLogoff(): error");
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public Boolean updatePickRequest(Long pickRequestID) {
-        System.out.println("updatePickRequest() called");
-        try {
-            PickRequestEntity pickRequestEntity = em.getReference(PickRequestEntity.class, pickRequestID);
-            Long salesRecordID = pickRequestEntity.getSalesRecord().getId();
-            SalesRecordEntity salesRecordEntity = em.getReference(SalesRecordEntity.class, salesRecordID);
-
-            //Find the store
-            StoreEntity storeEntity = em.getReference(StoreEntity.class, salesRecordEntity.getStore().getId());
-
-            //Find the list of pickers in the store
-            Query q = em.createQuery("SELECT p FROM PickerEntity p WHERE p.store.id=:storeID");
-            q.setParameter("storeID", storeEntity.getId());
-            List<PickerEntity> pickers = q.getResultList();
-
-            // If no pickers available in this store, return false
-            //!!!! SHOULD NOT OCCUR DURING DEMO, PICKER HAVE TO LOGIN FIRST!!
-            if (pickers.size() == 0) {
-                return false;
-            }
-
-            //Find picker with least amount of job in queue
-            PickerEntity pickerWithLeastJobInQueue = pickers.get(0);
-            for (PickerEntity curr : pickers) {
-                if (curr.getListOfJob().size() < pickerWithLeastJobInQueue.getListOfJob().size()) {
-                    pickerWithLeastJobInQueue = curr;
-                }
-            }
-
-            //Update the pick request to the new person
-            pickRequestEntity.setPicker(pickerWithLeastJobInQueue);
-            em.merge(pickRequestEntity);
-
-            //Check the picker queue to slot the pick request in (by date)
-            List<PickRequestEntity> pickerTaskQueue = pickerWithLeastJobInQueue.getListOfJob();
-            Long currentPickRequestTime = salesRecordEntity.getCreatedDate().getTime();
-            //If picker does not have anything, just add
-            if (pickerTaskQueue.size() == 0) {
-                pickerTaskQueue.add(pickRequestEntity);
-                em.merge(pickerWithLeastJobInQueue);
-            } else { // otherwise loop thru his queue and slot it in (based on sale order date)   
-                for (int i = 0; i < pickerTaskQueue.size(); i++) {
-                    // If the current one in queue is newer, slow the pick request before it
-                    if (pickerTaskQueue.get(i).getSalesRecord().getCreatedDate().getTime() > currentPickRequestTime) {
-                        //Add to the picker queue
-                        pickerTaskQueue.add(i, pickRequestEntity);
-                        em.merge(pickerWithLeastJobInQueue);
-                    }
-                }
-            }
-            return true;
-        } catch (Exception ex) {
-            System.out.println("addPickRequest(): error");
-            ex.printStackTrace();
-            return false;
-        }
-    }
-    
     @Override
     public Boolean addPickRequest(Long salesRecordID) {
         System.out.println("addPickRequest() called");
@@ -252,25 +169,6 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
 
             //Find the store
             StoreEntity storeEntity = em.getReference(StoreEntity.class, salesRecordEntity.getStore().getId());
-
-            //Find the list of pickers in the store
-            Query q = em.createQuery("SELECT p FROM PickerEntity p WHERE p.store.id=:storeID");
-            q.setParameter("storeID", storeEntity.getId());
-            List<PickerEntity> pickers = q.getResultList();
-
-            // If no pickers available in this store, return false
-            //!!!! SHOULD NOT OCCUR DURING DEMO, PICKER HAVE TO LOGIN FIRST!!
-            if (pickers.size() == 0) {
-                return false;
-            }
-
-            //Find picker with least amount of job in queue
-            PickerEntity pickerWithLeastJobInQueue = pickers.get(0);
-            for (PickerEntity curr : pickers) {
-                if (curr.getListOfJob().size() < pickerWithLeastJobInQueue.getListOfJob().size()) {
-                    pickerWithLeastJobInQueue = curr;
-                }
-            }
 
             //Create the items to be picked
             List<LineItemEntity> itemsToBePicked = new ArrayList<LineItemEntity>();
@@ -282,26 +180,9 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             //Create the PickRequest 
             String receiptNo = salesRecordEntity.getReceiptNo();
             String queueNo = receiptNo.substring(receiptNo.length() - 4);
-            PickRequestEntity pickRequestEntity = new PickRequestEntity(pickerWithLeastJobInQueue, salesRecordEntity, itemsToBePicked, queueNo);
+            PickRequestEntity pickRequestEntity = new PickRequestEntity(storeEntity, salesRecordEntity, itemsToBePicked, queueNo);
             em.persist(pickRequestEntity);
 
-            //Check the picker queue to slot the pick request in (by date)
-            List<PickRequestEntity> pickerTaskQueue = pickerWithLeastJobInQueue.getListOfJob();
-            Long currentPickRequestTime = salesRecordEntity.getCreatedDate().getTime();
-            //If picker does not have anything, just add
-            if (pickerTaskQueue.size() == 0) {
-                pickerTaskQueue.add(pickRequestEntity);
-                em.merge(pickerWithLeastJobInQueue);
-            } else { // otherwise loop thru his queue and slot it in (based on sale order date)   
-                for (int i = 0; i < pickerTaskQueue.size(); i++) {
-                    // If the current one in queue is newer, slow the pick request before it
-                    if (pickerTaskQueue.get(i).getSalesRecord().getCreatedDate().getTime() > currentPickRequestTime) {
-                        //Add to the picker queue
-                        pickerTaskQueue.add(i, pickRequestEntity);
-                        em.merge(pickerWithLeastJobInQueue);
-                    }
-                }
-            }
             return true;
         } catch (Exception ex) {
             System.out.println("addPickRequest(): error");
@@ -322,5 +203,81 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             ex.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public List<PickRequestEntity> getPickRequestInStoreForReceptionist(Long storeID) {
+        System.out.println("getPickRequestInStoreForReceptionist() called");
+        try {
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store.id=:storeID AND p.collectionStatus!=5 AND ORDER BY p.pickStatus DESC,p.dateSubmitted ASC");
+            q.setParameter("storeID", storeID);
+            return q.getResultList();
+        } catch (Exception ex) {
+            System.out.println("getPickRequestInStoreForReceptionist(): error");
+            ex.printStackTrace();
+            return new ArrayList();
+        }
+    }
+
+    @Override
+    public List<PickRequestEntity> getAllUncollectedPickRequestInStore(Long storeID) {
+        System.out.println("getAllUncollectedPickRequestInStore() called");
+        try {
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store.id=:storeID AND p.collectionStatus=3 AND ORDER BY p.dateSubmitted ASC");
+            q.setParameter("storeID", storeID);
+            return q.getResultList();
+        } catch (Exception ex) {
+            System.out.println("getAllUncollectedPickRequestInStore(): error");
+            ex.printStackTrace();
+            return new ArrayList();
+        }
+    }
+
+    @Override
+    public Boolean markPickRequestAsCollected(Long pickRequestID) {
+        System.out.println("markPickRequestAsCollected() called");
+        try {
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.id=:pickRequestID");
+            q.setParameter("pickRequestID", pickRequestID);
+            PickRequestEntity pickRequestEntity = (PickRequestEntity) q.getSingleResult();
+            pickRequestEntity.setCollectionStatus(5);//Collected
+            em.merge(pickRequestEntity);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("markPickRequestAsCollected(): error");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean markPickRequestAsUnCollected(Long pickRequestID) {
+        System.out.println("markPickRequestAsUnCollected() called");
+        try {
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.id=:pickRequestID");
+            q.setParameter("pickRequestID", pickRequestID);
+            PickRequestEntity pickRequestEntity = (PickRequestEntity) q.getSingleResult();
+            pickRequestEntity.setCollectionStatus(4);//Uncollected
+            em.merge(pickRequestEntity);
+            return true;
+        } catch (Exception ex) {
+            System.out.println("markPickRequestAsUnCollected(): error");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean callCustomer(Long pickRequestID) {
+        System.out.println("callCustomer(): called");
+        try {
+            PickRequestEntity pickRequestEntity = em.getReference(PickRequestEntity.class, pickRequestID);
+            pickRequestEntity.setCollectionStatus(3);//Called
+            em.merge(pickRequestEntity);
+        } catch (Exception ex) {
+            System.out.println("callCustomer(): Error");
+            ex.printStackTrace();
+        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
