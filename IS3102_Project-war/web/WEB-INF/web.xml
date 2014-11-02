@@ -1010,8 +1010,8 @@
         <servlet-class>A4_servlets.PromotionalSalesManagement_UpdateServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PickerLogout_Servlet</servlet-name>
-        <servlet-class>A4_servlets.unused_servlet</servlet-class>
+        <servlet-name>ReceptionistJobList_Servlet</servlet-name>
+        <servlet-class>A4_servlets.ReceptionistJobList_Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PickerCollectedJob_Servlet</servlet-name>
@@ -1056,6 +1056,10 @@
     <servlet>
         <servlet-name>Analytical_ValueAnalysisSendLoyaltyCLVServlet</servlet-name>
         <servlet-class>A5_servlets.Analytical_ValueAnalysisSendLoyaltyCLVServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReceptionistLogin_Servlet</servlet-name>
+        <servlet-class>A4_servlets.ReceptionistLogin_Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
@@ -2066,8 +2070,8 @@
         <url-pattern>/PromotionalSalesManagement_UpdateServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PickerLogout_Servlet</servlet-name>
-        <url-pattern>/PickerLogout_Servlet</url-pattern>
+        <servlet-name>ReceptionistJobList_Servlet</servlet-name>
+        <url-pattern>/ReceptionistJobList_Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PickerCollectedJob_Servlet</servlet-name>
@@ -2112,6 +2116,10 @@
     <servlet-mapping>
         <servlet-name>Analytical_ValueAnalysisSendLoyaltyCLVServlet</servlet-name>
         <url-pattern>/Analytical_ValueAnalysisSendLoyaltyCLVServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReceptionistLogin_Servlet</servlet-name>
+        <url-pattern>/ReceptionistLogin_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

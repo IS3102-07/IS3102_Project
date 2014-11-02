@@ -28,47 +28,50 @@
 
             <div class="container">
                 <div class="row">
-
-                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                                <tr>
-                                    <th>Queue No.</th>
-                                    <th>Pick Status</th>
-                                    <th>Picker</th>
-                                    <th>Date/Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    List<PickRequestEntity> pickRequests = (List<PickRequestEntity>) (session.getAttribute("pickRequests"));
-                                    if (pickRequests != null) {
-                                        for (int i = 0; i < pickRequests.size(); i++) {
-                                %>
-                                <tr>
-                                    <td>
-                                        <%= pickRequests.get(i).getQueueNo()%>
-                                    </td>
-                                    <td>
-                                        <%=pickRequests.get(i).getPickStatus()%>
-                                    </td>
-                                    <td>
-                                        <%=pickRequests.get(i).getPicker().getName()%>
-                                    </td>
-                                    <td>
-                                        <%=pickRequests.get(i).getDateSubmitted()%>
-                                    </td>
-                                </tr>
-                                <%
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Queue No.</th>
+                                <th>Pick Status</th>
+                                <th>Picker</th>
+                                <th>Date/Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                List<PickRequestEntity> pickRequests = (List<PickRequestEntity>) (session.getAttribute("pickRequests"));
+                                if (pickRequests != null) {
+                                    for (int i = 0; i < pickRequests.size(); i++) {
+                            %>
+                            <tr>
+                                <td>
+                                    <%= pickRequests.get(i).getQueueNo()%>
+                                </td>
+                                <td>
+                                    <%=pickRequests.get(i).getPickStatus()%>
+                                </td>
+                                <td>
+                                    <% StaffEntity picker = pickRequests.get(i).getPicker();
+                                        if (picker != null) {
+                                            out.println(picker.getName());
+                                        } else {
+                                            out.println("Unassigned");
                                         }
+                                    %>
+                                </td>
+                                <td>
+                                    <%=pickRequests.get(i).getDateSubmitted()%>
+                                </td>
+                            </tr>
+                            <%
                                     }
-                                %>
-                            </tbody>
-                        </table>
-                    </div>
+                                }
+                            %>
+                        </tbody>
+                    </table>
                     <hr class="tall">
+
                 </div>
             </div>
-        </div>
     </body>
 </html>

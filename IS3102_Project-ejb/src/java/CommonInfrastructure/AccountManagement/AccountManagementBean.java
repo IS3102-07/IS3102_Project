@@ -1391,6 +1391,22 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             return false;
         }
     }
+    
+    @Override
+    public Boolean checkIfStaffIsPicker(Long staffId) {
+        try {
+            StaffEntity staffEntity = (StaffEntity) em.getReference(StaffEntity.class, staffId);
+            List<RoleEntity> roles = staffEntity.getRoles();
+            for (RoleEntity role : roles) {
+                if (role.getName().equals("Picker")) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 
     @Override
     public Boolean checkIfStaffIsGlobalManager(Long staffId) {

@@ -35,6 +35,7 @@
                             <tr>
                                 <th>Location</th>
                                 <th>SKU</th>
+                                <th>Name</th>
                                 <th>Quantity</th>
                             </tr>
                         </thead>
@@ -53,6 +54,9 @@
                                 </td>
                                 <td>
                                     <%=pickRequest.getItems().get(i).getItem().getSKU()%>
+                                </td>
+                                <td>
+                                    <%=pickRequest.getItems().get(i).getItem().getName()%>
                                 </td>
                                 <td>
                                     <%=pickRequest.getItems().get(i).getQuantity()%>

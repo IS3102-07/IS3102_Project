@@ -122,6 +122,7 @@ public interface AccountManagementBeanLocal {
     public Boolean checkIfStaffIsCashier(Long staffId);
 
     public Boolean checkIfStaffIsReceptionist(Long staffId);
+    public Boolean checkIfStaffIsPicker(Long staffId);
 
     public Boolean checkIfStaffIsGlobalManager(Long staffId);
     

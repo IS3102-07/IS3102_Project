@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class unused_servlet extends HttpServlet {
+public class ReceptionistLogin_Servlet extends HttpServlet {
 
     @EJB
-    CustomerServiceBeanLocal customerServiceBean;
+    CustomerServiceBeanLocal customerServiceBeanLocal;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -23,14 +23,19 @@ public class unused_servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
 
-            StaffEntity picker = (StaffEntity) (session.getAttribute("picker"));
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
-            session.invalidate();
-            response.sendRedirect("A4/pickerLogin.jsp?goodMsg=Logout Successful.");
-
-            out.close();
+            StaffEntity receptionist = customerServiceBeanLocal.receptionistLoginStaff(email, password);
+            if (receptionist == null) {
+                response.sendRedirect("A4/receptionistLogin.jsp?errMsg=Invalid Login Credential.");
+            } else {
+                receptionist = customerServiceBeanLocal.receptionistLoginStaff(email, password);
+                session.setAttribute("receptionist", receptionist);
+                response.sendRedirect("/ReceptionistJobList_Servlet");
+            }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            out.println(ex);
         }
     }
 

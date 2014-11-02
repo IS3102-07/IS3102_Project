@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class PickerJobList_Servlet extends HttpServlet {
+public class ReceptionistJobList_Servlet extends HttpServlet {
 
     @EJB
     CustomerServiceBeanLocal customerServiceBean;
@@ -33,19 +33,19 @@ public class PickerJobList_Servlet extends HttpServlet {
 
             StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
             if (staff != null) {
-                if (accountManagementBean.checkIfStaffIsStoreManager(staff.getId())|| accountManagementBean.checkIfStaffIsPicker(staff.getId())) {
+                if (accountManagementBean.checkIfStaffIsReceptionist(staff.getId())|| accountManagementBean.checkIfStaffIsStoreManager(staff.getId())) {
                     AccessRightEntity accessRightEntity = accountManagementBean.isAccessRightExist(staff.getId(), 4L);
                     Long storeID = accessRightEntity.getStore().getId();
-                    List<PickRequestEntity> pickRequests = customerServiceBean.getAllPickRequestInStore(storeID);
+                    List<PickRequestEntity> pickRequests = customerServiceBean.getPickRequestInStoreForReceptionist(storeID);
                     session.setAttribute("pickRequests", pickRequests);
-                    response.sendRedirect("A4/pickerJobList.jsp");
-                } else {//no store manager or picker role
-                     String result = "Account does not have store manager or picker role.";
-                    response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
+                    response.sendRedirect("A4/receptionistJobList.jsp");
+                } else {//no store manager or receptionist role
+                     String result = "Account does not have store manager or receptionist role.";
+                    response.sendRedirect("A1/receptionistLogin.jsp?errMsg=" + result);
                 }
             } else {
                 String result = "Login fail. Please try again.";
-                response.sendRedirect("A4/pickerLogin.jsp?errMsg=" + result);
+                response.sendRedirect("A1/receptionistLogin.jsp?errMsg=" + result);
             }
 
         } catch (Exception ex) {

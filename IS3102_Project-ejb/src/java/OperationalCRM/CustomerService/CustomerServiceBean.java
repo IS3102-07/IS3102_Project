@@ -72,17 +72,16 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             if (staffEntity == null) {
                 return null;
             }
-            // Check roles, only picker role can login
-            List<RoleEntity> roles = staffEntity.getRoles();
-            for (RoleEntity role : roles) {
-                if (role.getId().equals(12L)) {//Picker role
-                    staffID = staffEntity.getId();
-                    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
-                    out.println(new Date().toString() + ";" + staffID + ";pickerLoginStaff();" + staffID + ";");
-                    out.close();
-                    return staffEntity;
-                }
+            staffID = staffEntity.getId();
+            // Check roles, only store manager or picker role can login
+            if (ambl.checkIfStaffIsStoreManager(staffID) || ambl.checkIfStaffIsPicker(staffID)) {//Store manager or pFicker role
+                staffID = staffEntity.getId();
+                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                out.println(new Date().toString() + ";" + staffID + ";pickerLoginStaff();" + staffID + ";");
+                out.close();
+                return staffEntity;
             }
+
             return null;
         } catch (Exception ex) {
             System.out.println("pickerLoginStaff(): error");
@@ -113,13 +112,14 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             AccessRightEntity accessRightEntity = ambl.isAccessRightExist(staffID, 12L);//Picker role
             Long storeID = accessRightEntity.getStore().getId();
             //Get pick requests which are not picked yet
-            Query q = em.createQuery("SELECT p from PickRequestEntity p where p.store.id=:storeID AND p.pickStatus=1 BY p.dateSubmitted ASC");
+            Query q = em.createQuery("SELECT p from PickRequestEntity p where p.store.id=:storeID AND p.pickStatus=1 ORDER BY p.dateSubmitted ASC");
             q.setParameter("storeID", storeID);
             List<PickRequestEntity> pickRequestEntities = (List<PickRequestEntity>) q.getResultList();
             //Get the oldestt one
             PickRequestEntity pickRequestEntity = pickRequestEntities.get(0);
             pickRequestEntity.setPickStatus(2);//Update pick status to 2.In-progress
             pickRequestEntity.setCollectionStatus(1);//Update collection status to 1.Picking
+            pickRequestEntity.setPicker(staffEntity);
             em.merge(pickRequestEntity);
             return pickRequestEntity;
         } catch (Exception ex) {
@@ -195,7 +195,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
     public List<PickRequestEntity> getAllPickRequestInStore(Long storeID) {
         System.out.println("getAllPickRequestInStore() called");
         try {
-            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store.id=:storeID ORDER BY p.pickStatus ASC,p.dateSubmitted ASC");
+            Query q = em.createQuery("SELECT p from PickRequestEntity p WHERE p.store.id=:storeID ORDER BY p.pickStatus ASC,p.dateSubmitted DESC");
             q.setParameter("storeID", storeID);
             return q.getResultList();
         } catch (Exception ex) {
@@ -279,5 +279,31 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             ex.printStackTrace();
         }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public StaffEntity receptionistLoginStaff(String email, String password) {
+        System.out.println("receptionistLoginStaff() called");
+        Long staffID = null;
+        try {
+            StaffEntity staffEntity = ambl.loginStaff(email, password);
+            if (staffEntity == null) {
+                return null;
+            }
+            staffID = staffEntity.getId();
+            // Check roles, only store manager or receptionist role can login
+            if (ambl.checkIfStaffIsStoreManager(staffID) || ambl.checkIfStaffIsReceptionist(staffID)) {//Store manager or receptionist role
+                staffID = staffEntity.getId();
+                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                out.println(new Date().toString() + ";" + staffID + ";receptionistLoginStaff();" + staffID + ";");
+                out.close();
+                return staffEntity;
+            }
+            return null;
+        } catch (Exception ex) {
+            System.out.println("receptionistLoginStaff(): error");
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

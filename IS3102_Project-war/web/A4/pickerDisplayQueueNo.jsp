@@ -18,26 +18,15 @@
 
 
         <div role="main" class="main">
-
-            <div class="header-container">
-                <div class="row" style="background-color : rgb(153, 0, 0); margin-bottom: 50px" >
-                    <div class="col-md-4 col-md-offset-4">  
-                        <img class="center-block img-responsive"  src="../img/logo-label.png" style="margin-top: 20px; margin-bottom: 20px;">
-                    </div>
-                </div>
-            </div>
-
-
             <div class="container">
                 <div class="row">
                     <% String queueNo = request.getParameter("queueNo");%>
-                    Display BIG BIG queue
                     <hr class="tall">
 
                     <div class="row">
                         <div class="col-md-12">
-                            <a  href="../PickerCompleteJob_Servlet?pickRequestId=<%=pickRequest.getId()%>">
-                                <input type="button" value="<%=queueNo%>"  style="min-height: 150px; font-size: 50px;"  class="btn btn-lg btn-primary btn-block">
+                            <a href="../PickerCollectedJob_Servlet?pickRequestId=<%=pickRequest.getId()%>">
+                                <input type="button" value="<%=queueNo%>"  style="min-height: 250px; font-size: 150px;"  class="btn btn-lg btn-primary btn-block">
                             </a>
                         </div>
                     </div>
