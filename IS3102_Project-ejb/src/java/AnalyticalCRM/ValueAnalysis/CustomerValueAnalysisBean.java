@@ -135,6 +135,49 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
     
     @Override
+    public List<LineItemEntity> sortBestSellingRetailProducts() {
+        System.out.println("sortBestSellingRetailProducts()");
+        List<LineItemEntity> sortedRetailProducts = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+            List<RetailProductEntity> retailProducts = q.getResultList();
+
+            for (RetailProductEntity furniture : retailProducts) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(furniture);
+                lineItem.setQuantity(0);
+                sortedRetailProducts.add(lineItem);
+            }
+            System.out.println("Size of sortedRetailProducts is : " + sortedRetailProducts.size());
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                System.out.println("Looping inside salesRecord of : " + salesRecord.getId());
+                if (salesRecord.getItemsPurchased().size() != 0) {
+                    for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                        System.out.println("Looping inside purchaseRecord of : " + lineItem.getId());
+                        for (int i = 0; i < sortedRetailProducts.size(); i++) {
+                            if (lineItem.getItem().getId() == sortedRetailProducts.get(i).getItem().getId()) {
+                                sortedRetailProducts.get(i).setQuantity(sortedRetailProducts.get(i).getQuantity() + lineItem.getQuantity());
+                                System.out.println(sortedRetailProducts.get(i).getItem().getName() + " quantity is updated to : " + sortedRetailProducts.get(i).getQuantity());
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < sortedRetailProducts.size(); i++) {
+                System.out.println("Retailproduct name : " + sortedRetailProducts.get(i).getItem().getName() + " quantity : " + sortedRetailProducts.get(i).getQuantity());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedRetailProducts;
+    }
+    
+    @Override
     public Double getFurnitureTotalRevenue(Long furnitureId) {
         return (double) 10;
     }

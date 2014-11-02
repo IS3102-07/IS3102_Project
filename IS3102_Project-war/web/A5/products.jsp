@@ -1,4 +1,4 @@
-<%@page import="EntityManager.MemberEntity"%>
+<%@page import="EntityManager.ItemEntity"%>
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.LineItemEntity"%>
 <%@page import="java.text.DecimalFormat"%>
@@ -87,15 +87,15 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                   Products Analysis
+                                    Furniture Analysis
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="rfm">
-                                   
-                                            <%
-                                                List<LineItemEntity> sortBestSellingFurniture = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture"));
-                                            %>
-                                            <!-- /.table-responsive -->
+
+                                    <%
+                                        List<LineItemEntity> sortBestSellingFurniture = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture"));
+                                    %>
+                                    <!-- /.table-responsive -->
 
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -109,39 +109,27 @@
                                                                 <tr>
                                                                     <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                     <th>Name</th>
-                                                                    <th>Recency</th>
-                                                                    <th>Frequency</th>
-                                                                    <th>Monetary Value</th>
-                                                                    <th>Action</th>
+                                                                    <th>Quantity Sold</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <%
-                                                                    
                                                                     if (sortBestSellingFurniture != null) {
                                                                         for (int i = 0; i < sortBestSellingFurniture.size(); i++) {
                                                                             LineItemEntity item = sortBestSellingFurniture.get(i);
+                                                                            ItemEntity itemEntity = item.getItem();
                                                                 %>
                                                                 <tr>                   
                                                                     <td>
                                                                         <input type="checkbox" name="delete" value="<%=item.getId()%>" />
                                                                     </td>
                                                                     <td>
-                                                                        <%=item.getId()%>
+                                                                        <%=itemEntity.getName()%>
                                                                     </td>
                                                                     <td >
-                                                                        
-                                                                    </td>
-                                                                    <td>
-                                                                        
-                                                                    </td>
-                                                                    <td>
-                                                                        
+                                                                        <%=item.getQuantity()%>
                                                                     </td>
 
-                                                                    <td>
-                                                                        <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=item.getId()%>" value="View Sales Record" onclick="javascript:viewSalesRecord('<%=item.getId()%>')"/>
-                                                                    </td>
                                                                 </tr>
                                                                 <%
                                                                         }
@@ -151,21 +139,82 @@
                                                         </table>
                                                     </div>
                                                     <!-- /.table-responsive -->
-                                                    <div class="row">
-                                                        <div class="col-md-12">                                                 
-                                                            <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Send Loyalty Points</button></a>
-                                                        </div>
-                                                    </div>
+
                                                     <input type="hidden" name="id" value="">    
                                                 </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div id="products" class="tab-pane">
+                                            </div>   
                                         </div>
                                     </div>
+                                    <input type="hidden" name="id" value="">    
+                                    </div>
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </form>
+                            </div>
+                                                            
+                                                            <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Retail Products Analysis
+                                </div>
+                                <!-- /.panel-heading -->
+                                <form name="rfm">
 
+                                    <%
+     
+                                        List<LineItemEntity> sortBestSellingRetailProducts = (List<LineItemEntity>) (session.getAttribute("sortBestSellingRetailProducts"));
+                                    %>
+                                    <!-- /.table-responsive -->
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+
+                                            <div class="panel-body">
+                                                <div class="table-responsive">
+
+                                                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
+                                                        <table class="table table-bordered" id="dataTables-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                                    <th>Name</th>
+                                                                    <th>Quantity Sold</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <%
+                                                                    if (sortBestSellingRetailProducts != null) {
+                                                                        for (int i = 0; i < sortBestSellingRetailProducts.size(); i++) {
+                                                                            LineItemEntity item = sortBestSellingRetailProducts.get(i);
+                                                                            ItemEntity itemEntity = item.getItem();
+                                                                %>
+                                                                <tr>                   
+                                                                    <td>
+                                                                        <input type="checkbox" name="delete" value="<%=item.getId()%>" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=itemEntity.getName()%>
+                                                                    </td>
+                                                                    <td >
+                                                                        <%=item.getQuantity()%>
+                                                                    </td>
+
+                                                                </tr>
+                                                                <%
+                                                                        }
+                                                                    }
+                                                                %>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!-- /.table-responsive -->
+
+                                                    <input type="hidden" name="id" value="">    
+                                                </div>
+                                            </div>   
+                                        </div>
+                                    </div>
                                     <input type="hidden" name="id" value="">    
                                     </div>
                                     </div>
