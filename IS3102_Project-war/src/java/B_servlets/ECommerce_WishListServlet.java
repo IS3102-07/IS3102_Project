@@ -2,7 +2,6 @@ package B_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import ECommerce.ECommerceBeanLocal;
-import EntityManager.ShoppingListEntity;
 import ECommerce.ECommerceBean;
 import EntityManager.FurnitureEntity;
 import EntityManager.Item_CountryEntity;
