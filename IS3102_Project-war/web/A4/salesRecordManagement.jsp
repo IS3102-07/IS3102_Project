@@ -16,12 +16,16 @@
                         <div class="col-lg-12">
                             <h1 class="page-header">Sales Record Management</h1>
                             <ol class="breadcrumb">
-                                <li>
-                                    <i class="icon icon-user"><a href="../A4/customerServiceManagement.jsp"></i> Customer Service
-                                </li>  
-                                <li>
+                                <li class="active">
+                                    <i class="icon icon-users"></i><a href="../A4/operationalCRM.jsp"> Operational CRM</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-user"></i> <a href="customerServiceManagement.jsp"> Customer Service </a>                                 
+                                </li>
+                                <li class="active">
                                     <i class="icon icon-align-center"></i> Sales Record Management
-                                </li>                                
+                                </li>
+                                                              
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->

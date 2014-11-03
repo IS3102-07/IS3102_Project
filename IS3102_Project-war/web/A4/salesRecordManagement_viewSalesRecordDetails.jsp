@@ -27,6 +27,9 @@
 
                             <h1 class="page-header">View Sales Record Details</h1>
                             <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="icon icon-users"></i><a href="../A4/operationalCRM.jsp"> Operational CRM</a>
+                                </li>
                                 <li>
                                     <i class="icon icon-user"></i> <a href="customerServiceManagement.jsp"> Customer Service </a>                                 
                                 </li>

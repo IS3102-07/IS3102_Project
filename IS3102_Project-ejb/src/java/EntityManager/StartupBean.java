@@ -357,7 +357,7 @@ public class StartupBean {
             //Item_Country pricing
             Query q = em.createQuery("Select c from CountryEntity c where c.name='Singapore'");
             CountryEntity c = (CountryEntity) q.getSingleResult();
-            q = em.createQuery("Select i from ItemEntity i where i.SKU='F1'");
+            q = em.createQuery("Select i from ItemEntity i where i.SKU='F_TD_01'");
             ItemEntity i = (ItemEntity) q.getSingleResult();
             Item_CountryEntity item_country;
             item_country = new Item_CountryEntity();
@@ -368,7 +368,7 @@ public class StartupBean {
             em.persist(item_country);
             em.flush();
 
-            q = em.createQuery("Select i from ItemEntity i where i.SKU='F2'");
+            q = em.createQuery("Select i from ItemEntity i where i.SKU='F_TD_02'");
             ItemEntity ii = (ItemEntity) q.getSingleResult();
             item_country = new Item_CountryEntity();
             item_country.setCountry(c);
@@ -421,20 +421,20 @@ public class StartupBean {
                                                         
                             if(i==0){
                                 SalesFigureLineItemEntity l = new SalesFigureLineItemEntity();
-                                l.setSKU("F1");
+                                l.setSKU("F_TD_01");
                                 l.setQuantity(saleFigure.getQuantity() / 2);
                                 l.setSaleFigure(saleFigure);  
                                 em.persist(l);
                                 
                                 SalesFigureLineItemEntity l1 = new SalesFigureLineItemEntity();
-                                l1.setSKU("F3");
+                                l1.setSKU("F_TD_02");
                                 l1.setQuantity(saleFigure.getQuantity() - (saleFigure.getQuantity() / 2));
                                 l1.setSaleFigure(saleFigure);
                                 em.persist(l1);
                             }
                             if(i==1){
                                 SalesFigureLineItemEntity l = new SalesFigureLineItemEntity();
-                                l.setSKU("F2");
+                                l.setSKU("F_BM_21");
                                 l.setQuantity(saleFigure.getQuantity());
                                 l.setSaleFigure(saleFigure);
                                 em.persist(l);

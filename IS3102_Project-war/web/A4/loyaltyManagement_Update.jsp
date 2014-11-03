@@ -19,6 +19,9 @@ a<%@page import="EntityManager.CountryEntity"%>
                                 Loyalty Tier Update
                             </h1>
                             <ol class="breadcrumb">
+                                <li class="active">
+                                    <i class="icon icon-users"></i><a href="../A4/operationalCRM.jsp"> Operational CRM</a>
+                                </li>
                                 <li>
                                     <i class="icon icon-user"></i>  <a href="../LoyaltyManagement_Servlet">Loyalty Management</a>
                                 </li>
