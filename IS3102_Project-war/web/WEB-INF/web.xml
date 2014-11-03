@@ -1077,6 +1077,10 @@
         <servlet-name>PickerCompleteJobRefresh_Servlet</servlet-name>
         <servlet-class>A4_servlets.PickerCompleteJobRefresh_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Analytical_SegmentationSendLoyaltyServlet</servlet-name>
+        <servlet-class>A5_servlets.Analytical_SegmentationSendLoyaltyServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2152,6 +2156,10 @@
     <servlet-mapping>
         <servlet-name>PickerCompleteJobRefresh_Servlet</servlet-name>
         <url-pattern>/PickerCompleteJobRefresh_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Analytical_SegmentationSendLoyaltyServlet</servlet-name>
+        <url-pattern>/Analytical_SegmentationSendLoyaltyServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

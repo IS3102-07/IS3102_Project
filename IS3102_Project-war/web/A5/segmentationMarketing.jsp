@@ -45,6 +45,24 @@
             checkboxes[i].checked = source.checked;
             }
             }
+            function sendLoyaltyPoints() {
+            checkboxes = document.getElementsByName('delete');
+                    var numOfTicks = 0;
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+            if (checkboxes[i].checked) {
+            numOfTicks++;
+            }
+            }
+            if (checkboxes.length == 0 || numOfTicks == 0) {
+            window.event.returnValue = true;
+                    document.segmentation.action = "../Analytical_SegmentationSendLoyaltyServlet";
+                    document.segmentation.submit();
+            } else {
+            window.event.returnValue = true;
+                    document.segmentation.action = "../Analytical_SegmentationSendLoyaltyServlet";
+                    document.segmentation.submit();
+            }
+            }
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -86,7 +104,7 @@
                                     %>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <form name="staffManagement">
+                                <form name="segmentation">
                                     <div class="panel-body">
                                         <div class="table-responsive">
                                             <br>
@@ -163,20 +181,20 @@
                                                                     </td>
                                                                     <td>
                                                                         <%=member.getAge()%>
-                                                                        <% 
-                                                                        Integer totalPoints = 0;
-                                                                        if (member.getAge() <= 25 && member.getAge() >= 18) {
+                                                                        <%
+                                                                            Integer totalPoints = 0;
+                                                                            if (member.getAge() <= 25 && member.getAge() >= 18) {
                                                                                 out.println("(1)");
                                                                                 totalPoints += 1;
                                                                             } else if (member.getAge() > 25 && member.getAge() <= 40) {
                                                                                 out.println("(2)");
-                                                                                totalPoints +=2;
+                                                                                totalPoints += 2;
                                                                             } else if (member.getAge() > 40 && member.getAge() <= 55) {
                                                                                 out.println("(4)");
-                                                                                totalPoints += 3;
+                                                                                totalPoints += 4;
                                                                             } else if (member.getAge() > 55) {
                                                                                 out.println("(3)");
-                                                                                totalPoints +=4;
+                                                                                totalPoints += 3;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -185,16 +203,16 @@
 
                                                                         <% if (member.getIncome() <= 30000) {
                                                                                 out.println("(1)");
-                                                                                totalPoints +=1;
+                                                                                totalPoints += 1;
                                                                             } else if (member.getIncome() > 30000 && member.getIncome() <= 60000) {
                                                                                 out.println("(2)");
-                                                                                totalPoints +=2;
+                                                                                totalPoints += 2;
                                                                             } else if (member.getIncome() > 60000 && member.getIncome() <= 100000) {
                                                                                 out.println("(4)");
-                                                                                totalPoints +=4;
+                                                                                totalPoints += 4;
                                                                             } else if (member.getIncome() > 100000) {
                                                                                 out.println("(3)");
-                                                                                totalPoints +=3;
+                                                                                totalPoints += 3;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -203,10 +221,10 @@
 
                                                                         <% if (member.getCity().equalsIgnoreCase("Malaysia")) {
                                                                                 out.println("(1)");
-                                                                                totalPoints+=1;
+                                                                                totalPoints += 1;
                                                                             } else if (member.getCity().equalsIgnoreCase("Singapore")) {
                                                                                 out.println("(2)");
-                                                                                totalPoints+=2;
+                                                                                totalPoints += 2;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -224,40 +242,40 @@
                                                                             days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                                                                             if (member.getJoinDate().getTime() > churnDate.getTime()) {
                                                                                 out.println("(1)");
-                                                                                totalPoints +=1;
+                                                                                totalPoints += 1;
                                                                             } else {
                                                                                 c.add(Calendar.DATE, (-365));
                                                                                 churnDate = c.getTime();
-                                                                                
+
                                                                                 if (member.getJoinDate().getTime() > churnDate.getTime()) {
                                                                                     out.println("(2)");
-                                                                                    totalPoints +=2;
+                                                                                    totalPoints += 2;
                                                                                 } else {
                                                                                     c.add(Calendar.DATE, (-365));
                                                                                     churnDate = c.getTime();
-                                                                                    
+
                                                                                     if (member.getJoinDate().getTime() > churnDate.getTime()) {
                                                                                         out.println("(3)");
-                                                                                        totalPoints+=3;
+                                                                                        totalPoints += 3;
                                                                                     } else {
                                                                                         c.add(Calendar.DATE, (-365));
                                                                                         churnDate = c.getTime();
-                                                                                        
+
                                                                                         if (member.getJoinDate().getTime() > churnDate.getTime()) {
                                                                                             out.println("(4)");
-                                                                                            totalPoints+=4;
+                                                                                            totalPoints += 4;
                                                                                         } else {
                                                                                             out.println("(5)");
-                                                                                            totalPoints+=5;
+                                                                                            totalPoints += 5;
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            
+
                                                                             }
                                                                         %>
                                                                     </td>
                                                                     <td>
-                                                                        <%out.println(totalPoints);%>
+                                                                        <%out.println(totalPoints + "/16");%>
                                                                     </td>
                                                                 </tr>
                                                                 <%
@@ -269,13 +287,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div class="row">
+                                                <div class="col-md-12">                                                 
+                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Send Loyalty Points</button></a>
+                                                </div>
+                                            </div>
                                             <input type="hidden" name="id" value="">    
                                         </div>
 
                                     </div>
                                     <!-- /.panel-body -->
-                                </form>
+
 
                             </div>
                             <!-- /.panel -->
@@ -291,122 +313,139 @@
 
         </div>
         <!-- /#wrapper -->
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Enter Loyalty Amount : 
+                            <input type="number" name="loyaltyPoints"></p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="sendLoyaltyPoints()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+                $(document).ready(function() {
+        $('#dataTables-example').dataTable();
+        });
+                new Morris.Bar({
+                // ID of the element in which to draw the chart.
+                element: 'ageGroupChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
 
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-                    $(document).ready(function() {
-            $('#dataTables-example').dataTable();
-            });
-                    new Morris.Bar({
-                    // ID of the element in which to draw the chart.
-                    element: 'ageGroupChart',
-                            // Chart data records -- each entry in this array corresponds to a point on
-                            // the chart.
+        <%
+            Integer cummulativeSpendingAgeGrp1 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp1");
+            Integer cummulativeSpendingAgeGrp2 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp2");
+            Integer cummulativeSpendingAgeGrp3 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp3");
+            Integer cummulativeSpendingAgeGrp4 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp4");
 
-            <%
-                Integer cummulativeSpendingAgeGrp1 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp1");
-                Integer cummulativeSpendingAgeGrp2 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp2");
-                Integer cummulativeSpendingAgeGrp3 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp3");
-                Integer cummulativeSpendingAgeGrp4 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp4");
+            Integer numOfMembersInAgeGroup1 = (Integer) session.getAttribute("numOfMembersInAgeGroup1");
+            Integer numOfMembersInAgeGroup2 = (Integer) session.getAttribute("numOfMembersInAgeGroup2");
+            Integer numOfMembersInAgeGroup3 = (Integer) session.getAttribute("numOfMembersInAgeGroup3");
+            Integer numOfMembersInAgeGroup4 = (Integer) session.getAttribute("numOfMembersInAgeGroup4");
 
-                Integer numOfMembersInAgeGroup1 = (Integer) session.getAttribute("numOfMembersInAgeGroup1");
-                Integer numOfMembersInAgeGroup2 = (Integer) session.getAttribute("numOfMembersInAgeGroup2");
-                Integer numOfMembersInAgeGroup3 = (Integer) session.getAttribute("numOfMembersInAgeGroup3");
-                Integer numOfMembersInAgeGroup4 = (Integer) session.getAttribute("numOfMembersInAgeGroup4");
+        %>
+                data: [
+                {y: '18-25', a: <%=cummulativeSpendingAgeGrp1%>, b: <%=numOfMembersInAgeGroup1%>, c: 1},
+                {y: '26-40', a: <%=cummulativeSpendingAgeGrp2%>, b: <%=numOfMembersInAgeGroup2%>, c: 2},
+                {y: '41-55', a: <%=cummulativeSpendingAgeGrp3%>, b: <%=numOfMembersInAgeGroup3%>, c: 3},
+                {y: '56-75', a: <%=cummulativeSpendingAgeGrp4%>, b: <%=numOfMembersInAgeGroup4%>, c: 4}
+                ],
+                        xkey: 'y',
+                        ykeys: ['a', 'b'],
+                        labels: ['Total Revenue', 'Num Of Members']
+                });</script>
 
-            %>
-                    data: [
-                    {y: '18-25', a: <%=cummulativeSpendingAgeGrp1%>, b: <%=numOfMembersInAgeGroup1%>, c: 1},
-                    {y: '26-40', a: <%=cummulativeSpendingAgeGrp2%>, b: <%=numOfMembersInAgeGroup2%>, c: 2},
-                    {y: '41-55', a: <%=cummulativeSpendingAgeGrp3%>, b: <%=numOfMembersInAgeGroup3%>, c: 3},
-                    {y: '56-75', a: <%=cummulativeSpendingAgeGrp4%>, b: <%=numOfMembersInAgeGroup4%>, c: 4}
-                    ],
-                            xkey: 'y',
-                            ykeys: ['a', 'b'],
-                            labels: ['Total Revenue', 'Num Of Members']
-                    });</script>
+    <script>
+                new Morris.Bar({
+                // ID of the element in which to draw the chart.
+                element: 'incomeGroupChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
 
-        <script>
-                    new Morris.Bar({
-                    // ID of the element in which to draw the chart.
-                    element: 'incomeGroupChart',
-                            // Chart data records -- each entry in this array corresponds to a point on
-                            // the chart.
+        <%
+            Integer cummulativeSpendingIncomeGrp1 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp1");
+            Integer cummulativeSpendingIncomeGrp2 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp2");
+            Integer cummulativeSpendingIncomeGrp3 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp3");
+            Integer cummulativeSpendingIncomeGrp4 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp4");
 
-            <%
-                Integer cummulativeSpendingIncomeGrp1 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp1");
-                Integer cummulativeSpendingIncomeGrp2 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp2");
-                Integer cummulativeSpendingIncomeGrp3 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp3");
-                Integer cummulativeSpendingIncomeGrp4 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp4");
+            Integer numOfMembersInIncomeGroup1 = (Integer) session.getAttribute("numOfMembersInIncomeGroup1");
+            Integer numOfMembersInIncomeGroup2 = (Integer) session.getAttribute("numOfMembersInIncomeGroup2");
+            Integer numOfMembersInIncomeGroup3 = (Integer) session.getAttribute("numOfMembersInIncomeGroup3");
+            Integer numOfMembersInIncomeGroup4 = (Integer) session.getAttribute("numOfMembersInIncomeGroup4");
 
-                Integer numOfMembersInIncomeGroup1 = (Integer) session.getAttribute("numOfMembersInIncomeGroup1");
-                Integer numOfMembersInIncomeGroup2 = (Integer) session.getAttribute("numOfMembersInIncomeGroup2");
-                Integer numOfMembersInIncomeGroup3 = (Integer) session.getAttribute("numOfMembersInIncomeGroup3");
-                Integer numOfMembersInIncomeGroup4 = (Integer) session.getAttribute("numOfMembersInIncomeGroup4");
+        %>
+                data: [
+                {y: '30,000', a: <%=cummulativeSpendingIncomeGrp1%>, b: <%=numOfMembersInIncomeGroup1%>, c: 1},
+                {y: '60,000', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: 2},
+                {y: '100,000', a: <%=cummulativeSpendingIncomeGrp3%>, b: <%=numOfMembersInIncomeGroup3%>, c: 3},
+                {y: '250,000', a: <%=cummulativeSpendingIncomeGrp4%>, b: <%=numOfMembersInIncomeGroup4%>, c: 4}
+                ],
+                        xkey: 'y',
+                        ykeys: ['a', 'b'],
+                        labels: ['Total Revenue', 'Num Of Members']
+                });</script>
+    <script>
+                new Morris.Bar({
+                // ID of the element in which to draw the chart.
+                element: 'countryChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
 
-            %>
-                    data: [
-                    {y: '30,000', a: <%=cummulativeSpendingIncomeGrp1%>, b: <%=numOfMembersInIncomeGroup1%>, c: 1},
-                    {y: '60,000', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: 2},
-                    {y: '100,000', a: <%=cummulativeSpendingIncomeGrp3%>, b: <%=numOfMembersInIncomeGroup3%>, c: 3},
-                    {y: '250,000', a: <%=cummulativeSpendingIncomeGrp4%>, b: <%=numOfMembersInIncomeGroup4%>, c: 4}
-                    ],
-                            xkey: 'y',
-                            ykeys: ['a', 'b'],
-                            labels: ['Total Revenue', 'Num Of Members']
-                    });</script>
-        <script>
-                    new Morris.Bar({
-                    // ID of the element in which to draw the chart.
-                    element: 'countryChart',
-                            // Chart data records -- each entry in this array corresponds to a point on
-                            // the chart.
+        <%
+            Integer totalCummulativeSpendingOfCountry1 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry1");
+            Integer totalCummulativeSpendingOfCountry2 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry2");
 
-            <%
-                Integer totalCummulativeSpendingOfCountry1 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry1");
-                Integer totalCummulativeSpendingOfCountry2 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry2");
+            Integer numOfMembersInCountry1 = (Integer) session.getAttribute("numOfMembersInCountry1");
+            Integer numOfMembersInCountry2 = (Integer) session.getAttribute("numOfMembersInCountry2");
 
-                Integer numOfMembersInCountry1 = (Integer) session.getAttribute("numOfMembersInCountry1");
-                Integer numOfMembersInCountry2 = (Integer) session.getAttribute("numOfMembersInCountry2");
+        %>
+                data: [
+                {y: 'Singapore', a: <%=totalCummulativeSpendingOfCountry1%>, b: <%=numOfMembersInCountry1%>, c: 1},
+                {y: 'Malaysia', a: <%=totalCummulativeSpendingOfCountry2%>, b: <%=numOfMembersInCountry2%>, c: 2},
+                ],
+                        xkey: 'y',
+                        ykeys: ['a', 'b'],
+                        labels: ['Total Revenue', 'Num Of Members']
+                });</script>
+    <script>
+                new Morris.Bar({
+                // ID of the element in which to draw the chart.
+                element: 'joinDateChart',
+                        // Chart data records -- each entry in this array corresponds to a point on
+                        // the chart.
 
-            %>
-                    data: [
-                    {y: 'Singapore', a: <%=totalCummulativeSpendingOfCountry1%>, b: <%=numOfMembersInCountry1%>, c: 1},
-                    {y: 'Malaysia', a: <%=totalCummulativeSpendingOfCountry2%>, b: <%=numOfMembersInCountry2%>, c: 2},
-                    ],
-                            xkey: 'y',
-                            ykeys: ['a', 'b'],
-                            labels: ['Total Revenue', 'Num Of Members']
-                    });</script>
-        <script>
-                    new Morris.Bar({
-                    // ID of the element in which to draw the chart.
-                    element: 'joinDateChart',
-                            // Chart data records -- each entry in this array corresponds to a point on
-                            // the chart.
+        <%
+            Integer getRevenueOfJoinDate1 = (Integer) session.getAttribute("getRevenueOfJoinDate1");
+            Integer getRevenueOfJoinDate2 = (Integer) session.getAttribute("getRevenueOfJoinDate2");
+            Integer getRevenueOfJoinDate3 = (Integer) session.getAttribute("getRevenueOfJoinDate3");
+            Integer getRevenueOfJoinDate4 = (Integer) session.getAttribute("getRevenueOfJoinDate4");
 
-            <%
-                Integer getRevenueOfJoinDate1 = (Integer) session.getAttribute("getRevenueOfJoinDate1");
-                Integer getRevenueOfJoinDate2 = (Integer) session.getAttribute("getRevenueOfJoinDate2");
-                Integer getRevenueOfJoinDate3 = (Integer) session.getAttribute("getRevenueOfJoinDate3");
-                Integer getRevenueOfJoinDate4 = (Integer) session.getAttribute("getRevenueOfJoinDate4");
+            Integer numOfMembersInJoinDate1 = (Integer) session.getAttribute("numOfMembersInJoinDate1");
+            Integer numOfMembersInJoinDate2 = (Integer) session.getAttribute("numOfMembersInJoinDate2");
+            Integer numOfMembersInJoinDate3 = (Integer) session.getAttribute("numOfMembersInJoinDate3");
+            Integer numOfMembersInJoinDate4 = (Integer) session.getAttribute("numOfMembersInJoinDate4");
 
-                Integer numOfMembersInJoinDate1 = (Integer) session.getAttribute("numOfMembersInJoinDate1");
-                Integer numOfMembersInJoinDate2 = (Integer) session.getAttribute("numOfMembersInJoinDate2");
-                Integer numOfMembersInJoinDate3 = (Integer) session.getAttribute("numOfMembersInJoinDate3");
-                Integer numOfMembersInJoinDate4 = (Integer) session.getAttribute("numOfMembersInJoinDate4");
-
-            %>
-                    data: [
-                    {y: '1 year', a: <%=getRevenueOfJoinDate1%>, b: <%=numOfMembersInJoinDate1%>, c: 1},
-                    {y: '2 years', a: <%=getRevenueOfJoinDate2%>, b: <%=numOfMembersInJoinDate2%>, c: 2},
-                    {y: '3 years', a: <%=getRevenueOfJoinDate3%>, b: <%=numOfMembersInJoinDate3%>, c: 3},
-                    {y: '4 years', a: <%=getRevenueOfJoinDate4%>, b: <%=numOfMembersInJoinDate4%>, c: 4},
-                    ],
-                            xkey: 'y',
-                            ykeys: ['a', 'b'],
-                            labels: ['Total Revenue', 'Num Of Members']
-                    });
-        </script>
-    </body>
+        %>
+                data: [
+                {y: '1 year', a: <%=getRevenueOfJoinDate1%>, b: <%=numOfMembersInJoinDate1%>, c: 1},
+                {y: '2 years', a: <%=getRevenueOfJoinDate2%>, b: <%=numOfMembersInJoinDate2%>, c: 2},
+                {y: '3 years', a: <%=getRevenueOfJoinDate3%>, b: <%=numOfMembersInJoinDate3%>, c: 3},
+                {y: '4 years', a: <%=getRevenueOfJoinDate4%>, b: <%=numOfMembersInJoinDate4%>, c: 4},
+                ],
+                        xkey: 'y',
+                        ykeys: ['a', 'b'],
+                        labels: ['Total Revenue', 'Num Of Members']
+                });
+    </script>
+</body>
 </html>

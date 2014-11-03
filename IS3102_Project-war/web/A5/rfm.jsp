@@ -87,7 +87,21 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                   Recency, Frequency & Monetary
+                                    <%
+                                        String errMsg = request.getParameter("errMsg");
+                                        String goodMsg = request.getParameter("goodMsg");
+                                        if (errMsg == null && goodMsg == null) {
+                                            out.println("Register a new staff or remove an existing staff");
+                                        } else if ((errMsg != null) && (goodMsg == null)) {
+                                            if (!errMsg.equals("")) {
+                                                out.println(errMsg);
+                                            }
+                                        } else if ((errMsg == null && goodMsg != null)) {
+                                            if (!goodMsg.equals("")) {
+                                                out.println(goodMsg);
+                                            }
+                                        }
+                                    %>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="rfm">
