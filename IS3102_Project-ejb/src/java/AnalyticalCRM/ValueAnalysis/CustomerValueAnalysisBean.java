@@ -37,13 +37,49 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
     @EJB
     ItemManagementBeanLocal itemManagementBean;
-    
-        
-    public Double getEstimatedCustomerLife(){    
+
+    public List<LineItemEntity> getTotalFurnitureSoldInCountry(String country) {
+        System.out.println("getTotalFurnitureSoldInCountry()");
+        List<LineItemEntity> sortedFurnitures = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            List<FurnitureEntity> furnitures = q.getResultList();
+
+            for (FurnitureEntity furniture : furnitures) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(furniture);
+                lineItem.setQuantity(0);
+                sortedFurnitures.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getStore().getCountry().getName().equalsIgnoreCase(country)) {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedFurnitures.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
+                                    sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedFurnitures;
+    }
+
+    public Double getEstimatedCustomerLife() {
         System.out.println("getEstimatedCustomerLife()");
-        return 1/(1 - this.getAverageRetentionRate());
-    }    
-    
+        return 1 / (1 - this.getAverageRetentionRate());
+    }
+
     public List<LineItemEntity> sortBestSellingMenuItem() {
         System.out.println("sortBestSellingMenuItem()");
         List<LineItemEntity> sortedMenuItem = new ArrayList();
@@ -67,7 +103,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         for (int i = 0; i < sortedMenuItem.size(); i++) {
                             if (lineItem.getItem().getId() == sortedMenuItem.get(i).getItem().getId()) {
                                 sortedMenuItem.get(i).setQuantity(sortedMenuItem.get(i).getQuantity() + lineItem.getQuantity());
-                                
+
                             }
                         }
                     }
@@ -78,12 +114,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return sortedMenuItem;
     }
-    
+
     public Double getCustomerLifeTimeValue() {
         System.out.println("getCustomerLifeTimeValue()");
         return this.getEstimatedCustomerLife() * this.getAverageCustomerMonetaryValue();
     }
-    
+
     public Double getAverageRetentionRate() {
         System.out.println("getAverageRetentionRate()");
         try {
@@ -92,9 +128,9 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             Double retentionRate_11 = this.getRetentionRateByYear(2011);
             Double retentionRate_12 = this.getRetentionRateByYear(2012);
             Double retentionRate_13 = this.getRetentionRateByYear(2013);
-            
-            return (retentionRate_09 + retentionRate_10 + retentionRate_11 + retentionRate_12 + retentionRate_13)/5 ;
-            
+
+            return (retentionRate_09 + retentionRate_10 + retentionRate_11 + retentionRate_12 + retentionRate_13) / 5;
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -195,7 +231,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
                 Date date = new Date();
                 c.setTime(date);
-                c.add(Calendar.DATE, (-365*year));
+                c.add(Calendar.DATE, (-365 * year));
                 Date churnDate = c.getTime();
 
                 System.out.println("Churn date is " + churnDate);
@@ -206,7 +242,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
-            
+
             return numOfMembersNotChurn;
         } catch (Exception ex) {
             System.out.println("\nServer failed to list retention rate:\n" + ex);
@@ -250,7 +286,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 } else {
                 }
             }
-           return ((double) numOfMembersNotChurn / (double) numOfMembers);
+            return ((double) numOfMembersNotChurn / (double) numOfMembers);
         } catch (Exception ex) {
             System.out.println("\nServer failed to list retention rate:\n" + ex);
             ex.printStackTrace();
@@ -258,7 +294,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
-    
     @Override
     public List<LineItemEntity> sortBestSellingFurniture() {
         System.out.println("sortBestSellingFurniture()");
@@ -283,7 +318,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         for (int i = 0; i < sortedFurnitures.size(); i++) {
                             if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
                                 sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
-                                
+
                             }
                         }
                     }
@@ -367,7 +402,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 } else {
                 }
             }
-           return retainedMembers;
+            return retainedMembers;
         } catch (Exception ex) {
 
             System.out.println("\nServer failed to list retention rate:\n" + ex);
@@ -609,7 +644,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
-            
+
             return ((double) numOfMembersNotChurn / (double) numOfMembers);
         } catch (Exception ex) {
 

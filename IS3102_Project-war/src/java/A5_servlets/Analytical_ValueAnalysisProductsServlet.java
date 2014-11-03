@@ -28,6 +28,13 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
 
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
             session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
+            
+            List<LineItemEntity> getTotalFurnitureSoldInCountry = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("singapore");
+            Integer totalNumberOfFurnitureInSG = 0;
+            for (int i = 0; i < getTotalFurnitureSoldInCountry.size(); i++) {
+                totalNumberOfFurnitureInSG += getTotalFurnitureSoldInCountry.get(i).getQuantity();
+            }
+            session.setAttribute("totalNumberOfFurnitureInSG",totalNumberOfFurnitureInSG);
             response.sendRedirect("A5/products.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();

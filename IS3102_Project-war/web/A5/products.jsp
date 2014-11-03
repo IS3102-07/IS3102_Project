@@ -268,12 +268,14 @@
                 <script type="text/javascript">
                     google.load("visualization", "1", {packages: ["geochart"]});
                     google.setOnLoadCallback(drawRegionsMap);
-                    
+                    <% 
+                    Integer totalNumberOfFurnitureInSG = (Integer) session.getAttribute("totalNumberOfFurnitureInSG");
+                    %>
                     function drawRegionsMap() {
 
                         var data = google.visualization.arrayToDataTable([
                             ['Country', 'Furniture Sold', 'Retail Products Sold'],
-                            ['Singapore', 200, 200],
+                            ['Singapore', <%=totalNumberOfFurnitureInSG%>, 200],
                             ['Malaysia', 300, 300],
                         ]);
 
