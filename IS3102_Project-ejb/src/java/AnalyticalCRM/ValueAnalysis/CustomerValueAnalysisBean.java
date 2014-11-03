@@ -258,6 +258,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
+    
     @Override
     public List<LineItemEntity> sortBestSellingFurniture() {
         System.out.println("sortBestSellingFurniture()");
