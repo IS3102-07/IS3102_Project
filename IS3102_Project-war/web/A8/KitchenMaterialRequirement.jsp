@@ -30,7 +30,7 @@
                                     <i class="icon icon-list"></i>  <a href="../KitchenManagement_servlet/KitchenDemandManagement_GET">Demand Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i> <a href="#">Raw Ingredient Requirement Management</a>
+                                    <i class="icon icon-list"></i> Raw Ingredient Requirement Management</a>
                                 </li>
                             </ol>
                         </div>

@@ -324,10 +324,10 @@
                         <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Sales Forecast</a>
                     </li>
                     <li>
-                        <a href="../KitchenManagement_servlet/*">Sales and Operations Planning</a>
+                        <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_POST/*">Demand Management</a>
                     </li>
                     <li>
-                        <a href="../PPD_index_GET/*">Production Plan Distribution</a>
+                        <a href="../KitchenManagement_servlet/KitchenMaterialRequirement_GET/*">Raw Ingredient Requirement Management</a>
                     </li>                    
                 </ul>
             </li>

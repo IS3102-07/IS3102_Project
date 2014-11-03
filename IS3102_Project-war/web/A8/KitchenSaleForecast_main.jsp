@@ -27,17 +27,17 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Kitchen Sales Forecast
+                                Sales Forecast
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">index</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Kitchen Sales Forecast</a>
                                 </li>   
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_schedule_GET">Schedule</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Sales Forecast</a>
+                                    <i class="icon icon-list"></i> Sales Forecast</a>
                                 </li>
                             </ol>
                         </div>
@@ -59,7 +59,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><b>Product Groups</b></h4>
+                                    <h4><b>Menu Items</b></h4>
                                 </div>
                                 <!-- /.panel-heading -->
 

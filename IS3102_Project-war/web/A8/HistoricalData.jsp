@@ -19,7 +19,7 @@
                             </h1>
                             <ol class="breadcrumb">                                
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">index</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Kitchen Sales Forecast</a>
                                 </li>   
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_schedule_GET">Schedule</a>
@@ -55,7 +55,7 @@
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year 
                                         <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-3);  }
-                                        else{ out.print(schedule.getYear()-2); } %> - Menu Item SKU<%= menuItem.getSKU()%> Sales Figure </h3>
+                                        else{ out.print(schedule.getYear()-2); } %> - Menu Item SKU <%= menuItem.getSKU()%> - <%= menuItem.getName() %> Sales Figure </h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart1"></div>
@@ -68,7 +68,7 @@
                             <div class="panel panel-green">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-2);  }
-                                        else{ out.print(schedule.getYear()-1); } %> - Menu Item SKU<%= menuItem.getSKU()%> - Product Group <%= menuItem.getName() %> Sales Figure</h3>
+                                        else{ out.print(schedule.getYear()-1); } %> - Menu Item SKU <%= menuItem.getSKU()%> - <%= menuItem.getName() %> Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart2"></div>
@@ -81,7 +81,7 @@
                             <div class="panel panel-green">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-1);  }
-                                        else{ out.print(schedule.getYear()); } %> - Menu Item SKU<%= menuItem.getSKU()%> - Product Group <%= menuItem.getName() %> Sales Figure</h3>
+                                        else{ out.print(schedule.getYear()); } %> - Menu Item SKU <%= menuItem.getSKU()%> - <%= menuItem.getName() %> Sales Figure</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="morris-area-chart3"></div>

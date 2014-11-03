@@ -18,20 +18,24 @@ public class SupplierItemInfoManagement_AddSupplierItemInfoServlet extends HttpS
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try{
+        try {
             String sku = request.getParameter("sku");
             String supplierId = request.getParameter("supplierId");
             String costPrice = request.getParameter("costPrice");
             String lotSize = request.getParameter("lotSize");
             String leadTime = request.getParameter("leadTime");
-            ReturnHelper helper = itemManagementBeanLocal.addSupplierItemInfo(sku, Long.parseLong(supplierId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
-           
-            if (!helper.getIsSuccess()) {
-                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
+            if (itemManagementBeanLocal.checkSKUExists(sku)) {
+                ReturnHelper helper = itemManagementBeanLocal.addSupplierItemInfo(sku, Long.parseLong(supplierId), Double.parseDouble(costPrice), Integer.parseInt(lotSize), Integer.parseInt(leadTime));
+
+                if (!helper.getIsSuccess()) {
+                    response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
+                } else {
+                    response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
+                }
             } else {
-                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=" + helper.getMessage());
+                response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=SKU does not exist. Please try again");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             response.sendRedirect("SupplierItemInfoManagement_Servlet?errMsg=An error has occurred. Please try again.");
         }

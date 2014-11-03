@@ -177,7 +177,7 @@
                                                                 SKU:&nbsp;
                                                             </td>
                                                             <td>
-                                                                <input id="auto" class="form-control" name="sku" type="text"  >
+                                                                <input id="auto" class="form-control" name="sku" type="text" required/>
                                                             </td>
                                                         </tr>
                                                         <tr>

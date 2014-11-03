@@ -23,12 +23,19 @@ public class CountryItemPricingManagement_AddCountryItemPricingServlet extends H
             String country = request.getParameter("country");
             String sku = request.getParameter("sku");
             String price = request.getParameter("price");
-            ReturnHelper helper = itemManagementBeanLocal.addCountryItemPricing(Long.parseLong(country), sku, Double.parseDouble(price));
-           
+            ReturnHelper helper;
+            
+            if (itemManagementBeanLocal.checkSKUExists(sku)){
+            helper = itemManagementBeanLocal.addCountryItemPricing(Long.parseLong(country), sku, Double.parseDouble(price));
+            
             if (!helper.getIsSuccess()) {
                 response.sendRedirect("CountryItemPricingManagement_Servlet?errMsg=" + helper.getMessage());
             } else {
                 response.sendRedirect("CountryItemPricingManagement_Servlet?errMsg=" + helper.getMessage());
+            }
+            }
+            else {
+                response.sendRedirect("CountryItemPricingManagement_Servlet?errMsg=SKU does not exist. Please try again");
             }
         }
     }

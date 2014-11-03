@@ -27,7 +27,7 @@
                                     <i class="icon icon-list"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_main_GET">Sales Forecast</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Demand Management</a>
+                                    <i class="icon icon-list"></i> Demand Management</a>
                                 </li>
                             </ol>
                         </div>

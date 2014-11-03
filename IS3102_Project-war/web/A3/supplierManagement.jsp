@@ -94,7 +94,7 @@
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Supplier" onclick="addSupplier()"  />
                                                     <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Supplier</button></a>
-                                                    <input class="btn btn-primary" name="btnSupplierInfo" type="submit" value="Supplier Infomation Management" onclick="viewSupplierInfo()"  />
+                                                    <input class="btn btn-primary" name="btnSupplierInfo" type="submit" value="Supplier Item Infomation Management" onclick="viewSupplierInfo()"  />
                                                 </div>
                                             </div>
                                             <br>
@@ -163,7 +163,7 @@
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Supplier" onclick="addSupplier()"  />
                                                     <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Supplier</button></a>
-                                                    <input class="btn btn-primary" name="btnSupplierInfo" type="submit" value="Supplier Infomation Management" onclick="viewSupplierInfo()"  />
+                                                    <input class="btn btn-primary" name="btnSupplierInfo" type="submit" value="Supplier Item Infomation Management" onclick="viewSupplierInfo()"  />
                                                 </div>
                                             </div>
                                             <input type="hidden" name="id" value="">    
