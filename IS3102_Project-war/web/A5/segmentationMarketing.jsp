@@ -111,12 +111,14 @@
                                                                                 <div class="col-md-6">
                                                                                     <h4>Age Group</h4>
                                                                                     <div id="ageGroupChart"></div>
+                                                                                    <h4>Country Group</h4>
                                                                                     <div id="countryChart"></div>
 
                                                                                 </div>
                                                                                 <div class="col-md-6">
                                                                                     <h4>Income Group</h4>
                                                                                     <div id="incomeGroupChart"></div>
+                                                                                    <h4>Join Date Group</h4>
                                                                                     <div id="joinDateChart"></div>
                                                                                 </div>
 
@@ -138,8 +140,8 @@
                                                                     <th>Name</th>
                                                                     <th>Age</th>
                                                                     <th>Income</th>
-                                                                    <th>Monetary Value</th>
-                                                                    <th>Action</th>
+                                                                    <th>Country</th>
+                                                                    <th>Join Date</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -158,16 +160,37 @@
                                                                     </td>
                                                                     <td>
                                                                         <%=member.getAge()%>
+                                                                        <% if (member.getAge() <= 25 && member.getAge() >= 18) {
+                                                                            out.println("(1)");
+                                                                        } else if (member.getAge() > 25 && member.getAge() <= 40) {
+                                                                            out.println("(2)");
+                                                                        } else if (member.getAge() > 40 && member.getAge() <= 55) {
+                                                                            out.println("(4)");
+                                                                        } else if (member.getAge() > 55) {
+                                                                            out.println("(3)");
+                                                                        }
+                                                                        %>
                                                                     </td>
                                                                     <td>
                                                                         <%=member.getIncome()%>
+                                                                        
+                                                                        <% if (member.getIncome() <= 30000) {
+                                                                            out.println("(1)");
+                                                                        } else if (member.getIncome() > 30000 && member.getIncome() <= 60000) {
+                                                                            out.println("(2)");
+                                                                        } else if (member.getIncome() > 60000 && member.getIncome() <= 100000) {
+                                                                            out.println("(4)");
+                                                                        } else if (member.getIncome() > 100000) {
+                                                                            out.println("(3)");
+                                                                        }
+                                                                        %>
                                                                     </td>
                                                                     <td>
                                                                         <%=member.getCity()%>
                                                                     </td>
-
-                                                                    <td>
                                                                         
+                                                                    <td>
+                                                                        <%=member.getJoinDate()%>
                                                                     </td>
                                                                 </tr>
                                                                 <%

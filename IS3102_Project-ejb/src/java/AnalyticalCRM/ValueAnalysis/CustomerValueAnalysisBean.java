@@ -110,9 +110,11 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
 
-                c.setTime(member.getJoinDate());
+                Date date = new Date();
+                c.setTime(date);
                 c.add(Calendar.DATE, (-365 * year));
                 Date churnDate = c.getTime();
+                System.out.println("Today date minus off is " + churnDate);
                 if (member.getJoinDate().getTime() > churnDate.getTime()) {
                     if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                         for (int i = 0; i < member.getPurchases().size(); i++) {
@@ -124,7 +126,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
+            System.out.println("Total revenue is " + totalRevenue.intValue());
             return totalRevenue.intValue();
         } catch (Exception ex) {
             System.out.println("\nServer failed to list retention rate:\n" + ex);
@@ -147,20 +149,20 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
 
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, (365*year));
+                Date date = new Date();
+                c.setTime(date);
+                c.add(Calendar.DATE, (-365*year));
                 Date churnDate = c.getTime();
 
                 System.out.println("Churn date is " + churnDate);
                 Long days = member.getJoinDate().getTime() - churnDate.getTime();
                 days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                if (days > 0 && days < (365 * year)) {
+                if (days > 0) {
                     numOfMembersNotChurn++;
-                    break;
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
+            
             return numOfMembersNotChurn;
         } catch (Exception ex) {
             System.out.println("\nServer failed to list retention rate:\n" + ex);

@@ -56,9 +56,9 @@ public class Analytical_SegmentationMarketingServlet extends HttpServlet {
             session.setAttribute("numOfMembersInAgeGroup4", numOfMembersInAgeGroup4);
             
             Integer numOfMembersInIncomeGroup1 = customerValueAnalysisBean.numOfMembersInIncomeGroup(0, 30000);
-            Integer numOfMembersInIncomeGroup2 = customerValueAnalysisBean.numOfMembersInIncomeGroup(20000, 60000);
-            Integer numOfMembersInIncomeGroup3 = customerValueAnalysisBean.numOfMembersInIncomeGroup(30000, 100000);
-            Integer numOfMembersInIncomeGroup4 = customerValueAnalysisBean.numOfMembersInIncomeGroup(40000, 250000);
+            Integer numOfMembersInIncomeGroup2 = customerValueAnalysisBean.numOfMembersInIncomeGroup(30000, 60000);
+            Integer numOfMembersInIncomeGroup3 = customerValueAnalysisBean.numOfMembersInIncomeGroup(60000, 100000);
+            Integer numOfMembersInIncomeGroup4 = customerValueAnalysisBean.numOfMembersInIncomeGroup(100000, 250000);
 
             session.setAttribute("numOfMembersInIncomeGroup1", numOfMembersInIncomeGroup1);
             session.setAttribute("numOfMembersInIncomeGroup2", numOfMembersInIncomeGroup2);
