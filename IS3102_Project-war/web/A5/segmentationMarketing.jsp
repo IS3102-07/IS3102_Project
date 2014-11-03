@@ -163,7 +163,7 @@
                                                                     <th>Income</th>
                                                                     <th>Country</th>
                                                                     <th>Join Date</th>
-                                                                    <th>Points</th>
+                                                                    <th>Points (/16)</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -275,7 +275,7 @@
                                                                         %>
                                                                     </td>
                                                                     <td>
-                                                                        <%out.println(totalPoints + "/16");%>
+                                                                        <%=totalPoints%>
                                                                     </td>
                                                                 </tr>
                                                                 <%
@@ -385,10 +385,10 @@
 
         %>
                 data: [
-                {y: '30,000', a: <%=cummulativeSpendingIncomeGrp1%>, b: <%=numOfMembersInIncomeGroup1%>, c: 1},
-                {y: '60,000', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: 2},
-                {y: '100,000', a: <%=cummulativeSpendingIncomeGrp3%>, b: <%=numOfMembersInIncomeGroup3%>, c: 3},
-                {y: '250,000', a: <%=cummulativeSpendingIncomeGrp4%>, b: <%=numOfMembersInIncomeGroup4%>, c: 4}
+                {y: '30k', a: <%=cummulativeSpendingIncomeGrp1%>, b: <%=numOfMembersInIncomeGroup1%>, c: 1},
+                {y: '60k', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: 2},
+                {y: '100k', a: <%=cummulativeSpendingIncomeGrp3%>, b: <%=numOfMembersInIncomeGroup3%>, c: 3},
+                {y: '250k', a: <%=cummulativeSpendingIncomeGrp4%>, b: <%=numOfMembersInIncomeGroup4%>, c: 4}
                 ],
                         xkey: 'y',
                         ykeys: ['a', 'b'],

@@ -88,18 +88,20 @@ out.println(getEstimatedCustomerLife);
                                                 </tr>
                                             </table>
                                             <table class="table">
+                                                <thead>
                                                 <tr>
                                                     <td>
 
                                                     </td>
-                                                    <td>
+                                                    <th>
                                                         Acquisition Year
-                                                    </td>
-                                                    <td>
+                                                    </th>
+                                                    <th>
                                                         Second Year
-                                                    </td>
+                                                    </th>
 
                                                 </tr>
+                                                </thead>
                                                 <tr>
                                                     <td>
                                                         Customers
@@ -152,7 +154,7 @@ out.println(getEstimatedCustomerLife);
 
                                                 <tr>
                                                     <td>
-                                                        Avg Order Price
+                                                        Avg Order Price (USD)
                                                     </td>
                                                     <td>
                                                         <% Double averageOrderPriceInAcquiredYear = (Double) session.getAttribute("averageOrderPriceInAcquiredYear"); %>
@@ -184,7 +186,7 @@ out.println(getEstimatedCustomerLife);
 
                                                 <tr>
                                                     <td>
-                                                        Customer LTV
+                                                        Customer LTV (USD)
                                                     </td>
                                                     <td>
                                                         <p id="acquiredYearLTV">
@@ -212,10 +214,10 @@ out.println(getEstimatedCustomerLife);
                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                             <th>Name</th>
                                             <th>Num of Orders</th>
-                                            <th>Average Order Price</th>
-                                            <th>Monetary Value</th>
-                                            <th>Cummulative Customer Value</th>
-                                            <th>CLV</th>
+                                            <th>Avg Order Price (USD)</th>
+                                            <th>Monetary Value (USD)</th>
+                                            <th>Cummulative Customer Value (USD)</th>
+         
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -255,9 +257,7 @@ out.println(getEstimatedCustomerLife);
                                             <td>
                                                 <% out.print(df.format(customerRetentionRate * totalSalesOfMember * 0.2)); %>
                                             </td>
-                                            <td>
-
-                                            </td>
+                                            
                                         </tr>
                                         <%
                                                 }

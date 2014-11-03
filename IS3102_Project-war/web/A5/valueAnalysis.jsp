@@ -156,9 +156,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <div class="featured-box featured-box-primary">
+                                                        <div class="featured-box featured-box-secundary">
                                                             <div class="box-content">
-                                                                <a href="../Analytical_ValueAnalysisProductsServlet"><i class="icon-featured icon icon-user"></i>
+                                                                <a href="../Analytical_ValueAnalysisProductsServlet"><i class="icon-featured icon icon-table"></i>
                                                                     <h4>Items Analysis</h4>
                                                                 </a>
                                                             </div>
