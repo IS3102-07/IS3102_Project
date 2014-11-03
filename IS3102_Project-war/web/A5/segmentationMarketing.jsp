@@ -2,6 +2,9 @@
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.StaffEntity"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.concurrent.TimeUnit"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -131,7 +134,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
                                                         <table class="table table-bordered" id="dataTables-example">
                                                             <thead>
@@ -146,7 +149,6 @@
                                                             </thead>
                                                             <tbody>
                                                                 <%
-                                                                    
                                                                     if (members != null) {
                                                                         for (int i = 0; i < members.size(); i++) {
                                                                             MemberEntity member = members.get(i);
@@ -161,36 +163,80 @@
                                                                     <td>
                                                                         <%=member.getAge()%>
                                                                         <% if (member.getAge() <= 25 && member.getAge() >= 18) {
-                                                                            out.println("(1)");
-                                                                        } else if (member.getAge() > 25 && member.getAge() <= 40) {
-                                                                            out.println("(2)");
-                                                                        } else if (member.getAge() > 40 && member.getAge() <= 55) {
-                                                                            out.println("(4)");
-                                                                        } else if (member.getAge() > 55) {
-                                                                            out.println("(3)");
-                                                                        }
+                                                                                out.println("(1)");
+                                                                            } else if (member.getAge() > 25 && member.getAge() <= 40) {
+                                                                                out.println("(2)");
+                                                                            } else if (member.getAge() > 40 && member.getAge() <= 55) {
+                                                                                out.println("(4)");
+                                                                            } else if (member.getAge() > 55) {
+                                                                                out.println("(3)");
+                                                                            }
                                                                         %>
                                                                     </td>
                                                                     <td>
                                                                         <%=member.getIncome()%>
-                                                                        
+
                                                                         <% if (member.getIncome() <= 30000) {
-                                                                            out.println("(1)");
-                                                                        } else if (member.getIncome() > 30000 && member.getIncome() <= 60000) {
-                                                                            out.println("(2)");
-                                                                        } else if (member.getIncome() > 60000 && member.getIncome() <= 100000) {
-                                                                            out.println("(4)");
-                                                                        } else if (member.getIncome() > 100000) {
-                                                                            out.println("(3)");
-                                                                        }
+                                                                                out.println("(1)");
+                                                                            } else if (member.getIncome() > 30000 && member.getIncome() <= 60000) {
+                                                                                out.println("(2)");
+                                                                            } else if (member.getIncome() > 60000 && member.getIncome() <= 100000) {
+                                                                                out.println("(4)");
+                                                                            } else if (member.getIncome() > 100000) {
+                                                                                out.println("(3)");
+                                                                            }
                                                                         %>
                                                                     </td>
                                                                     <td>
                                                                         <%=member.getCity()%>
+
+                                                                        <% if (member.getCity().equalsIgnoreCase("Malaysia")) {
+                                                                                out.println("(1)");
+                                                                            } else if (member.getCity().equalsIgnoreCase("Singapore")) {
+                                                                                out.println("(2)");
+                                                                            }
+                                                                        %>
                                                                     </td>
-                                                                        
+
                                                                     <td>
                                                                         <%=member.getJoinDate()%>
+                                                                        <%
+                                                                            Calendar c = Calendar.getInstance();
+                                                                            Date date = new Date();
+                                                                            c.setTime(date);
+                                                                            c.add(Calendar.DATE, (-365));
+                                                                            Date churnDate = c.getTime();
+
+                                                                            Long days = member.getJoinDate().getTime() - churnDate.getTime();
+                                                                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                                                                            if (member.getJoinDate().getTime() > churnDate.getTime()) {
+                                                                                out.println("(1)");
+                                                                            } else {
+                                                                                c.add(Calendar.DATE, (-365));
+                                                                                churnDate = c.getTime();
+                                                                                
+                                                                                if (member.getJoinDate().getTime() > churnDate.getTime()) {
+                                                                                    out.println("(2)");
+                                                                                } else {
+                                                                                    c.add(Calendar.DATE, (-365));
+                                                                                    churnDate = c.getTime();
+                                                                                    
+                                                                                    if (member.getJoinDate().getTime() > churnDate.getTime()) {
+                                                                                        out.println("(3)");
+                                                                                    } else {
+                                                                                        c.add(Calendar.DATE, (-365));
+                                                                                        churnDate = c.getTime();
+                                                                                        
+                                                                                        if (member.getJoinDate().getTime() > churnDate.getTime()) {
+                                                                                            out.println("(4)");
+                                                                                        } else {
+                                                                                            out.println("(5)");
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            
+                                                                            }
+                                                                        %>
                                                                     </td>
                                                                 </tr>
                                                                 <%
@@ -287,8 +333,7 @@
                             xkey: 'y',
                             ykeys: ['a', 'b'],
                             labels: ['Total Revenue', 'Num Of Members']
-                    });
-        </script>
+                    });</script>
         <script>
                     new Morris.Bar({
                     // ID of the element in which to draw the chart.
@@ -311,8 +356,7 @@
                             xkey: 'y',
                             ykeys: ['a', 'b'],
                             labels: ['Total Revenue', 'Num Of Members']
-                    });
-        </script>
+                    });</script>
         <script>
                     new Morris.Bar({
                     // ID of the element in which to draw the chart.
