@@ -128,8 +128,8 @@
                                                                 out.println(retailProductSold);%></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Total Number of Menu Item Sold :</td><td><% Integer sortBestSellingMenuItems = (Integer) session.getAttribute("sortBestSellingMenuItems");
-                                                            out.println(sortBestSellingMenuItems); %>
+                                                            <td>Total Number of Menu Item Sold :</td><td><% Integer menuItemSold = (Integer) session.getAttribute("menuItemSold");
+                                                            out.println(menuItemSold); %>
                                                             
                                                             </td>
                                                         </tr>

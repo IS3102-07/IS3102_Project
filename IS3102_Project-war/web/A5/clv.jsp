@@ -73,34 +73,28 @@
                                 <form name="staffManagement">
                                     <%
                                         List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));
+                                        DecimalFormat df = new DecimalFormat("#.00");
+                                                        DecimalFormat noDecimal = new DecimalFormat("#");
 
                                     %>
                                     <!-- /.table-responsive -->
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <table class ="table">
-                                                <tr><td>Estimated Lifetime</td><td>LifeTime Value</td></tr>
-                                                <tr>
-                                                    <td><%
-Double getEstimatedCustomerLife = (Double) (session.getAttribute("getEstimatedCustomerLife"));
-out.println(getEstimatedCustomerLife);
-%></td><td></td>
-                                                </tr>
-                                            </table>
+                                            
                                             <table class="table">
                                                 <thead>
-                                                <tr>
-                                                    <td>
+                                                    <tr>
+                                                        <td>
 
-                                                    </td>
-                                                    <th>
-                                                        Acquisition Year
-                                                    </th>
-                                                    <th>
-                                                        Second Year
-                                                    </th>
+                                                        </td>
+                                                        <th>
+                                                            Acquisition Year
+                                                        </th>
+                                                        <th>
+                                                            Second Year
+                                                        </th>
 
-                                                </tr>
+                                                    </tr>
                                                 </thead>
                                                 <tr>
                                                     <td>
@@ -108,8 +102,7 @@ out.println(getEstimatedCustomerLife);
                                                     </td>
                                                     <td>
                                                         <%                                                                Double customerRetentionRate = (Double) session.getAttribute("customerRetentionRate");
-                                                            DecimalFormat df = new DecimalFormat("#.00");
-                                                            DecimalFormat noDecimal = new DecimalFormat("#");
+
                                                         %>
                                                         <%=members.size()%>
                                                     </td>
@@ -201,6 +194,27 @@ out.println(getEstimatedCustomerLife);
 
                                                 </tr>
                                             </table>
+                                                        
+                                                        <table class ="table">
+                                                            <thead>
+                                                                <tr><td></td><th>Estimated Lifetime</th><th>LifeTime Value (USD)</th></tr>
+                                                            </thead>
+                                                <tr>
+                                                    <td></td><td><%                                                        
+                                                        Double getEstimatedCustomerLife = (Double) (session.getAttribute("getEstimatedCustomerLife"));
+                                                        out.println(df.format(getEstimatedCustomerLife) + " years");
+                                                        %></td><td>
+                                                    
+                                                    <% 
+                                                    Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
+                                                    %>
+                                                    <p id="lifeTimeValue">
+                                                    <%
+                                                    out.print(df.format(averageMemberMonetaryValue * getEstimatedCustomerLife * 0.2));
+                                                    %></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
                                         <div id="products" class="tab-pane">
                                         </div>
@@ -217,7 +231,7 @@ out.println(getEstimatedCustomerLife);
                                             <th>Avg Order Price (USD)</th>
                                             <th>Monetary Value (USD)</th>
                                             <th>Cummulative Customer Value (USD)</th>
-         
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -257,7 +271,7 @@ out.println(getEstimatedCustomerLife);
                                             <td>
                                                 <% out.print(df.format(customerRetentionRate * totalSalesOfMember * 0.2)); %>
                                             </td>
-                                            
+
                                         </tr>
                                         <%
                                                 }
@@ -321,6 +335,8 @@ out.println(getEstimatedCustomerLife);
             document.getElementById("profitMargin").value--;
             var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value / 100) * <%=customerRetentionRate%>;
             document.getElementById("acquiredYearLTV").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
+            var lifeTimeValue = (document.getElementById("profitMargin").value /100) * <%=getEstimatedCustomerLife * averageMemberMonetaryValue%>;
+            document.getElementById("lifeTimeValue").innerHTML = parseFloat(Math.round(lifeTimeValue*100) / 100).toFixed(2);
         }
     }
     function plus() {
@@ -328,6 +344,8 @@ out.println(getEstimatedCustomerLife);
         document.getElementById("profitMargin").value++;
         var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value / 100) * <%=customerRetentionRate%>;
         document.getElementById("acquiredYearLTV").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
+        var lifeTimeValue = (document.getElementById("profitMargin").value /100) * <%=getEstimatedCustomerLife * averageMemberMonetaryValue%>;
+            document.getElementById("lifeTimeValue").innerHTML = parseFloat(Math.round(lifeTimeValue*100)/100).toFixed(2);
     }
 
     function minus2() {
@@ -336,6 +354,7 @@ out.println(getEstimatedCustomerLife);
             document.getElementById("profitMargin2").value--;
             var acquiredYearLTV = <%=averageOrdersPerRetainedMember * averageOrderPriceForRetainedMembers%> * (document.getElementById("profitMargin2").value / 100) * <%=getRetainedCustomerRetentionRate%>;
             document.getElementById("acquiredYearLTV2").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
+            
         }
     }
     function plus2() {

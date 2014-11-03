@@ -75,7 +75,7 @@
                                     <form role="form" action="../StoreTransferOrderLineItemManagement_Servlet">
                                         <div class="form-group">
                                             <label>SKU</label>
-                                            <input class="form-control" name="sku" type="text"  >
+                                            <input class="form-control" id="auto" name="sku" type="text"  >
                                         </div>
                                         <div class="form-group">
                                             <label>Quantity</label>
