@@ -47,6 +47,8 @@ public interface CustomerValueAnalysisBeanLocal {
     public Double getFurnitureTotalRevenue(Long furnitureId);
 
     public List<LineItemEntity> sortBestSellingFurniture();
+    
+    public List<LineItemEntity> sortBestSellingMenuItem();
 
     public Boolean sendMemberLoyaltyPoints(List<MemberEntity> members, Integer loyaltyPoints);
 

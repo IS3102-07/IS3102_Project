@@ -109,7 +109,7 @@
                                                     <table class="table">
                                                         <thead>
 
-                                                        <td>Item</td><td>Value</td>
+                                                        <th>Item</td><th>Value</td>
 
                                                         </thead>
                                                         <tr>
@@ -128,7 +128,10 @@
                                                                 out.println(retailProductSold);%></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Total Number of Menu Item Sold :</td><td>To Do</td>
+                                                            <td>Total Number of Menu Item Sold :</td><td><% Integer sortBestSellingMenuItems = (Integer) session.getAttribute("sortBestSellingMenuItems");
+                                                            out.println(sortBestSellingMenuItems); %>
+                                                            
+                                                            </td>
                                                         </tr>
                                                     </table>
 

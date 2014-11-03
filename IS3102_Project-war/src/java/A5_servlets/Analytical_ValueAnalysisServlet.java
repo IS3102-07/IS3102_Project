@@ -54,6 +54,13 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
                 retailProductSold += lineItem.getQuantity();
             }
             session.setAttribute("retailProductSold", retailProductSold);
+            
+            List<LineItemEntity> sortBestSellingMenuItems = customerValueAnalysisBean.sortBestSellingMenuItem();
+            Integer menuItemSold = 0;
+            for (LineItemEntity lineItem : sortBestSellingMenuItems) {
+                menuItemSold += lineItem.getQuantity();
+            }
+            session.setAttribute("sortBestSellingMenuItems", sortBestSellingMenuItems);
             response.sendRedirect("A5/valueAnalysis.jsp");
 
         } catch (Exception ex) {

@@ -12,6 +12,7 @@ import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.LineItemEntity;
 import EntityManager.MemberEntity;
+import EntityManager.MenuItemEntity;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,41 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("getEstimatedCustomerLife()");
         return 1/(1 - this.getAverageRetentionRate());
     }    
+    
+    public List<LineItemEntity> sortBestSellingMenuItem() {
+        System.out.println("sortBestSellingMenuItem()");
+        List<LineItemEntity> sortedMenuItem = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM MenuItemEntity t");
+            List<MenuItemEntity> menuItems = q.getResultList();
+
+            for (MenuItemEntity menuItem : menuItems) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(menuItem);
+                lineItem.setQuantity(0);
+                sortedMenuItem.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getItemsPurchased().size() != 0) {
+                    for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                        for (int i = 0; i < sortedMenuItem.size(); i++) {
+                            if (lineItem.getItem().getId() == sortedMenuItem.get(i).getItem().getId()) {
+                                sortedMenuItem.get(i).setQuantity(sortedMenuItem.get(i).getQuantity() + lineItem.getQuantity());
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedMenuItem;
+    }
     
     public Double getCustomerLifeTimeValue() {
         System.out.println("getCustomerLifeTimeValue()");
