@@ -139,17 +139,8 @@
                                                 <div class="form-group">
                                                     <div class="col-md-3"><br>
                                                         Raw Material SKU: 
-                                                        <select required="true" name="sku" class="form-control">
-                                                            <option></option>
-                                                            <%
-                                                                List<RawMaterialEntity> rawMaterials = (List<RawMaterialEntity>) (session.getAttribute("rawMaterials"));
-                                                                if (rawMaterials != null) {
-                                                                    for (int i = 0; i < rawMaterials.size(); i++) {
-                                                                        out.println("<option value='" + rawMaterials.get(i).getSKU() + "'>" + rawMaterials.get(i).getSKU() + " : " + rawMaterials.get(i).getName() + "</option>");
-                                                                    }
-                                                                }
-                                                            %>
-                                                        </select>
+                                                        <input id="auto" class="form-control" name="sku" type="text">
+
                                                         Quantity: 
                                                         <input type ="number" class="form-control" name="qty"/><br>
                                                         <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" onclick="addLineItem()"  />
@@ -203,6 +194,18 @@
                 $("html, body").animate({scrollTop: $(document).height()}, "slow");
                 $("#addLineItemForm").show("slow", function() {
                 });
+            });
+            $(function() {
+                var array1 = [];
+                $.get('../SKU_ajax_servlet/*', function(responseText) {
+                    var arr = responseText.trim().split(';');
+                    arr.pop();
+                    for (var i = 0; i < arr.length; i++) {
+                        array1.push(arr[i]);
+                    }
+                });
+
+                $("#auto").autocomplete({source: array1});
             });
         </script>
 

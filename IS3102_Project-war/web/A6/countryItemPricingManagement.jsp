@@ -39,10 +39,10 @@
                     window.event.returnValue = true;
                     document.itemPricingManagement.submit();
                 } else {
-                  
-                        window.event.returnValue = true;
-                        document.itemPricingManagement.action = "../CountryItemPricingManagement_RemoveCountryItemPricingServlet";
-                        document.itemPricingManagement.submit();                   
+
+                    window.event.returnValue = true;
+                    document.itemPricingManagement.action = "../CountryItemPricingManagement_RemoveCountryItemPricingServlet";
+                    document.itemPricingManagement.submit();
                 }
             }
         </script>
@@ -177,14 +177,7 @@
                                                                 SKU:&nbsp;
                                                             </td>
                                                             <td>
-                                                                <select class="form-control" name="sku"> 
-                                                                    <%
-                                                                        List<String> listOfSKUs = (List<String>) session.getAttribute("listOfSKUs");
-                                                                        for (String s : listOfSKUs) {
-                                                                            out.print("<option value=\"" + s + "\">" + s + "</option>");
-                                                                        }
-                                                                    %>
-                                                                </select>
+                                                                <input id="auto" class="form-control" name="sku" type="text"  >
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -218,7 +211,7 @@
 
         </div>
         <!-- /#wrapper -->
-        
+
         <div role="dialog" class="modal fade" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -238,20 +231,31 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
 
-            $(".btnAdd").click(function () {
+            $(".btnAdd").click(function() {
                 $("html, body").animate({scrollTop: $(document).height()}, "slow");
-                $("#addItemPricingForm").show("slow", function () {
+                $("#addItemPricingForm").show("slow", function() {
                 });
             });
             function showEditItemPricing(id) {
-                $("#updateItemPricing" + id).show("fast", function () {
+                $("#updateItemPricing" + id).show("fast", function() {
                 });
             }
+             $(function () {
+                var array1 = [];
+                $.get('../SKU_ajax_servlet/*', function (responseText) {
+                    var arr = responseText.trim().split(';');
+                    arr.pop();
+                    for (var i = 0; i < arr.length; i++) {
+                        array1.push(arr[i]);
+                    }
+                });
 
+                $("#auto").autocomplete({source: array1});
+            });
         </script>
 
     </body>
