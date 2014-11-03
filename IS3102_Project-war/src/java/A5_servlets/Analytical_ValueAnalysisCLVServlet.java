@@ -30,10 +30,10 @@ public class Analytical_ValueAnalysisCLVServlet extends HttpServlet {
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
-            System.out.println("Analytical_ValueAnalysisServlet");
+            System.out.println("Analytical_ValueAnalysisCLVServlet");
 
             List<MemberEntity> members = accountManagementBean.listAllMember();
-            session.setAttribute("members", members);
+            session.setAttribute("members",members);
             Double customerRetentionRate = customerValueAnalysisBean.getCustomerRetentionRate();
             session.setAttribute("customerRetentionRate", customerRetentionRate);
 
@@ -52,6 +52,9 @@ public class Analytical_ValueAnalysisCLVServlet extends HttpServlet {
             
             Double averageOrderPriceForRetainedMembers = customerValueAnalysisBean.averageOrderPriceForRetainedMembers();
             session.setAttribute("averageOrderPriceForRetainedMembers",averageOrderPriceForRetainedMembers);
+            
+            Double getEstimatedCustomerLife = customerValueAnalysisBean.getEstimatedCustomerLife();
+            session.setAttribute("getEstimatedCustomerLife", getEstimatedCustomerLife);
             response.sendRedirect("A5/clv.jsp");
 
         } catch (Exception ex) {

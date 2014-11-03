@@ -42,7 +42,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
     public Boolean discountMemberLoyaltyPoints(String memberId, Integer loyaltyPoints) {
         System.out.println("Server called discountMemberLoyaltyPoints():" + memberId);
         MemberEntity member = em.find(MemberEntity.class, Long.valueOf(memberId).longValue());
-        member.setLoyaltyPoints(member.getLoyaltyPoints()+loyaltyPoints);
+        member.setLoyaltyPoints(member.getLoyaltyPoints() + loyaltyPoints);
         em.merge(member);
         String activationCode = "";
         StaffEntity staff = null;
@@ -63,7 +63,9 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(member.getEmail(), false));
                 msg.setSubject("Island Furniture Loyalty Points Added");
                 String messageText = "Greetings from Island Furniture... \n\n"
-                        + "We have added loyalty points to your account : " + loyaltyPoints + "\n\n"
+                        + "Thank you for being our loyal customer and as an appreciation for your support, "
+                        + "we have added loyalty points to your account : " + loyaltyPoints + "\n\n"
+                        + "The points can be used for discount on your next purchase in any of our store!" + "\n\n"
                         + "Link to our site: http://localhost:8080/IS3102_Project-war/B/index.jsp";
                 msg.setText(messageText);
                 msg.setHeader("X-Mailer", mailer);
@@ -79,7 +81,7 @@ public class SystemSecurityBean implements SystemSecurityBeanLocal, SystemSecuri
             return false;
         }
     }
-    
+
     //When staff user account is created, this function should be invoked
     public Boolean sendActivationEmailForStaff(String email) {
         System.out.println("Server called sendActivationEmailForStaff():" + email);

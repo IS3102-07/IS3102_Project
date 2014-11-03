@@ -18,6 +18,10 @@ import javax.ejb.Stateful;
 @Local
 public interface CustomerValueAnalysisBeanLocal {
     
+    public Double getEstimatedCustomerLife();
+    
+    public Double getCustomerLifeTimeValue();
+    
     public Integer numOfMembersInJoinDate(Integer year);
     
     public Integer getRevenueOfJoinDate(Integer year);

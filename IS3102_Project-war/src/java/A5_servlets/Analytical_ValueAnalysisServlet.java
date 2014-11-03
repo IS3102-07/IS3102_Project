@@ -32,7 +32,7 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             System.out.println("Analytical_ValueAnalysisServlet");
             Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
             Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
-            System.out.println(totalCustomerRevenue);
+
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
             session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
 

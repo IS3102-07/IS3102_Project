@@ -56,7 +56,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Register a new staff or remove an existing staff");
+                                            out.println("Customer Lifetime Value");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);
@@ -78,6 +78,15 @@
                                     <!-- /.table-responsive -->
                                     <div class="row">
                                         <div class="col-lg-12">
+                                            <table class ="table">
+                                                <tr><td>Estimated Lifetime</td><td>LifeTime Value</td></tr>
+                                                <tr>
+                                                    <td><%
+Double getEstimatedCustomerLife = (Double) (session.getAttribute("getEstimatedCustomerLife"));
+out.println(getEstimatedCustomerLife);
+%></td><td></td>
+                                                </tr>
+                                            </table>
                                             <table class="table">
                                                 <tr>
                                                     <td>
