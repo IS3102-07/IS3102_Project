@@ -38,8 +38,8 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     @EJB
     ItemManagementBeanLocal itemManagementBean;
 
-    public List<LineItemEntity> getTotalFurnitureSoldInCountry(String country) {
-        System.out.println("getTotalFurnitureSoldInCountry()");
+    public Integer getTotalFurnitureSoldInCountry(String country) {
+        System.out.println("getTotalFurnitureSoldInCountry()" + country);
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
@@ -56,13 +56,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             List<SalesRecordEntity> salesRecords = x.getResultList();
 
             for (SalesRecordEntity salesRecord : salesRecords) {
-                if (salesRecord.getStore().getCountry().getName().equalsIgnoreCase(country)) {
-                    if (salesRecord.getItemsPurchased().size() != 0) {
-                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
-                            for (int i = 0; i < sortedFurnitures.size(); i++) {
-                                if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
-                                    sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
+                if (salesRecord.getStore() != null) {
+                    if (salesRecord.getStore().getCountry().getName().equalsIgnoreCase(country)) {
+                        if (salesRecord.getItemsPurchased().size() != 0) {
+                            for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                                for (int i = 0; i < sortedFurnitures.size(); i++) {
+                                    if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
+                                        sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
 
+                                    }
                                 }
                             }
                         }
@@ -72,9 +74,55 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return sortedFurnitures;
+        Integer total = 0;
+        for (int i = 0;i < sortedFurnitures.size(); i++) {
+            total += sortedFurnitures.get(i).getQuantity();
+        }
+        return total;
     }
 
+    public Integer getTotalRetailProductsSoldInCountry(String country) {
+        System.out.println("getTotalFurnitureSoldInCountry()" + country);
+        List<LineItemEntity> sortedFurnitures = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+            List<RetailProductEntity> furnitures = q.getResultList();
+
+            for (RetailProductEntity furniture : furnitures) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(furniture);
+                lineItem.setQuantity(0);
+                sortedFurnitures.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getStore() != null) {
+                    if (salesRecord.getStore().getCountry().getName().equalsIgnoreCase(country)) {
+                        if (salesRecord.getItemsPurchased().size() != 0) {
+                            for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                                for (int i = 0; i < sortedFurnitures.size(); i++) {
+                                    if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
+                                        sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Integer total = 0;
+        for (int i = 0;i < sortedFurnitures.size(); i++) {
+            total += sortedFurnitures.get(i).getQuantity();
+        }
+        return total;
+    }
     public Double getEstimatedCustomerLife() {
         System.out.println("getEstimatedCustomerLife()");
         return 1 / (1 - this.getAverageRetentionRate());

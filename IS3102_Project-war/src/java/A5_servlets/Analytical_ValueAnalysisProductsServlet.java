@@ -27,14 +27,23 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
 
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
-            session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
+            session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);  
             
-            List<LineItemEntity> getTotalFurnitureSoldInCountry = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("singapore");
-            Integer totalNumberOfFurnitureInSG = 0;
-            for (int i = 0; i < getTotalFurnitureSoldInCountry.size(); i++) {
-                totalNumberOfFurnitureInSG += getTotalFurnitureSoldInCountry.get(i).getQuantity();
-            }
+            List<LineItemEntity> sortBestSellingMenuItem = customerValueAnalysisBean.sortBestSellingMenuItem();
+            session.setAttribute("sortBestSellingMenuItem",sortBestSellingMenuItem);
+            
+            Integer totalNumberOfFurnitureInSG = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("singapore");
             session.setAttribute("totalNumberOfFurnitureInSG",totalNumberOfFurnitureInSG);
+            
+            Integer totalNumberOfFurnitureInMS = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("malaysia");
+            session.setAttribute("totalNumberOfFurnitureInMS",totalNumberOfFurnitureInMS);
+            
+            Integer getTotalRetailProductsSoldInSG = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("singapore");
+            session.setAttribute("getTotalRetailProductsSoldInSG",getTotalRetailProductsSoldInSG);
+            
+            Integer getTotalRetailProductsSoldInMS = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("malaysia");
+            session.setAttribute("getTotalRetailProductsSoldInMS", getTotalRetailProductsSoldInMS);
+            
             response.sendRedirect("A5/products.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();

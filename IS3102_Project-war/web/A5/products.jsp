@@ -227,6 +227,77 @@
                                             <!-- /.panel-body -->
                                         </form>
                                     </div>
+                                               
+                                                                    <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Menu Items Analysis
+                                        </div>
+                                        <!-- /.panel-heading -->
+                                        <form name="rfm">
+
+                                            <%
+                                                List<LineItemEntity> sortBestSellingMenuItem = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem"));
+                                            %>
+                                            <!-- /.table-responsive -->
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+
+
+
+                                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
+                                                                <table class="table table-bordered" id="dataTables-example3">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                                            <th>Name</th>
+                                                                            <th>Quantity Sold</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <%
+                                                                            if (sortBestSellingMenuItem != null) {
+                                                                                for (int i = 0; i < sortBestSellingMenuItem.size(); i++) {
+                                                                                    LineItemEntity item = sortBestSellingMenuItem.get(i);
+                                                                                    ItemEntity itemEntity = item.getItem();
+                                                                        %>
+                                                                        <tr>                   
+                                                                            <td>
+                                                                                <input type="checkbox" name="delete" value="<%=item.getId()%>" />
+                                                                            </td>
+                                                                            <td>
+                                                                                <%=itemEntity.getName()%>
+                                                                            </td>
+                                                                            <td >
+                                                                                <%=item.getQuantity()%>
+                                                                            </td>
+
+                                                                        </tr>
+                                                                        <%
+                                                                                }
+                                                                            }
+                                                                        %>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- /.table-responsive -->
+
+                                                            <input type="hidden" name="id" value="">    
+                                                        </div>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="id" value="">    
+                                            </div>
+                                            </div>
+                                            <!-- /.panel-body -->
+                                        </form>
+                                    </div>
                                     <!-- /.panel -->
                                 </div>
                                 <!-- /.col-lg-12 -->
@@ -262,6 +333,7 @@
                     $(document).ready(function() {
                         $('#dataTables-example').dataTable();
                         $('#dataTables-example2').dataTable();
+                        $('#dataTables-example3').dataTable();
                     });
                 </script>
                 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -270,13 +342,16 @@
                     google.setOnLoadCallback(drawRegionsMap);
                     <% 
                     Integer totalNumberOfFurnitureInSG = (Integer) session.getAttribute("totalNumberOfFurnitureInSG");
+                    Integer totalNumberOfFurnitureInMS = (Integer) session.getAttribute("totalNumberOfFurnitureInMS");
+                    Integer getTotalRetailProductsSoldInSG = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
+                    Integer getTotalRetailProductsSoldInMS = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
                     %>
                     function drawRegionsMap() {
 
                         var data = google.visualization.arrayToDataTable([
                             ['Country', 'Furniture Sold', 'Retail Products Sold'],
-                            ['Singapore', <%=totalNumberOfFurnitureInSG%>, 200],
-                            ['Malaysia', 300, 300],
+                            ['Singapore', <%=totalNumberOfFurnitureInSG%>, <%=getTotalRetailProductsSoldInSG%>],
+                            ['Malaysia', <%=totalNumberOfFurnitureInMS%>, <%=getTotalRetailProductsSoldInMS%>],
                         ]);
 
                         var options = {
