@@ -268,20 +268,18 @@
                 <script type="text/javascript">
                     google.load("visualization", "1", {packages: ["geochart"]});
                     google.setOnLoadCallback(drawRegionsMap);
-
+                    
                     function drawRegionsMap() {
 
                         var data = google.visualization.arrayToDataTable([
-                            ['Country', 'Furniture Sold'],
-                            ['Germany', 200],
-                            ['United States', 300],
-                            ['Brazil', 400],
-                            ['Canada', 500],
-                            ['France', 600],
-                            ['RU', 700]
+                            ['Country', 'Furniture Sold', 'Retail Products Sold'],
+                            ['Singapore', 200, 200],
+                            ['Malaysia', 300, 300],
                         ]);
 
-                        var options = {};
+                        var options = {
+                            region: '035'
+                        };
 
                         var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 
