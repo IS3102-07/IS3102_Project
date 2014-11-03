@@ -145,6 +145,7 @@
                                                                     <th>Income</th>
                                                                     <th>Country</th>
                                                                     <th>Join Date</th>
+                                                                    <th>Points</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -162,14 +163,20 @@
                                                                     </td>
                                                                     <td>
                                                                         <%=member.getAge()%>
-                                                                        <% if (member.getAge() <= 25 && member.getAge() >= 18) {
+                                                                        <% 
+                                                                        Integer totalPoints = 0;
+                                                                        if (member.getAge() <= 25 && member.getAge() >= 18) {
                                                                                 out.println("(1)");
+                                                                                totalPoints += 1;
                                                                             } else if (member.getAge() > 25 && member.getAge() <= 40) {
                                                                                 out.println("(2)");
+                                                                                totalPoints +=2;
                                                                             } else if (member.getAge() > 40 && member.getAge() <= 55) {
                                                                                 out.println("(4)");
+                                                                                totalPoints += 3;
                                                                             } else if (member.getAge() > 55) {
                                                                                 out.println("(3)");
+                                                                                totalPoints +=4;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -178,12 +185,16 @@
 
                                                                         <% if (member.getIncome() <= 30000) {
                                                                                 out.println("(1)");
+                                                                                totalPoints +=1;
                                                                             } else if (member.getIncome() > 30000 && member.getIncome() <= 60000) {
                                                                                 out.println("(2)");
+                                                                                totalPoints +=2;
                                                                             } else if (member.getIncome() > 60000 && member.getIncome() <= 100000) {
                                                                                 out.println("(4)");
+                                                                                totalPoints +=4;
                                                                             } else if (member.getIncome() > 100000) {
                                                                                 out.println("(3)");
+                                                                                totalPoints +=3;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -192,8 +203,10 @@
 
                                                                         <% if (member.getCity().equalsIgnoreCase("Malaysia")) {
                                                                                 out.println("(1)");
+                                                                                totalPoints+=1;
                                                                             } else if (member.getCity().equalsIgnoreCase("Singapore")) {
                                                                                 out.println("(2)");
+                                                                                totalPoints+=2;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -211,32 +224,40 @@
                                                                             days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                                                                             if (member.getJoinDate().getTime() > churnDate.getTime()) {
                                                                                 out.println("(1)");
+                                                                                totalPoints +=1;
                                                                             } else {
                                                                                 c.add(Calendar.DATE, (-365));
                                                                                 churnDate = c.getTime();
                                                                                 
                                                                                 if (member.getJoinDate().getTime() > churnDate.getTime()) {
                                                                                     out.println("(2)");
+                                                                                    totalPoints +=2;
                                                                                 } else {
                                                                                     c.add(Calendar.DATE, (-365));
                                                                                     churnDate = c.getTime();
                                                                                     
                                                                                     if (member.getJoinDate().getTime() > churnDate.getTime()) {
                                                                                         out.println("(3)");
+                                                                                        totalPoints+=3;
                                                                                     } else {
                                                                                         c.add(Calendar.DATE, (-365));
                                                                                         churnDate = c.getTime();
                                                                                         
                                                                                         if (member.getJoinDate().getTime() > churnDate.getTime()) {
                                                                                             out.println("(4)");
+                                                                                            totalPoints+=4;
                                                                                         } else {
                                                                                             out.println("(5)");
+                                                                                            totalPoints+=5;
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             
                                                                             }
                                                                         %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%out.println(totalPoints);%>
                                                                     </td>
                                                                 </tr>
                                                                 <%
