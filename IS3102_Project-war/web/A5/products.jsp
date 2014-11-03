@@ -345,13 +345,16 @@
                     Integer totalNumberOfFurnitureInMS = (Integer) session.getAttribute("totalNumberOfFurnitureInMS");
                     Integer getTotalRetailProductsSoldInSG = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
                     Integer getTotalRetailProductsSoldInMS = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
+                    Integer getTotalMenuItemSoldInSG = (Integer) session.getAttribute("getTotalMenuItemSoldInSG");
+                    Integer getTotalMenuItemSoldInMS = (Integer) session.getAttribute("getTotalMenuItemSoldInMS");
+                    
                     %>
                     function drawRegionsMap() {
 
                         var data = google.visualization.arrayToDataTable([
-                            ['Country', 'Furniture Sold', 'Retail Products Sold'],
-                            ['Singapore', <%=totalNumberOfFurnitureInSG%>, <%=getTotalRetailProductsSoldInSG%>],
-                            ['Malaysia', <%=totalNumberOfFurnitureInMS%>, <%=getTotalRetailProductsSoldInMS%>],
+                            ['Country', 'Furniture Sold', 'Retail Products Sold', 'Menu Items Sold'],
+                            ['Singapore', <%=totalNumberOfFurnitureInSG%>, <%=getTotalRetailProductsSoldInSG%>, <%=getTotalMenuItemSoldInSG%>],
+                            ['Malaysia', <%=totalNumberOfFurnitureInMS%>, <%=getTotalRetailProductsSoldInMS%>, <%=getTotalMenuItemSoldInMS%>],
                         ]);
 
                         var options = {

@@ -44,6 +44,12 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             Integer getTotalRetailProductsSoldInMS = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("malaysia");
             session.setAttribute("getTotalRetailProductsSoldInMS", getTotalRetailProductsSoldInMS);
             
+            Integer getTotalMenuItemSoldInSG = customerValueAnalysisBean.getTotalMenuItemSoldInCountry("singapore");
+            session.setAttribute("getTotalMenuItemSoldInSG",getTotalMenuItemSoldInSG);
+            
+            Integer getTotalMenuItemSoldInMS = customerValueAnalysisBean.getTotalMenuItemSoldInCountry("malaysia");
+            session.setAttribute("getTotalMenuItemSoldInMS", getTotalMenuItemSoldInMS);
+            
             response.sendRedirect("A5/products.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();

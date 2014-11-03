@@ -38,6 +38,48 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     @EJB
     ItemManagementBeanLocal itemManagementBean;
 
+    public Integer getTotalMenuItemSoldInCountry(String country) {
+        System.out.println("getTotalMenuItemSoldInCountry()" + country);
+        List<LineItemEntity> sortedFurnitures = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM MenuItemEntity t");
+            List<MenuItemEntity> furnitures = q.getResultList();
+
+            for (MenuItemEntity furniture : furnitures) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(furniture);
+                lineItem.setQuantity(0);
+                sortedFurnitures.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getStore() != null) {
+                    if (salesRecord.getStore().getCountry().getName().equalsIgnoreCase(country)) {
+                        if (salesRecord.getItemsPurchased().size() != 0) {
+                            for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                                for (int i = 0; i < sortedFurnitures.size(); i++) {
+                                    if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
+                                        sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Integer total = 0;
+        for (int i = 0;i < sortedFurnitures.size(); i++) {
+            total += sortedFurnitures.get(i).getQuantity();
+        }
+        return total;
+    }
     public Integer getTotalFurnitureSoldInCountry(String country) {
         System.out.println("getTotalFurnitureSoldInCountry()" + country);
         List<LineItemEntity> sortedFurnitures = new ArrayList();
