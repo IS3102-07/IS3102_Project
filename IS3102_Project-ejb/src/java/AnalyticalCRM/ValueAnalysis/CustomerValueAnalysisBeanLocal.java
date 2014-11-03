@@ -18,7 +18,11 @@ import javax.ejb.Stateful;
 @Local
 public interface CustomerValueAnalysisBeanLocal {
     
-    public List<LineItemEntity> getTotalFurnitureSoldInCountry(String country);
+    public Integer getTotalMenuItemSoldInCountry(String country);
+    
+    public Integer getTotalRetailProductsSoldInCountry(String country);
+    
+    public Integer getTotalFurnitureSoldInCountry(String country);
     
     public Double getEstimatedCustomerLife();
     

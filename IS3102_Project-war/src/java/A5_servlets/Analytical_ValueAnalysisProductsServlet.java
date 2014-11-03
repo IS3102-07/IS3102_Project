@@ -27,14 +27,35 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
 
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
-            session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
+            session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);  
             
-            List<LineItemEntity> getTotalFurnitureSoldInCountry = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("singapore");
-            Integer totalNumberOfFurnitureInSG = 0;
-            for (int i = 0; i < getTotalFurnitureSoldInCountry.size(); i++) {
-                totalNumberOfFurnitureInSG += getTotalFurnitureSoldInCountry.get(i).getQuantity();
-            }
+            List<LineItemEntity> sortBestSellingMenuItem = customerValueAnalysisBean.sortBestSellingMenuItem();
+            session.setAttribute("sortBestSellingMenuItem",sortBestSellingMenuItem);
+            
+            Integer totalNumberOfFurnitureInCN = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("china");
+            session.setAttribute("totalNumberOfFurnitureInCN",totalNumberOfFurnitureInCN);
+            
+            Integer totalNumberOfFurnitureInSG = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("singapore");
             session.setAttribute("totalNumberOfFurnitureInSG",totalNumberOfFurnitureInSG);
+            
+            Integer totalNumberOfFurnitureInMS = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("malaysia");
+            session.setAttribute("totalNumberOfFurnitureInMS",totalNumberOfFurnitureInMS);
+            
+            Integer getTotalRetailProductsSoldInCN = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("china");
+            session.setAttribute("getTotalRetailProductsSoldInCN",getTotalRetailProductsSoldInCN);
+            
+            Integer getTotalRetailProductsSoldInSG = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("singapore");
+            session.setAttribute("getTotalRetailProductsSoldInSG",getTotalRetailProductsSoldInSG);
+            
+            Integer getTotalRetailProductsSoldInMS = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("malaysia");
+            session.setAttribute("getTotalRetailProductsSoldInMS", getTotalRetailProductsSoldInMS);
+            
+            Integer getTotalMenuItemSoldInSG = customerValueAnalysisBean.getTotalMenuItemSoldInCountry("singapore");
+            session.setAttribute("getTotalMenuItemSoldInSG",getTotalMenuItemSoldInSG);
+            
+            Integer getTotalMenuItemSoldInMS = customerValueAnalysisBean.getTotalMenuItemSoldInCountry("malaysia");
+            session.setAttribute("getTotalMenuItemSoldInMS", getTotalMenuItemSoldInMS);
+            
             response.sendRedirect("A5/products.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
