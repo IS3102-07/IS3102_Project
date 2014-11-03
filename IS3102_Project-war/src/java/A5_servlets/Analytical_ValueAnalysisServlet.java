@@ -38,29 +38,34 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
 
             Integer numOfMembers = accountManagementBean.listAllMember().size();
             session.setAttribute("numOfMembers", numOfMembers);
-            
+
             Integer numOfTransactions = customerValueAnalysisBean.getTotalNumberOfSalesRecord();
-            session.setAttribute("numOfTransactions",numOfTransactions);
- 
+            session.setAttribute("numOfTransactions", numOfTransactions);
+
             List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
             Integer totalFurnitureSold = 0;
             for (LineItemEntity lineItem : sortBestSellingFurniture) {
                 totalFurnitureSold += lineItem.getQuantity();
-            } 
-            session.setAttribute("totalFurnitureSold", totalFurnitureSold);    
+            }
+            session.setAttribute("totalFurnitureSold", totalFurnitureSold);
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
             Integer retailProductSold = 0;
             for (LineItemEntity lineItem : sortBestSellingRetailProducts) {
                 retailProductSold += lineItem.getQuantity();
             }
             session.setAttribute("retailProductSold", retailProductSold);
-            
+
             List<LineItemEntity> sortBestSellingMenuItems = customerValueAnalysisBean.sortBestSellingMenuItem();
             Integer menuItemSold = 0;
-            for (LineItemEntity lineItem : sortBestSellingMenuItems) {
-                menuItemSold += lineItem.getQuantity();
+            if (!sortBestSellingMenuItems.isEmpty()) {
+                for (LineItemEntity lineItem : sortBestSellingMenuItems) {
+                    menuItemSold += lineItem.getQuantity();
+                }
             }
-            session.setAttribute("sortBestSellingMenuItems", sortBestSellingMenuItems);
+            session.setAttribute("menuItemSold", menuItemSold);
+            
+            Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
+            session.setAttribute("averageMemberMonetaryValue", averageMemberMonetaryValue);
             response.sendRedirect("A5/valueAnalysis.jsp");
 
         } catch (Exception ex) {
