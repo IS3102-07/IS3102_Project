@@ -22,10 +22,10 @@
                                     <i class="icon icon-users"></i><a href="../A4/operationalCRM.jsp"> Operational CRM</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user-md"></i> <a href="customerServiceManagement.jsp"> Customer Service </a>                                 
+                                    <i class="icon icon-user"></i> <a href="customerServiceManagement.jsp"> Customer Service </a>                                 
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Feedback Management</a>                                 
+                                    <i class="icon icon-fire"></i> Feedback Management</a>                                 
                                 </li>
                             </ol>
                         </div>
