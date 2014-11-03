@@ -12,6 +12,7 @@ import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.LineItemEntity;
 import EntityManager.MemberEntity;
+import EntityManager.MenuItemEntity;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -38,11 +39,53 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     ItemManagementBeanLocal itemManagementBean;
     
         
-    public Double getEstimatedCustomerLife(){        
+    public Double getEstimatedCustomerLife(){    
+        System.out.println("getEstimatedCustomerLife()");
         return 1/(1 - this.getAverageRetentionRate());
     }    
     
+    public List<LineItemEntity> sortBestSellingMenuItem() {
+        System.out.println("sortBestSellingMenuItem()");
+        List<LineItemEntity> sortedMenuItem = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM MenuItemEntity t");
+            List<MenuItemEntity> menuItems = q.getResultList();
+
+            for (MenuItemEntity menuItem : menuItems) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(menuItem);
+                lineItem.setQuantity(0);
+                sortedMenuItem.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getItemsPurchased().size() != 0) {
+                    for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                        for (int i = 0; i < sortedMenuItem.size(); i++) {
+                            if (lineItem.getItem().getId() == sortedMenuItem.get(i).getItem().getId()) {
+                                sortedMenuItem.get(i).setQuantity(sortedMenuItem.get(i).getQuantity() + lineItem.getQuantity());
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedMenuItem;
+    }
+    
+    public Double getCustomerLifeTimeValue() {
+        System.out.println("getCustomerLifeTimeValue()");
+        return this.getEstimatedCustomerLife() * this.getAverageCustomerMonetaryValue();
+    }
+    
     public Double getAverageRetentionRate() {
+        System.out.println("getAverageRetentionRate()");
         try {
             Double retentionRate_09 = this.getRetentionRateByYear(2009);
             Double retentionRate_10 = this.getRetentionRateByYear(2010);
@@ -59,6 +102,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
 
     private Double getRetentionRateByYear(Integer year) {
+        System.out.println("getRetentionRateByYear()");
         try {
             int numberOfCustomerRetained = 0;
             Calendar cal = Calendar.getInstance();
@@ -68,13 +112,13 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             cal.set(Calendar.MONTH, 1);
             cal.set(Calendar.DAY_OF_MONTH, 1);
 
-            Query q = em.createQuery("SELECT m FROM MemberEntity m where m.joinDate < 1").setParameter(1, cal, TemporalType.DATE);
+            Query q = em.createQuery("SELECT m FROM MemberEntity m where m.joinDate < ?1").setParameter(1, cal.getTime(), TemporalType.DATE);
             List<MemberEntity> members = q.getResultList();
             for (MemberEntity m : members) {
 
                 Query q1 = em.createQuery("select s from SalesRecordEntity s where s.member.id = ?1 and s.createdDate > ?2 ")
                         .setParameter(1, m.getId())
-                        .setParameter(2, cal, TemporalType.DATE);
+                        .setParameter(2, cal.getTime(), TemporalType.DATE);
                 if (!q1.getResultList().isEmpty()) {
                     numberOfCustomerRetained++;
                 }
@@ -204,12 +248,9 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         }
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
-            return ((double) numOfMembersNotChurn / (double) numOfMembers);
+           return ((double) numOfMembersNotChurn / (double) numOfMembers);
         } catch (Exception ex) {
             System.out.println("\nServer failed to list retention rate:\n" + ex);
             ex.printStackTrace();
@@ -232,27 +273,20 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 lineItem.setQuantity(0);
                 sortedFurnitures.add(lineItem);
             }
-            System.out.println("Size of sortedFurnitures is : " + sortedFurnitures.size());
             Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
             List<SalesRecordEntity> salesRecords = x.getResultList();
 
             for (SalesRecordEntity salesRecord : salesRecords) {
-                System.out.println("Looping inside salesRecord of : " + salesRecord.getId());
                 if (salesRecord.getItemsPurchased().size() != 0) {
                     for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
-                        System.out.println("Looping inside purchaseRecord of : " + lineItem.getId());
                         for (int i = 0; i < sortedFurnitures.size(); i++) {
                             if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
                                 sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
-                                System.out.println(sortedFurnitures.get(i).getItem().getName() + " quantity is updated to : " + sortedFurnitures.get(i).getQuantity());
+                                
                             }
                         }
                     }
                 }
-            }
-
-            for (int i = 0; i < sortedFurnitures.size(); i++) {
-                System.out.println("Furniture name : " + sortedFurnitures.get(i).getItem().getName() + " quantity : " + sortedFurnitures.get(i).getQuantity());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -275,27 +309,19 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 lineItem.setQuantity(0);
                 sortedRetailProducts.add(lineItem);
             }
-            System.out.println("Size of sortedRetailProducts is : " + sortedRetailProducts.size());
             Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
             List<SalesRecordEntity> salesRecords = x.getResultList();
 
             for (SalesRecordEntity salesRecord : salesRecords) {
-                System.out.println("Looping inside salesRecord of : " + salesRecord.getId());
                 if (salesRecord.getItemsPurchased().size() != 0) {
                     for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
-                        System.out.println("Looping inside purchaseRecord of : " + lineItem.getId());
                         for (int i = 0; i < sortedRetailProducts.size(); i++) {
                             if (lineItem.getItem().getId() == sortedRetailProducts.get(i).getItem().getId()) {
                                 sortedRetailProducts.get(i).setQuantity(sortedRetailProducts.get(i).getQuantity() + lineItem.getQuantity());
-                                System.out.println(sortedRetailProducts.get(i).getItem().getName() + " quantity is updated to : " + sortedRetailProducts.get(i).getQuantity());
                             }
                         }
                     }
                 }
-            }
-
-            for (int i = 0; i < sortedRetailProducts.size(); i++) {
-                System.out.println("Retailproduct name : " + sortedRetailProducts.get(i).getItem().getName() + " quantity : " + sortedRetailProducts.get(i).getQuantity());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -322,20 +348,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        System.out.println("Number of days from churn date is " + days);
                         if (days > 0) {
                             retainedMembers.add(member);
                             numOfMembersNotChurn++;
@@ -343,12 +364,9 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         }
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
-            return retainedMembers;
+           return retainedMembers;
         } catch (Exception ex) {
 
             System.out.println("\nServer failed to list retention rate:\n" + ex);
@@ -370,31 +388,23 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        System.out.println("Number of days from churn date is " + days);
                         if (days > 0) {
                             numOfMembersNotChurn++;
                             numOfOrders++;
                         }
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("average order per year is " + numOfOrders);
             return ((double) numOfOrders / (double) numOfMembers);
         } catch (Exception ex) {
 
@@ -417,31 +427,24 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 730);
                 Date churnDate = c.getTime();
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        System.out.println("Number of days from churn date is " + days);
                         if (days > 0 && days < 365) {
                             numOfMembersNotChurn++;
                             numOfOrders++;
                         }
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("average order per year is " + numOfOrders);
+
             return ((double) numOfOrders / (double) numOfMembers);
         } catch (Exception ex) {
 
@@ -466,20 +469,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        System.out.println("Number of days from churn date is " + days);
+                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);;
                         if (days > 0) {
                             totalPriceOfOrders += member.getPurchases().get(i).getAmountDue();
                             numOfOrders++;
@@ -487,11 +485,8 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         }
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("average order per year is " + numOfOrders);
             return ((double) totalPriceOfOrders / (double) numOfOrders);
         } catch (Exception ex) {
 
@@ -515,31 +510,24 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 730);
                 Date churnDate = c.getTime();
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        System.out.println("Number of days from churn date is " + days);
                         if (days > 0 && days < 365) {
                             totalPriceOfOrders += member.getPurchases().get(i).getAmountDue();
                             numOfOrders++;
                         }
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("average order per year is " + numOfOrders);
             return ((double) totalPriceOfOrders / (double) numOfOrders);
         } catch (Exception ex) {
 
@@ -562,20 +550,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        System.out.println("Number of days from churn date is " + days);
                         if (days > 0) {
                             numOfMembersNotChurn++;
                             numOfOrders++;
@@ -583,11 +566,8 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         }
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
-            DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("average order per year is " + numOfOrders);
             return ((double) numOfOrders / (double) numOfMembers);
         } catch (Exception ex) {
 
@@ -609,31 +589,26 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-                System.out.println("Member " + member.getName() + " join date is : " + member.getJoinDate());
 
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (SalesRecordEntity record : member.getPurchases()) {
-                        System.out.println("Looping through purchases");
                         Long days = churnDate.getTime() - record.getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        System.out.println("Number of days from churn date is " + days);
                         if (days > 0) {
                             numOfMembersNotChurn++;
                             break;
                         }
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
+
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("Num of numbers not churn is :  " + numOfMembersNotChurn + "num of members " + numOfMembers + " retention rate is " + (numOfMembersNotChurn / numOfMembers));
+            
             return ((double) numOfMembersNotChurn / (double) numOfMembers);
         } catch (Exception ex) {
 
@@ -656,14 +631,11 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
                     List<Date> dates = new ArrayList<Date>();
                     Date latest;
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         dates.add(member.getPurchases().get(i).getCreatedDate());
                     }
                     latest = Collections.max(dates);
@@ -675,14 +647,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     numOfDaysWithRecord++;
                     totalDays += (int) (long) days;
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list recency:\n" + ex);
             ex.printStackTrace();
         }
-        System.out.println("Average recency days is : " + totalDays / numOfDaysWithRecord);
 
         return totalDays / numOfDaysWithRecord;
     }
@@ -726,24 +696,19 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    System.out.println("This member has purchases records of " + member.getPurchases().size());
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        System.out.println("Looping through purchases");
                         numOfPurchases++;
                         amountOfPurchase += member.getPurchases().get(i).getAmountDue().intValue();
                     }
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list monetary value:\n" + ex);
             ex.printStackTrace();
         }
-        System.out.println("Average monetary value : " + amountOfPurchase / numOfPurchases);
 
         return amountOfPurchase / numOfPurchases;
     }
@@ -762,12 +727,10 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
         MemberEntity member = em.find(MemberEntity.class, memberId);
         if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-            System.out.println("This member has purchases records of " + member.getPurchases().size());
 
             List<Date> dates = new ArrayList<Date>();
 
             for (int i = 0; i < member.getPurchases().size(); i++) {
-                System.out.println("Looping through purchases");
                 dates.add(member.getPurchases().get(i).getCreatedDate());
             }
             Date latest = Collections.max(dates);

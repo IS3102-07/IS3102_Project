@@ -98,7 +98,7 @@
                                                 <div class="col-md-6">
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
-                                                            <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Total Revenue : <%=totalCustomerRevenue + totalNonCustomerRevenue%></h3>
+                                                            <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Total Revenue : <%=totalCustomerRevenue + totalNonCustomerRevenue%> (USD)</h3>
                                                         </div>
                                                         <div class="panel-body">
                                                             <div id="morris-donut-chart"></div>
@@ -108,24 +108,33 @@
                                                 <div class="col-md-6">
                                                     <table class="table">
                                                         <thead>
-                                                        
-                                                            <td>Item</td><td>Value</td>
-                                                        
+
+                                                        <th>Item</td><th>Value</td>
+
                                                         </thead>
                                                         <tr>
-                                                            <td>Total Number of Customers :</td><td><%=numOfMembers%></td>
+                                                            <td>Total Number of Members :</td><td><%=numOfMembers%></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Total Number of Transactions :</td><td><% Integer numOfTransactions = (Integer) session.getAttribute("numOfTransactions"); out.println(numOfTransactions); %></td>
+                                                            <td>Total Number of Transactions :</td><td><% Integer numOfTransactions = (Integer) session.getAttribute("numOfTransactions");
+                                                                out.println(numOfTransactions); %></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Total Number of Furnitures Sold : </td><td><% Integer totalFurnitureSold = (Integer) session.getAttribute("totalFurnitureSold"); out.println(totalFurnitureSold); %></td>
+                                                            <td>Total Number of Furnitures Sold : </td><td><% Integer totalFurnitureSold = (Integer) session.getAttribute("totalFurnitureSold");
+                                                                out.println(totalFurnitureSold); %></td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Total Number of Retail Products Sold :</td><td><% Integer retailProductSold = (Integer) session.getAttribute("retailProductSold"); out.println(retailProductSold); %></td>
+                                                            <td>Total Number of Retail Products Sold :</td><td><% Integer retailProductSold = (Integer) session.getAttribute("retailProductSold");
+                                                                out.println(retailProductSold);%></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Number of Menu Item Sold :</td><td><% Integer sortBestSellingMenuItems = (Integer) session.getAttribute("sortBestSellingMenuItems");
+                                                            out.println(sortBestSellingMenuItems); %>
+                                                            
+                                                            </td>
                                                         </tr>
                                                     </table>
-                                                      
+
                                                 </div>
 
                                             </div>
@@ -150,9 +159,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <div class="featured-box featured-box-primary">
+                                                        <div class="featured-box featured-box-secundary">
                                                             <div class="box-content">
-                                                                <a href="../Analytical_ValueAnalysisProductsServlet"><i class="icon-featured icon icon-user"></i>
+                                                                <a href="../Analytical_ValueAnalysisProductsServlet"><i class="icon-featured icon icon-table"></i>
                                                                     <h4>Items Analysis</h4>
                                                                 </a>
                                                             </div>
@@ -212,6 +221,12 @@
                     label: "Non-Member Sales",
                     value: <%=totalNonCustomerRevenue%>
                 }],
+            backgroundColor: '#ccc',
+            labelColor: '#000000',
+            colors: [
+                '#0088cc',
+                '#FF0000'
+            ],
             resize: true
         });
 

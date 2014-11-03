@@ -91,7 +91,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Register a new staff or remove an existing staff");
+                                            out.println("Recency, Frequency & Monetary Analysis");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);
@@ -176,7 +176,7 @@
                                                                     <th>Name</th>
                                                                     <th>Recency</th>
                                                                     <th>Frequency</th>
-                                                                    <th>Monetary Value</th>
+                                                                    <th>Monetary Value (USD)</th>
                                                                     <th>Total Value</th>
                                                                 </tr>
                                                             </thead>
@@ -197,12 +197,12 @@
                                                                         <%=member.getName()%>
                                                                     </td>
                                                                     <td <% if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
-                                                                        %>bgcolor="#00FF33"<%
+                                                                        %>bgcolor="#bce8f1"<%
                                                                         } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
                                                                         %>
-                                                                        bgcolor="red"
+                                                                        bgcolor="#ebccd1"
                                                                         <% } else { %>
-                                                                        bgcolor="orange"
+                                                                        bgcolor="#faebcc"
                                                                         <%
                                                                             }
                                                                         %>
@@ -211,12 +211,12 @@
                                                                     </td>
                                                                     <td
                                                                         <% if (memberFrequencyValue.get(i) <= (averageMemberFrequency / 2)) {
-                                                                        %>bgcolor="red"<%
+                                                                        %>bgcolor="#ebccd1"<%
                                                                         } else if (memberFrequencyValue.get(i) > ((averageMemberFrequency / 2) + averageMemberFrequency)) {
                                                                         %>
-                                                                        bgcolor="#00FF33"
+                                                                        bgcolor="#bce8f1"
                                                                         <% } else { %>
-                                                                        bgcolor="orange"
+                                                                        bgcolor="#faebcc"
                                                                         <%
                                                                             }
                                                                         %>
@@ -225,12 +225,12 @@
                                                                     </td>
                                                                     <td
                                                                         <% if (memberMonetaryValue.get(i) < (averageMemberMonetaryValue / 2)) {
-                                                                        %>bgcolor="red"<%
+                                                                        %>bgcolor="#ebccd1"<%
                                                                         } else if (memberMonetaryValue.get(i) > ((averageMemberMonetaryValue / 2) + averageMemberMonetaryValue)) {
                                                                         %>
-                                                                        bgcolor="#00FF33"
+                                                                        bgcolor="#bce8f1"
                                                                         <% } else { %>
-                                                                        bgcolor="orange"
+                                                                        bgcolor="#faebcc"
                                                                         <%
                                                                             }
                                                                         %>

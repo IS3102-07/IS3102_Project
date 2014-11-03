@@ -121,7 +121,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     @Test
     public void test09CheckSKUExists() {
         System.out.println("testCheckSKUExists");
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         Boolean result = retailProductsAndRawMaterialsPurchasingBean.checkSKUExists(testdata_SKU);
         assertTrue(result);
     }

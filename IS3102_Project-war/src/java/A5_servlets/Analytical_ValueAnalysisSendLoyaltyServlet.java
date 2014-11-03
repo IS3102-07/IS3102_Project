@@ -34,7 +34,7 @@ public class Analytical_ValueAnalysisSendLoyaltyServlet extends HttpServlet {
                 for (int i = 0; i < deleteArr.length; i++) {
                     systemSecurityBean.discountMemberLoyaltyPoints(deleteArr[i], loyaltyPoints);
                 }
-                response.sendRedirect("A5/rfm.jsp?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("A5/rfm.jsp?goodMsg=Successfully sent loyalty points : " + deleteArr.length + " record(s).");
             } else {
                 response.sendRedirect("A5/rfm.jsp?errMsg=Nothing is selected.");
             }

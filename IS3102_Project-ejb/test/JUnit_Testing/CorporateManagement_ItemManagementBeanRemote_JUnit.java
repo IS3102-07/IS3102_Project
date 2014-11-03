@@ -54,7 +54,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test01GetItemBySKU() {
         System.out.println("testgetItemBySKU");
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         ItemEntity result = itemManagementBean.getItemBySKU(testdata_SKU);
         assertEquals(testdata_SKU, result.getSKU());
     }
@@ -62,7 +62,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test02CheckSKUExists() {
         System.out.println("testCheckSKUExists");
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         Boolean result = itemManagementBean.checkSKUExists(testdata_SKU);
         assertTrue(result);
     }
@@ -155,9 +155,9 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test11ViewFurniture() {
         System.out.println("testViewFurniture");
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         FurnitureEntity result = itemManagementBean.viewFurniture(testdata_SKU);
-        assertEquals(result.getSKU(), "F1");
+        assertEquals(result.getSKU(), "F_TD_01");
     }
 
     @Test
@@ -261,7 +261,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test23AddLineItemToBOM() {
         System.out.println("testAddLineItemToBOM");
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         Integer testdata_qty = 2;
         Long testdata_BOMId = 1L;
         Boolean result = itemManagementBean.addLineItemToBOM(testdata_SKU, testdata_qty, testdata_BOMId);
@@ -332,7 +332,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test31CreateProductGroupLineItem() {
         System.out.println("testCreateProductGroupLineItem");
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         Double testdata_percent = 0.1;
         ProductGroupLineItemEntity result = itemManagementBean.createProductGroupLineItem(testdata_SKU, testdata_percent);
         assertNotNull(result);
@@ -343,7 +343,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
         System.out.println("testEditProductGroupLineItem");
         Long testdata_productGroupId = 1L;
         Long testdata_productGroupLineItemId = 1L;
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         Double testdata_percent = 0.1;
         Boolean result = itemManagementBean.editProductGroupLineItem(testdata_productGroupId, testdata_productGroupLineItemId, testdata_SKU, testdata_percent);
         assertFalse(result);
@@ -379,7 +379,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void test36CheckIfSKUIsFurniture() {
         System.out.println("testCheckIfSKUIsFurniture");
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         Boolean result = itemManagementBean.checkIfSKUIsFurniture(testdata_SKU);
         assertTrue(result);
     }
@@ -433,7 +433,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     public void test43GetItemPricing() {
         System.out.println("testGetItemPricing");
         Long testdata_itemId = 1L;
-        String testdata_SKU = "F1";
+        String testdata_SKU = "F_TD_01";
         Item_CountryEntity result = itemManagementBean.getItemPricing(testdata_itemId, testdata_SKU);
         assertNull(result);
     }

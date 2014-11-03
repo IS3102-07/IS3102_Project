@@ -56,7 +56,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Register a new staff or remove an existing staff");
+                                            out.println("Customer Lifetime Value");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);
@@ -78,19 +78,30 @@
                                     <!-- /.table-responsive -->
                                     <div class="row">
                                         <div class="col-lg-12">
+                                            <table class ="table">
+                                                <tr><td>Estimated Lifetime</td><td>LifeTime Value</td></tr>
+                                                <tr>
+                                                    <td><%
+Double getEstimatedCustomerLife = (Double) (session.getAttribute("getEstimatedCustomerLife"));
+out.println(getEstimatedCustomerLife);
+%></td><td></td>
+                                                </tr>
+                                            </table>
                                             <table class="table">
+                                                <thead>
                                                 <tr>
                                                     <td>
 
                                                     </td>
-                                                    <td>
+                                                    <th>
                                                         Acquisition Year
-                                                    </td>
-                                                    <td>
+                                                    </th>
+                                                    <th>
                                                         Second Year
-                                                    </td>
+                                                    </th>
 
                                                 </tr>
+                                                </thead>
                                                 <tr>
                                                     <td>
                                                         Customers
@@ -143,7 +154,7 @@
 
                                                 <tr>
                                                     <td>
-                                                        Avg Order Price
+                                                        Avg Order Price (USD)
                                                     </td>
                                                     <td>
                                                         <% Double averageOrderPriceInAcquiredYear = (Double) session.getAttribute("averageOrderPriceInAcquiredYear"); %>
@@ -175,7 +186,7 @@
 
                                                 <tr>
                                                     <td>
-                                                        Customer LTV
+                                                        Customer LTV (USD)
                                                     </td>
                                                     <td>
                                                         <p id="acquiredYearLTV">
@@ -203,10 +214,10 @@
                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                             <th>Name</th>
                                             <th>Num of Orders</th>
-                                            <th>Average Order Price</th>
-                                            <th>Monetary Value</th>
-                                            <th>Cummulative Customer Value</th>
-                                            <th>CLV</th>
+                                            <th>Avg Order Price (USD)</th>
+                                            <th>Monetary Value (USD)</th>
+                                            <th>Cummulative Customer Value (USD)</th>
+         
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -246,9 +257,7 @@
                                             <td>
                                                 <% out.print(df.format(customerRetentionRate * totalSalesOfMember * 0.2)); %>
                                             </td>
-                                            <td>
-
-                                            </td>
+                                            
                                         </tr>
                                         <%
                                                 }

@@ -18,6 +18,10 @@ import javax.ejb.Stateful;
 @Local
 public interface CustomerValueAnalysisBeanLocal {
     
+    public Double getEstimatedCustomerLife();
+    
+    public Double getCustomerLifeTimeValue();
+    
     public Integer numOfMembersInJoinDate(Integer year);
     
     public Integer getRevenueOfJoinDate(Integer year);
@@ -43,6 +47,8 @@ public interface CustomerValueAnalysisBeanLocal {
     public Double getFurnitureTotalRevenue(Long furnitureId);
 
     public List<LineItemEntity> sortBestSellingFurniture();
+    
+    public List<LineItemEntity> sortBestSellingMenuItem();
 
     public Boolean sendMemberLoyaltyPoints(List<MemberEntity> members, Integer loyaltyPoints);
 

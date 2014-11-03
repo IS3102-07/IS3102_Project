@@ -32,7 +32,7 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
             System.out.println("Analytical_ValueAnalysisServlet");
             Double totalCustomerRevenue = customerValueAnalysisBean.totalMemberRevenue();
             Double totalNonCustomerRevenue = customerValueAnalysisBean.totalNonMemberRevenue();
-            System.out.println(totalCustomerRevenue);
+
             session.setAttribute("totalCustomerRevenue", totalCustomerRevenue);
             session.setAttribute("totalNonCustomerRevenue", totalNonCustomerRevenue);
 
@@ -54,6 +54,13 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
                 retailProductSold += lineItem.getQuantity();
             }
             session.setAttribute("retailProductSold", retailProductSold);
+            
+            List<LineItemEntity> sortBestSellingMenuItems = customerValueAnalysisBean.sortBestSellingMenuItem();
+            Integer menuItemSold = 0;
+            for (LineItemEntity lineItem : sortBestSellingMenuItems) {
+                menuItemSold += lineItem.getQuantity();
+            }
+            session.setAttribute("sortBestSellingMenuItems", sortBestSellingMenuItems);
             response.sendRedirect("A5/valueAnalysis.jsp");
 
         } catch (Exception ex) {
