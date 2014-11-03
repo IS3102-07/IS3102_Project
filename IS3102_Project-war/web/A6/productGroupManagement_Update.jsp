@@ -133,7 +133,6 @@
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>SKU</th>
                                                             <th>Furniture Name</th>
-                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -151,10 +150,7 @@
                                                             </td>
                                                             <td>
                                                                 <%=lineItems.get(i).getItem().getName()%>
-                                                            </td>                                                          
-                                                            <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" value="Update" onclick="javascript:updatePGLineItem('<%=lineItems.get(i).getId()%>')"/>
-                                                            </td>
+                                                            </td>                                                                                                                   
                                                         </tr>
                                                         <%}
                                                             }%>

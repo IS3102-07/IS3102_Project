@@ -54,7 +54,7 @@
                             <form role="form" method="POST" enctype="multipart/form-data" action="../PromotionalSalesManagement_UpdateServlet">                        
                                 <div class="form-group">
                                     <label>Item SKU</label>
-                                    <input class="form-control" required="true" type="text" name="sku" value="<%=promotion.getItem().getSKU()%>" >
+                                    <input class="form-control" id="auto" required="true" type="text" name="sku" value="<%=promotion.getItem().getSKU()%>" >
                                 </div>
                                 <div class="form-group">
                                     <label>Country</label>
@@ -122,6 +122,23 @@
             var today = new Date().toISOString().split('T')[0];
             document.getElementsByName("startDate")[0].setAttribute('min', today);
             document.getElementsByName("endDate")[0].setAttribute('min', today);
+        
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementsByName("startDate")[0].setAttribute('min', today);
+            document.getElementsByName("endDate")[0].setAttribute('min', today);
+       
+            $(function () {
+                var array1 = [];
+                $.get('../SKU_ajax_servlet/*', function (responseText) {
+                    var arr = responseText.trim().split(';');
+                    arr.pop();
+                    for (var i = 0; i < arr.length; i++) {
+                        array1.push(arr[i]);
+                    }
+                });
+
+                $("#auto").autocomplete({source: array1});
+            });
         </script>
     </body>
 
