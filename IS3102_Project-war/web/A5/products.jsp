@@ -343,18 +343,19 @@
                     <% 
                     Integer totalNumberOfFurnitureInSG = (Integer) session.getAttribute("totalNumberOfFurnitureInSG");
                     Integer totalNumberOfFurnitureInMS = (Integer) session.getAttribute("totalNumberOfFurnitureInMS");
+                    Integer totalNumberOfFurnitureInCN = (Integer) session.getAttribute("totalNumberOfFurnitureInCN");
                     Integer getTotalRetailProductsSoldInSG = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
                     Integer getTotalRetailProductsSoldInMS = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
-                    Integer getTotalMenuItemSoldInSG = (Integer) session.getAttribute("getTotalMenuItemSoldInSG");
-                    Integer getTotalMenuItemSoldInMS = (Integer) session.getAttribute("getTotalMenuItemSoldInMS");
+                    Integer getTotalRetailProductsSoldInCN = (Integer) session.getAttribute("getTotalRetailProductsSoldInCN");
                     
                     %>
                     function drawRegionsMap() {
 
                         var data = google.visualization.arrayToDataTable([
-                            ['Country', 'Furniture Sold', 'Retail Products Sold', 'Menu Items Sold'],
-                            ['Singapore', <%=totalNumberOfFurnitureInSG%>, <%=getTotalRetailProductsSoldInSG%>, <%=getTotalMenuItemSoldInSG%>],
-                            ['Malaysia', <%=totalNumberOfFurnitureInMS%>, <%=getTotalRetailProductsSoldInMS%>, <%=getTotalMenuItemSoldInMS%>],
+                            ['Country', 'Furniture Sold', 'Retail Products Sold'],
+                            ['Singapore', <%=totalNumberOfFurnitureInSG%>, <%=getTotalRetailProductsSoldInSG%>],
+                            ['Malaysia', <%=totalNumberOfFurnitureInMS%>, <%=getTotalRetailProductsSoldInMS%>],
+                            ['Indonesia', <%=totalNumberOfFurnitureInCN%>, <%=getTotalRetailProductsSoldInCN%>]
                         ]);
 
                         var options = {

@@ -124,7 +124,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
 
     public Integer getTotalRetailProductsSoldInCountry(String country) {
-        System.out.println("getTotalFurnitureSoldInCountry()" + country);
+        System.out.println("getTotalRetailProductsSoldInCountry()" + country);
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
@@ -284,19 +284,16 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 c.setTime(date);
                 c.add(Calendar.DATE, (-365 * year));
                 Date churnDate = c.getTime();
-                System.out.println("Today date minus off is " + churnDate);
                 if (member.getJoinDate().getTime() > churnDate.getTime()) {
                     if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                         for (int i = 0; i < member.getPurchases().size(); i++) {
                             totalRevenue += member.getPurchases().get(i).getAmountDue();
                         }
                     } else {
-                        System.out.println("This member has NO purchases records");
                     }
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
-            System.out.println("Total revenue is " + totalRevenue.intValue());
             return totalRevenue.intValue();
         } catch (Exception ex) {
             System.out.println("\nServer failed to list retention rate:\n" + ex);
@@ -324,7 +321,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 c.add(Calendar.DATE, (-365 * year));
                 Date churnDate = c.getTime();
 
-                System.out.println("Churn date is " + churnDate);
                 Long days = member.getJoinDate().getTime() - churnDate.getTime();
                 days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                 if (days > 0) {
@@ -765,10 +761,8 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         dates.add(member.getPurchases().get(i).getCreatedDate());
                     }
                     latest = Collections.max(dates);
-                    System.out.println("Latest date for member :" + member.getName() + " is " + latest);
 
                     Long days = date.getTime() - latest.getTime();
-                    System.out.println("Number of dates against today's date : " + TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS));
                     days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                     numOfDaysWithRecord++;
                     totalDays += (int) (long) days;
@@ -794,19 +788,16 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
-                System.out.println("Inside members list");
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                     numOfPurchases++;
                     frequency += member.getPurchases().size();
                 } else {
-                    System.out.println("This member has NO purchases records");
                 }
             }
         } catch (Exception ex) {
             System.out.println("\nServer failed to list recency:\n" + ex);
             ex.printStackTrace();
         }
-        System.out.println("Average frequency is : " + frequency / numOfPurchases);
 
         return frequency / numOfPurchases;
     }
@@ -860,14 +851,11 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 dates.add(member.getPurchases().get(i).getCreatedDate());
             }
             Date latest = Collections.max(dates);
-            System.out.println("Latest date for member :" + member.getName() + " is " + latest);
 
             Long numOfDaysBetween = date.getTime() - latest.getTime();
-            System.out.println("Number of dates against today's date : " + TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS));
             days = (int) (long) TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS);
 
         } else {
-            System.out.println("This member has NO purchases records");
         }
         return days;
     }
@@ -881,7 +869,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         if (member.getPurchases() != null && member.getPurchases().size() != 0) {
             numOfPurchases = member.getPurchases().size();
         } else {
-            System.out.println("This member has NO purchases records");
             return 0;
         }
         return numOfPurchases;
@@ -898,7 +885,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 totalPriceOfPurchases += member.getPurchases().get(i).getAmountDue().intValue();
             }
         } else {
-            System.out.println("This member has NO purchases records");
             return 0;
         }
         return totalPriceOfPurchases;
@@ -915,7 +901,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 totalCummulativeSpending += member.getCummulativeSpending();
             }
         }
-        System.out.println("totalCummulativeSpending is : " + totalCummulativeSpending);
         return totalCummulativeSpending;
     }
 
@@ -934,7 +919,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 totalCummulativeSpending += member.getCummulativeSpending();
             }
         }
-        System.out.println("totalCummulativeSpending is : " + totalCummulativeSpending);
         return totalCummulativeSpending;
     }
 
@@ -952,7 +936,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         for (MemberEntity member : members) {
             regression.addData(member.getAge(), member.getCummulativeSpending());
         }
-        System.out.println("Get R is : " + regression.getR());
         return regression.getR();
     }
 
@@ -970,7 +953,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         for (MemberEntity member : members) {
             regression.addData(member.getAge(), member.getCummulativeSpending());
         }
-        System.out.println("Get R is : " + regression.getSlopeStdErr());
         return regression.getR();
     }
 
@@ -988,7 +970,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         for (MemberEntity member : members) {
             regression.addData(member.getAge(), member.getCummulativeSpending());
         }
-        System.out.println("Get R squared is : " + regression.getRSquare());
         return regression.getRSquare();
     }
 
@@ -1006,7 +987,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         for (MemberEntity member : members) {
             regression.addData(member.getIncome(), member.getCummulativeSpending());
         }
-        System.out.println("Get R is : " + regression.getR());
         return regression.getR();
     }
 
@@ -1024,7 +1004,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         for (MemberEntity member : members) {
             regression.addData(member.getIncome(), member.getCummulativeSpending());
         }
-        System.out.println("Get R is : " + regression.getSlopeStdErr());
         return regression.getR();
     }
 
@@ -1042,7 +1021,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         for (MemberEntity member : members) {
             regression.addData(member.getIncome(), member.getCummulativeSpending());
         }
-        System.out.println("Get R squared is : " + regression.getRSquare());
         return regression.getRSquare();
     }
 
@@ -1057,7 +1035,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 totalCummulativeSpending += member.getCummulativeSpending();
             }
         }
-        System.out.println("totalCummulativeSpending is : " + totalCummulativeSpending);
         return totalCummulativeSpending;
     }
 
@@ -1072,7 +1049,6 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 totalCummulativeSpending += member.getCummulativeSpending();
             }
         }
-        System.out.println("totalCummulativeSpendingOfCountry is : " + totalCummulativeSpending);
         return totalCummulativeSpending;
     }
 
