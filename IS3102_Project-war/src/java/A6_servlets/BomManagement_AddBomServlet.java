@@ -34,12 +34,13 @@ public class BomManagement_AddBomServlet extends HttpServlet {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String source = request.getParameter("source");
+            Integer workhour = Integer.parseInt(request.getParameter("workHour"));
             boolean ifExist = false;
             if (ifExist) {
                 result = "?errMsg=Registration fail. BOM already registered.";
                 response.sendRedirect(source + result);
             } else {
-                itemManagementBeanLocal.createBOM(name, description);
+                itemManagementBeanLocal.createBOM(name, description, workhour);
                 result = "?goodMsg= BOM has been added successfully.";
                 response.sendRedirect("BomManagement_BomServlet" + result);
             }
