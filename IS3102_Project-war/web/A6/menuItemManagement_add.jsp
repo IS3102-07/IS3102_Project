@@ -45,17 +45,7 @@
                                 <div class="form-group">
                                     <label>Description</label>
                                     <input class="form-control" required="true" type="text" name="description">
-                                </div>
-                                <div class="form-group">
-                                    <label>Image URL</label>
-                                    <input class="form-control" type="text" required="true" name="imageURL" >     
-
-                                    <div class="field">
-                                        <span class="label"><label for="__">Attachment</label></span>
-                                        <input class="file" id="attachment_0" name="attachment_0" type="file" />
-                                    </div>
-                                </div>
-
+                                </div>                               
                                 <div class="form-group">
                                     <label>SKU</label>
                                     <input class="form-control" type="text" required="true" name="SKU">

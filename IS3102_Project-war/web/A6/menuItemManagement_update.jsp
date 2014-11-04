@@ -60,11 +60,7 @@
                                 <div class="form-group">
                                     <label>Description</label>
                                     <input class="form-control" type="text"  name="description"required="true" value="<%=menuItem.getDescription()%>" >
-                                </div>
-                                <div class="form-group">
-                                    <label>Image URL</label>
-                                    <input class="form-control" type="text" required="true" name="imageURL" value="<%=menuItem.getImageURL()%>">
-                                </div>
+                                </div>                           
                                 <div class="form-group">
                                     <label>SKU</label>
                                     <input class="form-control" type="text" required="true" name="SKU" value="<%=menuItem.getSKU()%>" disabled>
