@@ -58,7 +58,6 @@ public class StoreEntity implements Serializable {
     private List<PickRequestEntity> pickRequest;
     private String storeMapImageURL;
     private Boolean isDeleted;
-    private String storeMapImageURL;
     
     public StoreEntity() {}
     public StoreEntity(String name, String address, String telephone, String email, CountryEntity country, String postalCode, String imageURL){
