@@ -48,74 +48,80 @@
                     <div class="row">
                         <div class="col-lg-6">                           
                             <% StoreHelper storeHelper = (StoreHelper) request.getAttribute("storeHelper");%>
-                            <form class="myForm" action="../FacilityManagement_StoreServlet/editStore_POST">
-                                <div class="form-group">
-                                    <label for="input_storeName">Store Name</label>
-                                    <input type="text" class="form-control" id="input_storeName" value="<%= storeHelper.store.getName()%>" required="true" disabled/>
-                                    <input type="hidden" name="storeName" value="<%= storeHelper.store.getName()%>" >
-                                </div>
+                            <form role="form" method="POST" enctype="multipart/form-data" action="../FacilityManagement_StoreServlet/editStore_POST">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label for="input_storeName">Store Name</label>
+                                        <input type="text" class="form-control" id="input_storeName" value="<%= storeHelper.store.getName()%>" required="true" disabled/>
+                                        <input type="hidden" name="storeName" value="<%= storeHelper.store.getName()%>" >
+                                    </div>
 
-                                <div class="form-group">
-                                    <label>Regional Office</label>                                    
-                                    <select name="regionalOfficeId" class="form-control" required="true">
-                                        <option value="<%= storeHelper.regionalOffice.getId()%>"> <%= storeHelper.regionalOffice.getName()%> </option>
+                                    <div class="form-group">
+                                        <label>Regional Office</label>                                    
+                                        <select name="regionalOfficeId" class="form-control" required="true">
+                                            <option value="<%= storeHelper.regionalOffice.getId()%>"> <%= storeHelper.regionalOffice.getName()%> </option>
 
-                                        <% List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
-                                            for (RegionalOfficeEntity ro : regionalOfficeList) {
-                                                if (ro.getId() != storeHelper.regionalOffice.getId()) {
-                                        %>
-                                        <option value="<%= ro.getId()%>"><%= ro.getName()%></option>
-                                        <%
+                                            <% List<RegionalOfficeEntity> regionalOfficeList = (List<RegionalOfficeEntity>) request.getAttribute("regionalOfficeList");
+                                                for (RegionalOfficeEntity ro : regionalOfficeList) {
+                                                    if (ro.getId() != storeHelper.regionalOffice.getId()) {
+                                            %>
+                                            <option value="<%= ro.getId()%>"><%= ro.getName()%></option>
+                                            <%
+                                                    }
                                                 }
-                                            }
-                                        %>
+                                            %>
 
-                                    </select>
-                                </div>
+                                        </select>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="input_address">Country</label>                                    
-                                    <select name="countryID" class="form-control" required="true">
-                                        <option value="<%= storeHelper.country.getId()%>"> <%= storeHelper.country.getName()%> </option>
+                                    <div class="form-group">
+                                        <label for="input_address">Country</label>                                    
+                                        <select name="countryID" class="form-control" required="true">
+                                            <option value="<%= storeHelper.country.getId()%>"> <%= storeHelper.country.getName()%> </option>
 
-                                        <% List<CountryEntity> countryList = (List<CountryEntity>) request.getAttribute("countryList");
-                                            for (CountryEntity ce : countryList) {
-                                                if (ce.getId() != storeHelper.country.getId()) {
-                                        %>
-                                        <option value="<%= ce.getId()%>"><%= ce.getName()%></option>
-                                        <%
+                                            <% List<CountryEntity> countryList = (List<CountryEntity>) request.getAttribute("countryList");
+                                                for (CountryEntity ce : countryList) {
+                                                    if (ce.getId() != storeHelper.country.getId()) {
+                                            %>
+                                            <option value="<%= ce.getId()%>"><%= ce.getName()%></option>
+                                            <%
+                                                    }
                                                 }
-                                            }
-                                        %>
+                                            %>
 
-                                    </select>
-                                </div>
+                                        </select>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="input_address">Address</label>
-                                    <input type="text" class="form-control" id="input_address"  name="address" value="<%= storeHelper.store.getAddress()%>" >
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="input_address">Postal Code</label>
-                                    <input type="text" class="form-control" id="input_postalCode"  name="postalCode" value="<%= storeHelper.store.getPostalCode()%>" >
-                                </div>
+                                    <div class="form-group">
+                                        <label for="input_address">Address</label>
+                                        <input type="text" class="form-control" id="input_address"  name="address" value="<%= storeHelper.store.getAddress()%>" >
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="input_telephone">Telephone</label>
-                                    <input type="text" class="form-control" id="input_telephone"  name="telephone" value="<%= storeHelper.store.getTelephone()%>" >
-                                </div>
+                                    <div class="form-group">
+                                        <label for="input_address">Postal Code</label>
+                                        <input type="text" class="form-control" id="input_postalCode"  name="postalCode" value="<%= storeHelper.store.getPostalCode()%>" >
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="input_email">Email</label>
-                                    <input type="email" class="form-control" id="input_email"  name="email" value="<%= storeHelper.store.getEmail()%>" >
-                                </div>
+                                    <div class="form-group">
+                                        <label for="input_telephone">Telephone</label>
+                                        <input type="text" class="form-control" id="input_telephone"  name="telephone" value="<%= storeHelper.store.getTelephone()%>" >
+                                    </div>
 
-                                <input type="hidden" name="storeId" value="<%= storeHelper.store.getId()%>">
+                                    <div class="form-group">
+                                        <label for="input_email">Email</label>
+                                        <input type="email" class="form-control" id="input_email"  name="email" value="<%= storeHelper.store.getEmail()%>" >
+                                    </div>
+                                    <div>
+                                        <input type="file" name="javafile">
+                                    </div>
+                                    <br/>
+                                    
+                                    <input type="hidden" name="storeId" value="<%= storeHelper.store.getId()%>">
 
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="Submit">
-                                </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary" value="Submit">
+                                    </div>
+                                </fieldset>
                             </form>
 
                         </div>
@@ -141,7 +147,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

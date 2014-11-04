@@ -58,9 +58,10 @@ public class StoreEntity implements Serializable {
     @OneToMany(mappedBy="store")
     private List<PickRequestEntity> pickRequest;
     private Boolean isDeleted;
+    private String storeMapImageURL;
     
     public StoreEntity() {}
-    public StoreEntity(String name, String address, String telephone, String email, CountryEntity country, String postalCode){
+    public StoreEntity(String name, String address, String telephone, String email, CountryEntity country, String postalCode, String imageURL){
         this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();
         this.saleAndOperationPlanList = new ArrayList<>();
@@ -69,6 +70,7 @@ public class StoreEntity implements Serializable {
         this.setName(name);
         this.setAddress(address);
         this.setTelephone(telephone);
+        this.setStoreMapImageURL(imageURL);
         this.setEmail(email);
         this.country = country;
         this.postalCode = postalCode;
@@ -207,6 +209,14 @@ public String getAddress() {
    
     public void setSalesFigureList(List<SalesFigureEntity> salesFigureList) {
         this.salesFigureList = salesFigureList;
+    }
+  
+    public String getStoreMapImageURL() {
+        return storeMapImageURL;
+    }
+
+    public void setStoreMapImageURL(String storeMapImageURL) {
+        this.storeMapImageURL = storeMapImageURL;
     }
     
     
