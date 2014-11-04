@@ -22,14 +22,14 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Kitchen Sales Forecast
+                                Schedule
                             </h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">index</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Kitchen Requirement Planning</a>
                                 </li>                    
                                 <li>
-                                    <i class="icon icon-calendar"></i>  <a href="#">Schedule</a>
+                                    <i class="icon icon-calendar"></i> Schedule</a>
                                 </li>
                             </ol>
                         </div>
@@ -39,7 +39,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <p>Access one scheme to start planning</p>
+                                    Access one scheme to start planning
                                 </div>
                                 <!-- /.panel-heading -->
 
@@ -49,7 +49,8 @@
                                             <form action="../KitchenManagement_servlet/KitchenSaleForecast_schedule_POST">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
-                                                        <tr>                                                            
+                                                        <tr> 
+                                                            <th hidden></th>
                                                             <th>Year</th>
                                                             <th>Month</th>                                                            
                                                             <th>Action</th>
@@ -61,7 +62,8 @@
                                                             if (scheduleList != null) {
                                                                 for (MonthScheduleEntity schedule : scheduleList) {
                                                         %>
-                                                        <tr>                                                            
+                                                        <tr>            
+                                                            <td hidden></td>
                                                             <td><%= schedule.getYear() %></td>
                                                             <td><%= schedule.getMonth() %></td>
                                                             <td><button class="btn btn-primary" name="scheduleId" value="<%= schedule.getId() %>">Access</button></a></td>

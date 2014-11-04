@@ -58,9 +58,10 @@ public class StoreEntity implements Serializable {
     private List<PickRequestEntity> pickRequest;
     private String storeMapImageURL;
     private Boolean isDeleted;
+    private String storeMapImageURL;
     
     public StoreEntity() {}
-    public StoreEntity(String name, String address, String telephone, String email, CountryEntity country, String postalCode){
+    public StoreEntity(String name, String address, String telephone, String email, CountryEntity country, String postalCode, String imageURL){
         this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();
         this.saleAndOperationPlanList = new ArrayList<>();
@@ -69,6 +70,7 @@ public class StoreEntity implements Serializable {
         this.setName(name);
         this.setAddress(address);
         this.setTelephone(telephone);
+        this.setStoreMapImageURL(imageURL);
         this.setEmail(email);
         this.country = country;
         this.postalCode = postalCode;

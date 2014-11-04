@@ -15,10 +15,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Raw Ingredient Requirement Planning</h1>
+                            <h1 class="page-header">Raw Ingredient Requirement</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">index</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Kitchen Requirement Planning</a>
                                 </li>   
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_schedule_GET">Schedule</a>
@@ -30,7 +30,7 @@
                                     <i class="icon icon-list"></i>  <a href="../KitchenManagement_servlet/KitchenDemandManagement_GET">Demand Management</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i> <a href="#">Raw Ingredient Requirement Management</a>
+                                    <i class="icon icon-list"></i> Raw Ingredient Requirement</a>
                                 </li>
                             </ol>
                         </div>

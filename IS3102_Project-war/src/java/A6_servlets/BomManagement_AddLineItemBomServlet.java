@@ -20,13 +20,14 @@ public class BomManagement_AddLineItemBomServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            System.out.println("coming in add line item servlet");
+            System.out.println("coming in add line item servlet");            
             String SKU = request.getParameter("sku");
             Integer qty = Integer.parseInt(request.getParameter("qty"));
             Long bomId = Long.parseLong(request.getParameter("bomId"));
             System.out.println("SKU is " + SKU);
             System.out.println("Quantity is " + qty);
             System.out.println("BOM Id is " + bomId);
+                     
             boolean canCreate = itemManagementBean.addLineItemToBOM(SKU, qty, bomId);
 
             if (!canCreate) {

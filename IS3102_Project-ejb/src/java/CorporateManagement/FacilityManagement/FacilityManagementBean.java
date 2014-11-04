@@ -307,14 +307,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode) {
+    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL) {
         System.out.println("createStore() called with name:" + storeName);
         String name;
         Long storeId;
         try {
-            
+
             CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
-            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity, postalCode);
+            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity, postalCode, imageURL);
             em.persist(storeEntity);
             countryEntity.getStores().add(storeEntity);
             em.merge(countryEntity);
@@ -353,7 +353,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID) {
+    public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID, String imageURL) {
         System.out.println("editStore() called with ID:" + storeId);
         try {
             StoreEntity storeEntity = em.find(StoreEntity.class, storeId);
@@ -365,6 +365,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             storeEntity.setAddress(address);
             storeEntity.setTelephone(telephone);
             storeEntity.setEmail(email);
+            storeEntity.setStoreMapImageURL(imageURL);
             storeEntity.setCountry(countryEntity);
             em.merge(storeEntity);
             //add to new country side
@@ -541,6 +542,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             return new ArrayList<WarehouseEntity>();
         }
     }
+
     @Override
     public List<WarehouseEntity> getMFWarehouseList() {
         try {
@@ -551,6 +553,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             return new ArrayList<WarehouseEntity>();
         }
     }
+
     @Override
     public List<WarehouseEntity> getStoreWarehouseList() {
         try {
@@ -614,7 +617,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
 
     @Override
     public StoreEntity getStoreByID(Long storeID) {
-        System.out.println("getStoreByID() called with ID:"+storeID);
+        System.out.println("getStoreByID() called with ID:" + storeID);
         try {
             Query q = em.createQuery("select s from StoreEntity s where s.isDeleted=false and s.id = ?1").setParameter(1, storeID);
             StoreEntity storeEntity = (StoreEntity) q.getSingleResult();
@@ -824,9 +827,9 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             return null;
         }
     }
-    
+
     @Override
-    public Long getCountryID(String countryName){
+    public Long getCountryID(String countryName) {
         System.out.println("getCountryID() called.");
         try {
             Query q = em.createQuery("Select c from CountryEntity c where c.name=:countryName");

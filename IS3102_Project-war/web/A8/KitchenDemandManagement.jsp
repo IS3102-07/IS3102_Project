@@ -18,7 +18,7 @@
                             <h1 class="page-header">Kitchen Demand Management</h1>
                             <ol class="breadcrumb">
                                 <li>
-                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">index</a>
+                                    <i class="icon icon-dashboard"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Kitchen Requirement Planning</a>
                                 </li>   
                                 <li>
                                     <i class="icon icon-calendar"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_schedule_GET">Schedule</a>
@@ -27,7 +27,7 @@
                                     <i class="icon icon-list"></i>  <a href="../KitchenManagement_servlet/KitchenSaleForecast_main_GET">Sales Forecast</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-list"></i>  <a href="#">Demand Management</a>
+                                    <i class="icon icon-list"></i> Demand Management</a>
                                 </li>
                             </ol>
                         </div>

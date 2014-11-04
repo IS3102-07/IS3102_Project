@@ -11,22 +11,24 @@ import EntityManager.RegionalOfficeEntity;
 import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import HelperClasses.StoreHelper;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
-/**
- *
- * @author Administrator
- */
+@MultipartConfig
 public class FacilityManagement_StoreServlet extends HttpServlet {
 
     @EJB
@@ -88,6 +90,9 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                     Long countryID = Long.parseLong(request.getParameter("countryID"));
                     String postalCode = request.getParameter("postalCode");
+                    Part file = request.getPart("javafile");
+                    String fileName = storeName + ".jpg";
+                    String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
                     if (fmBean.checkNameExistsOfStore(storeName)) {
                         // request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
@@ -98,11 +103,23 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                         nextPage = "/FacilityManagement_StoreServlet/storeManagement_index" + result;
                     } else {
                         System.out.println("Posting from create store :");
-                        StoreEntity store = fmBean.createStore(currentLoggedInStaffID, storeName, address, telephone, email, countryID, postalCode);
+                        StoreEntity store = fmBean.createStore(currentLoggedInStaffID, storeName, address, telephone, email, countryID, postalCode, imageURL);
                         fmBean.addStoreToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, store.getId());
                         if (store != null) {
                             result = "?goodMsg=A new store record has been saved.";
+                            if (file != null) {
+                                String s = file.getHeader("content-disposition");
+                                InputStream fileInputStream = file.getInputStream();
+                                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
 
+                                System.out.println("fileOutputStream  " + fileOutputStream);
+                                int nextByte;
+                                while ((nextByte = fileInputStream.read()) != -1) {
+                                    fileOutputStream.write(nextByte);
+                                }
+                                fileOutputStream.close();
+                                fileInputStream.close();
+                            }
                         } else {
                             result = "?errMsg=Fail to create store due to duplicated store name.";
                         }
@@ -133,9 +150,25 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 Long id = Long.parseLong(request.getParameter("storeId"));
                 Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                 Long countryID = Long.parseLong(request.getParameter("countryID"));
+                Part file = request.getPart("javafile");
+                String fileName = storeName + ".jpg";
+                String imageURL = "/IS3102_Project-war/img/products/" + fileName;
 
-                if (fmBean.editStore(currentLoggedInStaffID, id, storeName, address, telephone, email, countryID)
+                if (fmBean.editStore(currentLoggedInStaffID, id, storeName, address, telephone, email, countryID, imageURL)
                         && fmBean.updateStoreToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, id)) {
+                    if (file != null) {
+                        String s = file.getHeader("content-disposition");
+                        InputStream fileInputStream = file.getInputStream();
+                        OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+
+                        System.out.println("fileOutputStream  " + fileOutputStream);
+                        int nextByte;
+                        while ((nextByte = fileInputStream.read()) != -1) {
+                            fileOutputStream.write(nextByte);
+                        }
+                        fileOutputStream.close();
+                        fileInputStream.close();
+                    }
                     result = "?goodMsg=The store has been updated.";
                 } else {
                     result = "?errMsg=Fail to edit store.";
