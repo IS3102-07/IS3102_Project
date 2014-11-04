@@ -649,18 +649,23 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
             Query q = em.createQuery("select l from ProductGroupLineItemEntity l where l.item.SKU = ?1 and l.productGroup is not null").setParameter(1, lineItem.getItem().getSKU());
             if (q.getResultList().isEmpty()) {
                 ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
-                for (int i = 0; i < productGroup.getLineItemList().size(); i++) {
-                    sum += productGroup.getLineItemList().get(i).getPercent();
-                }
-                sum += lineItem.getPercent();
-                if (sum <= 1.0) {
-                    lineItem.setProductGroup(productGroup);
-                    productGroup.setType(lineItem.getItem().getType());
-                    productGroup.getLineItemList().add(lineItem);
-                    em.merge(productGroup);
-                    return true;
-                } else {
-                    return false;
+                if (lineItem.getItem().getType().equals("Furniture")) {
+                    FurnitureEntity furniture = (FurnitureEntity) lineItem.getItem();
+                    if (productGroup.getWorkHours().equals(furniture.getBOM().getWorkHours())) {
+                        for (int i = 0; i < productGroup.getLineItemList().size(); i++) {
+                            sum += productGroup.getLineItemList().get(i).getPercent();
+                        }
+                        sum += lineItem.getPercent();
+                        if (sum <= 1.0) {
+                            lineItem.setProductGroup(productGroup);
+                            productGroup.setType(lineItem.getItem().getType());
+                            productGroup.getLineItemList().add(lineItem);
+                            em.merge(productGroup);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
                 }
             }
         } catch (Exception ex) {

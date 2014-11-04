@@ -221,7 +221,8 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
         System.out.println("testCreateBOM");
         String testdata_name = "BOM for Metal Table";
         String testdata_description = "This is the BOM for metal table.";
-        Boolean result = itemManagementBean.createBOM(testdata_name, testdata_description);
+        // to test...................
+        Boolean result = itemManagementBean.createBOM(testdata_name, testdata_description, 10);
         assertTrue(result);
     }
 
