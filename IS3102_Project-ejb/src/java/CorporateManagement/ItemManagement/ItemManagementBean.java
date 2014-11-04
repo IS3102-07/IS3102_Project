@@ -287,12 +287,13 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     }
 
     @Override
-    public boolean createBOM(String name, String description) {//
+    public boolean createBOM(String name, String description, Integer workHour) {//
         System.out.println("createBillOfMaterial() called with name:" + name);
         try {
             BillOfMaterialEntity BOM = new BillOfMaterialEntity();
             BOM.setDescription(description);
             BOM.setName(name);
+            BOM.setWorkHours(workHour);
             em.persist(BOM);
 
             System.out.println("Bill Of Material Name \"" + name + "\" registered successfully as id:" + BOM.getId());

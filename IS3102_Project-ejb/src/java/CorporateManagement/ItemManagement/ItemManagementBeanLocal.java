@@ -39,7 +39,7 @@ public interface ItemManagementBeanLocal {
     public RetailProductEntity viewRetailProduct(String SKU);
     public List<RetailProductEntity> listAllRetailProduct();
    
-    public boolean createBOM(String name, String description);
+    public boolean createBOM(String name, String description, Integer workHour);
     public boolean editBOM(Long BOMId, String name, String description);
     public boolean deleteBOM(Long BOMId);
     public BillOfMaterialEntity viewSingleBOM(Long BOMId);

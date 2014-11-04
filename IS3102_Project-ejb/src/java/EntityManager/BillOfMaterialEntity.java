@@ -30,6 +30,7 @@ public class BillOfMaterialEntity implements Serializable {
     private FurnitureEntity furniture;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH})
     private List<LineItemEntity> listOfLineItems;
+    private Integer workHours;
 
     public BillOfMaterialEntity() {
         listOfLineItems = new ArrayList<>();
@@ -37,6 +38,14 @@ public class BillOfMaterialEntity implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public Integer getWorkHours() {
+        return workHours;
+    }
+
+    public void setWorkHours(Integer workHours) {
+        this.workHours = workHours;
     }
 
     public void setId(Long id) {
