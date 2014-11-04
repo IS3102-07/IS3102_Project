@@ -28,12 +28,30 @@ public class ECommerce_MemberEditProfileServlet extends HttpServlet {
             String name = request.getParameter("name");
             String phone = request.getParameter("phone");
             String id = request.getParameter("id");
+            String country = request.getParameter("country");
+            if (country == null) {
+                country = "";
+            }
             String address = request.getParameter("address");
             String securityQuestion = request.getParameter("securityQuestion");
             String securityAnswer = request.getParameter("securityAnswer");
+            String ageString = request.getParameter("age");
+            Integer age = null;
+            if (ageString == "") {
+                ageString = null;
+            } else {
+                age = Integer.parseInt(ageString);
+            }
+            String incomeString = request.getParameter("income");
+            Integer income = null;
+            if (incomeString == "") {
+                incomeString = null;
+            } else {
+                income = Integer.parseInt(incomeString);
+            }
 
-            boolean test = accountManagementBean.editMember(Long.valueOf(id), null, name, address, email, phone, null, null, null, password, Integer.valueOf(securityQuestion), securityAnswer);
-
+            boolean test = accountManagementBean.editMember(Long.valueOf(id), null, name, address, email, phone, null, country, null, password, Integer.valueOf(securityQuestion), securityAnswer);
+            accountManagementBean.editMemberAgeAndIncome(Long.valueOf(id), age, income);
             HttpSession session;
             session = request.getSession();
             MemberEntity memberEntity = accountManagementBean.getMemberByEmail(email);

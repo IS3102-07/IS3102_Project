@@ -1,6 +1,8 @@
 package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
+import EntityManager.CountryEntity;
 import OperationalCRM.LoyaltyAndRewards.LoyaltyAndRewardsBeanLocal;
 import EntityManager.MemberEntity;
 import EntityManager.LoyaltyTierEntity;
@@ -21,6 +23,8 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
     private AccountManagementBeanLocal accountManagementBean;
     @EJB
     private LoyaltyAndRewardsBeanLocal loyaltyRewardsBean;
+    @EJB
+    private FacilityManagementBeanLocal facilityManagementBean;
 
     private String result;
 
@@ -45,6 +49,8 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
                 URLprefix = "";
             }
             if (memberEntity != null) {
+                List<CountryEntity> countries = facilityManagementBean.getListOfCountries();
+                session.setAttribute("countries", countries);
                 LoyaltyTierEntity nextLoyaltyTier = loyaltyRewardsBean.getMemberNextTier(memberEntity.getId());
                 session.setAttribute("nextLoyaltyTier", nextLoyaltyTier);
                 session.setAttribute("member", memberEntity);

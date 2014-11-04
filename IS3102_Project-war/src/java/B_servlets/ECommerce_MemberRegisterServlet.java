@@ -2,6 +2,7 @@ package B_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;

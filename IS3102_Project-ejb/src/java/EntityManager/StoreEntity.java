@@ -1,7 +1,6 @@
 package EntityManager;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -57,6 +56,7 @@ public class StoreEntity implements Serializable {
     private List<SalesRecordEntity> salesRecords;
     @OneToMany(mappedBy="store")
     private List<PickRequestEntity> pickRequest;
+    private String storeMapImageURL;
     private Boolean isDeleted;
     private String storeMapImageURL;
     
@@ -210,7 +210,7 @@ public String getAddress() {
     public void setSalesFigureList(List<SalesFigureEntity> salesFigureList) {
         this.salesFigureList = salesFigureList;
     }
-  
+
     public String getStoreMapImageURL() {
         return storeMapImageURL;
     }

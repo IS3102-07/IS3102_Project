@@ -820,7 +820,6 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     public List<CountryEntity> getListOfCountries() {
         System.out.println("getListOfCountries() called.");
         try {
-            //Query q = em.createQuery("Select c from CountryEntity c join fetch c.stores");
             Query q = em.createQuery("Select c from CountryEntity c");
             return q.getResultList();
         } catch (Exception ex) {
