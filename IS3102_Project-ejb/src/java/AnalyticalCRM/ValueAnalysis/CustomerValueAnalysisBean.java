@@ -75,11 +75,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             ex.printStackTrace();
         }
         Integer total = 0;
-        for (int i = 0;i < sortedFurnitures.size(); i++) {
+        for (int i = 0; i < sortedFurnitures.size(); i++) {
             total += sortedFurnitures.get(i).getQuantity();
         }
         return total;
     }
+
     public Integer getTotalFurnitureSoldInCountry(String country) {
         System.out.println("getTotalFurnitureSoldInCountry()" + country);
         List<LineItemEntity> sortedFurnitures = new ArrayList();
@@ -117,7 +118,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             ex.printStackTrace();
         }
         Integer total = 0;
-        for (int i = 0;i < sortedFurnitures.size(); i++) {
+        for (int i = 0; i < sortedFurnitures.size(); i++) {
             total += sortedFurnitures.get(i).getQuantity();
         }
         return total;
@@ -160,11 +161,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             ex.printStackTrace();
         }
         Integer total = 0;
-        for (int i = 0;i < sortedFurnitures.size(); i++) {
+        for (int i = 0; i < sortedFurnitures.size(); i++) {
             total += sortedFurnitures.get(i).getQuantity();
         }
         return total;
     }
+
     public Double getEstimatedCustomerLife() {
         System.out.println("getEstimatedCustomerLife()");
         return 1 / (1 - this.getAverageRetentionRate());
@@ -1109,15 +1111,17 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     @Override
     public Double totalMemberRevenue() {
         System.out.println("totalMemberRevenue()");
-        List<MemberEntity> members = accountManagementBean.listAllMember();
-
         Double profit = new Double("0");
+        try {
+            List<MemberEntity> members = accountManagementBean.listAllMember();
 
-        for (int i = 0; i < members.size(); i++) {
-
-            profit += members.get(i).getCummulativeSpending();
+            for (int i = 0; i < members.size(); i++) {
+                profit += members.get(i).getCummulativeSpending();
+            }
+            return profit;
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
         return profit;
     }
 
