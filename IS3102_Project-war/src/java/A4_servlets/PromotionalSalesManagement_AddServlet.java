@@ -56,7 +56,7 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
 
             else if (inboundAndOutboundLogisticsBeanLocal.checkSKUExists(sku)) {
                 String fileName = sku + datestring + ".jpg";
-                String imageURL = "/IS3102_Project-war/img/products/" + fileName;
+                String imageURL = "/IS3102_Project-war/img/promotions/" + fileName;
 
                     if (promotionalSalesBeanLocal.checkIfPromotionCreated(sku, Long.parseLong(countryId), startDate, endDate)) {
                     ItemEntity item = itemManagementBeanLocal.getItemBySKU(sku);
@@ -67,7 +67,7 @@ public class PromotionalSalesManagement_AddServlet extends HttpServlet {
                      if (file != null) {
                         String s = file.getHeader("content-disposition");
                         InputStream fileInputStream = file.getInputStream();
-                        OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+                        OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/promotions/") + "/" + fileName);
 
                         System.out.println("fileOutputStream  " + fileOutputStream);
                         int nextByte;
