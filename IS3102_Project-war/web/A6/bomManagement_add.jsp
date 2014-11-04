@@ -43,6 +43,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label>Work Hours</label>
+                                    <input class="form-control" required="true" type="number" name="workHour" >
+                                </div>
+                                
+                                <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">
                                 </div>
                                 <input type="hidden" value="A6/bomManagement_add.jsp" name="source">
