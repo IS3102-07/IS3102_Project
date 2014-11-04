@@ -321,14 +321,8 @@
                 </a>
                 <ul id="Kitchen" class="collapse">
                     <li>
-                        <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Sales Forecast</a>
-                    </li>
-                    <li>
-                        <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_POST/*">Demand Management</a>
-                    </li>
-                    <li>
-                        <a href="../KitchenManagement_servlet/KitchenMaterialRequirement_GET/*">Raw Ingredient Requirement Management</a>
-                    </li>                    
+                        <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Kitchen Requirement Planning</a>
+                    </li>                                
                 </ul>
             </li>
             
