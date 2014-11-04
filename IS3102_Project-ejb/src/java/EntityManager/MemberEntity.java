@@ -164,6 +164,14 @@ public class MemberEntity implements Serializable {
         return this.income;
     }
 
+    public void setIncome(Integer income) {
+        this.income = income;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }

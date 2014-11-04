@@ -161,6 +161,31 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
     }
 
     @Override
+    public Boolean editMemberAgeAndIncome(Long memberID, Integer age, Integer income) {
+        System.out.println("editMemberAgeAndIncome() called with memberID:" + memberID);
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.id=:id");
+            q.setParameter("id", memberID);
+            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+            if (memberEntity.getId() == memberID) {
+                memberEntity.setAge(age);
+                memberEntity.setIncome(income);
+                em.merge(memberEntity);
+                System.out.println("Server edited member details successfully.");
+                return true;
+            }
+
+        } catch (NoResultException ex) {
+            System.out.println("Failed to find member to edit.");
+            return false;
+        } catch (Exception ex) {
+            System.out.println("editMemberAgeAndIncome(): Failed" + ex);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public MemberEntity loginMember(String email, String password) {
         System.out.println("loginMember() called with email:" + email);
         try {
@@ -736,7 +761,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
                 System.out.println("aaa");
                 List<AccessRightEntity> accessRights = rolesToBeRemoved.get(i).getAccessRightList();
                 for (int j = 0; j < accessRights.size(); j++) {
-                     System.out.println(accessRights.get(j).getStaff().getId()+"+++"+staffID);
+                    System.out.println(accessRights.get(j).getStaff().getId() + "+++" + staffID);
                     if (Objects.equals(accessRights.get(j).getStaff().getId(), staffID)) {
                         System.out.println("delete");
                         em.remove(accessRights.get(j));
@@ -1391,7 +1416,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             return false;
         }
     }
-    
+
     @Override
     public Boolean checkIfStaffIsPicker(Long staffId) {
         try {
