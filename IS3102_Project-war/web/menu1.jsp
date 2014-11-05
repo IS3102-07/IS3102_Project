@@ -19,10 +19,11 @@
     boolean roleCanView;
     boolean roleCanView2;
     boolean roleCanView3;
+    boolean roleCanView4;
+
 %>
 
-<%
-    List<MessageInboxEntity> listOfInboxMsg = (List<MessageInboxEntity>) session.getAttribute("inboxMessages");
+<%    List<MessageInboxEntity> listOfInboxMsg = (List<MessageInboxEntity>) session.getAttribute("inboxMessages");
     /*  MessageInboxEntity msg = new MessageInboxEntity();
      msg.setId(1L);
      msg.setMessage("helloooooooo how are you?");
@@ -157,29 +158,29 @@
                 %>
                 <li>
                     <a href="#"><i class="icon icon-user"></i> <%= role.getName()%>
-                    <%if (role.getId() == 8L) {
-                            for (int i = 0; i < role.getAccessRightList().size(); i++) {
-                                if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                                    out.print("of " + role.getAccessRightList().get(0).getManufacturingFacility().getName());
+                        <%if (role.getId() == 8L) {
+                                for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                                    if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                        out.print("of " + role.getAccessRightList().get(0).getManufacturingFacility().getName());
+                                    }
                                 }
-                            }
-                        }%>
+                            }%>
 
-                    <%if (role.getId() == 3L) {
-                            for (int i = 0; i < role.getAccessRightList().size(); i++) {
-                                if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                                    out.print("of " + role.getAccessRightList().get(0).getWarehouse().getWarehouseName());
+                        <%if (role.getId() == 3L) {
+                                for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                                    if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                        out.print("of " + role.getAccessRightList().get(0).getWarehouse().getWarehouseName());
+                                    }
                                 }
-                            }
-                        }%>
-                    <%if (role.getId() == 4L || role.getId() == 5L || role.getId() == 9L || role.getId() == 10L || role.getId() == 12L) {
-                            for (int i = 0; i < role.getAccessRightList().size(); i++) {
-                                if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                                    out.print("of " + role.getAccessRightList().get(0).getStore().getName());
+                            }%>
+                        <%if (role.getId() == 4L || role.getId() == 5L || role.getId() == 9L || role.getId() == 10L || role.getId() == 12L) {
+                                for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                                    if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                        out.print("of " + role.getAccessRightList().get(0).getStore().getName());
+                                    }
                                 }
-                            }
-                        }%>
-                     </a>
+                            }%>
+                    </a>
                 </li>    
                 <%
                     }
@@ -277,6 +278,8 @@
                 roleCanView = false;
                 roleCanView2 = true;
                 roleCanView3 = true;
+                roleCanView4 = true;
+
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
@@ -287,6 +290,9 @@
                         }
                         if (roleEntity.getId().equals(3L)) {//Manufacturing Facility Manager
                             roleCanView3 = false;
+                        }
+                        if (roleEntity.getId().equals(4L)) {//Manufacturing Facility Manager
+                            roleCanView4 = false;
                         }
                     }
                     if (roleCanView) {
@@ -300,22 +306,27 @@
                     <i class="icon icon-home"></i> SCM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="SCM" class="collapse" style="color: #C5C5C5;">
-                    <% if (roleCanView2) { %>
+                    <% if ((roleCanView2) && (roleCanView4)) { %>
                     <li>
                         <a href="../PurchaseOrderManagement_Servlet">Retail Products and Raw Materials Purchasing</a>
                     </li>
-                    <%if (roleCanView3){%>
+                    <%}%>
+                    <%if ((roleCanView3) && (roleCanView2) && (roleCanView4)) {%>
                     <li>
                         <a href="../SupplierManagement_SupplierServlet">Supplier Management</a>
                     </li>
                     <%}%>
+                    <%if (roleCanView2) {%>
                     <li>
                         <a href="../ShippingOrderManagement_Servlet">Inbound and Outbound Logistics</a>
                     </li>
                     <%}%>
+                    <%if (roleCanView4) {%>
                     <li>
                         <a href="../ManufacturingWarehouseManagement_Servlet">Manufacturing's Warehouse Management</a>
                     </li>
+                    <%}%>
+
                 </ul>
             </li>
             <% }

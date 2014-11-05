@@ -109,7 +109,7 @@
                                                             boolean isRegional = false;
                                                             if (!isAdmin) {
                                                                 for (RoleEntity role : listOfRoles) {
-                                                                    if (role.getName().equals("Regional Manager")) {
+                                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Store Manager") || role.getName().equals("Warehouse Manager")) {
                                                                         isRegional = true;
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
@@ -127,6 +127,9 @@
                                                         %>
                                                     <script>
                                                         $(".btnCreate").attr('disabled', 'disabled');
+                                                    </script>
+                                                    <script>
+                                                        $(".btnCreate1").attr('disabled', 'disabled');
                                                     </script>
                                                     <%           for (RoleEntity role : listOfRoles) {
                                                                     if (role.getName().equals("Warehouse Manager")) {
@@ -190,9 +193,7 @@
                                                     <input class="btn btn-primary btnCreate1" name="btnAdd" type="submit" value="Create Shipping Order" onclick="addSO()"  />
                                                 </div>
                                             </div>
-                                            <script>
-                                                $(".btnCreate1").attr('disabled', 'disabled');
-                                            </script>
+
                                             <input type="hidden" name="id" value="">    
                                             <input type="hidden" name="source" value="">   
                                         </div>
