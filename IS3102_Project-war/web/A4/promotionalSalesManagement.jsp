@@ -8,7 +8,7 @@
     boolean roleCanEditAnnouncement = false;
     if (staffEntity != null) {
         List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{1L, 2L, 5L};
+        Long[] approvedRolesID = new Long[]{1L, 2L, 5L, 11L};
         for (RoleEntity roleEntity : roles) {
             for (Long ID : approvedRolesID) {
                 if (roleEntity.getId().equals(ID)) {

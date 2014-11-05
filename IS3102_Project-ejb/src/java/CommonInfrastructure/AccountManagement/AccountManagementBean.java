@@ -1042,9 +1042,10 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             StaffEntity staff = em.find(StaffEntity.class, StaffId);
             List<RoleEntity> roles = staff.getRoles();
             RoleEntity admin = this.searchRole("Administrator", "System");
+            RoleEntity globalManager = this.searchRole("Global Manager", "Organization");
             RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
             RoleEntity purchasingManager = this.searchRole("Purchasing Manager", "Region");
-            if (roles.contains(admin)) {
+            if (roles.contains(admin)||roles.contains(globalManager)) {
                 return true;
             } else if (roles.contains(regionalManager)) {
                 Query q = em.createQuery("select a from AccessRightEntity a where a.staff.id = ?1 and a.role.id = ?2")
@@ -1076,10 +1077,11 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             StoreEntity store = em.find(StoreEntity.class, StoreId);
             List<RoleEntity> roles = staff.getRoles();
             RoleEntity admin = this.searchRole("Administrator", "System");
+            RoleEntity globalManager = this.searchRole("Global Manager", "Organization");
             RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
             RoleEntity storeManager = this.searchRole("Store Manager", "Facility");
 
-            if (roles.contains(admin)) {
+            if (roles.contains(admin)||roles.contains(globalManager)) {
                 System.out.println("current user in role: " + admin.getName());
                 return true;
             } else if (roles.contains(regionalManager)) {
@@ -1114,9 +1116,10 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, MfId);
             List<RoleEntity> roles = staff.getRoles();
             RoleEntity admin = this.searchRole("Administrator", "System");
+            RoleEntity globalManager = this.searchRole("Global Manager", "Organization");
             RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
             RoleEntity mfManager = this.searchRole("Manufacturing Facility Manager", "Facility");
-            if (roles.contains(admin)) {
+            if (roles.contains(admin)||roles.contains(globalManager)) {
                 System.out.println("current user in role: " + admin.getName());
                 return true;
             } else if (roles.contains(regionalManager)) {
@@ -1166,12 +1169,13 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             }
 
             RoleEntity admin = this.searchRole("Administrator", "System");
+            RoleEntity globalManager = this.searchRole("Global Manager", "Organization");
             RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
             RoleEntity purchasingManager = this.searchRole("Purchasing Manager", "Region");
             RoleEntity mfManager = this.searchRole("Manufacturing Facility Manager", "Facility");
             RoleEntity storeManager = this.searchRole("Store Manager", "Facility");
             RoleEntity warehouseManager = this.searchRole("Warehouse Manager", "Facility");
-            if (roles.contains(admin)) {
+            if (roles.contains(admin)||roles.contains(globalManager)) {
                 System.out.println("current user in role: " + admin.getName());
                 return true;
             } else if (roles.contains(regionalManager)) {
@@ -1230,6 +1234,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
     public Long getRegionalOfficeIdBasedOnStaffRole(Long staffId) {
         System.out.println("getRegionalOfficeIDbasedOnStaffRole() called:" + staffId);
         RoleEntity admin = this.searchRole("Administrator", "System");
+        RoleEntity globalManager = this.searchRole("Global Manager", "Organization");
         RoleEntity regionalManager = this.searchRole("Regional Manager", "Region");
         RoleEntity purchasingManager = this.searchRole("Purchasing Manager", "Region");
         RoleEntity mfManager = this.searchRole("Manufacturing Facility Manager", "Facility");
