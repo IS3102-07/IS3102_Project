@@ -196,6 +196,10 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             String passwordHash = generatePasswordHash(passwordSalt, password);
             if (passwordHash.equals(memberEntity.getPasswordHash())) {
                 System.out.println("Member with email:" + email + " logged in successfully.");
+                if (memberEntity.getAccountActivationStatus() == false || memberEntity.getAccountLockStatus()) {
+                    System.out.println("Member not activated or account locked.");
+                    return null;
+                }
                 PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
                 out.println(new Date().toString() + ";" + memberEntity.getId() + ";loginMember();");
                 out.close();
