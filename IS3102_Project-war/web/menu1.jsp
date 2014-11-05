@@ -155,7 +155,7 @@
                     for (RoleEntity role : roles) {
                 %>
                 <li>
-                    <a href="#"><i class="icon icon-user"></i> <%= role.getName()%></a>
+                    <a href="#"><i class="icon icon-user"></i> <%= role.getName()%>
                     <%if (role.getId() == 8L) {
                             for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                 if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
@@ -178,6 +178,7 @@
                                 }
                             }
                         }%>
+                     </a>
                 </li>    
                 <%
                     }
