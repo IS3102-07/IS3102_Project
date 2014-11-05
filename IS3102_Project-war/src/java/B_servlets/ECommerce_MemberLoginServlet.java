@@ -84,7 +84,7 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
                 session.setAttribute("URLprefix", URLprefix);
                 response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberProfile.jsp");
             } else {
-                result = "Login fail. Please try again.";
+                result = "Login fail. Username or password is wrong or account is not activated.";
                 response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "memberLogin.jsp?errMsg=" + result);
             }
 
