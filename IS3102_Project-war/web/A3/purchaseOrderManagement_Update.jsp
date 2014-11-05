@@ -15,7 +15,7 @@
     if (purchaseOrders == null || id == null) {
         response.sendRedirect("../PurchaseOrderManagement_Servlet");
     } else {
-        List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("activeSuppliers"));
+        List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
         List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
 
         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();

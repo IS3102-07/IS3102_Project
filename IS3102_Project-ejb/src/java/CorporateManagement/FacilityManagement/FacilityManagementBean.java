@@ -542,7 +542,17 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             return new ArrayList<WarehouseEntity>();
         }
     }
-
+    
+    @Override
+    public List<WarehouseEntity> getWarehouseListByRegionalOffice(Long regionalOfficeId) {
+        try {
+            Query q = em.createQuery("select s from WarehouseEntity s where s.isDeleted=false and s.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
+            return q.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
     @Override
     public List<WarehouseEntity> getMFWarehouseList() {
         try {
@@ -577,8 +587,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public WarehouseEntity
-            getWarehouseById(Long Id) {
+    public WarehouseEntity getWarehouseById(Long Id) {
         try {
             return em.find(WarehouseEntity.class, Id);
         } catch (Exception ex) {
@@ -590,7 +599,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     @Override
     public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId) {
         try {
-            Query q = em.createQuery("select s from StoreEntity s where s.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
+            Query q = em.createQuery("select s from StoreEntity s where s.isDeleted=false and s.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
             return q.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();

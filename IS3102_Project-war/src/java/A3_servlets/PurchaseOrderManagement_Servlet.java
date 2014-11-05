@@ -1,7 +1,9 @@
 package A3_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.PurchaseOrderEntity;
+import EntityManager.StaffEntity;
 import EntityManager.SupplierEntity;
 import EntityManager.WarehouseEntity;
 import SCM.RetailProductsAndRawMaterialsPurchasing.RetailProductsAndRawMaterialsPurchasingBeanLocal;
@@ -24,6 +26,8 @@ public class PurchaseOrderManagement_Servlet extends HttpServlet {
     private SupplierManagementBeanLocal supplierManagementBean;
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -36,11 +40,21 @@ public class PurchaseOrderManagement_Servlet extends HttpServlet {
             String goodMsg = request.getParameter("goodMsg");
             List<PurchaseOrderEntity> purchaseOrders = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
             session.setAttribute("purchaseOrders", purchaseOrders);
-
-            List<SupplierEntity> activeSuppliers = supplierManagementBean.viewAllSupplierList();
-            session.setAttribute("activeSuppliers", activeSuppliers);
-
-            List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
+            List<SupplierEntity> suppliers = null;
+            List<WarehouseEntity> warehouses = null;
+            
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            if (accountManagementBean.checkIfStaffIsAdministrator(staffEntity.getId()) || accountManagementBean.checkIfStaffIsGlobalManager(staffEntity.getId())) {
+                suppliers = supplierManagementBean.viewAllSupplierList();
+                warehouses = facilityManagementBeanLocal.getWarehouseList();
+            } else if (accountManagementBean.checkIfStaffIsRegionalManager(staffEntity.getId()) || accountManagementBean.checkIfStaffIsPurchasingManager(staffEntity.getId())) {
+                Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());
+                if (roID != null) {
+                    suppliers = supplierManagementBean.getSupplierListOfRO(roID);
+                    warehouses = facilityManagementBeanLocal.getWarehouseListByRegionalOffice(roID);
+                }
+            }
+            session.setAttribute("suppliers", suppliers);
             session.setAttribute("warehouses", warehouses);
 
             if (errMsg == null && goodMsg == null) {

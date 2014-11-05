@@ -42,6 +42,7 @@ public class SupplierItemInfoManagement_Servlet extends HttpServlet {
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
             if (accountManagementBean.checkIfStaffIsAdministrator(staffEntity.getId()) || accountManagementBean.checkIfStaffIsGlobalManager(staffEntity.getId())) {
                 suppliers = supplierManagementBean.viewAllSupplierList();
+                listOfSupplierItemInfo = itemManagementBean.listAllSupplierItemInfo();
             } else if (accountManagementBean.checkIfStaffIsRegionalManager(staffEntity.getId()) || accountManagementBean.checkIfStaffIsPurchasingManager(staffEntity.getId())) {
                 Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());
                 if (roID != null) {

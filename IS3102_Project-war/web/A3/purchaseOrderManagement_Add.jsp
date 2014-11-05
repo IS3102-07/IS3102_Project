@@ -6,7 +6,7 @@
     if (purchaseOrders == null) {
         response.sendRedirect("../PurchaseOrderManagement_Servlet");
     } else {
-        List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("activeSuppliers"));
+        List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
         List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
 %>
 <html lang="en">
