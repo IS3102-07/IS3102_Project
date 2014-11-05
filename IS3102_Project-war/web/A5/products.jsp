@@ -94,6 +94,7 @@
 
                                     <%
                                         List<LineItemEntity> sortBestSellingFurniture = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture"));
+                                        List<LineItemEntity> listOfSecondProduct = (List<LineItemEntity>) (session.getAttribute("listOfSecondProduct"));
                                     %>
                                     <!-- /.table-responsive -->
 
@@ -115,6 +116,7 @@
                                                                     <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                     <th>Name</th>
                                                                     <th>Quantity Sold</th>
+                                                                    <th>Items Purchased With</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -133,6 +135,15 @@
                                                                     </td>
                                                                     <td >
                                                                         <%=item.getQuantity()%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%
+                                                                        
+                                                                        if (listOfSecondProduct.get(i).getItem() != null) {
+                                                                        out.println(listOfSecondProduct.get(i).getItem().getName());
+                                                                        }
+                                                                        %>
+                                                                        
                                                                     </td>
 
                                                                 </tr>

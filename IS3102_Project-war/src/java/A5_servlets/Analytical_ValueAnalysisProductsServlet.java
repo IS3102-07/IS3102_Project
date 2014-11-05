@@ -1,15 +1,18 @@
 package A5_servlets;
 
+import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
+import EntityManager.FurnitureEntity;
+import EntityManager.ItemEntity;
+import EntityManager.LineItemEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
-import EntityManager.LineItemEntity;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 
 public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
@@ -26,36 +29,55 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
             session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
 
+            List<LineItemEntity> listOfSecondProduct = new ArrayList();
+            for (LineItemEntity item : sortBestSellingFurniture) {
+                if (item.getItem().getName() != null) {
+                    LineItemEntity secondBestItem = customerValueAnalysisBean.getSecondProductFromFirst(item.getItem().getName());
+                    if (secondBestItem == null) {
+                        LineItemEntity lineItem = new LineItemEntity();
+                        ItemEntity newItem = new FurnitureEntity();
+                        newItem.setName("");
+                        lineItem.setQuantity(0);
+                        lineItem.setItem(newItem);
+                        listOfSecondProduct.add(lineItem);
+                    } else {
+                        listOfSecondProduct.add(secondBestItem);
+                    }
+                } else {
+                    LineItemEntity lineItem = new LineItemEntity();
+                    ItemEntity newItem = new FurnitureEntity();
+                    newItem.setName("");
+                    lineItem.setQuantity(0);
+                    lineItem.setItem(newItem);
+                    listOfSecondProduct.add(lineItem);
+                }
+            }
+
+            session.setAttribute("listOfSecondProduct", listOfSecondProduct);
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
-            session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);  
-            
+            session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
+
             List<LineItemEntity> sortBestSellingMenuItem = customerValueAnalysisBean.sortBestSellingMenuItem();
-            session.setAttribute("sortBestSellingMenuItem",sortBestSellingMenuItem);
-            
+            session.setAttribute("sortBestSellingMenuItem", sortBestSellingMenuItem);
+
             Integer totalNumberOfFurnitureInID = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("indonesia");
-            session.setAttribute("totalNumberOfFurnitureInID",totalNumberOfFurnitureInID);
-            
+            session.setAttribute("totalNumberOfFurnitureInID", totalNumberOfFurnitureInID);
+
             Integer totalNumberOfFurnitureInSG = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("singapore");
-            session.setAttribute("totalNumberOfFurnitureInSG",totalNumberOfFurnitureInSG);
-            
+            session.setAttribute("totalNumberOfFurnitureInSG", totalNumberOfFurnitureInSG);
+
             Integer totalNumberOfFurnitureInMS = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("malaysia");
-            session.setAttribute("totalNumberOfFurnitureInMS",totalNumberOfFurnitureInMS);
-            
+            session.setAttribute("totalNumberOfFurnitureInMS", totalNumberOfFurnitureInMS);
+
             Integer getTotalRetailProductsSoldInID = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("indonesia");
-            session.setAttribute("getTotalRetailProductsSoldInID",getTotalRetailProductsSoldInID);
-            
+            session.setAttribute("getTotalRetailProductsSoldInID", getTotalRetailProductsSoldInID);
+
             Integer getTotalRetailProductsSoldInSG = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("singapore");
-            session.setAttribute("getTotalRetailProductsSoldInSG",getTotalRetailProductsSoldInSG);
-            
+            session.setAttribute("getTotalRetailProductsSoldInSG", getTotalRetailProductsSoldInSG);
+
             Integer getTotalRetailProductsSoldInMS = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("malaysia");
             session.setAttribute("getTotalRetailProductsSoldInMS", getTotalRetailProductsSoldInMS);
-            
-            Integer getTotalMenuItemSoldInSG = customerValueAnalysisBean.getTotalMenuItemSoldInCountry("singapore");
-            session.setAttribute("getTotalMenuItemSoldInSG",getTotalMenuItemSoldInSG);
-            
-            Integer getTotalMenuItemSoldInMS = customerValueAnalysisBean.getTotalMenuItemSoldInCountry("malaysia");
-            session.setAttribute("getTotalMenuItemSoldInMS", getTotalMenuItemSoldInMS);
-            
+
             response.sendRedirect("A5/products.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();
