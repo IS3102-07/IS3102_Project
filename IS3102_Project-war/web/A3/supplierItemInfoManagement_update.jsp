@@ -59,7 +59,7 @@
                                     <input class="form-control"  type="text" name="SKU" value="<%=supplierItemInfo.getItem().getSKU()%>" disabled>
                                 </div>
                                 <div class="form-group">
-                                    <label>Cost Price Per Unit</label>
+                                    <label>Cost Price (Per Lot)</label>
                                     <input class="form-control" type="number" step="any" name="costPrice" required="true" value="<%=supplierItemInfo.getCostPrice()%>" >
                                 </div>
                                <div class="form-group">

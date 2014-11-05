@@ -183,7 +183,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                Cost Price Per Unit:&nbsp;
+                                                                Cost Price (Per Lot):&nbsp;
                                                             </td>
                                                             <td>
                                                                 <input type="number" step="any" class="form-control" name="costPrice" required/>

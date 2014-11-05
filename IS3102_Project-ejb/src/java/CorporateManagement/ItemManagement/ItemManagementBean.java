@@ -98,7 +98,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     public RawMaterialEntity viewRawMaterial(String SKU) {
         System.out.println("viewRawMaterial() called with SKU:" + SKU);
         try {
-            Query q = em.createQuery("SELECT t FROM RawMaterialEntity t");
+            Query q = em.createQuery("SELECT t FROM RawMaterialEntity t where t.isDeleted=false");
 
             for (Object o : q.getResultList()) {
                 RawMaterialEntity i = (RawMaterialEntity) o;
@@ -196,7 +196,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     public List<FurnitureEntity> viewFurnitureByCategory(String category) {
         System.out.println("viewFurnitureByCategory() called with SKU:" + category);
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.category=:category");
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.category=:category and t.isDeleted=false");
             q.setParameter("category", category);
             List<FurnitureEntity> furnitures = new ArrayList();
             for (Object o : q.getResultList()) {
@@ -570,7 +570,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     public ProductGroupLineItemEntity createProductGroupLineItem(String SKU, double percent) {
         System.out.println("createProductGroupLineItem() called");
         try {
-            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU and i.isDeleted=false");
             q.setParameter("SKU", SKU);
             ItemEntity item = (ItemEntity) q.getSingleResult();
             ProductGroupLineItemEntity lineItem = new ProductGroupLineItemEntity();
@@ -600,7 +600,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
     @Override
     public Boolean checkIfSKUIsFurniture(String SKU) {
         try {
-            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+            Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU and i.isDeleted=false");
             q.setParameter("SKU", SKU);
             ItemEntity itemEntity = (ItemEntity) q.getSingleResult();
             if (itemEntity.getType().equals("Furniture")) {
@@ -626,7 +626,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
             sum -= lineItem.getPercent();
             if (sum + percent <= 1.0) {
                 lineItem.setPercent(percent);
-                Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU");
+                Query q = em.createQuery("Select i from ItemEntity i where i.SKU=:SKU and i.isDeleted=false");
                 q.setParameter("SKU", SKU);
                 ItemEntity item = (ItemEntity) q.getSingleResult();
                 lineItem.setItem(item);
@@ -643,29 +643,32 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
 
     @Override
     public Boolean addLineItemToProductGroup(Long productGroupId, Long lineItemId) {
+        System.out.println("addLineItemToProductGroup");
         try {
-            double sum = 0.0;
             ProductGroupLineItemEntity lineItem = em.find(ProductGroupLineItemEntity.class, lineItemId);
-            Query q = em.createQuery("select l from ProductGroupLineItemEntity l where l.item.SKU = ?1 and l.productGroup is not null").setParameter(1, lineItem.getItem().getSKU());
+            Query q = em.createQuery("select l from ProductGroupLineItemEntity l where l.item.isDeleted=false AND l.item.SKU = ?1 and l.productGroup is not null").setParameter(1, lineItem.getItem().getSKU());
             if (q.getResultList().isEmpty()) {
+                System.out.println("q.getResultList().isEmpty()");
                 ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
                 if (lineItem.getItem().getType().equals("Furniture")) {
+                    System.out.println("lineItem.getItem().getType().equals");
                     FurnitureEntity furniture = (FurnitureEntity) lineItem.getItem();
                     if (productGroup.getWorkHours().equals(furniture.getBOM().getWorkHours())) {
-                        for (int i = 0; i < productGroup.getLineItemList().size(); i++) {
-                            sum += productGroup.getLineItemList().get(i).getPercent();
-                        }
-                        sum += lineItem.getPercent();
-                        if (sum <= 1.0) {
-                            lineItem.setProductGroup(productGroup);
-                            productGroup.setType(lineItem.getItem().getType());
-                            productGroup.getLineItemList().add(lineItem);
-                            em.merge(productGroup);
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        System.out.println("productGroup.getWorkHours().equals");
+
+                        lineItem.setProductGroup(productGroup);
+                        productGroup.setType(lineItem.getItem().getType());
+                        productGroup.getLineItemList().add(lineItem);
+                        em.merge(productGroup);
+                        return true;
+
                     }
+                } else {
+                    lineItem.setProductGroup(productGroup);
+                    productGroup.setType(lineItem.getItem().getType());
+                    productGroup.getLineItemList().add(lineItem);
+                    em.merge(productGroup);
+                    return true;
                 }
             }
         } catch (Exception ex) {
@@ -695,6 +698,11 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
         System.out.println("removeProductGroup() called with SKU:" + productGroupID);
         try {
             ProductGroupEntity productGroupEntity = em.getReference(ProductGroupEntity.class, productGroupID);
+            for (ProductGroupLineItemEntity lineItem : productGroupEntity.getLineItemList()) {
+                em.remove(lineItem);
+            }
+            em.flush();
+
             productGroupEntity.setIsDeleted(true);
             em.merge(productGroupEntity);
             em.flush();
@@ -715,7 +723,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
         System.out.println("addCountryItemPricing() called.");
         ReturnHelper helper = new ReturnHelper();
         try {
-            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.country.id=:countryId and cip.item.SKU=:SKU and cip.isDeleted=false");
+            Query q = em.createQuery("Select cip from Item_CountryEntity cip where cip.country.id=:countryId and cip.item.SKU=:SKU and cip.item.isDeleted=false and cip.isDeleted=false");
             q.setParameter("countryId", countryId);
             q.setParameter("SKU", SKU);
             List<Item_CountryEntity> list = q.getResultList();
@@ -904,7 +912,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
         System.out.println("addSupplierItemInfo() called.");
         ReturnHelper helper = new ReturnHelper();
         try {
-            Query q = em.createQuery("Select s from Supplier_ItemEntity s where s.item.SKU=:SKU and s.supplier.id=:supplierId and s.isDeleted=false");
+            Query q = em.createQuery("Select s from Supplier_ItemEntity s where s.item.SKU=:SKU and s.item.isDeleted=false and s.supplier.id=:supplierId and s.isDeleted=false");
             q.setParameter("SKU", SKU);
             q.setParameter("supplierId", supplierId);
             List<Supplier_ItemEntity> list = q.getResultList();

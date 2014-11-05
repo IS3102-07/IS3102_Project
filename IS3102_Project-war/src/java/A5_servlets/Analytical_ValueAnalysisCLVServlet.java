@@ -55,6 +55,10 @@ public class Analytical_ValueAnalysisCLVServlet extends HttpServlet {
             
             Double getEstimatedCustomerLife = customerValueAnalysisBean.getEstimatedCustomerLife();
             session.setAttribute("getEstimatedCustomerLife", getEstimatedCustomerLife);
+            
+            Integer avgMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
+            session.setAttribute("avgMonetaryValue",avgMonetaryValue);
+            
             response.sendRedirect("A5/clv.jsp");
 
         } catch (Exception ex) {
