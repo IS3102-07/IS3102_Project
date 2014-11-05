@@ -20,6 +20,7 @@
     boolean roleCanView2;
     boolean roleCanView3;
     boolean roleCanView4;
+    boolean roleCanView5;
 
 %>
 
@@ -158,6 +159,13 @@
                 %>
                 <li>
                     <a href="#"><i class="icon icon-user"></i> <%= role.getName()%>
+                        <%if ((role.getId() == 2L) || (role.getId() == 7L)) {
+                                for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                                    if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                        out.print("of " + role.getAccessRightList().get(0).getRegionalOffice().getName());
+                                    }
+                                }
+                            }%>
                         <%if (role.getId() == 8L) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
@@ -274,7 +282,7 @@
                     <li>
                         <a href="../MRP_index_GET/*">Manufacturing Requirement Planning</a>
                     </li>
-                    
+
                 </ul>
             </li>
             <% }
@@ -283,6 +291,7 @@
                 roleCanView2 = true;
                 roleCanView3 = true;
                 roleCanView4 = true;
+                roleCanView5 = true;
 
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -297,6 +306,9 @@
                         }
                         if (roleEntity.getId().equals(4L)) {//Manufacturing Facility Manager
                             roleCanView4 = false;
+                        }
+                        if (roleEntity.getId().equals(7L)) {//Manufacturing Facility Manager
+                            roleCanView5 = false;
                         }
                     }
                     if (roleCanView) {
@@ -320,12 +332,13 @@
                         <a href="../SupplierManagement_SupplierServlet">Supplier Management</a>
                     </li>
                     <%}%>
-                    <%if (roleCanView2) {%>
+                    <%if (roleCanView5) {%>
                     <li>
                         <a href="../ShippingOrderManagement_Servlet">Inbound and Outbound Logistics</a>
                     </li>
                     <%}%>
-                    <%if (roleCanView4) {%>
+
+                    <%if ((roleCanView4) && (roleCanView5)) {%>
                     <li>
                         <a href="../ManufacturingWarehouseManagement_Servlet">Manufacturing's Warehouse Management</a>
                     </li>

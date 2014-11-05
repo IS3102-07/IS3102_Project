@@ -109,7 +109,7 @@
                                                             boolean isRegional = false;
                                                             if (!isAdmin) {
                                                                 for (RoleEntity role : listOfRoles) {
-                                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Store Manager") || role.getName().equals("Warehouse Manager")) {
+                                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Store Manager") || role.getName().equals("Warehouse Manager")||role.getName().equals("Manufacturing Facility Manager")) {
                                                                         isRegional = true;
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
