@@ -197,13 +197,21 @@
                                                         
                                                         <table class ="table">
                                                             <thead>
-                                                                <tr><td></td><th>Estimated Lifetime</th><th>LifeTime Value (USD)</th></tr>
+                                                                <tr><td></td><th>Estimated Lifetime</th><th>Avg Monetary Value</th><th>LifeTime Value (USD)</th></tr>
                                                             </thead>
                                                 <tr>
                                                     <td></td><td><%                                                        
                                                         Double getEstimatedCustomerLife = (Double) (session.getAttribute("getEstimatedCustomerLife"));
                                                         out.println(df.format(getEstimatedCustomerLife) + " years");
-                                                        %></td><td>
+                                                        %></td>
+                                                    <td>
+                                                        <%
+                                                        Integer avgMonetaryValue = (Integer) (session.getAttribute("avgMonetaryValue"));
+                                                        out.println(avgMonetaryValue);
+                                                        %>
+                                                        
+                                                    </td>
+                                                    <td>
                                                     
                                                     <% 
                                                     Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
