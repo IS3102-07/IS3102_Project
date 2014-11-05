@@ -71,6 +71,7 @@
                                     <input class="form-control" type="text" required="true" name="description" >
                                 </div>
                                     <div>
+                                        <label>Promotion Poster</label>
                                         <input type="file" name="javafile">
                                     </div>
                                     <br>

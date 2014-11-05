@@ -123,4 +123,14 @@ public class RetailInventoryWebService {
     public Boolean checkIfCustomerNeedToWaitForPicker(@WebParam(name = "receiptNo") String receiptNo) {
         return rib.checkIfCustomerNeedToWaitForPicker(receiptNo);
     }
+    
+    @WebMethod
+    public String getStoreMap(@WebParam(name = "storeID") Long storeID) {
+        try {
+            StoreEntity storeEntity = rib.getStoreByID(storeID);
+            return storeEntity.getStoreMapImageURL();
+        } catch (Exception ex) {
+            return "";
+        }
+    }
 }

@@ -24,7 +24,7 @@ public class StorageBinManagement_AddItemToBinServlet extends HttpServlet {
             Boolean result = manufacturingInventoryControlBean.addItemIntoBin(storageBinID, SKU, qty);
             if(result){
                 msg="Item added to bin successfully!";
-                 response.sendRedirect("A3/storageBinManagement.jsp?goodMsg=" + msg);
+                 response.sendRedirect("StorageBinManagement_Servlet?errMsg=" + msg);
             }else{
                 msg = "Failed to add item to bin. Please try again!";
                  response.sendRedirect("A3/storageBinManagement.jsp?errMsg=" + msg);

@@ -220,10 +220,19 @@
                                                 <table>
                                                     <tr>
                                                         <td>
-                                                            Storage Bin ID:&nbsp;
+                                                            Storage Bin:&nbsp;
                                                         </td>
                                                         <td>
-                                                            <input required class="form-control" type="text" name="storageBinID">
+                                                            <select class="form-control" name="storageBinID"> 
+                                                                <%
+                                                                    List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
+                                                                    for (StorageBinEntity s : storageBins) {
+                                                                        Long storageBinID = s.getId();
+                                                                        String storageBinName = s.getName();
+                                                                        out.print("<option value=\"" + storageBinID + "\">Bin Id " + storageBinID + ": " + storageBinName + "</option>");
+                                                                    }
+                                                                %>
+                                                            </select>
                                                         </td>
                                                     </tr>
                                                     <tr>

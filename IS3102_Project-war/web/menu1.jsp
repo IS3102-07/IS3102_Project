@@ -235,7 +235,7 @@
                 </ul>
             </li>
             <%}
-                approvedRolesID = new Long[]{1L, 2L, 4L};
+                approvedRolesID = new Long[]{1L, 2L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
