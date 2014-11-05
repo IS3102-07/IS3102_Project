@@ -92,7 +92,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     String postalCode = request.getParameter("postalCode");
                     Part file = request.getPart("javafile");
                     String fileName = storeName + ".jpg";
-                    String imageURL = "/IS3102_Project-war/img/products/" + fileName;
+                    String imageURL = "/IS3102_Project-war/img/storemaps/" + fileName;
 
                     if (fmBean.checkNameExistsOfStore(storeName)) {
                         // request.setAttribute("alertMessage", "Fail to create store due to duplicated store name.");
@@ -110,7 +110,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                             if (file != null) {
                                 String s = file.getHeader("content-disposition");
                                 InputStream fileInputStream = file.getInputStream();
-                                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+                                OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/storemaps/") + "/" + fileName);
 
                                 System.out.println("fileOutputStream  " + fileOutputStream);
                                 int nextByte;
@@ -152,14 +152,14 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 Long countryID = Long.parseLong(request.getParameter("countryID"));
                 Part file = request.getPart("javafile");
                 String fileName = storeName + ".jpg";
-                String imageURL = "/IS3102_Project-war/img/products/" + fileName;
+                String imageURL = "/IS3102_Project-war/img/storemaps/" + fileName;
 
                 if (fmBean.editStore(currentLoggedInStaffID, id, storeName, address, telephone, email, countryID, imageURL)
                         && fmBean.updateStoreToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, id)) {
                     if (file != null) {
                         String s = file.getHeader("content-disposition");
                         InputStream fileInputStream = file.getInputStream();
-                        OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/products/") + "/" + fileName);
+                        OutputStream fileOutputStream = new FileOutputStream(request.getServletContext().getRealPath("/img/storemaps/") + "/" + fileName);
 
                         System.out.println("fileOutputStream  " + fileOutputStream);
                         int nextByte;

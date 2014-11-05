@@ -102,6 +102,7 @@
                                         <input type="email" class="form-control" id="input_email"  name="email" >
                                     </div>
                                     <div>
+                                        <label>Store Map</label>
                                         <input type="file" name="javafile">
                                     </div>
                                     <br/>
