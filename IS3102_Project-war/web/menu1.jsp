@@ -94,7 +94,7 @@
 
 
 <!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -103,12 +103,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../Workspace_Servlet">Island Furniture - Staff Portal</a>
+        <a class="navbar-brand" href="../Workspace_Servlet" style="color: #C5C5C5;">Island Furniture - Staff Portal</a>
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-envelope"> Inbox</i> <b class="caret"></b></a>
+            <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-envelope"> Inbox</i> <b class="caret"></b></a>
             <ul class="dropdown-menu message-dropdown">
                 <li class="message-preview" id="m1">
                     <a href="../WorkspaceMessage_Servlet">
@@ -149,7 +149,7 @@
             </ul>
         </li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-group"></i> My Roles <b class="caret"></b></a>
+            <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-group"></i> My Roles <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <%
                     for (RoleEntity role : roles) {
@@ -163,7 +163,7 @@
             </ul>
         </li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-user"></i> <%=staffEntity.getName()%><b class="caret"></b></a>
+            <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-user"></i> <%=staffEntity.getName()%><b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
                     <a href="../A1/staffProfile.jsp"><i class="icon icon-user"></i> Profile</a>
@@ -201,7 +201,7 @@
                 if (roleCanView) {
             %>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#commonInfrastructure">
+                <a href="javascript:;" data-toggle="collapse" data-target="#commonInfrastructure" style="color: #C5C5C5;">
                     <i class="icon icon-user"></i> Common Infrastructure <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="commonInfrastructure" class="collapse">
@@ -227,7 +227,7 @@
                 if (roleCanView) {
             %>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#MRP">
+                <a href="javascript:;" data-toggle="collapse" data-target="#MRP" style="color: #C5C5C5;">
                     <i class="icon icon-book"></i> MRP <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="MRP" class="collapse">
@@ -268,10 +268,10 @@
                 if (roleCanView) {
             %>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#SCM">
+                <a href="javascript:;" data-toggle="collapse" data-target="#SCM" style="color: #C5C5C5;">
                     <i class="icon icon-home"></i> SCM <i class="icon icon-caret-down"></i>
                 </a>
-                <ul id="SCM" class="collapse">
+                <ul id="SCM" class="collapse" style="color: #C5C5C5;">
                     <% if (roleCanView2) { %>
                     <li>
                         <a href="../PurchaseOrderManagement_Servlet">Retail Products and Raw Materials Purchasing</a>
@@ -304,7 +304,7 @@
                 if (roleCanView) {
             %>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#store">
+                <a href="javascript:;" data-toggle="collapse" data-target="#store" style="color: #C5C5C5;">
                     <i class="icon icon-home"></i> Store Inventory <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="store" class="collapse">                 
@@ -316,7 +316,7 @@
             <% } %>
             
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#Kitchen">
+                <a href="javascript:;" data-toggle="collapse" data-target="#Kitchen" style="color: #C5C5C5;">
                     <i class="icon icon-book"></i> Kitchen Management <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="Kitchen" class="collapse">
@@ -346,7 +346,7 @@
                 if (roleCanView) {
             %>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#operationalCRM">
+                <a href="javascript:;" data-toggle="collapse" data-target="#operationalCRM" style="color: #C5C5C5;">
                     <i class="icon icon-cogs"></i> Operational CRM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="operationalCRM" class="collapse">
@@ -381,7 +381,7 @@
                 if (roleCanView) {
             %>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#analyticalCRM">
+                <a href="javascript:;" data-toggle="collapse" data-target="#analyticalCRM" style="color: #C5C5C5;">
                     <i class="icon icon-bar-chart-o"></i> Analytical CRM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="analyticalCRM" class="collapse">
@@ -407,7 +407,7 @@
                 if (roleCanView) {
             %>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#corporateCRM">
+                <a href="javascript:;" data-toggle="collapse" data-target="#corporateCRM" style="color: #C5C5C5;">
                     <i class="icon icon-briefcase"></i> Corporate Management <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="corporateCRM" class="collapse">
