@@ -5,8 +5,10 @@
  */
 package A2_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.ManufacturingFacilityEntity;
+import EntityManager.StaffEntity;
 import MRP.ManufacturingRequirementPlanning.ManufacturingRequirementPlanningBeanLocal;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -26,22 +28,30 @@ public class MRP_index_POST extends HttpServlet {
     @EJB
     private FacilityManagementBeanLocal fmBean; 
     @EJB
-    private ManufacturingRequirementPlanningBeanLocal mrpBean;
+    private AccountManagementBeanLocal amBean;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
         System.out.println("servlet MRP_index_POST is called");
+        String nextPage;
         
-        String nextPage = "/MRP_main_GET/*";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         
         String MF_Name = request.getParameter("MF_Name");
         ManufacturingFacilityEntity mf = fmBean.getManufacturingFacilityByName(MF_Name);
-        session.setAttribute("MRP_mf", mf);                
+        StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
+        
+        if (amBean.canStaffAccessToTheManufacturingFacility(currentUser.getId(), mf.getId())) {
+            session.setAttribute("MRP_mf", mf);
+            nextPage = "/MRP_main_GET/*";
+        } else {
+            request.setAttribute("alertMessage", "You are not allowed to access the manufacturing facility.");
+            nextPage = "/MRP_index_GET";
+        }
         
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);        
