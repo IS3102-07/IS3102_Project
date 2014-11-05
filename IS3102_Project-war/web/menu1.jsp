@@ -195,10 +195,7 @@
                 </li>
                 <li>
                     <a href="../WorkspaceMessage_Servlet?view=inbox"><i class="icon icon-envelope"></i> Inbox</a>
-                </li>
-                <li>
-                    <a href="#"><i class="icon icon-gear"></i> Settings</a>
-                </li>
+                </li>  
                 <li class="divider"></li>
                 <li>
                     <a href="../AccountManagement_LogoutServlet"><i class="icon icon-power-off"></i> Log Out</a>
@@ -210,7 +207,7 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <%
-                approvedRolesID = new Long[]{1L, 2L ,11L};
+                approvedRolesID = new Long[]{1L, 2L, 11L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -236,14 +233,18 @@
                 </ul>
             </li>
             <%}
-                approvedRolesID = new Long[]{1L, 2L, 11L};
+                approvedRolesID = new Long[]{1L, 2L, 8L, 11L};
                 roleCanView = false;
+                roleCanView2 = true;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
                             roleCanView = true;
                             break;
                         }
+                    }
+                    if (roleEntity.getId().equals(8L)) {//Manufacturing Facility Manager
+                        roleCanView2 = false;
                     }
                     if (roleCanView) {
                         break;
@@ -256,6 +257,7 @@
                     <i class="icon icon-book"></i> MRP <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="MRP" class="collapse">
+                    <%if (roleCanView2) {%>
                     <li>
                         <a href="../SaleForecast_Servlet/SaleForecast_index_GET">Sales Forecast</a>
                     </li>
@@ -265,12 +267,14 @@
                     <li>
                         <a href="../PPD_index_GET/*">Production Plan Distribution</a>
                     </li>
+                    <%}%>
                     <li>
                         <a href="../DemandManagement_index_GET/*">Demand Management</a>
                     </li>
                     <li>
                         <a href="../MRP_index_GET/*">Manufacturing Requirement Planning</a>
                     </li>
+                    
                 </ul>
             </li>
             <% }

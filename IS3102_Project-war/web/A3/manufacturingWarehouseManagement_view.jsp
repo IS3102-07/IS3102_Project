@@ -10,6 +10,8 @@
     boolean roleIsAdmin = false;
     boolean roleIsRegionalManager = false;
     boolean roleIsWarehouseManager = false;
+    boolean roleIsMFManager = false;
+
     if (staffEntity != null) {
         List<RoleEntity> roles = staffEntity.getRoles();
         Long[] approvedRolesID = new Long[]{1L};
@@ -46,9 +48,22 @@
             }
         }
     }
+    if (staffEntity != null) {
+        List<RoleEntity> roles = staffEntity.getRoles();
+        Long[] approvedRolesID = new Long[]{8L};
+        for (RoleEntity roleEntity : roles) {
+            for (Long ID : approvedRolesID) {
+                if (roleEntity.getId().equals(ID)) {
+                    roleIsMFManager = true;
+                    break;
+                }
+            }
+        }
+    }
 
     Long warehouseId = null;
     Long regionalOfficeId = null;
+    Long id = null;
 
     if (roleIsRegionalManager) {
         for (int i = 0; i < role.getAccessRightList().size(); i++) {
@@ -64,9 +79,17 @@
             }
         }
     }
+    if (roleIsMFManager) {
+        for (int i = 0; i < role.getAccessRightList().size(); i++) {
+            if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                id = role.getAccessRightList().get(i).getManufacturingFacility().getWarehouse().getId();
+            }
+        }
+    }
 
     Boolean canAccessByWarehouseManager = false;
     Boolean canAccessByRegionalManager = false;
+    Boolean canAccessByMFManager = false;
 %>
 <html lang="en">
 
@@ -156,7 +179,13 @@
                                                                             canAccessByWarehouseManager = true;
                                                                         }
                                                                     }
-                                                                if (canAccessByWarehouseManager || roleIsAdmin || canAccessByRegionalManager) {%>
+                                                                    if (roleIsMFManager) {
+                                                                        canAccessByMFManager = false;
+                                                                        if (id.equals(warehouses.get(i).getId())) {
+                                                                          canAccessByMFManager = true;
+                                                                      }
+                                                                  }
+                                                                if (canAccessByWarehouseManager || canAccessByMFManager || roleIsAdmin || canAccessByRegionalManager) {%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateManufacturingWarehouse('<%=warehouses.get(i).getId()%>', 'manufacturingWarehouseManagement.jsp')"/>                                                                                                                            
                                                                 <%} else {%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
