@@ -162,14 +162,14 @@
                         <%if ((role.getId() == 2L) || (role.getId() == 7L)) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                                        out.print("of " + role.getAccessRightList().get(0).getRegionalOffice().getName());
+                                        out.print("of " + role.getAccessRightList().get(i).getRegionalOffice().getName());
                                     }
                                 }
                             }%>
                         <%if (role.getId() == 8L) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                                        out.print("of " + role.getAccessRightList().get(0).getManufacturingFacility().getName());
+                                        out.print("of " + role.getAccessRightList().get(i).getManufacturingFacility().getName());
                                     }
                                 }
                             }%>
@@ -177,14 +177,14 @@
                         <%if (role.getId() == 3L) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                                        out.print("of " + role.getAccessRightList().get(0).getWarehouse().getWarehouseName());
+                                        out.print("of " + role.getAccessRightList().get(i).getWarehouse().getWarehouseName());
                                     }
                                 }
                             }%>
                         <%if (role.getId() == 4L || role.getId() == 9L || role.getId() == 10L || role.getId() == 12L) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                                        out.print("of " + role.getAccessRightList().get(0).getStore().getName());
+                                        out.print("of " + role.getAccessRightList().get(i).getStore().getName());
                                     }
                                 }
                             }%>
@@ -474,7 +474,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 6L, 11L};
+                approvedRolesID = new Long[]{1L, 6L, 11L};
                 roleCanView = false;
                 roleCanView2 = true;
                 for (RoleEntity roleEntity : roles) {

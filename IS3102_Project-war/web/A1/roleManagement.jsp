@@ -71,7 +71,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Add new roles or remove existing roles");
+                                            out.println("View existing roles");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);
@@ -87,13 +87,7 @@
                                 <form name="rolesManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">                                          
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
-                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Role</button></a>
-                                                </div>
-                                            </div>
-                                            <br>
+                                       
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
@@ -102,7 +96,6 @@
                                                             <th>Name</th>
                                                             <th>Access Level</th>
                                                             <th>Staff</th>
-                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -132,10 +125,7 @@
                                                                         }
                                                                     }
                                                                 %>
-                                                            </td>
-                                                            <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=role.getId()%>" value="Update" onclick="javascript:updateRole('<%=role.getId()%>')"/>
-                                                            </td>
+                                                            </td>                                                          
                                                         </tr>
                                                         <%
                                                                 }
@@ -146,12 +136,7 @@
                                             </div>
                                             <!-- /.table-responsive -->
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Role" onclick="addRole()"  />
-                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Role</button></a>
-                                                </div>
-                                            </div>
+                                            
                                             <input type="hidden" name="id" value="">    
                                         </div>
 

@@ -100,6 +100,7 @@
                                                                     break;
                                                                 }
                                                             }
+
                                                             boolean isRegional = false;
                                                             if (!isAdmin) {
                                                                 for (RoleEntity role : listOfRoles) {
@@ -108,13 +109,14 @@
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                if (accessRight.getRegionalOffice() != null && accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getRegionalOffice() != null && accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
                                                                                     if (!finalListOfPO.contains(PO)) {
                                                                                         finalListOfPO.add(PO);
                                                                                     }
                                                                                 }
                                                                             }
                                                                         }
+
                                                                     }
                                                                 }
                                                                 if (!isRegional) {
@@ -123,13 +125,12 @@
                                                     <script>
                                                         $(".btnCreate").attr('disabled', 'disabled');
                                                     </script>
-                                                    <%
-                                                                for (RoleEntity role : listOfRoles) {
+                                                    <%                                                                for (RoleEntity role : listOfRoles) {
                                                                     if (role.getName().equals("Warehouse Manager")) {
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                if (accessRight.getWarehouse() != null && (accessRight.getWarehouse().getId().equals(PO.getDestination().getId()) && !PO.getStatus().equals("Pending"))) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getWarehouse() != null && (accessRight.getWarehouse().getId().equals(PO.getDestination().getId()) && !PO.getStatus().equals("Pending"))) {
                                                                                     if (!finalListOfPO.contains(PO)) {
                                                                                         finalListOfPO.add(PO);
                                                                                     }
@@ -140,6 +141,7 @@
                                                                 }
                                                             }
                                                         }
+
                                                         if (finalListOfPO != null) {
                                                             for (int i = 0; i < finalListOfPO.size(); i++) {
                                                                 SupplierEntity supplier = finalListOfPO.get(i).getSupplier();
@@ -216,7 +218,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>

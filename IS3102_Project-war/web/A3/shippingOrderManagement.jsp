@@ -109,8 +109,10 @@
                                                             boolean isRegional = false;
                                                             if (!isAdmin) {
                                                                 for (RoleEntity role : listOfRoles) {
-                                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Store Manager") || role.getName().equals("Warehouse Manager")||role.getName().equals("Manufacturing Facility Manager")) {
+                                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Store Manager") || role.getName().equals("Warehouse Manager") || role.getName().equals("Manufacturing Facility Manager")) {
                                                                         isRegional = true;
+                                                                    }
+                                                                    if (role.getName().equals("Regional Manager")) {
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {
@@ -122,6 +124,7 @@
                                                                             }
                                                                         }
                                                                     }
+
                                                                 }
                                                                 if (!isRegional) {
                                                         %>
@@ -137,6 +140,34 @@
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {
                                                                                 if (accessRight.getWarehouse() != null && ((accessRight.getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                    if (!finalListOfSO.contains(SO)) {
+                                                                                        finalListOfSO.add(SO);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                 for (RoleEntity role : listOfRoles) {
+                                                                    if (role.getName().equals("Store Manager")) {
+                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                        for (AccessRightEntity accessRight : accessList) {
+                                                                            for (ShippingOrderEntity SO : shippingOrders) {
+                                                                                if (accessRight.getStore() != null && ((accessRight.getStore().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getStore().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                    if (!finalListOfSO.contains(SO)) {
+                                                                                        finalListOfSO.add(SO);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                 for (RoleEntity role : listOfRoles) {
+                                                                    if (role.getName().equals("Manufacturing Facility Manager")) {
+                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                        for (AccessRightEntity accessRight : accessList) {
+                                                                            for (ShippingOrderEntity SO : shippingOrders) {
+                                                                                if (accessRight.getManufacturingFacility() != null && ((accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
                                                                                     if (!finalListOfSO.contains(SO)) {
                                                                                         finalListOfSO.add(SO);
                                                                                     }

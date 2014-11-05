@@ -75,34 +75,32 @@
                                     <label>Address</label>
                                     <input class="form-control" type="text" required="true" name="address" value="<%=staff.getAddress()%>">
                                 </div>
-                               <!-- <div class="form-group">
-                                    <label>New Password (leave blank unless setting a new password).</label>-->
-                                    <input class="form-control" type="hidden" name="password" id="password">
+                                <!-- <div class="form-group">
+                                     <label>New Password (leave blank unless setting a new password).</label>-->
+                                <input class="form-control" type="hidden" name="password" id="password">
                                 <!--</div>
                                 <div class="form-group">
                                     <label>Re-enter New Password</label>-->
-                                    <input class="form-control" type="hidden" name="repassword" id="repassword">
+                                <input class="form-control" type="hidden" name="repassword" id="repassword">
                                 <!--</div>-->
-                                
+
                                 <div class="form-group">
                                     <label>Roles Assignment</label><br/>
                                     <%
                                         List<RoleEntity> roles = (List<RoleEntity>) session.getAttribute("staffUpdateRoles");
-                              
+
                                     %>
                                     <table class="table table-hover">
-                                        <%
-                                            List<RoleEntity> roleList = (List<RoleEntity>) session.getAttribute("allRoles");
+                                        <%                                            List<RoleEntity> roleList = (List<RoleEntity>) session.getAttribute("allRoles");
                                             for (RoleEntity role : roleList) {
                                         %>
                                         <tr>
-                                            <td><input type="checkbox" name="roles" value="<%= role.getId() %>" <%if (roles.contains(role)) {%>checked<%}%>/> <%= role.getName() %> </td>
-                                            <%if (role.getId().toString().equals("2")||role.getId().toString().equals("3")||role.getId().toString().equals("4")||role.getId().toString().equals("7")||role.getId().toString().equals("8")||role.getId().toString().equals("9")||role.getId().toString().equals("10")||role.getId().toString().equals("12")){%>
-                                            <td><span class="btn btn-default"><a href="../AccessRight_Servlet/AccessRight_GET?staffId=<%= staff.getId() %>&roleId=<%= role.getId() %>">Customize Access Right</a></span></td>
-                                            <%}
-                                            else{%>
+                                            <td><input type="radio" name="roles" value="<%= role.getId()%>" <%if (roles.contains(role)) {%>checked<%}%>/> <%= role.getName()%> </td>
+                                                <%if (role.getId().toString().equals("2") || role.getId().toString().equals("3") || role.getId().toString().equals("4") || role.getId().toString().equals("7") || role.getId().toString().equals("8") || role.getId().toString().equals("9") || role.getId().toString().equals("10") || role.getId().toString().equals("12")) {%>
+                                            <td><span class="btn btn-default"><a href="../AccessRight_Servlet/AccessRight_GET?staffId=<%= staff.getId()%>&roleId=<%= role.getId()%>">Customize Access Right</a></span></td>
+                                            <%} else {%>
                                             <td><input type="button" name="btnEdit" value="Cutomize Access Rights" class="btn btn-default"  disabled/>
-                                            <%}%>
+                                                <%}%>
                                         </tr>
                                         <%
                                             }
@@ -131,24 +129,24 @@
         </div>
         <!-- /#wrapper -->
         <script>
-             function validatePassword() {
-                    var password = document.getElementById("password").value;
-                    var repassword = document.getElementById("repassword").value;
-                    var ok = true;
-                    if ((password != null && repassword != null) || (password != "" && repassword != "")) {
-                        if (password != repassword) {
-                            //alert("Passwords Do not match");
-                            document.getElementById("password").style.borderColor = "#E34234";
-                            document.getElementById("repassword").style.borderColor = "#E34234";
-                            alert("Passwords do not match. Please key again.");
-                            ok = false;
-                        } 
-                    } else {
-                        return ok;
+            function validatePassword() {
+                var password = document.getElementById("password").value;
+                var repassword = document.getElementById("repassword").value;
+                var ok = true;
+                if ((password != null && repassword != null) || (password != "" && repassword != "")) {
+                    if (password != repassword) {
+                        //alert("Passwords Do not match");
+                        document.getElementById("password").style.borderColor = "#E34234";
+                        document.getElementById("repassword").style.borderColor = "#E34234";
+                        alert("Passwords do not match. Please key again.");
+                        ok = false;
                     }
+                } else {
                     return ok;
                 }
-        </script>F
+                return ok;
+            }
+        </script>     
     </body>
 
 </html>
