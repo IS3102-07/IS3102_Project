@@ -557,7 +557,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     @Override
     public List<WarehouseEntity> getStoreWarehouseList() {
         try {
-            Query q = em.createQuery("select w from WarehouseEntity w where w.isDeleted=false and w.store is not null");
+            Query q = em.createQuery("select w from WarehouseEntity w where w.isDeleted=false and w.store IS NOT NULL");
             return q.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
