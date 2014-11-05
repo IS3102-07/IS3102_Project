@@ -38,6 +38,58 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     @EJB
     ItemManagementBeanLocal itemManagementBean;
 
+    public LineItemEntity getSecondProductFromFirst(String furniture) {
+        System.out.println("getSecondProductFromFirst()" + furniture);
+        LineItemEntity secondProduct = new LineItemEntity();
+        List<LineItemEntity> listOfSecondProducts = new ArrayList();
+        try {
+            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getItemsPurchased() != null && salesRecord.getItemsPurchased().size() != 0) {
+                    for (LineItemEntity item : salesRecord.getItemsPurchased()) {
+                        if (item.getItem().getName().equalsIgnoreCase(furniture)) {
+                            for (LineItemEntity item2 : salesRecord.getItemsPurchased()) {
+                                if (!item2.getItem().getName().equalsIgnoreCase(furniture)) {
+                                    secondProduct = item2;
+
+                                    if (listOfSecondProducts.size() == 0) {
+                                        secondProduct.setQuantity(1);
+                                        listOfSecondProducts.add(secondProduct);
+                                    } else {
+                                        for (int i = 0; i < listOfSecondProducts.size(); i++) {
+                                            if (listOfSecondProducts.get(i).getItem().getId().equals(secondProduct.getItem().getId())) {
+                                                listOfSecondProducts.get(i).setQuantity(listOfSecondProducts.get(i).getQuantity() + 1);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < listOfSecondProducts.size(); i++) {
+                System.out.println("Item " + i + " " + listOfSecondProducts.get(i).getItem().getName() + " quantity is " + listOfSecondProducts.get(i).getQuantity());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        if (listOfSecondProducts.size() != 0) {
+           LineItemEntity highestGrade = listOfSecondProducts.get(0);
+           for (int i = 0; i < listOfSecondProducts.size(); i++) {
+               
+           }
+        }
+        if (listOfSecondProducts.size() != 0) {
+            return listOfSecondProducts.get(0);
+        } else {
+            return null;
+        }
+    }
+
     public Integer getTotalMenuItemSoldInCountry(String country) {
         System.out.println("getTotalMenuItemSoldInCountry()" + country);
         List<LineItemEntity> sortedFurnitures = new ArrayList();
@@ -904,7 +956,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 List<SalesRecordEntity> salesRecordOfMember = member.getPurchases();
                 if (salesRecordOfMember != null) {
                     for (SalesRecordEntity salesRecord : salesRecordOfMember) {
-                        
+
                         totalCummulativeSpending += salesRecord.getAmountDue();
                     }
                 }
@@ -928,7 +980,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 List<SalesRecordEntity> salesRecordOfMember = member.getPurchases();
                 if (salesRecordOfMember != null) {
                     for (SalesRecordEntity salesRecord : salesRecordOfMember) {
-                        
+
                         totalCummulativeSpending += salesRecord.getAmountDue();
                     }
                 }
@@ -1069,7 +1121,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 List<SalesRecordEntity> salesRecordOfMember = member.getPurchases();
                 if (salesRecordOfMember != null) {
                     for (SalesRecordEntity salesRecord : salesRecordOfMember) {
-                        
+
                         totalCummulativeSpending += salesRecord.getAmountDue();
                     }
                 }
@@ -1086,12 +1138,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         int totalCummulativeSpending = 0;
         for (int i = 0; i < members.size(); i++) {
             List<SalesRecordEntity> salesRecordOfMember = members.get(i).getPurchases();
-                if (salesRecordOfMember != null) {
-                    for (SalesRecordEntity salesRecord : salesRecordOfMember) {
-                        
-                        totalCummulativeSpending += salesRecord.getAmountDue();
-                    }
+            if (salesRecordOfMember != null) {
+                for (SalesRecordEntity salesRecord : salesRecordOfMember) {
+
+                    totalCummulativeSpending += salesRecord.getAmountDue();
                 }
+            }
         }
         return (totalCummulativeSpending / members.size());
     }
@@ -1149,7 +1201,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 List<SalesRecordEntity> salesRecordOfMember = members.get(i).getPurchases();
                 if (salesRecordOfMember != null) {
                     for (SalesRecordEntity salesRecord : salesRecordOfMember) {
-                        
+
                         profit += salesRecord.getAmountDue();
                     }
                 }
