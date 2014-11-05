@@ -437,10 +437,10 @@
 
         %>
                 data: [
-                {y: '1 year', a: <%=getRevenueOfJoinDate1%>, b: <%=numOfMembersInJoinDate1%>, c: 1},
-                {y: '2 years', a: <%=getRevenueOfJoinDate2%>, b: <%=numOfMembersInJoinDate2%>, c: 2},
-                {y: '3 years', a: <%=getRevenueOfJoinDate3%>, b: <%=numOfMembersInJoinDate3%>, c: 3},
-                {y: '4 years', a: <%=getRevenueOfJoinDate4%>, b: <%=numOfMembersInJoinDate4%>, c: 4},
+                {y: '1 yr', a: <%=getRevenueOfJoinDate1%>, b: <%=numOfMembersInJoinDate1%>, c: 1},
+                {y: '2 yr', a: <%=getRevenueOfJoinDate2%>, b: <%=numOfMembersInJoinDate2%>, c: 2},
+                {y: '3 yr', a: <%=getRevenueOfJoinDate3%>, b: <%=numOfMembersInJoinDate3%>, c: 3},
+                {y: '4 yr', a: <%=getRevenueOfJoinDate4%>, b: <%=numOfMembersInJoinDate4%>, c: 4},
                 ],
                         xkey: 'y',
                         ykeys: ['a', 'b'],
