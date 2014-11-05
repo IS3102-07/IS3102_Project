@@ -85,6 +85,8 @@ public interface ItemManagementBeanLocal {
     public ReturnHelper editSupplierItemInfo(Long supplierItemId, Double costPrice, Integer lotSize, Integer leadTime);
     public Supplier_ItemEntity getSupplierItemInfo(Long supplierItemId);
     public List<Supplier_ItemEntity> listAllSupplierItemInfo();
+    public List<Supplier_ItemEntity> listAllSupplierItemInfo(Long roID);
+
 
     @Remove
     public void remove();

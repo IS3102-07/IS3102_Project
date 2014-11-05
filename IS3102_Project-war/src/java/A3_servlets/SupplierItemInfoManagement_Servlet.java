@@ -1,6 +1,8 @@
 package A3_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
+import EntityManager.StaffEntity;
 import EntityManager.SupplierEntity;
 import EntityManager.Supplier_ItemEntity;
 import SCM.SupplierManagement.SupplierManagementBeanLocal;
@@ -20,6 +22,8 @@ public class SupplierItemInfoManagement_Servlet extends HttpServlet {
     private ItemManagementBeanLocal itemManagementBean;
     @EJB
     private SupplierManagementBeanLocal supplierManagementBean;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,12 +33,24 @@ public class SupplierItemInfoManagement_Servlet extends HttpServlet {
             HttpSession session = request.getSession();
             String errMsg = request.getParameter("errMsg");
             String goodMsg = request.getParameter("goodMsg");
-            List<Supplier_ItemEntity> listOfSupplierItemInfo = itemManagementBean.listAllSupplierItemInfo();
-            session.setAttribute("listOfSupplierItemInfo", listOfSupplierItemInfo);
+            
             List<String> listOfSKUs = itemManagementBean.listAllItemsSKUForSupplier();
             session.setAttribute("listOfSKUs", listOfSKUs);
-            List<SupplierEntity> listOfSuppliers =  supplierManagementBean.viewAllSupplierList();
-            session.setAttribute("listOfSuppliers", listOfSuppliers);
+            List <SupplierEntity> suppliers = null;
+            List<Supplier_ItemEntity> listOfSupplierItemInfo = null;
+            
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            if (accountManagementBean.checkIfStaffIsAdministrator(staffEntity.getId()) || accountManagementBean.checkIfStaffIsGlobalManager(staffEntity.getId())) {
+                suppliers = supplierManagementBean.viewAllSupplierList();
+            } else if (accountManagementBean.checkIfStaffIsRegionalManager(staffEntity.getId()) || accountManagementBean.checkIfStaffIsPurchasingManager(staffEntity.getId())) {
+                Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());
+                if (roID != null) {
+                    suppliers = supplierManagementBean.getSupplierListOfRO(roID);
+                    listOfSupplierItemInfo = itemManagementBean.listAllSupplierItemInfo(roID);
+                }
+            }
+            session.setAttribute("suppliers", suppliers);
+            session.setAttribute("listOfSupplierItemInfo", listOfSupplierItemInfo);
 
             if (errMsg == null && goodMsg == null) {
                 response.sendRedirect("A3/supplierItemInfoManagement.jsp");

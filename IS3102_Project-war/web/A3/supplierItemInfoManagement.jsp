@@ -165,7 +165,7 @@
                                                             <td>
                                                                 <select class="form-control" name="supplierId"> 
                                                                     <%
-                                                                        List<SupplierEntity> listOfSuppliers = (List<SupplierEntity>) session.getAttribute("listOfSuppliers");
+                                                                        List<SupplierEntity> listOfSuppliers = (List<SupplierEntity>) session.getAttribute("suppliers");
                                                                         for (SupplierEntity s : listOfSuppliers) {
                                                                             out.print("<option value=\"" + s.getId() + "\">ID " + s.getId() + ": " + s.getSupplierName() + "</option>");
                                                                         }
@@ -206,6 +206,7 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                    <br>
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add" />
                                                 </div>
                                             </div>
@@ -256,9 +257,9 @@
                 $("#addItemPricingForm").show("slow", function() {
                 });
             });
-             $(function () {
+            $(function() {
                 var array1 = [];
-                $.get('../SKU_ajax_servlet/*', function (responseText) {
+                $.get('../SKU_ajax_servlet/*', function(responseText) {
                     var arr = responseText.trim().split(';');
                     arr.pop();
                     for (var i = 0; i < arr.length; i++) {

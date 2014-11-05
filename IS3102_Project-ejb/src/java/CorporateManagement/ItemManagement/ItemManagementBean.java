@@ -1022,4 +1022,19 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
         }
     }
 
+    @Override
+    public List<Supplier_ItemEntity> listAllSupplierItemInfo(Long roID) {
+        System.out.println("listAllSupplierItemInfo() called.");
+        try {
+            Query q = em.createQuery("Select s from Supplier_ItemEntity s where s.supplier.regionalOffice.id=:roID and s.isDeleted=false order by s.supplier.id ASC");
+            q.setParameter("roID", roID);
+            List<Supplier_ItemEntity> listOfSupplierItemInfo = q.getResultList();
+            System.out.println("listAllSupplierItemInfo(): Successful");
+            return listOfSupplierItemInfo;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("listAllSupplierItemInfo(): Failed to retrieve list.");
+            return null;
+        }
+    }
 }
