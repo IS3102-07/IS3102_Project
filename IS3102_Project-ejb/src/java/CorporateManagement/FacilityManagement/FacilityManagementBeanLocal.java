@@ -106,6 +106,9 @@ public interface FacilityManagementBeanLocal {
     public List<CountryEntity> getListOfCountries();
 
     public Long getCountryID(String countryName);
+    
+    public WarehouseEntity getWarehouseEntityBasedOnStaffRole(Long staffId);
+
 
     @Remove
     public void remove();

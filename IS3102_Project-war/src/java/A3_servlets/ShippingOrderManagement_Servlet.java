@@ -1,11 +1,14 @@
 package A3_servlets;
 
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CorporateManagement.FacilityManagement.FacilityManagementBeanLocal;
 import EntityManager.ShippingOrderEntity;
+import EntityManager.StaffEntity;
 import EntityManager.WarehouseEntity;
 import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -18,9 +21,14 @@ public class ShippingOrderManagement_Servlet extends HttpServlet {
 
     @EJB
     private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocal;
+    
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
+    
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -33,7 +41,43 @@ public class ShippingOrderManagement_Servlet extends HttpServlet {
             List<ShippingOrderEntity> shippingOrders = inboundAndOutboundLogisticsBeanLocal.getShippingOrderList();
             session.setAttribute("shippingOrders", shippingOrders);
 
-            List<WarehouseEntity> warehouses = facilityManagementBeanLocal.getWarehouseList();
+            List<WarehouseEntity> warehouses = new ArrayList();
+            List<WarehouseEntity> warehouse1 = new ArrayList();
+            System.out.println("1");
+            StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            Long id = staffEntity.getId();
+
+            if (accountManagementBean.checkIfStaffIsAdministrator(staffEntity.getId()) || accountManagementBean.checkIfStaffIsGlobalManager(staffEntity.getId())) {
+                warehouses = facilityManagementBeanLocal.getWarehouseList();
+                System.out.println("2");
+
+            } else if (accountManagementBean.checkIfStaffIsRegionalManager(staffEntity.getId()) || accountManagementBean.checkIfStaffIsPurchasingManager(staffEntity.getId())) {
+                Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());
+                if (roID != null) {
+                    warehouses = facilityManagementBeanLocal.getWarehouseListByRegionalOffice(roID);
+                    session.setAttribute("warehouse1", warehouses);
+                    System.out.println("3");
+
+                }
+            } else if ((accountManagementBean.checkIfStaffIsStoreManager(staffEntity.getId())) || (accountManagementBean.checkIfStaffIsManufacturingFacilityManager(staffEntity.getId())) || (accountManagementBean.checkIfStaffIsManufacturingFacilityWarehouseManager(staffEntity.getId()))) {
+                System.out.println("2");
+                WarehouseEntity wh = facilityManagementBeanLocal.getWarehouseEntityBasedOnStaffRole(id);
+
+                if (wh!=null){
+                   System.out.println("3");
+                   warehouses.add(wh);
+                   System.out.println("4");
+                }
+
+                Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());
+                System.out.println("6");
+
+                if (roID != null) {
+                    warehouse1 = facilityManagementBeanLocal.getWarehouseListByRegionalOffice(roID);
+
+                    session.setAttribute("warehouse1", warehouse1);
+                }
+            }
             session.setAttribute("warehouses", warehouses);
 
             if (errMsg == null && goodMsg == null) {

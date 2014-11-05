@@ -109,16 +109,13 @@
                                                             boolean isRegional = false;
                                                             if (!isAdmin) {
                                                                 for (RoleEntity role : listOfRoles) {
-                                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Store Manager") || role.getName().equals("Warehouse Manager") || role.getName().equals("Manufacturing Facility Manager")) {
-                                                                        isRegional = true;
-                                                                    }
                                                                     if (role.getName().equals("Regional Manager")) {
+                                                                        isRegional = true;
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {
                                                                                 if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getRegionalOffice() != null && (accessRight.getRegionalOffice().getId().equals(SO.getOrigin().getRegionalOffice().getId()) || accessRight.getRegionalOffice().getId().equals(SO.getDestination().getRegionalOffice().getId()))) {
                                                                                     if (!finalListOfSO.contains(SO)) {
-                                                                                        System.out.println("2222");
                                                                                         finalListOfSO.add(SO);
                                                                                     }
                                                                                 }
@@ -128,14 +125,7 @@
 
                                                                 }
                                                                 if (!isRegional) {
-                                                        %>
-                                                    <script>
-                                                        $(".btnCreate").attr('disabled', 'disabled');
-                                                    </script>
-                                                    <script>
-                                                        $(".btnCreate1").attr('disabled', 'disabled');
-                                                    </script>
-                                                    <%           for (RoleEntity role : listOfRoles) {
+                                                                 for (RoleEntity role : listOfRoles) {
                                                                     if (role.getName().equals("Warehouse Manager")) {
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
@@ -165,6 +155,7 @@
                                                                 }
                                                                 for (RoleEntity role : listOfRoles) {
                                                                     if (role.getName().equals("Manufacturing Facility Manager")) {
+                                                                        System.out.println("test1");
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {

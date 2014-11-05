@@ -6,9 +6,11 @@
 package CorporateManagement.FacilityManagement;
 
 import Config.Config;
+import EntityManager.AccessRightEntity;
 import EntityManager.CountryEntity;
 import EntityManager.ManufacturingFacilityEntity;
 import EntityManager.RegionalOfficeEntity;
+import EntityManager.StaffEntity;
 import EntityManager.StoreEntity;
 import EntityManager.WarehouseEntity;
 import HelperClasses.ManufacturingFacilityHelper;
@@ -544,6 +546,36 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             ex.printStackTrace();
             return new ArrayList<WarehouseEntity>();
         }
+    }
+    
+    @Override
+    public WarehouseEntity getWarehouseEntityBasedOnStaffRole(Long staffId) {
+        try {
+            Query q = em.createQuery("select s from StaffEntity s where s.id=:staffId");
+            q.setParameter("staffId", staffId);
+            StaffEntity staff = (StaffEntity)q.getSingleResult();
+            List<AccessRightEntity> accessRights = staff.getRoles().get(0).getAccessRightList();
+            if (staff.getRoles().get(0).getName().equals("Manufacturing Facility Manager")){
+                for (AccessRightEntity accessRight:accessRights)
+                    if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getManufacturingFacility() != null)
+                        return accessRight.getManufacturingFacility().getWarehouse();
+            }   
+             else if (staff.getRoles().get(0).getName().equals("Store Manager")){
+                for (AccessRightEntity accessRight1: accessRights)
+                    if (accessRight1.getStaff().getId().equals(staff.getId()) && accessRight1.getStore()!= null)
+                        return accessRight1.getStore().getWarehouse();
+            } 
+              else if (staff.getRoles().get(0).getName().equals("Warehouse Manager")){
+                for (AccessRightEntity accessRight1: accessRights)
+                    if (accessRight1.getStaff().getId().equals(staff.getId()) && accessRight1.getWarehouse()!= null)
+                        return accessRight1.getWarehouse();
+            }
+                
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+          return null;
     }
     
     @Override

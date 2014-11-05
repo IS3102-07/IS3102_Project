@@ -12,6 +12,7 @@
         response.sendRedirect("../ShippingOrderManagement_Servlet");
     } else {
         List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
+        List<WarehouseEntity> warehouses1 = (List<WarehouseEntity>) (session.getAttribute("warehouse1"));
 
         ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
         for (int i = 0; i < shippingOrders.size(); i++) {
@@ -118,11 +119,11 @@
                                             <label>Destination</label>
                                             <select class="form-control" name="destination" id="select_destination" required="true" <%if (!shippingOrder.getStatus().equals("Pending")) {%>disabled<%}%>>
                                                 <%
-                                                    for (int i = 0; i < warehouses.size(); i++) {
-                                                        if (warehouses.get(i).getWarehouseName().equals(shippingOrder.getDestination().getWarehouseName())) {
-                                                            out.println("<option selected value='" + warehouses.get(i).getId() + "'>" + warehouses.get(i).getWarehouseName() + "</option>");
+                                                    for (int i = 0; i < warehouses1.size(); i++) {
+                                                        if (warehouses1.get(i).getWarehouseName().equals(shippingOrder.getDestination().getWarehouseName())) {
+                                                            out.println("<option selected value='" + warehouses1.get(i).getId() + "'>" + warehouses1.get(i).getWarehouseName() + "</option>");
                                                         } else {
-                                                            out.println("<option value='" + warehouses.get(i).getId() + "'>" + warehouses.get(i).getWarehouseName() + "</option>");
+                                                            out.println("<option value='" + warehouses1.get(i).getId() + "'>" + warehouses1.get(i).getWarehouseName() + "</option>");
                                                         }
                                                     }
 
