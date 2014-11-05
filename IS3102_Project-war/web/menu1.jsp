@@ -173,7 +173,7 @@
                                     }
                                 }
                             }%>
-                        <%if (role.getId() == 4L || role.getId() == 5L || role.getId() == 9L || role.getId() == 10L || role.getId() == 12L) {
+                        <%if (role.getId() == 4L || role.getId() == 9L || role.getId() == 10L || role.getId() == 12L) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
                                         out.print("of " + role.getAccessRightList().get(0).getStore().getName());
@@ -210,7 +210,7 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <%
-                approvedRolesID = new Long[]{1L, 2L};
+                approvedRolesID = new Long[]{1L, 2L ,11L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -236,7 +236,7 @@
                 </ul>
             </li>
             <%}
-                approvedRolesID = new Long[]{1L, 2L};
+                approvedRolesID = new Long[]{1L, 2L, 11L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -274,7 +274,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 7L, 8L};
+                approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 7L, 8L, 11L};
                 roleCanView = false;
                 roleCanView2 = true;
                 roleCanView3 = true;
@@ -330,7 +330,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 3L, 4L};
+                approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 11L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -355,7 +355,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 5L};
+                approvedRolesID = new Long[]{1L, 2L, 11L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -386,8 +386,10 @@
             </li>
 
             <%}
-                approvedRolesID = new Long[]{1L, 2L, 4L, 5L};
+                approvedRolesID = new Long[]{1L, 2L, 4L, 5L, 11L};
                 roleCanView = false;
+                roleCanView2 = true;
+                roleCanView3 = true;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
@@ -396,6 +398,9 @@
                         }
                         if (roleEntity.getId().equals(5L)) {//Marketing Director 
                             roleCanView2 = false;
+                        }
+                        if (roleEntity.getId().equals(4L)) {
+                            roleCanView3 = false;
                         }
                     }
                     if (roleCanView) {
@@ -409,10 +414,12 @@
                     <i class="icon icon-cogs"></i> Operational CRM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="operationalCRM" class="collapse">
-                    <% if (roleCanView2) { %>
+                    <% if (roleCanView3) { %>
                     <li>
                         <a href="../LoyaltyManagement_Servlet">Loyalty & Rewards</a>
                     </li>
+                    <%}%>
+                    <% if (roleCanView2) { %>
                     <li>
                         <a href="../A4/customerServiceManagement.jsp">Customer Service</a>
                     </li>                    
@@ -424,7 +431,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 4L, 5L};
+                approvedRolesID = new Long[]{1L, 2L, 4L, 5L, 11L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -450,14 +457,18 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 6L};
+                approvedRolesID = new Long[]{1L, 2L, 6L, 11L};
                 roleCanView = false;
+                roleCanView2 = true;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
                             roleCanView = true;
                             break;
                         }
+                    }
+                    if (roleEntity.getId().equals(6L)) {//Marketing Director 
+                        roleCanView2 = false;
                     }
                     if (roleCanView) {
                         break;
@@ -470,9 +481,11 @@
                     <i class="icon icon-briefcase"></i> Corporate Management <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="corporateCRM" class="collapse">
+                    <% if (roleCanView2) { %>
                     <li>
                         <a href="../A6/facilityManagement.jsp">Facility Management</a>
                     </li>
+                    <%}%>
                     <li>
                         <a href="../A6/itemManagement.jsp">Item Management</a>
                     </li>
