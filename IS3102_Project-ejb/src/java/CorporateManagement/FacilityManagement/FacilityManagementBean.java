@@ -442,11 +442,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
                 if (storeId != -1) {
                     StoreEntity store = em.find(StoreEntity.class, storeId);
                     warehouse.setStore(store);
+                    warehouse.setRegionalOffice(store.getRegionalOffice());
+                    warehouse.setCountry(store.getCountry());
                     store.setWarehouse(warehouse);
                     em.merge(store);
                 } else if (mfId != -1) {
                     ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, mfId);
                     warehouse.setManufaturingFacility(mf);
+                    warehouse.setRegionalOffice(mf.getRegionalOffice());
                     mf.setWarehouse(warehouse);
                     em.merge(mf);
                 }

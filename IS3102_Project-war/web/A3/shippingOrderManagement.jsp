@@ -116,8 +116,9 @@
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {
-                                                                                if (accessRight.getRegionalOffice() != null && (accessRight.getRegionalOffice().getId().equals(SO.getOrigin().getRegionalOffice().getId()) || accessRight.getRegionalOffice().getId().equals(SO.getDestination().getRegionalOffice().getId()))) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getRegionalOffice() != null && (accessRight.getRegionalOffice().getId().equals(SO.getOrigin().getRegionalOffice().getId()) || accessRight.getRegionalOffice().getId().equals(SO.getDestination().getRegionalOffice().getId()))) {
                                                                                     if (!finalListOfSO.contains(SO)) {
+                                                                                        System.out.println("2222");
                                                                                         finalListOfSO.add(SO);
                                                                                     }
                                                                                 }
@@ -139,7 +140,7 @@
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {
-                                                                                if (accessRight.getWarehouse() != null && ((accessRight.getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getWarehouse() != null && ((accessRight.getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getWarehouse().getId().equals(SO.getOrigin().getId()))) {
                                                                                     if (!finalListOfSO.contains(SO)) {
                                                                                         finalListOfSO.add(SO);
                                                                                     }
@@ -148,12 +149,12 @@
                                                                         }
                                                                     }
                                                                 }
-                                                                 for (RoleEntity role : listOfRoles) {
+                                                                for (RoleEntity role : listOfRoles) {
                                                                     if (role.getName().equals("Store Manager")) {
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {
-                                                                                if (accessRight.getStore() != null && ((accessRight.getStore().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getStore().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getStore() != null && ((accessRight.getStore().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getStore().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
                                                                                     if (!finalListOfSO.contains(SO)) {
                                                                                         finalListOfSO.add(SO);
                                                                                     }
@@ -162,12 +163,12 @@
                                                                         }
                                                                     }
                                                                 }
-                                                                 for (RoleEntity role : listOfRoles) {
+                                                                for (RoleEntity role : listOfRoles) {
                                                                     if (role.getName().equals("Manufacturing Facility Manager")) {
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (ShippingOrderEntity SO : shippingOrders) {
-                                                                                if (accessRight.getManufacturingFacility() != null && ((accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getManufacturingFacility() != null && ((accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
                                                                                     if (!finalListOfSO.contains(SO)) {
                                                                                         finalListOfSO.add(SO);
                                                                                     }

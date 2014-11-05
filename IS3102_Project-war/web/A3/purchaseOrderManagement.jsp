@@ -109,7 +109,7 @@
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getRegionalOffice() != null && accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getRegionalOffice() != null && ((accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId()))||(accessRight.getRegionalOffice().getId().equals(PO.getDestination().getRegionalOffice().getId())))) {
                                                                                     if (!finalListOfPO.contains(PO)) {
                                                                                         finalListOfPO.add(PO);
                                                                                     }
