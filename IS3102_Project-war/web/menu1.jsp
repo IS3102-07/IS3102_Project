@@ -156,6 +156,28 @@
                 %>
                 <li>
                     <a href="#"><i class="icon icon-user"></i> <%= role.getName()%></a>
+                    <%if (role.getId() == 8L) {
+                            for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                                if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                    out.print("of " + role.getAccessRightList().get(0).getManufacturingFacility().getName());
+                                }
+                            }
+                        }%>
+
+                    <%if (role.getId() == 3L) {
+                            for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                                if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                    out.print("of " + role.getAccessRightList().get(0).getWarehouse().getWarehouseName());
+                                }
+                            }
+                        }%>
+                    <%if (role.getId() == 4L || role.getId() == 5L || role.getId() == 9L || role.getId() == 10L || role.getId() == 12L) {
+                            for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                                if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                    out.print("of " + role.getAccessRightList().get(0).getStore().getName());
+                                }
+                            }
+                        }%>
                 </li>    
                 <%
                     }
@@ -257,7 +279,7 @@
                         if (roleEntity.getId().equals(ID)) {
                             roleCanView = true;
                         }
-                        if(roleEntity.getId().equals(8L)) {//Manufacturing Facility Manager
+                        if (roleEntity.getId().equals(8L)) {//Manufacturing Facility Manager
                             roleCanView2 = false;
                         }
                     }
@@ -313,8 +335,26 @@
                     </li>
                 </ul>
             </li>
-            <% } %>
-            
+            <% }
+                approvedRolesID = new Long[]{1L, 2L, 4L, 5L};
+                roleCanView = false;
+                for (RoleEntity roleEntity : roles) {
+                    for (Long ID : approvedRolesID) {
+                        if (roleEntity.getId().equals(ID)) {
+                            roleCanView = true;
+                            break;
+                        }
+                        if (roleEntity.getId().equals(5L)) {
+                            roleCanView2 = false;
+                        }
+
+                    }
+                    if (roleCanView) {
+                        break;
+                    }
+                }
+                if (roleCanView) {
+            %>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#Kitchen" style="color: #C5C5C5;">
                     <i class="icon icon-book"></i> Kitchen Management <i class="icon icon-caret-down"></i>
@@ -325,8 +365,8 @@
                     </li>                                
                 </ul>
             </li>
-            
-            <%
+
+            <%}
                 approvedRolesID = new Long[]{1L, 2L, 4L, 5L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
@@ -335,7 +375,7 @@
                             roleCanView = true;
                             break;
                         }
-                        if(roleEntity.getId().equals(5L)) {//Marketing Director 
+                        if (roleEntity.getId().equals(5L)) {//Marketing Director 
                             roleCanView2 = false;
                         }
                     }
@@ -361,7 +401,7 @@
                     <li>
                         <a href="../PromotionalSalesManagement_Servlet">Promotional Sales</a>
                     </li>
-                   
+
                 </ul>
             </li>
             <% }
