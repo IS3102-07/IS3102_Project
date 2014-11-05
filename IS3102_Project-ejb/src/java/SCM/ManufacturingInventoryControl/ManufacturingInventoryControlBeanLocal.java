@@ -38,4 +38,6 @@ public interface ManufacturingInventoryControlBeanLocal {
     public LineItemEntity checkIfItemExistInsideStorageBin(Long storageBinID, String SKU);
     
     public Boolean checkIfStorageBinIsOfAppropriateItemType(Long storageBinId, String SKU);
+    
+    public Boolean addItemIntoBin(Long storageBinID, String SKU, Integer quantity);
 }

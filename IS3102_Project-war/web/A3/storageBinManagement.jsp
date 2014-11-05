@@ -191,49 +191,105 @@
                                 </form>
 
                             </div>
-                                                    <div><form action=""
-                                                    asdasaadsasdasd
-                                                    </div>
-                            <!-- /.panel -->
+                            <div class="panel-heading">
+                                <h3 style="display: inline">
+                                    Add Item to Bin
+                                </h3>
+                            </div>
+
+                            <script>
+                                $(function () {
+                                    var array1 = [];
+                                    $.get('../SKU_ajax_servlet/*', function (responseText) {
+                                        var arr = responseText.trim().split(';');
+                                        arr.pop();
+                                        for (var i = 0; i < arr.length; i++) {
+                                            array1.push(arr[i]);
+                                        }
+                                    });
+
+                                    $("#auto").autocomplete({source: array1});
+                                });
+                            </script>
+
+                            <form name="addItemToBin" action="../StorageBinManagement_AddItemToBinServlet">
+                                <div id="addItemToBinForm">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3" style="padding-left: 30px"><br>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            Storage Bin ID:&nbsp;
+                                                        </td>
+                                                        <td>
+                                                            <input required class="form-control" type="text" name="storageBinID">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Item SKU:&nbsp;
+                                                        </td>
+                                                        <td>
+                                                            <input id="auto" required class="form-control" name="SKU" type="text"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Quantity:&nbsp;
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" min="1" max="3000" required  class="form-control" name="qty">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <input class="btn btn-primary" type="submit" value="Add to Bin"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <!-- /.col-lg-12 -->
+                        <!-- /.panel -->
                     </div>
-                    <!-- /.row -->
-
-
+                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /.row -->
+
 
             </div>
-            <!-- /#page-wrapper -->
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- /#wrapper -->
-        <div role="dialog" class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Alert</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p id="messageBox">Storage bin will be removed. Are you sure?</p>
-                    </div>
-                    <div class="modal-footer">                        
-                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStorageBin()"  />
-                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
-                    </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <div role="dialog" class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="messageBox">Storage bin will be removed. Are you sure?</p>
+                </div>
+                <div class="modal-footer">                        
+                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStorageBin()"  />
+                    <a class="btn btn-default" data-dismiss ="modal">Close</a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-            });
-        </script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
 
-    </body>
+</body>
 
 </html>
 <%}%>

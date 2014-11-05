@@ -793,4 +793,36 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
+
+    @Override
+    public Boolean addItemIntoBin(Long storageBinID, String SKU, Integer quantity) {
+        System.out.println("addItemIntoBin called");
+        try {
+            StorageBinEntity storageBinEntity = em.find(StorageBinEntity.class, storageBinID);
+            Query q = em.createQuery("Select i from ItemEntity i where i.isDeleted=false and i.SKU=:SKU");
+            q.setParameter("SKU", SKU);
+            ItemEntity item = (ItemEntity) q.getSingleResult();
+            Integer totalVolume = item.getVolume() * quantity;
+            if (storageBinEntity.getFreeVolume() >= totalVolume) {
+                for (LineItemEntity lineItem : storageBinEntity.getLineItems()) {
+                    if (lineItem.getItem().getSKU().equals(item.getSKU())) {
+                        lineItem.setQuantity(lineItem.getQuantity() + quantity);
+                        return true;
+                    }
+                }
+                LineItemEntity newLineItem = new LineItemEntity(item, quantity, "");
+                em.persist(newLineItem);
+                storageBinEntity.getLineItems().add(newLineItem);
+                return true;
+            } else {
+                System.out.println("Not enough space to add item!");
+                return false;
+            }
+        } catch (Exception ex) {
+            System.out.println("Failed to add item to bin!");
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
 }
