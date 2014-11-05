@@ -18,6 +18,7 @@
     Long[] approvedRolesID;
     boolean roleCanView;
     boolean roleCanView2;
+    boolean roleCanView3;
 %>
 
 <%
@@ -234,7 +235,7 @@
                 </ul>
             </li>
             <%}
-                approvedRolesID = new Long[]{1L, 2L, 3L, 4L};
+                approvedRolesID = new Long[]{1L, 2L, 4L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
@@ -275,6 +276,7 @@
                 approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 7L, 8L};
                 roleCanView = false;
                 roleCanView2 = true;
+                roleCanView3 = true;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
@@ -282,6 +284,9 @@
                         }
                         if (roleEntity.getId().equals(8L)) {//Manufacturing Facility Manager
                             roleCanView2 = false;
+                        }
+                        if (roleEntity.getId().equals(3L)) {//Manufacturing Facility Manager
+                            roleCanView3 = false;
                         }
                     }
                     if (roleCanView) {
@@ -299,9 +304,11 @@
                     <li>
                         <a href="../PurchaseOrderManagement_Servlet">Retail Products and Raw Materials Purchasing</a>
                     </li>
+                    <%if (roleCanView3){%>
                     <li>
                         <a href="../SupplierManagement_SupplierServlet">Supplier Management</a>
                     </li>
+                    <%}%>
                     <li>
                         <a href="../ShippingOrderManagement_Servlet">Inbound and Outbound Logistics</a>
                     </li>
@@ -312,7 +319,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 4L};
+                approvedRolesID = new Long[]{1L, 2L, 3L, 4L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
