@@ -140,7 +140,9 @@
                                                                         <%
                                                                         
                                                                         if (listOfSecondProduct.get(i).getItem() != null) {
-                                                                        out.println(listOfSecondProduct.get(i).getItem().getName());
+                                                                        out.println(listOfSecondProduct.get(i).getItem().getName() + " (" + listOfSecondProduct.get(i).getQuantity() + ")");
+                                                                        
+                                                                        
                                                                         }
                                                                         %>
                                                                         

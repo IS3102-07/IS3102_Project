@@ -58,10 +58,17 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                                         secondProduct.setQuantity(1);
                                         listOfSecondProducts.add(secondProduct);
                                     } else {
+                                        Boolean flag = false;
                                         for (int i = 0; i < listOfSecondProducts.size(); i++) {
                                             if (listOfSecondProducts.get(i).getItem().getId().equals(secondProduct.getItem().getId())) {
                                                 listOfSecondProducts.get(i).setQuantity(listOfSecondProducts.get(i).getQuantity() + 1);
-                                            }
+                                                flag = true;
+                                                break;
+                                            } 
+                                        }
+                                        if (flag == false) {
+                                            secondProduct.setQuantity(1);
+                                            listOfSecondProducts.add(secondProduct);
                                         }
                                     }
                                 }
@@ -76,15 +83,17 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+        LineItemEntity highestGrade = null;
         if (listOfSecondProducts.size() != 0) {
-           LineItemEntity highestGrade = listOfSecondProducts.get(0);
-           for (int i = 0; i < listOfSecondProducts.size(); i++) {
-               
+           highestGrade = listOfSecondProducts.get(0);
+           for (int i = 1; i < listOfSecondProducts.size(); i++) {
+               if (listOfSecondProducts.get(i).getQuantity() > highestGrade.getQuantity()) {
+                   highestGrade = listOfSecondProducts.get(i);
+               }
            }
         }
-        if (listOfSecondProducts.size() != 0) {
-            return listOfSecondProducts.get(0);
+        if (highestGrade != null) {
+            return highestGrade;
         } else {
             return null;
         }
