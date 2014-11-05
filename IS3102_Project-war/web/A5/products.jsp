@@ -343,10 +343,10 @@
                     <% 
                     Integer totalNumberOfFurnitureInSG = (Integer) session.getAttribute("totalNumberOfFurnitureInSG");
                     Integer totalNumberOfFurnitureInMS = (Integer) session.getAttribute("totalNumberOfFurnitureInMS");
-                    Integer totalNumberOfFurnitureInCN = (Integer) session.getAttribute("totalNumberOfFurnitureInCN");
+                    Integer totalNumberOfFurnitureInID = (Integer) session.getAttribute("totalNumberOfFurnitureInID");
                     Integer getTotalRetailProductsSoldInSG = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
                     Integer getTotalRetailProductsSoldInMS = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
-                    Integer getTotalRetailProductsSoldInCN = (Integer) session.getAttribute("getTotalRetailProductsSoldInCN");
+                    Integer getTotalRetailProductsSoldInID = (Integer) session.getAttribute("totalNumberOfFurnitureInID");
                     
                     %>
                     function drawRegionsMap() {
@@ -355,7 +355,7 @@
                             ['Country', 'Furniture Sold', 'Retail Products Sold'],
                             ['Singapore', <%=totalNumberOfFurnitureInSG%>, <%=getTotalRetailProductsSoldInSG%>],
                             ['Malaysia', <%=totalNumberOfFurnitureInMS%>, <%=getTotalRetailProductsSoldInMS%>],
-                            ['Indonesia', <%=totalNumberOfFurnitureInCN%>, <%=getTotalRetailProductsSoldInCN%>]
+                            ['Indonesia', <%=totalNumberOfFurnitureInID%>, <%=getTotalRetailProductsSoldInID%>]
                         ]);
 
                         var options = {
