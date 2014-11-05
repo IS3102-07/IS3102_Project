@@ -172,6 +172,7 @@
                                                         <td style="width:200px">
                                                             <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updateSO('<%=finalListOfSO.get(i).getId()%>')"/>
                                                         </td>
+
                                                     </tr>
                                                     <%
                                                                 }
@@ -186,9 +187,12 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary btnCreate" name="btnAdd" type="submit" value="Create Shipping Order" onclick="addSO()"  />
+                                                    <input class="btn btn-primary btnCreate1" name="btnAdd" type="submit" value="Create Shipping Order" onclick="addSO()"  />
                                                 </div>
                                             </div>
+                                            <script>
+                                                $(".btnCreate1").attr('disabled', 'disabled');
+                                            </script>
                                             <input type="hidden" name="id" value="">    
                                             <input type="hidden" name="source" value="">   
                                         </div>
@@ -217,7 +221,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>
