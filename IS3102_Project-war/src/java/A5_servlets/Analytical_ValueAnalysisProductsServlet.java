@@ -32,8 +32,8 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             List<LineItemEntity> sortBestSellingMenuItem = customerValueAnalysisBean.sortBestSellingMenuItem();
             session.setAttribute("sortBestSellingMenuItem",sortBestSellingMenuItem);
             
-            Integer totalNumberOfFurnitureInCN = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("china");
-            session.setAttribute("totalNumberOfFurnitureInCN",totalNumberOfFurnitureInCN);
+            Integer totalNumberOfFurnitureInID = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("indonesia");
+            session.setAttribute("totalNumberOfFurnitureInID",totalNumberOfFurnitureInID);
             
             Integer totalNumberOfFurnitureInSG = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("singapore");
             session.setAttribute("totalNumberOfFurnitureInSG",totalNumberOfFurnitureInSG);
@@ -41,8 +41,8 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             Integer totalNumberOfFurnitureInMS = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("malaysia");
             session.setAttribute("totalNumberOfFurnitureInMS",totalNumberOfFurnitureInMS);
             
-            Integer getTotalRetailProductsSoldInCN = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("china");
-            session.setAttribute("getTotalRetailProductsSoldInCN",getTotalRetailProductsSoldInCN);
+            Integer getTotalRetailProductsSoldInID = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("indonesia");
+            session.setAttribute("getTotalRetailProductsSoldInID",getTotalRetailProductsSoldInID);
             
             Integer getTotalRetailProductsSoldInSG = customerValueAnalysisBean.getTotalRetailProductsSoldInCountry("singapore");
             session.setAttribute("getTotalRetailProductsSoldInSG",getTotalRetailProductsSoldInSG);
