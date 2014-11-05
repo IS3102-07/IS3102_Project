@@ -83,4 +83,18 @@ public class AccountManagementWebService {
             return null;
         }
     }
+
+    @WebMethod
+    public Boolean kioskRegisterMember(@WebParam(name = "name") String name, @WebParam(name = "address") String address, @WebParam(name = "DOB") Date DOB, @WebParam(name = "email") String email, @WebParam(name = "phone") String phone, @WebParam(name = "city") String city, @WebParam(name = "zipCode") String zipCode, @WebParam(name = "password") String password, @WebParam(name = "storeID") Long storeID) {
+        System.out.println("kioskRegisterMember() called");
+        try {
+            StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
+            CountryEntity country = storeEntity.getCountry();
+            return AccountManagementBeanLocal.registerMember(name, address, DOB, email, phone, country, city, zipCode, password);
+        } catch (Exception ex) {
+            System.out.println("kioskRegisterMember(): Error");
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }
