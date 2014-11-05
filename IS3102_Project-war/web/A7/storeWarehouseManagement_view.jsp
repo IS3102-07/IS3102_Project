@@ -9,6 +9,7 @@
      boolean roleIsAdmin = false;
      boolean roleIsRegionalManager = false;
      boolean roleIsWarehouseManager = false;
+     boolean roleIsStoreManager = false;
     if (staffEntity != null) {
         List<RoleEntity> roles = staffEntity.getRoles();
         Long[] approvedRolesID = new Long[]{1L};
@@ -45,6 +46,18 @@
             }
         }
     }
+    if (staffEntity != null) {
+        List<RoleEntity> roles = staffEntity.getRoles();
+        Long[] approvedRolesID = new Long[]{4L};
+        for (RoleEntity roleEntity : roles) {
+            for (Long ID : approvedRolesID) {
+                if (roleEntity.getId().equals(ID)) {
+                    roleIsStoreManager = true;
+                    break;
+                }
+            }
+        }
+    }
     
     List<AccessRightEntity> accessRights = staffEntity.getAccessRightList();
     ArrayList<Long> warehouseId = new ArrayList();
@@ -59,9 +72,14 @@
         if (accessRights.get(i).getWarehouse()!=null)
         warehouseId.add(accessRights.get(i).getWarehouse().getId());
         }
+        if (roleIsStoreManager){
+        if (accessRights.get(i).getWarehouse()!=null)
+        warehouseId.add(accessRights.get(i).getWarehouse().getId());
+        }
     }
     Boolean canAccessByWarehouseManager = false;
     Boolean canAccessByRegionalManager = false;
+    Boolean canAccessByStoreManager = false;
 %>
 <html lang="en">
 
@@ -149,7 +167,12 @@
                                                                     if (warehouseId.get(j) == warehouses.get(i).getId())
                                                                         canAccessByWarehouseManager = true;
                                                                       }
-                                                                if (canAccessByWarehouseManager||roleIsAdmin||canAccessByRegionalManager){%>
+                                                                canAccessByStoreManager = false;
+                                                                for (int j=0; j<warehouseId.size();j++){
+                                                                    if (warehouseId.get(j) == warehouses.get(i).getId())
+                                                                        canAccessByStoreManager = true;
+                                                                      }
+                                                                if (canAccessByWarehouseManager||roleIsAdmin||canAccessByRegionalManager||canAccessByStoreManager){%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateStoreWarehouse('<%=warehouses.get(i).getId()%>', 'storeWarehouseManagement.jsp')"/>                                                                                                                            
                                                                 <%} else {%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
