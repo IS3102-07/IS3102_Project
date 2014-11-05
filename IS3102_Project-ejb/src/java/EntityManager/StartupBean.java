@@ -174,7 +174,7 @@ public class StartupBean {
                 em.persist(country);
                 country = new CountryEntity("China", "RMB", 6.13, 86);
                 em.persist(country);
-                country = new CountryEntity("France", "EUR", 0.798, 86);
+                country = new CountryEntity("France", "EUR", 0.798, 4);
                 em.persist(country);
                 //Create schedule                
                 sopBean.createSchedule(2013, 1, 5, 5, 5, 5, 0);

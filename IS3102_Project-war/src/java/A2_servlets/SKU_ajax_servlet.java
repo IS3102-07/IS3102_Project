@@ -29,8 +29,7 @@ public class SKU_ajax_servlet extends HttpServlet {
         System.out.println("SKU_ajax_servlet is called.");
         
         try (PrintWriter out = response.getWriter()) {
-           for(String SKU: itemManagementBean.listAllItemsSKU()){
-               System.out.print(SKU + ";");
+           for(String SKU: itemManagementBean.listAllItemsSKU()){               
                out.write(SKU + ";");
            }
         }
