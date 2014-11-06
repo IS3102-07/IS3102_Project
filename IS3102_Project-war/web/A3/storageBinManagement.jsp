@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="EntityManager.MasterProductionScheduleEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
@@ -211,94 +213,121 @@
                                     $("#auto").autocomplete({source: array1});
                                 });
                             </script>
-
-                            <form name="addItemToBin" action="../StorageBinManagement_AddItemToBinServlet">
-                                <div id="addItemToBinForm">
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <div class="col-md-3" style="padding-left: 30px"><br>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            Storage Bin:&nbsp;
-                                                        </td>
-                                                        <td>
-                                                            <select class="form-control" name="storageBinID"> 
-                                                                <%
-                                                                    List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
-                                                                    for (StorageBinEntity s : storageBins) {
-                                                                        Long storageBinID = s.getId();
-                                                                        String storageBinName = s.getName();
-                                                                        out.print("<option value=\"" + storageBinID + "\">Bin Id " + storageBinID + ": " + storageBinName + "</option>");
-                                                                    }
-                                                                %>
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Item SKU:&nbsp;
-                                                        </td>
-                                                        <td>
-                                                            <input id="auto" required class="form-control" name="SKU" type="text"/>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Quantity:&nbsp;
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" min="1" max="3000" required  class="form-control" name="qty">
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <input class="btn btn-primary" type="submit" value="Add to Bin"/>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form name="addItemToBin" action="../StorageBinManagement_AddItemToBinServlet">
+                                        <div id="addItemToBinForm">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-md-3" style="padding-left: 30px"><br>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    Storage Bin:&nbsp;
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control" name="storageBinID"> 
+                                                                        <%
+                                                                            List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
+                                                                            for (StorageBinEntity s : storageBins) {
+                                                                                Long storageBinID = s.getId();
+                                                                                String storageBinName = s.getName();
+                                                                                out.print("<option value=\"" + storageBinID + "\">Bin Id " + storageBinID + ": " + storageBinName + "</option>");
+                                                                            }
+                                                                        %>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    Item SKU:&nbsp;
+                                                                </td>
+                                                                <td>
+                                                                    <input id="auto" required class="form-control" name="SKU" type="text"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    Quantity:&nbsp;
+                                                                </td>
+                                                                <td>
+                                                                    <input type="number" min="1" max="3000" required  class="form-control" name="qty">
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <input class="btn btn-primary" type="submit" value="Add to Bin"/>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            </form>
+                                <%
+                                    List<MasterProductionScheduleEntity> listOfMPS = (List<MasterProductionScheduleEntity>) session.getAttribute("listOfMPS");
+                                    for(MasterProductionScheduleEntity mps : listOfMPS){
+                                       
+                                    }
+                                %>
+                                <div class="col-md-8">
+                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
+                                        <thead>
+                                            <tr>
+                                                <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Length</th>
+                                                <th>Width</th>
+                                                <th>Height</th>
+                                                <th>Total Volume</th>
+                                                <th>Avaliable Volume</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel -->
+                        <!-- /.col-lg-12 -->
                     </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
+                    <!-- /.row -->
 
+
+                </div>
+                <!-- /.container-fluid -->
 
             </div>
-            <!-- /.container-fluid -->
+            <!-- /#page-wrapper -->
 
         </div>
-        <!-- /#page-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-    <div role="dialog" class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Alert</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="messageBox">Storage bin will be removed. Are you sure?</p>
-                </div>
-                <div class="modal-footer">                        
-                    <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStorageBin()"  />
-                    <a class="btn btn-default" data-dismiss ="modal">Close</a>
+        <!-- /#wrapper -->
+        <div role="dialog" class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Alert</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageBox">Storage bin will be removed. Are you sure?</p>
+                    </div>
+                    <div class="modal-footer">                        
+                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStorageBin()"  />
+                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-        $(document).ready(function () {
-            $('#dataTables-example').dataTable();
-        });
-    </script>
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').dataTable();
+                $('#dataTables-example1').dataTable();
+            });
+        </script>
 
-</body>
+    </body>
 
 </html>
 <%}%>
