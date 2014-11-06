@@ -274,11 +274,17 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
     @Override
     public List<SalesFigureEntity> getYearlySalesFigureList(Long StoreId, Long productGroupId, Integer year) {
         try {
+            em.flush();
             Query q = em.createQuery("select s from SalesFigureEntity s where s.store.id = ?1 AND s.productGroup.id = ?2 AND s.schedule.year = ?3 ")
                     .setParameter(1, StoreId)
                     .setParameter(2, productGroupId)
                     .setParameter(3, year);
-            return q.getResultList();
+            
+            List<SalesFigureEntity> sfList = (List<SalesFigureEntity>)q.getResultList();
+            for(SalesFigureEntity sf: sfList){
+                em.refresh(sf);
+            }            
+            return sfList;
         } catch (Exception ex) {
         }
         return new ArrayList<>();
