@@ -138,6 +138,30 @@
                                                                             }
                                                                         }
                                                                     }
+                                                                    if (role.getName().equals("Store Manager")) {
+                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                        for (AccessRightEntity accessRight : accessList) {
+                                                                            for (PurchaseOrderEntity PO : purchaseOrders) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getStore().getWarehouse() != null && (accessRight.getStore().getWarehouse().getId().equals(PO.getDestination().getId()) && !PO.getStatus().equals("Pending"))) {
+                                                                                    if (!finalListOfPO.contains(PO)) {
+                                                                                        finalListOfPO.add(PO);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    if (role.getName().equals("Manufacturing Facility Manager")) {
+                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                        for (AccessRightEntity accessRight : accessList) {
+                                                                            for (PurchaseOrderEntity PO : purchaseOrders) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getManufacturingFacility().getWarehouse() != null && (accessRight.getManufacturingFacility().getWarehouse().getId().equals(PO.getDestination().getId()) && !PO.getStatus().equals("Pending"))) {
+                                                                                    if (!finalListOfPO.contains(PO)) {
+                                                                                        finalListOfPO.add(PO);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }

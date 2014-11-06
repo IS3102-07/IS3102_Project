@@ -114,7 +114,8 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         String testdata_telephone = "67890123";
         String testdata_email = "mfsg3@if.com";
         Integer testdata_capacity = 1000;
-        ManufacturingFacilityEntity result = facilityManagementBean.createManufacturingFacility(testdata_callerStaffID, testdata_manufacturingFacilityName, testdata_address, testdata_telephone, testdata_email, testdata_capacity);
+        String testdata_city = "Singapore";
+        ManufacturingFacilityEntity result = facilityManagementBean.createManufacturingFacility(testdata_callerStaffID, testdata_manufacturingFacilityName, testdata_address, testdata_telephone, testdata_email, testdata_capacity, testdata_city);
         manufacturingFacilityId = result.getId();
         assertNotNull(result);
     }
