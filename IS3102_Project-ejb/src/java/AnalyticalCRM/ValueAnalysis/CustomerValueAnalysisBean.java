@@ -38,6 +38,128 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     @EJB
     ItemManagementBeanLocal itemManagementBean;
 
+    public LineItemEntity getSecondProductFromFirstMenuItem(String menuItem) {
+        System.out.println("getSecondProductFromFirstMenuItem()" + menuItem);
+        LineItemEntity secondProduct = new LineItemEntity();
+        List<LineItemEntity> listOfSecondProducts = new ArrayList();
+        try {
+            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getItemsPurchased() != null && salesRecord.getItemsPurchased().size() != 0) {
+                    for (LineItemEntity item : salesRecord.getItemsPurchased()) {
+                        if (item.getItem().getName().equalsIgnoreCase(menuItem)) {
+                            for (LineItemEntity item2 : salesRecord.getItemsPurchased()) {
+                                if (!item2.getItem().getName().equalsIgnoreCase(menuItem)) {
+                                    secondProduct = item2;
+
+                                    if (listOfSecondProducts.size() == 0) {
+                                        secondProduct.setQuantity(1);
+                                        listOfSecondProducts.add(secondProduct);
+                                    } else {
+                                        Boolean flag = false;
+                                        for (int i = 0; i < listOfSecondProducts.size(); i++) {
+                                            if (listOfSecondProducts.get(i).getItem().getId().equals(secondProduct.getItem().getId())) {
+                                                listOfSecondProducts.get(i).setQuantity(listOfSecondProducts.get(i).getQuantity() + 1);
+                                                flag = true;
+                                                break;
+                                            }
+                                        }
+                                        if (flag == false) {
+                                            secondProduct.setQuantity(1);
+                                            listOfSecondProducts.add(secondProduct);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < listOfSecondProducts.size(); i++) {
+                System.out.println("Item " + i + " " + listOfSecondProducts.get(i).getItem().getName() + " quantity is " + listOfSecondProducts.get(i).getQuantity());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        LineItemEntity highestGrade = null;
+        if (listOfSecondProducts.size() != 0) {
+            highestGrade = listOfSecondProducts.get(0);
+            for (int i = 1; i < listOfSecondProducts.size(); i++) {
+                if (listOfSecondProducts.get(i).getQuantity() > highestGrade.getQuantity()) {
+                    highestGrade = listOfSecondProducts.get(i);
+                }
+            }
+        }
+        if (highestGrade != null) {
+            return highestGrade;
+        } else {
+            return null;
+        }
+    }
+    
+    public LineItemEntity getSecondProductFromFirstRP(String retailProduct) {
+        System.out.println("getSecondProductFromFirstRP()" + retailProduct);
+        LineItemEntity secondProduct = new LineItemEntity();
+        List<LineItemEntity> listOfSecondProducts = new ArrayList();
+        try {
+            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getItemsPurchased() != null && salesRecord.getItemsPurchased().size() != 0) {
+                    for (LineItemEntity item : salesRecord.getItemsPurchased()) {
+                        if (item.getItem().getName().equalsIgnoreCase(retailProduct)) {
+                            for (LineItemEntity item2 : salesRecord.getItemsPurchased()) {
+                                if (!item2.getItem().getName().equalsIgnoreCase(retailProduct)) {
+                                    secondProduct = item2;
+
+                                    if (listOfSecondProducts.size() == 0) {
+                                        secondProduct.setQuantity(1);
+                                        listOfSecondProducts.add(secondProduct);
+                                    } else {
+                                        Boolean flag = false;
+                                        for (int i = 0; i < listOfSecondProducts.size(); i++) {
+                                            if (listOfSecondProducts.get(i).getItem().getId().equals(secondProduct.getItem().getId())) {
+                                                listOfSecondProducts.get(i).setQuantity(listOfSecondProducts.get(i).getQuantity() + 1);
+                                                flag = true;
+                                                break;
+                                            }
+                                        }
+                                        if (flag == false) {
+                                            secondProduct.setQuantity(1);
+                                            listOfSecondProducts.add(secondProduct);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < listOfSecondProducts.size(); i++) {
+                System.out.println("Item " + i + " " + listOfSecondProducts.get(i).getItem().getName() + " quantity is " + listOfSecondProducts.get(i).getQuantity());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        LineItemEntity highestGrade = null;
+        if (listOfSecondProducts.size() != 0) {
+            highestGrade = listOfSecondProducts.get(0);
+            for (int i = 1; i < listOfSecondProducts.size(); i++) {
+                if (listOfSecondProducts.get(i).getQuantity() > highestGrade.getQuantity()) {
+                    highestGrade = listOfSecondProducts.get(i);
+                }
+            }
+        }
+        if (highestGrade != null) {
+            return highestGrade;
+        } else {
+            return null;
+        }
+    }
+    
     public LineItemEntity getSecondProductFromFirst(String furniture) {
         System.out.println("getSecondProductFromFirst()" + furniture);
         LineItemEntity secondProduct = new LineItemEntity();
