@@ -122,7 +122,6 @@
 
                                                             StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
                                                             boolean isAdmin = false;
-                                                            boolean isRegional = false;
                                                             List<RoleEntity> roles = staff.getRoles();
                                                             List<AccessRightEntity> accessRights = staff.getAccessRightList();
                                                             List<SupplierEntity> listToDisplay = new ArrayList<SupplierEntity>();
@@ -136,7 +135,6 @@
                                                             if (!isAdmin) {
                                                                 for (RoleEntity role : roles) {
                                                                     if (role.getName().equals("Regional Manager") || role.getName().equals("Purchasing Manager")) {
-                                                                        isRegional = true;
                                                                         for (SupplierEntity supplier : suppliers) {
                                                                             for (AccessRightEntity access : accessRights) {
                                                                                 if (access.getRegionalOffice() != null & supplier.getRegionalOffice().getName().equals(access.getRegionalOffice().getName())) {
