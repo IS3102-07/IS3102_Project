@@ -262,28 +262,50 @@
                                         </div>
                                     </form>
                                 </div>
-                                <%
-                                    List<MasterProductionScheduleEntity> listOfMPS = (List<MasterProductionScheduleEntity>) session.getAttribute("listOfMPS");
-                                    for(MasterProductionScheduleEntity mps : listOfMPS){
-                                       
-                                    }
-                                %>
+
                                 <div class="col-md-8">
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Type</th>
-                                                <th>Length</th>
-                                                <th>Width</th>
-                                                <th>Height</th>
-                                                <th>Total Volume</th>
-                                                <th>Avaliable Volume</th>
-                                                <th>Action</th>
+                                                <th>SKU</th>
+                                                <th>Quantity</th>
+                                                <th>Fulfill</th>
                                             </tr>
                                         </thead>
+                                        <tbody>
+                                            <tr>
+                                                <%
+                                                    int week = (int) (session.getAttribute("week"));
+                                                    List<MasterProductionScheduleEntity> listOfMPS = (List<MasterProductionScheduleEntity>) session.getAttribute("listOfMPS");
+                                                    int quantity = 0;
+                                                    for (MasterProductionScheduleEntity mps : listOfMPS) {
+                                                        
+                                                        switch (week) {
+                                                            case 1:
+                                                                quantity = mps.getAmount_week1() / mps.getSchedule().getWorkDays_firstWeek();
+                                                            case 2:
+                                                                quantity = mps.getAmount_week2() / mps.getSchedule().getWorkDays_secondWeek() ;
+                                                            case 3:
+                                                                quantity = mps.getAmount_week3() / mps.getSchedule().getWorkDays_thirdWeek() ;
+                                                            case 4:
+                                                                quantity = mps.getAmount_week4() / mps.getSchedule().getWorkDays_forthWeek() ;
+                                                            case 5:
+                                                                quantity = mps.getAmount_week5() / mps.getSchedule().getWorkDays_fifthWeek() ;
+                                                            default:
+                                                        }
+                                                %>
+                                                <td>
+                                                    <%=mps.getFurniture().getSKU() %>
+                                                </td>
+                                                <td>
+                                                    <%=quantity %>
+                                                </td>
+                                                <td>
+                                                    <%=%>
+                                                </td>
+                                                <%                                                    }%>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
