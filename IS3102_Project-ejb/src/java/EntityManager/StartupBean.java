@@ -529,7 +529,7 @@ public class StartupBean {
 //        } catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
-//    }
+    }
 
     @PreDestroy
     private void shutdown() {
