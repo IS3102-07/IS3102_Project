@@ -459,16 +459,11 @@ public class RestaurantManagementBean implements RestaurantManagementBeanLocal {
     public Boolean addLineItemToCombo(Long comboId, Long lineItemId) {
         try {
             ComboLineItemEntity lineItem = em.find(ComboLineItemEntity.class, lineItemId);
-            Query q = em.createQuery("select l from ComboLineItemEntity l where l.menuItem.SKU = ?1 and l.combo is not null").setParameter(1, lineItem.getMenuItem().getSKU());
-            if (q.getResultList().isEmpty()) {
                 ComboEntity combo = em.find(ComboEntity.class, comboId);
                 lineItem.setCombo(combo);
                 combo.getLineItemList().add(lineItem);
                 em.merge(combo);
                 return true;
-            } else {
-                return false;
-            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

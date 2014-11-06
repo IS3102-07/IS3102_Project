@@ -114,8 +114,9 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         String testdata_telephone = "67890123";
         String testdata_email = "mfsg3@if.com";
         Integer testdata_capacity = 1000;
-        String testdata_city = "Singapore";
-        ManufacturingFacilityEntity result = facilityManagementBean.createManufacturingFacility(testdata_callerStaffID, testdata_manufacturingFacilityName, testdata_address, testdata_telephone, testdata_email, testdata_capacity, testdata_city);
+        String testdata_latitude = "11";
+        String testdata_longitude = "111";
+        ManufacturingFacilityEntity result = facilityManagementBean.createManufacturingFacility(testdata_callerStaffID, testdata_manufacturingFacilityName, testdata_address, testdata_telephone, testdata_email, testdata_capacity, testdata_latitude, testdata_longitude);
         manufacturingFacilityId = result.getId();
         assertNotNull(result);
     }
@@ -130,7 +131,9 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         String testdata_telephone = "61234567";
         String testdata_email = "mfsg3@if.com";
         Integer testdata_capacity = 1000;
-        Boolean result = facilityManagementBean.editManufacturingFacility(testdata_callerStaffID, testdata_id, testdata_manufacturingFacilityName, testdata_address, testdata_telephone, testdata_email, testdata_capacity);
+        String testdata_latitude = "11";
+        String testdata_longitude = "111";
+        Boolean result = facilityManagementBean.editManufacturingFacility(testdata_callerStaffID, testdata_id, testdata_manufacturingFacilityName, testdata_address, testdata_telephone, testdata_email, testdata_capacity, testdata_latitude, testdata_longitude);
         assertTrue(result);
     }
 
@@ -207,7 +210,6 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
 //        Boolean result = facilityManagementBean.editStore(testdata_callerStaffID, testdata_id, testdata_storeName, testdata_address, testdata_telephone, testdata_email, testdata_countryID);
 //        assertFalse(result == null);
 //    }
-
     @Test
     public void test17ViewStoreEntity() {
         System.out.println("testViewStoreEntity");
