@@ -48,6 +48,7 @@ public class store_MF_connectionManagement_GET extends HttpServlet {
         if (mfList == null) {
             mfList = new ArrayList<>();
         }
+        System.out.println("mfList.size()" + mfList.size());
         request.setAttribute("mfList", mfList);                                
         
         List<ManufacturingFacilityEntity> allMFs = fmBean.viewListOfManufacturingFacility();

@@ -277,11 +277,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     @Override
     public List<ManufacturingFacilityEntity> viewListOfManufacturingFacility() {
         System.out.println("viewListOfRegionalOffice() called.");
-        List<ManufacturingFacilityEntity> listOfManufacturingFacility = new ArrayList<ManufacturingFacilityEntity>();
+        List<ManufacturingFacilityEntity> listOfManufacturingFacility = new ArrayList<>();
         try {
+            em.flush();
             Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t where t.isDeleted=false");
-            for (Object o : q.getResultList()) {
-                ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) o;
+            for (ManufacturingFacilityEntity mf : (List<ManufacturingFacilityEntity>)q.getResultList()) {
+                em.refresh(mf);
+                System.out.println("em.refresh(mf); mf.getStoreList().size(): " + mf.getStoreList().size());
+                ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) mf;
                 listOfManufacturingFacility.add(i);
             }
             return listOfManufacturingFacility; //Could not find the role to remove
