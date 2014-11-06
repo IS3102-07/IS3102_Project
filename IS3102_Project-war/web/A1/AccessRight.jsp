@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="EntityManager.ManufacturingFacilityEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StoreEntity"%>
@@ -58,7 +59,30 @@
                                     <p><b>Role to customize: </b><%= role.getName()%></p>
                                 </div>
                                 <div class="panel-body">
+                                    <%
+                                        StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
+                                        if (currentUser.getRoles().get(0).getName().equals("Regional Manager")) {
+                                            regionalOfficeList = new ArrayList<RegionalOfficeEntity>();
+                                            storeList = new ArrayList<StoreEntity>();
+                                            manufacturingFacilityList = new ArrayList<ManufacturingFacilityEntity>();
+                                            warehouseList = new ArrayList<WarehouseEntity>();
 
+                                            if (!currentUser.getAccessRightList().isEmpty()) {
+                                                RegionalOfficeEntity regionalOffice = currentUser.getAccessRightList().get(0).getRegionalOffice();
+                                                regionalOfficeList.add(regionalOffice);
+                                                
+                                                for(StoreEntity store: regionalOffice.getStoreList()){
+                                                    storeList.add(store);
+                                                }
+                                                for(ManufacturingFacilityEntity mf: regionalOffice.getManufacturingFacilityList()){
+                                                    manufacturingFacilityList.add(mf);
+                                                }
+                                                for (WarehouseEntity warehouse: regionalOffice.getWarehouseList())
+                                                    warehouseList.add(warehouse);
+                                            }
+                                            
+                                        }
+                                    %>
                                     <form role="form" action="../AccessRight_Servlet/AccessRight_POST">
                                         <%if (role.getId() == 2L || (role.getId() == 7L)) {%>
                                         <div class="form-group">

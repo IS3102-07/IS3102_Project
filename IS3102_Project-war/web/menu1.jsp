@@ -322,11 +322,9 @@
                     <i class="icon icon-home"></i> SCM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="SCM" class="collapse" style="color: #C5C5C5;">
-                    <% if (roleCanView2) { %>
                     <li>
                         <a href="../PurchaseOrderManagement_Servlet">Retail Products and Raw Materials Purchasing</a>
                     </li>
-                    <%}%>
                     <%if ((roleCanView3) && (roleCanView2) && (roleCanView4)) {%>
                     <li>
                         <a href="../SupplierManagement_SupplierServlet">Supplier Management</a>
@@ -448,7 +446,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 4L, 5L, 11L};
+                approvedRolesID = new Long[]{1L, 5L, 6L, 11L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
