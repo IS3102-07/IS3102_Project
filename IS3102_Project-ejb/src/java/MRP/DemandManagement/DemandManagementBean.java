@@ -13,6 +13,7 @@ import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.SalesFigureLineItemEntity;
+import EntityManager.WarehouseEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -81,11 +82,11 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                                 .setParameter(2, sop.getSchedule().getId())
                                 .setParameter(3, sop.getStore().getId())
                                 .setParameter(4, lineitem.getItem().getSKU());
-                        
+
                         if (!qe.getResultList().isEmpty()) {
 
-                            SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity)qe.getResultList().get(0);
-                            
+                            SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity) qe.getResultList().get(0);
+
                             Query q3 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.mf.id = ?1 and mps.schedule.id = ?2 and mps.furniture.SKU = ?3")
                                     .setParameter(1, MfId)
                                     .setParameter(2, lastSchedule.getId())
@@ -110,7 +111,7 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
 
                             int amount = 0;
                             if (!lineitem.getId().equals(lineItemList.get(lineItemList.size() - 1).getId())) {
-                                amount = (int) Math.round(sop.getProductionPlan() * ( 1.0 * salesFigureLineItem.getQuantity() / salesFigureLineItem.getSaleFigure().getQuantity()));
+                                amount = (int) Math.round(sop.getProductionPlan() * (1.0 * salesFigureLineItem.getQuantity() / salesFigureLineItem.getSaleFigure().getQuantity()));
                                 residualMonthlyProductAmount -= amount;
                             } else {
                                 amount = residualMonthlyProductAmount;
@@ -160,6 +161,19 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                         .setParameter(2, lastSchedule.getId());
                 return (List<MasterProductionScheduleEntity>) q1.getResultList();
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<MasterProductionScheduleEntity> getMPSList(Long warehouseId) {
+        try {
+            WarehouseEntity warehouse = em.find(WarehouseEntity.class, warehouseId);            
+            Query q = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.mf.id = ?1 ")
+                    .setParameter(1, warehouse.getManufaturingFacility().getId());            
+            return (List<MasterProductionScheduleEntity>) q.getResultList();            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
