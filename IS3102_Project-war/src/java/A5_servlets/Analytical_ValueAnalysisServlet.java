@@ -70,6 +70,7 @@ public class Analytical_ValueAnalysisServlet extends HttpServlet {
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
+            response.sendRedirect("A5/valueAnalysis.jsp");
         }
     }
 
