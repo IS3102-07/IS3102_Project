@@ -89,10 +89,14 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="city">City</label>
-                                    <input type="text" class="form-control" id="city"  name="city" value="<%= mfHelper.manufacturingFacilityEntity.getCity() %>" readonly>
+                                    <label for="input_city">Latitude</label>
+                                    <input type="text" class="form-control" id="input_city"  name="latitude" value="<%= mfHelper.manufacturingFacilityEntity.getLatitude() %>" readonly>
                                 </div>
-                                
+
+                                <div class="form-group">
+                                    <label for="input_city">Longitude</label>
+                                    <input type="text" class="form-control" id="input_city"  name="longitude" value="<%= mfHelper.manufacturingFacilityEntity.getLongitude() %>" readonly>
+                                </div>                                
 
                                 <div class="form-group">
                                     <label for="input_email">Capacity</label>

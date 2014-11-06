@@ -165,13 +165,13 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacility, String address, String telephone, String email, Integer capacity, String city) {
+    public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacility, String address, String telephone, String email, Integer capacity, String latitude, String longitude) {
         System.out.println("createManufacturingFacility() called with name:" + manufacturingFacility);
         String name;
         Long manuafacturingFacilityID;
         try {
             ManufacturingFacilityEntity manufacturingFacilityEntity = new ManufacturingFacilityEntity();
-            manufacturingFacilityEntity.create(manufacturingFacility, address, telephone, email, capacity, city);
+            manufacturingFacilityEntity.create(manufacturingFacility, address, telephone, email, capacity, latitude, longitude);
             em.persist(manufacturingFacilityEntity);
             name = manufacturingFacilityEntity.getName();
             manuafacturingFacilityID = manufacturingFacilityEntity.getId();
@@ -309,14 +309,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL, String city) {
+    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL, String latitude, String longitude) {
         System.out.println("createStore() called with name:" + storeName);
         String name;
         Long storeId;
         try {
 
             CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
-            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity, postalCode, imageURL, city);
+            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity, postalCode, imageURL, latitude, longitude);
             em.persist(storeEntity);
             countryEntity.getStores().add(storeEntity);
             em.merge(countryEntity);

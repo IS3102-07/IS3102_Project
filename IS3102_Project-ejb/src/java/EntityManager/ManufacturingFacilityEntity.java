@@ -40,7 +40,8 @@ public class ManufacturingFacilityEntity implements Serializable {
     private String address;
     @Lob
     private String telephone;
-    private String city;
+    private String latitude;
+    private String longitude;
     @Lob
     private String email;
     @OneToOne
@@ -59,14 +60,15 @@ public class ManufacturingFacilityEntity implements Serializable {
         this.SaleAndOperationPlanList = new ArrayList<>();
     }
     
-    public void create(String name, String address, String telephone, String email, Integer capacity, String city) {
+    public void create(String name, String address, String telephone, String email, Integer capacity, String latitude, String longitude) {
         this.setName(name);
         this.setAddress(address);
         this.setTelephone(telephone);
         this.setEmail(email);
         this.setCapacity(capacity);
         this.isDeleted=false;
-        this.city = city;
+        this.latitude = latitude;                                
+        this.longitude = longitude;
     }
 
     public Boolean getIsDeleted() {
@@ -77,14 +79,22 @@ public class ManufacturingFacilityEntity implements Serializable {
         this.isDeleted = isDeleted;
     }
 
-    public String getCity() {
-        return city;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+    
     public List<SaleAndOperationPlanEntity> getSaleAndOperationPlanList() {
         return SaleAndOperationPlanList;
     }
