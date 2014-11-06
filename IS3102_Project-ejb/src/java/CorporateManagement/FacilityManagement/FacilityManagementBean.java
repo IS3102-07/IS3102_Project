@@ -165,13 +165,13 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacility, String address, String telephone, String email, Integer capacity, String city) {
+    public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacility, String address, String telephone, String email, Integer capacity, String latitude, String longitude) {
         System.out.println("createManufacturingFacility() called with name:" + manufacturingFacility);
         String name;
         Long manuafacturingFacilityID;
         try {
             ManufacturingFacilityEntity manufacturingFacilityEntity = new ManufacturingFacilityEntity();
-            manufacturingFacilityEntity.create(manufacturingFacility, address, telephone, email, capacity, city);
+            manufacturingFacilityEntity.create(manufacturingFacility, address, telephone, email, capacity, latitude, longitude);
             em.persist(manufacturingFacilityEntity);
             name = manufacturingFacilityEntity.getName();
             manuafacturingFacilityID = manufacturingFacilityEntity.getId();
@@ -207,7 +207,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public Boolean editManufacturingFacility(String callerStaffID, Long manufacturingFacilityID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity) {
+    public Boolean editManufacturingFacility(String callerStaffID, Long manufacturingFacilityID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity, String latitude, String longitude) {
         System.out.println("editManufacturingFacility() called with ID:" + manufacturingFacilityID);
         try {
             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, manufacturingFacilityID);
@@ -216,6 +216,8 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             manufacturingFacility.setTelephone(telephone);
             manufacturingFacility.setEmail(email);
             manufacturingFacility.setCapacity(capacity);
+            manufacturingFacility.setLatitude(latitude);
+            manufacturingFacility.setLongitude(longitude);
             em.merge(manufacturingFacility);
             System.out.println("\nServer edited manufacturing facility: " + manufacturingFacilityID);
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
@@ -309,14 +311,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL, String city) {
+    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL, String latitude, String longitude) {
         System.out.println("createStore() called with name:" + storeName);
         String name;
         Long storeId;
         try {
 
             CountryEntity countryEntity = em.getReference(CountryEntity.class, countryID);
-            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity, postalCode, imageURL, city);
+            StoreEntity storeEntity = new StoreEntity(storeName, address, telephone, email, countryEntity, postalCode, imageURL, latitude, longitude);
             em.persist(storeEntity);
             countryEntity.getStores().add(storeEntity);
             em.merge(countryEntity);
@@ -355,7 +357,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID, String imageURL) {
+    public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID, String imageURL, String latitude, String longitude) {
         System.out.println("editStore() called with ID:" + storeId);
         try {
             StoreEntity storeEntity = em.find(StoreEntity.class, storeId);
@@ -369,6 +371,8 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             storeEntity.setEmail(email);
             storeEntity.setStoreMapImageURL(imageURL);
             storeEntity.setCountry(countryEntity);
+            storeEntity.setLatitude(latitude);
+            storeEntity.setLongitude(longitude);
             em.merge(storeEntity);
             //add to new country side
             countryEntity.getStores().add(storeEntity);

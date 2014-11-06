@@ -81,9 +81,14 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="input_city">City</label>
-                                    <input type="text" class="form-control" id="input_city"  name="city" >
-                                </div>
+                                        <label for="input_city">Latitude</label>
+                                        <input type="text" class="form-control" id="input_city"  name="latitude" >
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="input_city">Longitude</label>
+                                        <input type="text" class="form-control" id="input_city"  name="longitude" >
+                                    </div>
                                     
                                 <div class="form-group">
                                     <label for="input_email">Capacity</label>

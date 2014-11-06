@@ -83,7 +83,8 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
-                    String city = request.getParameter("city");
+                    String longitude = request.getParameter("longitude");
+                    String latitude = request.getParameter("latitude");     
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                     Integer capacity = Integer.valueOf(request.getParameter("capacity"));
 
@@ -94,7 +95,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                         result = "?errMsg=Fail to create manufacturing facility due to duplicated manufacturing facility name.";
                         nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index" + result;
                     } else {
-                        ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(currentLoggedInStaffID, manufacturingFacilityName, address, telephone, email, capacity, city);
+                        ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(currentLoggedInStaffID, manufacturingFacilityName, address, telephone, email, capacity, latitude, longitude);
                         fmBean.addManufacturingFacilityToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, manufacturingFacility.getId());
                         if (manufacturingFacility != null) {
                             result = "?goodMsg=A new manufacturing facility record has been saved.";
@@ -126,12 +127,14 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 String address = request.getParameter("address");
                 String telephone = request.getParameter("telephone");
                 String email = request.getParameter("email");
+                String longitude = request.getParameter("longitude");
+                String latitude = request.getParameter("latitude");   
                 Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                 System.out.println(manufacturingFacilityName + address + telephone + email);
                 String capacity = request.getParameter("capacity");
                 Long mfId = Long.parseLong(request.getParameter("manufacturingFacilityId"));
                 System.out.println(mfId + " is id");
-                if (fmBean.editManufacturingFacility(currentLoggedInStaffID, mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity))
+                if (fmBean.editManufacturingFacility(currentLoggedInStaffID, mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity), latitude, longitude)
                         && fmBean.updateManufacturingFacilityToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, mfId)) {
                     result = "?goodMsg=The manufacturing facility has been updated.";
 

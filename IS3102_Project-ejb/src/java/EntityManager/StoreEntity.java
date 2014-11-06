@@ -35,7 +35,8 @@ public class StoreEntity implements Serializable {
     private String telephone;
     @Lob
     private String email;
-    private String city;
+    private String latitude;
+    private String longitude;
     @OneToOne
     private WarehouseEntity warehouse;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="store")
@@ -61,7 +62,7 @@ public class StoreEntity implements Serializable {
     private Boolean isDeleted;
     
     public StoreEntity() {}
-    public StoreEntity(String name, String address, String telephone, String email, CountryEntity country, String postalCode, String imageURL, String city){
+    public StoreEntity(String name, String address, String telephone, String email, CountryEntity country, String postalCode, String imageURL, String latitude, String longitude){
         this.manufacturingFacilityList = new ArrayList<>();
         this.saleForcastList = new ArrayList<>();
         this.saleAndOperationPlanList = new ArrayList<>();
@@ -75,7 +76,8 @@ public class StoreEntity implements Serializable {
         this.country = country;
         this.postalCode = postalCode;
         this.pickRequest = new ArrayList<>();
-        this.city = city;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     
     @XmlTransient
@@ -83,14 +85,22 @@ public class StoreEntity implements Serializable {
         return salesRecords;
     }
 
-    public String getCity() {
-        return city;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+            
     public String getPostalCode() {
         return postalCode;
     }
