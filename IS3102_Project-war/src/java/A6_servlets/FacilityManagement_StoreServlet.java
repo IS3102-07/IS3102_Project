@@ -149,6 +149,8 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 String address = request.getParameter("address");
                 String telephone = request.getParameter("telephone");
                 String email = request.getParameter("email");
+                String longitude = request.getParameter("longitude");
+                String latitude = request.getParameter("latitude");  
                 Long id = Long.parseLong(request.getParameter("storeId"));
                 Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                 Long countryID = Long.parseLong(request.getParameter("countryID"));
@@ -156,7 +158,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                 String fileName = storeName + ".jpg";
                 String imageURL = "/IS3102_Project-war/img/storemaps/" + fileName;
 
-                if (fmBean.editStore(currentLoggedInStaffID, id, storeName, address, telephone, email, countryID, imageURL)
+                if (fmBean.editStore(currentLoggedInStaffID, id, storeName, address, telephone, email, countryID, imageURL, latitude, longitude)
                         && fmBean.updateStoreToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, id)) {
                     if (file != null) {
                         String s = file.getHeader("content-disposition");

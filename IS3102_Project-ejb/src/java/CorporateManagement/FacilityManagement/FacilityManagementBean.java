@@ -207,7 +207,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public Boolean editManufacturingFacility(String callerStaffID, Long manufacturingFacilityID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity) {
+    public Boolean editManufacturingFacility(String callerStaffID, Long manufacturingFacilityID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity, String latitude, String longitude) {
         System.out.println("editManufacturingFacility() called with ID:" + manufacturingFacilityID);
         try {
             ManufacturingFacilityEntity manufacturingFacility = em.find(ManufacturingFacilityEntity.class, manufacturingFacilityID);
@@ -216,6 +216,8 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             manufacturingFacility.setTelephone(telephone);
             manufacturingFacility.setEmail(email);
             manufacturingFacility.setCapacity(capacity);
+            manufacturingFacility.setLatitude(latitude);
+            manufacturingFacility.setLongitude(longitude);
             em.merge(manufacturingFacility);
             System.out.println("\nServer edited manufacturing facility: " + manufacturingFacilityID);
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
@@ -355,7 +357,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
     }
 
     @Override
-    public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID, String imageURL) {
+    public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID, String imageURL, String latitude, String longitude) {
         System.out.println("editStore() called with ID:" + storeId);
         try {
             StoreEntity storeEntity = em.find(StoreEntity.class, storeId);
@@ -369,6 +371,8 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             storeEntity.setEmail(email);
             storeEntity.setStoreMapImageURL(imageURL);
             storeEntity.setCountry(countryEntity);
+            storeEntity.setLatitude(latitude);
+            storeEntity.setLongitude(longitude);
             em.merge(storeEntity);
             //add to new country side
             countryEntity.getStores().add(storeEntity);

@@ -33,7 +33,7 @@ public interface FacilityManagementBeanLocal {
 
     public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity, String latitude, String longitude);
 
-    public Boolean editManufacturingFacility(String callerStaffID, Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
+    public Boolean editManufacturingFacility(String callerStaffID, Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity, String latitude, String longitude);
 
     public Boolean removeManufacturingFacility(String callerStaffID, String manufacturingFacilityName);
 
@@ -57,7 +57,7 @@ public interface FacilityManagementBeanLocal {
 
     public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL, String latitude, String longitude);
 
-    public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID, String imageURL);
+    public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID, String imageURL, String latitude, String longitude);
 
     public StoreEntity viewStoreEntity(Long storeId);
 
