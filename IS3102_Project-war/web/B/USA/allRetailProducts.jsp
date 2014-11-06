@@ -75,7 +75,7 @@
                                                 if (promotions != null) {
                                                     for (int k = 0; k < promotions.size(); k++) {
                                                         if (promotions.get(k).getItem().getSKU().equals(retailProducts.get(i).getSKU())) {
-                                                            promotion = promotions.get(i);
+                                                            promotion = promotions.get(k);
                                                             promoPrice = item_countryList.get(j).getRetailPrice() * (100 - promotion.getDiscountRate()) / 100 + "0 " + item_countryList.get(j).getCountry().getCurrency();
                                                         }
                                                     }

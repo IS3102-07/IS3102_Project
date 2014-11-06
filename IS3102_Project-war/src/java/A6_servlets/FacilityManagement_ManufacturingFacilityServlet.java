@@ -83,6 +83,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
+                    String city = request.getParameter("city");
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                     Integer capacity = Integer.valueOf(request.getParameter("capacity"));
 
@@ -93,7 +94,7 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                         result = "?errMsg=Fail to create manufacturing facility due to duplicated manufacturing facility name.";
                         nextPage = "/FacilityManagement_ManufacturingFacilityServlet/manufacturingFacilityManagement_index" + result;
                     } else {
-                        ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(currentLoggedInStaffID, manufacturingFacilityName, address, telephone, email, capacity);
+                        ManufacturingFacilityEntity manufacturingFacility = fmBean.createManufacturingFacility(currentLoggedInStaffID, manufacturingFacilityName, address, telephone, email, capacity, city);
                         fmBean.addManufacturingFacilityToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, manufacturingFacility.getId());
                         if (manufacturingFacility != null) {
                             result = "?goodMsg=A new manufacturing facility record has been saved.";

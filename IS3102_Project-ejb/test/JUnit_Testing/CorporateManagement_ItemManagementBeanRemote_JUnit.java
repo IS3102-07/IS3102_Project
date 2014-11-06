@@ -443,14 +443,15 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
     @Test
     public void addItemPricing() {
         System.out.println("addItemPricing");
-        String data = "F_TD_01,100,F_TD_02,120,F_TD_03,119,F_TD_04,130,F_TD_05,125,F_TD_06,124,F_TD_07,80,F_TD_08,98,F_TD_09,170,F_TD_10,40,F_BA_11,90,F_BA_12,95,F_BA_13,150,F_BA_14,30,F_BA_15,5,F_BA_16,4,F_BA_17,10,F_BA_18,19,F_BA_19,4,F_BA_20,2,F_BM_21,300,F_BM_22,250,F_BM_23,260,F_BM_24,450,F_BM_25,280,F_BM_26,260,F_BM_27,270,F_BM_28,290,F_BM_29,255,F_BM_30,120,F_SC_31,450,F_SC_32,355,F_SC_33,370,F_SC_34,270,F_SC_35,270,F_SC_36,600,F_SC_37,70,F_SC_38,136,F_SC_39,670,F_SC_40,90,F_CS_41,40,F_CS_42,40,F_CS_43,26,F_CS_44,12,F_CS_45,35,F_CS_46,35,F_CS_47,30,F_CS_48,25,F_CS_49,15,F_CS_50,13,F_LI_51,40,F_LI_52,119,F_LI_53,30,F_LI_54,34,F_LI_55,65,F_LI_56,67,F_LI_57,96,F_LI_58,12,F_LI_59,62,F_LI_60,43,F_ST_61,320,F_ST_62,490,F_ST_63,370,F_ST_64,70,F_ST_65,320,F_ST_66,180,F_ST_67,264,F_ST_68,170,F_ST_69,30,F_ST_70,25,F_CH_71,27,F_CH_72,31,F_CH_73,48,F_CH_74,8,F_CH_75,7,F_CH_76,2,F_CH_77,12,F_CH_78,10,F_CH_79,3,F_CH_80,2";
+        String data = "F_TD_02,120,F_TD_03,119,F_TD_04,130,F_TD_05,125,F_TD_06,124,F_TD_07,80,F_TD_08,98,F_TD_09,170,F_TD_10,40,F_BA_11,90,F_BA_12,95,F_BA_13,150,F_BA_14,30,F_BA_15,5,F_BA_16,4,F_BA_17,10,F_BA_18,19,F_BA_19,4,F_BA_20,2,F_BM_21,300,F_BM_22,250,F_BM_23,260,F_BM_24,450,F_BM_25,280,F_BM_26,260,F_BM_27,270,F_BM_28,290,F_BM_29,255,F_BM_30,120,F_SC_31,450,F_SC_32,355,F_SC_33,370,F_SC_34,270,F_SC_35,270,F_SC_36,600,F_SC_37,70,F_SC_38,136,F_SC_39,670,F_SC_40,90,F_CS_41,40,F_CS_42,40,F_CS_43,26,F_CS_44,12,F_CS_45,35,F_CS_46,35,F_CS_47,30,F_CS_48,25,F_CS_49,15,F_CS_50,13,F_LI_51,40,F_LI_52,119,F_LI_53,30,F_LI_54,34,F_LI_55,65,F_LI_56,67,F_LI_57,96,F_LI_58,12,F_LI_59,62,F_LI_60,43,F_ST_61,320,F_ST_62,490,F_ST_63,370,F_ST_64,70,F_ST_65,320,F_ST_66,180,F_ST_67,264,F_ST_68,170,F_ST_69,30,F_ST_70,25,F_CH_71,27,F_CH_72,31,F_CH_73,48,F_CH_74,8,F_CH_75,7,F_CH_76,2,F_CH_77,12,F_CH_78,10,F_CH_79,3,F_CH_80,2";
         Scanner sc = new Scanner(data);
+        sc.useDelimiter(",");
         String sku;
         double price;
         while (sc.hasNext()) {
             sku = sc.next();
-            price = sc.nextDouble();
-            itemManagementBean.addCountryItemPricing(1L, sku, price);
+            price = Double.parseDouble(sc.next());
+            itemManagementBean.addCountryItemPricing(25L, sku, price);
         }
     }
 

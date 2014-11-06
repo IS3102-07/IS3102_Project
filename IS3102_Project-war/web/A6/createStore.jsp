@@ -101,6 +101,12 @@
                                         <label for="input_email">Email</label>
                                         <input type="email" class="form-control" id="input_email"  name="email" >
                                     </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="input_city">City</label>
+                                        <input type="text" class="form-control" id="input_city"  name="city" >
+                                    </div>
+                                    
                                     <div>
                                         <label>Store Map</label>
                                         <input type="file" name="javafile">
