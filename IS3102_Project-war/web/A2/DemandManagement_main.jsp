@@ -43,7 +43,7 @@
                                     <% MonthScheduleEntity schedule = (MonthScheduleEntity) request.getAttribute("schedule"); %>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <b>Material Requirement</b>
+                                            <b>Master Production Schedule List</b>
                                         </div>
                                         <div class="col-md-6">
                                             <b>Schedule: <%= schedule.getYear()%> - <%= schedule.getMonth() %></b>
