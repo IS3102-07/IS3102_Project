@@ -81,6 +81,11 @@
                                 </div>
                                 
                                 <div class="form-group">
+                                    <label for="input_city">City</label>
+                                    <input type="text" class="form-control" id="input_city"  name="city" >
+                                </div>
+                                    
+                                <div class="form-group">
                                     <label for="input_email">Capacity</label>
                                     <input type="number" class="form-control" id="input_email" min="1" step="1" name="capacity" >
                                 </div>

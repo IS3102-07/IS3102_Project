@@ -26,7 +26,7 @@ public interface FacilityManagementBeanRemote {
     public List<RegionalOfficeEntity> viewListOfRegionalOffice();
     public boolean checkNameExistsOfRegionalOffice(String name);
 
-    public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
+    public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity, String city);
     public Boolean editManufacturingFacility(String callerStaffID, Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
     public Boolean removeManufacturingFacility(String callerStaffID, String manufacturingFacilityName);
     public ManufacturingFacilityEntity viewManufacturingFacility(Long manufacturingFacilityEntityId);
@@ -40,7 +40,7 @@ public interface FacilityManagementBeanRemote {
     public Boolean updateManufacturingFacilityToRegionalOffice(String callerStaffID, Long regionalOfficeId, Long MFid);
     public Boolean removeManufacturingFacility(String callerStaffID, Long Id);    
     
-    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL);    
+    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL, String city);    
     public Boolean editStore(String callerStaffID, Long id, String storeName, String address, String telephone, String email, Long countryID, String imageURL);  
     public StoreEntity viewStoreEntity(Long storeId);
     public List<StoreEntity> viewListOfStore();

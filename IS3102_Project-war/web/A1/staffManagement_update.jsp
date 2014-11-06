@@ -95,7 +95,7 @@
                                             for (RoleEntity role : roleList) {
                                         %>
                                         <tr>
-                                            <td><input type="radio" name="roles" value="<%= role.getId()%>" <%if (roles.contains(role)) {%>checked<%}%>/> <%= role.getName()%> </td>
+                                            <td><input type="checkbox" name="roles" value="<%= role.getId()%>" <%if (roles.contains(role)) {%>checked<%}%>/> <%= role.getName()%> </td>
                                                 <%if (role.getId().toString().equals("2") || role.getId().toString().equals("3") || role.getId().toString().equals("4") || role.getId().toString().equals("7") || role.getId().toString().equals("8") || role.getId().toString().equals("9") || role.getId().toString().equals("10") || role.getId().toString().equals("12")) {%>
                                             <td><span class="btn btn-default"><a href="../AccessRight_Servlet/AccessRight_GET?staffId=<%= staff.getId()%>&roleId=<%= role.getId()%>">Customize Access Right</a></span></td>
                                             <%} else {%>
