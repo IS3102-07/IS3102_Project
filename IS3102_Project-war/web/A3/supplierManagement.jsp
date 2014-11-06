@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="EntityManager.AccessRightEntity"%>
+<%@page import="EntityManager.RoleEntity"%>
+<%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.ItemEntity"%>
 <%@page import="EntityManager.CountryEntity"%>
 <%@page import="EntityManager.SupplierEntity"%>
@@ -115,28 +119,55 @@
                                                     <tbody>
                                                         <%
                                                             List<SupplierEntity> suppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
-                                                            if (suppliers != null) {
 
-                                                                for (int i = 0; i < suppliers.size(); i++) {
+                                                            StaffEntity staff = (StaffEntity) session.getAttribute("staffEntity");
+                                                            boolean isAdmin = false;
+                                                            List<RoleEntity> roles = staff.getRoles();
+                                                            List<AccessRightEntity> accessRights = staff.getAccessRightList();
+                                                            List<SupplierEntity> listToDisplay = new ArrayList<SupplierEntity>();
+                                                            for (RoleEntity role : roles) {
+                                                                if (role.getName().equals("Administrator") || role.getName().equals("Global Manager")) {
+                                                                    isAdmin = true;
+                                                                    listToDisplay = suppliers;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if (!isAdmin) {
+                                                                for (RoleEntity role : roles) {
+                                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Purchasing Manager")) {
+                                                                        for (SupplierEntity supplier : suppliers) {
+                                                                            for (AccessRightEntity access : accessRights) {
+                                                                                if (access.getRegionalOffice() != null & supplier.getRegionalOffice().getName().equals(access.getRegionalOffice().getName())) {
+                                                                                    listToDisplay.add(supplier);
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            if (listToDisplay != null) {
+                                                                for (int i = 0; i < listToDisplay.size(); i++) {
                                                         %>
                                                         <tr>
                                                             <td>
-                                                                <input type="checkbox" name="delete" value="<%=suppliers.get(i).getId()%>" />
+                                                                <input type="checkbox" name="delete" value="<%=listToDisplay.get(i).getId()%>" />
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getRegionalOffice().getName()%>
+                                                                <%=listToDisplay.get(i).getRegionalOffice().getName()%>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getSupplierName()%>
+                                                                <%=listToDisplay.get(i).getSupplierName()%>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getContactNo()%>
+                                                                <%=listToDisplay.get(i).getContactNo()%>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getEmail()%>
+                                                                <%=listToDisplay.get(i).getEmail()%>
                                                             </td>
                                                             <td>
-                                                                <%CountryEntity country = suppliers.get(i).getCountry();
+                                                                <%CountryEntity country = listToDisplay.get(i).getCountry();
                                                                     if (country != null) {
                                                                         out.print(country.getName());
                                                                     } else {
@@ -145,10 +176,10 @@
                                                                 %>
                                                             </td>
                                                             <td>
-                                                                <%=suppliers.get(i).getAddress()%>
+                                                                <%=listToDisplay.get(i).getAddress()%>
                                                             </td>
                                                             <td>
-                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=suppliers.get(i).getId()%>" value="Update" onclick="javascript:updateSupplier('<%=suppliers.get(i).getId()%>')"/>
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=listToDisplay.get(i).getId()%>" value="Update" onclick="javascript:updateSupplier('<%=listToDisplay.get(i).getId()%>')"/>
                                                             </td>
                                                         </tr>
                                                         <%

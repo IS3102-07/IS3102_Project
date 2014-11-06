@@ -1,10 +1,13 @@
 package A3_servlets;
 
+import EntityManager.MasterProductionScheduleEntity;
 import EntityManager.StorageBinEntity;
 import EntityManager.WarehouseEntity;
+import MRP.DemandManagement.DemandManagementBeanLocal;
 import SCM.ManufacturingWarehouseManagement.ManufacturingWarehouseManagementBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class StorageBinManagement_Servlet extends HttpServlet {
+
+    @EJB
+    private DemandManagementBeanLocal demandManagementBean;
 
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
@@ -32,6 +38,13 @@ public class StorageBinManagement_Servlet extends HttpServlet {
             } else {
                 List<StorageBinEntity> storageBins = manufacturingWarehouseManagementBean.viewAllStorageBin(warehouseEntity.getId());
                 session.setAttribute("storageBins", storageBins);
+
+                Calendar calendar = Calendar.getInstance();
+                int week = calendar.get(Calendar.WEEK_OF_MONTH);
+                System.out.println("Week is " + week);
+                List<MasterProductionScheduleEntity> listOfMPS = demandManagementBean.getMPSList(warehouseEntity.getId());
+                session.setAttribute("listOfMPS", listOfMPS);
+                session.setAttribute("week", week);
                 if (errMsg == null || errMsg.equals("")) {
                     response.sendRedirect("A3/storageBinManagement.jsp");
                 } else {

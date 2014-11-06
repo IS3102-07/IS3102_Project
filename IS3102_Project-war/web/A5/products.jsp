@@ -181,6 +181,7 @@
 
                                             <%
                                                 List<LineItemEntity> sortBestSellingRetailProducts = (List<LineItemEntity>) (session.getAttribute("sortBestSellingRetailProducts"));
+                                                List<LineItemEntity> listOfSecondProductRP = (List<LineItemEntity>) (session.getAttribute("listOfSecondProductRP"));
                                             %>
                                             <!-- /.table-responsive -->
 
@@ -199,6 +200,7 @@
                                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                             <th>Name</th>
                                                                             <th>Quantity Sold</th>
+                                                                            <th>Items Purchased With</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -217,6 +219,16 @@
                                                                             </td>
                                                                             <td >
                                                                                 <%=item.getQuantity()%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%
+                                                                        
+                                                                        if (listOfSecondProductRP.get(i).getItem() != null) {
+                                                                        out.println(listOfSecondProductRP.get(i).getItem().getName() + " (" + listOfSecondProductRP.get(i).getQuantity() + ")");
+                                                                        
+                                                                        
+                                                                        }
+                                                                        %>
                                                                             </td>
 
                                                                         </tr>
@@ -252,6 +264,7 @@
 
                                             <%
                                                 List<LineItemEntity> sortBestSellingMenuItem = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem"));
+                                                List<LineItemEntity> listOfSecondProductMenuItem = (List<LineItemEntity>) (session.getAttribute("listOfSecondProductMenuItem"));
                                             %>
                                             <!-- /.table-responsive -->
 
@@ -270,6 +283,7 @@
                                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                             <th>Name</th>
                                                                             <th>Quantity Sold</th>
+                                                                            <th>Items Purchased With</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -288,6 +302,16 @@
                                                                             </td>
                                                                             <td >
                                                                                 <%=item.getQuantity()%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%
+                                                                        
+                                                                        if (listOfSecondProductMenuItem.get(i).getItem() != null) {
+                                                                        out.println(listOfSecondProductMenuItem.get(i).getItem().getName() + " (" + listOfSecondProductMenuItem.get(i).getQuantity() + ")");
+                                                                        
+                                                                        
+                                                                        }
+                                                                        %>
                                                                             </td>
 
                                                                         </tr>
