@@ -57,9 +57,8 @@
                             MemberEntity member = (MemberEntity) session.getAttribute("member");
                             List<LoyaltyTierEntity> loyaltyTiers = (List<LoyaltyTierEntity>) (session.getAttribute("loyaltyTiers"));
                             LoyaltyTierEntity nextLoyaltyTier = (LoyaltyTierEntity) session.getAttribute("nextLoyaltyTier");
-                            List<CountryEntity> countries = (List<CountryEntity>) session.getAttribute("countries");
                     %>
-                    <div class="row">
+                    <div class="row" style="min-height: 500px;">
                         <div class="tabs">
                             <ul class="nav nav-tabs">
                                 <li class="active">
@@ -457,14 +456,22 @@
                                                 <div class="col-md-12">
                                                     <%
                                                         Double barPercentage = (nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()) / nextLoyaltyTier.getAmtOfSpendingRequired();
+
+                                                        if (barPercentage < 0) {
+                                                            barPercentage = 0.0;
+                                                        }
+
                                                         Double barRemainder = 1 - barPercentage;
                                                     %>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             Current Tier : <%=member.getLoyaltyTier().getTier()%> <br/>
                                                             Next Tier : <%=nextLoyaltyTier.getTier()%>
+
                                                             <br/><br/>
+
                                                             My Points : <%=member.getLoyaltyPoints()%>
+
                                                             <div class="progress">
                                                                 <div class="progress-bar progress-bar-success" style="border-bottom-right-radius: 0px;border-top-right-radius: 0px; width: <%=barRemainder * 100%>%;">
                                                                     <%=member.getLoyaltyPoints()%>
@@ -472,12 +479,18 @@
                                                                 <div class="progress-bar progress-bar-warning progress-bar-striped" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; width: <%=barPercentage * 100%>%">
                                                                     <%=nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()%>
                                                                 </div>
-                                                                Spend <%=nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue()%> USD more to reach the next tier
+                                                                <%
+                                                                    double pointsLeft = nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue();
+                                                                    if (pointsLeft < 0) {
+                                                                        out.write("");
+                                                                    } else {
+                                                                        out.write("<br>Spend " + pointsLeft + " USD more to reach the next tier");
+                                                                    }
+                                                                %>
                                                             </div>
-
-
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
