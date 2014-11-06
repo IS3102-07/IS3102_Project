@@ -56,7 +56,7 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
             ex.printStackTrace();
         }
         return new ArrayList<>();
-    }
+    }        
 
     @Override
     public Boolean addStore_ManufacturingFacilityConnection(Long storeId, Long manufacturingFacilityId) {
