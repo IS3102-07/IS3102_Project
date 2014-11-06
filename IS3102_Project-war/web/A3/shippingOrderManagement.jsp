@@ -106,6 +106,7 @@
                                                                     break;
                                                                 }
                                                             }
+
                                                             boolean isRegional = false;
                                                             if (!isAdmin) {
                                                                 for (RoleEntity role : listOfRoles) {
@@ -125,88 +126,90 @@
 
                                                                 }
                                                                 if (!isRegional) {
-                                                                 for (RoleEntity role : listOfRoles) {
-                                                                    if (role.getName().equals("Warehouse Manager")) {
-                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
-                                                                        for (AccessRightEntity accessRight : accessList) {
-                                                                            for (ShippingOrderEntity SO : shippingOrders) {
-                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getWarehouse() != null && ((accessRight.getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getWarehouse().getId().equals(SO.getOrigin().getId()))) {
-                                                                                    if (!finalListOfSO.contains(SO)) {
-                                                                                        finalListOfSO.add(SO);
+                                                                    for (RoleEntity role : listOfRoles) {
+                                                                        if (role.getName().equals("Warehouse Manager")) {
+                                                                            List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                            for (AccessRightEntity accessRight : accessList) {
+                                                                                for (ShippingOrderEntity SO : shippingOrders) {
+                                                                                    if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getWarehouse() != null && ((accessRight.getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                        if (!finalListOfSO.contains(SO)) {
+                                                                                            finalListOfSO.add(SO);
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             }
                                                                         }
                                                                     }
-                                                                }
-                                                                for (RoleEntity role : listOfRoles) {
-                                                                    if (role.getName().equals("Store Manager")) {
-                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
-                                                                        for (AccessRightEntity accessRight : accessList) {
-                                                                            for (ShippingOrderEntity SO : shippingOrders) {
-                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getStore() != null && ((accessRight.getStore().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getStore().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
-                                                                                    if (!finalListOfSO.contains(SO)) {
-                                                                                        finalListOfSO.add(SO);
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                                for (RoleEntity role : listOfRoles) {
-                                                                    if (role.getName().equals("Manufacturing Facility Manager")) {
-                                                                        System.out.println("test1");
-                                                                        List<AccessRightEntity> accessList = role.getAccessRightList();
-                                                                        for (AccessRightEntity accessRight : accessList) {
-                                                                            for (ShippingOrderEntity SO : shippingOrders) {
-                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getManufacturingFacility() != null && ((accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
-                                                                                    if (!finalListOfSO.contains(SO)) {
-                                                                                        finalListOfSO.add(SO);
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        if (finalListOfSO != null) {
-                                                            for (int i = 0; i < finalListOfSO.size(); i++) {
-                                                                WarehouseEntity source = finalListOfSO.get(i).getOrigin();
-                                                                WarehouseEntity destination = finalListOfSO.get(i).getDestination();
-                                                    %>
-                                                    <tr>
-                                                        <td hidden></td>
-                                                        <td>
-                                                            <%=finalListOfSO.get(i).getId()%>
-                                                        </td>
-                                                        <td>
-                                                            <%=source.getWarehouseName()%>
-                                                        </td>
-                                                        <td>
-                                                            <%=destination.getWarehouseName()%>
-                                                        </td>
-                                                        <td>
-                                                            <%=finalListOfSO.get(i).getExpectedReceivedDate()%>
-                                                        </td>
-                                                        <td>
-                                                            <%=finalListOfSO.get(i).getSubmittedBy()%>
-                                                        </td>
-                                                        <td>
-                                                            <%=finalListOfSO.get(i).getStatus()%>
-                                                        </td>
-                                                        <td style="width:200px">
-                                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updateSO('<%=finalListOfSO.get(i).getId()%>')"/>
-                                                        </td>
+                                                                    for (RoleEntity role : listOfRoles) {
+                                                                        if (role.getName().equals("Store Manager")) {
 
-                                                    </tr>
-                                                    <%
+                                                                            List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                            for (AccessRightEntity accessRight : accessList) {
+                                                                                for (ShippingOrderEntity SO : shippingOrders) {
+                                                                                    if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getStore() != null && ((accessRight.getStore().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getStore().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                        if (!finalListOfSO.contains(SO)) {
+                                                                                            finalListOfSO.add(SO);
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    for (RoleEntity role : listOfRoles) {
+                                                                        if (role.getName().equals("Manufacturing Facility Manager")) {
+                                                                            System.out.println("test1");
+                                                                            List<AccessRightEntity> accessList = role.getAccessRightList();
+                                                                            for (AccessRightEntity accessRight : accessList) {
+                                                                                for (ShippingOrderEntity SO : shippingOrders) {
+                                                                                    if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getManufacturingFacility() != null && ((accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getDestination().getId()) && !SO.getStatus().equals("Pending")) || accessRight.getManufacturingFacility().getWarehouse().getId().equals(SO.getOrigin().getId()))) {
+                                                                                        if (!finalListOfSO.contains(SO)) {
+                                                                                            finalListOfSO.add(SO);
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
-                                                        } catch (Exception ex) {
-                                                            response.sendRedirect("../A1/workspace.jsp");
-                                                        }
-                                                    %>
+
+                                                            if (finalListOfSO != null) {
+                                                                for (int i = 0; i < finalListOfSO.size(); i++) {
+                                                                    WarehouseEntity source = finalListOfSO.get(i).getOrigin();
+                                                                    WarehouseEntity destination = finalListOfSO.get(i).getDestination();
+                                                        %>
+                                                        <tr>
+                                                            <td hidden></td>
+                                                            <td>
+                                                                <%=finalListOfSO.get(i).getId()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=source.getWarehouseName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=destination.getWarehouseName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=finalListOfSO.get(i).getExpectedReceivedDate()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=finalListOfSO.get(i).getSubmittedBy()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=finalListOfSO.get(i).getStatus()%>
+                                                            </td>
+                                                            <td style="width:200px">
+                                                                <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updateSO('<%=finalListOfSO.get(i).getId()%>')"/>
+                                                            </td>
+
+                                                        </tr>
+                                                        <%
+                                                                    }
+                                                                }
+                                                            } catch (Exception ex) {
+                                                                response.sendRedirect("../A1/workspace.jsp");
+                                                            }
+                                                        %>
                                                     </tbody>
                                                 </table>
                                             </div>
