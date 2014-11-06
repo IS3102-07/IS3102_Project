@@ -111,6 +111,12 @@
                                         <label for="input_email">Email</label>
                                         <input type="email" class="form-control" id="input_email"  name="email" value="<%= storeHelper.store.getEmail()%>" >
                                     </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <input type="text" class="form-control" id="city"  name="city" value="<%= storeHelper.store.getCity() %>" readonly>
+                                    </div>
+                                    
                                     <div>
                                         <label>Store Map</label>
                                         <input type="file" name="javafile">

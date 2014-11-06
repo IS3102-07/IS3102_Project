@@ -87,6 +87,12 @@
                                     <label for="input_email">Email</label>
                                     <input type="email" class="form-control" id="input_email"  name="email" value="<%= mfHelper.manufacturingFacilityEntity.getEmail()%>" >
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city"  name="city" value="<%= mfHelper.manufacturingFacilityEntity.getCity() %>" >
+                                </div>
+                                
 
                                 <div class="form-group">
                                     <label for="input_email">Capacity</label>
