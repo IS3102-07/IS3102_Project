@@ -20,4 +20,5 @@ public interface DemandManagementBeanLocal {
     public MonthScheduleEntity getLastSchedule();
     public List<MasterProductionScheduleEntity> getMasterProductionSchedules(Long MfId);
     public Boolean generateMasterProductionSchedules(Long MfId);
+    public List<MasterProductionScheduleEntity> getMPSList(Long warehouseId);
 }
