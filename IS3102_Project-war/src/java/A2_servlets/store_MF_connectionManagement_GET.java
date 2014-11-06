@@ -26,47 +26,36 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class store_MF_connectionManagement_GET extends HttpServlet {
+
     @EJB
     private ProductionPlanDistributionBeanLocal ppdBean;
     @EJB
     private FacilityManagementBeanLocal fmBean;
-    
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String nextPage = "/A2/store_MF_connectionManagement";
         ServletContext servletContext = getServletContext();
-        RequestDispatcher dispatcher;        
+        RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
-        
+
         Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOffice"));
         request.setAttribute("regionalOfficeId", regionalOfficeId);
-        
-        List<ManufacturingFacilityEntity> mfList = ppdBean.getManufacturingFacilityListByRegionalOffice(regionalOfficeId);
-        if (mfList == null) {
-            mfList = new ArrayList<>();
-        }
+
+        List<ManufacturingFacilityEntity> mfList = ppdBean.getManufacturingFacilityListByRegionalOffice(regionalOfficeId);        
         System.out.println("mfList.size()" + mfList.size());
-        request.setAttribute("mfList", mfList);                                
-        
-        List<ManufacturingFacilityEntity> allMFs = fmBean.viewListOfManufacturingFacility();
-        if(allMFs == null){
-            allMFs = new ArrayList<>();
-        }
-        request.setAttribute("allMFs", allMFs);
-        
-        List<StoreEntity> storeList = fmBean.viewListOfStore();
-        if(storeList == null){
+        request.setAttribute("mfList", mfList);
+
+        List<StoreEntity> storeList = ppdBean.getStoreListByRegionalOffice(regionalOfficeId);
+        if (storeList == null) {
             storeList = new ArrayList<>();
         }
         request.setAttribute("storeList", storeList);
-        
-        
-        
+
         dispatcher = servletContext.getRequestDispatcher(nextPage);
-        dispatcher.forward(request, response);                
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

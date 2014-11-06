@@ -22,7 +22,7 @@ public interface ProductionPlanDistributionBeanLocal {
     
     public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId);
     
-    public List<ManufacturingFacilityEntity> getManufacturingFacilityListByRegionalOffice(Long regionalOfficeId);
+    public List<ManufacturingFacilityEntity> getManufacturingFacilityListByRegionalOffice(Long regionalOfficeId);       
     
     public Boolean addStore_ManufacturingFacilityConnection(Long storeId, Long manufacturingFacilityId);
     

@@ -84,15 +84,9 @@
                                                     <label for="select_mf">Manufacturing Facility</label>
                                                     <select id="select_mf" class="form-control" name="mfId" required="true">
                                                         <option></option>
-                                                        <% List<ManufacturingFacilityEntity> allMFs = (List<ManufacturingFacilityEntity>) request.getAttribute("allMFs");
-                                                            for (ManufacturingFacilityEntity mf : allMFs) {
-                                                        %>
+                                                        <% for (ManufacturingFacilityEntity mf : mfList) { %>                                                        
                                                         <option value="<%= mf.getId()%>"><%= mf.getName()%></option>
-                                                        <%
-                                                            }
-
-                                                        %>
-
+                                                        <% } %>
                                                     </select>
                                                 </div>
 
@@ -183,7 +177,7 @@
 
             <% } %>
 
-            <% for (ManufacturingFacilityEntity mf : allMFs) {%>
+            <% for (ManufacturingFacilityEntity mf : mfList) {%>
 
                 var <%= "mf" + mf.getId()%> = new google.maps.Marker({
                     position: new google.maps.LatLng(<%= mf.getLatitude()%>, <%= mf.getLongitude()%>),
