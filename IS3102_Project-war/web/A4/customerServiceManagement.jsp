@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="featured-box featured-box-secundary">
+                                <div class="featured-box featured-box-tertiary">
                                     <div class="box-content">
                                         <a href="../FeedbackManagement_Servlet"><i class="icon-featured icon icon-fire"> </i>
                                             <h4>Feedback Management</h4>
