@@ -90,7 +90,7 @@
                                 
                                 <div class="form-group">
                                     <label for="city">City</label>
-                                    <input type="text" class="form-control" id="city"  name="city" value="<%= mfHelper.manufacturingFacilityEntity.getCity() %>" >
+                                    <input type="text" class="form-control" id="city"  name="city" value="<%= mfHelper.manufacturingFacilityEntity.getCity() %>" readonly>
                                 </div>
                                 
 
