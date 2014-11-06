@@ -129,8 +129,7 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                    <div id="googleMap" style="width:100%;height:100%;"></div>
-
+                    
                 </div>
                 <!-- /.container-fluid -->
 
@@ -158,33 +157,7 @@
             );
         </script>
 
-        <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
-        <script>
-            function initialize()
-            {
-                var mapProp = {
-                    center: new google.maps.LatLng(1.35, 103.8),
-                    zoom: 12,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                var map = new google.maps.Map(document.getElementById("googleMap")
-                        , mapProp);
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(1.296884, 103.776330),
-                    map: map,
-                    title: 'title',
-                });
-                
-                var marker2 = new google.maps.Marker({
-                    position: new google.maps.LatLng(1.396884, 103.776330),
-                    map: map,
-                    title: 'title1',
-                });
-            }            
-
-            google.maps.event.addDomListener(window, 'load', initialize);
-        </script>
     </body>
 
 </html>

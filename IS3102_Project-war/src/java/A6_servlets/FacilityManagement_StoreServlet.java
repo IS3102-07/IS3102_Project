@@ -87,7 +87,8 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                     String address = request.getParameter("address");
                     String telephone = request.getParameter("telephone");
                     String email = request.getParameter("email");
-                    String city = request.getParameter("city");
+                    String longitude = request.getParameter("longitude");
+                    String latitude = request.getParameter("latitude");                    
                     Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                     Long countryID = Long.parseLong(request.getParameter("countryID"));
                     String postalCode = request.getParameter("postalCode");
@@ -104,7 +105,7 @@ public class FacilityManagement_StoreServlet extends HttpServlet {
                         nextPage = "/FacilityManagement_StoreServlet/storeManagement_index" + result;
                     } else {
                         System.out.println("Posting from create store :");
-                        StoreEntity store = fmBean.createStore(currentLoggedInStaffID, storeName, address, telephone, email, countryID, postalCode, imageURL, city);
+                        StoreEntity store = fmBean.createStore(currentLoggedInStaffID, storeName, address, telephone, email, countryID, postalCode, imageURL, latitude, longitude);
                         fmBean.addStoreToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, store.getId());
                         if (store != null) {
                             result = "?goodMsg=A new store record has been saved.";

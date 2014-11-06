@@ -31,7 +31,7 @@ public interface FacilityManagementBeanLocal {
 
     public boolean checkNameExistsOfRegionalOffice(String name);
 
-    public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity, String city);
+    public ManufacturingFacilityEntity createManufacturingFacility(String callerStaffID, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity, String latitude, String longitude);
 
     public Boolean editManufacturingFacility(String callerStaffID, Long id, String manufacturingFacilityName, String address, String telephone, String email, Integer capacity);
 
@@ -55,7 +55,7 @@ public interface FacilityManagementBeanLocal {
 
     public Boolean removeManufacturingFacility(String callerStaffID, Long Id);
 
-    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL, String city);
+    public StoreEntity createStore(String callerStaffID, String storeName, String address, String telephone, String email, Long countryID, String postalCode, String imageURL, String latitude, String longitude);
 
     public Boolean editStore(String callerStaffID, Long storeId, String storeName, String address, String telephone, String email, Long countryID, String imageURL);
 
