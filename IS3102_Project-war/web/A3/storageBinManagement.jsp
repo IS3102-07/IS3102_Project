@@ -11,7 +11,11 @@
 <html lang="en">
 
     <jsp:include page="../header2.html" />
-
+    <style>
+        select{
+            min-width: 100px;
+        }
+    </style>
     <body>
         <script>
             function updateStorageBin(id) {
@@ -255,6 +259,7 @@
                                                                 </td>
                                                             </tr>
                                                         </table>
+                                                        <br>
                                                         <input class="btn btn-primary" type="submit" value="Add to Bin"/>
                                                     </div>
                                                 </div>
@@ -262,92 +267,93 @@
                                         </div>
                                     </form>
                                 </div>
-
-                                <div class="col-md-8">
-                                    <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
-                                        <thead>
-                                            <tr>
-                                                <th>SKU</th>
-                                                <th>Quantity</th>
-                                                <th>Fulfill</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <%
-                                                    int week = (int) (session.getAttribute("week"));
-                                                    List<MasterProductionScheduleEntity> listOfMPS = (List<MasterProductionScheduleEntity>) session.getAttribute("listOfMPS");
-                                                    int quantity = 0;
-                                                    for (MasterProductionScheduleEntity mps : listOfMPS) {
-                                                        
-                                                        switch (week) {
-                                                            case 1:
-                                                                quantity = mps.getAmount_week1() / mps.getSchedule().getWorkDays_firstWeek();
-                                                            case 2:
-                                                                quantity = mps.getAmount_week2() / mps.getSchedule().getWorkDays_secondWeek() ;
-                                                            case 3:
-                                                                quantity = mps.getAmount_week3() / mps.getSchedule().getWorkDays_thirdWeek() ;
-                                                            case 4:
-                                                                quantity = mps.getAmount_week4() / mps.getSchedule().getWorkDays_forthWeek() ;
-                                                            case 5:
-                                                                quantity = mps.getAmount_week5() / mps.getSchedule().getWorkDays_fifthWeek() ;
-                                                            default:
-                                                        }
-                                                %>
-                                                <td>
-                                                    <%=mps.getFurniture().getSKU() %>
-                                                </td>
-                                                <td>
-                                                    <%=quantity %>
-                                                </td>
-                                                <td>
-                                                    <%=%>
-                                                </td>
-                                                <%                                                    }%>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <%--
+<div class="col-md-8">
+<table class="table table-striped table-bordered table-hover" id="dataTables-example1">
+<thead>
+    <tr>
+        <th>SKU</th>
+        <th>Quantity</th>
+        <th>Fulfill</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <%
+            int week = (int) (session.getAttribute("week"));
+            List<MasterProductionScheduleEntity> listOfMPS = (List<MasterProductionScheduleEntity>) session.getAttribute("listOfMPS");
+            int quantity = 0;
+            for (MasterProductionScheduleEntity mps : listOfMPS) {
+                
+                switch (week) {
+                    case 1:
+                        quantity = mps.getAmount_week1() / mps.getSchedule().getWorkDays_firstWeek();
+                    case 2:
+                        quantity = mps.getAmount_week2() / mps.getSchedule().getWorkDays_secondWeek() ;
+                    case 3:
+                        quantity = mps.getAmount_week3() / mps.getSchedule().getWorkDays_thirdWeek() ;
+                    case 4:
+                        quantity = mps.getAmount_week4() / mps.getSchedule().getWorkDays_forthWeek() ;
+                    case 5:
+                        quantity = mps.getAmount_week5() / mps.getSchedule().getWorkDays_fifthWeek() ;
+                    default:
+                }
+        %>
+        <td>
+            <%=mps.getFurniture().getSKU() %>
+        </td>
+        <td>
+            <%=quantity %>
+        </td>
+        <td>
+            <%=%>
+        </td>
+        <%                                                    }%>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- /.panel -->
+                                --%>
                             </div>
-                            <!-- /.panel -->
+                            <!-- /.col-lg-12 -->
                         </div>
-                        <!-- /.col-lg-12 -->
-                    </div>
-                    <!-- /.row -->
+                        <!-- /.row -->
 
+
+                    </div>
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /#page-wrapper -->
 
             </div>
-            <!-- /#page-wrapper -->
-
-        </div>
-        <!-- /#wrapper -->
-        <div role="dialog" class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Alert</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p id="messageBox">Storage bin will be removed. Are you sure?</p>
-                    </div>
-                    <div class="modal-footer">                        
-                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStorageBin()"  />
-                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+            <!-- /#wrapper -->
+            <div role="dialog" class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Alert</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="messageBox">Storage bin will be removed. Are you sure?</p>
+                        </div>
+                        <div class="modal-footer">                        
+                            <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeStorageBin()"  />
+                            <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').dataTable();
-                $('#dataTables-example1').dataTable();
-            });
-        </script>
+            <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+            <script>
+                $(document).ready(function () {
+                    $('#dataTables-example').dataTable();
+                    $('#dataTables-example1').dataTable();
+                });
+            </script>
 
     </body>
 
