@@ -106,7 +106,7 @@
                             </div>
                         </div>
                         <!-- /.row -->
-<div class="col-lg-6">
+                        <div class="col-lg-6">
                             <div class="panel panel-default">
 
                                 <div class="panel-heading">
@@ -253,6 +253,20 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(function() {
+                var array1 = [];
+                $.get('../SKU_ajax_servlet/*', function(responseText) {
+                    var arr = responseText.trim().split(';');
+                    arr.pop();
+                    for (var i = 0; i < arr.length; i++) {
+                        array1.push(arr[i]);
+                    }
+                });
+
+                $("#auto").autocomplete({source: array1});
+            });
+        </script>
     </body>
 
 </html>
