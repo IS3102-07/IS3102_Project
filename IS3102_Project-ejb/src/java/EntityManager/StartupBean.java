@@ -380,156 +380,156 @@ public class StartupBean {
 //            System.out.println("Skipping creating of Item_CountryEntities\n" + ex);
 //            ex.printStackTrace();
 //        }
-        try {
-            Query q1 = em.createQuery("select s from StoreEntity s");
-            List<StoreEntity> storeList = (List<StoreEntity>) q1.getResultList();
-            Query q2 = em.createQuery("select pg from ProductGroupEntity pg");
-            List<ProductGroupEntity> productGroupList = (List<ProductGroupEntity>) q2.getResultList();
-            Query q3 = em.createQuery("select s from MonthScheduleEntity s");
-            List<MonthScheduleEntity> scheduleList = (List<MonthScheduleEntity>) q3.getResultList();
-            Query q4 = em.createQuery("select m from MenuItemEntity m");
-            List<MenuItemEntity> menuItemList = (List<MenuItemEntity>) q4.getResultList();
-
-            // ..................
-            int Quantity = 100;
-            for (StoreEntity store : storeList) {
-
-                int var1 = 0;
-                int var2 = 0;
-                int var3 = 0;
-                int var4 = 0;
-                for (MonthScheduleEntity schedule : scheduleList) {
-
-                    for (ProductGroupEntity pg : productGroupList) {
-                        if (pg.getName().equals("PG001")) {
-
-                            SalesFigureEntity saleFigure_PG001 = new SalesFigureEntity();
-                            saleFigure_PG001.setStore(store);
-                            saleFigure_PG001.setProductGroup(pg);
-                            saleFigure_PG001.setSchedule(schedule);
-
-                            if ((var1 % 4) == 0) {
-                                saleFigure_PG001.setQuantity(Quantity + var1 * 3);
-                            } else if ((var1 % 4) == 1) {
-                                saleFigure_PG001.setQuantity(Quantity + var1 * 3 + 5);
-                            } else if ((var1 % 4) == 2) {
-                                saleFigure_PG001.setQuantity(Quantity + var1 * 3);
-                            } else {
-                                saleFigure_PG001.setQuantity(Quantity + var1 * 3 - 5);
-                            }
-                            em.persist(saleFigure_PG001);
-
-                            SalesFigureLineItemEntity line0 = new SalesFigureLineItemEntity();
-                            line0.setSKU("F_TD_01");
-                            line0.setQuantity(saleFigure_PG001.getQuantity() * 2 / 3);
-                            line0.setSaleFigure(saleFigure_PG001);
-                            em.persist(line0);
-
-                            SalesFigureLineItemEntity line1 = new SalesFigureLineItemEntity();
-                            line1.setSKU("F_TD_02");
-                            line1.setQuantity(saleFigure_PG001.getQuantity() - line0.getQuantity());
-                            line1.setSaleFigure(saleFigure_PG001);
-                            em.persist(line1);
-
-                            var1++;
-
-                        } else if (pg.getName().equals("PG002")) {
-                            SalesFigureEntity saleFigure_PG002 = new SalesFigureEntity();
-                            saleFigure_PG002.setStore(store);
-                            saleFigure_PG002.setProductGroup(pg);
-                            saleFigure_PG002.setSchedule(schedule);
-
-                            if ((var2 % 4) == 0) {
-                                saleFigure_PG002.setQuantity(50 + var2 * 3);
-                            } else if ((var2 % 4) == 1) {
-                                saleFigure_PG002.setQuantity(55 + var2 * 3);
-                            } else if ((var2 % 4) == 2) {
-                                saleFigure_PG002.setQuantity(50 + var2 * 3);
-                            } else {
-                                saleFigure_PG002.setQuantity(45 + var2 * 3);
-                            }
-
-                            if (schedule.getMonth() == 9) {
-                                saleFigure_PG002.setQuantity(saleFigure_PG002.getQuantity() + 50);
-                            }
-
-                            em.persist(saleFigure_PG002);
-
-                            SalesFigureLineItemEntity line = new SalesFigureLineItemEntity();
-                            line.setSKU("F_BM_21");
-                            line.setQuantity(saleFigure_PG002.getQuantity());
-                            line.setSaleFigure(saleFigure_PG002);
-                            em.persist(line);
-
-                            var2++;
-                        } else if (pg.getName().equals("PG003")) {
-
-                            SalesFigureEntity saleFigure_PG003 = new SalesFigureEntity();
-                            saleFigure_PG003.setStore(store);
-                            saleFigure_PG003.setProductGroup(pg);
-                            saleFigure_PG003.setSchedule(schedule);
-
-                            if (schedule.getYear() == 2014 && schedule.getMonth() > 5) {
-                                if (schedule.getMonth() == 6) {
-                                    saleFigure_PG003.setQuantity(70 + var3);
-                                } else if (schedule.getMonth() == 7) {
-                                    saleFigure_PG003.setQuantity(80 + var3);
-                                } else if (schedule.getMonth() == 8) {
-                                    saleFigure_PG003.setQuantity(88 + var3);
-                                } else if (schedule.getMonth() == 9) {
-                                    saleFigure_PG003.setQuantity(95 + var3);
-                                } else if (schedule.getMonth() == 10) {
-                                    saleFigure_PG003.setQuantity(90 + var3);
-                                } else {
-                                    saleFigure_PG003.setQuantity(90 + var3);
-                                }
-
-                            } else {
-                                if ((var2 % 4) == 0) {
-                                    saleFigure_PG003.setQuantity(50 + var3);
-                                } else if ((var2 % 4) == 1) {
-                                    saleFigure_PG003.setQuantity(55 + var3);
-                                } else if ((var2 % 4) == 2) {
-                                    saleFigure_PG003.setQuantity(50 + var3);
-                                } else {
-                                    saleFigure_PG003.setQuantity(45 + var3);
-                                }
-                            }
-                            em.persist(saleFigure_PG003);
-
-                        }
-                    } // end loop product group 
-
-                    for (MenuItemEntity menuitem : menuItemList) {
-                        try {
-                            SalesFigureEntity saleFigure = new SalesFigureEntity();
-                            saleFigure.setStore(store);
-                            saleFigure.setMenuItem(menuitem);
-                            saleFigure.setSchedule(schedule);
-
-                            if ((var4 % 5) == 0) {
-                                saleFigure.setQuantity(20);
-                            } else if ((var4 % 5) == 1) {
-                                saleFigure.setQuantity(25);
-                            } else if ((var4 % 5) == 2) {
-                                saleFigure.setQuantity(35);
-                            } else if ((var4 % 5) == 3) {
-                                saleFigure.setQuantity(40);
-                            } else {
-                                saleFigure.setQuantity(30);
-                            }
-                            var4++;
-                            em.persist(saleFigure);
-                        } catch (Exception ex) {
-                        }
-                    }
-
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+//        try {
+//            Query q1 = em.createQuery("select s from StoreEntity s");
+//            List<StoreEntity> storeList = (List<StoreEntity>) q1.getResultList();
+//            Query q2 = em.createQuery("select pg from ProductGroupEntity pg");
+//            List<ProductGroupEntity> productGroupList = (List<ProductGroupEntity>) q2.getResultList();
+//            Query q3 = em.createQuery("select s from MonthScheduleEntity s");
+//            List<MonthScheduleEntity> scheduleList = (List<MonthScheduleEntity>) q3.getResultList();
+//            Query q4 = em.createQuery("select m from MenuItemEntity m");
+//            List<MenuItemEntity> menuItemList = (List<MenuItemEntity>) q4.getResultList();
+//
+//            // ..................
+//            int Quantity = 100;
+//            for (StoreEntity store : storeList) {
+//
+//                int var1 = 0;
+//                int var2 = 0;
+//                int var3 = 0;
+//                int var4 = 0;
+//                for (MonthScheduleEntity schedule : scheduleList) {
+//
+//                    for (ProductGroupEntity pg : productGroupList) {
+//                        if (pg.getName().equals("PG001")) {
+//
+//                            SalesFigureEntity saleFigure_PG001 = new SalesFigureEntity();
+//                            saleFigure_PG001.setStore(store);
+//                            saleFigure_PG001.setProductGroup(pg);
+//                            saleFigure_PG001.setSchedule(schedule);
+//
+//                            if ((var1 % 4) == 0) {
+//                                saleFigure_PG001.setQuantity(Quantity + var1 * 3);
+//                            } else if ((var1 % 4) == 1) {
+//                                saleFigure_PG001.setQuantity(Quantity + var1 * 3 + 5);
+//                            } else if ((var1 % 4) == 2) {
+//                                saleFigure_PG001.setQuantity(Quantity + var1 * 3);
+//                            } else {
+//                                saleFigure_PG001.setQuantity(Quantity + var1 * 3 - 5);
+//                            }
+//                            em.persist(saleFigure_PG001);
+//
+//                            SalesFigureLineItemEntity line0 = new SalesFigureLineItemEntity();
+//                            line0.setSKU("F_TD_01");
+//                            line0.setQuantity(saleFigure_PG001.getQuantity() * 2 / 3);
+//                            line0.setSaleFigure(saleFigure_PG001);
+//                            em.persist(line0);
+//
+//                            SalesFigureLineItemEntity line1 = new SalesFigureLineItemEntity();
+//                            line1.setSKU("F_TD_02");
+//                            line1.setQuantity(saleFigure_PG001.getQuantity() - line0.getQuantity());
+//                            line1.setSaleFigure(saleFigure_PG001);
+//                            em.persist(line1);
+//
+//                            var1++;
+//
+//                        } else if (pg.getName().equals("PG002")) {
+//                            SalesFigureEntity saleFigure_PG002 = new SalesFigureEntity();
+//                            saleFigure_PG002.setStore(store);
+//                            saleFigure_PG002.setProductGroup(pg);
+//                            saleFigure_PG002.setSchedule(schedule);
+//
+//                            if ((var2 % 4) == 0) {
+//                                saleFigure_PG002.setQuantity(50 + var2 * 3);
+//                            } else if ((var2 % 4) == 1) {
+//                                saleFigure_PG002.setQuantity(55 + var2 * 3);
+//                            } else if ((var2 % 4) == 2) {
+//                                saleFigure_PG002.setQuantity(50 + var2 * 3);
+//                            } else {
+//                                saleFigure_PG002.setQuantity(45 + var2 * 3);
+//                            }
+//
+//                            if (schedule.getMonth() == 9) {
+//                                saleFigure_PG002.setQuantity(saleFigure_PG002.getQuantity() + 50);
+//                            }
+//
+//                            em.persist(saleFigure_PG002);
+//
+//                            SalesFigureLineItemEntity line = new SalesFigureLineItemEntity();
+//                            line.setSKU("F_BM_21");
+//                            line.setQuantity(saleFigure_PG002.getQuantity());
+//                            line.setSaleFigure(saleFigure_PG002);
+//                            em.persist(line);
+//
+//                            var2++;
+//                        } else if (pg.getName().equals("PG003")) {
+//
+//                            SalesFigureEntity saleFigure_PG003 = new SalesFigureEntity();
+//                            saleFigure_PG003.setStore(store);
+//                            saleFigure_PG003.setProductGroup(pg);
+//                            saleFigure_PG003.setSchedule(schedule);
+//
+//                            if (schedule.getYear() == 2014 && schedule.getMonth() > 5) {
+//                                if (schedule.getMonth() == 6) {
+//                                    saleFigure_PG003.setQuantity(70 + var3);
+//                                } else if (schedule.getMonth() == 7) {
+//                                    saleFigure_PG003.setQuantity(80 + var3);
+//                                } else if (schedule.getMonth() == 8) {
+//                                    saleFigure_PG003.setQuantity(88 + var3);
+//                                } else if (schedule.getMonth() == 9) {
+//                                    saleFigure_PG003.setQuantity(95 + var3);
+//                                } else if (schedule.getMonth() == 10) {
+//                                    saleFigure_PG003.setQuantity(90 + var3);
+//                                } else {
+//                                    saleFigure_PG003.setQuantity(90 + var3);
+//                                }
+//
+//                            } else {
+//                                if ((var2 % 4) == 0) {
+//                                    saleFigure_PG003.setQuantity(50 + var3);
+//                                } else if ((var2 % 4) == 1) {
+//                                    saleFigure_PG003.setQuantity(55 + var3);
+//                                } else if ((var2 % 4) == 2) {
+//                                    saleFigure_PG003.setQuantity(50 + var3);
+//                                } else {
+//                                    saleFigure_PG003.setQuantity(45 + var3);
+//                                }
+//                            }
+//                            em.persist(saleFigure_PG003);
+//
+//                        }
+//                    } // end loop product group 
+//
+//                    for (MenuItemEntity menuitem : menuItemList) {
+//                        try {
+//                            SalesFigureEntity saleFigure = new SalesFigureEntity();
+//                            saleFigure.setStore(store);
+//                            saleFigure.setMenuItem(menuitem);
+//                            saleFigure.setSchedule(schedule);
+//
+//                            if ((var4 % 5) == 0) {
+//                                saleFigure.setQuantity(20);
+//                            } else if ((var4 % 5) == 1) {
+//                                saleFigure.setQuantity(25);
+//                            } else if ((var4 % 5) == 2) {
+//                                saleFigure.setQuantity(35);
+//                            } else if ((var4 % 5) == 3) {
+//                                saleFigure.setQuantity(40);
+//                            } else {
+//                                saleFigure.setQuantity(30);
+//                            }
+//                            var4++;
+//                            em.persist(saleFigure);
+//                        } catch (Exception ex) {
+//                        }
+//                    }
+//
+//                }
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     @PreDestroy
     private void shutdown() {
