@@ -48,7 +48,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">                                    
-                                    <b>Master Production Plan</b>
+                                    <b>Master Raw Ingredient Requirement Plan</b>
                                 </div>
                                 <div class="panel-body">
 
