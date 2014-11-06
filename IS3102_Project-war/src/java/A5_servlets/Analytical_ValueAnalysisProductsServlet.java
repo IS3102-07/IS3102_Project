@@ -4,6 +4,8 @@ import AnalyticalCRM.ValueAnalysis.CustomerValueAnalysisBeanLocal;
 import EntityManager.FurnitureEntity;
 import EntityManager.ItemEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.MenuItemEntity;
+import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -54,11 +56,64 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             }
 
             session.setAttribute("listOfSecondProduct", listOfSecondProduct);
+            
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
             session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
+            
+            List<LineItemEntity> listOfSecondProductRP = new ArrayList();
+            for (LineItemEntity item : sortBestSellingRetailProducts) {
+                if (item.getItem().getName() != null) {
+                    LineItemEntity secondBestItem = customerValueAnalysisBean.getSecondProductFromFirstRP(item.getItem().getName());
+                    if (secondBestItem == null) {
+                        LineItemEntity lineItem = new LineItemEntity();
+                        ItemEntity newItem = new RetailProductEntity();
+                        newItem.setName("");
+                        lineItem.setQuantity(0);
+                        lineItem.setItem(newItem);
+                        listOfSecondProductRP.add(lineItem);
+                    } else {
+                        listOfSecondProductRP.add(secondBestItem);
+                    }
+                } else {
+                    LineItemEntity lineItem = new LineItemEntity();
+                    ItemEntity newItem = new RetailProductEntity();
+                    newItem.setName("");
+                    lineItem.setQuantity(0);
+                    lineItem.setItem(newItem);
+                    listOfSecondProductRP.add(lineItem);
+                }
+            }
 
+            session.setAttribute("listOfSecondProductRP", listOfSecondProductRP);
+            
             List<LineItemEntity> sortBestSellingMenuItem = customerValueAnalysisBean.sortBestSellingMenuItem();
             session.setAttribute("sortBestSellingMenuItem", sortBestSellingMenuItem);
+            
+            List<LineItemEntity> listOfSecondProductMenuItem = new ArrayList();
+            for (LineItemEntity item : sortBestSellingMenuItem) {
+                if (item.getItem().getName() != null) {
+                    LineItemEntity secondBestItem = customerValueAnalysisBean.getSecondProductFromFirstMenuItem(item.getItem().getName());
+                    if (secondBestItem == null) {
+                        LineItemEntity lineItem = new LineItemEntity();
+                        ItemEntity newItem = new MenuItemEntity();
+                        newItem.setName("");
+                        lineItem.setQuantity(0);
+                        lineItem.setItem(newItem);
+                        listOfSecondProductMenuItem.add(lineItem);
+                    } else {
+                        listOfSecondProductMenuItem.add(secondBestItem);
+                    }
+                } else {
+                    LineItemEntity lineItem = new LineItemEntity();
+                    ItemEntity newItem = new MenuItemEntity();
+                    newItem.setName("");
+                    lineItem.setQuantity(0);
+                    lineItem.setItem(newItem);
+                    listOfSecondProductMenuItem.add(lineItem);
+                }
+            }
+
+            session.setAttribute("listOfSecondProductMenuItem", listOfSecondProductMenuItem);
 
             Integer totalNumberOfFurnitureInID = customerValueAnalysisBean.getTotalFurnitureSoldInCountry("indonesia");
             session.setAttribute("totalNumberOfFurnitureInID", totalNumberOfFurnitureInID);
