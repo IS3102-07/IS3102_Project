@@ -91,7 +91,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Register a new staff or remove an existing staff");
+                                            out.println("Market Segments");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);
