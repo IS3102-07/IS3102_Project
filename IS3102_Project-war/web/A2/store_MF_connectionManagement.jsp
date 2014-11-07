@@ -172,7 +172,7 @@
                 var <%= "store" + s.getId()%> = new google.maps.Marker({
                     position: new google.maps.LatLng(<%= s.getLatitude()%>, <%= s.getLongitude()%>),
                     map: map,
-                    title: 'title',
+                    title: '<%= s.getName() %>',
                 });
 
             <% } %>
@@ -182,7 +182,7 @@
                 var <%= "mf" + mf.getId()%> = new google.maps.Marker({
                     position: new google.maps.LatLng(<%= mf.getLatitude()%>, <%= mf.getLongitude()%>),
                     map: map,
-                    title: 'title',
+                    title: '<%= mf.getName() %>',
                 });
 
             <% }%>

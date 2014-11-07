@@ -41,8 +41,9 @@ public class StorageBinManagement_Servlet extends HttpServlet {
 
                 Calendar calendar = Calendar.getInstance();
                 int week = calendar.get(Calendar.WEEK_OF_MONTH);
-                System.out.println("Week is " + week);
                 List<MasterProductionScheduleEntity> listOfMPS = demandManagementBean.getMPSList(warehouseEntity.getId());
+                System.out.println("listOfMPS.size()" + listOfMPS.size());
+                System.out.println("week: " + week);
                 session.setAttribute("listOfMPS", listOfMPS);
                 session.setAttribute("week", week);
                 if (errMsg == null || errMsg.equals("")) {
