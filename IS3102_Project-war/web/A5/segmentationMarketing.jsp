@@ -152,6 +152,27 @@
 
             Integer numOfMembersInCountry1 = (Integer) session.getAttribute("numOfMembersInCountry1");
             Integer numOfMembersInCountry2 = (Integer) session.getAttribute("numOfMembersInCountry2");
+            
+            List<Integer> cummulativeGroupCountry = new ArrayList();
+            cummulativeGroupCountry.add(totalCummulativeSpendingOfCountry1 / numOfMembersInCountry1);
+            cummulativeGroupCountry.add(totalCummulativeSpendingOfCountry2 / numOfMembersInCountry2);
+
+            Integer countryGroup1Points = 1;
+            Integer countryGroup2Points = 1;
+
+            for (int i = 0; i < cummulativeGroupCountry.size(); i++) {
+                for (int j = 0; j < cummulativeGroupCountry.size(); j++) {
+                    if (!(i == j)) {
+                        if (cummulativeGroupCountry.get(i) > cummulativeGroupCountry.get(j)) {
+                            if (i == 0) {
+                                countryGroup1Points++;
+                            } else if (i==1){
+                                countryGroup2Points++;
+                            } 
+                        }
+                    }
+                }
+            }
 
         %>
 
@@ -285,16 +306,16 @@
                                                                         <%
                                                                             Integer totalPoints = 0;
                                                                             if (member.getAge() <= 25 && member.getAge() >= 18) {
-                                                                                out.println(ageGroup1Points);
+                                                                                out.println("("+ageGroup1Points+")");
                                                                                 totalPoints += ageGroup1Points;
                                                                             } else if (member.getAge() > 25 && member.getAge() <= 40) {
-                                                                                out.println(ageGroup2Points);
+                                                                                out.println("("+ageGroup2Points+")");
                                                                                 totalPoints += ageGroup2Points;
                                                                             } else if (member.getAge() > 40 && member.getAge() <= 55) {
-                                                                                out.println(ageGroup3Points);
+                                                                                out.println("("+ageGroup3Points+")");
                                                                                 totalPoints += ageGroup3Points;
                                                                             } else if (member.getAge() <= 75) {
-                                                                                out.println(ageGroup4Points);
+                                                                                out.println("("+ageGroup4Points+")");
                                                                                 totalPoints += ageGroup4Points;
                                                                             }
                                                                         %>
@@ -303,16 +324,16 @@
                                                                         <%=member.getIncome()%>
 
                                                                         <% if (member.getIncome() <= 30000) {
-                                                                                out.println(incomeGroup1Points);
+                                                                                out.println("("+incomeGroup1Points+")");
                                                                                 totalPoints += incomeGroup1Points;
                                                                             } else if (member.getIncome() > 30000 && member.getIncome() <= 60000) {
-                                                                                out.println(incomeGroup2Points);
+                                                                                out.println("("+incomeGroup2Points+")");
                                                                                 totalPoints += incomeGroup2Points;
                                                                             } else if (member.getIncome() > 60000 && member.getIncome() <= 100000) {
-                                                                                out.println(incomeGroup3Points);
+                                                                                out.println("("+incomeGroup3Points+")");
                                                                                 totalPoints += incomeGroup3Points;
                                                                             } else if (member.getIncome() > 100000) {
-                                                                                out.println(incomeGroup4Points);
+                                                                                out.println("("+incomeGroup4Points+")");
                                                                                 totalPoints += incomeGroup4Points;
                                                                             }
                                                                         %>
@@ -321,11 +342,11 @@
                                                                         <%=member.getCity()%>
 
                                                                         <% if (member.getCity().equalsIgnoreCase("Malaysia")) {
-                                                                                out.println("(1)");
-                                                                                totalPoints += 1;
+                                                                                out.println("("+countryGroup1Points+")");
+                                                                                totalPoints += countryGroup1Points;
                                                                             } else if (member.getCity().equalsIgnoreCase("Singapore")) {
-                                                                                out.println("(2)");
-                                                                                totalPoints += 2;
+                                                                                out.println("("+countryGroup1Points+")");
+                                                                                totalPoints += countryGroup1Points;
                                                                             }
                                                                         %>
                                                                     </td>
