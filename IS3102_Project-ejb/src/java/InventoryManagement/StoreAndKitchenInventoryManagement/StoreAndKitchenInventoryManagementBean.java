@@ -1460,7 +1460,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                                 storageBinLineItem.setQuantity(storageBinLineItem.getQuantity() - 1);
                                 em.flush();
                             }
-                            em.merge(furnitureMarketplace);
+                            em.merge(furnitureMarketplace.get(i));
                             furnitureMarketplace.get(i).setFreeVolume(furnitureMarketplace.get(i).getFreeVolume() + storageBinLineItem.getItem().getVolume());
                             em.flush();
                         }
@@ -1524,7 +1524,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                                 storageBinLineItem.setQuantity(storageBinLineItem.getQuantity() - 1);
                                 em.flush();
                             }
-                            em.merge(retailOutlet);
+                            em.merge(retailOutlet.get(i));
                             retailOutlet.get(i).setFreeVolume(retailOutlet.get(i).getFreeVolume() + storageBinLineItem.getItem().getVolume());
                             em.flush();
                         }
@@ -1640,7 +1640,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                                 storageBinLineItem.setQuantity(storageBinLineItem.getQuantity() - 1);
                                 em.flush();
                             }
-                            em.merge(pallets);
+                            em.merge(pallets.get(i));
                             pallets.get(i).setFreeVolume(pallets.get(i).getFreeVolume() + storageBinLineItem.getItem().getVolume());
                             em.flush();
                         }
@@ -1705,7 +1705,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                                 storageBinLineItem.setQuantity(storageBinLineItem.getQuantity() - 1);
                                 em.flush();
                             }
-                            em.merge(shelfs);
+                            em.merge(shelfs.get(i));
                             shelfs.get(i).setFreeVolume(shelfs.get(i).getFreeVolume() + storageBinLineItem.getItem().getVolume());
                             em.flush();
                         }
@@ -1747,7 +1747,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
             //If needs self collection, don't remove first
             if (!picker && itemEntity.getVolume() > Config.minVolumeForCollectionAreaItems) {
                 return false;
-            } else if (picker && itemEntity.getVolume() > Config.minVolumeForCollectionAreaItems) {
+            } else if (picker && itemEntity.getVolume() < Config.minVolumeForCollectionAreaItems) {
                 return false;
             }
             Boolean removeStatus = false;

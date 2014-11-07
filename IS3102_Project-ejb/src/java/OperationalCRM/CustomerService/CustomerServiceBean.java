@@ -128,7 +128,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public PickRequestEntity completePickRequest(Long pickRequestID) {
         System.out.println("completePickRequest() called");
@@ -177,13 +177,16 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
                     itemsToBePicked.add(curr);
                 }
             }
-            //Create the PickRequest 
+            //Create the PickRequest (only if got items to be picked)
             String receiptNo = salesRecordEntity.getReceiptNo();
             String queueNo = receiptNo.substring(receiptNo.length() - 4);
             PickRequestEntity pickRequestEntity = new PickRequestEntity(storeEntity, salesRecordEntity, itemsToBePicked, queueNo);
-            em.persist(pickRequestEntity);
-
-            return true;
+            if (itemsToBePicked.size() > 0) {
+                em.persist(pickRequestEntity);
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception ex) {
             System.out.println("addPickRequest(): error");
             ex.printStackTrace();
@@ -266,7 +269,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             return false;
         }
     }
-    
+
     @Override
     public Boolean markPickRequestForCollection(String receiptNo) {
         System.out.println("markPickRequestForCollection() called");
@@ -325,7 +328,7 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             return null;
         }
     }
-    
+
     @Override
     public List<PickRequestEntity> getLastCalledPickRequestInStoreForReceptionist(Long storeID) {
         System.out.println("getLastCalledPickRequestInStoreForReceptionist() called");
