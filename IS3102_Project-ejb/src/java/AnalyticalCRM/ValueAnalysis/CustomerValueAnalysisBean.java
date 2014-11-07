@@ -1106,8 +1106,18 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
             for (MemberEntity member : members) {
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    Boolean menuItemExistsInPurchase = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                                menuItemExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (menuItemExistsInPurchase) {
                     numOfPurchases++;
                     frequency += member.getPurchases().size();
+                    }
                 } else {
                 }
             }
@@ -1145,6 +1155,46 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         }
                     }
                     if (furnitureExistsInPurchase) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            numOfPurchases++;
+                            amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        }
+                    }
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list monetary value:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfPurchases != 0) {
+            return amountOfPurchase / numOfPurchases;
+        } else {
+            return 0;
+        }
+    }
+    
+    public Integer getAverageCustomerMonetaryValueMenuItem() {
+        System.out.println("getAverageCustomerMonetaryValueMenuItem()");
+
+        Integer amountOfPurchase = 0;
+        Integer numOfPurchases = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+
+                    Boolean menuItemExistsInPurchase = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                                menuItemExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (menuItemExistsInPurchase) {
                         for (int i = 0; i < member.getPurchases().size(); i++) {
                             numOfPurchases++;
                             amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();

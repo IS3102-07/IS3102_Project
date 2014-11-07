@@ -19,6 +19,10 @@ import javax.ejb.Stateful;
 @Local
 public interface CustomerValueAnalysisBeanLocal {
     
+    public Integer getAverageCustomerFrequencyMenuItem();
+    
+     public Integer getAverageCustomerMonetaryValueMenuItem();
+    
     public Integer getAverageCustomerRecencyMenuItem();
     
     public Date getItemLastPurchase(Long itemId);
