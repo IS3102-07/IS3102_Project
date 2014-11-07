@@ -1,10 +1,13 @@
 package EntityManager;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CorporateManagement.ItemManagement.ItemManagementBean;
+import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import MRP.SalesAndOperationPlanning.SalesAndOperationPlanningBeanLocal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -19,6 +22,8 @@ import javax.persistence.Query;
 public class StartupBean {
 
     @EJB
+    private ItemManagementBeanLocal itemManagementBean;
+    @EJB
     private AccountManagementBeanLocal accountManagementBean;
 
     @EJB
@@ -27,8 +32,23 @@ public class StartupBean {
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
-//    @PostConstruct
-//    private void startup() {
+    @PostConstruct
+    private void startup() {
+        //==============
+//        System.out.println("addItemPricing");
+//        String data = "K_CO_01,2,K_CO_02,2,K_CO_03,2,K_CO_04,2,K_CO_05,2";
+//        Scanner sc = new Scanner(data);
+//        sc.useDelimiter(",");
+//        String sku;
+//        double price;
+//        while (sc.hasNext()) {
+//            sku = sc.next();
+//            price = Math.round(Double.parseDouble(sc.next())/1.25*0.798);
+//            //price = Math.round(Double.parseDouble(sc.next()));
+//            itemManagementBean.addCountryItemPricing(65L, sku, price);
+//        }
+//    }
+        //==========
 //        try {
 //            Query q = em.createQuery("SELECT t FROM RoleEntity t");
 //            List<RoleEntity> roleEntities = q.getResultList();
@@ -529,7 +549,7 @@ public class StartupBean {
 //        } catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
-//    }
+    }
 
     @PreDestroy
     private void shutdown() {

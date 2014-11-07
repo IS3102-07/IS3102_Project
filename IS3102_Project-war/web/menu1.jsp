@@ -405,6 +405,7 @@
                 roleCanView = false;
                 roleCanView2 = true;
                 roleCanView3 = true;
+                roleCanView4 = true;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
@@ -416,6 +417,9 @@
                         }
                         if (roleEntity.getId().equals(4L)) {
                             roleCanView3 = false;
+                        }
+                        if (roleEntity.getId().equals(2L)) {
+                            roleCanView4 = false;
                         }
                     }
                     if (roleCanView) {
@@ -429,7 +433,7 @@
                     <i class="icon icon-cogs"></i> Operational CRM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="operationalCRM" class="collapse">
-                    <% if (roleCanView3) { %>
+                    <% if ((roleCanView3) && (roleCanView4)){ %>
                     <li>
                         <a href="../LoyaltyManagement_Servlet">Loyalty & Rewards</a>
                     </li>

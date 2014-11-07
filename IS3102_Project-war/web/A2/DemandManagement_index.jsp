@@ -38,7 +38,7 @@
                                     <%
                                         String errMsg = request.getParameter("errMsg");
                                         if (errMsg == null || errMsg.equals("")) {
-                                            errMsg = "Select regional office first, then select store";
+                                            errMsg = "Select regional office first, then select manufacturing facility";
                                         }
                                         out.println(errMsg);
                                     %>
