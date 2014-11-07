@@ -83,6 +83,7 @@
                                                             <th>Shipping Destination</th>
                                                             <th>Expected Receiving Date</th>
                                                             <th>Submitted By</th>
+                                                            <th>Created At</th>
                                                             <th>Status</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -187,9 +188,12 @@
                                                                 String date = DATE_FORMAT.format(finalListOfPO.get(i).getExpectedReceivedDate());%>
                                                             <%=date%>
                                                         </td>
-                                                        <td>
-                                                            <%=finalListOfPO.get(i).getSubmittedBy()%>
+                                                        <td>                                                            
+                                                            <%= finalListOfPO.get(i).getSubmittedBy() %>
                                                         </td>
+                                                        <td>
+                                                            <% SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("dd-MM-yyyy hh:mm"); %>
+                                                            <%= DATE_FORMAT2.format(finalListOfPO.get(i).getCreatedDate()) %> </td>
                                                         <td>
                                                             <%=finalListOfPO.get(i).getStatus()%>
                                                         </td>
