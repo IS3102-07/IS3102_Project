@@ -56,12 +56,12 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
                 session.setAttribute("member", memberEntity);
                 session.setAttribute("loyaltyTiers", loyaltyTiers);
                 if (memberEntity.getCity()!= null) {
-                    String country = memberEntity.getCountry().getName();
+                    String country = memberEntity.getCity();
                     switch (country) {
                         case "France":
                             session.setAttribute("URLprefix", "FRA/");
                             break;
-                        case "USA":
+                        case "United States of America":
                             session.setAttribute("URLprefix", "USA/");
                             break;
                         case "China":
