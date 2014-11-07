@@ -238,7 +238,7 @@
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form name="sopManagement">
+                                            <form name="sopManagement" action="../SaleAndOperationPlanning_Servlet/sopManagement" >
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable3">
                                                     <thead>
                                                         <tr>
@@ -252,7 +252,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%                                                            List<SaleAndOperationPlanEntity> retailSopList = (List<SaleAndOperationPlanEntity>) request.getAttribute("retailSopList");
+                                                        <%                                                            
+                                                            List<SaleAndOperationPlanEntity> retailSopList = (List<SaleAndOperationPlanEntity>) request.getAttribute("retailSopList");
                                                             for (SaleAndOperationPlanEntity model : retailSopList) {
                                                         %>
                                                         <tr>
