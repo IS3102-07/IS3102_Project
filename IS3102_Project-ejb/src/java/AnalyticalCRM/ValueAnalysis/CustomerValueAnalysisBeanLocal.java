@@ -19,6 +19,10 @@ import javax.ejb.Stateful;
 @Local
 public interface CustomerValueAnalysisBeanLocal {
     
+    public Integer getAverageCustomerMonetaryValueRetailProduct();
+    
+    public Integer getAverageCustomerFrequencyRetailProduct();
+    
     public Integer getAverageCustomerFrequencyMenuItem();
     
      public Integer getAverageCustomerMonetaryValueMenuItem();
