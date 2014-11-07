@@ -1427,5 +1427,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<SalesRecordEntity> salesRecords = new ArrayList();
         return salesRecords;
     }
+    
+    @Override
+    public Double getSalesRecordSpendingInUSD(Long salesRecordId){
+        SalesRecordEntity salesRecordEntity = em.getReference(SalesRecordEntity.class, salesRecordId);
+        Double exchangeRate = salesRecordEntity.getStore().getCountry().getExchangeRate();
+        Double amountDue = salesRecordEntity.getAmountDue();
+        Double amountDueInUSD = amountDue/exchangeRate;
+        return amountDueInUSD;
+    }
 
 }
