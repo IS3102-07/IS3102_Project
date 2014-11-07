@@ -218,7 +218,7 @@
             element: 'morris-donut-chart',
             data: [{
                     label: "Member Sales",
-                    value: <%noDecimal.format(totalCustomerRevenue);%>
+                    value: <%=noDecimal.format(totalCustomerRevenue)%>
                 }, {
                     label: "Non-Member Sales",
                     value: <%=noDecimal.format(totalNonCustomerRevenue)%>
