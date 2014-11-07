@@ -38,6 +38,35 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     @EJB
     ItemManagementBeanLocal itemManagementBean;
 
+    public Date getItemLastPurchase(Long itemId) {
+        System.out.println("getItemLastPurchase" + itemId);
+        Date latest = null;
+        try {
+            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getItemsPurchased() != null && salesRecord.getItemsPurchased().size() != 0) {
+                    for (LineItemEntity item : salesRecord.getItemsPurchased()) {
+                        if (item.getItem().getId().equals(itemId)) {
+                            if (latest == null) {
+                                System.out.println("latest is null");
+                                latest = salesRecord.getCreatedDate();
+                            } else if (salesRecord.getCreatedDate().getTime() > latest.getTime()) {
+                                System.out.println("latest is not null, changing latest date");
+                                latest = salesRecord.getCreatedDate();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return latest;
+    }
+
     public LineItemEntity getSecondProductFromFirstMenuItem(String menuItem) {
         System.out.println("getSecondProductFromFirstMenuItem()" + menuItem);
         LineItemEntity secondProduct = new LineItemEntity();
@@ -951,6 +980,57 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                     numOfDaysWithRecord++;
                     totalDays += (int) (long) days;
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list recency:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfDaysWithRecord != 0) {
+            return totalDays / numOfDaysWithRecord;
+        } else {
+            return 0;
+        }
+    }
+
+    public Integer getAverageCustomerRecencyMenuItem() {
+        System.out.println("getAverageCustomerRecencyMenuItem()");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+
+        Integer numOfDaysWithRecord = 0;
+        Integer totalDays = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    List<Date> dates = new ArrayList<Date>();
+                    Date latest;
+                    Boolean containsMenuItem = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+
+                        if (member.getPurchases().get(i).getItemsPurchased() != null && member.getPurchases().get(i).getItemsPurchased().size() != 0) {
+                            for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                                if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                                    containsMenuItem = true;
+                                }
+                            }
+                        }
+                    }
+                    if (containsMenuItem == true) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            dates.add(member.getPurchases().get(i).getCreatedDate());
+                        }
+                        latest = Collections.max(dates);
+
+                        Long days = date.getTime() - latest.getTime();
+                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                        numOfDaysWithRecord++;
+                        totalDays += (int) (long) days;
+                    }
                 } else {
                 }
             }

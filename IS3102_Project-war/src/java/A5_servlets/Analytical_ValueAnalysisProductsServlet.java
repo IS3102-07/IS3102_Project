@@ -9,6 +9,7 @@ import EntityManager.RetailProductEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -30,6 +31,16 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             HttpSession session = request.getSession();
             List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
             session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
+
+            List<Date> dateOfLastPurchaseFurniture = new ArrayList();
+
+            for (LineItemEntity item : sortBestSellingFurniture) {
+
+                Date itemPurchasedDate = customerValueAnalysisBean.getItemLastPurchase(item.getItem().getId());
+                dateOfLastPurchaseFurniture.add(itemPurchasedDate);
+            }
+            
+            session.setAttribute("dateOfLastPurchaseFurniture", dateOfLastPurchaseFurniture);
 
             List<LineItemEntity> listOfSecondProduct = new ArrayList();
             for (LineItemEntity item : sortBestSellingFurniture) {
@@ -56,10 +67,10 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             }
 
             session.setAttribute("listOfSecondProduct", listOfSecondProduct);
-            
+
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
             session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
-            
+
             List<LineItemEntity> listOfSecondProductRP = new ArrayList();
             for (LineItemEntity item : sortBestSellingRetailProducts) {
                 if (item.getItem().getName() != null) {
@@ -85,10 +96,10 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             }
 
             session.setAttribute("listOfSecondProductRP", listOfSecondProductRP);
-            
+
             List<LineItemEntity> sortBestSellingMenuItem = customerValueAnalysisBean.sortBestSellingMenuItem();
             session.setAttribute("sortBestSellingMenuItem", sortBestSellingMenuItem);
-            
+
             List<LineItemEntity> listOfSecondProductMenuItem = new ArrayList();
             for (LineItemEntity item : sortBestSellingMenuItem) {
                 if (item.getItem().getName() != null) {

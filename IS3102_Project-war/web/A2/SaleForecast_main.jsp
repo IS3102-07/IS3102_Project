@@ -65,45 +65,67 @@
 
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                            <form action="../SaleForecast_Servlet/SaleForecast_main_POST">
-                                                <table class="table table-striped table-bordered table-hover" id="dataTable1">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Product Group Name</th>
-                                                            <th>Sales Forecast</th>                                                              
-                                                            <th>Forecast Method <i class="icon icon-question-circle" <a href="#myModal" data-toggle="modal"></a></i></th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <%
-                                                            List<SaleForecastEntity> saleForecastList = (List<SaleForecastEntity>) request.getAttribute("saleForecastList");
-                                                            int index = 0;
-                                                            for (SaleForecastEntity s : saleForecastList) {
-                                                            index ++;
-                                                        %>
-                                                        <tr id="<%=index%>">                                                            
-                                                            <td style="width: 15%" ><%= s.getProductGroup().getProductGroupName()%></td>                                                        
-                                                            <td style="width: 15%"><p id="<%= s.getProductGroup().getId() %>"><%= s.getQuantity()%></p></td>                                                            
-                                                            <td style="width: 45%">
-                                                                <div class="btn-group btn-toggle"> 
-                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getMultipleRegressionSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("M")){ out.print("active"); } %> ">Multiple Linear Regression</span>
-                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getRegressionSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("R")){ out.print("active"); } %>">Simple Linear Regression</span>
-                                                                    <span id="<%= s.getProductGroup().getId() %>" onclick="getSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("A")){ out.print("active"); } %> ">Average Method</span>                                                                    
-                                                                </div>                                                                                                                                                                                                                                                 
-                                                            </td>                                                            
-                                                            <td style="width: 25%">
+                                        <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">                                            
+                                            <table class="table table-striped table-bordered table-hover" id="dataTable1">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product Group Name</th>
+                                                        <th>Sales Forecast</th>                                                              
+                                                        <th>Forecast Method <i class="icon icon-question-circle" <a href="#myModal" data-toggle="modal"></a></i></th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                        List<SaleForecastEntity> saleForecastList = (List<SaleForecastEntity>) request.getAttribute("saleForecastList");
+                                                        int index = 0;
+                                                        for (SaleForecastEntity s : saleForecastList) {
+                                                        index ++;
+                                                    %>
+                                                    <tr id="<%=index%>">                                                            
+                                                        <td style="width: 15%" ><%= s.getProductGroup().getProductGroupName()%></td>                                                        
+                                                        <td style="width: 12%"><p id="<%= s.getProductGroup().getId() %>"><%= s.getQuantity()%></p></td>                                                            
+                                                        <td style="width: 48%">
+                                                            <div class="btn-group btn-toggle"> 
+                                                                <span id="<%= s.getProductGroup().getId() %>" onclick="getMultipleRegressionSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("M")){ out.print("active"); } %> ">Multiple Linear Regression</span>
+                                                                <span id="<%= s.getProductGroup().getId() %>" onclick="getRegressionSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("R")){ out.print("active"); } %>">Simple Linear Regression</span>
+                                                                <span id="<%= s.getProductGroup().getId() %>" onclick="getSaleForecast(this)" class="btn btn-default <% if(s.getMethod().equals("A")){ out.print("active"); } %> ">Average Method</span>                                                                    
+                                                                <a href="#myModal<%= s.getId()%>" data-toggle="modal"><span id="<%= s.getProductGroup().getId()%>" class="btn btn-default <% if (s.getMethod().equals("E")) {out.print("active");}%>">Manual</span></a>
+                                                                <div role="dialog" class="modal fade" id="myModal<%= s.getId()%>">
+                                                                    <div class="modal-dialog">
+                                                                        <form action="../SaleForecast_Servlet/editSaleForecast">
+                                                                            <input type="hidden" name="saleForecastId" value="<%= s.getId()%>" >
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h4>Manual Create Sale Forecast</h4>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="form-group">
+                                                                                        <label>Sale Forecast Quantity: </label>
+                                                                                        <input type="number" min="0" class="form-control" name="quantity" required>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">                                                                                                                                
+                                                                                    <button class="btn btn-primary" name="submit-btn" value="Delete Warehouse">Confirm</button>
+                                                                                    <a class="btn btn-default" data-dismiss ="modal">Close</a>                        
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                                                                                                                                                                                                                 
+                                                        </td>                                                            
+                                                        <td style="width: 25%">
+                                                            <form action="../SaleForecast_Servlet/SaleForecast_main_POST">
                                                                 <button class="btn btn-primary" name="productGroupId" value="<%= s.getProductGroup().getId()%>">View historical data</button>
-                                                            </td>
-                                                        </tr>
-                                                        <%
-                                                            }
-                                                        %>
-                                                    </tbody>
-                                                </table>                                                    
-                                            </form>                                              
-
+                                                            </form>   
+                                                        </td>
+                                                    </tr>
+                                                    <%
+                                                        }
+                                                    %>
+                                                </tbody>
+                                            </table>                                                                                                                                           
                                         </div>
                                     </div>
                                     <!-- /.table-responsive -->
@@ -153,6 +175,7 @@
                     $(a).addClass('active');
                     $(a).closest('td').find('span:eq(0)').removeClass('active');
                     $(a).closest('td').find('span:eq(1)').removeClass('active');
+                    $(a).closest('td').find('span:eq(3)').removeClass('active');
                 });
             }
         </script>
@@ -166,6 +189,7 @@
                     $(a).addClass('active');
                     $(a).closest('td').find('span:eq(0)').removeClass('active');
                     $(a).closest('td').find('span:eq(2)').removeClass('active');
+                    $(a).closest('td').find('span:eq(3)').removeClass('active');
                 });
             }
         </script>
@@ -179,6 +203,7 @@
                     $(a).addClass('active');
                     $(a).closest('td').find('span:eq(1)').removeClass('active');
                     $(a).closest('td').find('span:eq(2)').removeClass('active');
+                    $(a).closest('td').find('span:eq(3)').removeClass('active');
                 });
             }
         </script>

@@ -6,6 +6,7 @@ import EntityManager.LineItemEntity;
 import EntityManager.MenuItemEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
+import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.SalesFigureLineItemEntity;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -81,7 +83,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                             SalesFigureEntity salesFigure = new SalesFigureEntity();
                             salesFigure.setStore(saleRecord.getStore());
                             salesFigure.setMenuItem(cl.getMenuItem());
-                            salesFigure.setSchedule(schedule);                            
+                            salesFigure.setSchedule(schedule);
                             salesFigure.setQuantity(lineItem.getQuantity());
                             em.persist(salesFigure);
 
@@ -189,7 +191,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
         }
         return false;
     }
-    
+
     public MonthScheduleEntity getTheBeforeOne(MonthScheduleEntity schedule) {
         try {
             if (schedule.getMonth() == 1) {
@@ -218,25 +220,19 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(2, storeId)
                     .setParameter(3, scheduleId);
 
-            System.out.println("debug......" + "getSalesForecast is called.");
-
             if (!q.getResultList().isEmpty()) {
-                em.remove(q.getResultList().get(0));
-                em.flush();
-            }
+                SaleForecastEntity saleForecast = (SaleForecastEntity)q.getResultList().get(0);
+                // if not exist, then create it
+                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+                StoreEntity store = em.find(StoreEntity.class, storeId);
+                ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
 
-            // if not exist, then create it
-            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
-            StoreEntity store = em.find(StoreEntity.class, storeId);
-            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+                MonthScheduleEntity lastSchedule = schedule;
 
-            MonthScheduleEntity lastSchedule = schedule;
-
-            try {
                 int amount = 0;
-                for (int i = 0; i < 3; i++) {                    
+                for (int i = 0; i < 3; i++) {
 
-                    lastSchedule = this.getTheBeforeOne(lastSchedule);                    
+                    lastSchedule = this.getTheBeforeOne(lastSchedule);
 
                     Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                             .setParameter(1, productGroupId)
@@ -250,20 +246,13 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                         amount += salesFigureEntity.getQuantity();
                     }
                 }
-
-                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, amount / 3);
+                
+                saleForecast.setQuantity(amount / 3);
                 saleForecast.setMethod("A");
                 em.persist(saleForecast);
 
                 return saleForecast;
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, 0);
-                System.out.println("debug......" + " exception is catched");
-                return saleForecast;
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -279,11 +268,11 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(1, StoreId)
                     .setParameter(2, productGroupId)
                     .setParameter(3, year);
-            
-            List<SalesFigureEntity> sfList = (List<SalesFigureEntity>)q.getResultList();
-            for(SalesFigureEntity sf: sfList){
+
+            List<SalesFigureEntity> sfList = (List<SalesFigureEntity>) q.getResultList();
+            for (SalesFigureEntity sf : sfList) {
                 em.refresh(sf);
-            }            
+            }
             return sfList;
         } catch (Exception ex) {
         }
@@ -300,16 +289,11 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(3, scheduleId);
 
             if (!q.getResultList().isEmpty()) {
-                em.remove(q.getResultList().get(0));
-                em.flush();
-            }
-
-            // if not exist, then create it
-            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
-            StoreEntity store = em.find(StoreEntity.class, storeId);
-            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
-
-            try {
+                SaleForecastEntity saleForecast = (SaleForecastEntity) q.getResultList().get(0);
+                // if not exist, then create it
+                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+                StoreEntity store = em.find(StoreEntity.class, storeId);
+                ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
 
                 List<SalesFigureEntity> salesFigureList = new ArrayList<>();
 
@@ -349,17 +333,12 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 double intercept = simpleRegression.getIntercept();
                 double forecastQuantity = slope * (salesFigureList.size() + 1) + intercept;
 
-                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, Math.round((float) forecastQuantity));
+                saleForecast.setQuantity(Math.round((float) forecastQuantity));
                 saleForecast.setMethod("R");
                 em.persist(saleForecast);
 
                 return saleForecast;
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, 0);
-                System.out.println("debug......" + " exception is catched");
-                return saleForecast;
             }
 
         } catch (Exception ex) {
@@ -378,16 +357,13 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(3, scheduleId);
 
             if (!q.getResultList().isEmpty()) {
-                em.remove(q.getResultList().get(0));
-                em.flush();
-            }
 
-            // if not exist, then create it
-            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
-            StoreEntity store = em.find(StoreEntity.class, storeId);
-            ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+                SaleForecastEntity saleForecast = (SaleForecastEntity) q.getResultList().get(0);
 
-            try {
+                // if not exist, then create it
+                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
+                StoreEntity store = em.find(StoreEntity.class, storeId);
+                ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
 
                 List<SalesFigureEntity> salesFigureList = new ArrayList<>();
 
@@ -471,7 +447,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                 }
                 double forecastQuantity = coefficient[0] - coefficient[1] + coefficient[schedule.getMonth() + 1];
 
-                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, Math.round((float) forecastQuantity));
+                saleForecast.setQuantity(Math.round((float) forecastQuantity));
                 saleForecast.setMethod("M");
                 em.persist(saleForecast);
 
@@ -479,13 +455,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                 return saleForecast;
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                SaleForecastEntity saleForecast = new SaleForecastEntity(store, productGroup, schedule, 0);
-                System.out.println("debug......" + " exception is catched");
-                return saleForecast;
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -502,7 +472,8 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(3, scheduleId);
 
             if (!q.getResultList().isEmpty()) {
-                return (SaleForecastEntity) q.getResultList().get(0);
+                SaleForecastEntity saleForecast = (SaleForecastEntity) q.getResultList().get(0);
+                return saleForecast;
             } else {
                 return this.getSalesForecastLinearRegression(storeId, productGroupId, scheduleId);
             }
@@ -510,5 +481,44 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Boolean editSaleForecast(Long saleForecastId, Integer quantity) {
+        try {
+
+            SaleForecastEntity saleForecast = em.getReference(SaleForecastEntity.class, saleForecastId);
+            saleForecast.setQuantity(quantity);
+            saleForecast.setMethod("E");
+            em.merge(saleForecast);
+
+            // to do .... Query check sale figure
+            Query q = em.createQuery("select s from SalesFigureEntity s where s.productGroup.id = ?1 and s.schedule.id = ?2 and s.store.id = ?3 ")
+                    .setParameter(1, saleForecast.getProductGroup().getId())
+                    .setParameter(2, saleForecast.getSchedule().getId())
+                    .setParameter(3, saleForecast.getStore().getId());
+
+            if (q.getResultList().isEmpty()) {
+                SalesFigureEntity saleFigure = new SalesFigureEntity();
+                saleFigure.setStore(saleForecast.getStore());
+                saleFigure.setProductGroup(saleForecast.getProductGroup());
+                saleFigure.setSchedule(this.getTheBeforeOne(saleForecast.getSchedule()));
+                saleFigure.setQuantity(quantity);
+                em.persist(saleFigure);
+
+                for (ProductGroupLineItemEntity lineItem : saleForecast.getProductGroup().getLineItemList()) {
+                    SalesFigureLineItemEntity sl = new SalesFigureLineItemEntity();
+                    sl.setSaleFigure(saleFigure);
+                    sl.setSKU(lineItem.getItem().getSKU());
+                    sl.setQuantity(quantity / saleForecast.getProductGroup().getLineItemList().size());
+                    em.persist(sl);
+                }
+            }
+            return true;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

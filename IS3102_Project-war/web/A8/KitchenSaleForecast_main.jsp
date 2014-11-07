@@ -90,18 +90,10 @@
                                                         <td style="width: 12%"><%= s.getQuantity()%></td>
                                                         <td style="width: 48%">
                                                             <div class="btn-group btn-toggle"> 
-                                                                <span id="<%= s.getMenuItem().getId()%>" onclick="getMultipleRegressionSaleForecast(this)" class="btn btn-default <% if (s.getMethod().equals("M")) {
-                                                                            out.print("active");
-                                                                        }%> ">Multiple Linear Regression</span>
-                                                                <span id="<%= s.getMenuItem().getId()%>" onclick="getRegressionSaleForecast(this)" class="btn btn-default <% if (s.getMethod().equals("R")) {
-                                                                            out.print("active");
-                                                                        }%>">Simple Linear Regression</span>
-                                                                <span id="<%= s.getMenuItem().getId()%>" onclick="getSaleForecast(this)" class="btn btn-default <% if (s.getMethod().equals("A")) {
-                                                                            out.print("active");
-                                                                        }%> ">Average Method</span>                                                                    
-                                                                <a href="#myModal<%= s.getId()%>" data-toggle="modal"><span id="<%= s.getMenuItem().getId()%>" class="btn btn-default <% if (s.getMethod().equals("E")) {
-                                                                            out.print("active");
-                                                                        }%>">Manual</span></a>
+                                                                <span id="<%= s.getMenuItem().getId()%>" onclick="getMultipleRegressionSaleForecast(this)" class="btn btn-default <% if (s.getMethod().equals("M")) {out.print("active");}%> ">Multiple Linear Regression</span>
+                                                                <span id="<%= s.getMenuItem().getId()%>" onclick="getRegressionSaleForecast(this)" class="btn btn-default <% if (s.getMethod().equals("R")) {out.print("active");}%>">Simple Linear Regression</span>
+                                                                <span id="<%= s.getMenuItem().getId()%>" onclick="getSaleForecast(this)" class="btn btn-default <% if (s.getMethod().equals("A")) {out.print("active");}%> ">Average Method</span>                                                                    
+                                                                <a href="#myModal<%= s.getId()%>" data-toggle="modal"><span id="<%= s.getMenuItem().getId()%>" class="btn btn-default <% if (s.getMethod().equals("E")) {out.print("active");}%>">Manual</span></a>
                                                                 <div role="dialog" class="modal fade" id="myModal<%= s.getId()%>">
                                                                     <div class="modal-dialog">
                                                                         <form action="../KitchenManagement_servlet/Kitchen_editSaleForecast">

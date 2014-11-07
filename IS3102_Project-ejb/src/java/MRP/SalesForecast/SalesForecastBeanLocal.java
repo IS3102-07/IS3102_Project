@@ -26,4 +26,6 @@ public interface SalesForecastBeanLocal {
         public SaleForecastEntity getSalesForecastMultipleLinearRegression(Long storeId, Long productGroupId, Long scheduleId);
         
         public MonthScheduleEntity getTheBeforeOne(MonthScheduleEntity schedule);
+        
+        public Boolean editSaleForecast(Long saleForecastId, Integer quantity);
 }
