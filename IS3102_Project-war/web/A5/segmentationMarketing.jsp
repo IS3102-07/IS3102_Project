@@ -76,7 +76,7 @@
                                     <i class="icon icon-users"></i> <a href="analytical.jsp">Analytical CRM</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Segmentation Marketing
+                                    <i class="icon icon-user"></i> Segmentation Marketing
                                 </li>
                             </ol>
                         </div>

@@ -38,10 +38,10 @@
                                     <i class="icon icon-users"></i> <a href="analytical.jsp">Analytical CRM</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-users"></i> <a href="../Analytical_ValueAnalysisServlet">Value Analysis</a>
+                                    <i class="icon icon-user"></i> <a href="../Analytical_ValueAnalysisServlet">Value Analysis</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Customer Lifetime Value
+                                    <i class="icon icon-user"></i> Customer Lifetime Value
                                 </li>
                             </ol>
                         </div>

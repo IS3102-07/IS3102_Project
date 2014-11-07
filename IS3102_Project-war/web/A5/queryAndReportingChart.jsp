@@ -76,7 +76,7 @@
                                     <i class="icon icon-users"></i> <a href="analytical.jsp">Query And Reporting</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Chart
+                                    <i class="icon icon-user"></i> Chart
                                 </li>
                             </ol>
                         </div>
