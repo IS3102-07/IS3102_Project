@@ -11,12 +11,18 @@
 <%@page import="java.util.List"%>
 <%
     List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
+    System.out.println(purchaseOrders.size());
     String id = request.getParameter("id");
+    System.out.println(id);
+    
     if (purchaseOrders == null || id == null) {
         response.sendRedirect("../PurchaseOrderManagement_Servlet");
     } else {
         List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
+            System.out.println(activeSuppliers.size());
+
         List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
+    System.out.println(warehouses.size());
 
         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
         for (int i = 0; i < purchaseOrders.size(); i++) {

@@ -21,14 +21,13 @@ public class ShippingOrderManagement_Servlet extends HttpServlet {
 
     @EJB
     private InboundAndOutboundLogisticsBeanLocal inboundAndOutboundLogisticsBeanLocal;
-    
+
     @EJB
     private FacilityManagementBeanLocal facilityManagementBeanLocal;
-    
+
     @EJB
     private AccountManagementBeanLocal accountManagementBean;
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -49,24 +48,25 @@ public class ShippingOrderManagement_Servlet extends HttpServlet {
 
             if (accountManagementBean.checkIfStaffIsAdministrator(staffEntity.getId()) || accountManagementBean.checkIfStaffIsGlobalManager(staffEntity.getId())) {
                 warehouses = facilityManagementBeanLocal.getWarehouseList();
+                warehouse1 = warehouses;
                 System.out.println("2");
-
+                session.setAttribute("warehouse1", warehouse1);
+            
             } else if (accountManagementBean.checkIfStaffIsRegionalManager(staffEntity.getId()) || accountManagementBean.checkIfStaffIsPurchasingManager(staffEntity.getId())) {
                 Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());
                 if (roID != null) {
                     warehouses = facilityManagementBeanLocal.getWarehouseListByRegionalOffice(roID);
                     session.setAttribute("warehouse1", warehouses);
                     System.out.println("3");
-
                 }
             } else if ((accountManagementBean.checkIfStaffIsStoreManager(staffEntity.getId())) || (accountManagementBean.checkIfStaffIsManufacturingFacilityManager(staffEntity.getId())) || (accountManagementBean.checkIfStaffIsManufacturingFacilityWarehouseManager(staffEntity.getId()))) {
                 System.out.println("2");
                 WarehouseEntity wh = facilityManagementBeanLocal.getWarehouseEntityBasedOnStaffRole(id);
 
-                if (wh!=null){
-                   System.out.println("3");
-                   warehouses.add(wh);
-                   System.out.println("4");
+                if (wh != null) {
+                    System.out.println("3");
+                    warehouses.add(wh);
+                    System.out.println("4");
                 }
 
                 Long roID = accountManagementBean.getRegionalOfficeIdBasedOnStaffRole(staffEntity.getId());

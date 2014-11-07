@@ -42,7 +42,7 @@ public class PurchaseOrderManagement_Servlet extends HttpServlet {
             session.setAttribute("purchaseOrders", purchaseOrders);
             List<SupplierEntity> suppliers = null;
             List<WarehouseEntity> warehouses = null;
-            
+
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
             if (accountManagementBean.checkIfStaffIsAdministrator(staffEntity.getId()) || accountManagementBean.checkIfStaffIsGlobalManager(staffEntity.getId())) {
                 suppliers = supplierManagementBean.viewAllSupplierList();
@@ -53,7 +53,11 @@ public class PurchaseOrderManagement_Servlet extends HttpServlet {
                     suppliers = supplierManagementBean.getSupplierListOfRO(roID);
                     warehouses = facilityManagementBeanLocal.getWarehouseListByRegionalOffice(roID);
                 }
+            } else {
+                suppliers = supplierManagementBean.viewAllSupplierList();
+                warehouses = facilityManagementBeanLocal.getWarehouseList();
             }
+
             session.setAttribute("suppliers", suppliers);
             session.setAttribute("warehouses", warehouses);
 

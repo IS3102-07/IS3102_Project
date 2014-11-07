@@ -127,12 +127,14 @@ public class FacilityManagement_ManufacturingFacilityServlet extends HttpServlet
                 String address = request.getParameter("address");
                 String telephone = request.getParameter("telephone");
                 String email = request.getParameter("email");
+                String longitude = request.getParameter("longitude");
+                String latitude = request.getParameter("latitude");   
                 Long regionalOfficeId = Long.parseLong(request.getParameter("regionalOfficeId"));
                 System.out.println(manufacturingFacilityName + address + telephone + email);
                 String capacity = request.getParameter("capacity");
                 Long mfId = Long.parseLong(request.getParameter("manufacturingFacilityId"));
                 System.out.println(mfId + " is id");
-                if (fmBean.editManufacturingFacility(currentLoggedInStaffID, mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity))
+                if (fmBean.editManufacturingFacility(currentLoggedInStaffID, mfId, manufacturingFacilityName, address, telephone, email, Integer.valueOf(capacity), latitude, longitude)
                         && fmBean.updateManufacturingFacilityToRegionalOffice(currentLoggedInStaffID, regionalOfficeId, mfId)) {
                     result = "?goodMsg=The manufacturing facility has been updated.";
 

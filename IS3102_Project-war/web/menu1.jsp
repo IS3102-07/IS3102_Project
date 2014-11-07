@@ -322,11 +322,9 @@
                     <i class="icon icon-home"></i> SCM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="SCM" class="collapse" style="color: #C5C5C5;">
-                    <% if (roleCanView2) { %>
                     <li>
                         <a href="../PurchaseOrderManagement_Servlet">Retail Products and Raw Materials Purchasing</a>
                     </li>
-                    <%}%>
                     <%if ((roleCanView3) && (roleCanView2) && (roleCanView4)) {%>
                     <li>
                         <a href="../SupplierManagement_SupplierServlet">Supplier Management</a>
@@ -407,6 +405,7 @@
                 roleCanView = false;
                 roleCanView2 = true;
                 roleCanView3 = true;
+                roleCanView4 = true;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
@@ -418,6 +417,9 @@
                         }
                         if (roleEntity.getId().equals(4L)) {
                             roleCanView3 = false;
+                        }
+                        if (roleEntity.getId().equals(2L)) {
+                            roleCanView4 = false;
                         }
                     }
                     if (roleCanView) {
@@ -431,7 +433,7 @@
                     <i class="icon icon-cogs"></i> Operational CRM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="operationalCRM" class="collapse">
-                    <% if (roleCanView3) { %>
+                    <% if ((roleCanView3) && (roleCanView4)){ %>
                     <li>
                         <a href="../LoyaltyManagement_Servlet">Loyalty & Rewards</a>
                     </li>
@@ -448,7 +450,7 @@
                 </ul>
             </li>
             <% }
-                approvedRolesID = new Long[]{1L, 2L, 4L, 5L, 11L};
+                approvedRolesID = new Long[]{1L, 5L, 6L, 11L};
                 roleCanView = false;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {

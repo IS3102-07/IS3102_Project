@@ -29,12 +29,12 @@ public class StoreTransferOrderManagement_AddServlet extends HttpServlet {
 
             if (origin.equals(target)) {
                 result = "?errMsg=Invalid movement, Origin and Target are the same.";
-                response.sendRedirect("A4/transferOrderManagement_Add.jsp" + result);
+                response.sendRedirect("A7/transferOrderManagement_Add.jsp" + result);
             } else {
                 boolean canUpdate = simbl.createTransferOrder(warehouseEntity.getId(), Long.parseLong(origin), Long.parseLong(target), null);
                 if (!canUpdate) {
                     result = "?errMsg=Ops error, please try again.";
-                    response.sendRedirect("A4/transferOrderManagement_Add.jsp" + result);
+                    response.sendRedirect("A7/transferOrderManagement_Add.jsp" + result);
                 } else {
                     result = "?goodMsg=Transfer Order created successfully.&id=" + warehouseEntity.getWarehouseName();
                     response.sendRedirect("StoreTransferOrderManagement_Servlet" + result);

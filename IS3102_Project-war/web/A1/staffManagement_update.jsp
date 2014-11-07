@@ -92,6 +92,17 @@
                                     %>
                                     <table class="table table-hover">
                                         <%                                            List<RoleEntity> roleList = (List<RoleEntity>) session.getAttribute("allRoles");
+                                        List<RoleEntity> roleList1 = roleList;
+
+                                        StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
+
+                                            if (currentUser.getRoles().get(0).getName().equals("Regional Manager")) {
+                                                for (int i=0;i<roleList1.size();i++) {
+                                                    if (roleList1.get(i).getName().equals("Administrator") || roleList1.get(i).getName().equals("Global Manager") || roleList1.get(i).getName().equals("Marketing Director") || roleList1.get(i).getName().equals("Product Development Engineer")) {
+                                                        roleList.remove(roleList1.get(i));
+                                                    }
+                                                }
+                                            }
                                             for (RoleEntity role : roleList) {
                                         %>
                                         <tr>

@@ -114,12 +114,12 @@
                                     
                                     <div class="form-group">
                                         <label for="input_city">Latitude</label>
-                                        <input type="text" class="form-control" id="input_city"  name="latitude" value="<%= storeHelper.store.getLatitude() %>" readonly>
+                                        <input type="text" class="form-control" id="input_city"  name="latitude" value="<%= storeHelper.store.getLatitude() %>">
                                     </div>
                                     
                                     <div class="form-group">
                                         <label for="input_city">Longitude</label>
-                                        <input type="text" class="form-control" id="input_city"  name="longitude" value="<%= storeHelper.store.getLongitude() %>" readonly>
+                                        <input type="text" class="form-control" id="input_city"  name="longitude" value="<%= storeHelper.store.getLongitude() %>">
                                     </div>
                                     
                                     <div>
