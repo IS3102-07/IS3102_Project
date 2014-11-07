@@ -91,13 +91,16 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:5%"><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                            <th style="width:15%">Supplier ID</th>
-                                                            <th style="width:15%">SKU</th>
-                                                            <th style="width:15%">Cost Price</th>
-                                                            <th style="width:10%">Lot Size</th>
-                                                            <th style="width:15%">Lead Time (Days)</th>
-                                                            <th style="width:8%">Update</th>
+                                                            <th style=""><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th style="">ID</th>
+                                                            <th style="">Supplier Name</th>
+                                                            <th style="">Supplier Address</th>
+                                                            <th style="">SKU</th>
+                                                            <th style="">Item Name</th>
+                                                            <th style="">Cost Price</th>
+                                                            <th style="">Lot Size</th>
+                                                            <th style="">Lead Time (Days)</th>
+                                                            <th style="">Update</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -116,7 +119,16 @@
                                                                 <%=listOfSupplierItemInfo.get(i).getSupplier().getId()%>
                                                             </td>
                                                             <td>
+                                                                <%=listOfSupplierItemInfo.get(i).getSupplier().getSupplierName()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfSupplierItemInfo.get(i).getSupplier().getAddress()%>
+                                                            </td>
+                                                            <td>
                                                                 <%=listOfSupplierItemInfo.get(i).getItem().getSKU()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=listOfSupplierItemInfo.get(i).getItem().getName()%>
                                                             </td>
                                                             <td>
                                                                 <%=listOfSupplierItemInfo.get(i).getCostPrice()%>
