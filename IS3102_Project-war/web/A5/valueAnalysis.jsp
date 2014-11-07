@@ -147,7 +147,7 @@
                                                     <div class="col-md-4">
                                                         <div class="featured-box featured-box-secundary">
                                                             <div class="box-content">
-                                                                <a href="../Analytical_ValueAnalysisRFMServlet"><i class="icon-featured icon icon-user"> </i>
+                                                                <a href="rfmSelect.jsp"><i class="icon-featured icon icon-user"> </i>
                                                                     <h4>Recency Frequency Monetary Value</h4>
                                                                 </a>
                                                             </div>

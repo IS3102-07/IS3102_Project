@@ -7,10 +7,16 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Analytical CRM</h1>
+                            <h1 class="page-header">Value Analysis</h1>
                             <ol class="breadcrumb">
+                                <li>
+                                    <i class="icon icon-users"></i> <a href="analytical.jsp">Analytical CRM</a>
+                                </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Analytical CRM
+                                    <i class="icon icon-user"></i> <a href="../Analytical_ValueAnalysisServlet">Value Analysis</a>
+                                </li>
+                                <li class="active">
+                                    <i class="icon icon-user"></i> RFM Selection
                                 </li>
                             </ol>
                         </div>
@@ -31,7 +37,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../Analytical_SegmentationMarketingServlet"><i class="icon-featured icon icon-user"> </i>
+                                        <a href="../Analytical_ValueAnalysisRFMRetailProductServlet"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Retail Products</h4>
                                         </a>
                                     </div>
@@ -40,7 +46,7 @@
                             <div class="col-md-4">
                                 <div class="featured-box featured-box-secundary">
                                     <div class="box-content">
-                                        <a href="../Analytical_ValueAnalysisServlet"><i class="icon-featured icon icon-user"> </i>
+                                        <a href="../Analytical_ValueAnalysisRFMMenuItemServlet"><i class="icon-featured icon icon-user"> </i>
                                             <h4>Menu Items</h4>
                                         </a>
                                     </div>
