@@ -30,6 +30,8 @@ public class Analytical_ValueAnalysisRFMServlet extends HttpServlet {
             session = request.getSession();
             System.out.println("Analytical_ValueAnalysisRFMServlet");
 
+            System.out.println(customerValueAnalysisBean.getAverageCustomerRecencyMenuItem());
+            
             List<MemberEntity> members = accountManagementBean.listAllMember();
             List<Integer> memberRecencyValue = new ArrayList();
             for (MemberEntity member : members) {

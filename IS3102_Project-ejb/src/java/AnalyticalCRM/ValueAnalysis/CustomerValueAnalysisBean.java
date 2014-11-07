@@ -994,6 +994,57 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
+    public Integer getAverageCustomerRecencyMenuItem() {
+        System.out.println("getAverageCustomerRecencyMenuItem()");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+
+        Integer numOfDaysWithRecord = 0;
+        Integer totalDays = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    List<Date> dates = new ArrayList<Date>();
+                    Date latest;
+                    Boolean containsMenuItem = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+
+                        if (member.getPurchases().get(i).getItemsPurchased() != null && member.getPurchases().get(i).getItemsPurchased().size() != 0) {
+                            for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                                if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                                    containsMenuItem = true;
+                                }
+                            }
+                        }
+                    }
+                    if (containsMenuItem == true) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            dates.add(member.getPurchases().get(i).getCreatedDate());
+                        }
+                        latest = Collections.max(dates);
+
+                        Long days = date.getTime() - latest.getTime();
+                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                        numOfDaysWithRecord++;
+                        totalDays += (int) (long) days;
+                    }
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list recency:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfDaysWithRecord != 0) {
+            return totalDays / numOfDaysWithRecord;
+        } else {
+            return 0;
+        }
+    }
+
     @Override
     public Integer getAverageCustomerFrequency() {
         System.out.println("getAverageCustomerFrequency()");
