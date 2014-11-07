@@ -76,19 +76,8 @@
                             <div class="col-md-6">
 
                                 <h4 class="push-top">Get in <strong>touch</strong></h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget leo at velit imperdiet varius. In eu ipsum vitae velit congue iaculis vitae at risus.</p>
-
+                                <p>Contact us for more information!</p>
                                 <hr />
-
-                                <h4>The <strong>Office</strong></h4>
-                                <ul class="list-unstyled">
-                                    <li><i class="fa fa-map-marker"></i> <strong>Address:</strong> 1234 Street Name, City Name, United States</li>
-                                    <li><i class="fa fa-phone"></i> <strong>Phone:</strong> (123) 456-7890</li>
-                                    <li><i class="fa fa-envelope"></i> <strong>Email:</strong> <a href="mailto:mail@example.com">mail@example.com</a></li>
-                                </ul>
-
-                                <hr />
-
                                 <h4>Business <strong>Hours</strong></h4>
                                 <ul class="list-unstyled">
                                     <li><i class="fa fa-time"></i> Monday - Friday 9am to 5pm</li>
