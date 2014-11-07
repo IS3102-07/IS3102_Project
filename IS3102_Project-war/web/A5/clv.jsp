@@ -267,6 +267,10 @@
                                                     for (int j = 0; j < member.getPurchases().size(); j++) {
                                                         totalSalesOfMember += member.getPurchases().get(j).getAmountDue();
                                                     }
+                                                    if (member.getPurchases().size()==0)
+                                                        out.println(0.00);
+                                                    
+                                                    else
                                                     out.print(df.format(totalSalesOfMember / member.getPurchases().size()));
                                                 %>
                                             </td>
