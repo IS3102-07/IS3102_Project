@@ -50,7 +50,7 @@ public class ECommerce_SelectCountry extends HttpServlet {
                     session.setAttribute("URLprefix", "FRA/");
                     response.sendRedirect("/IS3102_Project-war/B/FRA/index.jsp");
                     break;
-                case "USA":
+                case "United States":
                     session.setAttribute("URLprefix", "USA/");
                     response.sendRedirect("/IS3102_Project-war/B/USA/index.jsp");
                     break;

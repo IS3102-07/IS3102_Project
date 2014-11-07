@@ -46,7 +46,7 @@
 
                             <div class="toogle" data-plugin-toggle>
                                 <%
-                                    List<StoreEntity> stores = (List<StoreEntity>) (session.getAttribute("stores"));
+                                    List<StoreEntity> stores = (List<StoreEntity>) (session.getAttribute("storesInCountry"));
 
                                     try {
                                         if (stores != null) {

@@ -56,7 +56,7 @@ a<%@page import="EntityManager.CountryEntity"%>
                                 </div>
                                 <div class="form-group">
                                     <label>Required amount spent</label>
-                                    <input class="form-control" type="number" required="true" min="1" name="requiredAmount" value="<%=loyaltyTierEntity.getAmtOfSpendingRequired()%>">
+                                    <input class="form-control" type="number" required="true" min="0" name="requiredAmount" value="<%=loyaltyTierEntity.getAmtOfSpendingRequired()%>">
                                 </div>
                                 
                                 <div class="form-group">

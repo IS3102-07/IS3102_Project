@@ -880,7 +880,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
             Query q = em.createQuery("Select i from Item_CountryEntity i where i.isDeleted=false and i.country.id=:countryId order by i.item.SKU ASC");
             q.setParameter("countryId", countryId);
             List<Item_CountryEntity> listOfItemPricing = q.getResultList();
-            System.out.println("listAllItemsOfCountry(): Successful.");
+            System.out.println("listAllItemsOfCountry(): Successful results:"+listOfItemPricing.size());
             return listOfItemPricing;
         } catch (Exception ex) {
             ex.printStackTrace();

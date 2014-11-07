@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="col-md-3" >
                                             <h1 style="color: white">America</h1>
-                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=USA"><h3>USA</h3></a>
+                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=United States"><h3>USA</h3></a>
                                         </div>
                                         <div class="col-md-3" >
                                             <h1 style="color: white">ASIA</h1>

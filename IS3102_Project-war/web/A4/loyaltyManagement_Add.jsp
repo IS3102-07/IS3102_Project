@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Required amount spent</label>
-                                    <input class="form-control" type="number" required="true" min="1" name="requiredAmount" >
+                                    <input class="form-control" type="number" required="true" min="0" name="requiredAmount" >
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Add" class="btn btn-lg btn-primary btn-block">

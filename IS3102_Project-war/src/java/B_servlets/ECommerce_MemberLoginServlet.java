@@ -61,7 +61,7 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
                         case "France":
                             session.setAttribute("URLprefix", "FRA/");
                             break;
-                        case "United States of America":
+                        case "United States":
                             session.setAttribute("URLprefix", "USA/");
                             break;
                         case "China":
