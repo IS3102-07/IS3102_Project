@@ -954,6 +954,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
+    //For furnitures only
     @Override
     public Integer getAverageCustomerRecency() {
         System.out.println("getAverageCustomerRecency()");
@@ -971,15 +972,25 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     List<Date> dates = new ArrayList<Date>();
                     Date latest;
 
+                    Boolean purchaseIncludesFurniture = false;
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        dates.add(member.getPurchases().get(i).getCreatedDate());
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                                purchaseIncludesFurniture = true;
+                            }
+                        }
                     }
-                    latest = Collections.max(dates);
+                    if (purchaseIncludesFurniture == true) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            dates.add(member.getPurchases().get(i).getCreatedDate());
+                        }
+                        latest = Collections.max(dates);
 
-                    Long days = date.getTime() - latest.getTime();
-                    days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                    numOfDaysWithRecord++;
-                    totalDays += (int) (long) days;
+                        Long days = date.getTime() - latest.getTime();
+                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                        numOfDaysWithRecord++;
+                        totalDays += (int) (long) days;
+                    }
                 } else {
                 }
             }
@@ -1045,6 +1056,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
+    //For furnitures only
     @Override
     public Integer getAverageCustomerFrequency() {
         System.out.println("getAverageCustomerFrequency()");
@@ -1057,8 +1069,18 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
             for (MemberEntity member : members) {
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    numOfPurchases++;
-                    frequency += member.getPurchases().size();
+                    Boolean furnitureExistsInPurchase = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                                furnitureExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (furnitureExistsInPurchase == true) {
+                        numOfPurchases++;
+                        frequency += member.getPurchases().size();
+                    }
                 } else {
                 }
             }
@@ -1099,6 +1121,8 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             return 0;
         }
     }
+
+    //For furnitures only
     @Override
     public Integer getAverageCustomerMonetaryValue() {
         System.out.println("getAverageCustomerMonetaryValue()");
@@ -1112,9 +1136,19 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (MemberEntity member : members) {
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
+                    Boolean furnitureExistsInPurchase = false;
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        numOfPurchases++;
-                        amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                                furnitureExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (furnitureExistsInPurchase) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            numOfPurchases++;
+                            amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        }
                     }
                 } else {
                 }
