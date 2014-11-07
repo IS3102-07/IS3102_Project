@@ -697,4 +697,18 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
         return false;
     }
 
+    @Override
+    public Boolean editSalesForecast(Long salesForecastId, Integer quantity) {
+        try {
+            SaleForecastEntity saleForecast = em.find(SaleForecastEntity.class, salesForecastId);
+            saleForecast.setQuantity(quantity);
+            saleForecast.setMethod("E");
+            em.merge(saleForecast);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
 }
