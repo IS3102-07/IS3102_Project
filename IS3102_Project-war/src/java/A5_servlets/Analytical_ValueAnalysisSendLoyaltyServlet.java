@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package A5_servlets;
 
 import java.io.IOException;
@@ -20,23 +19,26 @@ public class Analytical_ValueAnalysisSendLoyaltyServlet extends HttpServlet {
 
     @EJB
     SystemSecurityBeanLocal systemSecurityBean;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             HttpSession session = request.getSession();
-            
+
             String[] deleteArr = request.getParameterValues("delete");
-            Integer loyaltyPoints = Integer.valueOf(request.getParameter("loyaltyPoints"));
-            if (deleteArr != null) {
+            Integer loyaltyPoints = 0;
+            if (request.getParameter("loyaltyPoints") != null && request.getParameter("loyaltyPoints") != "") {
+                loyaltyPoints = Integer.valueOf(request.getParameter("loyaltyPoints"));
+            }
+            if (deleteArr != null && loyaltyPoints != 0) {
                 for (int i = 0; i < deleteArr.length; i++) {
                     systemSecurityBean.discountMemberLoyaltyPoints(deleteArr[i], loyaltyPoints);
                 }
                 response.sendRedirect("A5/rfm.jsp?goodMsg=Successfully sent loyalty points : " + deleteArr.length + " record(s).");
             } else {
-                response.sendRedirect("A5/rfm.jsp?errMsg=Nothing is selected.");
+                response.sendRedirect("A5/rfm.jsp?errMsg=Nothing is selected or no loyalty points enter.");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
