@@ -111,7 +111,7 @@
 
                                                         <th>Item</td><th>Value</td>
 
-                                                        </thead>
+                                                            </thead>
                                                         <tr>
                                                             <td>Total Number of Members :</td><td><%=numOfMembers%></td>
                                                         </tr>
@@ -129,8 +129,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Total Number of Menu Item Sold :</td><td><% Integer menuItemSold = (Integer) session.getAttribute("menuItemSold");
-                                                            out.println(menuItemSold); %>
-                                                            
+                                                                out.println(menuItemSold); %>
+
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -211,15 +211,17 @@
             $('#dataTables-example').dataTable();
         });
 
-
+        <%
+    DecimalFormat noDecimal = new DecimalFormat("#");
+        %>
         new Morris.Donut({
             element: 'morris-donut-chart',
             data: [{
                     label: "Member Sales",
-                    value: <%=totalCustomerRevenue%>
+                    value: <%=noDecimal.format(totalCustomerRevenue)%>
                 }, {
                     label: "Non-Member Sales",
-                    value: <%=totalNonCustomerRevenue%>
+                    value: <%=noDecimal.format(totalNonCustomerRevenue)%>
                 }],
             backgroundColor: '#ccc',
             labelColor: '#000000',
