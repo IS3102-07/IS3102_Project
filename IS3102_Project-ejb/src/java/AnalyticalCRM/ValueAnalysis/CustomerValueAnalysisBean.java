@@ -1349,7 +1349,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 if (salesRecordOfMember != null) {
                     for (SalesRecordEntity salesRecord : salesRecordOfMember) {
 
-                        profit += salesRecord.getAmountDue();
+                        profit += getSalesRecordAmountDueInUSD(salesRecord.getId());
                     }
                 }
             }
@@ -1371,7 +1371,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
             for (SalesRecordEntity salesRecord : salesRecords) {
                 if (salesRecord.getMember() == null) {
-                    profit += salesRecord.getAmountDue();
+                    profit += getSalesRecordAmountDueInUSD(salesRecord.getId());
                 } else {
 
                 }
@@ -1429,7 +1429,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     }
     
     @Override
-    public Double getSalesRecordSpendingInUSD(Long salesRecordId){
+    public Double getSalesRecordAmountDueInUSD(Long salesRecordId){
         SalesRecordEntity salesRecordEntity = em.getReference(SalesRecordEntity.class, salesRecordId);
         Double exchangeRate = salesRecordEntity.getStore().getCountry().getExchangeRate();
         Double amountDue = salesRecordEntity.getAmountDue();

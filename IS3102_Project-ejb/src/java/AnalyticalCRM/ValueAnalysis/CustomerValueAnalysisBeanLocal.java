@@ -126,5 +126,5 @@ public interface CustomerValueAnalysisBeanLocal {
 
     public List<SalesRecordEntity> viewMemberSalesRecord(Long memberId);
     
-    public Double getSalesRecordSpendingInUSD(Long salesRecordId);
+    public Double getSalesRecordAmountDueInUSD(Long salesRecordId);
 }
