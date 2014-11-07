@@ -416,6 +416,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
                 System.out.println("Staff with email:" + email + " logged in successfully.");
                 staffEntity.setInvalidLoginAttempt(0);
                 PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
+                System.out.println(Config.logFilePath + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                 out.println(new Date().toString() + ";" + staffEntity.getId() + ";loginStaff();");
                 out.close();
                 return staffEntity;
