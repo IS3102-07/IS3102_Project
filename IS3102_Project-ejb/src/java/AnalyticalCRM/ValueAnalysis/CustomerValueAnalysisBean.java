@@ -1073,6 +1073,32 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
+    public Integer getAverageCustomerFrequencyMenuItem() {
+        System.out.println("getAverageCustomerFrequencyMenuItem()");
+
+        Integer numOfPurchases = 0;
+        Integer frequency = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    numOfPurchases++;
+                    frequency += member.getPurchases().size();
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list recency:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfPurchases != 0) {
+            return frequency / numOfPurchases;
+        } else {
+            return 0;
+        }
+    }
     @Override
     public Integer getAverageCustomerMonetaryValue() {
         System.out.println("getAverageCustomerMonetaryValue()");
