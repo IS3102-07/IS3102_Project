@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="EntityManager.FurnitureEntity"%>
+<%@page import="EntityManager.RetailProductEntity"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="checkCountry.jsp" />
 <html> <!--<![endif]-->
@@ -124,6 +125,7 @@
                                                     <tbody>
                                                         <%WishListEntity wishList = (WishListEntity) (session.getAttribute("wishList"));
                                                             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
+                                                            List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProducts"));
                                                             List<Item_CountryEntity> item_countryList = (List<Item_CountryEntity>) (session.getAttribute("item_countryList"));
                                                             try {
                                                                 if (wishList != null && wishList.getItems().size() > 0) {
@@ -136,9 +138,33 @@
                                                                 <input type="checkbox" name="delete" value="<%=wishList.getItems().get(i).getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
-                                                                <a href="shop-product-sidebar.html">
-                                                                    <img width="100" height="100" alt="" class="img-responsive" src="/IS3102_Project-war/img/products/<%=i % 5%>.JPG">
-                                                                </a>
+                                                                <a href="shop-product-sidebar.html"><%
+                                                                        boolean flag = true;
+                                                                        for (int j = 0; j < furnitures.size(); j++) {
+                                                                            if (furnitures.get(j).getId().equals(wishList.getItems().get(i).getId())) {
+                                                                    %>
+                                                                    <img width="100" height="100" alt="" class="img-responsive" src=<%=furnitures.get(j).getImageURL()%>>
+                                                                    <%
+                                                                                flag = false;
+                                                                                break;
+                                                                            }
+
+                                                                        }
+
+                                                                        if (flag == true) {
+                                                                            for (int j = 0; j < retailProducts.size(); j++) {
+                                                                                if (retailProducts.get(j).getId().equals(wishList.getItems().get(i).getId())) {
+
+                                                                    %>
+                                                                    <img width="100" height="100" alt="" class="img-responsive" src=<%=retailProducts.get(j).getImageURL()%>>
+                                                                    <%
+
+                                                                                    break;
+                                                                                }
+
+                                                                            }
+                                                                        }
+                                                                    %></a>
                                                             </td>
                                                             <td class="product-name">
                                                                 <a href="shop-product-sidebar.html"><%=wishList.getItems().get(i).getName()%></a>
