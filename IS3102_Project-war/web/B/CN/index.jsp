@@ -164,8 +164,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="get-started">
-                                    <a href="allProductsCatalog.jsp" class="btn btn-lg btn-primary">现在就开始吧!</a>
-                                    <div class="learn-more">或 <a href="allProductsCatalog.jsp">了解更多.</a></div>
+                                    <a href="allFurnitureProducts.jsp" class="btn btn-lg btn-primary">现在就开始吧!</a>
+                                    <div class="learn-more">或 <a href="allFurnitureProducts.jsp">了解更多.</a></div>
                                 </div>
                             </div>
                         </div>
