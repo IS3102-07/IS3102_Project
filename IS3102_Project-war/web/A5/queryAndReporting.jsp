@@ -54,7 +54,7 @@
                                     <i class="icon icon-users"></i> <a href="analytical.jsp">Analytical CRM</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Query And Reporting
+                                    <i class="icon icon-user"></i> Query And Reporting
                                 </li>
                             </ol>
                         </div>

@@ -163,8 +163,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="get-started">
-                                    <a href="allProductsCatalog.jsp" class="btn btn-lg btn-primary">Mula Sekarang!</a>
-                                    <div class="learn-more">atau <a href="allProductsCatalog.jsp">ketahui lebih lanjut.</a></div>
+                                    <a href="allFurnitureProducts.jsp" class="btn btn-lg btn-primary">Mula Sekarang!</a>
+                                    <div class="learn-more">atau <a href="allFurnitureProducts.jsp">ketahui lebih lanjut.</a></div>
                                 </div>
                             </div>
                         </div>

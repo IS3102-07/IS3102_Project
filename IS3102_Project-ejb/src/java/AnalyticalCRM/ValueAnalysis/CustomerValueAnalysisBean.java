@@ -98,7 +98,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             return null;
         }
     }
-    
+
     public LineItemEntity getSecondProductFromFirstRP(String retailProduct) {
         System.out.println("getSecondProductFromFirstRP()" + retailProduct);
         LineItemEntity secondProduct = new LineItemEntity();
@@ -159,7 +159,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             return null;
         }
     }
-    
+
     public LineItemEntity getSecondProductFromFirst(String furniture) {
         System.out.println("getSecondProductFromFirst()" + furniture);
         LineItemEntity secondProduct = new LineItemEntity();
@@ -1342,14 +1342,17 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("totalMemberRevenue()");
         Double profit = new Double("0");
         try {
-            List<MemberEntity> members = accountManagementBean.listAllMember();
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
 
             for (int i = 0; i < members.size(); i++) {
-                List<SalesRecordEntity> salesRecordOfMember = members.get(i).getPurchases();
-                if (salesRecordOfMember != null) {
-                    for (SalesRecordEntity salesRecord : salesRecordOfMember) {
+                if (members.get(i).getPurchases() != null) {
+                    List<SalesRecordEntity> salesRecordOfMember = members.get(i).getPurchases();
+                    if (salesRecordOfMember != null) {
+                        for (SalesRecordEntity salesRecord : salesRecordOfMember) {
 
-                        profit += getSalesRecordAmountDueInUSD(salesRecord.getId());
+                            profit += getSalesRecordAmountDueInUSD(salesRecord.getId());
+                        }
                     }
                 }
             }
@@ -1427,13 +1430,13 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<SalesRecordEntity> salesRecords = new ArrayList();
         return salesRecords;
     }
-    
+
     @Override
-    public Double getSalesRecordAmountDueInUSD(Long salesRecordId){
+    public Double getSalesRecordAmountDueInUSD(Long salesRecordId) {
         SalesRecordEntity salesRecordEntity = em.getReference(SalesRecordEntity.class, salesRecordId);
         Double exchangeRate = salesRecordEntity.getStore().getCountry().getExchangeRate();
         Double amountDue = salesRecordEntity.getAmountDue();
-        Double amountDueInUSD = amountDue/exchangeRate;
+        Double amountDueInUSD = amountDue / exchangeRate;
         return amountDueInUSD;
     }
 

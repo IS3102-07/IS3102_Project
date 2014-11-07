@@ -73,10 +73,10 @@
                                     <i class="icon icon-users"></i> <a href="analytical.jsp">Analytical CRM</a>
                                 </li>
                                 <li>
-                                    <i class="icon icon-users"></i> <a href="../Analytical_ValueAnalysisServlet">Value Analysis</a>
+                                    <i class="icon icon-user"></i> <a href="../Analytical_ValueAnalysisServlet">Value Analysis</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-users"></i> Products Analysis
+                                    <i class="icon icon-user"></i> Products Analysis
                                 </li>
                             </ol>
                         </div>
