@@ -39,6 +39,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     ItemManagementBeanLocal itemManagementBean;
 
     public Date getItemLastPurchase(Long itemId) {
+        System.out.println("getItemLastPurchase" + itemId);
         Date latest = null;
         try {
             Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
@@ -47,10 +48,12 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (SalesRecordEntity salesRecord : salesRecords) {
                 if (salesRecord.getItemsPurchased() != null && salesRecord.getItemsPurchased().size() != 0) {
                     for (LineItemEntity item : salesRecord.getItemsPurchased()) {
-                        if (item.getId().equals(itemId)) {
+                        if (item.getItem().getId().equals(itemId)) {
                             if (latest == null) {
+                                System.out.println("latest is null");
                                 latest = salesRecord.getCreatedDate();
                             } else if (salesRecord.getCreatedDate().getTime() > latest.getTime()) {
+                                System.out.println("latest is not null, changing latest date");
                                 latest = salesRecord.getCreatedDate();
                             }
                         }

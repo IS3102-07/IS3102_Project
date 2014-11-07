@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.LineItemEntity"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Date"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
 
@@ -95,6 +96,7 @@
                                     <%
                                         List<LineItemEntity> sortBestSellingFurniture = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture"));
                                         List<LineItemEntity> listOfSecondProduct = (List<LineItemEntity>) (session.getAttribute("listOfSecondProduct"));
+                                        List<Date> dateOfLastPurchaseFurniture = (List<Date>) (session.getAttribute("dateOfLastPurchaseFurniture"));
                                         DecimalFormat df = new DecimalFormat("#.##");
                                     %>
                                     <!-- /.table-responsive -->
@@ -140,7 +142,7 @@
                                                                         <%=item.getQuantity()%>
                                                                     </td>
                                                                     <td>
-                                                                        
+                                                                        <%=dateOfLastPurchaseFurniture.get(i) %>
                                                                     </td>
                                                                     <td>
                                                                         <%
