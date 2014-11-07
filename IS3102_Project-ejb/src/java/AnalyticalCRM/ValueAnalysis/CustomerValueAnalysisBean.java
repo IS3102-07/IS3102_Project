@@ -38,6 +38,32 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
     @EJB
     ItemManagementBeanLocal itemManagementBean;
 
+    public Date getItemLastPurchase(Long itemId) {
+        Date latest = null;
+        try {
+            Query q = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = q.getResultList();
+
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getItemsPurchased() != null && salesRecord.getItemsPurchased().size() != 0) {
+                    for (LineItemEntity item : salesRecord.getItemsPurchased()) {
+                        if (item.getId().equals(itemId)) {
+                            if (latest == null) {
+                                latest = salesRecord.getCreatedDate();
+                            } else if (salesRecord.getCreatedDate().getTime() > latest.getTime()) {
+                                latest = salesRecord.getCreatedDate();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return latest;
+    }
+
     public LineItemEntity getSecondProductFromFirstMenuItem(String menuItem) {
         System.out.println("getSecondProductFromFirstMenuItem()" + menuItem);
         LineItemEntity secondProduct = new LineItemEntity();

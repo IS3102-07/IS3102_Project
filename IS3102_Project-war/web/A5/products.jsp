@@ -117,6 +117,7 @@
                                                                     <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                     <th>Name</th>
                                                                     <th>Quantity Sold</th>
+                                                                    <th>Last Purchase</th>
                                                                     <th>Items Purchased With</th>
                                                                     <th>Probability</th>
                                                                 </tr>
@@ -137,6 +138,9 @@
                                                                     </td>
                                                                     <td >
                                                                         <%=item.getQuantity()%>
+                                                                    </td>
+                                                                    <td>
+                                                                        
                                                                     </td>
                                                                     <td>
                                                                         <%
