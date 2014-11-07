@@ -14,7 +14,7 @@ public interface ManufacturingInventoryControlBeanRemote {
     public List<StorageBinEntity> getEmptyStorageBins(Long warehouseID, ItemEntity itemEntity); //returns the appropirate type of empty storage bins  
     public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID);
     public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID);
-    public Boolean removeItemFromOutboundBinForShipping(Long shippingOrderID);
+    public Boolean removeItemsFromOutboundBinForShipping(Long shippingOrderID);
     public boolean addItemToReceivingBin(Long warehouseID, String SKU);
     //if you want to move multiple items, please call this method many times
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination);

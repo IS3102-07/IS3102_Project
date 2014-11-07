@@ -55,7 +55,7 @@ public class ECommerce_MemberLoginServlet extends HttpServlet {
                 session.setAttribute("nextLoyaltyTier", nextLoyaltyTier);
                 session.setAttribute("member", memberEntity);
                 session.setAttribute("loyaltyTiers", loyaltyTiers);
-                if (memberEntity.getCountry() != null) {
+                if (memberEntity.getCity()!= null) {
                     String country = memberEntity.getCountry().getName();
                     switch (country) {
                         case "France":

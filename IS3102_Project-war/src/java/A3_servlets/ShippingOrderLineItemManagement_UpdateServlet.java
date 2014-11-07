@@ -82,7 +82,6 @@ public class ShippingOrderLineItemManagement_UpdateServlet extends HttpServlet {
                         response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
                     } else {
                         result = "?errMsg=Failed to update shipping order to shipped. Outbound bin not found or no items.&id=" + shippingOrderId;
-                        inboundAndOutboundLogisticsBean.updateShippingOrderStatus(Long.parseLong(shippingOrderId),"Unfulfillable",submittedBy);
                         response.sendRedirect("ShippingOrderLineItemManagement_Servlet" + result);
                     }
                 }
