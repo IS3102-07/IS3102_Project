@@ -123,6 +123,14 @@ public class KitchenManagement_servlet extends HttpServlet {
                 nextPage = "/A8/KitchenSaleForecast_main";
                 break;
 
+            case "/Kitchen_editSaleForecast":
+                System.out.println("Kitchen_editSaleForecast is called.");
+                Long saleForecastId = Long.parseLong(request.getParameter("saleForecastId"));
+                Integer quantity = Integer.parseInt(request.getParameter("quantity"));
+                fdfpBean.editSalesForecast(saleForecastId, quantity);
+                nextPage = "/KitchenManagement_servlet/KitchenSaleForecast_main_GET";
+                break;
+
             case "/ViewSaleFigure_GET":
                 System.out.println("ViewSaleFigure_GET is called.");
                 String menuItemSKU = request.getParameter("menuItemSKU");

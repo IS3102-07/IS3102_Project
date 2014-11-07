@@ -472,7 +472,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 if (member.getJoinDate().getTime() > churnDate.getTime()) {
                     if (member.getPurchases() != null && member.getPurchases().size() != 0) {
                         for (int i = 0; i < member.getPurchases().size(); i++) {
-                            totalRevenue += member.getPurchases().get(i).getAmountDue();
+                            totalRevenue += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
                         }
                     } else {
                     }
@@ -786,7 +786,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);;
                         if (days > 0) {
-                            totalPriceOfOrders += member.getPurchases().get(i).getAmountDue();
+                            totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
                             numOfOrders++;
                             break;
                         }
@@ -827,7 +827,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
                         days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                         if (days > 0 && days < 365) {
-                            totalPriceOfOrders += member.getPurchases().get(i).getAmountDue();
+                            totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
                             numOfOrders++;
                         }
                     }
@@ -1008,7 +1008,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
                     for (int i = 0; i < member.getPurchases().size(); i++) {
                         numOfPurchases++;
-                        amountOfPurchase += member.getPurchases().get(i).getAmountDue().intValue();
+                        amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
                     }
                 } else {
                 }
@@ -1076,7 +1076,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         MemberEntity member = em.find(MemberEntity.class, memberId);
         if (member.getPurchases() != null && member.getPurchases().size() != 0) {
             for (int i = 0; i < member.getPurchases().size(); i++) {
-                totalPriceOfPurchases += member.getPurchases().get(i).getAmountDue().intValue();
+                totalPriceOfPurchases += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
             }
         } else {
             return 0;
@@ -1097,7 +1097,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     if (salesRecordOfMember != null) {
                         for (SalesRecordEntity salesRecord : salesRecordOfMember) {
 
-                            totalCummulativeSpending += salesRecord.getAmountDue();
+                            totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
                         }
                     }
                 }
@@ -1122,7 +1122,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 if (salesRecordOfMember != null) {
                     for (SalesRecordEntity salesRecord : salesRecordOfMember) {
 
-                        totalCummulativeSpending += salesRecord.getAmountDue();
+                        totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
                     }
                 }
             }
@@ -1244,7 +1244,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     List<SalesRecordEntity> salesRecordOfMember = member.getPurchases();
                     if (salesRecordOfMember != null) {
                         for (SalesRecordEntity salesRecord : salesRecordOfMember) {
-                            totalCummulativeSpending += salesRecord.getAmountDue();
+                            totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
                         }
                     }
                 }
@@ -1265,7 +1265,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 if (salesRecordOfMember != null) {
                     for (SalesRecordEntity salesRecord : salesRecordOfMember) {
 
-                        totalCummulativeSpending += salesRecord.getAmountDue();
+                        totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
                     }
                 }
             }
@@ -1284,7 +1284,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             if (salesRecordOfMember != null) {
                 for (SalesRecordEntity salesRecord : salesRecordOfMember) {
 
-                    totalCummulativeSpending += salesRecord.getAmountDue();
+                    totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
                 }
             }
         }
