@@ -14,16 +14,18 @@ import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.SaleAndOperationPlanEntity;
 import EntityManager.SalesFigureLineItemEntity;
 import EntityManager.WarehouseEntity;
+import MRP.SalesForecast.SalesForecastBeanLocal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class DemandManagementBean implements DemandManagementBeanLocal {
-
+public class DemandManagementBean implements DemandManagementBeanLocal {    
+    
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
@@ -47,8 +49,8 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
             List<MonthScheduleEntity> scheduleList = q.getResultList();
             if (!scheduleList.isEmpty()) {
                 ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, MfId);
-                MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 1);
-
+                MonthScheduleEntity onPlanSchedule = scheduleList.get(scheduleList.size() - 1);
+                MonthScheduleEntity lastSchedule = scheduleList.get(scheduleList.size() - 2);
                 // clear former MPSs
                 Query q0 = em.createQuery("select mr from MaterialRequirementEntity mr");
                 for (MaterialRequirementEntity mr : (List<MaterialRequirementEntity>) q0.getResultList()) {
@@ -58,7 +60,7 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
 
                 Query q1 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.mf.id = ?1 and mps.schedule.id = ?2")
                         .setParameter(1, MfId)
-                        .setParameter(2, lastSchedule.getId());
+                        .setParameter(2, onPlanSchedule.getId());
                 List<MasterProductionScheduleEntity> formerMPSs = (List<MasterProductionScheduleEntity>) q1.getResultList();
                 for (MasterProductionScheduleEntity mps : formerMPSs) {
                     em.remove(mps);
@@ -67,7 +69,7 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
 
                 // generate MPSs
                 Query q2 = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.schedule.id = ?1 and sop.manufacturingFacility.id = ?2")
-                        .setParameter(1, lastSchedule.getId())
+                        .setParameter(1, onPlanSchedule.getId())
                         .setParameter(2, MfId);
                 List<SaleAndOperationPlanEntity> sopList = (List<SaleAndOperationPlanEntity>) q2.getResultList();
                 System.out.println("sopList.size(): " + sopList.size());
@@ -75,21 +77,25 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                 for (SaleAndOperationPlanEntity sop : sopList) {
                     int residualMonthlyProductAmount = sop.getProductionPlan();
                     List<ProductGroupLineItemEntity> lineItemList = sop.getProductGroup().getLineItemList();
+                    
+                    System.out.println("lineItemList.size(): " + lineItemList.size() );
+                    
                     for (ProductGroupLineItemEntity lineitem : lineItemList) {
 
                         Query qe = em.createQuery("select l from SalesFigureLineItemEntity l where l.saleFigure.productGroup.id = ?1 and l.saleFigure.schedule.id=?2 and l.saleFigure.store.id =?3 and l.SKU = ?4")
                                 .setParameter(1, sop.getProductGroup().getId())
-                                .setParameter(2, sop.getSchedule().getId())
+                                .setParameter(2, lastSchedule.getId())
                                 .setParameter(3, sop.getStore().getId())
                                 .setParameter(4, lineitem.getItem().getSKU());
 
                         if (!qe.getResultList().isEmpty()) {
+                            System.out.println("qe.getResultList() is not Empty()");
 
                             SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity) qe.getResultList().get(0);
 
                             Query q3 = em.createQuery("select mps from MasterProductionScheduleEntity mps where mps.mf.id = ?1 and mps.schedule.id = ?2 and mps.furniture.SKU = ?3")
                                     .setParameter(1, MfId)
-                                    .setParameter(2, lastSchedule.getId())
+                                    .setParameter(2, onPlanSchedule.getId())
                                     .setParameter(3, lineitem.getItem().getSKU());
 
                             MasterProductionScheduleEntity mps;
@@ -97,7 +103,7 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                             if (q3.getResultList().isEmpty()) {
                                 mps = new MasterProductionScheduleEntity();
                                 mps.setMf(mf);
-                                mps.setSchedule(lastSchedule);
+                                mps.setSchedule(onPlanSchedule);
                                 mps.setFurniture((FurnitureEntity) lineitem.getItem());
                                 mpsExits = false;
                             } else {
@@ -106,8 +112,8 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                             }
 
                             // total work days in the month
-                            int days_month = lastSchedule.getWorkDays_firstWeek() + lastSchedule.getWorkDays_secondWeek() + lastSchedule.getWorkDays_thirdWeek()
-                                    + lastSchedule.getWorkDays_forthWeek() + lastSchedule.getWorkDays_fifthWeek();
+                            int days_month = onPlanSchedule.getWorkDays_firstWeek() + onPlanSchedule.getWorkDays_secondWeek() + onPlanSchedule.getWorkDays_thirdWeek()
+                                    + onPlanSchedule.getWorkDays_forthWeek() + onPlanSchedule.getWorkDays_fifthWeek();
 
                             int amount = 0;
                             if (!lineitem.getId().equals(lineItemList.get(lineItemList.size() - 1).getId())) {
@@ -117,16 +123,16 @@ public class DemandManagementBean implements DemandManagementBeanLocal {
                                 amount = residualMonthlyProductAmount;
                             }
 
-                            int amount_week1 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_firstWeek() / days_month);
-                            int amount_week2 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_secondWeek() / days_month);
-                            int amount_week3 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_thirdWeek() / days_month);
-                            int amount_week4 = (int) Math.round(1.0 * amount * lastSchedule.getWorkDays_forthWeek() / days_month);
+                            int amount_week1 = (int) Math.round(1.0 * amount * onPlanSchedule.getWorkDays_firstWeek() / days_month);
+                            int amount_week2 = (int) Math.round(1.0 * amount * onPlanSchedule.getWorkDays_secondWeek() / days_month);
+                            int amount_week3 = (int) Math.round(1.0 * amount * onPlanSchedule.getWorkDays_thirdWeek() / days_month);
+                            int amount_week4 = (int) Math.round(1.0 * amount * onPlanSchedule.getWorkDays_forthWeek() / days_month);
 
                             mps.setAmount_month(mps.getAmount_month() + amount);
                             mps.setAmount_week1(mps.getAmount_week1() + amount_week1);
                             mps.setAmount_week2(mps.getAmount_week2() + amount_week2);
                             mps.setAmount_week3(mps.getAmount_week3() + amount_week3);
-                            if (lastSchedule.getWorkDays_fifthWeek() == 0) {
+                            if (onPlanSchedule.getWorkDays_fifthWeek() == 0) {
                                 mps.setAmount_week4(mps.getAmount_week4() + amount - amount_week1 - amount_week2 - amount_week3);
                             } else {
                                 mps.setAmount_week4(mps.getAmount_week4() + amount_week4);
