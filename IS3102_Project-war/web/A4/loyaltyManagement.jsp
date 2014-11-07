@@ -85,13 +85,7 @@
                                 <form name="loyaltyManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Loyalty" onclick="addLoyalty()"  />
-                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Loyalty</button></a>
-                                                </div>
-                                            </div>
-                                            <br>
+                                           
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
@@ -132,12 +126,7 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Loyalty" onclick="addLoyalty()"  />                                                    
-                                                    <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Remove Loyalty</button></a>
-                                                </div>
-                                            </div>
+                                           
                                             <input type="hidden" name="id" value="">    
                                         </div>
 
