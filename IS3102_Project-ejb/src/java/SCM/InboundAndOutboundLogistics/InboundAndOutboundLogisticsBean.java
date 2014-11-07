@@ -220,24 +220,23 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Boolean updateShippingOrderStatus(Long id, String status, String submittedBy) {
+    public Boolean updateShippingOrderStatus(Long shippingOrderID, String status, String submittedBy) {
         System.out.println("updateShippingOrderStatus() called.");
         try {
-            ShippingOrderEntity shippingOrder = em.find(ShippingOrderEntity.class, id);
+            ShippingOrderEntity shippingOrder = em.find(ShippingOrderEntity.class, shippingOrderID);
             if (status.equals("Submitted")) {
                 shippingOrder.setSubmittedBy(submittedBy);
                 em.merge(shippingOrder);
                 em.flush();
             }
             if (!shippingOrder.getStatus().equals("Completed")) {
-                shippingOrder.setStatus(status);
                 if (status.equals("Shipped")) {
                     List<LineItemEntity> listOfLineItems = shippingOrder.getLineItems();
+                    //ensure that storage bin can meet shipping order quantity
                     for (LineItemEntity lineItemInShippingOrder : listOfLineItems) {
                         em.merge(lineItemInShippingOrder);
                         int quantityToMove = lineItemInShippingOrder.getQuantity();
 
-                        //ensure that storage bin can meet shipping order quantity
                         WarehouseEntity warehouse = shippingOrder.getOrigin();
                         StorageBinEntity outbound = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouse.getId());
                         em.merge(outbound);
@@ -255,27 +254,23 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
                                 }
                             }
                         }//end of "ensure that storage bin can meet shipping order quantity"
-
-                        boolean isRemovedSuccessfully;
-                        System.out.println("Quantity to move: " + quantityToMove);
-                        for (int i = 0; i < quantityToMove; i++) {
-                            System.out.println("moving item...");
-                            isRemovedSuccessfully = manufacturingInventoryControlBean.removeItemFromOutboundBinForShipping(id);
-                            em.merge(shippingOrder);
-                            em.flush();
-                            em.refresh(shippingOrder);
-                            if (!isRemovedSuccessfully) {
-                                shippingOrder.setStatus("Submitted");
-                                em.flush();
-                                throw new Exception();
-                            }
-                        }
+                    }
+                    
+                    //Perform the actual removal
+                    Boolean isRemovedSuccessfully = manufacturingInventoryControlBean.removeItemsFromOutboundBinForShipping(shippingOrderID);
+                    em.merge(shippingOrder);
+                    em.flush();
+                    em.refresh(shippingOrder);
+                    if (!isRemovedSuccessfully) {
+                        shippingOrder.setStatus("Submitted");
+                        em.flush();
+                        throw new Exception();
                     }
 
                     shippingOrder.setShippedDate(new Date());
 
                 } else if (status.equals("Completed")) {
-                    boolean isMovedToReceivingBin = manufacturingInventoryControlBean.moveInboundShippingOrderItemsToReceivingBin(id);
+                    boolean isMovedToReceivingBin = manufacturingInventoryControlBean.moveInboundShippingOrderItemsToReceivingBin(shippingOrderID);
                     em.merge(shippingOrder);
                     em.refresh(shippingOrder);
                     System.out.println("Moving items to receiving bin...");
@@ -286,8 +281,9 @@ public class InboundAndOutboundLogisticsBean implements InboundAndOutboundLogist
 
                     shippingOrder.setReceivedDate(new Date());
                 }
+                shippingOrder.setStatus(status);
             }
-            em.persist(shippingOrder);
+            em.merge(shippingOrder);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

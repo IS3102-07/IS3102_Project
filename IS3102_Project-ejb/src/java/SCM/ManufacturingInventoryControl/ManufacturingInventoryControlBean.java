@@ -25,19 +25,19 @@ import javax.persistence.Query;
 
 @Stateless
 public class ManufacturingInventoryControlBean implements ManufacturingInventoryControlBeanLocal, ManufacturingInventoryControlBeanRemote {
-    
+
     @EJB
     private ManufacturingWarehouseManagementBeanLocal manufacturingWarehouseManagementBean;
-    
+
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
-    
+
     @Override
     public List<StorageBinEntity> getEmptyStorageBins(Long warehouseID, ItemEntity itemEntity) {
         System.out.println("getEmptyStorageBins() called with ItemEntity:" + itemEntity);
-        
+
         WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
-        
+
         List<StorageBinEntity> listOfAppropriateEmptyStorageBins = new ArrayList<>();
         String storageBinType = "";
         if (itemEntity instanceof FurnitureEntity) {
@@ -66,11 +66,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Boolean removeItemFromOutboundBinForShipping(Long shippingOrderID) {
-        System.out.println("removeOutboundBinToShipAShippingOrder called()");
+    public Boolean removeItemsFromOutboundBinForShipping(Long shippingOrderID) {
+        System.out.println("removeItemFromOutboundBinForShipping called()");
         try {
             ShippingOrderEntity shippingOrderEntity = em.getReference(ShippingOrderEntity.class, shippingOrderID);
             WarehouseEntity warehouse = shippingOrderEntity.getOrigin();
@@ -83,34 +83,38 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             List<LineItemEntity> itemsInShippingOrder = shippingOrderEntity.getLineItems();
             //For each item in shipping order
             for (LineItemEntity lineItemEntity : itemsInShippingOrder) {
-                //Check if it's in outbound bin
-                em.merge(lineItemEntity);
-                LineItemEntity lineItemInOutboundBin = checkIfItemExistInsideStorageBin(outbound.getId(), lineItemEntity.getItem().getSKU());
+                int lineItemToRemoveQuantity = lineItemEntity.getQuantity();
+                //Remove the amount of quantity requied for each line item in the shipping order
+                for (int i = 0; i < lineItemToRemoveQuantity; i++) {
+                    //Check if it's in outbound bin
+                    em.merge(lineItemEntity);
+                    LineItemEntity lineItemInOutboundBin = checkIfItemExistInsideStorageBin(outbound.getId(), lineItemEntity.getItem().getSKU());
 
-                //Line item does not exist 
-                if (lineItemInOutboundBin == null) {
-                    System.out.println("Outbound bin does not have sufficient quantity to ship the order.");
-                    throw new Exception();
-                } else {            //line item exist
-                    em.merge(lineItemInOutboundBin);
-                    //if it is the last item
-                    if (lineItemInOutboundBin.getQuantity() == 1) {
-                        outbound.getLineItems().remove(lineItemInOutboundBin);
-                        em.remove(lineItemInOutboundBin);
-                        em.flush();
-                    } else {
-                        if (lineItemInOutboundBin.getQuantity() == 0) {
-                            System.out.println("Outbound bin has insufficient quantity to be removed. Please try again.");
-                            throw new Exception();
+                    //Line item does not exist 
+                    if (lineItemInOutboundBin == null) {
+                        System.out.println("Outbound bin does not have sufficient quantity to ship the order.");
+                        throw new Exception();
+                    } else {            //line item exist
+                        em.merge(lineItemInOutboundBin);
+                        //if it is the last item
+                        if (lineItemInOutboundBin.getQuantity() == 1) {
+                            outbound.getLineItems().remove(lineItemInOutboundBin);
+                            em.remove(lineItemInOutboundBin);
+                            em.flush();
+                        } else {
+                            if (lineItemInOutboundBin.getQuantity() == 0) {
+                                System.out.println("Outbound bin has insufficient quantity to be removed. Please try again.");
+                                throw new Exception();
+                            }
+                            lineItemInOutboundBin.setQuantity(lineItemInOutboundBin.getQuantity() - 1);
+                            em.flush();
                         }
-                        lineItemInOutboundBin.setQuantity(lineItemInOutboundBin.getQuantity() - 1);
+                        em.merge(outbound);
+                        outbound.setFreeVolume(outbound.getFreeVolume() + lineItemInOutboundBin.getItem().getVolume());
+                        System.out.println("Setting outbound volume...");
+                        System.out.println("Outbound volume = outbound.getFreeVolume() + lineItemInOutboundBin.getItem().getVolume()" + outbound.getFreeVolume() + "+" + lineItemInOutboundBin.getItem().getVolume());
                         em.flush();
                     }
-                    em.merge(outbound);
-                    outbound.setFreeVolume(outbound.getFreeVolume() + lineItemInOutboundBin.getItem().getVolume());
-                    System.out.println("Setting outbound volume...");
-                    System.out.println("Outbound volume = outbound.getFreeVolume() + lineItemInOutboundBin.getItem().getVolume()" + outbound.getFreeVolume() + "+" + lineItemInOutboundBin.getItem().getVolume());
-                    em.flush();
                 }
             }
             return true;
@@ -123,7 +127,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public Boolean moveInboundShippingOrderItemsToReceivingBin(Long shippingOrderID
     ) {
@@ -155,11 +159,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
-    public LineItemEntity checkIfItemExistInsideStorageBin(Long storageBinID, String SKU
-    ) {
-        System.out.println("checkIfItemExistInsideStorageBin() called");
+    public LineItemEntity checkIfItemExistInsideStorageBin(Long storageBinID, String SKU) {
+        System.out.println("checkIfItemExistInsideStorageBin() called with:" + storageBinID + "," + SKU);
         StorageBinEntity storageBin = em.getReference(StorageBinEntity.class, storageBinID);
         List<LineItemEntity> listOfLineItems = storageBin.getLineItems();
         for (LineItemEntity lineItem : listOfLineItems) {
@@ -171,7 +174,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
         System.out.println("checkIfItemExistInsideStorageBin(): SKU not found.");
         return null;
     }
-    
+
     @Override
     public Boolean moveInboundPurchaseOrderItemsToReceivingBin(Long purchaseOrderID
     ) {
@@ -203,11 +206,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public boolean addItemToReceivingBin(Long warehouseID, String SKU
     ) {
-        
+
         try {
             System.out.println("addItemToReceivingBin() called with SKU:" + SKU + " & wahouseID:" + warehouseID);
             StorageBinEntity inboundBin = manufacturingWarehouseManagementBean.getInboundStorageBin(warehouseID);
@@ -244,7 +247,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public boolean moveSingleItemBetweenStorageBins(String SKU, StorageBinEntity source, StorageBinEntity destination
     ) {
@@ -292,7 +295,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                 }
                 System.out.println("Setting free volume of destination bin...");
                 System.out.println("Free volume of destination = destination.getFreeVolume() - lineItem.getItem().getVolume(): " + destination.getFreeVolume() + " - " + lineItem.getItem().getVolume());
-                
+
                 destination.setFreeVolume(destination.getFreeVolume() - lineItem.getItem().getVolume());
                 em.flush();
                 if (destination.getFreeVolume() < 0) {
@@ -313,7 +316,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public Integer checkItemQty(Long warehouseId, String SKU) {
         System.out.println("checkItemQty() called with SKU:" + SKU);
@@ -342,7 +345,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<StorageBinEntity> findStorageBinsThatContainsItem(Long warehouseId, String SKU
     ) {
@@ -363,7 +366,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfInboundStorageBin(Long warehouseID
     ) {
@@ -390,7 +393,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return 0;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfOutboundStorageBin(Long warehouseID
     ) {
@@ -417,7 +420,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return 0;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfShelfStorageBin(Long warehouseID
     ) {
@@ -444,7 +447,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return 0;
         }
     }
-    
+
     @Override
     public Integer getTotalVolumeOfPalletStorageBin(Long warehouseID
     ) {
@@ -471,7 +474,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return 0;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfInboundStorageBin(Long warehouseID
     ) {
@@ -498,7 +501,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return 0;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfOutboundStorageBin(Long warehouseID
     ) {
@@ -525,7 +528,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return 0;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfShelfStorageBin(Long warehouseID
     ) {
@@ -552,7 +555,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return 0;
         }
     }
-    
+
     @Override
     public Integer getTotalFreeVolumeOfPalletStorageBin(Long warehouseID
     ) {
@@ -583,7 +586,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
     //Assumes one type of item is in each storage bin, so just return the first one
     private List<LineItemEntity> getItemInsideStorageBin(Long storageBinID) {
         System.out.println("getItemInsideStorageBin() called");
-        
+
         try {
             em.flush();
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
@@ -601,7 +604,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<ItemStorageBinHelper> getItemList(Long warehouseID) {
         System.out.println("getItemList() called");
@@ -610,7 +613,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             List<ItemStorageBinHelper> itemStorageBinHelperList = new ArrayList<>();
             WarehouseEntity warehouseEntity = em.getReference(WarehouseEntity.class, warehouseID);
             List<StorageBinEntity> storageBins = warehouseEntity.getStorageBins();
-            
+
             ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
             System.out.println("Number of storage bins in warehouse id " + warehouseID + ": " + storageBins.size());
             //For each bin in the warehouse
@@ -635,7 +638,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     }
                 }
             }
-            
+
             return itemStorageBinHelperList;
         } catch (EntityNotFoundException ex) {
             System.out.println("Warehouse could not be found.");
@@ -646,7 +649,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<ItemStorageBinHelper> getOutboundBinItemList(Long warehouseID) {
         System.out.println("getOutboundBinItemList() called");
@@ -657,7 +660,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             StorageBinEntity storageBinEntity = manufacturingWarehouseManagementBean.getOutboundStorageBin(warehouseID);
             List<StorageBinEntity> storageBins = new ArrayList();
             storageBins.add(storageBinEntity);
-            
+
             ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
             //For each bin in the warehouse
             for (StorageBinEntity storageBin : storageBins) {
@@ -681,7 +684,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     }
                 }
             }
-            
+
             return itemStorageBinHelperList;
         } catch (EntityNotFoundException ex) {
             System.out.println("Warehouse could not be found.");
@@ -692,7 +695,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public List<ItemStorageBinHelper> getBinItemList(Long storageBinID) {
         System.out.println("getBinItemList() called");
@@ -702,7 +705,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
             List<StorageBinEntity> storageBins = new ArrayList();
             storageBins.add(storageBinEntity);
-            
+
             ItemStorageBinHelper itemStorageBinHelper = new ItemStorageBinHelper();
             //For each bin in the warehouse
             for (StorageBinEntity storageBin : storageBins) {
@@ -726,7 +729,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                     }
                 }
             }
-            
+
             return itemStorageBinHelperList;
         } catch (EntityNotFoundException ex) {
             System.out.println("Storage bin could not be found.");
@@ -737,14 +740,14 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return null;
         }
     }
-    
+
     @Override
     public Boolean emptyStorageBin(Long lineItemID, Long storageBinID) {
         System.out.println("emptyStorageBin_ItemEntity() called");
-        
+
         try {
             LineItemEntity lineItemEntity = em.getReference(LineItemEntity.class, lineItemID);
-            
+
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
             em.refresh(storageBinEntity);
             ItemEntity itemsDeleted = lineItemEntity.getItem();
@@ -764,7 +767,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public Boolean checkIfStorageBinIsOfAppropriateItemType(Long storageBinId, String SKU) {
         System.out.println("checkIfStorageBinIsOfAppropriateItemType() called.");
@@ -793,7 +796,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return false;
         }
     }
-    
+
     @Override
     public Boolean addItemIntoBin(Long storageBinID, String SKU, Integer quantity) {
         System.out.println("addItemIntoBin called");
@@ -824,6 +827,6 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             ex.printStackTrace();
             return false;
         }
-        
+
     }
 }

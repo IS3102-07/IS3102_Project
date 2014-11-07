@@ -31,11 +31,10 @@ public class ShippingOrderManagement_UpdateServlet extends HttpServlet {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatter.parse(expectedDate);
-            System.out.println("huat ahhhhhhh!!!!");
             if (sourceId != null && destinationId != null) {
                 boolean canUpdate = inboundAndOutboundLogisticsBeanLocal.updateShippingOrder(Long.parseLong(shippingOrderId), Long.parseLong(sourceId), Long.parseLong(destinationId), date);
                 if (!canUpdate) {
-                    result = "?errMsg=One of the selected warehouse no longer exist..&id=" + shippingOrderId;
+                    result = "?errMsg=One of the selected warehouse no longer exist.&id=" + shippingOrderId;
                     response.sendRedirect("A3/shippingOrderManagement_Update.jsp" + result);
                 } else {
                     HttpSession session;

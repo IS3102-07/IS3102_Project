@@ -5,6 +5,8 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.concurrent.TimeUnit"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Collections"%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -12,58 +14,179 @@
     <body>
         <script>
             function updateStaff(id) {
-            staffManagement.id.value = id;
-                    document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
-                    document.staffManagement.submit();
+                staffManagement.id.value = id;
+                document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
+                document.staffManagement.submit();
             }
             function removeStaff() {
-            checkboxes = document.getElementsByName('delete');
-                    var numOfTicks = 0;
-                    for (var i = 0, n = checkboxes.length; i < n; i++) {
-            if (checkboxes[i].checked) {
-            numOfTicks++;
-            }
-            }
-            if (checkboxes.length == 0 || numOfTicks == 0) {
-            window.event.returnValue = true;
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = true;
                     document.staffManagement.action = "../StaffManagement_StaffServlet";
                     document.staffManagement.submit();
-            } else {
-            window.event.returnValue = true;
+                } else {
+                    window.event.returnValue = true;
                     document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
                     document.staffManagement.submit();
-            }
+                }
             }
             function addStaff() {
-            window.event.returnValue = true;
-                    document.staffManagement.action = "staffManagement_add.jsp";
-                    document.staffManagement.submit();
+                window.event.returnValue = true;
+                document.staffManagement.action = "staffManagement_add.jsp";
+                document.staffManagement.submit();
             }
             function checkAll(source) {
-            checkboxes = document.getElementsByName('delete');
-                    for (var i = 0, n = checkboxes.length; i < n; i++) {
-            checkboxes[i].checked = source.checked;
-            }
+                checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
             }
             function sendLoyaltyPoints() {
-            checkboxes = document.getElementsByName('delete');
-                    var numOfTicks = 0;
-                    for (var i = 0, n = checkboxes.length; i < n; i++) {
-            if (checkboxes[i].checked) {
-            numOfTicks++;
-            }
-            }
-            if (checkboxes.length == 0 || numOfTicks == 0) {
-            window.event.returnValue = true;
+                checkboxes = document.getElementsByName('delete');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                if (checkboxes.length == 0 || numOfTicks == 0) {
+                    window.event.returnValue = true;
                     document.segmentation.action = "../Analytical_SegmentationSendLoyaltyServlet";
                     document.segmentation.submit();
-            } else {
-            window.event.returnValue = true;
+                } else {
+                    window.event.returnValue = true;
                     document.segmentation.action = "../Analytical_SegmentationSendLoyaltyServlet";
                     document.segmentation.submit();
-            }
+                }
             }
         </script>
+        <%
+            Integer cummulativeSpendingAgeGrp1 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp1");
+            Integer cummulativeSpendingAgeGrp2 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp2");
+            Integer cummulativeSpendingAgeGrp3 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp3");
+            Integer cummulativeSpendingAgeGrp4 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp4");
+
+            Integer numOfMembersInAgeGroup1 = (Integer) session.getAttribute("numOfMembersInAgeGroup1");
+            Integer numOfMembersInAgeGroup2 = (Integer) session.getAttribute("numOfMembersInAgeGroup2");
+            Integer numOfMembersInAgeGroup3 = (Integer) session.getAttribute("numOfMembersInAgeGroup3");
+            Integer numOfMembersInAgeGroup4 = (Integer) session.getAttribute("numOfMembersInAgeGroup4");
+
+            List<Integer> cummulativeGroupAge = new ArrayList();
+            cummulativeGroupAge.add(cummulativeSpendingAgeGrp1 / numOfMembersInAgeGroup1);
+            cummulativeGroupAge.add(cummulativeSpendingAgeGrp2 / numOfMembersInAgeGroup2);
+            cummulativeGroupAge.add(cummulativeSpendingAgeGrp3 / numOfMembersInAgeGroup3);
+            cummulativeGroupAge.add(cummulativeSpendingAgeGrp4 / numOfMembersInAgeGroup4);
+
+            Integer ageGroup1Points = 1;
+            Integer ageGroup2Points = 1;
+            Integer ageGroup3Points = 1;
+            Integer ageGroup4Points = 1;
+
+            for (int i = 0; i < cummulativeGroupAge.size(); i++) {
+                for (int j = 0; j < cummulativeGroupAge.size(); j++) {
+                    if (!(i == j)) {
+                        if (cummulativeGroupAge.get(i) > cummulativeGroupAge.get(j)) {
+                            if (i == 0) {
+                                ageGroup1Points++;
+                            } else if (i==1){
+                                ageGroup2Points++;
+                            } else if (i==2) {
+                                ageGroup3Points++;
+                            } else if (i==3) {
+                                ageGroup4Points++;
+                            }
+                        }
+                    }
+                }
+            }
+        %>
+        <%
+            Integer cummulativeSpendingIncomeGrp1 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp1");
+            Integer cummulativeSpendingIncomeGrp2 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp2");
+            Integer cummulativeSpendingIncomeGrp3 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp3");
+            Integer cummulativeSpendingIncomeGrp4 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp4");
+
+            Integer numOfMembersInIncomeGroup1 = (Integer) session.getAttribute("numOfMembersInIncomeGroup1");
+            Integer numOfMembersInIncomeGroup2 = (Integer) session.getAttribute("numOfMembersInIncomeGroup2");
+            Integer numOfMembersInIncomeGroup3 = (Integer) session.getAttribute("numOfMembersInIncomeGroup3");
+            Integer numOfMembersInIncomeGroup4 = (Integer) session.getAttribute("numOfMembersInIncomeGroup4");
+            
+            List<Integer> cummulativeGroupIncome = new ArrayList();
+            cummulativeGroupIncome.add(cummulativeSpendingIncomeGrp1 / numOfMembersInIncomeGroup1);
+            cummulativeGroupIncome.add(cummulativeSpendingIncomeGrp2 / numOfMembersInIncomeGroup2);
+            cummulativeGroupIncome.add(cummulativeSpendingIncomeGrp3 / numOfMembersInIncomeGroup3);
+            cummulativeGroupIncome.add(cummulativeSpendingIncomeGrp4 / numOfMembersInIncomeGroup4);
+
+            Integer incomeGroup1Points = 1;
+            Integer incomeGroup2Points = 1;
+            Integer incomeGroup3Points = 1;
+            Integer incomeGroup4Points = 1;
+
+            for (int i = 0; i < cummulativeGroupIncome.size(); i++) {
+                for (int j = 0; j < cummulativeGroupIncome.size(); j++) {
+                    if (!(i == j)) {
+                        if (cummulativeGroupIncome.get(i) > cummulativeGroupIncome.get(j)) {
+                            if (i == 0) {
+                                incomeGroup1Points++;
+                            } else if (i==1){
+                                incomeGroup2Points++;
+                            } else if (i==2) {
+                                incomeGroup3Points++;
+                            } else if (i==3) {
+                                incomeGroup4Points++;
+                            }
+                        }
+                    }
+                }
+            }
+
+        %>
+        <%            Integer totalCummulativeSpendingOfCountry1 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry1");
+            Integer totalCummulativeSpendingOfCountry2 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry2");
+
+            Integer numOfMembersInCountry1 = (Integer) session.getAttribute("numOfMembersInCountry1");
+            Integer numOfMembersInCountry2 = (Integer) session.getAttribute("numOfMembersInCountry2");
+            
+            List<Integer> cummulativeGroupCountry = new ArrayList();
+            cummulativeGroupCountry.add(totalCummulativeSpendingOfCountry1 / numOfMembersInCountry1);
+            cummulativeGroupCountry.add(totalCummulativeSpendingOfCountry2 / numOfMembersInCountry2);
+
+            Integer countryGroup1Points = 1;
+            Integer countryGroup2Points = 1;
+
+            for (int i = 0; i < cummulativeGroupCountry.size(); i++) {
+                for (int j = 0; j < cummulativeGroupCountry.size(); j++) {
+                    if (!(i == j)) {
+                        if (cummulativeGroupCountry.get(i) > cummulativeGroupCountry.get(j)) {
+                            if (i == 0) {
+                                countryGroup1Points++;
+                            } else if (i==1){
+                                countryGroup2Points++;
+                            } 
+                        }
+                    }
+                }
+            }
+
+        %>
+
+        <%            Integer getRevenueOfJoinDate1 = (Integer) session.getAttribute("getRevenueOfJoinDate1");
+            Integer getRevenueOfJoinDate2 = (Integer) session.getAttribute("getRevenueOfJoinDate2");
+            Integer getRevenueOfJoinDate3 = (Integer) session.getAttribute("getRevenueOfJoinDate3");
+            Integer getRevenueOfJoinDate4 = (Integer) session.getAttribute("getRevenueOfJoinDate4");
+
+            Integer numOfMembersInJoinDate1 = (Integer) session.getAttribute("numOfMembersInJoinDate1");
+            Integer numOfMembersInJoinDate2 = (Integer) session.getAttribute("numOfMembersInJoinDate2");
+            Integer numOfMembersInJoinDate3 = (Integer) session.getAttribute("numOfMembersInJoinDate3");
+            Integer numOfMembersInJoinDate4 = (Integer) session.getAttribute("numOfMembersInJoinDate4");
+
+        %>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
@@ -76,7 +199,7 @@
                                     <i class="icon icon-users"></i> <a href="analytical.jsp">Analytical CRM</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i> Segmentation Marketing
+                                    <i class="icon icon-users"></i> Segmentation Marketing
                                 </li>
                             </ol>
                         </div>
@@ -87,8 +210,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <%
-                                        String errMsg = request.getParameter("errMsg");
+                                    <%                                        String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
                                             out.println("Market Segments");
@@ -184,17 +306,17 @@
                                                                         <%
                                                                             Integer totalPoints = 0;
                                                                             if (member.getAge() <= 25 && member.getAge() >= 18) {
-                                                                                out.println("(1)");
-                                                                                totalPoints += 1;
+                                                                                out.println("("+ageGroup1Points+")");
+                                                                                totalPoints += ageGroup1Points;
                                                                             } else if (member.getAge() > 25 && member.getAge() <= 40) {
-                                                                                out.println("(2)");
-                                                                                totalPoints += 2;
+                                                                                out.println("("+ageGroup2Points+")");
+                                                                                totalPoints += ageGroup2Points;
                                                                             } else if (member.getAge() > 40 && member.getAge() <= 55) {
-                                                                                out.println("(4)");
-                                                                                totalPoints += 4;
-                                                                            } else if (member.getAge() > 55) {
-                                                                                out.println("(3)");
-                                                                                totalPoints += 3;
+                                                                                out.println("("+ageGroup3Points+")");
+                                                                                totalPoints += ageGroup3Points;
+                                                                            } else if (member.getAge() <= 75) {
+                                                                                out.println("("+ageGroup4Points+")");
+                                                                                totalPoints += ageGroup4Points;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -202,17 +324,17 @@
                                                                         <%=member.getIncome()%>
 
                                                                         <% if (member.getIncome() <= 30000) {
-                                                                                out.println("(1)");
-                                                                                totalPoints += 1;
+                                                                                out.println("("+incomeGroup1Points+")");
+                                                                                totalPoints += incomeGroup1Points;
                                                                             } else if (member.getIncome() > 30000 && member.getIncome() <= 60000) {
-                                                                                out.println("(2)");
-                                                                                totalPoints += 2;
+                                                                                out.println("("+incomeGroup2Points+")");
+                                                                                totalPoints += incomeGroup2Points;
                                                                             } else if (member.getIncome() > 60000 && member.getIncome() <= 100000) {
-                                                                                out.println("(4)");
-                                                                                totalPoints += 4;
+                                                                                out.println("("+incomeGroup3Points+")");
+                                                                                totalPoints += incomeGroup3Points;
                                                                             } else if (member.getIncome() > 100000) {
-                                                                                out.println("(3)");
-                                                                                totalPoints += 3;
+                                                                                out.println("("+incomeGroup4Points+")");
+                                                                                totalPoints += incomeGroup4Points;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -220,11 +342,11 @@
                                                                         <%=member.getCity()%>
 
                                                                         <% if (member.getCity().equalsIgnoreCase("Malaysia")) {
-                                                                                out.println("(1)");
-                                                                                totalPoints += 1;
+                                                                                out.println("("+countryGroup1Points+")");
+                                                                                totalPoints += countryGroup1Points;
                                                                             } else if (member.getCity().equalsIgnoreCase("Singapore")) {
-                                                                                out.println("(2)");
-                                                                                totalPoints += 2;
+                                                                                out.println("("+countryGroup1Points+")");
+                                                                                totalPoints += countryGroup1Points;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -333,119 +455,79 @@
     </form>
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
-                $(document).ready(function() {
-        $('#dataTables-example').dataTable();
+        $(document).ready(function() {
+            $('#dataTables-example').dataTable();
         });
-                new Morris.Bar({
-                // ID of the element in which to draw the chart.
-                element: 'ageGroupChart',
-                        // Chart data records -- each entry in this array corresponds to a point on
-                        // the chart.
+        new Morris.Bar({
+            // ID of the element in which to draw the chart.
+            element: 'ageGroupChart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
 
-        <%
-            Integer cummulativeSpendingAgeGrp1 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp1");
-            Integer cummulativeSpendingAgeGrp2 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp2");
-            Integer cummulativeSpendingAgeGrp3 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp3");
-            Integer cummulativeSpendingAgeGrp4 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp4");
 
-            Integer numOfMembersInAgeGroup1 = (Integer) session.getAttribute("numOfMembersInAgeGroup1");
-            Integer numOfMembersInAgeGroup2 = (Integer) session.getAttribute("numOfMembersInAgeGroup2");
-            Integer numOfMembersInAgeGroup3 = (Integer) session.getAttribute("numOfMembersInAgeGroup3");
-            Integer numOfMembersInAgeGroup4 = (Integer) session.getAttribute("numOfMembersInAgeGroup4");
-
-        %>
-                data: [
-                {y: '18-25', a: <%=cummulativeSpendingAgeGrp1%>, b: <%=numOfMembersInAgeGroup1%>, c: 1},
-                {y: '26-40', a: <%=cummulativeSpendingAgeGrp2%>, b: <%=numOfMembersInAgeGroup2%>, c: 2},
-                {y: '41-55', a: <%=cummulativeSpendingAgeGrp3%>, b: <%=numOfMembersInAgeGroup3%>, c: 3},
-                {y: '56-75', a: <%=cummulativeSpendingAgeGrp4%>, b: <%=numOfMembersInAgeGroup4%>, c: 4}
-                ],
-                        xkey: 'y',
-                        ykeys: ['a', 'b'],
-                        labels: ['Total Revenue', 'Num Of Members']
-                });</script>
+            data: [
+                {y: '18-25', a: <%=cummulativeSpendingAgeGrp1%>, b: <%=numOfMembersInAgeGroup1%>, c: <%=cummulativeSpendingAgeGrp1 / numOfMembersInAgeGroup1%>},
+                {y: '26-40', a: <%=cummulativeSpendingAgeGrp2%>, b: <%=numOfMembersInAgeGroup2%>, c: <%=cummulativeSpendingAgeGrp2 / numOfMembersInAgeGroup2%>},
+                {y: '41-55', a: <%=cummulativeSpendingAgeGrp3%>, b: <%=numOfMembersInAgeGroup3%>, c: <%=cummulativeSpendingAgeGrp3 / numOfMembersInAgeGroup3%>},
+                {y: '56-75', a: <%=cummulativeSpendingAgeGrp4%>, b: <%=numOfMembersInAgeGroup4%>, c: <%=cummulativeSpendingAgeGrp4 / numOfMembersInAgeGroup4%>}
+            ],
+            xkey: 'y',
+            ykeys: ['a', 'b', 'c'],
+            labels: ['Total Revenue', 'Num Of Members', 'Avg Value']
+        });</script>
 
     <script>
-                new Morris.Bar({
-                // ID of the element in which to draw the chart.
-                element: 'incomeGroupChart',
-                        // Chart data records -- each entry in this array corresponds to a point on
-                        // the chart.
+        new Morris.Bar({
+            // ID of the element in which to draw the chart.
+            element: 'incomeGroupChart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
 
-        <%
-            Integer cummulativeSpendingIncomeGrp1 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp1");
-            Integer cummulativeSpendingIncomeGrp2 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp2");
-            Integer cummulativeSpendingIncomeGrp3 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp3");
-            Integer cummulativeSpendingIncomeGrp4 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp4");
 
-            Integer numOfMembersInIncomeGroup1 = (Integer) session.getAttribute("numOfMembersInIncomeGroup1");
-            Integer numOfMembersInIncomeGroup2 = (Integer) session.getAttribute("numOfMembersInIncomeGroup2");
-            Integer numOfMembersInIncomeGroup3 = (Integer) session.getAttribute("numOfMembersInIncomeGroup3");
-            Integer numOfMembersInIncomeGroup4 = (Integer) session.getAttribute("numOfMembersInIncomeGroup4");
-
-        %>
-                data: [
-                {y: '30k', a: <%=cummulativeSpendingIncomeGrp1%>, b: <%=numOfMembersInIncomeGroup1%>, c: 1},
-                {y: '60k', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: 2},
-                {y: '100k', a: <%=cummulativeSpendingIncomeGrp3%>, b: <%=numOfMembersInIncomeGroup3%>, c: 3},
-                {y: '250k', a: <%=cummulativeSpendingIncomeGrp4%>, b: <%=numOfMembersInIncomeGroup4%>, c: 4}
-                ],
-                        xkey: 'y',
-                        ykeys: ['a', 'b'],
-                        labels: ['Total Revenue', 'Num Of Members']
-                });</script>
+            data: [
+                {y: '30k', a: <%=cummulativeSpendingIncomeGrp1%>, b: <%=numOfMembersInIncomeGroup1%>, c: <%=cummulativeSpendingIncomeGrp1 / numOfMembersInIncomeGroup1%>},
+                {y: '60k', a: <%=cummulativeSpendingIncomeGrp2%>, b: <%=numOfMembersInIncomeGroup2%>, c: <%=cummulativeSpendingIncomeGrp2 / numOfMembersInIncomeGroup2%>},
+                {y: '100k', a: <%=cummulativeSpendingIncomeGrp3%>, b: <%=numOfMembersInIncomeGroup3%>, c: <%=cummulativeSpendingIncomeGrp3 / numOfMembersInIncomeGroup3%>},
+                {y: '250k', a: <%=cummulativeSpendingIncomeGrp4%>, b: <%=numOfMembersInIncomeGroup4%>, c: <%=cummulativeSpendingIncomeGrp4 / numOfMembersInIncomeGroup4%>}
+            ],
+            xkey: 'y',
+            ykeys: ['a', 'b', 'c'],
+            labels: ['Total Revenue', 'Num Of Members', 'Avg Value']
+        });</script>
     <script>
-                new Morris.Bar({
-                // ID of the element in which to draw the chart.
-                element: 'countryChart',
-                        // Chart data records -- each entry in this array corresponds to a point on
-                        // the chart.
+        new Morris.Bar({
+            // ID of the element in which to draw the chart.
+            element: 'countryChart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
 
-        <%
-            Integer totalCummulativeSpendingOfCountry1 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry1");
-            Integer totalCummulativeSpendingOfCountry2 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry2");
 
-            Integer numOfMembersInCountry1 = (Integer) session.getAttribute("numOfMembersInCountry1");
-            Integer numOfMembersInCountry2 = (Integer) session.getAttribute("numOfMembersInCountry2");
-
-        %>
-                data: [
-                {y: 'Singapore', a: <%=totalCummulativeSpendingOfCountry1%>, b: <%=numOfMembersInCountry1%>, c: 1},
-                {y: 'Malaysia', a: <%=totalCummulativeSpendingOfCountry2%>, b: <%=numOfMembersInCountry2%>, c: 2},
-                ],
-                        xkey: 'y',
-                        ykeys: ['a', 'b'],
-                        labels: ['Total Revenue', 'Num Of Members']
-                });</script>
+            data: [
+                {y: 'Singapore', a: <%=totalCummulativeSpendingOfCountry1%>, b: <%=numOfMembersInCountry1%>, c: <%=totalCummulativeSpendingOfCountry1 / numOfMembersInCountry1%>},
+                {y: 'Malaysia', a: <%=totalCummulativeSpendingOfCountry2%>, b: <%=numOfMembersInCountry2%>, c: <%=totalCummulativeSpendingOfCountry2 / numOfMembersInCountry2%>},
+            ],
+            xkey: 'y',
+            ykeys: ['a', 'b', 'c'],
+            labels: ['Total Revenue', 'Num Of Members', 'Avg Value']
+        });</script>
     <script>
-                new Morris.Bar({
-                // ID of the element in which to draw the chart.
-                element: 'joinDateChart',
-                        // Chart data records -- each entry in this array corresponds to a point on
-                        // the chart.
+        new Morris.Bar({
+            // ID of the element in which to draw the chart.
+            element: 'joinDateChart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
 
-        <%
-            Integer getRevenueOfJoinDate1 = (Integer) session.getAttribute("getRevenueOfJoinDate1");
-            Integer getRevenueOfJoinDate2 = (Integer) session.getAttribute("getRevenueOfJoinDate2");
-            Integer getRevenueOfJoinDate3 = (Integer) session.getAttribute("getRevenueOfJoinDate3");
-            Integer getRevenueOfJoinDate4 = (Integer) session.getAttribute("getRevenueOfJoinDate4");
 
-            Integer numOfMembersInJoinDate1 = (Integer) session.getAttribute("numOfMembersInJoinDate1");
-            Integer numOfMembersInJoinDate2 = (Integer) session.getAttribute("numOfMembersInJoinDate2");
-            Integer numOfMembersInJoinDate3 = (Integer) session.getAttribute("numOfMembersInJoinDate3");
-            Integer numOfMembersInJoinDate4 = (Integer) session.getAttribute("numOfMembersInJoinDate4");
-
-        %>
-                data: [
-                {y: '1 yr', a: <%=getRevenueOfJoinDate1%>, b: <%=numOfMembersInJoinDate1%>, c: 1},
-                {y: '2 yr', a: <%=getRevenueOfJoinDate2%>, b: <%=numOfMembersInJoinDate2%>, c: 2},
-                {y: '3 yr', a: <%=getRevenueOfJoinDate3%>, b: <%=numOfMembersInJoinDate3%>, c: 3},
-                {y: '4 yr', a: <%=getRevenueOfJoinDate4%>, b: <%=numOfMembersInJoinDate4%>, c: 4},
-                ],
-                        xkey: 'y',
-                        ykeys: ['a', 'b'],
-                        labels: ['Total Revenue', 'Num Of Members']
-                });
+            data: [
+                {y: '1 yr', a: <%=getRevenueOfJoinDate1%>, b: <%=numOfMembersInJoinDate1%>, c: <%=getRevenueOfJoinDate1 / numOfMembersInJoinDate1%>},
+                {y: '2 yr', a: <%=getRevenueOfJoinDate2%>, b: <%=numOfMembersInJoinDate2%>, c: <%=getRevenueOfJoinDate2 / numOfMembersInJoinDate2%>},
+                {y: '3 yr', a: <%=getRevenueOfJoinDate3%>, b: <%=numOfMembersInJoinDate3%>, c: <%=getRevenueOfJoinDate3 / numOfMembersInJoinDate3%>},
+                {y: '4 yr', a: <%=getRevenueOfJoinDate4%>, b: <%=numOfMembersInJoinDate4%>, c: <%=getRevenueOfJoinDate4 / numOfMembersInJoinDate4%>},
+            ],
+            xkey: 'y',
+            ykeys: ['a', 'b', 'c'],
+            labels: ['Total Revenue', 'Num Of Members', 'Avg Value']
+        });
     </script>
 </body>
 </html>

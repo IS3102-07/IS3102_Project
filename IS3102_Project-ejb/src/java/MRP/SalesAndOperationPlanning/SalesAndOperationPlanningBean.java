@@ -322,10 +322,10 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
 
             for (SaleAndOperationPlanEntity sop : sopList) {
                 for (ProductGroupLineItemEntity lineItem : sop.getProductGroup().getLineItemList()) {
-                    Query q3 = em.createQuery("select si from Supplier_ItemEntity si where si.supplier.regionalOffice.id = ?1 and si.item.SKU = ?2")
+                    Query q3 = em.createQuery("select si from Supplier_ItemEntity si where si.supplier.regionalOffice.id = ?1 and si.item.SKU = ?2 and si.isDeleted = false ")
                             .setParameter(1, store.getRegionalOffice().getId())
                             .setParameter(2, lineItem.getItem().getSKU());
-                    Supplier_ItemEntity supplier_ItemEntity = (Supplier_ItemEntity) q3.getSingleResult();
+                    Supplier_ItemEntity supplier_ItemEntity = (Supplier_ItemEntity) q3.getResultList().get(0);
 
                     PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), new Date(schedule.getYear(), schedule.getMonth(), 1));
                     purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), lineItem.getItem().getSKU(), sop.getProductionPlan());

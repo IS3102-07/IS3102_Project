@@ -43,6 +43,10 @@
                 }
             }
         </script>
+        
+        <%
+    DecimalFormat noDecimal = new DecimalFormat("#");
+        %>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
@@ -98,7 +102,7 @@
                                                 <div class="col-md-6">
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
-                                                            <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Total Revenue : <%=totalCustomerRevenue + totalNonCustomerRevenue%> (USD)</h3>
+                                                            <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> Total Revenue : <%=noDecimal.format(totalCustomerRevenue + totalNonCustomerRevenue)%> (USD)</h3>
                                                         </div>
                                                         <div class="panel-body">
                                                             <div id="morris-donut-chart"></div>
@@ -211,9 +215,7 @@
             $('#dataTables-example').dataTable();
         });
 
-        <%
-    DecimalFormat noDecimal = new DecimalFormat("#");
-        %>
+        
         new Morris.Donut({
             element: 'morris-donut-chart',
             data: [{

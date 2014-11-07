@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.LineItemEntity"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Date"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
 
@@ -95,6 +96,8 @@
                                     <%
                                         List<LineItemEntity> sortBestSellingFurniture = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture"));
                                         List<LineItemEntity> listOfSecondProduct = (List<LineItemEntity>) (session.getAttribute("listOfSecondProduct"));
+                                        List<Date> dateOfLastPurchaseFurniture = (List<Date>) (session.getAttribute("dateOfLastPurchaseFurniture"));
+                                        DecimalFormat df = new DecimalFormat("#.##");
                                     %>
                                     <!-- /.table-responsive -->
 
@@ -116,7 +119,9 @@
                                                                     <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                     <th>Name</th>
                                                                     <th>Quantity Sold</th>
+                                                                    <th>Last Purchase</th>
                                                                     <th>Items Purchased With</th>
+                                                                    <th>Probability</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -137,6 +142,9 @@
                                                                         <%=item.getQuantity()%>
                                                                     </td>
                                                                     <td>
+                                                                        <%=dateOfLastPurchaseFurniture.get(i) %>
+                                                                    </td>
+                                                                    <td>
                                                                         <%
                                                                         
                                                                         if (listOfSecondProduct.get(i).getItem() != null) {
@@ -145,6 +153,12 @@
                                                                         
                                                                         }
                                                                         %>
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                       <%
+                                                                        out.println(df.format((double)listOfSecondProduct.get(i).getQuantity()/(double)item.getQuantity()));
+%> 
                                                                         
                                                                     </td>
 
@@ -201,6 +215,7 @@
                                                                             <th>Name</th>
                                                                             <th>Quantity Sold</th>
                                                                             <th>Items Purchased With</th>
+                                                                            <th>Probability</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -229,6 +244,12 @@
                                                                         
                                                                         }
                                                                         %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%
+                                                                        out.print(df.format((double)listOfSecondProductRP.get(i).getQuantity() / (double)item.getQuantity()));
+                                                                        %>
+                                                                                
                                                                             </td>
 
                                                                         </tr>
@@ -284,6 +305,7 @@
                                                                             <th>Name</th>
                                                                             <th>Quantity Sold</th>
                                                                             <th>Items Purchased With</th>
+                                                                            <th>Probability</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -312,6 +334,12 @@
                                                                         
                                                                         }
                                                                         %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%
+                                                                        out.print(df.format((double)listOfSecondProductMenuItem.get(i).getQuantity()/(double)item.getQuantity()));
+                                                                        %>
+                                                                                
                                                                             </td>
 
                                                                         </tr>
