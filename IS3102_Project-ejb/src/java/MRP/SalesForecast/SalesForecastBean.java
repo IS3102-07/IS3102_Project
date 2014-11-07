@@ -6,6 +6,7 @@ import EntityManager.LineItemEntity;
 import EntityManager.MenuItemEntity;
 import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupEntity;
+import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.SaleForecastEntity;
 import EntityManager.SalesFigureEntity;
 import EntityManager.SalesFigureLineItemEntity;
@@ -81,7 +82,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                             SalesFigureEntity salesFigure = new SalesFigureEntity();
                             salesFigure.setStore(saleRecord.getStore());
                             salesFigure.setMenuItem(cl.getMenuItem());
-                            salesFigure.setSchedule(schedule);                            
+                            salesFigure.setSchedule(schedule);
                             salesFigure.setQuantity(lineItem.getQuantity());
                             em.persist(salesFigure);
 
@@ -189,7 +190,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
         }
         return false;
     }
-    
+
     public MonthScheduleEntity getTheBeforeOne(MonthScheduleEntity schedule) {
         try {
             if (schedule.getMonth() == 1) {
@@ -234,9 +235,9 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
             try {
                 int amount = 0;
-                for (int i = 0; i < 3; i++) {                    
+                for (int i = 0; i < 3; i++) {
 
-                    lastSchedule = this.getTheBeforeOne(lastSchedule);                    
+                    lastSchedule = this.getTheBeforeOne(lastSchedule);
 
                     Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                             .setParameter(1, productGroupId)
@@ -279,11 +280,11 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(1, StoreId)
                     .setParameter(2, productGroupId)
                     .setParameter(3, year);
-            
-            List<SalesFigureEntity> sfList = (List<SalesFigureEntity>)q.getResultList();
-            for(SalesFigureEntity sf: sfList){
+
+            List<SalesFigureEntity> sfList = (List<SalesFigureEntity>) q.getResultList();
+            for (SalesFigureEntity sf : sfList) {
                 em.refresh(sf);
-            }            
+            }
             return sfList;
         } catch (Exception ex) {
         }
@@ -510,5 +511,43 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Boolean editSaleForecast(Long saleForecastId, Integer quantity) {
+        try {
+            SaleForecastEntity saleForecast = em.find(SaleForecastEntity.class, saleForecastId);
+            saleForecast.setQuantity(quantity);
+            saleForecast.setMethod("E");
+            em.merge(saleForecast);
+
+            // to do .... Query check sale figure
+            Query q = em.createQuery("select s from SalesFigureEntity s where s.productGroup.id = ?1 and s.schedule.id = ?2 and s.store.id = ?3 ")
+                    .setParameter(1, saleForecast.getProductGroup().getId())
+                    .setParameter(2, saleForecast.getSchedule().getId())
+                    .setParameter(3, saleForecast.getStore().getId());
+
+            if (q.getResultList().isEmpty()) {
+                SalesFigureEntity saleFigure = new SalesFigureEntity();
+                saleFigure.setStore(saleForecast.getStore());
+                saleFigure.setProductGroup(saleForecast.getProductGroup());
+                saleFigure.setSchedule(this.getTheBeforeOne(saleForecast.getSchedule()));
+                saleFigure.setQuantity(quantity);
+                em.persist(saleFigure);
+                                
+                for(ProductGroupLineItemEntity lineItem: saleForecast.getProductGroup().getLineItemList()){                    
+                    SalesFigureLineItemEntity sl = new SalesFigureLineItemEntity();
+                    sl.setSaleFigure(saleFigure);
+                    sl.setSKU(lineItem.getItem().getSKU());
+                    sl.setQuantity(quantity / saleForecast.getProductGroup().getLineItemList().size());                                        
+                    em.persist(sl);
+                }
+                em.flush();                
+            } 
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }
