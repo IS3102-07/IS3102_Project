@@ -21,7 +21,7 @@ public class StorageBinManagement_AddItemToBinServlet extends HttpServlet {
             Long storageBinID = Long.parseLong(request.getParameter("storageBinID"));
             String SKU = request.getParameter("SKU");
             Integer qty = Integer.parseInt(request.getParameter("qty"));
-            Boolean result = manufacturingInventoryControlBean.addItemIntoBin(storageBinID, SKU, qty);
+            Boolean result = (manufacturingInventoryControlBean.checkIfStorageBinIsOfAppropriateItemType(storageBinID, SKU) && manufacturingInventoryControlBean.addItemIntoBin(storageBinID, SKU, qty));
             if(result){
                 msg="Item added to bin successfully!";
                  response.sendRedirect("StorageBinManagement_Servlet?errMsg=" + msg);
