@@ -71,7 +71,7 @@ public class SCM_ManufacturingInventoryControlBeanRemote_JUnit {
     @Test
     public void testRemoveItemFromOutboundBinForShipping() {
         Long shippingOrderID = 1234L;
-        Boolean result = manufacturingInventoryControlBean.removeItemFromOutboundBinForShipping(shippingOrderID);
+        Boolean result = manufacturingInventoryControlBean.removeItemsFromOutboundBinForShipping(shippingOrderID);
         assertFalse(result);
     }
 

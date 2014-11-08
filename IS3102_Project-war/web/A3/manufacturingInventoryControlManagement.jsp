@@ -2,7 +2,8 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+<%
+    WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
     if (warehouseEntity == null) {
         response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
     } else {
@@ -13,7 +14,12 @@
 
     <body>
         <script>
-            function removeItemFromStorageBin(id, storageBinId) {
+            var a = 0;
+            var b = 0;
+
+            function removeItemFromStorageBin() {
+                var id = a;
+                var storageBinId = b;
 
                 window.event.returnValue = true;
                 document.inventoryControl.lineItemID.value = id;
@@ -21,6 +27,10 @@
                 document.inventoryControl.action = "../ManufacturingInventoryControl_RemoveServlet";
                 document.inventoryControl.submit();
 
+            }
+            function changeId(id, storageBinId) {
+                a = id;
+                b = storageBinId;
             }
         </script>
         <div id="wrapper">
@@ -112,7 +122,7 @@
                                                                 <%=itemStorageBinHelpers.get(i).getItemType()%>
                                                             </td>
                                                             <td>
-                                                                <a href="#myModal" data-toggle="modal"><button class="btn btn-primary btn-block">Remove Item From Storage Bin</button></a>
+                                                                <a href="#myModal" data-toggle="modal"><button onclick="changeId('<%=itemStorageBinHelpers.get(i).getLineItemID()%>', '<%=itemStorageBinHelpers.get(i).getStorageBinID()%>')" class="btn btn-primary btn-block">Remove Item From Storage Bin</button></a>
                                                                 <div role="dialog" class="modal fade" id="myModal">
                                                                     <div class="modal-dialog">
                                                                         <div class="modal-content">
@@ -123,7 +133,7 @@
                                                                                 <p id="messageBox">Are you sure you want to delete the all instance of this item in this storage bin?</p>
                                                                             </div>
                                                                             <div class="modal-footer">                        
-                                                                                <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeItemFromStorageBin('<%=itemStorageBinHelpers.get(i).getLineItemID()%>', '<%=itemStorageBinHelpers.get(i).getStorageBinID()%>')" />
+                                                                                <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="removeItemFromStorageBin()" />
                                                                                 <a class="btn btn-default" data-dismiss ="modal">Close</a>
                                                                             </div>
                                                                         </div>
@@ -165,7 +175,7 @@
         <!-- /#wrapper -->
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>
