@@ -92,7 +92,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox" onclick="checkAll(this)" /></th>
+                                                            <!--th><input type="checkbox" onclick="checkAll(this)" /></th-->
                                                             <th>Name</th>
                                                             <th>Access Level</th>
                                                             <th>Staff</th>
@@ -105,9 +105,9 @@
                                                                 for (RoleEntity role : roles) {
                                                         %>
                                                         <tr>
-                                                            <td>
+                                                            <!--td>
                                                                 <input type="checkbox" name="delete" value="<%=role.getId()%>" />
-                                                            </td>
+                                                            </td-->
                                                             <td>
                                                                 <%=role.getName()%>
                                                             </td>

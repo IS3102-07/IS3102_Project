@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </section>
-                <jsp:include page="footer.html" />
+                <jsp:include page="footer.jsp" />
             </div>
             <!-- Theme Initializer -->
             <script src="/IS3102_Project-war/js/theme.plugins.js"></script>

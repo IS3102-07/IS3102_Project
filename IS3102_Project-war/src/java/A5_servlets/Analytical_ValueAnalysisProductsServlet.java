@@ -30,7 +30,9 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
+            List<LineItemEntity> sortBestSellingFurniture1Year = customerValueAnalysisBean.sortBestSellingFurniture1Year();
             session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
+            //session.setAttribute("sortBestSellingFurniture1Year",sortBestSellingFurniture1Year);
 
             List<Date> dateOfLastPurchaseFurniture = new ArrayList();
 
@@ -70,6 +72,16 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
 
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
             session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
+            
+            List<Date> dateOfLastPurchaseRetailProduct = new ArrayList();
+
+            for (LineItemEntity item : sortBestSellingRetailProducts) {
+
+                Date itemPurchasedDate = customerValueAnalysisBean.getItemLastPurchase(item.getItem().getId());
+                dateOfLastPurchaseRetailProduct.add(itemPurchasedDate);
+            }
+            
+            session.setAttribute("dateOfLastPurchaseRetailProduct", dateOfLastPurchaseRetailProduct);
 
             List<LineItemEntity> listOfSecondProductRP = new ArrayList();
             for (LineItemEntity item : sortBestSellingRetailProducts) {
@@ -99,6 +111,16 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
 
             List<LineItemEntity> sortBestSellingMenuItem = customerValueAnalysisBean.sortBestSellingMenuItem();
             session.setAttribute("sortBestSellingMenuItem", sortBestSellingMenuItem);
+            
+            List<Date> dateOfLastPurchaseMenuItem = new ArrayList();
+
+            for (LineItemEntity item : sortBestSellingMenuItem) {
+
+                Date itemPurchasedDate = customerValueAnalysisBean.getItemLastPurchase(item.getItem().getId());
+                dateOfLastPurchaseMenuItem.add(itemPurchasedDate);
+            }
+            
+            session.setAttribute("dateOfLastPurchaseMenuItem", dateOfLastPurchaseMenuItem);
 
             List<LineItemEntity> listOfSecondProductMenuItem = new ArrayList();
             for (LineItemEntity item : sortBestSellingMenuItem) {

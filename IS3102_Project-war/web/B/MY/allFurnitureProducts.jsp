@@ -68,9 +68,9 @@
 
                                             <h4><%=furnitures.get(i).getName()%></h4>
 
-                                            <span class="product-thumb-info-act-left"><em>Height: <%=furnitures.get(i).getHeight()%></em></span><br/>
-                                            <span class="product-thumb-info-act-left"><em>Length: <%=furnitures.get(i).getLength()%></em></span><br/>
-                                            <span class="product-thumb-info-act-left"><em>Width: <%=furnitures.get(i).getWidth()%></em></span><br/>
+                                            <span class="product-thumb-info-act-left"><em>Tinggi: <%=furnitures.get(i).getHeight()%></em></span><br/>
+                                            <span class="product-thumb-info-act-left"><em>Panjang: <%=furnitures.get(i).getLength()%></em></span><br/>
+                                            <span class="product-thumb-info-act-left"><em>Lebar: <%=furnitures.get(i).getWidth()%></em></span><br/>
                                             <%
                                                 String normalPrice = item_countryList.get(j).getRetailPrice()+"0 "+item_countryList.get(j).getCountry().getCurrency();
                                                 PromotionEntity promotion = null;
@@ -85,12 +85,12 @@
                                                 }
                                             %>
                                             <%if (promotion==null) {%>
-                                            <span class="product-thumb-info-act-left"><em>Price: <%=normalPrice%></em></span>
+                                            <span class="product-thumb-info-act-left"><em>Harga: <%=normalPrice%></em></span>
                                             <%} else {%>
-                                            <span class="product-thumb-info-act-left"><em>Price: <%=promoPrice%></em></span>
+                                            <span class="product-thumb-info-act-left"><em>Harga: <%=promoPrice%></em></span>
                                             <%}%>
                                             <br/>
-                                            <a href="furnitureProductDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
+                                            <a href="furnitureProductDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>Maklumat Lanjut</em></span></a>
 
                                         </span>
                                         <%
