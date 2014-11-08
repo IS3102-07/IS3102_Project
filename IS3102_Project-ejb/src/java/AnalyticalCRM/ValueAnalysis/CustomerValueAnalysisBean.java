@@ -498,12 +498,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 c.setTime(date);
                 c.add(Calendar.DATE, (-365 * year));
                 Date churnDate = c.getTime();
-                if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                        for (int i = 0; i < member.getPurchases().size(); i++) {
-                            totalRevenue += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
+
+                if (member.getJoinDate() != null) {
+                    if (member.getJoinDate().getTime() > churnDate.getTime()) {
+                        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                            for (int i = 0; i < member.getPurchases().size(); i++) {
+                                totalRevenue += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
+                            }
+                        } else {
                         }
-                    } else {
                     }
                 }
             }
@@ -535,17 +538,19 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 c.add(Calendar.DATE, (-365 * year));
                 Date churnDate = c.getTime();
 
-                Long days = member.getJoinDate().getTime() - churnDate.getTime();
-                days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                if (days > 0) {
-                    numOfMembersNotChurn++;
+                if (member.getJoinDate() != null) {
+                    Long days = member.getJoinDate().getTime() - churnDate.getTime();
+                    days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                    if (days > 0) {
+                        numOfMembersNotChurn++;
+                    }
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
 
             return numOfMembersNotChurn;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to list retention rate:\n" + ex);
+            System.out.println("\nServer failed to list num of members in join date:\n" + ex);
             ex.printStackTrace();
             return numOfMembersNotChurn;
         }
@@ -1382,7 +1387,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return days;
     }
-    
+
     //For retail products
     public Integer getCustomerRecencyRetailProduct(Long memberId) {
         System.out.println("getCustomerRecencyRetailProduct()");
@@ -1417,7 +1422,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return days;
     }
-    
+
     //For menu item
     public Integer getCustomerRecencyMenuItem(Long memberId) {
         System.out.println("getCustomerRecencyMenuItem()");
@@ -1469,13 +1474,13 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 }
             }
-            
+
         } else {
             return 0;
         }
         return numOfTimesPurchased;
     }
-    
+
     public Integer getCustomerFrequencyRetailProduct(Long memberId) {
         System.out.println("getCustomerFrequencyRetailProduct()");
 
@@ -1490,7 +1495,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 }
             }
-            
+
         } else {
             return 0;
         }
@@ -1511,13 +1516,13 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 }
             }
-            
+
         } else {
             return 0;
         }
         return numOfTimesPurchased;
     }
-    
+
     //for furnitures only
     @Override
     public Integer getCustomerMonetaryValue(Long memberId) {
@@ -1534,14 +1539,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         break;
                     }
                 }
-                
+
             }
         } else {
             return 0;
         }
         return totalPriceOfPurchases;
     }
-    
+
     public Integer getCustomerMonetaryValueRetailProduct(Long memberId) {
         System.out.println("getCustomerMonetaryValueRetailProduct()");
 
@@ -1556,14 +1561,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         break;
                     }
                 }
-                
+
             }
         } else {
             return 0;
         }
         return totalPriceOfPurchases;
     }
-    
+
     public Integer getCustomerMonetaryValueMenuItem(Long memberId) {
         System.out.println("getCustomerMonetaryValueMenuItem()");
 

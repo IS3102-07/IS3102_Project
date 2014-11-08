@@ -185,6 +185,35 @@
             Integer numOfMembersInJoinDate2 = (Integer) session.getAttribute("numOfMembersInJoinDate2");
             Integer numOfMembersInJoinDate3 = (Integer) session.getAttribute("numOfMembersInJoinDate3");
             Integer numOfMembersInJoinDate4 = (Integer) session.getAttribute("numOfMembersInJoinDate4");
+            
+            List<Integer> joinDateGroupIncome = new ArrayList();
+            cummulativeGroupIncome.add(getRevenueOfJoinDate1 / numOfMembersInJoinDate1);
+            cummulativeGroupIncome.add(getRevenueOfJoinDate2 / numOfMembersInJoinDate2);
+            cummulativeGroupIncome.add(getRevenueOfJoinDate3 / numOfMembersInJoinDate3);
+            cummulativeGroupIncome.add(getRevenueOfJoinDate4 / numOfMembersInJoinDate4);
+            
+            Integer joinDateGroup1Points = 1;
+            Integer joinDateGroup2Points = 1;
+            Integer joinDateGroup3Points = 1;
+            Integer joinDateGroup4Points = 1;
+
+            for (int i = 0; i < joinDateGroupIncome.size(); i++) {
+                for (int j = 0; j < joinDateGroupIncome.size(); j++) {
+                    if (!(i == j)) {
+                        if (joinDateGroupIncome.get(i) > joinDateGroupIncome.get(j)) {
+                            if (i == 0) {
+                                joinDateGroup1Points++;
+                            } else if (i==1){
+                                joinDateGroup2Points++;
+                            } else if (i==2) {
+                                joinDateGroup3Points++;
+                            } else if (i==3) {
+                                joinDateGroup4Points++;
+                            }
+                        }
+                    }
+                }
+            }
 
         %>
         <div id="wrapper">
@@ -345,8 +374,8 @@
                                                                                 out.println("("+countryGroup1Points+")");
                                                                                 totalPoints += countryGroup1Points;
                                                                             } else if (member.getCity().equalsIgnoreCase("Singapore")) {
-                                                                                out.println("("+countryGroup1Points+")");
-                                                                                totalPoints += countryGroup1Points;
+                                                                                out.println("("+countryGroup2Points+")");
+                                                                                totalPoints += countryGroup2Points;
                                                                             }
                                                                         %>
                                                                     </td>
@@ -363,29 +392,29 @@
                                                                             Long days = member.getJoinDate().getTime() - churnDate.getTime();
                                                                             days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                                                                             if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                                                                                out.println("(1)");
-                                                                                totalPoints += 1;
+                                                                                out.println("(" + joinDateGroup1Points + ")");
+                                                                                totalPoints += joinDateGroup1Points;
                                                                             } else {
                                                                                 c.add(Calendar.DATE, (-365));
                                                                                 churnDate = c.getTime();
 
                                                                                 if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                                                                                    out.println("(2)");
-                                                                                    totalPoints += 2;
+                                                                                    out.println("(" + joinDateGroup2Points + ")");
+                                                                                    totalPoints += joinDateGroup2Points;
                                                                                 } else {
                                                                                     c.add(Calendar.DATE, (-365));
                                                                                     churnDate = c.getTime();
 
                                                                                     if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                                                                                        out.println("(3)");
-                                                                                        totalPoints += 3;
+                                                                                        out.println("(" + joinDateGroup3Points + ")");
+                                                                                        totalPoints += joinDateGroup3Points;
                                                                                     } else {
                                                                                         c.add(Calendar.DATE, (-365));
                                                                                         churnDate = c.getTime();
 
                                                                                         if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                                                                                            out.println("(4)");
-                                                                                            totalPoints += 4;
+                                                                                            out.println("(" + joinDateGroup4Points + ")");
+                                                                                            totalPoints += joinDateGroup4Points;
                                                                                         } else {
                                                                                             out.println("(5)");
                                                                                             totalPoints += 5;
