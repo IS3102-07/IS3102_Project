@@ -8,11 +8,6 @@
     <body>
 
         <script>
-            function updateStaff(id) {
-                staffManagement.id.value = id;
-                document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
-                document.staffManagement.submit();
-            }
             function sendLoyaltyPoints() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -31,29 +26,8 @@
                     document.rfm.submit();
                 }
             }
-            function removeStaff() {
-                checkboxes = document.getElementsByName('delete');
-                var numOfTicks = 0;
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    if (checkboxes[i].checked) {
-                        numOfTicks++;
-                    }
-                }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = true;
-                    document.rfm.action = "../StaffManagement_StaffServlet";
-                    document.rfm.submit();
-                } else {
-                    window.event.returnValue = true;
-                    document.rfm.action = "../StaffManagement_RemoveStaffServlet";
-                    document.rfm.submit();
-                }
-            }
-            function addStaff() {
-                window.event.returnValue = true;
-                document.staffManagement.action = "staffManagement_add.jsp";
-                document.staffManagement.submit();
-            }
+            
+            
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
