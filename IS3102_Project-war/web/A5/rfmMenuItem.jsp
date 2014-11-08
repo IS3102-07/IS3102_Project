@@ -23,7 +23,7 @@
                     document.rfm.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.rfm.action = "../Analytical_ValueAnalysisSendLoyaltyServlet";
+                    document.rfm.action = "../Analytical_ValueAnalysisSendLoyaltyMIServlet";
                     document.rfm.submit();
                 }
             }
