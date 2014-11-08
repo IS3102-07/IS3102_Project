@@ -1406,7 +1406,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                     return false;
                 }
             } else if (storageBin.getType().equals("Kitchen")) {
-                if (!itemEntity.getType().equals("Raw Ingredient")) {
+                if (!itemEntity.getType().equals("Raw Ingredient") && !itemEntity.getType().equals("Menu Item")) {
                     System.out.println("Incorrect bin.");
                     return false;
                 }
