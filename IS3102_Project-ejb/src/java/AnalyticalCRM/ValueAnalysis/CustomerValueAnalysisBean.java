@@ -635,6 +635,47 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         return sortedFurnitures;
     }
 
+    public List<LineItemEntity> sortBestSellingFurniture1Year() {
+        System.out.println("sortBestSellingFurniture1Year()");
+        List<LineItemEntity> sortedFurnitures = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            List<FurnitureEntity> furnitures = q.getResultList();
+
+            for (FurnitureEntity furniture : furnitures) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(furniture);
+                lineItem.setQuantity(0);
+                sortedFurnitures.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+            Calendar c = Calendar.getInstance();
+            Date date = new Date();
+            c.setTime(date);
+            c.add(Calendar.DATE, -365);
+            Date churnDate = c.getTime();
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getCreatedDate().getTime() > churnDate.getTime()) {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedFurnitures.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
+                                    sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedFurnitures;
+    }
+
     @Override
     public List<LineItemEntity> sortBestSellingRetailProducts() {
         System.out.println("sortBestSellingRetailProducts()");

@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.StaffEntity"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.concurrent.TimeUnit"%>
@@ -38,6 +39,9 @@
                 }
             }
         </script>
+        <%
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                %>
         <%
             Integer cummulativeSpendingAgeGrp1 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp1");
             Integer cummulativeSpendingAgeGrp2 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp2");
@@ -365,7 +369,7 @@
 
                                                                     <td>
                                                                         <%                                                                            if (member.getJoinDate() != null) {
-                                                                                out.print(member.getJoinDate());
+                                                                                out.print(dateFormat.format(member.getJoinDate()));
                                                                             }
 
                                                                         %>
