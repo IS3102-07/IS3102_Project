@@ -94,11 +94,11 @@
                         if (cummulativeGroupAge.get(i) > cummulativeGroupAge.get(j)) {
                             if (i == 0) {
                                 ageGroup1Points++;
-                            } else if (i==1){
+                            } else if (i == 1) {
                                 ageGroup2Points++;
-                            } else if (i==2) {
+                            } else if (i == 2) {
                                 ageGroup3Points++;
-                            } else if (i==3) {
+                            } else if (i == 3) {
                                 ageGroup4Points++;
                             }
                         }
@@ -116,7 +116,7 @@
             Integer numOfMembersInIncomeGroup2 = (Integer) session.getAttribute("numOfMembersInIncomeGroup2");
             Integer numOfMembersInIncomeGroup3 = (Integer) session.getAttribute("numOfMembersInIncomeGroup3");
             Integer numOfMembersInIncomeGroup4 = (Integer) session.getAttribute("numOfMembersInIncomeGroup4");
-            
+
             List<Integer> cummulativeGroupIncome = new ArrayList();
             cummulativeGroupIncome.add(cummulativeSpendingIncomeGrp1 / numOfMembersInIncomeGroup1);
             cummulativeGroupIncome.add(cummulativeSpendingIncomeGrp2 / numOfMembersInIncomeGroup2);
@@ -134,11 +134,11 @@
                         if (cummulativeGroupIncome.get(i) > cummulativeGroupIncome.get(j)) {
                             if (i == 0) {
                                 incomeGroup1Points++;
-                            } else if (i==1){
+                            } else if (i == 1) {
                                 incomeGroup2Points++;
-                            } else if (i==2) {
+                            } else if (i == 2) {
                                 incomeGroup3Points++;
-                            } else if (i==3) {
+                            } else if (i == 3) {
                                 incomeGroup4Points++;
                             }
                         }
@@ -152,7 +152,7 @@
 
             Integer numOfMembersInCountry1 = (Integer) session.getAttribute("numOfMembersInCountry1");
             Integer numOfMembersInCountry2 = (Integer) session.getAttribute("numOfMembersInCountry2");
-            
+
             List<Integer> cummulativeGroupCountry = new ArrayList();
             cummulativeGroupCountry.add(totalCummulativeSpendingOfCountry1 / numOfMembersInCountry1);
             cummulativeGroupCountry.add(totalCummulativeSpendingOfCountry2 / numOfMembersInCountry2);
@@ -166,9 +166,9 @@
                         if (cummulativeGroupCountry.get(i) > cummulativeGroupCountry.get(j)) {
                             if (i == 0) {
                                 countryGroup1Points++;
-                            } else if (i==1){
+                            } else if (i == 1) {
                                 countryGroup2Points++;
-                            } 
+                            }
                         }
                     }
                 }
@@ -185,13 +185,13 @@
             Integer numOfMembersInJoinDate2 = (Integer) session.getAttribute("numOfMembersInJoinDate2");
             Integer numOfMembersInJoinDate3 = (Integer) session.getAttribute("numOfMembersInJoinDate3");
             Integer numOfMembersInJoinDate4 = (Integer) session.getAttribute("numOfMembersInJoinDate4");
-            
+
             List<Integer> joinDateGroupIncome = new ArrayList();
             cummulativeGroupIncome.add(getRevenueOfJoinDate1 / numOfMembersInJoinDate1);
             cummulativeGroupIncome.add(getRevenueOfJoinDate2 / numOfMembersInJoinDate2);
             cummulativeGroupIncome.add(getRevenueOfJoinDate3 / numOfMembersInJoinDate3);
             cummulativeGroupIncome.add(getRevenueOfJoinDate4 / numOfMembersInJoinDate4);
-            
+
             Integer joinDateGroup1Points = 1;
             Integer joinDateGroup2Points = 1;
             Integer joinDateGroup3Points = 1;
@@ -203,11 +203,11 @@
                         if (joinDateGroupIncome.get(i) > joinDateGroupIncome.get(j)) {
                             if (i == 0) {
                                 joinDateGroup1Points++;
-                            } else if (i==1){
+                            } else if (i == 1) {
                                 joinDateGroup2Points++;
-                            } else if (i==2) {
+                            } else if (i == 2) {
                                 joinDateGroup3Points++;
-                            } else if (i==3) {
+                            } else if (i == 3) {
                                 joinDateGroup4Points++;
                             }
                         }
@@ -335,16 +335,16 @@
                                                                         <%
                                                                             Integer totalPoints = 0;
                                                                             if (member.getAge() <= 25 && member.getAge() >= 18) {
-                                                                                out.println("("+ageGroup1Points+")");
+                                                                                out.println("(" + ageGroup1Points + ")");
                                                                                 totalPoints += ageGroup1Points;
                                                                             } else if (member.getAge() > 25 && member.getAge() <= 40) {
-                                                                                out.println("("+ageGroup2Points+")");
+                                                                                out.println("(" + ageGroup2Points + ")");
                                                                                 totalPoints += ageGroup2Points;
                                                                             } else if (member.getAge() > 40 && member.getAge() <= 55) {
-                                                                                out.println("("+ageGroup3Points+")");
+                                                                                out.println("(" + ageGroup3Points + ")");
                                                                                 totalPoints += ageGroup3Points;
                                                                             } else if (member.getAge() <= 75) {
-                                                                                out.println("("+ageGroup4Points+")");
+                                                                                out.println("(" + ageGroup4Points + ")");
                                                                                 totalPoints += ageGroup4Points;
                                                                             }
                                                                         %>
@@ -353,16 +353,16 @@
                                                                         <%=member.getIncome()%>
 
                                                                         <% if (member.getIncome() <= 30000) {
-                                                                                out.println("("+incomeGroup1Points+")");
+                                                                                out.println("(" + incomeGroup1Points + ")");
                                                                                 totalPoints += incomeGroup1Points;
                                                                             } else if (member.getIncome() > 30000 && member.getIncome() <= 60000) {
-                                                                                out.println("("+incomeGroup2Points+")");
+                                                                                out.println("(" + incomeGroup2Points + ")");
                                                                                 totalPoints += incomeGroup2Points;
                                                                             } else if (member.getIncome() > 60000 && member.getIncome() <= 100000) {
-                                                                                out.println("("+incomeGroup3Points+")");
+                                                                                out.println("(" + incomeGroup3Points + ")");
                                                                                 totalPoints += incomeGroup3Points;
                                                                             } else if (member.getIncome() > 100000) {
-                                                                                out.println("("+incomeGroup4Points+")");
+                                                                                out.println("(" + incomeGroup4Points + ")");
                                                                                 totalPoints += incomeGroup4Points;
                                                                             }
                                                                         %>
@@ -371,57 +371,63 @@
                                                                         <%=member.getCity()%>
 
                                                                         <% if (member.getCity().equalsIgnoreCase("Malaysia")) {
-                                                                                out.println("("+countryGroup1Points+")");
+                                                                                out.println("(" + countryGroup1Points + ")");
                                                                                 totalPoints += countryGroup1Points;
                                                                             } else if (member.getCity().equalsIgnoreCase("Singapore")) {
-                                                                                out.println("("+countryGroup2Points+")");
+                                                                                out.println("(" + countryGroup2Points + ")");
                                                                                 totalPoints += countryGroup2Points;
                                                                             }
                                                                         %>
                                                                     </td>
 
                                                                     <td>
-                                                                        <%=member.getJoinDate()%>
                                                                         <%
-                                                                            Calendar c = Calendar.getInstance();
+                                                                            if (member.getJoinDate() != null) {
+                                                                                out.print(member.getJoinDate());
+                                                                            }
+
+                                                                        %>
+                                                                        <%                                                                            Calendar c = Calendar.getInstance();
                                                                             Date date = new Date();
                                                                             c.setTime(date);
                                                                             c.add(Calendar.DATE, (-365));
                                                                             Date churnDate = c.getTime();
-
-                                                                            Long days = member.getJoinDate().getTime() - churnDate.getTime();
-                                                                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                                                                            if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                                                                                out.println("(" + joinDateGroup1Points + ")");
-                                                                                totalPoints += joinDateGroup1Points;
-                                                                            } else {
-                                                                                c.add(Calendar.DATE, (-365));
-                                                                                churnDate = c.getTime();
-
+                                                                            if (member.getJoinDate() != null) {
+                                                                                Long days = member.getJoinDate().getTime() - churnDate.getTime();
+                                                                                days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
                                                                                 if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                                                                                    out.println("(" + joinDateGroup2Points + ")");
-                                                                                    totalPoints += joinDateGroup2Points;
+                                                                                    out.println("(" + joinDateGroup1Points + ")");
+                                                                                    totalPoints += joinDateGroup1Points;
                                                                                 } else {
                                                                                     c.add(Calendar.DATE, (-365));
                                                                                     churnDate = c.getTime();
 
                                                                                     if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                                                                                        out.println("(" + joinDateGroup3Points + ")");
-                                                                                        totalPoints += joinDateGroup3Points;
+                                                                                        out.println("(" + joinDateGroup2Points + ")");
+                                                                                        totalPoints += joinDateGroup2Points;
                                                                                     } else {
                                                                                         c.add(Calendar.DATE, (-365));
                                                                                         churnDate = c.getTime();
 
                                                                                         if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                                                                                            out.println("(" + joinDateGroup4Points + ")");
-                                                                                            totalPoints += joinDateGroup4Points;
+                                                                                            out.println("(" + joinDateGroup3Points + ")");
+                                                                                            totalPoints += joinDateGroup3Points;
                                                                                         } else {
-                                                                                            out.println("(5)");
-                                                                                            totalPoints += 5;
+                                                                                            c.add(Calendar.DATE, (-365));
+                                                                                            churnDate = c.getTime();
+
+                                                                                            if (member.getJoinDate().getTime() > churnDate.getTime()) {
+                                                                                                out.println("(" + joinDateGroup4Points + ")");
+                                                                                                totalPoints += joinDateGroup4Points;
+                                                                                            } else {
+                                                                                                out.println("(5)");
+                                                                                                totalPoints += 5;
+                                                                                            }
+
                                                                                         }
                                                                                     }
-                                                                                }
 
+                                                                                }
                                                                             }
                                                                         %>
                                                                     </td>

@@ -689,24 +689,24 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-if (member.getJoinDate() != null) {
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 365);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 365);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0) {
-                            retainedMembers.add(member);
-                            numOfMembersNotChurn++;
-                            break;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0) {
+                                retainedMembers.add(member);
+                                numOfMembersNotChurn++;
+                                break;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
-            }
             }
             return retainedMembers;
         } catch (Exception ex) {
@@ -730,23 +730,23 @@ if (member.getJoinDate() != null) {
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-if (member.getJoinDate() != null) {
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 365);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 365);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0) {
-                            numOfMembersNotChurn++;
-                            numOfOrders++;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0) {
+                                numOfMembersNotChurn++;
+                                numOfOrders++;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
-            }
             }
             return ((double) numOfOrders / (double) numOfMembers);
         } catch (Exception ex) {
@@ -770,23 +770,23 @@ if (member.getJoinDate() != null) {
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-if (member.getJoinDate() != null) {
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 730);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 730);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0 && days < 365) {
-                            numOfMembersNotChurn++;
-                            numOfOrders++;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0 && days < 365) {
+                                numOfMembersNotChurn++;
+                                numOfOrders++;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
-            }
             }
 
             return ((double) numOfOrders / (double) numOfMembers);
@@ -813,24 +813,24 @@ if (member.getJoinDate() != null) {
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-if (member.getJoinDate() != null) {
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 365);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 365);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);;
-                        if (days > 0) {
-                            totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
-                            numOfOrders++;
-                            break;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);;
+                            if (days > 0) {
+                                totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
+                                numOfOrders++;
+                                break;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
-            }
             }
             return ((double) totalPriceOfOrders / (double) numOfOrders);
         } catch (Exception ex) {
@@ -935,24 +935,24 @@ if (member.getJoinDate() != null) {
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-if (member.getJoinDate() != null) {
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 365);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 365);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                    for (SalesRecordEntity record : member.getPurchases()) {
-                        Long days = churnDate.getTime() - record.getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0) {
-                            numOfMembersNotChurn++;
-                            break;
+                        for (SalesRecordEntity record : member.getPurchases()) {
+                            Long days = churnDate.getTime() - record.getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0) {
+                                numOfMembersNotChurn++;
+                                break;
+                            }
                         }
-                    }
-                } else {
+                    } else {
 
+                    }
                 }
-            }
             }
             DecimalFormat df = new DecimalFormat("#.00");
 
@@ -1772,12 +1772,14 @@ if (member.getJoinDate() != null) {
 
         int totalCummulativeSpending = 0;
         for (MemberEntity member : members) {
-            if (member.getCity().equalsIgnoreCase(country)) {
-                List<SalesRecordEntity> salesRecordOfMember = member.getPurchases();
-                if (salesRecordOfMember != null) {
-                    for (SalesRecordEntity salesRecord : salesRecordOfMember) {
+            if (member.getCity() != null) {
+                if (member.getCity().equalsIgnoreCase(country)) {
+                    List<SalesRecordEntity> salesRecordOfMember = member.getPurchases();
+                    if (salesRecordOfMember != null) {
+                        for (SalesRecordEntity salesRecord : salesRecordOfMember) {
 
-                        totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
+                            totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
+                        }
                     }
                 }
             }
@@ -1842,8 +1844,10 @@ if (member.getJoinDate() != null) {
 
         int numOfmembersInGroup = 0;
         for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getCity().equalsIgnoreCase(country)) {
-                numOfmembersInGroup++;
+            if (members.get(i).getCity() != null) {
+                if (members.get(i).getCity().equalsIgnoreCase(country)) {
+                    numOfmembersInGroup++;
+                }
             }
         }
         return numOfmembersInGroup;
