@@ -33,15 +33,15 @@ public class Analytical_ValueAnalysisRFMMenuItemServlet extends HttpServlet {
             List<MemberEntity> members = accountManagementBean.listAllMember();
             List<Integer> memberRecencyValue = new ArrayList();
             for (MemberEntity member : members) {
-                memberRecencyValue.add(customerValueAnalysisBean.getCustomerRecency(member.getId()));
+                memberRecencyValue.add(customerValueAnalysisBean.getCustomerRecencyMenuItem(member.getId()));
             }
             List<Integer> memberFrequencyValue = new ArrayList();
             for (MemberEntity member : members) {
-                memberFrequencyValue.add(customerValueAnalysisBean.getCustomerFrequency(member.getId()));
+                memberFrequencyValue.add(customerValueAnalysisBean.getCustomerFrequencyMenuItem(member.getId()));
             }
             List<Integer> memberMonetaryValue = new ArrayList();
             for (MemberEntity member : members) {
-                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
+                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValueMenuItem(member.getId()));
             }
             
             session.setAttribute("members", members);

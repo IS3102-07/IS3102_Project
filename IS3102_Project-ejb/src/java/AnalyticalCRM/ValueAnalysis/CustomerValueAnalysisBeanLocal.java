@@ -18,6 +18,17 @@ import javax.ejb.Stateful;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {
+     public Integer getCustomerMonetaryValueMenuItem(Long memberId);
+    
+    public Integer getCustomerMonetaryValueRetailProduct(Long memberId);
+    
+    public Integer getCustomerFrequencyMenuItem(Long memberId);
+    
+    public Integer getCustomerFrequencyRetailProduct(Long memberId);
+    
+    public Integer getCustomerRecencyMenuItem(Long memberId);
+    
+    public Integer getCustomerRecencyRetailProduct(Long memberId);
     
     public Integer getAverageCustomerRecencyRetailProduct();
     
