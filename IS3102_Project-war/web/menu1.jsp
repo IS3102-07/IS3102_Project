@@ -34,65 +34,6 @@
      msg.setSentDate(Calendar.getInstance().getTime());
 
      listOfInboxMsg.add(msg);*/
-
-    int sizeOfList = listOfInboxMsg.size();
-    MessageInboxEntity inbox;
-    String inbox1_id = "";
-    String inbox1_date = "";
-    String inbox1_sender = "";
-    String inbox1_message = "";
-
-    String inbox2_id = "";
-    String inbox2_date = "";
-    String inbox2_sender = "";
-    String inbox2_message = "";
-
-    String inbox3_id = "";
-    String inbox3_date = "";
-    String inbox3_sender = "";
-    String inbox3_message = "";
-    switch (sizeOfList) {
-        case 0:
-            break;
-        case 1:
-            inbox = listOfInboxMsg.get(0);
-            inbox1_id = inbox.getId() + "";
-            inbox1_date = inbox.getSentDate().toString();
-            inbox1_sender = inbox.getSender().getName();
-            inbox1_message = inbox.getMessage();
-            break;
-        case 2:
-            inbox = listOfInboxMsg.get(0);
-            inbox1_id = inbox.getId() + "";
-            inbox1_date = inbox.getSentDate().toString();
-            inbox1_sender = inbox.getSender().getName();
-            inbox1_message = inbox.getMessage();
-
-            inbox = listOfInboxMsg.get(1);
-            inbox2_id = inbox.getId() + "";
-            inbox2_date = inbox.getSentDate().toString();
-            inbox2_sender = inbox.getSender().getName();
-            inbox2_message = inbox.getMessage();
-            break;
-        default:
-            inbox = listOfInboxMsg.get(0);
-            inbox1_id = inbox.getId() + "";
-            inbox1_date = inbox.getSentDate().toString();
-            inbox1_sender = inbox.getSender().getName();
-            inbox1_message = inbox.getMessage();
-
-            inbox = listOfInboxMsg.get(1);
-            inbox2_id = inbox.getId() + "";
-            inbox2_date = inbox.getSentDate().toString();
-            inbox2_sender = inbox.getSender().getName();
-            inbox2_message = inbox.getMessage();
-
-            inbox = listOfInboxMsg.get(2);
-            inbox3_id = inbox.getId() + "";
-            inbox3_date = inbox.getSentDate().toString();
-            inbox3_sender = inbox.getSender().getName();
-            inbox3_message = inbox.getMessage();
-    }
 %>
 
 
@@ -113,47 +54,39 @@
         <li class="dropdown">
             <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-envelope"> Inbox</i> <b class="caret"></b></a>
             <ul class="dropdown-menu message-dropdown">
-                <li class="message-preview" id="m1">
+                <%
+                    if (listOfInboxMsg.size() > 0) {
+                        for (int i = 0; i < 3; i++) {
+                %>
+
+                <li class="message-preview">
                     <a href="../WorkspaceMessage_Servlet">
                         <div class="media">
                             <div class="media-body">
-                                <h5 class="media-heading"><strong><%=inbox1_sender%></strong></h5><!--Sender-->
-                                <p class="small text-muted"><i class="icon icon-clock-o"><%=inbox1_date%></i> </p><!--Date sent-->
-                                <p><%=inbox1_message%></p> <!--Message Content-->
+                                <h5 class="media-heading"><strong><%=listOfInboxMsg.get(i).getSender().getName()%></strong></h5><!--Sender-->
+                                <p class="small text-muted"><i class="icon icon-clock-o"><%=listOfInboxMsg.get(i).getSentDate().toString()%></i> </p><!--Date sent-->
+                                <p><%=listOfInboxMsg.get(i).getMessage()%></p> <!--Message Content-->
                             </div>
                         </div>
                     </a>
                 </li>
-                <li class="message-preview" id="m2">
-                    <a href="../WorkspaceMessage_Servlet">
-                        <div class="media">
-                            <div class="media-body">
-                                <h5 class="media-heading"><strong><%=inbox2_sender%></strong></h5><!--Sender-->
-                                <p class="small text-muted"><i class="icon icon-clock-o"><%=inbox2_date%></i> </p><!--Date sent-->
-                                <p><%=inbox2_message%></p> <!--Message Content-->
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="message-preview" onLoad="refreshMsg()">
-                    <a href="../WorkspaceMessage_Servlet">
-                        <div class="media" id="m3">
-                            <div class="media-body">
-                                <h5 class="media-heading"><strong><%=inbox3_sender%></strong></h5><!--Sender-->
-                                <p class="small text-muted"><i class="icon icon-clock-o"><%=inbox3_date%></i> </p><!--Date sent-->
-                                <p><%=inbox3_message%></p> <!--Message Content-->
-                            </div>
-                        </div>
-                    </a>
-                </li>
+                <%
+                    }
+                %>
                 <li class="message-footer">
                     <a href="../WorkspaceMessage_Servlet">Read All New Messages</a>
                 </li>
+                <%} else {%>
+
+                <li class="message-footer">
+                    <a href="#">No Message</a>
+                </li>
+                <%}%>
             </ul>
         </li>
         <li class="dropdown">
             <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-group"></i> My Roles <b class="caret"></b></a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="min-width: 300px">
                 <%
                     for (RoleEntity role : roles) {
                 %>
@@ -433,7 +366,7 @@
                     <i class="icon icon-cogs"></i> Operational CRM <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="operationalCRM" class="collapse">
-                    <% if ((roleCanView3) && (roleCanView4)){ %>
+                    <% if ((roleCanView3) && (roleCanView4)) { %>
                     <li>
                         <a href="../LoyaltyManagement_Servlet">Loyalty & Rewards</a>
                     </li>
