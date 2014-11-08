@@ -32,7 +32,7 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
             List<LineItemEntity> sortBestSellingFurniture1Year = customerValueAnalysisBean.sortBestSellingFurniture1Year();
             session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
-            session.setAttribute("sortBestSellingFurniture1Year",sortBestSellingFurniture1Year);
+            //session.setAttribute("sortBestSellingFurniture1Year",sortBestSellingFurniture1Year);
 
             List<Date> dateOfLastPurchaseFurniture = new ArrayList();
 

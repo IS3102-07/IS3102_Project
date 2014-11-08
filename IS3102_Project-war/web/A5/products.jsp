@@ -74,7 +74,7 @@
 
                                     <%
                                         List<LineItemEntity> sortBestSellingFurniture = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture"));
-                                        List<LineItemEntity> sortBestSellingFurniture1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture1Year"));
+                                        //List<LineItemEntity> sortBestSellingFurniture1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture1Year"));
                                         List<LineItemEntity> listOfSecondProduct = (List<LineItemEntity>) (session.getAttribute("listOfSecondProduct"));
                                         List<Date> dateOfLastPurchaseFurniture = (List<Date>) (session.getAttribute("dateOfLastPurchaseFurniture"));
                                         
@@ -125,12 +125,12 @@
                                                                     </td>
                                                                     <td>
                                                                         <%
-                                                                        for (int j = 0; j < sortBestSellingFurniture1Year.size(); j++) {
+                                                                        /*for (int j = 0; j < sortBestSellingFurniture1Year.size(); j++) {
                                                                             if (item.getId().equals(sortBestSellingFurniture1Year.get(j).getItem().getId())) {
                                                                                 out.print(sortBestSellingFurniture1Year.get(j).getQuantity());
                                                                                 break;
                                                                             }
-                                                                        }
+                                                                        }*/
                                                                         %>
                                                                         
                                                                     </td>
