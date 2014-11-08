@@ -88,6 +88,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
         try {
             MemberEntity memberEntity = new MemberEntity();
             memberEntity.create(name, address, DOB, email, phone, country, city, zipCode, passwordHash, passwordSalt);
+            Date date = new Date();
+            memberEntity.setJoinDate(date);
             memberEntity.setLoyaltyTier(loyaltyAndRewardsBean.getLowestLevelTier());
             em.persist(memberEntity);
             memberID = memberEntity.getMemberID();

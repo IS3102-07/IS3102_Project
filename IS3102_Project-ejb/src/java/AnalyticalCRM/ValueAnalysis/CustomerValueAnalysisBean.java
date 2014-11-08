@@ -689,7 +689,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-
+if (member.getJoinDate() != null) {
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
@@ -706,6 +706,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 } else {
                 }
+            }
             }
             return retainedMembers;
         } catch (Exception ex) {
@@ -729,7 +730,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-
+if (member.getJoinDate() != null) {
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
@@ -745,6 +746,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 } else {
                 }
+            }
             }
             return ((double) numOfOrders / (double) numOfMembers);
         } catch (Exception ex) {
@@ -768,7 +770,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-
+if (member.getJoinDate() != null) {
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 730);
                 Date churnDate = c.getTime();
@@ -784,6 +786,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 } else {
                 }
+            }
             }
 
             return ((double) numOfOrders / (double) numOfMembers);
@@ -810,7 +813,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-
+if (member.getJoinDate() != null) {
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
@@ -827,6 +830,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 } else {
                 }
+            }
             }
             return ((double) totalPriceOfOrders / (double) numOfOrders);
         } catch (Exception ex) {
@@ -851,21 +855,22 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 730);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 730);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0 && days < 365) {
-                            totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
-                            numOfOrders++;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0 && days < 365) {
+                                totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
+                                numOfOrders++;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
@@ -930,7 +935,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
-
+if (member.getJoinDate() != null) {
                 c.setTime(member.getJoinDate());
                 c.add(Calendar.DATE, 365);
                 Date churnDate = c.getTime();
@@ -947,6 +952,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 } else {
 
                 }
+            }
             }
             DecimalFormat df = new DecimalFormat("#.00");
 
