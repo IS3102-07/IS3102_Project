@@ -22,18 +22,17 @@
                     document.rfm.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.rfm.action = "../Analytical_ValueAnalysisSendLoyaltyServlet";
+                    document.rfm.action = "../Analytical_ValueAnalysisSendLoyaltyRPServlet";
                     document.rfm.submit();
                 }
             }
-            
-            
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
                 }
             }
+            
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -68,7 +67,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Recency, Frequency & Monetary Analysis on Furnitures");
+                                            out.println("Recency, Frequency & Monetary Analysis on Retail Products");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);
@@ -82,6 +81,7 @@
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="rfm">
+                                   
                                             <%
                                                 List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));
                                             %>
@@ -91,8 +91,12 @@
                                                 Integer averageMemberFrequency = (Integer) session.getAttribute("averageMemberFrequency");
                                                 Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
                                             %>
+
+                                        
+                                  
                                     <div class="row">
                                         <div class="col-lg-12">
+
                                             <div class="panel-body">
                                                 <div class="table-responsive">
 

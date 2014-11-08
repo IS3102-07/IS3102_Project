@@ -954,6 +954,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
+    //For furnitures only
     @Override
     public Integer getAverageCustomerRecency() {
         System.out.println("getAverageCustomerRecency()");
@@ -971,15 +972,25 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     List<Date> dates = new ArrayList<Date>();
                     Date latest;
 
+                    Boolean purchaseIncludesFurniture = false;
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        dates.add(member.getPurchases().get(i).getCreatedDate());
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                                purchaseIncludesFurniture = true;
+                            }
+                        }
                     }
-                    latest = Collections.max(dates);
+                    if (purchaseIncludesFurniture == true) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            dates.add(member.getPurchases().get(i).getCreatedDate());
+                        }
+                        latest = Collections.max(dates);
 
-                    Long days = date.getTime() - latest.getTime();
-                    days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                    numOfDaysWithRecord++;
-                    totalDays += (int) (long) days;
+                        Long days = date.getTime() - latest.getTime();
+                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                        numOfDaysWithRecord++;
+                        totalDays += (int) (long) days;
+                    }
                 } else {
                 }
             }
@@ -1045,6 +1056,58 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
+    public Integer getAverageCustomerRecencyRetailProduct() {
+        System.out.println("getAverageCustomerRecencyRetailProduct()");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+
+        Integer numOfDaysWithRecord = 0;
+        Integer totalDays = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    List<Date> dates = new ArrayList<Date>();
+                    Date latest;
+                    Boolean containsRetailProduct = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+
+                        if (member.getPurchases().get(i).getItemsPurchased() != null && member.getPurchases().get(i).getItemsPurchased().size() != 0) {
+                            for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                                if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Retail Product")) {
+                                    containsRetailProduct = true;
+                                }
+                            }
+                        }
+                    }
+                    if (containsRetailProduct == true) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            dates.add(member.getPurchases().get(i).getCreatedDate());
+                        }
+                        latest = Collections.max(dates);
+
+                        Long days = date.getTime() - latest.getTime();
+                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                        numOfDaysWithRecord++;
+                        totalDays += (int) (long) days;
+                    }
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list recency:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfDaysWithRecord != 0) {
+            return totalDays / numOfDaysWithRecord;
+        } else {
+            return 0;
+        }
+    }
+
+    //For furnitures only
     @Override
     public Integer getAverageCustomerFrequency() {
         System.out.println("getAverageCustomerFrequency()");
@@ -1057,8 +1120,18 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
             for (MemberEntity member : members) {
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                    numOfPurchases++;
-                    frequency += member.getPurchases().size();
+                    Boolean furnitureExistsInPurchase = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                                furnitureExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (furnitureExistsInPurchase == true) {
+                        numOfPurchases++;
+                        frequency += member.getPurchases().size();
+                    }
                 } else {
                 }
             }
@@ -1073,6 +1146,81 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
     }
 
+    public Integer getAverageCustomerFrequencyMenuItem() {
+        System.out.println("getAverageCustomerFrequencyMenuItem()");
+
+        Integer numOfPurchases = 0;
+        Integer frequency = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    Boolean menuItemExistsInPurchase = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                                menuItemExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (menuItemExistsInPurchase) {
+                        numOfPurchases++;
+                        frequency += member.getPurchases().size();
+                    }
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list recency:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfPurchases != 0) {
+            return frequency / numOfPurchases;
+        } else {
+            return 0;
+        }
+    }
+
+    public Integer getAverageCustomerFrequencyRetailProduct() {
+        System.out.println("getAverageCustomerFrequencyRetailProduct()");
+
+        Integer numOfPurchases = 0;
+        Integer frequency = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                    Boolean retailProductExistsInPurchase = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Retail Product")) {
+                                retailProductExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (retailProductExistsInPurchase) {
+                        numOfPurchases++;
+                        frequency += member.getPurchases().size();
+                    }
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list recency:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfPurchases != 0) {
+            return frequency / numOfPurchases;
+        } else {
+            return 0;
+        }
+    }
+
+    //For furnitures only
     @Override
     public Integer getAverageCustomerMonetaryValue() {
         System.out.println("getAverageCustomerMonetaryValue()");
@@ -1086,9 +1234,99 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             for (MemberEntity member : members) {
                 if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
+                    Boolean furnitureExistsInPurchase = false;
                     for (int i = 0; i < member.getPurchases().size(); i++) {
-                        numOfPurchases++;
-                        amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                                furnitureExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (furnitureExistsInPurchase) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            numOfPurchases++;
+                            amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        }
+                    }
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list monetary value:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfPurchases != 0) {
+            return amountOfPurchase / numOfPurchases;
+        } else {
+            return 0;
+        }
+    }
+
+    public Integer getAverageCustomerMonetaryValueRetailProduct() {
+        System.out.println("getAverageCustomerMonetaryValueRetailProduct()");
+
+        Integer amountOfPurchase = 0;
+        Integer numOfPurchases = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+
+                    Boolean retailProductExistsInPurchase = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Retail Product")) {
+                                retailProductExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (retailProductExistsInPurchase) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            numOfPurchases++;
+                            amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        }
+                    }
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("\nServer failed to list monetary value:\n" + ex);
+            ex.printStackTrace();
+        }
+        if (numOfPurchases != 0) {
+            return amountOfPurchase / numOfPurchases;
+        } else {
+            return 0;
+        }
+    }
+
+    public Integer getAverageCustomerMonetaryValueMenuItem() {
+        System.out.println("getAverageCustomerMonetaryValueMenuItem()");
+
+        Integer amountOfPurchase = 0;
+        Integer numOfPurchases = 0;
+        try {
+            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            List<MemberEntity> members = q.getResultList();
+
+            for (MemberEntity member : members) {
+                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+
+                    Boolean menuItemExistsInPurchase = false;
+                    for (int i = 0; i < member.getPurchases().size(); i++) {
+                        for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                            if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                                menuItemExistsInPurchase = true;
+                            }
+                        }
+                    }
+                    if (menuItemExistsInPurchase) {
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            numOfPurchases++;
+                            amountOfPurchase += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        }
                     }
                 } else {
                 }
@@ -1109,6 +1347,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         return 5;
     }
 
+    //For furniture only
     @Override
     public Integer getCustomerRecency(Long memberId) {
         System.out.println("getCustomerRecency()");
@@ -1119,35 +1358,167 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         MemberEntity member = em.find(MemberEntity.class, memberId);
         if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-            List<Date> dates = new ArrayList<Date>();
-
+            Boolean furnitureExists = false;
             for (int i = 0; i < member.getPurchases().size(); i++) {
-                dates.add(member.getPurchases().get(i).getCreatedDate());
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                        furnitureExists = true;
+                        break;
+                    }
+                }
             }
-            Date latest = Collections.max(dates);
+            if (furnitureExists) {
+                List<Date> dates = new ArrayList<Date>();
 
-            Long numOfDaysBetween = date.getTime() - latest.getTime();
-            days = (int) (long) TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS);
+                for (int i = 0; i < member.getPurchases().size(); i++) {
+                    dates.add(member.getPurchases().get(i).getCreatedDate());
+                }
+                Date latest = Collections.max(dates);
 
+                Long numOfDaysBetween = date.getTime() - latest.getTime();
+                days = (int) (long) TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS);
+            }
+        } else {
+        }
+        return days;
+    }
+    
+    //For retail products
+    public Integer getCustomerRecencyRetailProduct(Long memberId) {
+        System.out.println("getCustomerRecencyRetailProduct()");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+
+            Boolean retailProductExists = false;
+            for (int i = 0; i < member.getPurchases().size(); i++) {
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Retail Product")) {
+                        retailProductExists = true;
+                        break;
+                    }
+                }
+            }
+            if (retailProductExists) {
+                List<Date> dates = new ArrayList<Date>();
+
+                for (int i = 0; i < member.getPurchases().size(); i++) {
+                    dates.add(member.getPurchases().get(i).getCreatedDate());
+                }
+                Date latest = Collections.max(dates);
+
+                Long numOfDaysBetween = date.getTime() - latest.getTime();
+                days = (int) (long) TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS);
+            }
+        } else {
+        }
+        return days;
+    }
+    
+    //For menu item
+    public Integer getCustomerRecencyMenuItem(Long memberId) {
+        System.out.println("getCustomerRecencyMenuItem()");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Integer days = 0;
+
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+
+            Boolean menuItemExists = false;
+            for (int i = 0; i < member.getPurchases().size(); i++) {
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                        menuItemExists = true;
+                        break;
+                    }
+                }
+            }
+            if (menuItemExists) {
+                List<Date> dates = new ArrayList<Date>();
+
+                for (int i = 0; i < member.getPurchases().size(); i++) {
+                    dates.add(member.getPurchases().get(i).getCreatedDate());
+                }
+                Date latest = Collections.max(dates);
+
+                Long numOfDaysBetween = date.getTime() - latest.getTime();
+                days = (int) (long) TimeUnit.DAYS.convert(numOfDaysBetween, TimeUnit.MILLISECONDS);
+            }
         } else {
         }
         return days;
     }
 
+    //For furniture only
     @Override
     public Integer getCustomerFrequency(Long memberId) {
         System.out.println("getCustomerFrequency()");
 
         Integer numOfPurchases;
+        Integer numOfTimesPurchased = 0;
         MemberEntity member = em.find(MemberEntity.class, memberId);
         if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-            numOfPurchases = member.getPurchases().size();
+            for (int i = 0; i < member.getPurchases().size(); i++) {
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                        numOfTimesPurchased++;
+                    }
+                }
+            }
+            
         } else {
             return 0;
         }
-        return numOfPurchases;
+        return numOfTimesPurchased;
+    }
+    
+    public Integer getCustomerFrequencyRetailProduct(Long memberId) {
+        System.out.println("getCustomerFrequencyRetailProduct()");
+
+        Integer numOfPurchases;
+        Integer numOfTimesPurchased = 0;
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+            for (int i = 0; i < member.getPurchases().size(); i++) {
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Retail Product")) {
+                        numOfTimesPurchased++;
+                    }
+                }
+            }
+            
+        } else {
+            return 0;
+        }
+        return numOfTimesPurchased;
     }
 
+    public Integer getCustomerFrequencyMenuItem(Long memberId) {
+        System.out.println("getCustomerFrequencyMenuItem()");
+
+        Integer numOfPurchases;
+        Integer numOfTimesPurchased = 0;
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+            for (int i = 0; i < member.getPurchases().size(); i++) {
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                        numOfTimesPurchased++;
+                    }
+                }
+            }
+            
+        } else {
+            return 0;
+        }
+        return numOfTimesPurchased;
+    }
+    
+    //for furnitures only
     @Override
     public Integer getCustomerMonetaryValue(Long memberId) {
         System.out.println("getCustomerMonetaryValue()");
@@ -1156,7 +1527,57 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         MemberEntity member = em.find(MemberEntity.class, memberId);
         if (member.getPurchases() != null && member.getPurchases().size() != 0) {
             for (int i = 0; i < member.getPurchases().size(); i++) {
-                totalPriceOfPurchases += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                Boolean furnitureExists = false;
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
+                        totalPriceOfPurchases += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        break;
+                    }
+                }
+                
+            }
+        } else {
+            return 0;
+        }
+        return totalPriceOfPurchases;
+    }
+    
+    public Integer getCustomerMonetaryValueRetailProduct(Long memberId) {
+        System.out.println("getCustomerMonetaryValueRetailProduct()");
+
+        Integer totalPriceOfPurchases = 0;
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+            for (int i = 0; i < member.getPurchases().size(); i++) {
+                Boolean furnitureExists = false;
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Retail Product")) {
+                        totalPriceOfPurchases += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        break;
+                    }
+                }
+                
+            }
+        } else {
+            return 0;
+        }
+        return totalPriceOfPurchases;
+    }
+    
+    public Integer getCustomerMonetaryValueMenuItem(Long memberId) {
+        System.out.println("getCustomerMonetaryValueMenuItem()");
+
+        Integer totalPriceOfPurchases = 0;
+        MemberEntity member = em.find(MemberEntity.class, memberId);
+        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+            for (int i = 0; i < member.getPurchases().size(); i++) {
+                Boolean furnitureExists = false;
+                for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
+                    if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
+                        totalPriceOfPurchases += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId()).intValue();
+                        break;
+                    }
+                }
             }
         } else {
             return 0;

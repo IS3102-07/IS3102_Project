@@ -8,6 +8,7 @@
     <body>
 
         <script>
+           
             function sendLoyaltyPoints() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -22,12 +23,11 @@
                     document.rfm.submit();
                 } else {
                     window.event.returnValue = true;
-                    document.rfm.action = "../Analytical_ValueAnalysisSendLoyaltyServlet";
+                    document.rfm.action = "../Analytical_ValueAnalysisSendLoyaltyMIServlet";
                     document.rfm.submit();
                 }
             }
-            
-            
+           
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -50,9 +50,6 @@
                                     <i class="icon icon-user"></i> <a href="../Analytical_ValueAnalysisServlet">Value Analysis</a>
                                 </li>
                                 <li class="active">
-                                    <i class="icon icon-user"></i> <a href="rfmSelect.jsp">RFM Selection</a>
-                                </li>
-                                <li class="active">
                                     <i class="icon icon-user"></i> Recency, Frequency & Monetary
                                 </li>
                             </ol>
@@ -68,7 +65,7 @@
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
-                                            out.println("Recency, Frequency & Monetary Analysis on Furnitures");
+                                            out.println("Recency, Frequency & Monetary Analysis");
                                         } else if ((errMsg != null) && (goodMsg == null)) {
                                             if (!errMsg.equals("")) {
                                                 out.println(errMsg);
@@ -82,6 +79,7 @@
                                 </div>
                                 <!-- /.panel-heading -->
                                 <form name="rfm">
+                                   
                                             <%
                                                 List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));
                                             %>
@@ -91,8 +89,12 @@
                                                 Integer averageMemberFrequency = (Integer) session.getAttribute("averageMemberFrequency");
                                                 Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
                                             %>
+
+                                        
+                                  
                                     <div class="row">
                                         <div class="col-lg-12">
+
                                             <div class="panel-body">
                                                 <div class="table-responsive">
 

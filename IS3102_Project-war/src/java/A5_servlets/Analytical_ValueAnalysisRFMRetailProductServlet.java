@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class Analytical_ValueAnalysisRFMServlet extends HttpServlet {
+public class Analytical_ValueAnalysisRFMRetailProductServlet extends HttpServlet {
 
     @EJB
     private CustomerValueAnalysisBeanLocal customerValueAnalysisBean;
@@ -29,19 +29,19 @@ public class Analytical_ValueAnalysisRFMServlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             System.out.println("Analytical_ValueAnalysisRFMServlet");
-            
+
             List<MemberEntity> members = accountManagementBean.listAllMember();
             List<Integer> memberRecencyValue = new ArrayList();
             for (MemberEntity member : members) {
-                memberRecencyValue.add(customerValueAnalysisBean.getCustomerRecency(member.getId()));
+                memberRecencyValue.add(customerValueAnalysisBean.getCustomerRecencyRetailProduct(member.getId()));
             }
             List<Integer> memberFrequencyValue = new ArrayList();
             for (MemberEntity member : members) {
-                memberFrequencyValue.add(customerValueAnalysisBean.getCustomerFrequency(member.getId()));
+                memberFrequencyValue.add(customerValueAnalysisBean.getCustomerFrequencyRetailProduct(member.getId()));
             }
             List<Integer> memberMonetaryValue = new ArrayList();
             for (MemberEntity member : members) {
-                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
+                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValueRetailProduct(member.getId()));
             }
             
             session.setAttribute("members", members);
@@ -49,16 +49,16 @@ public class Analytical_ValueAnalysisRFMServlet extends HttpServlet {
             session.setAttribute("memberFrequencyValue", memberFrequencyValue);
             session.setAttribute("memberMonetaryValue", memberMonetaryValue);
 
-            Integer averageMemberRecency = customerValueAnalysisBean.getAverageCustomerRecency();
+            Integer averageMemberRecency = customerValueAnalysisBean.getAverageCustomerRecencyRetailProduct();
             session.setAttribute("averageMemberRecency", averageMemberRecency);
 
-            Integer averageMemberFrequency = customerValueAnalysisBean.getAverageCustomerFrequency();
+            Integer averageMemberFrequency = customerValueAnalysisBean.getAverageCustomerFrequencyRetailProduct();
             session.setAttribute("averageMemberFrequency", averageMemberFrequency);
 
-            Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValue();
+            Integer averageMemberMonetaryValue = customerValueAnalysisBean.getAverageCustomerMonetaryValueRetailProduct();
             session.setAttribute("averageMemberMonetaryValue", averageMemberMonetaryValue);
 
-            response.sendRedirect("A5/rfm.jsp");
+            response.sendRedirect("A5/rfmRetailProduct.jsp");
 
         } catch (Exception ex) {
             out.println("\n\n " + ex.getMessage());
