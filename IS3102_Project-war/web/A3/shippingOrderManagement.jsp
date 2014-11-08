@@ -83,10 +83,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th hidden></th>
-                                                            <th>Shipping Order ID</th>
+                                                            <th style="width: 8%">SO ID</th>
                                                             <th>Shipping Origin</th>
                                                             <th>Shipping Destination</th>
                                                             <th>Expected Receiving Date</th>
+                                                            <th>Created Date</th>
                                                             <th>Submitted By</th>
                                                             <th>Status</th>
                                                             <th>Action</th>
@@ -193,12 +194,15 @@
                                                                 <%=finalListOfSO.get(i).getExpectedReceivedDate()%>
                                                             </td>
                                                             <td>
+                                                                <%=finalListOfSO.get(i).getCreatedDate()%>
+                                                            </td>
+                                                            <td>
                                                                 <%=finalListOfSO.get(i).getSubmittedBy()%>
                                                             </td>
                                                             <td>
                                                                 <%=finalListOfSO.get(i).getStatus()%>
                                                             </td>
-                                                            <td style="width:200px">
+                                                            <td style="width:80px">
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updateSO('<%=finalListOfSO.get(i).getId()%>')"/>
                                                             </td>
 
