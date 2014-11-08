@@ -13,34 +13,6 @@
 
     <body>
         <script>
-            function updateStaff(id) {
-                staffManagement.id.value = id;
-                document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
-                document.staffManagement.submit();
-            }
-            function removeStaff() {
-                checkboxes = document.getElementsByName('delete');
-                var numOfTicks = 0;
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    if (checkboxes[i].checked) {
-                        numOfTicks++;
-                    }
-                }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = true;
-                    document.staffManagement.action = "../StaffManagement_StaffServlet";
-                    document.staffManagement.submit();
-                } else {
-                    window.event.returnValue = true;
-                    document.staffManagement.action = "../StaffManagement_RemoveStaffServlet";
-                    document.staffManagement.submit();
-                }
-            }
-            function addStaff() {
-                window.event.returnValue = true;
-                document.staffManagement.action = "staffManagement_add.jsp";
-                document.staffManagement.submit();
-            }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -322,6 +294,7 @@
                                                                     if (members != null) {
                                                                         for (int i = 0; i < members.size(); i++) {
                                                                             MemberEntity member = members.get(i);
+                                                                            if (member.getName() != null && member.getAge() != null && member.getIncome() != null && member.getCity() != null && member.getJoinDate() != null) {
                                                                 %>
                                                                 <tr>                   
                                                                     <td>
@@ -368,21 +341,30 @@
                                                                         %>
                                                                     </td>
                                                                     <td>
-                                                                        <%=member.getCity()%>
-
-                                                                        <% if (member.getCity().equalsIgnoreCase("Malaysia")) {
-                                                                                out.println("(" + countryGroup1Points + ")");
-                                                                                totalPoints += countryGroup1Points;
-                                                                            } else if (member.getCity().equalsIgnoreCase("Singapore")) {
-                                                                                out.println("(" + countryGroup2Points + ")");
-                                                                                totalPoints += countryGroup2Points;
+                                                                        <%
+                                                                            if (member.getCity() != null) {
+                                                                                out.print(member.getCity());
                                                                             }
+                                                                        %>
+
+                                                                        <%
+                                                                            if (member.getCity() != null) {
+                                                                                if (member.getCity().equalsIgnoreCase("Malaysia")) {
+                                                                                    out.println("(" + countryGroup1Points + ")");
+                                                                                    totalPoints += countryGroup1Points;
+                                                                                } else if (member.getCity().equalsIgnoreCase("Singapore")) {
+                                                                                    out.println("(" + countryGroup2Points + ")");
+                                                                                    totalPoints += countryGroup2Points;
+                                                                                }
+                                                                            } else {
+                                                                                out.print("this member no city");
+                                                                            }
+
                                                                         %>
                                                                     </td>
 
                                                                     <td>
-                                                                        <%
-                                                                            if (member.getJoinDate() != null) {
+                                                                        <%                                                                            if (member.getJoinDate() != null) {
                                                                                 out.print(member.getJoinDate());
                                                                             }
 
@@ -423,11 +405,11 @@
                                                                                                 out.println("(5)");
                                                                                                 totalPoints += 5;
                                                                                             }
-
                                                                                         }
                                                                                     }
-
                                                                                 }
+                                                                            } else {
+                                                                                out.print("this member no join date");
                                                                             }
                                                                         %>
                                                                     </td>
@@ -436,6 +418,7 @@
                                                                     </td>
                                                                 </tr>
                                                                 <%
+                                                                            }
                                                                         }
                                                                     }
                                                                 %>
