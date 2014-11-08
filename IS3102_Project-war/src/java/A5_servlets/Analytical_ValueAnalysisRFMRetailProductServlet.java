@@ -41,7 +41,7 @@ public class Analytical_ValueAnalysisRFMRetailProductServlet extends HttpServlet
             }
             List<Integer> memberMonetaryValue = new ArrayList();
             for (MemberEntity member : members) {
-                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValue(member.getId()));
+                memberMonetaryValue.add(customerValueAnalysisBean.getCustomerMonetaryValueRetailProduct(member.getId()));
             }
             
             session.setAttribute("members", members);
