@@ -655,7 +655,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
             Calendar calendar = Calendar.getInstance();
             calendar.clear();
             calendar.set(Calendar.YEAR, schedule.getYear());
-            calendar.set(Calendar.MONTH, schedule.getMonth());
+            calendar.set(Calendar.MONTH, schedule.getMonth()-1);
 
             Query q1 = em.createQuery("select rm from RawIngredientEntity rm");
             List<RawIngredientEntity> rmList = (List<RawIngredientEntity>) q1.getResultList();
