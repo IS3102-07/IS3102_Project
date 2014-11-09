@@ -296,11 +296,11 @@
                                                                 <%=supplierItemInfo.getLotSize()%>
                                                             </td>
                                                             <td>
-                                                                <%=lineItem.getQuantity()%>
+                                                                <%=lineItem.getQuantity()/supplierItemInfo.getLotSize()%>
                                                             </td>
                                                             <td>
-                                                                <%=supplierItemInfo.getLotSize()*lineItem.getQuantity()%>
-                                                            </td>
+                                                                <%=lineItem.getQuantity()%>
+                                                            </td>           
                                                             <td>
                                                                 <%=supplierItemInfo.getLeadTime()%>
                                                             </td>
