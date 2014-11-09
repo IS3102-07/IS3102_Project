@@ -75,7 +75,7 @@ public class RetailInventoryWebService {
             // Retrieve the item_CountryEntity for that country
             Item_CountryEntity item_CountryEntity = new Item_CountryEntity();
             item_CountryEntity = rib.getItemPricing(countryEntity.getId(), SKU);
-            return item_CountryEntity.getRetailPrice();
+            return Math.round(item_CountryEntity.getRetailPrice()*100.0)/100.0;
         } catch (NullPointerException ex) {
             System.out.println("getItemCountryPriceBySKU(): Pricing for this item is not available.");
             return null;

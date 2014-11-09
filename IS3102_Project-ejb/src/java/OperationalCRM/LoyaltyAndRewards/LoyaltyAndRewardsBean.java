@@ -310,4 +310,40 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             return null;
         }
     }
+    
+    @Override
+    public MemberEntity checkMemberHasCard(String email) {
+        System.out.println("checkMemberHasCard() called");
+        try {
+            Query q = em.createQuery("SELECT m from MemberEntity m where m.email=:email");
+            q.setParameter("email", email);
+            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+            if (memberEntity.getLoyaltyCardId() == null || memberEntity.getLoyaltyCardId()=="") {
+                return memberEntity;
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            System.out.println("checkMemberHasCard(): Error");
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public MemberEntity tieCardToMember(String email, String loyaltyCardId) {
+        System.out.println("tieCardToMember() called");
+        try {
+            Query q = em.createQuery("SELECT m from MemberEntity m where m.email=:email");
+            q.setParameter("email", email);
+            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+            memberEntity.setLoyaltyCardId(loyaltyCardId);
+            em.merge(memberEntity);
+            return memberEntity;
+        } catch (Exception ex) {
+            System.out.println("tieCardToMember(): Error");
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }

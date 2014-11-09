@@ -1101,6 +1101,10 @@
         <servlet-name>Analytical_ValueAnalysisSendLoyaltyMIServlet</servlet-name>
         <servlet-class>A5_servlets.Analytical_ValueAnalysisSendLoyaltyMIServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoyaltyCardManagement_Servlet</servlet-name>
+        <servlet-class>A4_servlets.LoyaltyCardManagement_Servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2200,6 +2204,10 @@
     <servlet-mapping>
         <servlet-name>Analytical_ValueAnalysisSendLoyaltyMIServlet</servlet-name>
         <url-pattern>/Analytical_ValueAnalysisSendLoyaltyMIServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoyaltyCardManagement_Servlet</servlet-name>
+        <url-pattern>/LoyaltyCardManagement_Servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

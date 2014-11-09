@@ -5,14 +5,14 @@
 <%@page import="java.util.List"%>
 <%
     StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
-    boolean roleCanEditAnnouncement = false;
+    boolean roleCanEditPromo = false;
     if (staffEntity != null) {
         List<RoleEntity> roles = staffEntity.getRoles();
         Long[] approvedRolesID = new Long[]{1L, 2L, 5L, 11L};
         for (RoleEntity roleEntity : roles) {
             for (Long ID : approvedRolesID) {
                 if (roleEntity.getId().equals(ID)) {
-                    roleCanEditAnnouncement = true;
+                    roleCanEditPromo = true;
                     break;
                 }
             }
@@ -103,7 +103,7 @@
                                 <form name="promotionManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                            <%if (roleCanEditAnnouncement) {%>
+                                            <%if (roleCanEditPromo) {%>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Promotion" onclick="addPromotion()"  />
@@ -116,7 +116,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
                                                         <tr>
-                                                            <%if (roleCanEditAnnouncement) {%>
+                                                            <%if (roleCanEditPromo) {%>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                 <%}%>
                                                             <th>Item Name</th>
@@ -125,7 +125,7 @@
                                                             <th>Start Date</th>
                                                             <th>End Date</th>
                                                             <th>Description</th>
-                                                                <% if (roleCanEditAnnouncement) {%>
+                                                                <% if (roleCanEditPromo) {%>
                                                             <th>Action</th>
                                                                 <%}%>
                                                         </tr>
@@ -139,7 +139,7 @@
 
                                                         %>
                                                         <tr>
-                                                            <%if (roleCanEditAnnouncement) {%>
+                                                            <%if (roleCanEditPromotion) {%>
                                                             <td>
                                                                 <input type="checkbox" name="delete" value="<%=promotions.get(i).getId()%>" />
                                                             </td>
@@ -166,7 +166,7 @@
                                                             <td>
                                                                 <%=promotions.get(i).getDescription()%>
                                                             </td>
-                                                            <%if (roleCanEditAnnouncement) {%>
+                                                            <%if (roleCanEditPromo) {%>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=promotions.get(i).getId()%>" value="Update" onclick="javascript:updatePromotion('<%=promotions.get(i).getId()%>')"/>
                                                             </td>
@@ -181,7 +181,7 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
-                                            <%if (roleCanEditAnnouncement) {%>
+                                            <%if (roleCanEditPromo) {%>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input class="btn btn-primary" name="btnAdd" type="submit" value="Add Promotion" onclick="addPromotion()"  />                                                    

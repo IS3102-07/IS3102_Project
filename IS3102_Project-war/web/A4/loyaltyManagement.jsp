@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="EntityManager.LoyaltyTierEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
@@ -85,7 +86,7 @@
                                 <form name="loyaltyManagement">
                                     <div class="panel-body">
                                         <div class="table-responsive">
-                                           
+
                                             <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                                     <thead>
@@ -111,7 +112,15 @@
                                                                 <%=loyaltyTiers.get(i).getTier()%>
                                                             </td>
                                                             <td>
-                                                                <%=loyaltyTiers.get(i).getAmtOfSpendingRequired()%>
+                                                                <%
+                                                                    Double amount = loyaltyTiers.get(i).getAmtOfSpendingRequired();
+                                                                    if (amount==0.0) {
+                                                                        out.println(0);
+                                                                    } else {
+                                                                    DecimalFormat df = new DecimalFormat("#.00");
+                                                                    out.println(df.format(amount));
+                                                                    }
+                                                                %>
                                                             </td>
                                                             <td>
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=loyaltyTiers.get(i).getId()%>" value="Update" onclick="javascript:updateLoyalty('<%=loyaltyTiers.get(i).getId()%>')"/>
@@ -126,7 +135,7 @@
                                                 </table>
                                             </div>
                                             <!-- /.table-responsive -->
-                                           
+
                                             <input type="hidden" name="id" value="">    
                                         </div>
 
