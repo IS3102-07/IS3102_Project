@@ -326,8 +326,13 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                             .setParameter(1, store.getRegionalOffice().getId())
                             .setParameter(2, lineItem.getItem().getSKU());
                     Supplier_ItemEntity supplier_ItemEntity = (Supplier_ItemEntity) q3.getResultList().get(0);
-
-                    PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), new Date(schedule.getYear(), schedule.getMonth(), 1));
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.clear();
+                    calendar.set(Calendar.YEAR, schedule.getYear());
+                    calendar.set(Calendar.MONTH, schedule.getMonth()-1);
+                    calendar.set(Calendar.DAY_OF_MONTH, 0);
+                    
+                    PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), calendar.getTime());
                     purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), lineItem.getItem().getSKU(), sop.getProductionPlan());
                 }
             }
