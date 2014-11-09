@@ -188,10 +188,10 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
 
                     SaleForecastEntity salesForecast = sfBean.getSalesForecast(storeId, productGroupId, schedulelId);
                     request.setAttribute("saleForecast", salesForecast);
-                    
+
                     List<Integer> pastTargetInventoryLevel = sopBean.getPastTargetInventoryLevel(storeId, schedulelId, productGroupId);
                     request.setAttribute("pastTargetInventoryLevel", pastTargetInventoryLevel);
-                    
+
                     int currentInventoryLevel = 0;
                     for (ProductGroupLineItemEntity lineitem : productGroup.getLineItemList()) {
                         currentInventoryLevel += simBean.checkItemQty(storeHelper.store.getWarehouse().getId(), lineitem.getItem().getSKU());
@@ -225,7 +225,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 Long schedulelId = (long) session.getAttribute("scheduleId");
 
                 SaleAndOperationPlanEntity sop = sopBean.createSOP(storeId, schedulelId, productGroupId, saleForecast, productionPlan, currentInventory, targetInventory);
-                
+
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 break;
 
@@ -238,11 +238,11 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 } else if (submit_btn.equals("Purchase Order")) {
                     storeId = (long) session.getAttribute("sop_storeId");
                     schedulelId = (long) session.getAttribute("scheduleId");
-                    if(sopBean.generatePurchaseOrdersForRetailProduct(storeId, schedulelId)){
+                    if (sopBean.generatePurchaseOrdersForRetailProduct(storeId, schedulelId)) {
                         request.setAttribute("alertMessage", "Purchase Order has been generated.");
-                    }else{
+                    } else {
                         request.setAttribute("alertMessage", "Fail to place purchase order.");
-                    }   
+                    }
                     nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 } else {
                     String sopIdStr = request.getParameter("submit-btn");
@@ -269,7 +269,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
 
                 ProductGroupEntity productGroup = sopBean.getProductGroupBySOP(sopId);
                 request.setAttribute("productGroup", productGroup);
-                
+
                 List<Integer> pastTargetInventoryLevel = sopBean.getPastTargetInventoryLevel(storeId, schedulelId, productGroup.getId());
                 request.setAttribute("pastTargetInventoryLevel", pastTargetInventoryLevel);
 
@@ -288,12 +288,15 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 break;
 
             case "/deleteSOP":
-                deletes = request.getParameterValues("delete");
-                if (deletes != null) {
-                    for (String sopString : deletes) {
-                        sopId = Long.parseLong(sopString);
-                        sopBean.deleteSOP(sopId);
+                try {
+                    deletes = request.getParameterValues("delete");
+                    if (deletes != null) {
+                        for (String sopString : deletes) {
+                            sopId = Long.parseLong(sopString);
+                            sopBean.deleteSOP(sopId);
+                        }
                     }
+                } catch (Exception ex) {
                 }
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 break;
