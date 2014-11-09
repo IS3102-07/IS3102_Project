@@ -71,9 +71,9 @@ public class MaterialRequirementFulfilmentBean implements MaterialRequirementFul
                         int lotsize = supplier_ItemEntity.getLotSize();
                         int purchaseQuantity = 0;
                         if (((mr.getQuantity() - stockLevel) % lotsize) != 0) {
-                            purchaseQuantity = ((mr.getQuantity() - stockLevel) / lotsize) + 1;
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1) * lotsize;
                         } else {
-                            purchaseQuantity = ((mr.getQuantity() - stockLevel) / lotsize);
+                            purchaseQuantity = mr.getQuantity() - stockLevel;
                         }
                         System.out.println("(mr.getQuantity() - stockLevel): " + (mr.getQuantity() - stockLevel) + "; lotsize: " + lotsize);
                         System.out.println("purchaseQuantity: " + purchaseQuantity);
@@ -82,8 +82,8 @@ public class MaterialRequirementFulfilmentBean implements MaterialRequirementFul
                         PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), mf.getWarehouse().getId(), calendar.getTime());
                         purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), rm.getSKU(), purchaseQuantity);
 
-                        stockLevel = stockLevel + purchaseQuantity * lotsize - mr.getQuantity();
-                    }
+                        stockLevel = stockLevel + purchaseQuantity - mr.getQuantity();
+                    }s
                 }
             }
             return true;
