@@ -163,7 +163,7 @@
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Product Group</th>
                                                             <th>Sales Forecast</th>
-                                                            <th>Production Plan</th>
+                                                            <th>Production Plan (Must be multiple of lot size)</th>
                                                             <th>Current Inventory</th>
                                                             <th>Target Inventory</th>
                                                             <th>Action</th>
