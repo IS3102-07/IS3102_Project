@@ -4,8 +4,10 @@ import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import Config.Config;
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
 import EntityManager.AccessRightEntity;
+import EntityManager.CountryEntity;
 import EntityManager.FeedbackEntity;
 import EntityManager.LineItemEntity;
+import EntityManager.MemberEntity;
 import EntityManager.PickRequestEntity;
 import EntityManager.RoleEntity;
 import EntityManager.SalesRecordEntity;
@@ -15,6 +17,9 @@ import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInv
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -294,6 +299,38 @@ public class CustomerServiceBean implements CustomerServiceBeanLocal {
             PickRequestEntity pickRequestEntity = em.getReference(PickRequestEntity.class, pickRequestID);
             pickRequestEntity.setCollectionStatus(3);//Called
             pickRequestEntity.setDateCalled(new Date());
+            //SMS to member if sales record is tied to member & member has HP number in profile
+            MemberEntity memberEntity = pickRequestEntity.getSalesRecord().getMember();
+            if (memberEntity!= null && memberEntity.getCity()!=null && memberEntity.getCity()!="" && memberEntity.getPhone()!=null && memberEntity.getPhone()!="") {
+                String country = memberEntity.getCity();
+                Query q = em.createQuery("SELECT c from CountryEntity c where c.name=:country");
+                q.setParameter("country", country);
+                CountryEntity countryEntity = (CountryEntity) q.getSingleResult();
+                String countryCode = "00"+countryEntity.getCountryCode();
+                String phoneNo = memberEntity.getPhone()+"";
+                String telNo = countryCode + phoneNo;
+                String smsMessage = "[Island Furniture] Your furniture(s) purchased is ready for collection. Q["+pickRequestEntity.getQueueNo()+"]";
+            System.out.println("Sending SMS: " + telNo + ": " +  URLEncoder.encode(smsMessage));
+
+            String requestURL = "http://smsc.vianett.no/v3/send.ashx?";
+            requestURL += ("username=" + "lee_yuan_guang@hotmail.com");
+            requestURL += ("&SenderAddress="+"Island");//11char max
+            requestURL += ("&SenderAddressType="+"5");
+            requestURL += ("&password=" + "r0b16");
+            requestURL += ("&tel=" + telNo);
+            requestURL += ("&msg=" + URLEncoder.encode(smsMessage));
+
+            URL url = new URL(requestURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setInstanceFollowRedirects(false);
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "text/plain");
+            connection.setRequestProperty("charset", "utf-8");
+            connection.connect();
+            connection.getInputStream();
+            connection.disconnect();
+            }
             em.merge(pickRequestEntity);
             return true;
         } catch (Exception ex) {

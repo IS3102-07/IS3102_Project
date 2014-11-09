@@ -26,4 +26,6 @@ public interface LoyaltyAndRewardsBeanLocal {
     public Boolean tieMemberToSyncRequest(String email, String qrCode);
     
     public LoyaltyTierEntity getMemberNextTier(Long memberID);
+    public MemberEntity checkMemberHasCard(String email);
+    public MemberEntity tieCardToMember(String email, String loyaltyCardId);
 }

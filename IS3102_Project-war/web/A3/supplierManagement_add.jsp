@@ -87,12 +87,14 @@
                                                 }
                                             }
                                             if (!isAdminLevel) {
+                                                List<AccessRightEntity> accessList = staff.getAccessRightList();
                                                 for (RoleEntity role : listOfRoles) {
-                                                    List<AccessRightEntity> accessList = role.getAccessRightList();
-                                                    for (AccessRightEntity accessRight : accessList) {
-                                                        for (RegionalOfficeEntity RO : listOfRegionalOffice) {
-                                                            if (accessRight.getRegionalOffice().getId().equals(RO.getId())) {
-                                                                out.println("<option value='" + RO.getId() + "'>" + RO.getName() + "</option>");
+                                                    if (role.getName().equals("Regional Manager") || role.getName().equals("Purchasing Manager")) {
+                                                        for (AccessRightEntity accessRight : accessList) {
+                                                            for (RegionalOfficeEntity RO : listOfRegionalOffice) {
+                                                                if (accessRight.getRegionalOffice() != null && accessRight.getRegionalOffice().getId().equals(RO.getId())) {
+                                                                    out.println("<option value='" + RO.getId() + "'>" + RO.getName() + "</option>");
+                                                                }
                                                             }
                                                         }
                                                     }

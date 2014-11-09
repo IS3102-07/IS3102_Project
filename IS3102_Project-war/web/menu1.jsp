@@ -370,11 +370,12 @@
             </li>
 
             <%}
-                approvedRolesID = new Long[]{1L, 2L, 4L, 5L, 11L};
+                approvedRolesID = new Long[]{1L, 2L, 4L, 5L, 11L, 10L};
                 roleCanView = false;
                 roleCanView2 = true;
                 roleCanView3 = true;
                 roleCanView4 = true;
+                roleCanView5 = true;
                 for (RoleEntity roleEntity : roles) {
                     for (Long ID : approvedRolesID) {
                         if (roleEntity.getId().equals(ID)) {
@@ -389,6 +390,11 @@
                         }
                         if (roleEntity.getId().equals(2L)) {
                             roleCanView4 = false;
+                        }
+                        if (roleEntity.getId().equals(10L)){//Receptionist
+                            roleCanView2 = false;
+                            roleCanView3 = false;
+                            roleCanView5 = false;
                         }
                     }
                     if (roleCanView) {
@@ -407,15 +413,19 @@
                         <a href="../LoyaltyManagement_Servlet">Loyalty & Rewards</a>
                     </li>
                     <%}%>
+                    <li>
+                        <a href="../A4/loyaltyCardMgt.jsp">Loyalty Card Management</a>
+                    </li>
                     <% if (roleCanView2) { %>
                     <li>
                         <a href="../A4/customerServiceManagement.jsp">Customer Service</a>
                     </li>                    
                     <%}%>
+                    <% if (roleCanView5) {%>
                     <li>
                         <a href="../PromotionalSalesManagement_Servlet">Promotional Sales</a>
                     </li>
-
+                    <%}%>
                 </ul>
             </li>
             <% }
