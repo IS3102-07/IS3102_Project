@@ -138,7 +138,8 @@
                                                                 <input type="checkbox" name="delete" value="<%=wishList.getItems().get(i).getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
-                                                                <a href="shop-product-sidebar.html"><%
+                                                                <a href="furnitureProductDetails.jsp?sku=<%=wishList.getItems().get(i).getSKU()%>">
+                                                                    <%
                                                                         boolean flag = true;
                                                                         for (int j = 0; j < furnitures.size(); j++) {
                                                                             if (furnitures.get(j).getId().equals(wishList.getItems().get(i).getId())) {
