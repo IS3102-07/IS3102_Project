@@ -83,7 +83,7 @@ public class MaterialRequirementFulfilmentBean implements MaterialRequirementFul
                         purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), rm.getSKU(), purchaseQuantity);
 
                         stockLevel = stockLevel + purchaseQuantity - mr.getQuantity();
-                    }s
+                    }
                 }
             }
             return true;
