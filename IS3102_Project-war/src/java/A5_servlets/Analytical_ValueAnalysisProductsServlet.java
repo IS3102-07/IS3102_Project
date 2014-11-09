@@ -32,7 +32,7 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             List<LineItemEntity> sortBestSellingFurniture = customerValueAnalysisBean.sortBestSellingFurniture();
             List<LineItemEntity> sortBestSellingFurniture1Year = customerValueAnalysisBean.sortBestSellingFurniture1Year();
             session.setAttribute("sortBestSellingFurniture", sortBestSellingFurniture);
-            //session.setAttribute("sortBestSellingFurniture1Year",sortBestSellingFurniture1Year);
+            session.setAttribute("sortBestSellingFurniture1Year",sortBestSellingFurniture1Year);
 
             List<Date> dateOfLastPurchaseFurniture = new ArrayList();
 
@@ -71,7 +71,9 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             session.setAttribute("listOfSecondProduct", listOfSecondProduct);
 
             List<LineItemEntity> sortBestSellingRetailProducts = customerValueAnalysisBean.sortBestSellingRetailProducts();
+            List<LineItemEntity> sortBestSellingRetailProduct1Year = customerValueAnalysisBean.sortBestSellingRetailProduct1Year();
             session.setAttribute("sortBestSellingRetailProducts", sortBestSellingRetailProducts);
+            session.setAttribute("sortBestSellingRetailProduct1Year",sortBestSellingRetailProduct1Year);
             
             List<Date> dateOfLastPurchaseRetailProduct = new ArrayList();
 
@@ -110,7 +112,9 @@ public class Analytical_ValueAnalysisProductsServlet extends HttpServlet {
             session.setAttribute("listOfSecondProductRP", listOfSecondProductRP);
 
             List<LineItemEntity> sortBestSellingMenuItem = customerValueAnalysisBean.sortBestSellingMenuItem();
+            List<LineItemEntity> sortBestSellingMenuItem1Year = customerValueAnalysisBean.sortBestSellingMenuItem1Year();
             session.setAttribute("sortBestSellingMenuItem", sortBestSellingMenuItem);
+            session.setAttribute("sortBestSellingMenuItem1Year", sortBestSellingMenuItem1Year);
             
             List<Date> dateOfLastPurchaseMenuItem = new ArrayList();
 

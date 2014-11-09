@@ -19,6 +19,10 @@ import javax.ejb.Stateful;
 @Local
 public interface CustomerValueAnalysisBeanLocal {
     
+    public List<LineItemEntity> sortBestSellingMenuItem1Year();
+    
+    public List<LineItemEntity> sortBestSellingRetailProduct1Year();
+    
     public List<LineItemEntity> sortBestSellingFurniture1Year();
     
      public Integer getCustomerMonetaryValueMenuItem(Long memberId);
