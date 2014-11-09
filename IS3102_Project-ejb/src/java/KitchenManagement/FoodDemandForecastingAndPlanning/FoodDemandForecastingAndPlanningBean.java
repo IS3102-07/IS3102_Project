@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -70,7 +71,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     .setParameter(1, menuItemId)
                     .setParameter(2, storeId)
                     .setParameter(3, scheduleId);
-
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             if (!q.getResultList().isEmpty()) {
                 return (SaleForecastEntity) q.getResultList().get(0);
             } else {

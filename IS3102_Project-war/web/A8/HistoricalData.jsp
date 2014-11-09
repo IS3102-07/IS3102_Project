@@ -48,6 +48,33 @@
                     </div>
                     <br>
                     
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-green">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-1);  }
+                                        else{ out.print(schedule.getYear()); } %> - Menu Item SKU <%= menuItem.getSKU()%> - <%= menuItem.getName() %> Sales Figure</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="morris-area-chart3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-green">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-2);  }
+                                        else{ out.print(schedule.getYear()-1); } %> - Menu Item SKU <%= menuItem.getSKU()%> - <%= menuItem.getName() %> Sales Figure</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="morris-area-chart2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>            
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -63,32 +90,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-green">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-2);  }
-                                        else{ out.print(schedule.getYear()-1); } %> - Menu Item SKU <%= menuItem.getSKU()%> - <%= menuItem.getName() %> Sales Figure</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div id="morris-area-chart2"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-green">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title"><i class="icon icon-bar-chart-o"></i> Year <% if(schedule.getMonth()==1){ out.print(schedule.getYear()-1);  }
-                                        else{ out.print(schedule.getYear()); } %> - Menu Item SKU <%= menuItem.getSKU()%> - <%= menuItem.getName() %> Sales Figure</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div id="morris-area-chart3"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    
                 </div>
                 <!-- /.container-fluid -->
 
