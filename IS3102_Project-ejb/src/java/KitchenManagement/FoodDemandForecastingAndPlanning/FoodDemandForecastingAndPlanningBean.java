@@ -498,7 +498,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
             }
 
             for (MasterProductionScheduleEntity mps : mpsList) {
-                if (mps.getMenuItem().getRecipe() != null) {
+                if (mps.getMenuItem().getRecipe() != null && mps.getAmount_month() != 0) {
                     for (LineItemEntity lineItem : mps.getMenuItem().getRecipe().getListOfLineItems()) {
 
                         Query query1 = em.createQuery("select mr from MaterialRequirementEntity mr where mr.store.id = ?1 and mr.rawIngredient.SKU = ?2 and mr.schedule.id =?3 and mr.day = ?4 ")
