@@ -130,6 +130,7 @@
         <!-- /#wrapper -->
 
         <script>
+            
             $('#input_targetInventoty').change(function () {
                 var lotSize = <%= productGroup.getLotSize()%>;
                 var targetInventoty = parseInt($('#input_targetInventoty').val());
