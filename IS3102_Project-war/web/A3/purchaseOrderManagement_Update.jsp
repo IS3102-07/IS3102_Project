@@ -216,7 +216,7 @@
                                                     if (lineItem.getItem().getSKU().equals(supplierItemInfo.getItem().getSKU())) {
                                                         double qty = lineItem.getQuantity();
                                                         double priceOfOneItem = supplierItemInfo.getCostPrice();
-                                                        double priceOfLineItem = qty * priceOfOneItem;
+                                                        double priceOfLineItem = qty /supplierItemInfo.getLotSize() * priceOfOneItem;
                                                         price += priceOfLineItem;
                                                     }
                                                 }
