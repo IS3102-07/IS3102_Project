@@ -203,7 +203,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal, Supp
     public List<SupplierEntity> getSupplierListOfRO(Long roID) {
         System.out.println("getSupplierListByRO() called");
         try {
-            Query q= em.createQuery("SELECT s from SupplierEntity s where s.regionalOffice.id=:roID");
+            Query q= em.createQuery("SELECT s from SupplierEntity s where s.regionalOffice.id=:roID and s.isDeleted=false");
             q.setParameter("roID", roID);
             return q.getResultList();
         } catch (Exception ex) {
