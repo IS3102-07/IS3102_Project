@@ -492,11 +492,11 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
             saleForecast.setQuantity(quantity);
             saleForecast.setMethod("E");
             em.merge(saleForecast);
-
+                        
             // to do .... Query check sale figure
             Query q = em.createQuery("select s from SalesFigureEntity s where s.productGroup.id = ?1 and s.schedule.id = ?2 and s.store.id = ?3 ")
                     .setParameter(1, saleForecast.getProductGroup().getId())
-                    .setParameter(2, saleForecast.getSchedule().getId())
+                    .setParameter(2, this.getTheBeforeOne(saleForecast.getSchedule()).getId())
                     .setParameter(3, saleForecast.getStore().getId());
 
             if (q.getResultList().isEmpty()) {
