@@ -330,7 +330,7 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                     calendar.clear();
                     calendar.set(Calendar.YEAR, schedule.getYear());
                     calendar.set(Calendar.MONTH, schedule.getMonth()-1);
-                    calendar.set(Calendar.DAY_OF_MONTH, 0);
+                    calendar.set(Calendar.DAY_OF_MONTH, 1);
                     
                     PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), calendar.getTime());
                     purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), lineItem.getItem().getSKU(), sop.getProductionPlan());
