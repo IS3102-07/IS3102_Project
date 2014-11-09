@@ -1,4 +1,3 @@
-
 package A6_servlets;
 
 import CorporateManagement.ItemManagement.ItemManagementBeanLocal;
@@ -10,13 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 public class ProductGroupManagement_RemoveServlet extends HttpServlet {
+
     @EJB
     private ItemManagementBeanLocal itemManagementBean;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        Boolean result;
+        int countDeleted = 0;
         response.setContentType("text/html;charset=UTF-8");
         try {
             //pass in arr of SKUs
@@ -24,9 +25,12 @@ public class ProductGroupManagement_RemoveServlet extends HttpServlet {
             if (deleteArr != null) {
                 for (String deleteArr1 : deleteArr) {
                     System.out.println(deleteArr1);
-                    itemManagementBean.removeProductGroup(Long.valueOf(deleteArr1));
+                    result = itemManagementBean.removeProductGroup(Long.valueOf(deleteArr1));
+                    if (result) {
+                        countDeleted++;
+                    }
                 }
-                response.sendRedirect("ProductGroupManagement_Servlet?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+                response.sendRedirect("ProductGroupManagement_Servlet?goodMsg=Successfully removed: " + countDeleted + " record(s).");
             }
         } catch (Exception ex) {
             out.println(ex);
