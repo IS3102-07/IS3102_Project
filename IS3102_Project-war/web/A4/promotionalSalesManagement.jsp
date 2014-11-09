@@ -139,7 +139,7 @@
 
                                                         %>
                                                         <tr>
-                                                            <%if (roleCanEditPromotion) {%>
+                                                            <%if (roleCanEditPromo) {%>
                                                             <td>
                                                                 <input type="checkbox" name="delete" value="<%=promotions.get(i).getId()%>" />
                                                             </td>
