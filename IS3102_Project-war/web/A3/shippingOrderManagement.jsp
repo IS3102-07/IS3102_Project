@@ -198,8 +198,8 @@
                                                             </td>
                                                             <td>
                                                                 <% SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("dd-MM-yyyy hh:mm");%>
-                                                                <%= DATE_FORMAT2.format(finalListOfSO.get(i).getCreatedDate())%> </td>
-                                                            <td>
+                                                                <%= DATE_FORMAT2.format(finalListOfSO.get(i).getCreatedDate())%>
+                                                            </td>
                                                             <td>
                                                                 <%=finalListOfSO.get(i).getSubmittedBy()%>
                                                             </td>
