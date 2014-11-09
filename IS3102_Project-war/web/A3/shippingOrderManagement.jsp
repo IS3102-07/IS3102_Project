@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="EntityManager.AccessRightEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="EntityManager.StaffEntity"%>
@@ -191,11 +192,14 @@
                                                                 <%=destination.getWarehouseName()%>
                                                             </td>
                                                             <td>
-                                                                <%=finalListOfSO.get(i).getExpectedReceivedDate()%>
+                                                                <% SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+                                                                    String date = DATE_FORMAT.format(finalListOfSO.get(i).getExpectedReceivedDate());%>
+                                                                <%=date%> 
                                                             </td>
                                                             <td>
-                                                                <%=finalListOfSO.get(i).getCreatedDate()%>
-                                                            </td>
+                                                                <% SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("dd-MM-yyyy hh:mm");%>
+                                                                <%= DATE_FORMAT2.format(finalListOfSO.get(i).getCreatedDate())%> </td>
+                                                            <td>
                                                             <td>
                                                                 <%=finalListOfSO.get(i).getSubmittedBy()%>
                                                             </td>
