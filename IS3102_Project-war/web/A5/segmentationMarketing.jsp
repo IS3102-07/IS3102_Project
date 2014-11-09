@@ -163,10 +163,10 @@
             Integer numOfMembersInJoinDate4 = (Integer) session.getAttribute("numOfMembersInJoinDate4");
 
             List<Integer> joinDateGroupIncome = new ArrayList();
-            cummulativeGroupIncome.add(getRevenueOfJoinDate1 / numOfMembersInJoinDate1);
-            cummulativeGroupIncome.add(getRevenueOfJoinDate2 / numOfMembersInJoinDate2);
-            cummulativeGroupIncome.add(getRevenueOfJoinDate3 / numOfMembersInJoinDate3);
-            cummulativeGroupIncome.add(getRevenueOfJoinDate4 / numOfMembersInJoinDate4);
+            joinDateGroupIncome.add(getRevenueOfJoinDate1 / numOfMembersInJoinDate1);
+            joinDateGroupIncome.add(getRevenueOfJoinDate2 / numOfMembersInJoinDate2);
+            joinDateGroupIncome.add(getRevenueOfJoinDate3 / numOfMembersInJoinDate3);
+            joinDateGroupIncome.add(getRevenueOfJoinDate4 / numOfMembersInJoinDate4);
 
             Integer joinDateGroup1Points = 1;
             Integer joinDateGroup2Points = 1;
@@ -354,11 +354,11 @@
                                                                         <%
                                                                             if (member.getCity() != null) {
                                                                                 if (member.getCity().equalsIgnoreCase("Malaysia")) {
-                                                                                    out.println("(" + countryGroup1Points + ")");
-                                                                                    totalPoints += countryGroup1Points;
-                                                                                } else if (member.getCity().equalsIgnoreCase("Singapore")) {
                                                                                     out.println("(" + countryGroup2Points + ")");
                                                                                     totalPoints += countryGroup2Points;
+                                                                                } else if (member.getCity().equalsIgnoreCase("Singapore")) {
+                                                                                    out.println("(" + countryGroup1Points + ")");
+                                                                                    totalPoints += countryGroup1Points;
                                                                                 }
                                                                             } else {
                                                                                 out.print("this member no city");
@@ -378,6 +378,7 @@
                                                                             c.setTime(date);
                                                                             c.add(Calendar.DATE, (-365));
                                                                             Date churnDate = c.getTime();
+                                                                            
                                                                             if (member.getJoinDate() != null) {
                                                                                 Long days = member.getJoinDate().getTime() - churnDate.getTime();
                                                                                 days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
