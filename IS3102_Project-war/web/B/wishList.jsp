@@ -132,7 +132,7 @@
                                                                 <input type="checkbox" name="delete" value="<%=wishList.getItems().get(i).getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
-                                                                <a href="shop-product-sidebar.html">
+                                                                <a href="furnitureProductDetails.jsp?sku=<%=wishList.getItems().get(i).getSKU()%>">
 
                                                                     <%
                                                                         boolean flag = true;
@@ -165,7 +165,7 @@
                                                                 </a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a href="shop-product-sidebar.html"><%=wishList.getItems().get(i).getName()%></a>
+                                                                <a href="furnitureProductDetails.jsp?sku=<%=wishList.getItems().get(i).getSKU()%>"><%=wishList.getItems().get(i).getName()%></a>
                                                             </td>
 
                                                             <td class="product-quantity">
