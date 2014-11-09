@@ -55,8 +55,8 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal, Supp
         System.out.println("deleteSupplier() called.");
         try {
             if (checkSupplierExists(id)) {
-                supplier = em.merge(em.getReference(SupplierEntity.class, id));
-                em.remove(supplier);
+                supplier = em.getReference(SupplierEntity.class, id);
+                supplier.setIsDeleted(true);
                 return true;
             }
             return false;

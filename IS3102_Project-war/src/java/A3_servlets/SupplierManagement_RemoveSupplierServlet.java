@@ -18,11 +18,11 @@ public class SupplierManagement_RemoveSupplierServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         try {
-
             String[] deleteArr = request.getParameterValues("delete");
             if (deleteArr != null) {
                 for (int i = 0; i < deleteArr.length; i++) {
                     supplierManagementBean.deleteSupplier(Long.parseLong(deleteArr[i]));
+
                 }
                 response.sendRedirect("SupplierManagement_SupplierServlet?errMsg=Successfully removed: " + deleteArr.length + " record(s).");
             } else {
