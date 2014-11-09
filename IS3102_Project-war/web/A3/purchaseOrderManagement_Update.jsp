@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="EntityManager.Supplier_ItemEntity"%>
 <%@page import="EntityManager.Item_CountryEntity"%>
 <%@page import="EntityManager.CountryEntity"%>
@@ -14,15 +15,15 @@
     System.out.println(purchaseOrders.size());
     String id = request.getParameter("id");
     System.out.println(id);
-    
+
     if (purchaseOrders == null || id == null) {
         response.sendRedirect("../PurchaseOrderManagement_Servlet");
     } else {
         List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
-            System.out.println(activeSuppliers.size());
+        System.out.println(activeSuppliers.size());
 
         List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
-    System.out.println(warehouses.size());
+        System.out.println(warehouses.size());
 
         PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
         for (int i = 0; i < purchaseOrders.size(); i++) {
@@ -204,9 +205,9 @@
                                     <h3 class="panel-title"> Total Price: <span class="" style="font-weight: bold;"><%
                                         Double price = 0.0;
                                         List<LineItemEntity> listOfLineItems = purchaseOrder.getLineItems();
-                                        if (listOfLineItems == null) {
-                                            out.println(" 0");
-                                        } else if (listOfLineItems != null) {
+                                        if (listOfLineItems.size()==0) {
+                                            out.println(price);
+                                        } else {
                                             SupplierEntity supplier = purchaseOrder.getSupplier();
                                             List<Supplier_ItemEntity> listOfSupplierItemInfo = supplier.getSupplyingItems();
 
@@ -220,7 +221,8 @@
                                                     }
                                                 }
                                             }
-                                            out.println(price);
+                                            DecimalFormat f = new DecimalFormat("##.00");
+                                            out.println(f.format(price));
                                         }
                                             %>
                                         </span></h3>
@@ -270,7 +272,7 @@
                                                             for (LineItemEntity lineItem : listOfLineItems) {
                                                                 for (Supplier_ItemEntity supplierItemInfo : listOfSupplierItemInfo) {
                                                                     if (lineItem.getItem().getSKU().equals(supplierItemInfo.getItem().getSKU())) {
-                                                                        
+
                                                         %>
 
                                                         <tr>
@@ -369,7 +371,7 @@
         </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
             });
         </script>
