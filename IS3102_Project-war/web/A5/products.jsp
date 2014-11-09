@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="EntityManager.LineItemEntity"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <html lang="en">
     <jsp:include page="../header2.html" />
@@ -9,11 +10,7 @@
     <body>
 
         <script>
-            function updateStaff(id) {
-                staffManagement.id.value = id;
-                document.staffManagement.action = "../StaffManagement_UpdateStaffServlet";
-                document.staffManagement.submit();
-            }
+            
             function sendLoyaltyPoints() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -32,35 +29,17 @@
                     document.rfm.submit();
                 }
             }
-            function removeStaff() {
-                checkboxes = document.getElementsByName('delete');
-                var numOfTicks = 0;
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    if (checkboxes[i].checked) {
-                        numOfTicks++;
-                    }
-                }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = true;
-                    document.rfm.action = "../StaffManagement_StaffServlet";
-                    document.rfm.submit();
-                } else {
-                    window.event.returnValue = true;
-                    document.rfm.action = "../StaffManagement_RemoveStaffServlet";
-                    document.rfm.submit();
-                }
-            }
-            function addStaff() {
-                window.event.returnValue = true;
-                document.staffManagement.action = "staffManagement_add.jsp";
-                document.staffManagement.submit();
-            }
+            
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
                 }
             }
+            
+            <%
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                %>
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -95,8 +74,10 @@
 
                                     <%
                                         List<LineItemEntity> sortBestSellingFurniture = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture"));
+                                        List<LineItemEntity> sortBestSellingFurniture1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture1Year"));
                                         List<LineItemEntity> listOfSecondProduct = (List<LineItemEntity>) (session.getAttribute("listOfSecondProduct"));
                                         List<Date> dateOfLastPurchaseFurniture = (List<Date>) (session.getAttribute("dateOfLastPurchaseFurniture"));
+                                        
                                         DecimalFormat df = new DecimalFormat("#.##");
                                     %>
                                     <!-- /.table-responsive -->
@@ -119,6 +100,7 @@
                                                                     <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                     <th>Name</th>
                                                                     <th>Quantity Sold</th>
+                                                                    <th>Last 365 Days</th>
                                                                     <th>Last Purchase</th>
                                                                     <th>Items Purchased With</th>
                                                                     <th>Probability</th>
@@ -142,7 +124,18 @@
                                                                         <%=item.getQuantity()%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=dateOfLastPurchaseFurniture.get(i) %>
+                                                                        <%
+                                                                        out.print(sortBestSellingFurniture1Year.get(i).getQuantity());
+                                                                        %>
+                                                                        
+                                                                    </td>
+                                                                        
+                                                                    <td>
+                                                                        <%
+                                                                        
+if (dateOfLastPurchaseFurniture.get(i) != null) {
+out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
+}%>
                                                                     </td>
                                                                     <td>
                                                                         <%
@@ -196,6 +189,8 @@
                                             <%
                                                 List<LineItemEntity> sortBestSellingRetailProducts = (List<LineItemEntity>) (session.getAttribute("sortBestSellingRetailProducts"));
                                                 List<LineItemEntity> listOfSecondProductRP = (List<LineItemEntity>) (session.getAttribute("listOfSecondProductRP"));
+                                                List<LineItemEntity> sortBestSellingRetailProduct1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingRetailProduct1Year"));
+                                                List<Date> dateOfLastPurchaseRetailProduct = (List<Date>) (session.getAttribute("dateOfLastPurchaseRetailProduct"));
                                             %>
                                             <!-- /.table-responsive -->
 
@@ -214,6 +209,8 @@
                                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                             <th>Name</th>
                                                                             <th>Quantity Sold</th>
+                                                                            <th>Last 365 Days</th>
+                                                                            <th>Last Purchase</th>
                                                                             <th>Items Purchased With</th>
                                                                             <th>Probability</th>
                                                                         </tr>
@@ -234,6 +231,10 @@
                                                                             </td>
                                                                             <td >
                                                                                 <%=item.getQuantity()%>
+                                                                            </td>
+                                                                            <td><%=sortBestSellingRetailProduct1Year.get(i).getQuantity()%></td>
+                                                                            <td>
+                                                                                 <% if (dateOfLastPurchaseRetailProduct.get(i) !=null) {out.print(dateFormat.format(dateOfLastPurchaseRetailProduct.get(i))); }%>
                                                                             </td>
                                                                             <td>
                                                                                 <%
@@ -286,6 +287,9 @@
                                             <%
                                                 List<LineItemEntity> sortBestSellingMenuItem = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem"));
                                                 List<LineItemEntity> listOfSecondProductMenuItem = (List<LineItemEntity>) (session.getAttribute("listOfSecondProductMenuItem"));
+                                                List<LineItemEntity> sortBestSellingMenuItem1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem1Year"));
+                                                
+                                                List<Date> dateOfLastPurchaseMenuItem = (List<Date>) (session.getAttribute("dateOfLastPurchaseMenuItem"));
                                             %>
                                             <!-- /.table-responsive -->
 
@@ -304,6 +308,8 @@
                                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                             <th>Name</th>
                                                                             <th>Quantity Sold</th>
+                                                                            <th>Last 365 Days</th>
+                                                                            <th>Last Purchase</th>
                                                                             <th>Items Purchased With</th>
                                                                             <th>Probability</th>
                                                                         </tr>
@@ -312,6 +318,7 @@
                                                                         <%
                                                                             if (sortBestSellingMenuItem != null) {
                                                                                 for (int i = 0; i < sortBestSellingMenuItem.size(); i++) {
+                                                                                    
                                                                                     LineItemEntity item = sortBestSellingMenuItem.get(i);
                                                                                     ItemEntity itemEntity = item.getItem();
                                                                         %>
@@ -324,6 +331,15 @@
                                                                             </td>
                                                                             <td >
                                                                                 <%=item.getQuantity()%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%=sortBestSellingMenuItem1Year.get(i)%>
+                                                                            </td>
+                                                                            <td>
+                                                                                 <%
+                                                                                 if (dateOfLastPurchaseRetailProduct.get(i) != null) {
+    out.print(dateFormat.format(dateOfLastPurchaseRetailProduct.get(i)));
+            }%>
                                                                             </td>
                                                                             <td>
                                                                                 <%

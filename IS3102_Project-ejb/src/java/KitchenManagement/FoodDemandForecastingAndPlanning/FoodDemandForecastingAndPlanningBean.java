@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -70,7 +71,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                     .setParameter(1, menuItemId)
                     .setParameter(2, storeId)
                     .setParameter(3, scheduleId);
-
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             if (!q.getResultList().isEmpty()) {
                 return (SaleForecastEntity) q.getResultList().get(0);
             } else {
@@ -505,19 +506,21 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                                 .setParameter(2, lineItem.getItem().getSKU())
                                 .setParameter(3, schedule.getId())
                                 .setParameter(4, 1);
-                        if (query1.getResultList().isEmpty()) {
-                            MaterialRequirementEntity MR1 = new MaterialRequirementEntity();
-                            MR1.setStore(store);
-                            MR1.setMps(mps);
-                            MR1.setRawIngredient((RawIngredientEntity) lineItem.getItem());
-                            MR1.setQuantity(mps.getAmount_week1() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
-                            MR1.setSchedule(schedule);
-                            MR1.setDay(1);
-                            em.persist(MR1);
-                        } else {
-                            MaterialRequirementEntity MR1 = (MaterialRequirementEntity) query1.getResultList().get(0);
-                            MR1.setQuantity(MR1.getQuantity() + mps.getAmount_week1() * lineItem.getQuantity());
-                            em.merge(MR1);
+                        if (mps.getAmount_week1() != 0) {
+                            if (query1.getResultList().isEmpty()) {
+                                MaterialRequirementEntity MR1 = new MaterialRequirementEntity();
+                                MR1.setStore(store);
+                                MR1.setMps(mps);
+                                MR1.setRawIngredient((RawIngredientEntity) lineItem.getItem());
+                                MR1.setQuantity(mps.getAmount_week1() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
+                                MR1.setSchedule(schedule);
+                                MR1.setDay(1);
+                                em.persist(MR1);
+                            } else {
+                                MaterialRequirementEntity MR1 = (MaterialRequirementEntity) query1.getResultList().get(0);
+                                MR1.setQuantity(MR1.getQuantity() + mps.getAmount_week1() * lineItem.getQuantity());
+                                em.merge(MR1);
+                            }
                         }
 
                         calendar.set(Calendar.WEEK_OF_MONTH, 2);
@@ -678,7 +681,12 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         Supplier_ItemEntity supplier_ItemEntity = (Supplier_ItemEntity) q3.getSingleResult();
 
                         int lotsize = supplier_ItemEntity.getLotSize();
-                        int purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1) * lotsize;
+                        int purchaseQuantity = 0;
+                        if (((mr.getQuantity() - stockLevel) % lotsize) != 0) {
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1);
+                        } else {
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize));
+                        }
                         System.out.println("(mr.getQuantity() - stockLevel): " + (mr.getQuantity() - stockLevel) + "; lotsize: " + lotsize);
                         System.out.println("purchaseQuantity: " + purchaseQuantity);
                         calendar.set(Calendar.DAY_OF_MONTH, mr.getDay());
@@ -686,7 +694,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), calendar.getTime());
                         purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), rm.getSKU(), purchaseQuantity);
 
-                        stockLevel = stockLevel + purchaseQuantity - mr.getQuantity();
+                        stockLevel = stockLevel + purchaseQuantity * lotsize - mr.getQuantity();
                     }
                 }
             }

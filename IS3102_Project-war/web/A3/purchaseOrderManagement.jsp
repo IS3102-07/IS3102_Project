@@ -78,14 +78,14 @@
                                                     <thead>
                                                         <tr>
                                                             <th hidden></th>
-                                                            <th>Purchase Order ID</th>
-                                                            <th>Supplier</th>
-                                                            <th>Shipping Destination</th>
-                                                            <th>Expected Receiving Date</th>
-                                                            <th>Submitted By</th>
-                                                            <th>Created At</th>
-                                                            <th>Status</th>
-                                                            <th>Action</th>
+                                                            <th style="width: 8%;">PO ID</th>
+                                                            <th style="width: 10%;">Supplier</th>
+                                                            <th style="width: 30%;">Shipping Destination</th>
+                                                            <th style="width: 12%;">Expected Delivery On</th>
+                                                            <th style="width: 10%;">Submitted By</th>
+                                                            <th style="width: 15%;">Created Date</th>
+                                                            <th style="width: 8%;">Status</th>
+                                                            <th style="width: 5%;">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -197,7 +197,7 @@
                                                         <td>
                                                             <%=finalListOfPO.get(i).getStatus()%>
                                                         </td>
-                                                        <td style="width:200px">
+                                                        <td style="width:80px">
                                                             <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updatePO('<%=finalListOfPO.get(i).getId()%>')"/>
                                                         </td>
                                                     </tr>

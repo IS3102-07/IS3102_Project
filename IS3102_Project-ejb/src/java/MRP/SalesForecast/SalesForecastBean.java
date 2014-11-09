@@ -221,7 +221,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(3, scheduleId);
 
             if (!q.getResultList().isEmpty()) {
-                SaleForecastEntity saleForecast = (SaleForecastEntity)q.getResultList().get(0);
+                SaleForecastEntity saleForecast = (SaleForecastEntity) q.getResultList().get(0);
                 // if not exist, then create it
                 MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
                 StoreEntity store = em.find(StoreEntity.class, storeId);
@@ -246,7 +246,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                         amount += salesFigureEntity.getQuantity();
                     }
                 }
-                
+
                 saleForecast.setQuantity(amount / 3);
                 saleForecast.setMethod("A");
                 em.persist(saleForecast);
@@ -470,6 +470,7 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
                     .setParameter(1, productGroupId)
                     .setParameter(2, storeId)
                     .setParameter(3, scheduleId);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
 
             if (!q.getResultList().isEmpty()) {
                 SaleForecastEntity saleForecast = (SaleForecastEntity) q.getResultList().get(0);
@@ -491,11 +492,11 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
             saleForecast.setQuantity(quantity);
             saleForecast.setMethod("E");
             em.merge(saleForecast);
-
+                        
             // to do .... Query check sale figure
             Query q = em.createQuery("select s from SalesFigureEntity s where s.productGroup.id = ?1 and s.schedule.id = ?2 and s.store.id = ?3 ")
                     .setParameter(1, saleForecast.getProductGroup().getId())
-                    .setParameter(2, saleForecast.getSchedule().getId())
+                    .setParameter(2, this.getTheBeforeOne(saleForecast.getSchedule()).getId())
                     .setParameter(3, saleForecast.getStore().getId());
 
             if (q.getResultList().isEmpty()) {

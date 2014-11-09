@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <footer id="footer">
     <script>
         function addToSubscription() {
@@ -10,12 +11,12 @@
     <div class="container">
         <div class="row">
             <div class="footer-ribbon">
-                <span>Get in Touch</span>
+                <span>取得联系</span>
             </div>
             <div class="col-md-3">
                 <div class="newsletter">
-                    <h4>Newsletter</h4>
-                    <p>Keep up on our always evolving product features and technology. Enter your e-mail and subscribe to our newsletter.</p>
+                    <h4>通讯</h4>
+                    <p>跟上我们总是在不断发展的产品功能和技术。请输入您的电子邮件和订阅我们的通讯。</p>
 
                     <div class="alert alert-success hidden" id="newsletterSuccess">
                         <strong>Success!</strong> You've been added to our email list.
@@ -35,16 +36,16 @@
             </div>
             <div class="col-md-4">
                 <div class="contact-details">
-                    <h4>Contact Us</h4>
+                    <h4>联系我们</h4>
                     <ul class="contact">
-                        <li><p><i class="icon icon-map-marker"></i> <strong>Address:</strong> 2 Jurong Gateway Road, JEM #09-01, Singapore</p></li>
-                        <li><p><i class="icon icon-phone"></i> <strong>Phone:</strong> (65) 6475-7890</p></li>
-                        <li><p><i class="icon icon-envelope"></i> <strong>Email:</strong> <a href="mailto:support@if.com">support@if.com</a></p></li>
+                        <li><p><i class="icon icon-map-marker"></i> <strong>地址:</strong> 徐汇区漕溪路126号, 近三汇路</p></li>
+                        <li><p><i class="icon icon-phone"></i> <strong>电话:</strong> (86) 2154254532</p></li>
+                        <li><p><i class="icon icon-envelope"></i> <strong>电子邮件:</strong> <a href="mailto:caoxi@if.com">caoxi@if.com</a></p></li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-2">
-                <h4>Follow Us</h4>
+                <h4>跟着我们</h4>
                 <div class="social-icons">
                     <ul class="social-icons">
                         <li class="facebook"><a href="http://www.facebook.com/" target="_blank" data-placement="bottom" rel="tooltip" title="Facebook">Facebook</a></li>
@@ -69,7 +70,7 @@
                 <div class="col-md-4">
                     <nav id="sub-menu">
                         <ul>
-                            <li><a href="/IS3102_Project-war/B/selectCountry.jsp">Change Location</a></li>
+                            <li><a href="/IS3102_Project-war/B/selectCountry.jsp">更改位置 (Change Location)</a></li>
                         </ul>
                     </nav>
                 </div>

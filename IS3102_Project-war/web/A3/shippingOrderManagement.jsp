@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="EntityManager.AccessRightEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="EntityManager.StaffEntity"%>
@@ -83,10 +84,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th hidden></th>
-                                                            <th>Shipping Order ID</th>
+                                                            <th style="width: 8%">SO ID</th>
                                                             <th>Shipping Origin</th>
                                                             <th>Shipping Destination</th>
                                                             <th>Expected Receiving Date</th>
+                                                            <th>Created Date</th>
                                                             <th>Submitted By</th>
                                                             <th>Status</th>
                                                             <th>Action</th>
@@ -190,7 +192,13 @@
                                                                 <%=destination.getWarehouseName()%>
                                                             </td>
                                                             <td>
-                                                                <%=finalListOfSO.get(i).getExpectedReceivedDate()%>
+                                                                <% SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+                                                                    String date = DATE_FORMAT.format(finalListOfSO.get(i).getExpectedReceivedDate());%>
+                                                                <%=date%> 
+                                                            </td>
+                                                            <td>
+                                                                <% SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("dd-MM-yyyy hh:mm");%>
+                                                                <%= DATE_FORMAT2.format(finalListOfSO.get(i).getCreatedDate())%>
                                                             </td>
                                                             <td>
                                                                 <%=finalListOfSO.get(i).getSubmittedBy()%>
@@ -198,7 +206,7 @@
                                                             <td>
                                                                 <%=finalListOfSO.get(i).getStatus()%>
                                                             </td>
-                                                            <td style="width:200px">
+                                                            <td style="width:80px">
                                                                 <input type="button" name="btnEdit" class="btn btn-primary btn-block"  value="View" onclick="javascript:updateSO('<%=finalListOfSO.get(i).getId()%>')"/>
                                                             </td>
 

@@ -130,27 +130,32 @@
         <!-- /#wrapper -->
 
         <script>
-            $('#input_targetInventoty').change(function () {
+
+            $('#input_targetInventoty').change(function() {
                 var lotSize = <%= productGroup.getLotSize()%>;
                 var targetInventoty = parseInt($('#input_targetInventoty').val());
                 var saleForecast = parseInt($('#input_saleForecast').val());
                 var currentInventory = parseInt($('#input_currentInventory').val());
-
-                if (targetInventoty < currentInventory - saleForecast) {
+                var test = false;
+                
+                if (targetInventoty < currentInventory - saleForecast && !test) {
                     targetInventoty = currentInventory - saleForecast;
                     $('#input_targetInventoty').val(targetInventoty);
                     alert("Target Inventory Level cannot be less than ( current inventory level - sales forecast ).");
+                    test = true;
                 }
-                if (targetInventoty < 0) {
+                if (targetInventoty < 0 && !test) {
                     targetInventoty = 0;
                     $('#input_targetInventoty').val(0);
                     alert("Target Inventory Level cannot be less than zero.");
+                    test = true;
                 }
 
                 var productionPlan = saleForecast - currentInventory + targetInventoty;
-                if (productionPlan % lotSize !== 0) {
+                if (productionPlan % lotSize !== 0 && !test) {
                     productionPlan = (Math.floor(productionPlan / lotSize) + 1) * lotSize;
-                    alert("Productiion Plan has to be multiple of lot size. Target Inventory has been changed automatically.");
+                    alert("Production Plan has to be multiple of lot size. Target Inventory has been changed automatically.");
+                    test = true;
                 }
                 $('#input_productionPlan').val(productionPlan);
                 $('#input_targetInventoty').val(productionPlan + currentInventory - saleForecast);
@@ -159,7 +164,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('#dataTables-example').dataTable();
                 barChart();
             }
@@ -167,21 +172,21 @@
         </script>
 
         <script>
-            <% List<Integer> pastTargetInventoryLevel = (List<Integer>)request.getAttribute("pastTargetInventoryLevel"); %>
+            <% List<Integer> pastTargetInventoryLevel = (List<Integer>) request.getAttribute("pastTargetInventoryLevel"); %>
             function barChart() {
                 Morris.Bar({
                     element: 'flot-bar-chart',
                     data: [
-                        <%  int i = 0;
-                            for(Integer a: pastTargetInventoryLevel){    
-                            i ++;    
-                        %>
-                            {
-                            device: '<%= schedule.getYear() + "-" + (schedule.getMonth()-i) %>',
-                            geekbench: <%= a %>
-                            },
-                        <% } %>
-                        ],
+            <%  int i = 0;
+                for (Integer a : pastTargetInventoryLevel) {
+                    i++;
+            %>
+                        {
+                            device: '<%= schedule.getYear() + "-" + (schedule.getMonth() - i)%>',
+                            geekbench: <%= a%>
+                        },
+            <% }%>
+                    ],
                     xkey: 'device',
                     ykeys: ['geekbench'],
                     labels: ['Target inventory level'],

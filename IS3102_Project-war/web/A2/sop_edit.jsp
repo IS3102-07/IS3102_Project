@@ -71,12 +71,12 @@
                                     <% SaleAndOperationPlanEntity sop = (SaleAndOperationPlanEntity)request.getAttribute("sopEntity");  %>
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_edit_POST">
                                         <div class="form-group">
-                                            <label>Sale Forecast</label> 
+                                            <label>Sales Forecast</label> 
                                             <input id="input_saleForecast" type="number" class="form-control" name="saleForecast" value="<%= sop.getSaleForcastdata() %>" required="true" readonly="true">
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Production Plan</label>
+                                            <label>Production Plan (Must be multiple of lot size) </label>
                                             <input id="input_productionPlan" type="number" class="form-control" name="productionPlan" value="<%= sop.getProductionPlan() %>" required="true" readonly="true">
                                         </div>
 
@@ -132,22 +132,27 @@
                 var targetInventory = parseInt($('#input_targetInventory').val());
                 var saleForecast = parseInt($('#input_saleForecast').val());
                 var currentInventory = parseInt($('#input_currentInventory').val());                
+                var test = false;
                 
-                if(targetInventory < currentInventory - saleForecast){
+                if(targetInventory < currentInventory - saleForecast && !test){
                     targetInventory = currentInventory - saleForecast;
                     $('#input_targetInventory').val(targetInventory);
-                    alert("Target Inventory Level cannot be less than ( current inventory level - sales forecast ).");
+                    alert("Target Inventory Level cannot be less than ( current inventory level - sales forecast ).");                  
+                    test = true;
                 }
-                if(targetInventory < 0){
+                
+                if(targetInventory < 0 && !test){
                     targetInventory = 0;
                     $('#input_targetInventory').val(0);
                     alert("Target Inventory Level cannot be less than zero.");
+                    test = true;
                 }
                                 
                 var productionPlan = saleForecast - currentInventory + targetInventory;
-                if (productionPlan % lotSize !== 0) {
+                if (productionPlan % lotSize !== 0 && !test) {
                     productionPlan = ( Math.floor(productionPlan / lotSize) + 1) * lotSize;
-                    alert("Productiion Plan has to be multiple of lot size. Target Inventory has been changed automatically.");
+                    alert("Production Plan has to be multiple of lot size. Target Inventory has been changed automatically.");
+                    test = true;
                 } 
                 $('#input_productionPlan').val(productionPlan);
                 $('#input_targetInventoty').val(productionPlan + currentInventory - saleForecast);

@@ -85,7 +85,42 @@
             </ul>
         </li>
         <li class="dropdown">
-            <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-group"></i> My Roles <b class="caret"></b></a>
+            <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon icon-group"></i> 
+                <%=roles.get(0).getName()%>
+                <%
+                    if ((roles.get(0).getId() == 2L) || (roles.get(0).getId() == 7L)) {
+                        for (int i = 0; i < roles.get(0).getAccessRightList().size(); i++) {
+                            if (roles.get(0).getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                out.print("of " + roles.get(0).getAccessRightList().get(i).getRegionalOffice().getName());
+                            }
+                        }
+                    }
+                    if (roles.get(0).getId() == 8L) {
+                        for (int i = 0; i < roles.get(0).getAccessRightList().size(); i++) {
+                            if (roles.get(0).getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                out.print("of " + roles.get(0).getAccessRightList().get(i).getManufacturingFacility().getName());
+                            }
+                        }
+                    }
+                    if (roles.get(0).getId() == 3L) {
+                        for (int i = 0; i < roles.get(0).getAccessRightList().size(); i++) {
+                            if (roles.get(0).getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                out.print("of " + roles.get(0).getAccessRightList().get(i).getWarehouse().getWarehouseName());
+                            }
+                        }
+                    }
+                    if (roles.get(0).getId() == 4L || roles.get(0).getId() == 9L || roles.get(0).getId() == 10L || roles.get(0).getId() == 12L) {
+                        for (int i = 0; i < roles.get(0).getAccessRightList().size(); i++) {
+                            if (roles.get(0).getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                                out.print("of " + roles.get(0).getAccessRightList().get(i).getStore().getName());
+                            }
+                        }
+                    }
+                %>
+                <b class="caret"></b>
+            </a>
+
             <ul class="dropdown-menu" style="min-width: 300px">
                 <%
                     for (RoleEntity role : roles) {
@@ -98,23 +133,22 @@
                                         out.print("of " + role.getAccessRightList().get(i).getRegionalOffice().getName());
                                     }
                                 }
-                            }%>
-                        <%if (role.getId() == 8L) {
+                            }
+                            if (role.getId() == 8L) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
                                         out.print("of " + role.getAccessRightList().get(i).getManufacturingFacility().getName());
                                     }
                                 }
-                            }%>
-
-                        <%if (role.getId() == 3L) {
+                            }
+                            if (role.getId() == 3L) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
                                         out.print("of " + role.getAccessRightList().get(i).getWarehouse().getWarehouseName());
                                     }
                                 }
-                            }%>
-                        <%if (role.getId() == 4L || role.getId() == 9L || role.getId() == 10L || role.getId() == 12L) {
+                            }
+                            if (role.getId() == 4L || role.getId() == 9L || role.getId() == 10L || role.getId() == 12L) {
                                 for (int i = 0; i < role.getAccessRightList().size(); i++) {
                                     if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
                                         out.print("of " + role.getAccessRightList().get(i).getStore().getName());
@@ -127,6 +161,8 @@
                     }
                 %>                       
             </ul>
+
+
         </li>
         <li class="dropdown">
             <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-user"></i> <%=staffEntity.getName()%><b class="caret"></b></a>

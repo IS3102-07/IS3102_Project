@@ -97,6 +97,26 @@ public class RetailProductsAndRawMaterialsPurchasingWebService {
         }
         return false;
     }
+    
+    @WebMethod(operationName = "shipPurchaseOrder")
+    public Boolean shipPurchaseOrder(@WebParam(name = "email") String email, @WebParam(name = "password") String password, @WebParam(name = "purchaseOrderId") Long purchaseOrderId) {
+        System.out.println("shipPurchaseOrder is called.");
+
+        try {
+            Query q = em.createQuery("select s from SupplierEntity s where s.email = ?1 and s.supplierName = ?2")
+                    .setParameter(1, email)
+                    .setParameter(2, password);
+
+            if (!q.getResultList().isEmpty()) {
+                PurchaseOrderEntity po = em.find(PurchaseOrderEntity.class, purchaseOrderId);
+                PurchasingBean.updatePurchaseOrderStatus(purchaseOrderId, "Shipped", po.getSubmittedBy());                
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 
     @WebMethod(operationName = "invoice")
     public Boolean invoice(@WebParam(name = "email") String email, @WebParam(name = "password") String password, @WebParam(name = "purchaseOrderId") Long purchaseOrderId) {

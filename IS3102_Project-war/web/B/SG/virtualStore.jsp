@@ -81,7 +81,7 @@
                                             <area  alt="" title="study" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode("Study")%>" shape="rect" coords="585,77,628,220" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapStudy.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
-                                            <area  alt="" title="restaurant" href="/IS3102_Project-war/ECommerce_AllFoodsServlet" shape="rect" coords="709,268,925,531" style="outline:none;" target="_self"  onmouseover="if (document.images)
+                                            <area  alt="" title="restaurant" href="#" shape="rect" coords="709,268,925,531" style="outline:none;" target="_self"  onmouseover="if (document.images)
                                                         document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMapRestaurant.jpg';" onmouseout="if (document.images)
                                                                     document.getElementById('storeMap').src = '/IS3102_Project-war/img/islandFurnitureStoreMap.jpg';"  />
                                             <area  alt="" title="pointOfSales" href="#" shape="rect" coords="351,557,986,751" style="outline:none;" target="_self"  onmouseover="if (document.images)

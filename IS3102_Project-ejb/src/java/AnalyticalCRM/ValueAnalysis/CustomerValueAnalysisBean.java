@@ -498,12 +498,15 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 c.setTime(date);
                 c.add(Calendar.DATE, (-365 * year));
                 Date churnDate = c.getTime();
-                if (member.getJoinDate().getTime() > churnDate.getTime()) {
-                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-                        for (int i = 0; i < member.getPurchases().size(); i++) {
-                            totalRevenue += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
+
+                if (member.getJoinDate() != null) {
+                    if (member.getJoinDate().getTime() > churnDate.getTime()) {
+                        if (member.getPurchases() != null && member.getPurchases().size() != 0) {
+                            for (int i = 0; i < member.getPurchases().size(); i++) {
+                                totalRevenue += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
+                            }
+                        } else {
                         }
-                    } else {
                     }
                 }
             }
@@ -535,17 +538,19 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 c.add(Calendar.DATE, (-365 * year));
                 Date churnDate = c.getTime();
 
-                Long days = member.getJoinDate().getTime() - churnDate.getTime();
-                days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                if (days > 0) {
-                    numOfMembersNotChurn++;
+                if (member.getJoinDate() != null) {
+                    Long days = member.getJoinDate().getTime() - churnDate.getTime();
+                    days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                    if (days > 0) {
+                        numOfMembersNotChurn++;
+                    }
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
 
             return numOfMembersNotChurn;
         } catch (Exception ex) {
-            System.out.println("\nServer failed to list retention rate:\n" + ex);
+            System.out.println("\nServer failed to list num of members in join date:\n" + ex);
             ex.printStackTrace();
             return numOfMembersNotChurn;
         }
@@ -630,6 +635,162 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         return sortedFurnitures;
     }
 
+    public List<LineItemEntity> sortBestSellingFurniture1Year() {
+        System.out.println("sortBestSellingFurniture1Year()");
+        List<LineItemEntity> sortedFurnitures = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            List<FurnitureEntity> furnitures = q.getResultList();
+
+            for (FurnitureEntity furniture : furnitures) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(furniture);
+                lineItem.setQuantity(0);
+                sortedFurnitures.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+            Calendar c = Calendar.getInstance();
+            Date date = new Date();
+            c.setTime(date);
+            c.add(Calendar.DATE, -365);
+            Date churnDate = c.getTime();
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getCreatedDate().getTime() > churnDate.getTime()) {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedFurnitures.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
+                                    sortedFurnitures.get(i).setQuantity(sortedFurnitures.get(i).getQuantity() + lineItem.getQuantity());
+
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedFurnitures.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
+                                    sortedFurnitures.get(i).setQuantity(0);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedFurnitures;
+    }
+    
+    public List<LineItemEntity> sortBestSellingMenuItem1Year() {
+        System.out.println("sortBestSellingMenuItem1Year()");
+        List<LineItemEntity> sortedMenuItems = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM MenuItemEntity t");
+            List<MenuItemEntity> menuItems = q.getResultList();
+
+            for (MenuItemEntity menuItem : menuItems) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(menuItem);
+                lineItem.setQuantity(0);
+                sortedMenuItems.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+            Calendar c = Calendar.getInstance();
+            Date date = new Date();
+            c.setTime(date);
+            c.add(Calendar.DATE, -365);
+            Date churnDate = c.getTime();
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getCreatedDate().getTime() > churnDate.getTime()) {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedMenuItems.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedMenuItems.get(i).getItem().getId()) {
+                                    sortedMenuItems.get(i).setQuantity(sortedMenuItems.get(i).getQuantity() + lineItem.getQuantity());
+
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedMenuItems.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedMenuItems.get(i).getItem().getId()) {
+                                    sortedMenuItems.get(i).setQuantity(0);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedMenuItems;
+    }
+    
+    public List<LineItemEntity> sortBestSellingRetailProduct1Year() {
+        System.out.println("sortBestSellingRetailProduct1Year()");
+        List<LineItemEntity> sortedRetailProducts = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+            List<RetailProductEntity> retailProducts = q.getResultList();
+
+            for (RetailProductEntity retailProduct : retailProducts) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(retailProduct);
+                lineItem.setQuantity(0);
+                sortedRetailProducts.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+            Calendar c = Calendar.getInstance();
+            Date date = new Date();
+            c.setTime(date);
+            c.add(Calendar.DATE, -365);
+            Date churnDate = c.getTime();
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getCreatedDate().getTime() > churnDate.getTime()) {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedRetailProducts.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedRetailProducts.get(i).getItem().getId()) {
+                                    sortedRetailProducts.get(i).setQuantity(sortedRetailProducts.get(i).getQuantity() + lineItem.getQuantity());
+
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedRetailProducts.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedRetailProducts.get(i).getItem().getId()) {
+                                    sortedRetailProducts.get(i).setQuantity(0);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedRetailProducts;
+    }
+
     @Override
     public List<LineItemEntity> sortBestSellingRetailProducts() {
         System.out.println("sortBestSellingRetailProducts()");
@@ -684,22 +845,23 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 365);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 365);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0) {
-                            retainedMembers.add(member);
-                            numOfMembersNotChurn++;
-                            break;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0) {
+                                retainedMembers.add(member);
+                                numOfMembersNotChurn++;
+                                break;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
             }
             return retainedMembers;
@@ -724,21 +886,22 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 365);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 365);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0) {
-                            numOfMembersNotChurn++;
-                            numOfOrders++;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0) {
+                                numOfMembersNotChurn++;
+                                numOfOrders++;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
             }
             return ((double) numOfOrders / (double) numOfMembers);
@@ -763,21 +926,22 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 730);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 730);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0 && days < 365) {
-                            numOfMembersNotChurn++;
-                            numOfOrders++;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0 && days < 365) {
+                                numOfMembersNotChurn++;
+                                numOfOrders++;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
             }
 
@@ -805,22 +969,23 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 365);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 365);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);;
-                        if (days > 0) {
-                            totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
-                            numOfOrders++;
-                            break;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);;
+                            if (days > 0) {
+                                totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
+                                numOfOrders++;
+                                break;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
             }
             return ((double) totalPriceOfOrders / (double) numOfOrders);
@@ -846,21 +1011,22 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 730);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 730);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-
-                    for (int i = 0; i < member.getPurchases().size(); i++) {
-                        Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0 && days < 365) {
-                            totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
-                            numOfOrders++;
+                        for (int i = 0; i < member.getPurchases().size(); i++) {
+                            Long days = churnDate.getTime() - member.getPurchases().get(i).getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0 && days < 365) {
+                                totalPriceOfOrders += getSalesRecordAmountDueInUSD(member.getPurchases().get(i).getId());
+                                numOfOrders++;
+                            }
                         }
+                    } else {
                     }
-                } else {
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
@@ -925,22 +1091,23 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
             numOfMembers = members.size();
             for (MemberEntity member : members) {
                 Calendar c = Calendar.getInstance();
+                if (member.getJoinDate() != null) {
+                    c.setTime(member.getJoinDate());
+                    c.add(Calendar.DATE, 365);
+                    Date churnDate = c.getTime();
+                    if (member.getPurchases() != null && member.getPurchases().size() != 0) {
 
-                c.setTime(member.getJoinDate());
-                c.add(Calendar.DATE, 365);
-                Date churnDate = c.getTime();
-                if (member.getPurchases() != null && member.getPurchases().size() != 0) {
-
-                    for (SalesRecordEntity record : member.getPurchases()) {
-                        Long days = churnDate.getTime() - record.getCreatedDate().getTime();
-                        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
-                        if (days > 0) {
-                            numOfMembersNotChurn++;
-                            break;
+                        for (SalesRecordEntity record : member.getPurchases()) {
+                            Long days = churnDate.getTime() - record.getCreatedDate().getTime();
+                            days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+                            if (days > 0) {
+                                numOfMembersNotChurn++;
+                                break;
+                            }
                         }
-                    }
-                } else {
+                    } else {
 
+                    }
                 }
             }
             DecimalFormat df = new DecimalFormat("#.00");
@@ -1382,7 +1549,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return days;
     }
-    
+
     //For retail products
     public Integer getCustomerRecencyRetailProduct(Long memberId) {
         System.out.println("getCustomerRecencyRetailProduct()");
@@ -1417,7 +1584,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         }
         return days;
     }
-    
+
     //For menu item
     public Integer getCustomerRecencyMenuItem(Long memberId) {
         System.out.println("getCustomerRecencyMenuItem()");
@@ -1469,13 +1636,13 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 }
             }
-            
+
         } else {
             return 0;
         }
         return numOfTimesPurchased;
     }
-    
+
     public Integer getCustomerFrequencyRetailProduct(Long memberId) {
         System.out.println("getCustomerFrequencyRetailProduct()");
 
@@ -1490,7 +1657,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 }
             }
-            
+
         } else {
             return 0;
         }
@@ -1511,13 +1678,13 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                     }
                 }
             }
-            
+
         } else {
             return 0;
         }
         return numOfTimesPurchased;
     }
-    
+
     //for furnitures only
     @Override
     public Integer getCustomerMonetaryValue(Long memberId) {
@@ -1534,14 +1701,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         break;
                     }
                 }
-                
+
             }
         } else {
             return 0;
         }
         return totalPriceOfPurchases;
     }
-    
+
     public Integer getCustomerMonetaryValueRetailProduct(Long memberId) {
         System.out.println("getCustomerMonetaryValueRetailProduct()");
 
@@ -1556,14 +1723,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                         break;
                     }
                 }
-                
+
             }
         } else {
             return 0;
         }
         return totalPriceOfPurchases;
     }
-    
+
     public Integer getCustomerMonetaryValueMenuItem(Long memberId) {
         System.out.println("getCustomerMonetaryValueMenuItem()");
 
@@ -1761,12 +1928,14 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
         int totalCummulativeSpending = 0;
         for (MemberEntity member : members) {
-            if (member.getCity().equalsIgnoreCase(country)) {
-                List<SalesRecordEntity> salesRecordOfMember = member.getPurchases();
-                if (salesRecordOfMember != null) {
-                    for (SalesRecordEntity salesRecord : salesRecordOfMember) {
+            if (member.getCity() != null) {
+                if (member.getCity().equalsIgnoreCase(country)) {
+                    List<SalesRecordEntity> salesRecordOfMember = member.getPurchases();
+                    if (salesRecordOfMember != null) {
+                        for (SalesRecordEntity salesRecord : salesRecordOfMember) {
 
-                        totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
+                            totalCummulativeSpending += getSalesRecordAmountDueInUSD(salesRecord.getId());
+                        }
                     }
                 }
             }
@@ -1831,8 +2000,10 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
 
         int numOfmembersInGroup = 0;
         for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getCity().equalsIgnoreCase(country)) {
-                numOfmembersInGroup++;
+            if (members.get(i).getCity() != null) {
+                if (members.get(i).getCity().equalsIgnoreCase(country)) {
+                    numOfmembersInGroup++;
+                }
             }
         }
         return numOfmembersInGroup;

@@ -162,7 +162,7 @@
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Product Group</th>
-                                                            <th>Sale Forecast</th>
+                                                            <th>Sales Forecast</th>
                                                             <th>Production Plan</th>
                                                             <th>Current Inventory</th>
                                                             <th>Target Inventory</th>
@@ -231,7 +231,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4><b>Sales And Operations Plans - Retail Product</b></h4>
+                                    <h4><b>Procurement Plans - Retail Product</b></h4>
                                 </div>
                                 <!-- /.panel-heading -->
 
@@ -244,8 +244,8 @@
                                                         <tr>
                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                             <th>Product Group</th>
-                                                            <th>Sale Forecast</th>
-                                                            <th>Production Plan</th>
+                                                            <th>Sales Forecast</th>
+                                                            <th>Procurement Plan</th>
                                                             <th>Current Inventory</th>
                                                             <th>Target Inventory</th>
                                                             <th>Action</th>
@@ -272,7 +272,7 @@
                                                 </table>    
                                                 <div class="row">
                                                     <div class="col-md-3">                                                        
-                                                        <a href="#deleteSOPRetailProduct" data-toggle="modal"><button class="btn btn-primary">Delete Sales and Operations Plan</button></a>
+                                                        <a href="#deleteSOPRetailProduct" data-toggle="modal"><button class="btn btn-primary">Delete Procurement Plan</button></a>
                                                         <div role="dialog" class="modal fade" id="deleteSOPRetailProduct">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
