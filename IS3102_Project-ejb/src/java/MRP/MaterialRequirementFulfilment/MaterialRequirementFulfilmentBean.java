@@ -71,9 +71,9 @@ public class MaterialRequirementFulfilmentBean implements MaterialRequirementFul
                         int lotsize = supplier_ItemEntity.getLotSize();
                         int purchaseQuantity = 0;
                         if (((mr.getQuantity() - stockLevel) % lotsize) != 0) {
-                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1) * lotsize;
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1);
                         } else {
-                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize)) * lotsize;
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize));
                         }
                         System.out.println("(mr.getQuantity() - stockLevel): " + (mr.getQuantity() - stockLevel) + "; lotsize: " + lotsize);
                         System.out.println("purchaseQuantity: " + purchaseQuantity);
