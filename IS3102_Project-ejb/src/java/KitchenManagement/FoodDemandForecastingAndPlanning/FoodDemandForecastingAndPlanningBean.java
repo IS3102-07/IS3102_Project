@@ -518,7 +518,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                                 em.persist(MR1);
                             } else {
                                 MaterialRequirementEntity MR1 = (MaterialRequirementEntity) query1.getResultList().get(0);
-                                MR1.setQuantity(MR1.getQuantity() + mps.getAmount_week1() * lineItem.getQuantity());
+                                MR1.setQuantity(MR1.getQuantity() + mps.getAmount_week1() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                                 em.merge(MR1);
                             }
                         }
@@ -537,14 +537,23 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                             MR2.setStore(store);
                             MR2.setMps(mps);
                             MR2.setRawIngredient((RawIngredientEntity) lineItem.getItem());
+                            System.out.println("persis-mps.getAmount_week2(): " + mps.getAmount_week2());
+                            System.out.println("lineItem.getQuantity(): " + lineItem.getQuantity());
+                            System.out.println("mps.getMenuItem().getRecipe().getBroadLotSize()" + mps.getMenuItem().getRecipe().getBroadLotSize());
                             MR2.setQuantity(mps.getAmount_week2() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                             MR2.setSchedule(schedule);
                             MR2.setDay(calendar.get(Calendar.DAY_OF_MONTH));
                             em.persist(MR2);
+                            System.out.println("persis-MR2.getQuantity(): " + MR2.getQuantity());
                         } else {
                             MaterialRequirementEntity MR2 = (MaterialRequirementEntity) query2.getResultList().get(0);
-                            MR2.setQuantity(MR2.getQuantity() + mps.getAmount_week2() * lineItem.getQuantity());
+                            System.out.println("persis-mps.getAmount_week2(): " + mps.getAmount_week2());
+                            System.out.println("lineItem.getQuantity(): " + lineItem.getQuantity());
+                            System.out.println("mps.getMenuItem().getRecipe().getBroadLotSize()" + mps.getMenuItem().getRecipe().getBroadLotSize());
+
+                            MR2.setQuantity(MR2.getQuantity() + mps.getAmount_week2() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);                            
                             em.merge(MR2);
+                            System.out.println("merge-MR2.getQuantity(): " + MR2.getQuantity());
                         }
 
                         calendar.set(Calendar.WEEK_OF_MONTH, 3);
@@ -566,7 +575,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                             em.persist(MR3);
                         } else {
                             MaterialRequirementEntity MR3 = (MaterialRequirementEntity) query3.getResultList().get(0);
-                            MR3.setQuantity(MR3.getQuantity() + mps.getAmount_week3() * lineItem.getQuantity());
+                            MR3.setQuantity(MR3.getQuantity() + mps.getAmount_week3() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                             em.merge(MR3);
                         }
 
@@ -589,7 +598,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                             em.persist(MR4);
                         } else {
                             MaterialRequirementEntity MR4 = (MaterialRequirementEntity) query4.getResultList().get(0);
-                            MR4.setQuantity(MR4.getQuantity() + mps.getAmount_week4() * lineItem.getQuantity());
+                            MR4.setQuantity(MR4.getQuantity() + mps.getAmount_week4() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                             em.merge(MR4);
                         }
 
@@ -613,7 +622,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                                 em.persist(MR5);
                             } else {
                                 MaterialRequirementEntity MR5 = (MaterialRequirementEntity) query5.getResultList().get(0);
-                                MR5.setQuantity(MR5.getQuantity() + mps.getAmount_week5() * lineItem.getQuantity());
+                                MR5.setQuantity(MR5.getQuantity() + mps.getAmount_week5() * lineItem.getQuantity() / mps.getMenuItem().getRecipe().getBroadLotSize() + 1);
                                 em.merge(MR5);
                             }
                         }
@@ -683,9 +692,9 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         int lotsize = supplier_ItemEntity.getLotSize();
                         int purchaseQuantity = 0;
                         if (((mr.getQuantity() - stockLevel) % lotsize) != 0) {
-                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1);
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize) + 1) * lotsize;
                         } else {
-                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize));
+                            purchaseQuantity = (((mr.getQuantity() - stockLevel) / lotsize)) * lotsize;
                         }
                         System.out.println("(mr.getQuantity() - stockLevel): " + (mr.getQuantity() - stockLevel) + "; lotsize: " + lotsize);
                         System.out.println("purchaseQuantity: " + purchaseQuantity);
@@ -694,7 +703,7 @@ public class FoodDemandForecastingAndPlanningBean implements FoodDemandForecasti
                         PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), calendar.getTime());
                         purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), rm.getSKU(), purchaseQuantity);
 
-                        stockLevel = stockLevel + purchaseQuantity * lotsize - mr.getQuantity();
+                        stockLevel = stockLevel + purchaseQuantity - mr.getQuantity();
                     }
                 }
             }

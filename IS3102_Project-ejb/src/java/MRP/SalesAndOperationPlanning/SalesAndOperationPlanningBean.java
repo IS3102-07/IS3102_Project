@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
@@ -177,20 +176,21 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
         Collections.sort(scheduleList, new CustomeComparator_schedule());
         return scheduleList;
     }
-    
+
     private class CustomeComparator_schedule implements Comparator<MonthScheduleEntity> {
+
         @Override
         public int compare(MonthScheduleEntity s1, MonthScheduleEntity s2) {
-            if(s1.getYear() > s2.getYear() ){
+            if (s1.getYear() > s2.getYear()) {
                 return -1;
-            } else if( s1.getYear() < s2.getYear() ) {
+            } else if (s1.getYear() < s2.getYear()) {
                 return 1;
-            } else{
-                if(s1.getMonth() > s2.getMonth() ){
+            } else {
+                if (s1.getMonth() > s2.getMonth()) {
                     return -1;
-                } else if(s1.getMonth() < s2.getMonth() ){
+                } else if (s1.getMonth() < s2.getMonth()) {
                     return 1;
-                } else{
+                } else {
                     return 0;
                 }
             }
@@ -329,17 +329,17 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                     int lotsize = supplier_ItemEntity.getLotSize();
                     int purchaseQuantity = 1;
                     if ((sop.getProductionPlan() % lotsize) != 0) {
-                            purchaseQuantity = ((sop.getProductionPlan() / lotsize) + 1);
-                        } else {
-                            purchaseQuantity = ((sop.getProductionPlan() / lotsize));
-                        }
-                    
+                        purchaseQuantity = ((sop.getProductionPlan() / lotsize) + 1) * lotsize;
+                    } else {
+                        purchaseQuantity = sop.getProductionPlan();
+                    }
+
                     Calendar calendar = Calendar.getInstance();
                     calendar.clear();
                     calendar.set(Calendar.YEAR, schedule.getYear());
-                    calendar.set(Calendar.MONTH, schedule.getMonth()-1);
+                    calendar.set(Calendar.MONTH, schedule.getMonth() - 1);
                     calendar.set(Calendar.DAY_OF_MONTH, 1);
-                    
+
                     PurchaseOrderEntity purchaseOrder = purchaseBean.createPurchaseOrder(supplier_ItemEntity.getSupplier().getId(), store.getWarehouse().getId(), calendar.getTime());
                     purchaseBean.addLineItemToPurchaseOrder(purchaseOrder.getId(), lineItem.getItem().getSKU(), purchaseQuantity);
                 }
@@ -355,11 +355,11 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
     @Override
     public List<Integer> getPastTargetInventoryLevel(Long storeId, Long scheduleId, Long productGroupId) {
         try {
-            
-            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);            
+
+            MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
             List pastTargetInventoryLevel = new ArrayList();
             for (int i = 0; i < 6; i++) {
-                schedule = salesForecastBean.getTheBeforeOne(schedule);                
+                schedule = salesForecastBean.getTheBeforeOne(schedule);
                 Query q = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.store.id = ?1 and sop.schedule.id = ?2 AND sop.productGroup.id = ?3")
                         .setParameter(1, storeId)
                         .setParameter(2, schedule.getId())
