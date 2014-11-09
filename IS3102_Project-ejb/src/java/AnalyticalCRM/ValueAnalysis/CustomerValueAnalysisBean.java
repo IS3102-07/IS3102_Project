@@ -668,12 +668,127 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                             }
                         }
                     }
+                } else {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedFurnitures.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedFurnitures.get(i).getItem().getId()) {
+                                    sortedFurnitures.get(i).setQuantity(0);
+
+                                }
+                            }
+                        }
+                    }
                 }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return sortedFurnitures;
+    }
+    
+    public List<LineItemEntity> sortBestSellingMenuItem1Year() {
+        System.out.println("sortBestSellingMenuItem1Year()");
+        List<LineItemEntity> sortedMenuItems = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM MenuItemEntity t");
+            List<MenuItemEntity> menuItems = q.getResultList();
+
+            for (MenuItemEntity menuItem : menuItems) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(menuItem);
+                lineItem.setQuantity(0);
+                sortedMenuItems.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+            Calendar c = Calendar.getInstance();
+            Date date = new Date();
+            c.setTime(date);
+            c.add(Calendar.DATE, -365);
+            Date churnDate = c.getTime();
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getCreatedDate().getTime() > churnDate.getTime()) {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedMenuItems.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedMenuItems.get(i).getItem().getId()) {
+                                    sortedMenuItems.get(i).setQuantity(sortedMenuItems.get(i).getQuantity() + lineItem.getQuantity());
+
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedMenuItems.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedMenuItems.get(i).getItem().getId()) {
+                                    sortedMenuItems.get(i).setQuantity(0);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedMenuItems;
+    }
+    
+    public List<LineItemEntity> sortBestSellingRetailProduct1Year() {
+        System.out.println("sortBestSellingRetailProduct1Year()");
+        List<LineItemEntity> sortedRetailProducts = new ArrayList();
+
+        try {
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+            List<RetailProductEntity> retailProducts = q.getResultList();
+
+            for (RetailProductEntity retailProduct : retailProducts) {
+                LineItemEntity lineItem = new LineItemEntity();
+                lineItem.setItem(retailProduct);
+                lineItem.setQuantity(0);
+                sortedRetailProducts.add(lineItem);
+            }
+            Query x = em.createQuery("SELECT t FROM SalesRecordEntity t");
+            List<SalesRecordEntity> salesRecords = x.getResultList();
+            Calendar c = Calendar.getInstance();
+            Date date = new Date();
+            c.setTime(date);
+            c.add(Calendar.DATE, -365);
+            Date churnDate = c.getTime();
+            for (SalesRecordEntity salesRecord : salesRecords) {
+                if (salesRecord.getCreatedDate().getTime() > churnDate.getTime()) {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedRetailProducts.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedRetailProducts.get(i).getItem().getId()) {
+                                    sortedRetailProducts.get(i).setQuantity(sortedRetailProducts.get(i).getQuantity() + lineItem.getQuantity());
+
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (salesRecord.getItemsPurchased().size() != 0) {
+                        for (LineItemEntity lineItem : salesRecord.getItemsPurchased()) {
+                            for (int i = 0; i < sortedRetailProducts.size(); i++) {
+                                if (lineItem.getItem().getId() == sortedRetailProducts.get(i).getItem().getId()) {
+                                    sortedRetailProducts.get(i).setQuantity(0);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sortedRetailProducts;
     }
 
     @Override

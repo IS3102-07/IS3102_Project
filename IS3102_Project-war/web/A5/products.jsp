@@ -74,7 +74,7 @@
 
                                     <%
                                         List<LineItemEntity> sortBestSellingFurniture = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture"));
-                                        //List<LineItemEntity> sortBestSellingFurniture1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture1Year"));
+                                        List<LineItemEntity> sortBestSellingFurniture1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture1Year"));
                                         List<LineItemEntity> listOfSecondProduct = (List<LineItemEntity>) (session.getAttribute("listOfSecondProduct"));
                                         List<Date> dateOfLastPurchaseFurniture = (List<Date>) (session.getAttribute("dateOfLastPurchaseFurniture"));
                                         
@@ -125,12 +125,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <%
-                                                                        /*for (int j = 0; j < sortBestSellingFurniture1Year.size(); j++) {
-                                                                            if (item.getId().equals(sortBestSellingFurniture1Year.get(j).getItem().getId())) {
-                                                                                out.print(sortBestSellingFurniture1Year.get(j).getQuantity());
-                                                                                break;
-                                                                            }
-                                                                        }*/
+                                                                        out.print(sortBestSellingFurniture1Year.get(i).getQuantity());
                                                                         %>
                                                                         
                                                                     </td>
@@ -194,6 +189,7 @@ out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
                                             <%
                                                 List<LineItemEntity> sortBestSellingRetailProducts = (List<LineItemEntity>) (session.getAttribute("sortBestSellingRetailProducts"));
                                                 List<LineItemEntity> listOfSecondProductRP = (List<LineItemEntity>) (session.getAttribute("listOfSecondProductRP"));
+                                                List<LineItemEntity> sortBestSellingRetailProduct1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingRetailProduct1Year"));
                                                 List<Date> dateOfLastPurchaseRetailProduct = (List<Date>) (session.getAttribute("dateOfLastPurchaseRetailProduct"));
                                             %>
                                             <!-- /.table-responsive -->
@@ -213,6 +209,7 @@ out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
                                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                             <th>Name</th>
                                                                             <th>Quantity Sold</th>
+                                                                            <th>Last 365 Days</th>
                                                                             <th>Last Purchase</th>
                                                                             <th>Items Purchased With</th>
                                                                             <th>Probability</th>
@@ -235,6 +232,7 @@ out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
                                                                             <td >
                                                                                 <%=item.getQuantity()%>
                                                                             </td>
+                                                                            <td><%=sortBestSellingRetailProduct1Year.get(i).getQuantity()%></td>
                                                                             <td>
                                                                                  <% if (dateOfLastPurchaseRetailProduct.get(i) !=null) {out.print(dateFormat.format(dateOfLastPurchaseRetailProduct.get(i))); }%>
                                                                             </td>
@@ -289,6 +287,8 @@ out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
                                             <%
                                                 List<LineItemEntity> sortBestSellingMenuItem = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem"));
                                                 List<LineItemEntity> listOfSecondProductMenuItem = (List<LineItemEntity>) (session.getAttribute("listOfSecondProductMenuItem"));
+                                                List<LineItemEntity> sortBestSellingMenuItem1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem1Year"));
+                                                
                                                 List<Date> dateOfLastPurchaseMenuItem = (List<Date>) (session.getAttribute("dateOfLastPurchaseMenuItem"));
                                             %>
                                             <!-- /.table-responsive -->
@@ -308,6 +308,7 @@ out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
                                                                             <th><input type="checkbox"onclick="checkAll(this)" /></th>
                                                                             <th>Name</th>
                                                                             <th>Quantity Sold</th>
+                                                                            <th>Last 365 Days</th>
                                                                             <th>Last Purchase</th>
                                                                             <th>Items Purchased With</th>
                                                                             <th>Probability</th>
@@ -330,6 +331,9 @@ out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
                                                                             </td>
                                                                             <td >
                                                                                 <%=item.getQuantity()%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%=sortBestSellingMenuItem1Year.get(i)%>
                                                                             </td>
                                                                             <td>
                                                                                  <%
