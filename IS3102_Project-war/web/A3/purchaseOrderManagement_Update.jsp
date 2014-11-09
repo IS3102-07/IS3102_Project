@@ -216,7 +216,7 @@
                                                     if (lineItem.getItem().getSKU().equals(supplierItemInfo.getItem().getSKU())) {
                                                         double qty = lineItem.getQuantity();
                                                         double priceOfOneItem = supplierItemInfo.getCostPrice();
-                                                        double priceOfLineItem = qty * priceOfOneItem;
+                                                        double priceOfLineItem = qty /supplierItemInfo.getLotSize() * priceOfOneItem;
                                                         price += priceOfLineItem;
                                                     }
                                                 }
@@ -260,6 +260,7 @@
                                                             <th>Price (Per Lot Size)</th>
                                                             <th>Lot Size</th>
                                                             <th>Quantity (In Lot Size)</th>
+                                                            <th>Total Quantity</th>
                                                             <th>Lead Time</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -295,8 +296,11 @@
                                                                 <%=supplierItemInfo.getLotSize()%>
                                                             </td>
                                                             <td>
-                                                                <%=lineItem.getQuantity()%>
+                                                                <%=lineItem.getQuantity()/supplierItemInfo.getLotSize()%>
                                                             </td>
+                                                            <td>
+                                                                <%=lineItem.getQuantity()%>
+                                                            </td>           
                                                             <td>
                                                                 <%=supplierItemInfo.getLeadTime()%>
                                                             </td>
