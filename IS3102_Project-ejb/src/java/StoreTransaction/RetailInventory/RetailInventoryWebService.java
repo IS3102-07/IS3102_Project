@@ -111,7 +111,6 @@ public class RetailInventoryWebService {
             connection.connect();
             connection.getInputStream();
             connection.disconnect();
-            System.out.println("?????????");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
