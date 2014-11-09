@@ -71,7 +71,7 @@
                                     <% SaleAndOperationPlanEntity sop = (SaleAndOperationPlanEntity)request.getAttribute("sopEntity");  %>
                                     <form action="../SaleAndOperationPlanning_Servlet/sop_edit_POST">
                                         <div class="form-group">
-                                            <label>Sale Forecast</label> 
+                                            <label>Sales Forecast</label> 
                                             <input id="input_saleForecast" type="number" class="form-control" name="saleForecast" value="<%= sop.getSaleForcastdata() %>" required="true" readonly="true">
                                         </div>
 
