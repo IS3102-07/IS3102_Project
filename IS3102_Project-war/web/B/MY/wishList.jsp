@@ -167,7 +167,7 @@
                                                                     %></a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a href="shop-product-sidebar.html"><%=wishList.getItems().get(i).getName()%></a>
+                                                                <a href="furnitureProductDetails.jsp?sku=<%=wishList.getItems().get(i).getSKU()%>"><%=wishList.getItems().get(i).getName()%></a>
                                                             </td>
 
                                                             <td class="product-price">
