@@ -260,6 +260,7 @@
                                                             <th>Price (Per Lot Size)</th>
                                                             <th>Lot Size</th>
                                                             <th>Quantity (In Lot Size)</th>
+                                                            <th>Total Quantity</th>
                                                             <th>Lead Time</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -296,6 +297,9 @@
                                                             </td>
                                                             <td>
                                                                 <%=lineItem.getQuantity()%>
+                                                            </td>
+                                                            <td>
+                                                                <%=supplierItemInfo.getLotSize()*lineItem.getQuantity()%>
                                                             </td>
                                                             <td>
                                                                 <%=supplierItemInfo.getLeadTime()%>
