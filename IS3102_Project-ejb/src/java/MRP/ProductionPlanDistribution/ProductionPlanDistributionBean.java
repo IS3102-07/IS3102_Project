@@ -32,8 +32,9 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ProductionPlanDistributionBean implements ProductionPlanDistributionBeanLocal {
+
     @EJB
-    private SalesForecastBeanLocal sfBean;    
+    private SalesForecastBeanLocal sfBean;
     @EJB
     private InboundAndOutboundLogisticsBeanLocal ioBean;
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
@@ -231,7 +232,10 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
             for (SaleAndOperationPlanEntity sop : sopList) {
                 calendar.set(Calendar.WEEK_OF_MONTH, 1);
                 calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-                ShippingOrderEntity shippingOrder_week1 = ioBean.createShippingOrderBasicInfo(calendar.getTime(), sop.getManufacturingFacility().getWarehouse().getId(), sop.getStore().getWarehouse().getId());
+                ShippingOrderEntity shippingOrder_week1 = new ShippingOrderEntity();
+                if (schedule.getWorkDays_firstWeek() != 0) {
+                    shippingOrder_week1 = ioBean.createShippingOrderBasicInfo(calendar.getTime(), sop.getManufacturingFacility().getWarehouse().getId(), sop.getStore().getWarehouse().getId());
+                }
 
                 calendar.set(Calendar.WEEK_OF_MONTH, 2);
                 calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
@@ -280,8 +284,9 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
                         }
                         if (amount > 0) {
                             int amount_week1 = (int) Math.round(1.0 * amount * schedule.getWorkDays_firstWeek() / days_month);
-                            ioBean.addLineItemToShippingOrder(shippingOrder_week1.getId(), lineitem.getItem().getSKU(), amount_week1);
-
+                            if (schedule.getWorkDays_firstWeek() != 0) {
+                                ioBean.addLineItemToShippingOrder(shippingOrder_week1.getId(), lineitem.getItem().getSKU(), amount_week1);
+                            }
                             int amount_week2 = (int) Math.round(1.0 * amount * schedule.getWorkDays_secondWeek() / days_month);
                             ioBean.addLineItemToShippingOrder(shippingOrder_week2.getId(), lineitem.getItem().getSKU(), amount_week2);
 
