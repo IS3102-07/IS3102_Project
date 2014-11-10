@@ -2224,6 +2224,13 @@
         <web-resource-collection>
             <web-resource-name>Viewpoint Secure URLs</web-resource-name>
             <url-pattern>/A1/staffLogin.jsp</url-pattern>
+            <url-pattern>/B/memberLogin</url-pattern>
+            <url-pattern>/CN/memberLogin</url-pattern>
+            <url-pattern>/FRA/memberLogin</url-pattern>
+            <url-pattern>/IDN/memberLogin</url-pattern>
+            <url-pattern>/MY/memberLogin</url-pattern>
+            <url-pattern>/SG/memberLogin</url-pattern>
+            <url-pattern>/USA/memberLogin</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
