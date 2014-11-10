@@ -10,8 +10,10 @@ import EntityManager.MonthScheduleEntity;
 import EntityManager.ProductGroupLineItemEntity;
 import EntityManager.RegionalOfficeEntity;
 import EntityManager.SaleAndOperationPlanEntity;
+import EntityManager.SalesFigureLineItemEntity;
 import EntityManager.ShippingOrderEntity;
 import EntityManager.StoreEntity;
+import MRP.SalesForecast.SalesForecastBeanLocal;
 import SCM.InboundAndOutboundLogistics.InboundAndOutboundLogisticsBeanLocal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +32,8 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ProductionPlanDistributionBean implements ProductionPlanDistributionBeanLocal {
-
+    @EJB
+    private SalesForecastBeanLocal sfBean;    
     @EJB
     private InboundAndOutboundLogisticsBeanLocal ioBean;
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
@@ -56,7 +59,7 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
             ex.printStackTrace();
         }
         return new ArrayList<>();
-    }        
+    }
 
     @Override
     public Boolean addStore_ManufacturingFacilityConnection(Long storeId, Long manufacturingFacilityId) {
@@ -216,7 +219,7 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
             Calendar calendar = Calendar.getInstance();
             calendar.clear();
             calendar.set(Calendar.YEAR, schedule.getYear());
-            calendar.set(Calendar.MONTH, schedule.getMonth()-1);
+            calendar.set(Calendar.MONTH, schedule.getMonth() - 1);
 
             Query q2 = em.createQuery("select sop from SaleAndOperationPlanEntity sop where sop.schedule.id = ?1 and sop.manufacturingFacility.regionalOffice.id = ?2")
                     .setParameter(1, scheduleId)
@@ -249,34 +252,50 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
                 int residualMonthlyProductAmount = sop.getProductionPlan();
                 List<ProductGroupLineItemEntity> lineItemList = sop.getProductGroup().getLineItemList();
                 for (ProductGroupLineItemEntity lineitem : lineItemList) {
+                    System.out.println("sop.getProductGroup().getId(): " + sop.getProductGroup().getId());
+                    System.out.println("schedule.getId(): " + schedule.getId());
+                    System.out.println("sop.getStore().getId():" + sop.getStore().getId());
+                    System.out.println("lineitem.getItem().getSKU(): " + lineitem.getItem().getSKU());
+                    Query qe = em.createQuery("select l from SalesFigureLineItemEntity l where l.saleFigure.productGroup.id = ?1 and l.saleFigure.schedule.id=?2 and l.saleFigure.store.id =?3 and l.SKU = ?4")
+                            .setParameter(1, sop.getProductGroup().getId())
+                            .setParameter(2, sfBean.getTheBeforeOne(schedule).getId())
+                            .setParameter(3, sop.getStore().getId())
+                            .setParameter(4, lineitem.getItem().getSKU());
 
-                    // total work days in the month
-                    int days_month = schedule.getWorkDays_firstWeek() + schedule.getWorkDays_secondWeek() + schedule.getWorkDays_thirdWeek()
-                            + schedule.getWorkDays_forthWeek() + schedule.getWorkDays_fifthWeek();
+                    if (!qe.getResultList().isEmpty()) {
+                        System.out.println("qe.getResultList() is not Empty()");
 
-                    int amount = 0;
-                    if (!lineitem.getId().equals(lineItemList.get(lineItemList.size() - 1).getId())) {
-                        amount = (int) Math.round(sop.getProductionPlan() * lineitem.getPercent());
-                        residualMonthlyProductAmount -= amount;
-                    } else {
-                        amount = residualMonthlyProductAmount;
-                    }
+                        SalesFigureLineItemEntity salesFigureLineItem = (SalesFigureLineItemEntity) qe.getResultList().get(0);
 
-                    int amount_week1 = (int) Math.round(1.0 * amount * schedule.getWorkDays_firstWeek() / days_month);
-                    ioBean.addLineItemToShippingOrder(shippingOrder_week1.getId(), lineitem.getItem().getSKU(), amount_week1);
+                        // total work days in the month
+                        int days_month = schedule.getWorkDays_firstWeek() + schedule.getWorkDays_secondWeek() + schedule.getWorkDays_thirdWeek()
+                                + schedule.getWorkDays_forthWeek() + schedule.getWorkDays_fifthWeek();
 
-                    int amount_week2 = (int) Math.round(1.0 * amount * schedule.getWorkDays_secondWeek() / days_month);
-                    ioBean.addLineItemToShippingOrder(shippingOrder_week2.getId(), lineitem.getItem().getSKU(), amount_week2);
+                        int amount = 0;
+                        if (!lineitem.getId().equals(lineItemList.get(lineItemList.size() - 1).getId())) {
+                            amount = (int) Math.round(sop.getProductionPlan() * (1.0 * salesFigureLineItem.getQuantity() / salesFigureLineItem.getSaleFigure().getQuantity()));
+                            residualMonthlyProductAmount -= amount;
+                        } else {
+                            amount = residualMonthlyProductAmount;
+                        }
+                        if (amount > 0) {
+                            int amount_week1 = (int) Math.round(1.0 * amount * schedule.getWorkDays_firstWeek() / days_month);
+                            ioBean.addLineItemToShippingOrder(shippingOrder_week1.getId(), lineitem.getItem().getSKU(), amount_week1);
 
-                    int amount_week3 = (int) Math.round(1.0 * amount * schedule.getWorkDays_thirdWeek() / days_month);
-                    ioBean.addLineItemToShippingOrder(shippingOrder_week3.getId(), lineitem.getItem().getSKU(), amount_week3);
+                            int amount_week2 = (int) Math.round(1.0 * amount * schedule.getWorkDays_secondWeek() / days_month);
+                            ioBean.addLineItemToShippingOrder(shippingOrder_week2.getId(), lineitem.getItem().getSKU(), amount_week2);
 
-                    int amount_week4 = (int) Math.round(1.0 * amount * schedule.getWorkDays_forthWeek() / days_month);
-                    ioBean.addLineItemToShippingOrder(shippingOrder_week4.getId(), lineitem.getItem().getSKU(), amount_week4);
+                            int amount_week3 = (int) Math.round(1.0 * amount * schedule.getWorkDays_thirdWeek() / days_month);
+                            ioBean.addLineItemToShippingOrder(shippingOrder_week3.getId(), lineitem.getItem().getSKU(), amount_week3);
 
-                    if (schedule.getWorkDays_fifthWeek() != 0) {
-                        int amount_week5 = amount - amount_week1 - amount_week2 - amount_week3 - amount_week4;
-                        ioBean.addLineItemToShippingOrder(shippingOrder_week5.getId(), lineitem.getItem().getSKU(), amount_week5);
+                            int amount_week4 = (int) Math.round(1.0 * amount * schedule.getWorkDays_forthWeek() / days_month);
+                            ioBean.addLineItemToShippingOrder(shippingOrder_week4.getId(), lineitem.getItem().getSKU(), amount_week4);
+
+                            if (schedule.getWorkDays_fifthWeek() != 0) {
+                                int amount_week5 = amount - amount_week1 - amount_week2 - amount_week3 - amount_week4;
+                                ioBean.addLineItemToShippingOrder(shippingOrder_week5.getId(), lineitem.getItem().getSKU(), amount_week5);
+                            }
+                        }
                     }
                 }
             }
