@@ -75,6 +75,8 @@
                                     <label>Address</label>
                                     <input class="form-control" type="text" required="true" name="address" value="<%=staff.getAddress()%>">
                                 </div>
+                                <input type="hidden" name="securityQuestion" value="<%=staff.getSecurityQuestion()%>">
+                                <input type="hidden"name="securityAnswer" value="<%=staff.getSecurityAnswer()%>">
                                 <!-- <div class="form-group">
                                      <label>New Password (leave blank unless setting a new password).</label>-->
                                 <input class="form-control" type="hidden" name="password" id="password">
@@ -92,12 +94,12 @@
                                     %>
                                     <table class="table table-hover">
                                         <%                                            List<RoleEntity> roleList = (List<RoleEntity>) session.getAttribute("allRoles");
-                                        List<RoleEntity> roleList1 = roleList;
+                                            List<RoleEntity> roleList1 = roleList;
 
-                                        StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
+                                            StaffEntity currentUser = (StaffEntity) session.getAttribute("staffEntity");
 
                                             if (currentUser.getRoles().get(0).getName().equals("Regional Manager")) {
-                                                for (int i=0;i<roleList1.size();i++) {
+                                                for (int i = 0; i < roleList1.size(); i++) {
                                                     if (roleList1.get(i).getName().equals("Administrator") || roleList1.get(i).getName().equals("Global Manager") || roleList1.get(i).getName().equals("Marketing Director") || roleList1.get(i).getName().equals("Product Development Engineer")) {
                                                         roleList.remove(roleList1.get(i));
                                                     }

@@ -154,7 +154,7 @@
                                                                 <%=warehouses.get(i).getWarehouseName()%>
                                                             </td>
                                                             <td>
-                                                                <%=warehouses.get(i).getAddress()%>
+                                                                <%=warehouses.get(i).getCountry().getName()%>
                                                             </td>
                                                             <td>
                                                                 <%=warehouses.get(i).getAddress()%>
