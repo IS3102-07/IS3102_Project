@@ -26,7 +26,6 @@
                         inbox = new ArrayList();
                     if(toDoList == null)
                         toDoList = new ArrayList();
-                    System.out.println("33333");
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
