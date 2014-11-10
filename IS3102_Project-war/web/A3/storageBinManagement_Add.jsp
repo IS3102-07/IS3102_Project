@@ -1,14 +1,14 @@
 <%@page import="EntityManager.WarehouseEntity"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
-    } else {
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+                } else {
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 

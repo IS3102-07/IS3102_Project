@@ -3,34 +3,33 @@
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    String id = request.getParameter("id");
-    String lineItemId = request.getParameter("lineItemId");
-    if (purchaseOrders == null || id == null || lineItemId == null) {
-        response.sendRedirect("../PurchaseOrderManagement_Servlet");
-    } else {
-        PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
-        for (int i = 0; i < purchaseOrders.size(); i++) {
-            if (purchaseOrders.get(i).getId() == Integer.parseInt(id)) {
-                purchaseOrder = purchaseOrders.get(i);
-            }
-        }
-        List<LineItemEntity> lineItems = purchaseOrder.getLineItems();
-        LineItemEntity lineItem = new LineItemEntity();
-        for (int i = 0; i < lineItems.size(); i++) {
-            if (lineItems.get(i).getId() == Integer.parseInt(lineItemId)) {
-                lineItem = lineItems.get(i);
-            }
-        }
 
-
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
+                String id = request.getParameter("id");
+                String lineItemId = request.getParameter("lineItemId");
+                if (purchaseOrders == null || id == null || lineItemId == null) {
+                    response.sendRedirect("../PurchaseOrderManagement_Servlet");
+                } else {
+                    PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
+                    for (int i = 0; i < purchaseOrders.size(); i++) {
+                        if (purchaseOrders.get(i).getId() == Integer.parseInt(id)) {
+                            purchaseOrder = purchaseOrders.get(i);
+                        }
+                    }
+                    List<LineItemEntity> lineItems = purchaseOrder.getLineItems();
+                    LineItemEntity lineItem = new LineItemEntity();
+                    for (int i = 0; i < lineItems.size(); i++) {
+                        if (lineItems.get(i).getId() == Integer.parseInt(lineItemId)) {
+                            lineItem = lineItems.get(i);
+                        }
+                    }
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 

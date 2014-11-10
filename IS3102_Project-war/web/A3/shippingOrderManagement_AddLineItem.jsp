@@ -2,25 +2,24 @@
 <%@page import="EntityManager.ShippingOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
-    String id = request.getParameter("id");
-    if (shippingOrders == null || id == null) {
-        response.sendRedirect("../ShippingOrderManagement_Servlet");
-    } else {
-        ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
-        for (int i = 0; i < shippingOrders.size(); i++) {
-            if (shippingOrders.get(i).getId() == Integer.parseInt(id)) {
-                shippingOrder = shippingOrders.get(i);
-            }
-        }
-
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
+                String id = request.getParameter("id");
+                if (shippingOrders == null || id == null) {
+                    response.sendRedirect("../ShippingOrderManagement_Servlet");
+                } else {
+                    ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
+                    for (int i = 0; i < shippingOrders.size(); i++) {
+                        if (shippingOrders.get(i).getId() == Integer.parseInt(id)) {
+                            shippingOrder = shippingOrders.get(i);
+                        }
+                    }
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -62,8 +61,8 @@
                                                 <%
                                                     List<ItemStorageBinHelper> listOfItems1 = (List<ItemStorageBinHelper>) session.getAttribute("listOfLineItems");
                                                     if (listOfItems1 != null) {
-                                                        for (int i=0; i<listOfItems1.size(); i++) {
-                                                            out.println("<option value='" + listOfItems1.get(i).getSKU()+ "'>" + listOfItems1.get(i).getSKU() + "</option>");
+                                                        for (int i = 0; i < listOfItems1.size(); i++) {
+                                                            out.println("<option value='" + listOfItems1.get(i).getSKU() + "'>" + listOfItems1.get(i).getSKU() + "</option>");
                                                         }
                                                     }
                                                 %>

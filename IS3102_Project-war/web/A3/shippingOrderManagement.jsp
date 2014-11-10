@@ -6,12 +6,6 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.ShippingOrderEntity"%>
 <%@page import="java.util.List"%>
-
-<% List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
-    if (shippingOrders == null) {
-        response.sendRedirect("../ShippingOrderManagement_Servlet");
-    } else {
-%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -31,8 +25,11 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
-            <%
-                try {
+            <% List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
+                if (shippingOrders == null) {
+                    response.sendRedirect("../ShippingOrderManagement_Servlet");
+                } else {
+                    try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -256,7 +253,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

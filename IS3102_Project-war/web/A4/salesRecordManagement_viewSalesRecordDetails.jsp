@@ -65,7 +65,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <%   List<LineItemEntity> lineItems = salesRecord.getItemsPurchased();
-                                                            for (int i = 0; i < lineItems.size(); i++){%>
+                                                            for (int i = 0; i < lineItems.size(); i++) {%>
                                                         <tr>
                                                             <td>
                                                                 <%=lineItems.get(i).getItem().getSKU()%>
@@ -76,17 +76,12 @@
                                                             <td>
                                                                 <%=lineItems.get(i).getQuantity()%>
                                                             </td>                                       
-
                                                         </tr>
                                                     </tbody>
                                             </div>
                                         </div>
                                         <%}
-                                            }
-                                            catch (Exception ex
-
-                                            
-                                                ) {
+                                            } catch (Exception ex) {
                                                 response.sendRedirect("../MemberManagement_MemberServlet");
                                             }
                                         %>
@@ -95,16 +90,20 @@
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
             <!-- /.panel-body -->
-        </form>
+
+        </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            $('#dataTables-example').dataTable();
-        }
-        );
-    </script>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable();
+    }
+    );
+</script>
 </body>
 </html>

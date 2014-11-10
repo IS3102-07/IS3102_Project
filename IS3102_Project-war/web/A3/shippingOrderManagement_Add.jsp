@@ -1,19 +1,19 @@
 <%@page import="EntityManager.ShippingOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<% List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
-    if (shippingOrders == null) {
-        response.sendRedirect("../ShippingOrderManagement_Servlet");
-    } else {
-        List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
-        List<WarehouseEntity> warehouses1 = (List<WarehouseEntity>) (session.getAttribute("warehouse1"));
 
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <% List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
+                if (shippingOrders == null) {
+                    response.sendRedirect("../ShippingOrderManagement_Servlet");
+                } else {
+                    List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
+                    List<WarehouseEntity> warehouses1 = (List<WarehouseEntity>) (session.getAttribute("warehouse1"));
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 

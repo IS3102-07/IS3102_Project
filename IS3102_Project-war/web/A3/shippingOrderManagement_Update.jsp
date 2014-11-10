@@ -5,23 +5,6 @@
 <%@page import="EntityManager.ShippingOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
-    String id = request.getParameter("id");
-    if (shippingOrders == null || id == null) {
-        response.sendRedirect("../ShippingOrderManagement_Servlet");
-    } else {
-        List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
-        List<WarehouseEntity> warehouses1 = (List<WarehouseEntity>) (session.getAttribute("warehouse1"));
-
-        ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
-        for (int i = 0; i < shippingOrders.size(); i++) {
-            if (shippingOrders.get(i).getId() == Integer.parseInt(id)) {
-                shippingOrder = shippingOrders.get(i);
-            }
-        }
-
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -29,7 +12,7 @@
             function addSOLineItem(id) {//gogo
                 var originId = $("#select_source").val();
                 shippingOrderManagement.originId.value = originId;
-                
+
                 shippingOrderManagement.id.value = id;
                 document.shippingOrderManagement.action = "../ShippingOrderLineItemManagement_DisplayOutboundBinServlet";
                 document.shippingOrderManagement.submit();
@@ -65,6 +48,22 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
+                String id = request.getParameter("id");
+                if (shippingOrders == null || id == null) {
+                    response.sendRedirect("../ShippingOrderManagement_Servlet");
+                } else {
+                    List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
+                    List<WarehouseEntity> warehouses1 = (List<WarehouseEntity>) (session.getAttribute("warehouse1"));
+
+                    ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
+                    for (int i = 0; i < shippingOrders.size(); i++) {
+                        if (shippingOrders.get(i).getId() == Integer.parseInt(id)) {
+                            shippingOrder = shippingOrders.get(i);
+                        }
+                    }
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -87,7 +86,7 @@
                     <!-- /.row -->
 
                     <jsp:include page="../displayMessageLong.jsp" />
-                    
+
 
                     <div class="row">
                         <div class="col-lg-6">
