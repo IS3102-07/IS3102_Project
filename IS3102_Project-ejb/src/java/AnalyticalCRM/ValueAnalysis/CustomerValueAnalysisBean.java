@@ -605,7 +605,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.isDeleted=false");
             List<FurnitureEntity> furnitures = q.getResultList();
 
             for (FurnitureEntity furniture : furnitures) {
@@ -640,7 +640,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.isDeleted=false");
             List<FurnitureEntity> furnitures = q.getResultList();
 
             for (FurnitureEntity furniture : furnitures) {
