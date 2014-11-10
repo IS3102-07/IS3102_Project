@@ -255,7 +255,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM MenuItemEntity t");
+            Query q = em.createQuery("SELECT t FROM MenuItemEntity t where t.isDeleted=false");
             List<MenuItemEntity> furnitures = q.getResultList();
 
             for (MenuItemEntity furniture : furnitures) {
@@ -298,7 +298,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.isDeleted=false");
             List<FurnitureEntity> furnitures = q.getResultList();
 
             for (FurnitureEntity furniture : furnitures) {
@@ -341,7 +341,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t where t.isDeleted=false");
             List<RetailProductEntity> furnitures = q.getResultList();
 
             for (RetailProductEntity furniture : furnitures) {
@@ -389,7 +389,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedMenuItem = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM MenuItemEntity t");
+            Query q = em.createQuery("SELECT t FROM MenuItemEntity t where t.isDeleted=false");
             List<MenuItemEntity> menuItems = q.getResultList();
 
             for (MenuItemEntity menuItem : menuItems) {
@@ -488,7 +488,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembersNotChurn = 0;
         Double totalRevenue = (double) 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -527,7 +527,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembersNotChurn = 0;
         Double totalRevenue = (double) 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -605,7 +605,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.isDeleted=false");
             List<FurnitureEntity> furnitures = q.getResultList();
 
             for (FurnitureEntity furniture : furnitures) {
@@ -640,7 +640,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedFurnitures = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM FurnitureEntity t");
+            Query q = em.createQuery("SELECT t FROM FurnitureEntity t where t.isDeleted=false");
             List<FurnitureEntity> furnitures = q.getResultList();
 
             for (FurnitureEntity furniture : furnitures) {
@@ -692,7 +692,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedMenuItems = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM MenuItemEntity t");
+            Query q = em.createQuery("SELECT t FROM MenuItemEntity t where t.isDeleted=false");
             List<MenuItemEntity> menuItems = q.getResultList();
 
             for (MenuItemEntity menuItem : menuItems) {
@@ -744,7 +744,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedRetailProducts = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t where t.isDeleted=false");
             List<RetailProductEntity> retailProducts = q.getResultList();
 
             for (RetailProductEntity retailProduct : retailProducts) {
@@ -797,7 +797,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         List<LineItemEntity> sortedRetailProducts = new ArrayList();
 
         try {
-            Query q = em.createQuery("SELECT t FROM RetailProductEntity t");
+            Query q = em.createQuery("SELECT t FROM RetailProductEntity t where t.isDeleted=false");
             List<RetailProductEntity> retailProducts = q.getResultList();
 
             for (RetailProductEntity furniture : retailProducts) {
@@ -840,7 +840,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembers = 0;
         Integer numOfMembersNotChurn = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -881,7 +881,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembers = 0;
         Integer numOfMembersNotChurn = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -921,7 +921,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembers = 0;
         Integer numOfMembersNotChurn = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -964,7 +964,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembers = 0;
         Integer numOfMembersNotChurn = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -1006,7 +1006,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembers = 0;
         Integer numOfMembersNotChurn = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -1047,7 +1047,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembers = 0;
         Integer numOfMembersNotChurn = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -1086,7 +1086,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfMembers = 0;
         Integer numOfMembersNotChurn = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
             numOfMembers = members.size();
             for (MemberEntity member : members) {
@@ -1131,7 +1131,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfDaysWithRecord = 0;
         Integer totalDays = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -1180,7 +1180,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfDaysWithRecord = 0;
         Integer totalDays = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -1231,7 +1231,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfDaysWithRecord = 0;
         Integer totalDays = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -1282,7 +1282,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfPurchases = 0;
         Integer frequency = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -1319,7 +1319,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfPurchases = 0;
         Integer frequency = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -1356,7 +1356,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer numOfPurchases = 0;
         Integer frequency = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -1395,7 +1395,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer amountOfPurchase = 0;
         Integer numOfPurchases = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -1435,7 +1435,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer amountOfPurchase = 0;
         Integer numOfPurchases = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -1475,7 +1475,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         Integer amountOfPurchase = 0;
         Integer numOfPurchases = 0;
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (MemberEntity member : members) {
@@ -2014,7 +2014,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
         System.out.println("totalMemberRevenue()");
         Double profit = new Double("0");
         try {
-            Query q = em.createQuery("SELECT t FROM MemberEntity t");
+            Query q = em.createQuery("SELECT t FROM MemberEntity t where t.isDeleted=false");
             List<MemberEntity> members = q.getResultList();
 
             for (int i = 0; i < members.size(); i++) {
