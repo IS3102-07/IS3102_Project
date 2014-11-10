@@ -290,7 +290,7 @@
                                                                     <th>Income</th>
                                                                     <th>Country</th>
                                                                     <th>Join Date</th>
-                                                                    <th>Points (/16)</th>
+                                                                    <th>Points (/14)</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
