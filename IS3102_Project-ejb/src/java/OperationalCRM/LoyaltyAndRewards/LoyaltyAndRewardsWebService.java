@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 @WebService(serviceName = "LoyaltyAndRewardsWebService")
 @Stateless
 public class LoyaltyAndRewardsWebService {
+
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
     private EntityManager em;
 
@@ -27,7 +28,7 @@ public class LoyaltyAndRewardsWebService {
 
     @WebMethod
     public MemberEntity getMemberViaEmail(@WebParam(name = "memberEmail") String memberEmail) {
-        MemberEntity memberEntity =  LoyaltyAndRewardsBeanLocal.getMemberViaEmail(memberEmail);
+        MemberEntity memberEntity = LoyaltyAndRewardsBeanLocal.getMemberViaEmail(memberEmail);
         em.detach(memberEntity);
         memberEntity.setShoppingList(null);
         memberEntity.setPurchases(null);
@@ -37,7 +38,14 @@ public class LoyaltyAndRewardsWebService {
 
     @WebMethod
     public MemberEntity getMemberViaCard(@WebParam(name = "memberCard") String memberCard) {
-        return LoyaltyAndRewardsBeanLocal.getMemberViaCard(memberCard);
+        MemberEntity member = LoyaltyAndRewardsBeanLocal.getMemberViaCard(memberCard);
+        em.detach(member);
+        member.setCountry(null);
+        member.setPurchases(null);
+        member.setWishList(null);
+        //member.get
+        //member.setShoppingList(null);
+        return member;
     }
 
     @WebMethod

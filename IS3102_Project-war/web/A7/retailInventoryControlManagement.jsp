@@ -2,11 +2,7 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        response.sendRedirect("../RetailWarehouseManagement_Servlet");
-    } else {
-%>
+
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -32,8 +28,11 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
-            <%
-                try {
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    response.sendRedirect("../RetailWarehouseManagement_Servlet");
+                } else {
+                    try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">

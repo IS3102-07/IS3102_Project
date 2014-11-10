@@ -4,22 +4,7 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        pageContext.forward("storeWarehouseManagement_view.jsp");
-    } else {
-        try {
-            String transferOrderID = request.getParameter("id");
-            List<TransferOrderEntity> transferOrders = (List<TransferOrderEntity>) (session.getAttribute("transferOrders"));
-            TransferOrderEntity transferOrder = new TransferOrderEntity();
-            for (int i = 0; i < transferOrders.size(); i++) {
-                if (transferOrders.get(i).getId() == Integer.parseInt(transferOrderID)) {
-                    transferOrder = transferOrders.get(i);
-                }
-            }
-            LineItemEntity lineItem = transferOrder.getLineItem();
 
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -35,7 +20,22 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    pageContext.forward("storeWarehouseManagement_view.jsp");
+                } else {
+                    try {
+                        String transferOrderID = request.getParameter("id");
+                        List<TransferOrderEntity> transferOrders = (List<TransferOrderEntity>) (session.getAttribute("transferOrders"));
+                        TransferOrderEntity transferOrder = new TransferOrderEntity();
+                        for (int i = 0; i < transferOrders.size(); i++) {
+                            if (transferOrders.get(i).getId() == Integer.parseInt(transferOrderID)) {
+                                transferOrder = transferOrders.get(i);
+                            }
+                        }
+                        LineItemEntity lineItem = transferOrder.getLineItem();
 
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -254,9 +254,9 @@
             </div>
         </div>
         <script>
-            $(function() {
+            $(function () {
                 var array1 = [];
-                $.get('../SKU_ajax_servlet/*', function(responseText) {
+                $.get('../SKU_ajax_servlet/*', function (responseText) {
                     var arr = responseText.trim().split(';');
                     arr.pop();
                     for (var i = 0; i < arr.length; i++) {

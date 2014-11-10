@@ -2,8 +2,7 @@
 <%@page import="EntityManager.LoyaltyTierEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
-<% String memberEmailParameter = request.getParameter("memberEmail");
-    String loyaltyCardID = request.getParameter("loyaltyCardID");%>
+
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -47,6 +46,8 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <% String memberEmailParameter = request.getParameter("memberEmail");
+                String loyaltyCardID = request.getParameter("loyaltyCardID");%>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -72,7 +73,7 @@
                                 <div class="form-group">
                                     <label>Member Email</label>
                                     <%String memberEmailForm = "";
-                                    String memberEmail = memberEmailParameter;
+                                        String memberEmail = memberEmailParameter;
                                         if (memberEmailParameter != null) {
                                             memberEmailForm = "disabled";
                                         } else {
@@ -88,7 +89,7 @@
                                             loyaltyCardForm = "disabled";
                                             loyaltyCardID = "";
                                         }
-                                        if (loyaltyCardID==null) {
+                                        if (loyaltyCardID == null) {
                                             loyaltyCardID = "";
                                         }
                                     %>

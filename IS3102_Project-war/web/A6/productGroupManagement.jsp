@@ -2,12 +2,7 @@
 <%@page import="EntityManager.ProductGroupEntity"%>
 <%@page import="java.util.List"%>
 
-<%
-    List<ProductGroupEntity> productGroups = (List<ProductGroupEntity>) (session.getAttribute("productGroups"));
-    if (productGroups == null) {
-        response.sendRedirect("../ProductGroupManagement_Servlet");
-    } else {
-%>
+
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -31,7 +26,7 @@
                 }
             }
             function removePG() {
-                
+
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
@@ -53,7 +48,11 @@
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <%
-                try {
+                List<ProductGroupEntity> productGroups = (List<ProductGroupEntity>) (session.getAttribute("productGroups"));
+                if (productGroups == null) {
+                    response.sendRedirect("../ProductGroupManagement_Servlet");
+                } else {
+                    try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -78,7 +77,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <%
-                                           String errMsg = request.getParameter("errMsg");
+                                        String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {
                                             out.println("Add Product Group");
@@ -143,7 +142,7 @@
                                                                     }
                                                                 %>
                                                             </td>
-                                                             <td>
+                                                            <td>
                                                                 <%=productGroups.get(i).getLotSize()%>
                                                             </td>
                                                             <td style="width:200px">

@@ -39,10 +39,12 @@
                 }
             }
         </script>
-        <%
+        
+        <div id="wrapper">
+            <jsp:include page="../menu1.jsp" />
+            <%
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                %>
-        <%
+ 
             Integer cummulativeSpendingAgeGrp1 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp1");
             Integer cummulativeSpendingAgeGrp2 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp2");
             Integer cummulativeSpendingAgeGrp3 = (Integer) session.getAttribute("cummulativeSpendingAgeGrp3");
@@ -81,8 +83,7 @@
                     }
                 }
             }
-        %>
-        <%
+   
             Integer cummulativeSpendingIncomeGrp1 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp1");
             Integer cummulativeSpendingIncomeGrp2 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp2");
             Integer cummulativeSpendingIncomeGrp3 = (Integer) session.getAttribute("cummulativeSpendingIncomeGrp3");
@@ -122,8 +123,7 @@
                 }
             }
 
-        %>
-        <%            Integer totalCummulativeSpendingOfCountry1 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry1");
+                    Integer totalCummulativeSpendingOfCountry1 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry1");
             Integer totalCummulativeSpendingOfCountry2 = (Integer) session.getAttribute("totalCummulativeSpendingOfCountry2");
 
             Integer numOfMembersInCountry1 = (Integer) session.getAttribute("numOfMembersInCountry1");
@@ -150,9 +150,7 @@
                 }
             }
 
-        %>
-
-        <%            Integer getRevenueOfJoinDate1 = (Integer) session.getAttribute("getRevenueOfJoinDate1");
+            Integer getRevenueOfJoinDate1 = (Integer) session.getAttribute("getRevenueOfJoinDate1");
             Integer getRevenueOfJoinDate2 = (Integer) session.getAttribute("getRevenueOfJoinDate2");
             Integer getRevenueOfJoinDate3 = (Integer) session.getAttribute("getRevenueOfJoinDate3");
             Integer getRevenueOfJoinDate4 = (Integer) session.getAttribute("getRevenueOfJoinDate4");
@@ -192,8 +190,6 @@
             }
 
         %>
-        <div id="wrapper">
-            <jsp:include page="../menu1.jsp" />
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">

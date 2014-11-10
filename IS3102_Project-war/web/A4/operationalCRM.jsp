@@ -1,4 +1,4 @@
-html lang="en">
+<html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">

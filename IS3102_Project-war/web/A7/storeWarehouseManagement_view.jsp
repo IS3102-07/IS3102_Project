@@ -4,92 +4,7 @@
 <%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<%
-    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
-    RoleEntity role = staffEntity.getRoles().get(0);
 
-    boolean roleIsAdmin = false;
-    boolean roleIsRegionalManager = false;
-    boolean roleIsWarehouseManager = false;
-    boolean roleIsStoreManager = false;
-    if (staffEntity != null) {
-        List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{1L, 11L};
-        for (RoleEntity roleEntity : roles) {
-            for (Long ID : approvedRolesID) {
-                if (roleEntity.getId().equals(ID)) {
-                    roleIsAdmin = true;
-                    break;
-                }
-            }
-        }
-    }
-    if (staffEntity != null) {
-        List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{2L};
-        for (RoleEntity roleEntity : roles) {
-            for (Long ID : approvedRolesID) {
-                if (roleEntity.getId().equals(ID)) {
-                    roleIsRegionalManager = true;
-                    break;
-                }
-            }
-        }
-    }
-    if (staffEntity != null) {
-        List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{3L};
-        for (RoleEntity roleEntity : roles) {
-            for (Long ID : approvedRolesID) {
-                if (roleEntity.getId().equals(ID)) {
-                    roleIsWarehouseManager = true;
-                    break;
-                }
-            }
-        }
-    }
-    if (staffEntity != null) {
-        List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{4L};
-        for (RoleEntity roleEntity : roles) {
-            for (Long ID : approvedRolesID) {
-                if (roleEntity.getId().equals(ID)) {
-                    roleIsStoreManager = true;
-                    break;
-                }
-            }
-        }
-    }
-
-    Long warehouseId = null;
-    Long regionalOfficeId = null;
-    Long id = null;
-
-    if (roleIsRegionalManager) {
-        for (int i = 0; i < role.getAccessRightList().size(); i++) {
-            if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                regionalOfficeId = role.getAccessRightList().get(i).getRegionalOffice().getId();
-            }
-        }
-    }
-    if (roleIsWarehouseManager) {
-        for (int i = 0; i < role.getAccessRightList().size(); i++) {
-            if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                warehouseId = role.getAccessRightList().get(i).getWarehouse().getId();
-            }
-        }
-    }
-    if (roleIsStoreManager) {
-        for (int i = 0; i < role.getAccessRightList().size(); i++) {
-            if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
-                id = role.getAccessRightList().get(i).getStore().getWarehouse().getId();
-            }
-        }
-    }
-    Boolean canAccessByWarehouseManager = false;
-    Boolean canAccessByRegionalManager = false;
-    Boolean canAccessByStoreManager = false;
-%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -101,6 +16,92 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+                RoleEntity role = staffEntity.getRoles().get(0);
+
+                boolean roleIsAdmin = false;
+                boolean roleIsRegionalManager = false;
+                boolean roleIsWarehouseManager = false;
+                boolean roleIsStoreManager = false;
+                if (staffEntity != null) {
+                    List<RoleEntity> roles = staffEntity.getRoles();
+                    Long[] approvedRolesID = new Long[]{1L, 11L};
+                    for (RoleEntity roleEntity : roles) {
+                        for (Long ID : approvedRolesID) {
+                            if (roleEntity.getId().equals(ID)) {
+                                roleIsAdmin = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (staffEntity != null) {
+                    List<RoleEntity> roles = staffEntity.getRoles();
+                    Long[] approvedRolesID = new Long[]{2L};
+                    for (RoleEntity roleEntity : roles) {
+                        for (Long ID : approvedRolesID) {
+                            if (roleEntity.getId().equals(ID)) {
+                                roleIsRegionalManager = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (staffEntity != null) {
+                    List<RoleEntity> roles = staffEntity.getRoles();
+                    Long[] approvedRolesID = new Long[]{3L};
+                    for (RoleEntity roleEntity : roles) {
+                        for (Long ID : approvedRolesID) {
+                            if (roleEntity.getId().equals(ID)) {
+                                roleIsWarehouseManager = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (staffEntity != null) {
+                    List<RoleEntity> roles = staffEntity.getRoles();
+                    Long[] approvedRolesID = new Long[]{4L};
+                    for (RoleEntity roleEntity : roles) {
+                        for (Long ID : approvedRolesID) {
+                            if (roleEntity.getId().equals(ID)) {
+                                roleIsStoreManager = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                Long warehouseId = null;
+                Long regionalOfficeId = null;
+                Long id = null;
+
+                if (roleIsRegionalManager) {
+                    for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                        if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                            regionalOfficeId = role.getAccessRightList().get(i).getRegionalOffice().getId();
+                        }
+                    }
+                }
+                if (roleIsWarehouseManager) {
+                    for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                        if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                            warehouseId = role.getAccessRightList().get(i).getWarehouse().getId();
+                        }
+                    }
+                }
+                if (roleIsStoreManager) {
+                    for (int i = 0; i < role.getAccessRightList().size(); i++) {
+                        if (role.getAccessRightList().get(i).getStaff().getId() == staffEntity.getId()) {
+                            id = role.getAccessRightList().get(i).getStore().getWarehouse().getId();
+                        }
+                    }
+                }
+                Boolean canAccessByWarehouseManager = false;
+                Boolean canAccessByRegionalManager = false;
+                Boolean canAccessByStoreManager = false;
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -184,7 +185,8 @@
                                                                         }
                                                                     }
 
-                                                                    if (canAccessByWarehouseManager || roleIsAdmin || canAccessByRegionalManager || canAccessByStoreManager) {System.out.println("888");%>
+                                                                    if (canAccessByWarehouseManager || roleIsAdmin || canAccessByRegionalManager || canAccessByStoreManager) {
+                                                                        System.out.println("888");%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateStoreWarehouse('<%=warehouses.get(i).getId()%>', 'storeWarehouseManagement.jsp')"/>                                                                                                                            
                                                                 <%} else {%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
@@ -226,7 +228,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

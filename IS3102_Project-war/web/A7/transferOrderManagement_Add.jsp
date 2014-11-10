@@ -1,16 +1,17 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        response.sendRedirect("../RetailWarehouseManagement_Servlet");
-    } else {
-%>
+
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    response.sendRedirect("../RetailWarehouseManagement_Servlet");
+                } else {
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -49,7 +50,7 @@
                                         <%
                                             List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
                                             for (int i = 0; i < storageBins.size(); i++) {
-                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin ID"+storageBins.get(i).getId()+" | " + storageBins.get(i).getName() + " - "+storageBins.get(i).getType() + "</option>");
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin ID" + storageBins.get(i).getId() + " | " + storageBins.get(i).getName() + " - " + storageBins.get(i).getType() + "</option>");
                                             }
                                         %>
                                     </select>
@@ -60,7 +61,7 @@
                                     <select class="form-control" name="target" required="true">
                                         <%
                                             for (int i = 0; i < storageBins.size(); i++) {
-                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin ID"+storageBins.get(i).getId()+" | " + storageBins.get(i).getName() + " - "+storageBins.get(i).getType() + "</option>");
+                                                out.println("<option value='" + storageBins.get(i).getId() + "'>Bin ID" + storageBins.get(i).getId() + " | " + storageBins.get(i).getName() + " - " + storageBins.get(i).getType() + "</option>");
                                             }
                                         %>
                                     </select>
