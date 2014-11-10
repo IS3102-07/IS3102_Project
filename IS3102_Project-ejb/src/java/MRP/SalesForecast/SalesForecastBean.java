@@ -283,17 +283,16 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
     public SaleForecastEntity getSalesForecastLinearRegression(Long storeId, Long productGroupId, Long scheduleId) {
         System.out.println("debug......" + "getSalesForecastLinearRegression is called.");
         try {
+            
             Query q = em.createQuery("select sf from SaleForecastEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
                     .setParameter(1, productGroupId)
                     .setParameter(2, storeId)
                     .setParameter(3, scheduleId);
 
             if (!q.getResultList().isEmpty()) {
-                SaleForecastEntity saleForecast = (SaleForecastEntity) q.getResultList().get(0);
-                // if not exist, then create it
-                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);
-                StoreEntity store = em.find(StoreEntity.class, storeId);
-                ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+                
+                SaleForecastEntity saleForecast = (SaleForecastEntity) q.getResultList().get(0);                
+                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);                
 
                 List<SalesFigureEntity> salesFigureList = new ArrayList<>();
 
@@ -339,6 +338,59 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
                 return saleForecast;
 
+            } else {
+                SaleForecastEntity saleForecast = new SaleForecastEntity();                
+                
+                StoreEntity store = em.find(StoreEntity.class, storeId);
+                MonthScheduleEntity schedule = em.find(MonthScheduleEntity.class, scheduleId);                
+                ProductGroupEntity productGroup = em.find(ProductGroupEntity.class, productGroupId);
+                
+                List<SalesFigureEntity> salesFigureList = new ArrayList<>();
+
+                MonthScheduleEntity lastSchedule = schedule;
+
+                Query q1 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                        .setParameter(1, productGroupId)
+                        .setParameter(2, storeId)
+                        .setParameter(3, lastSchedule.getId());
+
+                if (!q1.getResultList().isEmpty()) {
+                    SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q1.getResultList().get(0);
+                    salesFigureList.add(salesFigureEntity);
+                }
+
+                while (this.getTheBeforeOne(lastSchedule) != null) {
+                    lastSchedule = this.getTheBeforeOne(lastSchedule);
+
+                    Query q2 = em.createQuery("select sf from SalesFigureEntity sf where sf.productGroup.id = ?1 AND sf.store.id = ?2 AND sf.schedule.id = ?3")
+                            .setParameter(1, productGroupId)
+                            .setParameter(2, storeId)
+                            .setParameter(3, lastSchedule.getId());
+
+                    if (!q2.getResultList().isEmpty()) {
+                        SalesFigureEntity salesFigureEntity = (SalesFigureEntity) q2.getResultList().get(0);
+                        salesFigureList.add(salesFigureEntity);
+                    }
+                }
+
+                SimpleRegression simpleRegression = new SimpleRegression();
+
+                for (int i = 0; i < salesFigureList.size(); i++) {
+                    simpleRegression.addData(salesFigureList.size() - i, salesFigureList.get(i).getQuantity());
+                }
+
+                double slope = simpleRegression.getSlope();
+                double intercept = simpleRegression.getIntercept();
+                double forecastQuantity = slope * (salesFigureList.size() + 1) + intercept;
+
+                saleForecast.setProductGroup(productGroup);
+                saleForecast.setSchedule(schedule);
+                saleForecast.setStore(store);
+                saleForecast.setQuantity(Math.round((float) forecastQuantity));
+                saleForecast.setMethod("R");                
+                em.persist(saleForecast);
+
+                return saleForecast;
             }
 
         } catch (Exception ex) {
@@ -474,8 +526,10 @@ public class SalesForecastBean implements SalesForecastBeanLocal {
 
             if (!q.getResultList().isEmpty()) {
                 SaleForecastEntity saleForecast = (SaleForecastEntity) q.getResultList().get(0);
+                System.out.println("return saleForecast;");
                 return saleForecast;
             } else {
+                System.out.println("return this.getSalesForecastLinearRegression(storeId, productGroupId, scheduleId);");
                 return this.getSalesForecastLinearRegression(storeId, productGroupId, scheduleId);
             }
         } catch (Exception ex) {
