@@ -71,7 +71,7 @@
                                                             out.println("selected");
                                                         }%>>What is your favourite animal?</option>
                                                 </select>
-                                                <input class="form-control" type="text" required="true" name="securityAnswer" value="<%if (staffEntity.getSecurityAnswer() == null) {
+                                                        <input class="form-control" type="text" required="true" name="securityAnswer" value="<%if (staffEntity.getSecurityAnswer() == null || staffEntity.getSecurityAnswer().equals("null")) {
                                                         out.println("");
                                                     } else {
                                                         out.println(staffEntity.getSecurityAnswer());
