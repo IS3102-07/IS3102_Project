@@ -89,7 +89,7 @@
                                                         <tr>
                                                             <th>SKU</th>
                                                             <th>Item Name</th>
-                                                            <th>Storage Bin ID</th>
+                                                            <th>Storage Bin Name</th>
                                                             <th>Bin Type</th>
                                                             <th>Item Quantity</th>
                                                             <th>Item Type</th>
@@ -110,7 +110,7 @@
                                                                 <%=itemStorageBinHelpers.get(i).getItemName()%>
                                                             </td>
                                                             <td>
-                                                                <%=itemStorageBinHelpers.get(i).getStorageBinID()%>
+                                                                <%=itemStorageBinHelpers.get(i).getStorageBinName()%>
                                                             </td>
                                                             <td>
                                                                 <%=itemStorageBinHelpers.get(i).getStorageBinType()%>
