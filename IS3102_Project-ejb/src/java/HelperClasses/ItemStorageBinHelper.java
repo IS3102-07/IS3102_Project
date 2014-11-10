@@ -5,12 +5,21 @@ public class ItemStorageBinHelper {
     private String SKU;
     private String itemName;
     private Long storageBinID;
+    private String storageBinName;
     private String storageBinType;
     private Integer itemQty;
     private String itemType;
 
     public String getStorageBinType() {
         return storageBinType;
+    }
+
+    public String getStorageBinName() {
+        return storageBinName;
+    }
+
+    public void setStorageBinName(String storageBinName) {
+        this.storageBinName = storageBinName;
     }
 
     public void setStorageBinType(String storageBinType) {

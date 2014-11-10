@@ -32,7 +32,7 @@ public class RetailInventoryControl_RemoveServlet extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            out.println(ex);
+            ex.printStackTrace();
         }
     }
 

@@ -56,7 +56,7 @@
             <ul class="dropdown-menu message-dropdown">
                 <%
                     if (listOfInboxMsg.size() > 0) {
-                        for (int i = 0; i < 3; i++) {
+                        for (int i = 0; i < listOfInboxMsg.size() && i < 3; i++) {
                 %>
 
                 <li class="message-preview">
@@ -391,7 +391,7 @@
                         if (roleEntity.getId().equals(2L)) {
                             roleCanView4 = false;
                         }
-                        if (roleEntity.getId().equals(10L)){//Receptionist
+                        if (roleEntity.getId().equals(10L)) {//Receptionist
                             roleCanView2 = false;
                             roleCanView3 = false;
                             roleCanView5 = false;

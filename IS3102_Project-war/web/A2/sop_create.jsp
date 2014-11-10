@@ -80,7 +80,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Production Plan</label>
+                                            <label>Production Plan (Must be multiple of lot size)</label>
                                             <input id="input_productionPlan" type="number" class="form-control" name="productionPlan" readonly>
                                         </div>
 

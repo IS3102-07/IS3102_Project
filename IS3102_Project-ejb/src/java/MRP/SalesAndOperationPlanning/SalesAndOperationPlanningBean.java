@@ -205,7 +205,7 @@ public class SalesAndOperationPlanningBean implements SalesAndOperationPlanningB
                     .setParameter(2, scheduleId);
             List<ProductGroupEntity> plannedProductGroupList = q1.getResultList();
 
-            Query q2 = em.createQuery("select p from ProductGroupEntity p");
+            Query q2 = em.createQuery("select p from ProductGroupEntity p where p.isDeleted = false");
             List<ProductGroupEntity> allProductGroupList = q2.getResultList();
 
             List<ProductGroupEntity> unPlannedProductGroupList = new ArrayList<>();

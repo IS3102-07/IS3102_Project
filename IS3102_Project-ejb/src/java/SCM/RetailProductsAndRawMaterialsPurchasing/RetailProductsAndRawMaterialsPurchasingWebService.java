@@ -38,7 +38,7 @@ public class RetailProductsAndRawMaterialsPurchasingWebService {
     public List<PurchaseOrderHelper> getPurchaseOrder(@WebParam(name = "email") String email, @WebParam(name = "password") String password) {
         System.out.println("getPurchaseOrder is called.");
         try {
-            Query q = em.createQuery("select s from SupplierEntity s where s.email = ?1 and s.supplierName = ?2")
+            Query q = em.createQuery("select s from SupplierEntity s where s.email = ?1 and s.supplierName = ?2 and s.isDeleted=false")
                     .setParameter(1, email)
                     .setParameter(2, password);
 
@@ -83,7 +83,7 @@ public class RetailProductsAndRawMaterialsPurchasingWebService {
         System.out.println("rejectPurchaseOrder is called.");
 
         try {
-            Query q = em.createQuery("select s from SupplierEntity s where s.email = ?1 and s.supplierName = ?2")
+            Query q = em.createQuery("select s from SupplierEntity s where s.email = ?1 and s.supplierName = ?2 and s.isDeleted=false")
                     .setParameter(1, email)
                     .setParameter(2, password);
 
@@ -103,7 +103,7 @@ public class RetailProductsAndRawMaterialsPurchasingWebService {
         System.out.println("shipPurchaseOrder is called.");
 
         try {
-            Query q = em.createQuery("select s from SupplierEntity s where s.email = ?1 and s.supplierName = ?2")
+            Query q = em.createQuery("select s from SupplierEntity s where s.email = ?1 and s.supplierName = ?2 and s.isDeleted=false")
                     .setParameter(1, email)
                     .setParameter(2, password);
 

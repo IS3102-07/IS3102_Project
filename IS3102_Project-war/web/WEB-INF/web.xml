@@ -1105,6 +1105,10 @@
         <servlet-name>LoyaltyCardManagement_Servlet</servlet-name>
         <servlet-class>A4_servlets.LoyaltyCardManagement_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountManagement_SecurityChallengeServlet</servlet-name>
+        <servlet-class>A1_servlets.AccountManagement_SecurityChallengeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2209,9 +2213,22 @@
         <servlet-name>LoyaltyCardManagement_Servlet</servlet-name>
         <url-pattern>/LoyaltyCardManagement_Servlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagement_SecurityChallengeServlet</servlet-name>
+        <url-pattern>/AccountManagement_SecurityChallengeServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Viewpoint Secure URLs</web-resource-name>
+            <url-pattern>/A1/staffLogin.jsp</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
     <welcome-file-list>
         <welcome-file>Workspace_Servlet</welcome-file>
     </welcome-file-list>

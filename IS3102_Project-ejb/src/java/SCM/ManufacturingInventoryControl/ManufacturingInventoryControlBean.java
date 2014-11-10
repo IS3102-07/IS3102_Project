@@ -631,6 +631,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                         itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
                         itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
                         itemStorageBinHelper.setStorageBinID(storageBin.getId());
+                        itemStorageBinHelper.setStorageBinName(storageBin.getName());
                         itemStorageBinHelper.setStorageBinType(storageBin.getType());
                         itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
                         itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());

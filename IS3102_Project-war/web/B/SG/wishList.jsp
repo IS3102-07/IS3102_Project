@@ -138,10 +138,10 @@
                                                                 <input type="checkbox" name="delete" value="<%=wishList.getItems().get(i).getSKU()%>" />
                                                             </td>
                                                             <td class="product-thumbnail">
-                                                                <a href="shop-product-sidebar.html"><%
-                                                                        boolean flag = true;
-                                                                        for (int j = 0; j < furnitures.size(); j++) {
-                                                                            if (furnitures.get(j).getId().equals(wishList.getItems().get(i).getId())) {
+                                                                <a href="furnitureProductDetails.jsp?sku=<%=wishList.getItems().get(i).getSKU()%>"><%
+                                                                    boolean flag = true;
+                                                                    for (int j = 0; j < furnitures.size(); j++) {
+                                                                        if (furnitures.get(j).getId().equals(wishList.getItems().get(i).getId())) {
                                                                     %>
                                                                     <img width="100" height="100" alt="" class="img-responsive" src=<%=furnitures.get(j).getImageURL()%>>
                                                                     <%
@@ -167,7 +167,7 @@
                                                                     %></a>
                                                             </td>
                                                             <td class="product-name">
-                                                                <a href="shop-product-sidebar.html"><%=wishList.getItems().get(i).getName()%></a>
+                                                                <a href="furnitureProductDetails.jsp?sku=<%=wishList.getItems().get(i).getSKU()%>"><%=wishList.getItems().get(i).getName()%></a>
                                                             </td>
 
                                                             <td class="product-price">

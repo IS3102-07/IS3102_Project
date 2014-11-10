@@ -22,7 +22,7 @@ public class RetailInventoryWebService {
 
     @EJB
     RetailInventoryBeanLocal rib;
-  
+
     @WebMethod
     public List<String> getStoreAddressByID(@WebParam(name = "storeID") Long storeID) {
         try {
@@ -52,9 +52,13 @@ public class RetailInventoryWebService {
 
     @WebMethod
     public ItemHelper getItemBySKU(@WebParam(name = "SKU") String SKU) {
-        ItemEntity itemEntity = rib.getItemBySKU(SKU);
-        ItemHelper ih = new ItemHelper(itemEntity.getId(), itemEntity.getSKU(), itemEntity.getName());
-        return ih;
+        try {
+            ItemEntity itemEntity = rib.getItemBySKU(SKU);
+            ItemHelper ih = new ItemHelper(itemEntity.getId(), itemEntity.getSKU(), itemEntity.getName());
+            return ih;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     @WebMethod
@@ -91,12 +95,12 @@ public class RetailInventoryWebService {
     public Boolean alertSupervisor(@WebParam(name = "posName") String posName, @WebParam(name = "supervisorTel") String telNo) {
         try {
             String smsMessage = "[Island Furniture] POS:\"" + posName + "\" requires assistance.";
-            System.out.println("Sending SMS: " + telNo + ": " +  URLEncoder.encode(smsMessage));
+            System.out.println("Sending SMS: " + telNo + ": " + URLEncoder.encode(smsMessage));
 
             String requestURL = "http://smsc.vianett.no/v3/send.ashx?";
             requestURL += ("username=" + "lee_yuan_guang@hotmail.com");
-            requestURL += ("&SenderAddress="+"Island");//11char max
-            requestURL += ("&SenderAddressType="+"5");
+            requestURL += ("&SenderAddress=" + "Island");//11char max
+            requestURL += ("&SenderAddressType=" + "5");
             requestURL += ("&password=" + "r0b16");
             requestURL += ("&tel=" + telNo);
             requestURL += ("&msg=" + URLEncoder.encode(smsMessage));
@@ -117,12 +121,12 @@ public class RetailInventoryWebService {
             return false;
         }
     }
-    
+
     @WebMethod
     public Boolean checkIfCustomerNeedToWaitForPicker(@WebParam(name = "receiptNo") String receiptNo) {
         return rib.checkIfCustomerNeedToWaitForPicker(receiptNo);
     }
-    
+
     @WebMethod
     public String getStoreMap(@WebParam(name = "storeID") Long storeID) {
         try {

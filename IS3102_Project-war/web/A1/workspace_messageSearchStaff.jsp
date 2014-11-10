@@ -146,7 +146,7 @@
                                             <!-- /.table-responsive -->
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input class="btn btn-primary" name="btnMultiple" type="submit" value="Select Multiple Staff" onclick="selectMultipleStaff()"  />
+                                                    <input class="btn btn-primary" name="btnMultiple" type="submit" value="Select Staff(s)" onclick="selectMultipleStaff()"  />
 
                                                 </div>
                                             </div>

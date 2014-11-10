@@ -37,10 +37,12 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
 
     @Override
     public MemberEntity getMemberViaCard(String memberCard) {
+        System.out.println("getMemberViaCard() called with memberCard:"+memberCard);
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity t where t.loyaltyCardId=:memberCard");
             q.setParameter("memberCard", memberCard);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
+            System.out.println("Returned member");
             return memberEntity;
         } catch (NoResultException ex) {
             return null;
@@ -52,6 +54,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
 
     @Override
     public Integer getMemberLoyaltyPointsAmount(String email) {
+        System.out.println("getMemberLoyaltyPointsAmount() called");
         MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
         if (memberEntity == null) {
             return 0;

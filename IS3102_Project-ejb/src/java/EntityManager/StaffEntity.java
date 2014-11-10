@@ -58,6 +58,9 @@ public class StaffEntity implements Serializable {
     private CountryEntity country;
     @OneToMany(cascade={CascadeType.REMOVE}, mappedBy="staff")
     private List<AccessRightEntity> accessRightList;
+    private Integer securityQuestion;
+    @Lob
+    private String securityAnswer;
     
 
     @ManyToMany
@@ -95,6 +98,22 @@ public class StaffEntity implements Serializable {
         this.sentMessages = new ArrayList<>();
         this.toDoList = new ArrayList<>();
         this.accessRightList = new ArrayList<>();
+    }
+
+    public Integer getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public void setSecurityQuestion(Integer securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    public String getSecurityAnswer() {
+        return securityAnswer;
+    }
+
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
     }
 
     public List<AccessRightEntity> getAccessRightList() {

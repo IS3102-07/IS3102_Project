@@ -2,6 +2,7 @@ package A1_servlets;
 
 import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
 import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -22,15 +23,16 @@ public class AccountManagement_SendResetPasswordServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String email = request.getParameter("email");
-
-            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
-            if (ifExist) {
+            String securityAnswer = request.getParameter("securityAnswer");
+            
+            StaffEntity staff = accountManagementBean.getStaffByEmail(email);
+            if (securityAnswer.equals(staff.getSecurityAnswer())) {
                 systemSecurityBean.sendPasswordResetEmailForStaff(email);
-                result = "?goodMsg=Send email successful. Please enter your activation code to reset your password.&email=" + email;
+                result = "?goodMsg=Password reset code sent. Check your email for the code to be filled in below.&email=" + email;
                 response.sendRedirect("./A1/staffResetPasswordCode.jsp" + result);
             } else {
-                result = "?errMsg=Staff email does not exist.";
-                response.sendRedirect("./A1/staffForgetPassword.jsp" + result);
+                result = "?errMsg=Security answer is not correct.";
+                response.sendRedirect("./A1/staffForgetPasswordSecurity.jsp" + result);
             }
         } catch (Exception ex) {
             System.out.println(ex);

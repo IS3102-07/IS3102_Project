@@ -55,8 +55,8 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal, Supp
         System.out.println("deleteSupplier() called.");
         try {
             if (checkSupplierExists(id)) {
-                supplier = em.merge(em.getReference(SupplierEntity.class, id));
-                em.remove(supplier);
+                supplier = em.getReference(SupplierEntity.class, id);
+                supplier.setIsDeleted(true);
                 return true;
             }
             return false;
@@ -203,7 +203,7 @@ public class SupplierManagementBean implements SupplierManagementBeanLocal, Supp
     public List<SupplierEntity> getSupplierListOfRO(Long roID) {
         System.out.println("getSupplierListByRO() called");
         try {
-            Query q= em.createQuery("SELECT s from SupplierEntity s where s.regionalOffice.id=:roID");
+            Query q= em.createQuery("SELECT s from SupplierEntity s where s.regionalOffice.id=:roID and s.isDeleted=false");
             q.setParameter("roID", roID);
             return q.getResultList();
         } catch (Exception ex) {
