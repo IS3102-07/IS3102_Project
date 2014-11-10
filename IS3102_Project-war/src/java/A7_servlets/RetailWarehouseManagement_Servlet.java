@@ -28,8 +28,11 @@ public class RetailWarehouseManagement_Servlet extends HttpServlet {
         try {
             HttpSession session;
             session = request.getSession();
+
             String errMsg = request.getParameter("errMsg");
+
             String destination = request.getParameter("destination");
+
             String warehouseId = request.getParameter("id");
 
             if (destination != null && warehouseId != null) {
@@ -47,7 +50,7 @@ public class RetailWarehouseManagement_Servlet extends HttpServlet {
                 session.setAttribute("latestTransferOrders", latestTransferOrders);
 
                 System.out.println("Checking total at start");
-                System.out.println("Total Pallet: "+totalPallet + " , Total Shelf: " + totalShelf + " , Total Inbound: " + totalInbound + " , Total Outbound: " + totalOutbound);
+                System.out.println("Total Pallet: " + totalPallet + " , Total Shelf: " + totalShelf + " , Total Inbound: " + totalInbound + " , Total Outbound: " + totalOutbound);
 
                 System.out.println("Checking free at start");
                 System.out.println("Free Pallet: " + freePallet + " , Free Shelf: " + freeShelf + " , Free Inbound: " + freeInbound + " , Free Outbound: " + freeOutbound);

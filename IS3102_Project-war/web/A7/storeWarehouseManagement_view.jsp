@@ -14,7 +14,7 @@
     boolean roleIsStoreManager = false;
     if (staffEntity != null) {
         List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{1L,11L};
+        Long[] approvedRolesID = new Long[]{1L, 11L};
         for (RoleEntity roleEntity : roles) {
             for (Long ID : approvedRolesID) {
                 if (roleEntity.getId().equals(ID)) {
@@ -93,7 +93,6 @@
 <html lang="en">
 
     <jsp:include page="../header2.html" />
-
     <body>
         <script>
             function updateStoreWarehouse(id, destination) {
@@ -168,7 +167,7 @@
                                                             <td>
                                                                 <% if (roleIsRegionalManager) {
                                                                         canAccessByRegionalManager = false;
-                                                                        if (regionalOfficeId.equals(warehouses.get(i).getManufaturingFacility().getRegionalOffice().getId())) {
+                                                                        if (regionalOfficeId.equals(warehouses.get(i).getStore().getRegionalOffice().getId())) {
                                                                             canAccessByRegionalManager = true;
                                                                         }
                                                                     }
@@ -181,10 +180,11 @@
                                                                     if (roleIsStoreManager) {
                                                                         canAccessByStoreManager = false;
                                                                         if (id.equals(warehouses.get(i).getId())) {
-                                                                          canAccessByStoreManager = true;
-                                                                      }
-                                                                  }
-                                                                  if (canAccessByWarehouseManager || roleIsAdmin || canAccessByRegionalManager || canAccessByStoreManager) {%>
+                                                                            canAccessByStoreManager = true;
+                                                                        }
+                                                                    }
+
+                                                                    if (canAccessByWarehouseManager || roleIsAdmin || canAccessByRegionalManager || canAccessByStoreManager) {System.out.println("888");%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  onclick="javascript:updateStoreWarehouse('<%=warehouses.get(i).getId()%>', 'storeWarehouseManagement.jsp')"/>                                                                                                                            
                                                                 <%} else {%>
                                                                 <input type="button" name="btnEdit" value="Select" class="btn btn-primary btn-block"  disabled/>
