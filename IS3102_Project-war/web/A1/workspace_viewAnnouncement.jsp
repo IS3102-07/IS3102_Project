@@ -2,22 +2,6 @@
 <%@page import="EntityManager.StaffEntity"%>
 <%@page import="EntityManager.AnnouncementEntity"%>
 <%@page import="java.util.List"%>
-<%
-    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
-    boolean roleCanEditAnnouncement = false;
-    if (staffEntity != null) {
-        List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{1L, 2L, 11L};
-        for (RoleEntity roleEntity : roles) {
-            for (Long ID : approvedRolesID) {
-                if (roleEntity.getId().equals(ID)) {
-                    roleCanEditAnnouncement = true;
-                    break;
-                }
-            }
-        }
-    }
-%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -62,6 +46,22 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+                boolean roleCanEditAnnouncement = false;
+                if (staffEntity != null) {
+                    List<RoleEntity> roles = staffEntity.getRoles();
+                    Long[] approvedRolesID = new Long[]{1L, 2L, 11L};
+                    for (RoleEntity roleEntity : roles) {
+                        for (Long ID : approvedRolesID) {
+                            if (roleEntity.getId().equals(ID)) {
+                                roleCanEditAnnouncement = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">

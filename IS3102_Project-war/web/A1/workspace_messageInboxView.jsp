@@ -3,13 +3,6 @@
 <%@page import="EntityManager.MessageEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
-<%
-    StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
-    String view = (String) session.getAttribute("view");
-    if (view == null) {
-        response.sendRedirect("../WorkspaceMessage_Servlet");
-    } else {
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -20,6 +13,12 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                String view = (String) session.getAttribute("view");
+                if (view == null) {
+                    response.sendRedirect("../WorkspaceMessage_Servlet");
+                } else {
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
