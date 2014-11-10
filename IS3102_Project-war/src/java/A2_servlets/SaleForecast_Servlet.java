@@ -107,6 +107,7 @@ public class SaleForecast_Servlet extends HttpServlet {
                     List<SaleForecastEntity> saleForecastList = new ArrayList<>();
                     for (ProductGroupEntity productGroup : productGroupList) {
                         SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
+                        System.out.println("saleForecast.getId(): " + saleForecast.getId());
                         saleForecastList.add(saleForecast);
                     }
 

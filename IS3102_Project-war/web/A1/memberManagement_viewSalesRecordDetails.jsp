@@ -7,19 +7,20 @@
 
     <jsp:include page="../header2.html" />
     <body>
-        <%
-            try {
-                String id = (String) (session.getAttribute("id"));
-                List<SalesRecordEntity> salesRecords = (List<SalesRecordEntity>) (session.getAttribute("salesRecords"));
-                SalesRecordEntity salesRecord = new SalesRecordEntity();
-                for (int i = 0; i < salesRecords.size(); i++) {
-                    if (salesRecords.get(i).getId() == Integer.parseInt(id)) {
-                        salesRecord = salesRecords.get(i);
-                    }
-                }
-        %>
+
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                try {
+                    String id = (String) (session.getAttribute("id"));
+                    List<SalesRecordEntity> salesRecords = (List<SalesRecordEntity>) (session.getAttribute("salesRecords"));
+                    SalesRecordEntity salesRecord = new SalesRecordEntity();
+                    for (int i = 0; i < salesRecords.size(); i++) {
+                        if (salesRecords.get(i).getId() == Integer.parseInt(id)) {
+                            salesRecord = salesRecords.get(i);
+                        }
+                    }
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -66,7 +67,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <%   List<LineItemEntity> lineItems = salesRecord.getItemsPurchased();
-                                                            for (int i = 0; i < lineItems.size(); i++){%>
+                                                            for (int i = 0; i < lineItems.size(); i++) {%>
                                                         <tr>
                                                             <td>
                                                                 <%=lineItems.get(i).getItem().getSKU()%>
@@ -83,11 +84,7 @@
                                             </div>
                                         </div>
                                         <%}
-                                            }
-                                            catch (Exception ex
-
-                                            
-                                                ) {
+                                            } catch (Exception ex) {
                                                 response.sendRedirect("../MemberManagement_MemberServlet");
                                             }
                                         %>
@@ -102,7 +99,7 @@
         </form>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#dataTables-example').dataTable();
         }
         );
