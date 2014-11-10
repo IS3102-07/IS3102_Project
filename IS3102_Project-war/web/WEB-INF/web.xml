@@ -1105,6 +1105,10 @@
         <servlet-name>LoyaltyCardManagement_Servlet</servlet-name>
         <servlet-class>A4_servlets.LoyaltyCardManagement_Servlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountManagement_SecurityChallengeServlet</servlet-name>
+        <servlet-class>A1_servlets.AccountManagement_SecurityChallengeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2208,6 +2212,10 @@
     <servlet-mapping>
         <servlet-name>LoyaltyCardManagement_Servlet</servlet-name>
         <url-pattern>/LoyaltyCardManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagement_SecurityChallengeServlet</servlet-name>
+        <url-pattern>/AccountManagement_SecurityChallengeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

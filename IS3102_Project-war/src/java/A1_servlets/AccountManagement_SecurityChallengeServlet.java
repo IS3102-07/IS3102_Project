@@ -9,8 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class AccountManagement_SendResetPasswordServlet extends HttpServlet {
+public class AccountManagement_SecurityChallengeServlet extends HttpServlet {
 
     @EJB
     private SystemSecurityBeanLocal systemSecurityBean;
@@ -22,17 +23,18 @@ public class AccountManagement_SendResetPasswordServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession session;
+            session = request.getSession();
             String email = request.getParameter("email");
-            String securityAnswer = request.getParameter("securityAnswer");
-            
-            StaffEntity staff = accountManagementBean.getStaffByEmail(email);
-            if (securityAnswer.equals(staff.getSecurityAnswer())) {
-                systemSecurityBean.sendPasswordResetEmailForStaff(email);
-                result = "?goodMsg=Password reset code sent. Check your email for the code to be filled in below.&email=" + email;
-                response.sendRedirect("./A1/staffResetPasswordCode.jsp" + result);
+
+            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
+            if (ifExist) {                
+                StaffEntity staff = accountManagementBean.getStaffByEmail(email);
+                session.setAttribute("staffForgetPassword", staff);
+                response.sendRedirect("/IS3102_Project-war/A1/staffForgetPasswordSecurity.jsp?email=" +email);
             } else {
-                result = "?errMsg=Security answer is not correct.";
-                response.sendRedirect("./A1/staffForgetPasswordSecurity.jsp" + result);
+                result = "?errMsg=Account does not exist.";
+                response.sendRedirect("/IS3102_Project-war/A1/staffForgetPassword.jsp" + result);
             }
         } catch (Exception ex) {
             System.out.println(ex);

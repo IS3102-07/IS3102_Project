@@ -53,6 +53,31 @@
                                                 <input class="form-control" required="true" value="<%=staffEntity.getEmail()%>" disabled/>
                                             </div>
                                             <div class="form-group">
+                                                <label>Set Challenge Question</label>
+                                                <select name="securityQuestion">
+                                                    <%int securityQn = 0;
+                                                        if (staffEntity.getSecurityQuestion() == null) {
+                                                            securityQn = 0;
+                                                        } else {
+                                                            securityQn = staffEntity.getSecurityQuestion();
+                                                        }%>
+                                                    <option value="1" <%if (securityQn == 1) {
+                                                            out.println("selected");
+                                                        }%>>What is your mother's maiden name?</option>
+                                                    <option value="2" <%if (securityQn == 2) {
+                                                            out.println("selected");
+                                                        }%>>What is your first pet's name?</option>
+                                                    <option value="3" <%if (securityQn == 3) {
+                                                            out.println("selected");
+                                                        }%>>What is your favourite animal?</option>
+                                                </select>
+                                                <input class="form-control" type="text" required="true" name="securityAnswer" value="<%if (staffEntity.getSecurityAnswer() == null) {
+                                                        out.println("");
+                                                    } else {
+                                                        out.println(staffEntity.getSecurityAnswer());
+                                                    }%>">
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Phone</label>
                                                 <input class="form-control" required="true" type="text" name="phone" value="<%=staffEntity.getPhone()%>">
                                             </div>

@@ -290,7 +290,7 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
 
     //For administrator to edit staff account.
     @Override
-    public boolean editStaff(String callerStaffID, Long staffID, String identificationNo, String name, String phone, String password, String address) {
+    public boolean editStaff(String callerStaffID, Long staffID, String identificationNo, String name, String phone, String password, String address, Integer securityQuestion,String securityAnswer) {
         System.out.println("editStaff() called with staffID:" + staffID);
 
         String passwordSalt = generatePasswordSalt();
@@ -304,6 +304,8 @@ public class AccountManagementBean implements AccountManagementBeanLocal, Accoun
             staffEntity.setName(name);
             staffEntity.setAddress(address);
             staffEntity.setPhone(phone);
+            staffEntity.setSecurityQuestion(securityQuestion);
+            staffEntity.setSecurityAnswer(securityAnswer);
             if (!password.isEmpty()) {
                 staffEntity.setPasswordSalt(passwordSalt);
             }

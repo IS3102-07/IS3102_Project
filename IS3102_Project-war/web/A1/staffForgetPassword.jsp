@@ -24,12 +24,13 @@
                         </div>
                         <h10 class="text-info"><%=errMsg%></h10>
                         <div class="panel-body">
-                            <form role="form" name="LoginForm" action="../AccountManagement_SendResetPasswordServlet">
+                            <form role="form" name="LoginForm" action="../AccountManagement_SecurityChallengeServlet">
+                            <!--form role="form" name="LoginForm" action="../AccountManagement_SendResetPasswordServlet"-->
 
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-12">
-                                            <label>Enter Your E-mail Address To Receive Password Reset</label>
+                                            <label>Enter Your E-mail Address</label>
                                             <input type="email" name="email" id="email" class="form-control input-lg" required="true">
                                         </div>
                                     </div>
