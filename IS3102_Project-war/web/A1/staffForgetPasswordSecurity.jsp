@@ -19,7 +19,7 @@
         <div role="main" class="main">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">  
-                    <div class="featured-box featured-boxes.login" style="height: auto;margin-top: 100px;">
+                    <div class="featured-box featured-boxes.login" style="height: 480px;margin-top: 100px;">
                         <div class="panel-heading"> 
                             <i class="icon-4x icon icon-unlock-alt"  style="margin-top: 10px;"></i><h6 class="panel-title">Forget Password?</h6>
                         </div>
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row featured-boxes login">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Forgot Password</h4>

@@ -44,7 +44,7 @@
                             <h1 class="page-header">Purchase Order Management</h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-exchange"></i> Purchase Order Management
+                                    <a href="../PurchaseOrderManagement_Servlet"><i class="icon icon-exchange"></i> Purchase Order Management</a>
                                 </li>
                             </ol>
                         </div>

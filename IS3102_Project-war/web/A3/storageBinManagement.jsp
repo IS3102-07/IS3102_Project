@@ -269,6 +269,9 @@
                                 </div>
 
                                 <div class="col-md-8">
+                                        <h3>
+                                        Goods Receipt
+                                        </h3>
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
                                         <thead>
                                             <tr>

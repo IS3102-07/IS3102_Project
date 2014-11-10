@@ -74,7 +74,13 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     }
 
                     boolean canUpdateRoles = accountManagementBean.editStaffRole(currentLoggedInStaffID, Long.parseLong(staffId), roleIDs);
-                    boolean canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address, Integer.valueOf(securityQuestion), securityAnswer);
+                    boolean canUpdateInfo;
+                    if (securityQuestion == null || securityQuestion.equals("") || securityQuestion.equals("null")) {
+                        canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address, null, securityAnswer);
+                    } else {
+                        System.out.println(securityQuestion);
+                        canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address, Integer.valueOf(securityQuestion), securityAnswer);
+                    }
                     if (!canUpdateInfo) {
                         result += "&errMsg=Error updating staff particulars.";
                     }

@@ -11,9 +11,9 @@
 
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
-            <%
+            <%  
                 StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
-                if (staffEntity != null) {
+                if (staffEntity != null) {                 
                     List<AnnouncementEntity> announcement = (List<AnnouncementEntity>) (session.getAttribute("listOfAnnouncements"));
                     List<MessageEntity> unreadMessages = (List<MessageEntity>) (session.getAttribute("unreadMessages"));
                     List<MessageEntity> inbox = (List<MessageEntity>) (session.getAttribute("inboxMessages"));

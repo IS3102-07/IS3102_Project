@@ -1,20 +1,7 @@
 <%@page import="EntityManager.ComboLineItemEntity"%>
 <%@page import="EntityManager.ComboEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<ComboEntity> combos = (List<ComboEntity>) (session.getAttribute("combos"));
-    String id = request.getParameter("id");
-    if (combos == null || id == null) {
-        response.sendRedirect("../ComboManagement_ComboServlet");
-    } else {
-        ComboEntity combo = new ComboEntity();
-        for (int i = 0; i < combos.size(); i++) {
-            if (combos.get(i).getId() == Integer.parseInt(id)) {
-                combo = combos.get(i);
-            }
-        }
 
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -46,6 +33,20 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+    List<ComboEntity> combos = (List<ComboEntity>) (session.getAttribute("combos"));
+    String id = request.getParameter("id");
+    if (combos == null || id == null) {
+        response.sendRedirect("../ComboManagement_ComboServlet");
+    } else {
+        ComboEntity combo = new ComboEntity();
+        for (int i = 0; i < combos.size(); i++) {
+            if (combos.get(i).getId() == Integer.parseInt(id)) {
+                combo = combos.get(i);
+            }
+        }
+
+%>
             <div id="page-wrapper">
                 <div class="container-fluid">
 

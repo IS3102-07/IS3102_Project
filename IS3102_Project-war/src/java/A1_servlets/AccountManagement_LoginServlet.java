@@ -39,6 +39,8 @@ public class AccountManagement_LoginServlet extends HttpServlet {
             session = request.getSession();
 
             StaffEntity staffEntity = (StaffEntity) session.getAttribute("staffEntity");
+            System.out.println("0");
+
             if (staffEntity == null) {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
@@ -55,25 +57,30 @@ public class AccountManagement_LoginServlet extends HttpServlet {
                 result = "Login fail. Please try again.";
                 response.sendRedirect("A1/staffLogin.jsp?errMsg=" + result);
             } else {
-                List<AccessRightEntity> accessRights = staffEntity.getAccessRightList();
                 List<RegionalOfficeEntity> regionalOfficeList = new ArrayList<>();
                 List<StoreEntity> storeList = new ArrayList<>();
                 List<ManufacturingFacilityEntity> manufacturingFacilityList = new ArrayList<>();
                 List<WarehouseEntity> warehouseList = new ArrayList<>();
-                for (AccessRightEntity access : accessRights) {
-                    if (access.getRegionalOffice() != null) {
-                        regionalOfficeList.add(access.getRegionalOffice());
-                    }
-                    if (access.getStore() != null) {
-                        storeList.add(access.getStore());
-                    }
-                    if (access.getManufacturingFacility() != null) {
-                        manufacturingFacilityList.add(access.getManufacturingFacility());
-                    }
-                    if (access.getWarehouse() != null) {
-                        warehouseList.add(access.getWarehouse());
+
+                if (staffEntity.getAccessRightList().size() != 0) {
+                    List<AccessRightEntity> accessRights = staffEntity.getAccessRightList();
+
+                    for (AccessRightEntity access : accessRights) {
+                        if (access.getRegionalOffice() != null) {
+                            regionalOfficeList.add(access.getRegionalOffice());
+                        }
+                        if (access.getStore() != null) {
+                            storeList.add(access.getStore());
+                        }
+                        if (access.getManufacturingFacility() != null) {
+                            manufacturingFacilityList.add(access.getManufacturingFacility());
+                        }
+                        if (access.getWarehouse() != null) {
+                            warehouseList.add(access.getWarehouse());
+                        }
                     }
                 }
+
                 session.setAttribute("access_RO", regionalOfficeList);
                 session.setAttribute("access_S", storeList);
                 session.setAttribute("access_MF", manufacturingFacilityList);
