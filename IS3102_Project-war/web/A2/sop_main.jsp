@@ -10,30 +10,13 @@
     <body>
 
         <script>
-            function editSOPRetailProduct(){
-                 document.sopManagement.action = "../SaleAndOperationPlanning_Servlet/sopManagement";
-                 document.sopManagement.submit();
+            function editSOPRetailProduct() {
+                document.sopManagement.action = "../SaleAndOperationPlanning_Servlet/sopManagement";
+                document.sopManagement.submit();
             }
-            function editSOP(){
-                 document.sopManagement1.action = "../SaleAndOperationPlanning_Servlet/sopManagement";
-                 document.sopManagement1.submit();
-            }
-            function removeSOPRetailProduct() {
-                checkboxes = document.getElementsByName('delete');
-                var numOfTicks = 0;
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                    if (checkboxes[i].checked) {
-                       numOfTicks++;
-                    }
-                }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
-                    document.sopManagement.submit();
-                } else {
-                    window.event.returnValue = true;
-                    document.sopManagement.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
-                    document.sopManagement.submit();
-                }
+            function editSOP() {
+                document.sopManagement1.action = "../SaleAndOperationPlanning_Servlet/sopManagement";
+                document.sopManagement1.submit();
             }
             function removeSOP() {
                 checkboxes = document.getElementsByName('delete');
@@ -43,14 +26,9 @@
                         numOfTicks++;
                     }
                 }
-                if (checkboxes.length == 0 || numOfTicks == 0) {
-                    window.event.returnValue = false;
-                    document.sopManagement1.submit();
-                } else {
-                    window.event.returnValue = true;
-                    document.sopManagement1.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
-                    document.sopManagement1.submit();
-                }
+                window.event.returnValue = true;
+                document.sopManagement1.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
+                document.sopManagement.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
@@ -252,8 +230,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <%                                                            
-                                                            List<SaleAndOperationPlanEntity> retailSopList = (List<SaleAndOperationPlanEntity>) request.getAttribute("retailSopList");
+                                                        <%                                                            List<SaleAndOperationPlanEntity> retailSopList = (List<SaleAndOperationPlanEntity>) request.getAttribute("retailSopList");
                                                             for (SaleAndOperationPlanEntity model : retailSopList) {
                                                         %>
                                                         <tr>
@@ -270,8 +247,8 @@
                                                         %>
                                                     </tbody>
                                                 </table>    
-                                                <div class="row">
-                                                    <div class="col-md-3">                                                        
+                                                <div class="row">          
+                                                    <div class="col-md-12">
                                                         <a href="#deleteSOPRetailProduct" data-toggle="modal"><button class="btn btn-primary">Delete Procurement Plan</button></a>
                                                         <div role="dialog" class="modal fade" id="deleteSOPRetailProduct">
                                                             <div class="modal-dialog">
@@ -283,14 +260,14 @@
                                                                         <p id="messageBox">SOP will be removed. Are you sure?</p>
                                                                     </div>
                                                                     <div class="modal-footer">                        
-                                                                        <input class="btn btn-primary" name="btnRemove" value="Confirm" onclick="removeSOPRetailProduct()"  />
+                                                                        <input class="btn btn-primary" name="btnRemove" value="Confirm" onclick="removeSOP()"  />
                                                                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-9">
+
+
                                                         <a href="#myModal" data-toggle="modal"><button class="btn btn-primary">Generate Purchase Orders</button></a>
 
                                                         <div role="dialog" class="modal fade" id="myModal">
@@ -348,7 +325,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->        
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTable1').dataTable();
                 $('#dataTable2').dataTable();
                 $('#dataTable3').dataTable();

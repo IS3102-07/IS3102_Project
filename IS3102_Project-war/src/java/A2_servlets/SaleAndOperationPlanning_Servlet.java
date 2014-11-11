@@ -290,7 +290,7 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
             case "/deleteSOP":
                 try {
                     deletes = request.getParameterValues("delete");
-                    if (deletes != null) {
+                    if (deletes != null && deletes.length != 0) {
                         for (String sopString : deletes) {
                             sopId = Long.parseLong(sopString);
                             sopBean.deleteSOP(sopId);
