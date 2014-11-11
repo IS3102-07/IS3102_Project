@@ -14,7 +14,6 @@ import EntityManager.SalesRecordEntity;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
-import javax.ejb.Stateful;
 
 @Local
 public interface CustomerValueAnalysisBeanLocal {

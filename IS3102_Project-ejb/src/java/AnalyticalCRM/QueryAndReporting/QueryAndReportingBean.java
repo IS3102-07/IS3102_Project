@@ -6,11 +6,11 @@
 
 package AnalyticalCRM.QueryAndReporting;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@Stateful
+@Stateless
 public class QueryAndReportingBean implements QueryAndReportingBeanLocal {
     @PersistenceContext
     private EntityManager em;

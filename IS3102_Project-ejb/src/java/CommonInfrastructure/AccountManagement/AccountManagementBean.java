@@ -26,15 +26,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
-import javax.jws.WebParam;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Stateful
+@Stateless
 public class AccountManagementBean implements AccountManagementBeanLocal, AccountManagementBeanRemote {
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")
