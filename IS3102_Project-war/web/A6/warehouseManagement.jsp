@@ -114,10 +114,15 @@
                                                             <td><%= warehouse.getStore().getName()%></td>                                                            
                                                             <%
                                                             } else {
+                                                                if (warehouse.getManufaturingFacility() != null) {
                                                             %>
-                                                            <td><%= warehouse.getManufaturingFacility().getRegionalOffice().getName() %></td>
-                                                            <td><%= warehouse.getManufaturingFacility().getName() %></td>
-                                                            <% } %>
+                                                            <td><%= warehouse.getManufaturingFacility().getRegionalOffice().getName()%></td>
+                                                            <td><%= warehouse.getManufaturingFacility().getName()%></td>
+                                                            <% } else {%>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <%}
+                                                                }%>
                                                             <td><%= warehouse.getAddress()%></td>
                                                             <td><%= warehouse.getTelephone()%></td>
                                                             <td><%= warehouse.getEmail()%></td>
@@ -177,7 +182,7 @@
     <!-- /#wrapper -->
 
     <%
-    if (request.getAttribute("alertMesage") != null) {
+        if (request.getAttribute("alertMesage") != null) {
     %>
     <script>
             alert("<%= request.getAttribute("alertMessage")%>");

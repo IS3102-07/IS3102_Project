@@ -37,6 +37,8 @@ public class MaterialRequirementFulfilmentBean implements MaterialRequirementFul
         System.out.println("generatePurchaseOrderFromMaterialRequirement is called.");
         try {
             ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, MfId);
+            System.out.println("mf.getWarehouse().getId(): "+mf.getWarehouse().getId());
+         
             Query q = em.createQuery("select s from MonthScheduleEntity s");
             List<MonthScheduleEntity> scheduleList = q.getResultList();
             MonthScheduleEntity schedule = scheduleList.get(scheduleList.size() - 1);
