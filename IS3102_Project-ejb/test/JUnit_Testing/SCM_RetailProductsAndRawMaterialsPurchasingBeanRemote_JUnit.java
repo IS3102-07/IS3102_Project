@@ -115,7 +115,7 @@ public class SCM_RetailProductsAndRawMaterialsPurchasingBeanRemote_JUnit {
     public void test08GetPurchaseOrderList() {
         System.out.println("testGetPurchaseOrderList");
         List result = retailProductsAndRawMaterialsPurchasingBean.getPurchaseOrderList();
-        assertFalse(!result.isEmpty());
+        assertFalse(result.isEmpty());
     }
 
     @Test

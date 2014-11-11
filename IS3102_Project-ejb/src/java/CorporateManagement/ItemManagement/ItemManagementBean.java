@@ -508,6 +508,7 @@ public class ItemManagementBean implements ItemManagementBeanLocal, ItemManageme
 
     @Override
     public ProductGroupEntity createProductGroup(String name, Integer workhours, Integer lotSize) {
+        System.out.println("createProductGroup called");
         try {
             Query q = em.createQuery("select pg from ProductGroupEntity pg where pg.productGroupName = ?1").setParameter(1, name);
             if (q.getResultList().isEmpty()) {
