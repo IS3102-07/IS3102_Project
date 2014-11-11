@@ -33,7 +33,7 @@
                             <tr>
                                 <th>Queue No.</th>
                                 <th>Pick Status</th>
-                                <th>Picker</th>
+                                <th>Trolley</th>
                                 <th>Date/Time</th>
                             </tr>
                         </thead>

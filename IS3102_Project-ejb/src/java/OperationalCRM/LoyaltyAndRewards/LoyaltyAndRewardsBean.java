@@ -284,6 +284,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         try {
             Query q = em.createQuery("SELECT m from MemberEntity m where m.email=:email");
             q.setParameter("email", email);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             List<LineItemEntity> shoppingListEntity = memberEntity.getShoppingList();
             return shoppingListEntity;

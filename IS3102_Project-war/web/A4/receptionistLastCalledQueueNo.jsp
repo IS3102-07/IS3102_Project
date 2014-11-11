@@ -34,7 +34,7 @@
                             <tr>
                                 <th>Queue No.</th>
                                 <th>Status</th>
-                                <th>Picker</th>
+                                <th>Trolley</th>
                                 <th>Date/Time Called</th>
                             </tr>
                         </thead>
@@ -61,8 +61,9 @@
                                     %>
                                 </td>
                                 <td>
-                                    <% String date = pickRequests.get(i).getDateCalled().toString();
-                                    if (date!=null) {
+                                    <% Date dateCalled =  pickRequests.get(i).getDateCalled();
+                                    if (dateCalled!=null) {
+                                        String date = pickRequests.get(i).getDateCalled().toString();
                                         out.println(date);
                                     } else {
                                         out.println("Please wait...");
