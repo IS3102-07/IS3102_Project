@@ -6,7 +6,16 @@
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>        
-
+    <style type="text/css">
+   .labels {
+     color: white;
+     background-color: red;
+     font-family: "Lucida Grande", "Arial", sans-serif;
+     font-size: 10px;
+     text-align: center;       
+     white-space: nowrap;
+   }
+   </style>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
 
@@ -155,7 +164,8 @@
         </script>
 
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
+        <script src="../js/markerwithlabel.js"></script>
+        
         <script>
             function initialize()
             {
@@ -169,20 +179,26 @@
 
             <% for (StoreEntity s : storeList) {%>
 
-                var <%= "store" + s.getId()%> = new google.maps.Marker({
+                var <%= "store" + s.getId()%> = new MarkerWithLabel({
                     position: new google.maps.LatLng(<%= s.getLatitude()%>, <%= s.getLongitude()%>),
                     map: map,
                     title: '<%= s.getName() %>',
+                    labelContent: "<%= s.getName() %>",
+                    labelAnchor: new google.maps.Point(22, 0),
+                    labelClass: "labels",
                 });
 
             <% } %>
 
             <% for (ManufacturingFacilityEntity mf : mfList) {%>
 
-                var <%= "mf" + mf.getId()%> = new google.maps.Marker({
+                var <%= "mf" + mf.getId()%> = new MarkerWithLabel({
                     position: new google.maps.LatLng(<%= mf.getLatitude()%>, <%= mf.getLongitude()%>),
                     map: map,
                     title: '<%= mf.getName() %>',
+                    labelContent: "<%= mf.getName() %>",
+                    labelAnchor: new google.maps.Point(22, 0),
+                    labelClass: "labels",
                 });
 
             <% }%>
