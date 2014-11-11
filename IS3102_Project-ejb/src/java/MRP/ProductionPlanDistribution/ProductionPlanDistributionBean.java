@@ -43,7 +43,7 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
     @Override
     public List<StoreEntity> getStoreListByRegionalOffice(Long regionalOfficeId) {
         try {
-            Query q = em.createQuery("select s from StoreEntity s where s.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
+            Query q = em.createQuery("select s from StoreEntity s where s.regionalOffice.id = ?1 and s.isDeleted = false").setParameter(1, regionalOfficeId);
             return q.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -54,7 +54,7 @@ public class ProductionPlanDistributionBean implements ProductionPlanDistributio
     @Override
     public List<ManufacturingFacilityEntity> getManufacturingFacilityListByRegionalOffice(Long regionalOfficeId) {
         try {
-            Query q = em.createQuery("select mf from ManufacturingFacilityEntity mf where mf.regionalOffice.id = ?1").setParameter(1, regionalOfficeId);
+            Query q = em.createQuery("select mf from ManufacturingFacilityEntity mf where mf.regionalOffice.id = ?1 and mf.isDeleted = false").setParameter(1, regionalOfficeId);
             return q.getResultList();
         } catch (Exception ex) {
             ex.printStackTrace();
