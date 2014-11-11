@@ -27,11 +27,30 @@
                     }
                 }
                 window.event.returnValue = true;
-                document.sopManagement1.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
+                document.sopManagement.action = "../SaleAndOperationPlanning_Servlet/deleteSOP";
                 document.sopManagement.submit();
+            }
+
+            function removeSOP1() {
+                checkboxes = document.getElementsByName('delete1');
+                var numOfTicks = 0;
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    if (checkboxes[i].checked) {
+                        numOfTicks++;
+                    }
+                }
+                window.event.returnValue = true;
+                document.sopManagement1.action = "../SaleAndOperationPlanning_Servlet/deleteSOP1";
+                document.sopManagement1.submit();
             }
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+            function checkAll1(source) {
+                checkboxes = document.getElementsByName('delete1');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
                 }
@@ -138,7 +157,7 @@
                                                 <table class="table table-striped table-bordered table-hover" id="dataTable2">
                                                     <thead>
                                                         <tr>
-                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                            <th><input type="checkbox"onclick="checkAll1(this)" /></th>
                                                             <th>Product Group</th>
                                                             <th>Sales Forecast</th>
                                                             <th>Production Plan (Must be multiple of lot size)</th>
@@ -154,7 +173,7 @@
                                                             for (SOP_Helper model : sopHelperList) {
                                                         %>
                                                         <tr>
-                                                            <td><input type="checkbox" name="delete" value="<%= model.sop.getId()%>" /></td>
+                                                            <td><input type="checkbox" name="delete1" value="<%= model.sop.getId()%>" /></td>
                                                             <td><%= model.productGroup.getProductGroupName()%></td>
                                                             <td><%= model.sop.getSaleForcastdata()%></td>
                                                             <td><%= model.sop.getProductionPlan()%></td>
@@ -182,7 +201,7 @@
                                                                         <p id="messageBox">SOP will be removed. Are you sure?</p>
                                                                     </div>
                                                                     <div class="modal-footer">                        
-                                                                        <input class="btn btn-primary" name="btnRemove" value="Confirm" onclick="removeSOP()"  />
+                                                                        <input class="btn btn-primary" name="btnRemove" value="Confirm" onclick="removeSOP1()"  />
                                                                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
                                                                     </div>
                                                                 </div>
@@ -260,7 +279,7 @@
                                                                         <p id="messageBox">SOP will be removed. Are you sure?</p>
                                                                     </div>
                                                                     <div class="modal-footer">                        
-                                                                        <input class="btn btn-primary" name="btnRemove" value="Confirm" onclick="removeSOP()"  />
+                                                                        <input class="btn btn-primary" name="btnRemoveDOP" value="Confirm" onclick="removeSOP()"  />
                                                                         <a class="btn btn-default" data-dismiss ="modal">Close</a>
                                                                     </div>
                                                                 </div>

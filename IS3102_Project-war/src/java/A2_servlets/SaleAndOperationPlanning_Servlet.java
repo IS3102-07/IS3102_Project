@@ -300,6 +300,19 @@ public class SaleAndOperationPlanning_Servlet extends HttpServlet {
                 }
                 nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
                 break;
+            case "/deleteSOP1":
+                try {
+                    deletes = request.getParameterValues("delete1");
+                    if (deletes != null && deletes.length != 0) {
+                        for (String sopString : deletes) {
+                            sopId = Long.parseLong(sopString);
+                            sopBean.deleteSOP(sopId);
+                        }
+                    }
+                } catch (Exception ex) {
+                }
+                nextPage = "/SaleAndOperationPlanning_Servlet/sop_main_GET";
+                break;
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
