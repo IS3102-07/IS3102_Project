@@ -140,7 +140,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             q.setParameter("email", email);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
-            memberEntity.setCummulativeSpending((memberEntity.getCummulativeSpending() + amountPaid)/storeEntity.getCountry().getExchangeRate());
+            memberEntity.setCummulativeSpending((memberEntity.getCummulativeSpending() + amountPaid/storeEntity.getCountry().getExchangeRate()));
             //Retrieve country for currency & exchange rate
             //Deduct his points if he used any
             memberEntity.setLoyaltyPoints(memberEntity.getLoyaltyPoints() - pointsUsed);
