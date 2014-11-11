@@ -303,7 +303,7 @@ public class CorporateManagement_ItemManagementBeanRemote_JUnit {
         Integer testdata_workhours = 100;
         Integer testdata_lotSize = 100;
         ProductGroupEntity result = itemManagementBean.createProductGroup(testdata_name, testdata_workhours, testdata_lotSize);
-        assertNull(result);
+        assertNotNull(result);
     }
 
     @Test

@@ -173,12 +173,14 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             ManufacturingFacilityEntity manufacturingFacilityEntity = new ManufacturingFacilityEntity();
             manufacturingFacilityEntity.create(manufacturingFacility, address, telephone, email, capacity, latitude, longitude);
             em.persist(manufacturingFacilityEntity);
+            em.flush();
             name = manufacturingFacilityEntity.getName();
             manuafacturingFacilityID = manufacturingFacilityEntity.getId();
             System.out.println("Manufacturing Facility Name \"" + name + "\" registered successfully as id:" + manuafacturingFacilityID);
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
             out.println(new Date().toString() + ";" + callerStaffID + ";createManufacturingFacility();" + manuafacturingFacilityID + ";");
             out.close();
+            em.detach(manufacturingFacilityEntity);
             return manufacturingFacilityEntity;
         } catch (Exception ex) {
             System.out.println("\nServer failed to register manufacturing facility:\n" + ex);
@@ -226,6 +228,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             return true;
         } catch (Exception ex) {
             System.out.println("\nServer failed to edit manufacturing facility:\n" + ex);
+            ex.printStackTrace();
             return false;
         }
     }
@@ -444,6 +447,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
 
     @Override
     public WarehouseEntity createWarehouse(String callerStaffID, String warehouseName, String address, String telephone, String email, Long storeId, Long mfId) {
+        System.out.println("createWarehouse called");
         try {
             Query q = em.createQuery("select w from WarehouseEntity w where w.warehouseName = ?1").setParameter(1, warehouseName);
             if (q.getResultList().isEmpty()) {

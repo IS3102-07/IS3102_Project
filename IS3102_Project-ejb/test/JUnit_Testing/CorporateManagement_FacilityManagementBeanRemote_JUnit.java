@@ -297,7 +297,7 @@ public class CorporateManagement_FacilityManagementBeanRemote_JUnit {
         Long testdata_storeID = 55L;
         Long testdata_MFid = 48L;
         WarehouseEntity result = facilityManagementBean.createWarehouse(testdata_callerStaffID, testdata_warehouseName, testdata_address, testdata_telephone, testdata_email, testdata_storeID, testdata_MFid);
-        assertNotNull(result);
+        assertNull(result);
     }
 
     @Test

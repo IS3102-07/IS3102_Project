@@ -267,6 +267,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             q.setParameter("qrCode", qrCode);
             QRPhoneSyncEntity phoneSyncEntity = (QRPhoneSyncEntity) q.getSingleResult();
+            System.out.println("getSyncWithPhoneStatus(): "+phoneSyncEntity.getMemberEmail());
             return phoneSyncEntity.getMemberEmail();
         } catch (NoResultException nre) {
             System.out.println("getSyncWithPhoneStatus(): No result");

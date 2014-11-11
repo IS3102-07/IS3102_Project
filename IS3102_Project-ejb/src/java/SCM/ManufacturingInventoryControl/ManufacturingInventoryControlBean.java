@@ -339,10 +339,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return qty;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed checkItemQty, warehouse or item not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to checkItemQty:\n" + ex);
-            return null;
+            return 0;
         }
     }
 
