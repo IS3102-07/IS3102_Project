@@ -339,10 +339,10 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             return qty;
         } catch (EntityNotFoundException ex) {
             System.out.println("Failed checkItemQty, warehouse or item not found.");
-            return null;
+            return 0;
         } catch (Exception ex) {
             System.out.println("\nServer failed to checkItemQty:\n" + ex);
-            return null;
+            return 0;
         }
     }
 
@@ -631,6 +631,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
                         itemStorageBinHelper.setSKU(listOfLineItemEntities.get(i).getItem().getSKU());
                         itemStorageBinHelper.setItemName(listOfLineItemEntities.get(i).getItem().getName());
                         itemStorageBinHelper.setStorageBinID(storageBin.getId());
+                        itemStorageBinHelper.setStorageBinName(storageBin.getName());
                         itemStorageBinHelper.setStorageBinType(storageBin.getType());
                         itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
                         itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());

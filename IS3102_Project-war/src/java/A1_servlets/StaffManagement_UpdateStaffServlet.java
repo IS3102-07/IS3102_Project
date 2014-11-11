@@ -43,7 +43,9 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                 String password = request.getParameter("password");
                 String address = request.getParameter("address");
                 String phone = request.getParameter("phone");
-                boolean canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address);
+                String securityQuestion = request.getParameter("securityQuestion");
+                String securityAnswer = request.getParameter("securityAnswer");
+                boolean canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address, Integer.valueOf(securityQuestion), securityAnswer);
                 if (!canUpdateInfo) {
                     result += "?&errMsg=Error updating your particulars.";
                     response.sendRedirect(source + result);
@@ -61,7 +63,8 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     String password = request.getParameter("password");
                     String address = request.getParameter("address");
                     String phone = request.getParameter("phone");
-
+                    String securityQuestion = request.getParameter("securityQuestion");
+                    String securityAnswer = request.getParameter("securityAnswer");
                     String[] roles = request.getParameterValues("roles");
                     List<Long> roleIDs = new ArrayList();
                     if (roles != null) {
@@ -71,7 +74,13 @@ public class StaffManagement_UpdateStaffServlet extends HttpServlet {
                     }
 
                     boolean canUpdateRoles = accountManagementBean.editStaffRole(currentLoggedInStaffID, Long.parseLong(staffId), roleIDs);
-                    boolean canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address);
+                    boolean canUpdateInfo;
+                    if (securityQuestion == null || securityQuestion.equals("") || securityQuestion.equals("null")) {
+                        canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address, null, securityAnswer);
+                    } else {
+                        System.out.println(securityQuestion);
+                        canUpdateInfo = accountManagementBean.editStaff(currentLoggedInStaffID, Long.parseLong(staffId), identificationNo, name, phone, password, address, Integer.valueOf(securityQuestion), securityAnswer);
+                    }
                     if (!canUpdateInfo) {
                         result += "&errMsg=Error updating staff particulars.";
                     }

@@ -1,24 +1,25 @@
 <%@page import="EntityManager.ProductGroupEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<ProductGroupEntity> productGroups = (List<ProductGroupEntity>) (session.getAttribute("productGroups"));
-    String id = request.getParameter("id");
-    if (productGroups == null || id == null) {
-        response.sendRedirect("../ProductGroupManagement_Servlet");
-    } else {
-        ProductGroupEntity productGroup = new ProductGroupEntity();
-        for (int i = 0; i < productGroups.size(); i++) {
-            if (productGroups.get(i).getId() == Integer.parseInt(id)) {
-                productGroup = productGroups.get(i);
-            }
-        }
 
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                List<ProductGroupEntity> productGroups = (List<ProductGroupEntity>) (session.getAttribute("productGroups"));
+                String id = request.getParameter("id");
+                if (productGroups == null || id == null) {
+                    response.sendRedirect("../ProductGroupManagement_Servlet");
+                } else {
+                    ProductGroupEntity productGroup = new ProductGroupEntity();
+                    for (int i = 0; i < productGroups.size(); i++) {
+                        if (productGroups.get(i).getId() == Integer.parseInt(id)) {
+                            productGroup = productGroups.get(i);
+                        }
+                    }
+
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 

@@ -2,34 +2,32 @@
 <%@page import="EntityManager.ShippingOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
-    String id = request.getParameter("id");
-    String lineItemId = request.getParameter("lineItemId");
-    if (shippingOrders == null || id == null || lineItemId == null) {
-        response.sendRedirect("../ShippingOrderManagement_Servlet");
-    } else {
-        ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
-        for (int i = 0; i < shippingOrders.size(); i++) {
-            if (shippingOrders.get(i).getId() == Integer.parseInt(id)) {
-                shippingOrder = shippingOrders.get(i);
-            }
-        }
-        List<LineItemEntity> lineItems = shippingOrder.getLineItems();
-        LineItemEntity lineItem = new LineItemEntity();
-        for (int i = 0; i < lineItems.size(); i++) {
-            if (lineItems.get(i).getId() == Integer.parseInt(lineItemId)) {
-                lineItem = lineItems.get(i);
-            }
-        }
-
-
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                List<ShippingOrderEntity> shippingOrders = (List<ShippingOrderEntity>) (session.getAttribute("shippingOrders"));
+                String id = request.getParameter("id");
+                String lineItemId = request.getParameter("lineItemId");
+                if (shippingOrders == null || id == null || lineItemId == null) {
+                    response.sendRedirect("../ShippingOrderManagement_Servlet");
+                } else {
+                    ShippingOrderEntity shippingOrder = new ShippingOrderEntity();
+                    for (int i = 0; i < shippingOrders.size(); i++) {
+                        if (shippingOrders.get(i).getId() == Integer.parseInt(id)) {
+                            shippingOrder = shippingOrders.get(i);
+                        }
+                    }
+                    List<LineItemEntity> lineItems = shippingOrder.getLineItems();
+                    LineItemEntity lineItem = new LineItemEntity();
+                    for (int i = 0; i < lineItems.size(); i++) {
+                        if (lineItems.get(i).getId() == Integer.parseInt(lineItemId)) {
+                            lineItem = lineItems.get(i);
+                        }
+                    }
+            %>            
             <div id="page-wrapper">
                 <div class="container-fluid">
 

@@ -10,7 +10,7 @@
     <body>
 
         <script>
-            
+
             function sendLoyaltyPoints() {
                 checkboxes = document.getElementsByName('delete');
                 var numOfTicks = 0;
@@ -29,17 +29,17 @@
                     document.rfm.submit();
                 }
             }
-            
+
             function checkAll(source) {
                 checkboxes = document.getElementsByName('delete');
                 for (var i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
                 }
             }
-            
+
             <%
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                %>
+            %>
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
@@ -77,7 +77,7 @@
                                         List<LineItemEntity> sortBestSellingFurniture1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingFurniture1Year"));
                                         List<LineItemEntity> listOfSecondProduct = (List<LineItemEntity>) (session.getAttribute("listOfSecondProduct"));
                                         List<Date> dateOfLastPurchaseFurniture = (List<Date>) (session.getAttribute("dateOfLastPurchaseFurniture"));
-                                        
+
                                         DecimalFormat df = new DecimalFormat("#.##");
                                     %>
                                     <!-- /.table-responsive -->
@@ -92,7 +92,7 @@
 
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    
+
                                                     <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
                                                         <table class="table table-bordered" id="dataTables-example">
                                                             <thead>
@@ -125,34 +125,32 @@
                                                                     </td>
                                                                     <td>
                                                                         <%
-                                                                        out.print(sortBestSellingFurniture1Year.get(i).getQuantity());
+                                                                            out.print(sortBestSellingFurniture1Year.get(i).getQuantity());
                                                                         %>
-                                                                        
+
                                                                     </td>
-                                                                        
+
                                                                     <td>
                                                                         <%
-                                                                        
-if (dateOfLastPurchaseFurniture.get(i) != null) {
-out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
-}%>
+                                                                            if (dateOfLastPurchaseFurniture.get(i) != null) {
+                                                                                out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
+                                                                            }%>
                                                                     </td>
                                                                     <td>
                                                                         <%
-                                                                        
-                                                                        if (listOfSecondProduct.get(i).getItem() != null) {
-                                                                        out.println(listOfSecondProduct.get(i).getItem().getName() + " (" + listOfSecondProduct.get(i).getQuantity() + ")");
-                                                                        
-                                                                        
-                                                                        }
+
+                                                                            if (listOfSecondProduct.get(i).getItem() != null) {
+                                                                                out.println(listOfSecondProduct.get(i).getItem().getName() + " (" + listOfSecondProduct.get(i).getQuantity() + ")");
+
+                                                                            }
                                                                         %>
-                                                                        
+
                                                                     </td>
                                                                     <td>
-                                                                       <%
-                                                                        out.println(df.format((double)listOfSecondProduct.get(i).getQuantity()/(double)item.getQuantity()));
-%> 
-                                                                        
+                                                                        <%
+                                                                            out.println(df.format((double) listOfSecondProduct.get(i).getQuantity() / (double) item.getQuantity()));
+                                                                        %> 
+
                                                                     </td>
 
                                                                 </tr>
@@ -234,23 +232,24 @@ out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
                                                                             </td>
                                                                             <td><%=sortBestSellingRetailProduct1Year.get(i).getQuantity()%></td>
                                                                             <td>
-                                                                                 <% if (dateOfLastPurchaseRetailProduct.get(i) !=null) {out.print(dateFormat.format(dateOfLastPurchaseRetailProduct.get(i))); }%>
+                                                                                <% if (dateOfLastPurchaseRetailProduct.get(i) != null) {
+                                                                                         out.print(dateFormat.format(dateOfLastPurchaseRetailProduct.get(i)));
+                                                                                     }%>
                                                                             </td>
                                                                             <td>
                                                                                 <%
-                                                                        
-                                                                        if (listOfSecondProductRP.get(i).getItem() != null) {
-                                                                        out.println(listOfSecondProductRP.get(i).getItem().getName() + " (" + listOfSecondProductRP.get(i).getQuantity() + ")");
-                                                                        
-                                                                        
-                                                                        }
-                                                                        %>
+
+                                                                                    if (listOfSecondProductRP.get(i).getItem() != null) {
+                                                                                        out.println(listOfSecondProductRP.get(i).getItem().getName() + " (" + listOfSecondProductRP.get(i).getQuantity() + ")");
+
+                                                                                    }
+                                                                                %>
                                                                             </td>
                                                                             <td>
                                                                                 <%
-                                                                        out.print(df.format((double)listOfSecondProductRP.get(i).getQuantity() / (double)item.getQuantity()));
-                                                                        %>
-                                                                                
+                                                                                    out.print(df.format((double) listOfSecondProductRP.get(i).getQuantity() / (double) item.getQuantity()));
+                                                                                %>
+
                                                                             </td>
 
                                                                         </tr>
@@ -274,180 +273,179 @@ out.print(dateFormat.format(dateOfLastPurchaseFurniture.get(i)));
                                             <!-- /.panel-body -->
                                         </form>
                                     </div>
-                                               
-                                                                    <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            Menu Items Analysis
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    Menu Items Analysis
+                                                </div>
+                                                <!-- /.panel-heading -->
+                                                <form name="rfm">
+
+                                                    <%
+                                                        List<LineItemEntity> sortBestSellingMenuItem = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem"));
+                                                        List<LineItemEntity> listOfSecondProductMenuItem = (List<LineItemEntity>) (session.getAttribute("listOfSecondProductMenuItem"));
+                                                        List<LineItemEntity> sortBestSellingMenuItem1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem1Year"));
+
+                                                        List<Date> dateOfLastPurchaseMenuItem = (List<Date>) (session.getAttribute("dateOfLastPurchaseMenuItem"));
+                                                    %>
+                                                    <!-- /.table-responsive -->
+
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+
+                                                            <div class="panel-body">
+                                                                <div class="table-responsive">
+
+
+
+                                                                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
+                                                                        <table class="table table-bordered" id="dataTables-example3">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th><input type="checkbox"onclick="checkAll(this)" /></th>
+                                                                                    <th>Name</th>
+                                                                                    <th>Quantity Sold</th>
+                                                                                    <th>Last 365 Days</th>
+                                                                                    <th>Last Purchase</th>
+                                                                                    <th>Items Purchased With</th>
+                                                                                    <th>Probability</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <%
+                                                                                    if (sortBestSellingMenuItem != null) {
+                                                                                        for (int i = 0; i < sortBestSellingMenuItem.size(); i++) {
+
+                                                                                            LineItemEntity item = sortBestSellingMenuItem.get(i);
+                                                                                            ItemEntity itemEntity = item.getItem();
+                                                                                %>
+                                                                                <tr>                   
+                                                                                    <td>
+                                                                                        <input type="checkbox" name="delete" value="<%=item.getId()%>" />
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%=itemEntity.getName()%>
+                                                                                    </td>
+                                                                                    <td >
+                                                                                        <%=item.getQuantity()%>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%=sortBestSellingMenuItem1Year.get(i).getQuantity()%>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%
+                                                                                            if (dateOfLastPurchaseRetailProduct.get(i) != null) {
+                                                                                                out.print(dateFormat.format(dateOfLastPurchaseRetailProduct.get(i)));
+                                                                                     }%>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%
+
+                                                                                            if (listOfSecondProductMenuItem.get(i).getItem() != null) {
+                                                                                                out.println(listOfSecondProductMenuItem.get(i).getItem().getName() + " (" + listOfSecondProductMenuItem.get(i).getQuantity() + ")");
+
+                                                                                            }
+                                                                                        %>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <%
+                                                                                            out.print(df.format((double) listOfSecondProductMenuItem.get(i).getQuantity() / (double) item.getQuantity()));
+                                                                                        %>
+
+                                                                                    </td>
+
+                                                                                </tr>
+                                                                                <%
+                                                                                        }
+                                                                                    }
+                                                                                %>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!-- /.table-responsive -->
+
+                                                                    <input type="hidden" name="id" value="">    
+                                                                </div>
+                                                            </div>   
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="id" value="">    
+                                                    </div>
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                </form>
+                                            </div>
+                                            <!-- /.panel -->
                                         </div>
-                                        <!-- /.panel-heading -->
-                                        <form name="rfm">
-
-                                            <%
-                                                List<LineItemEntity> sortBestSellingMenuItem = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem"));
-                                                List<LineItemEntity> listOfSecondProductMenuItem = (List<LineItemEntity>) (session.getAttribute("listOfSecondProductMenuItem"));
-                                                List<LineItemEntity> sortBestSellingMenuItem1Year = (List<LineItemEntity>) (session.getAttribute("sortBestSellingMenuItem1Year"));
-                                                
-                                                List<Date> dateOfLastPurchaseMenuItem = (List<Date>) (session.getAttribute("dateOfLastPurchaseMenuItem"));
-                                            %>
-                                            <!-- /.table-responsive -->
-
-                                            <div class="row">
-                                                <div class="col-lg-12">
-
-                                                    <div class="panel-body">
-                                                        <div class="table-responsive">
-
-
-
-                                                            <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" member="grid">
-                                                                <table class="table table-bordered" id="dataTables-example3">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th><input type="checkbox"onclick="checkAll(this)" /></th>
-                                                                            <th>Name</th>
-                                                                            <th>Quantity Sold</th>
-                                                                            <th>Last 365 Days</th>
-                                                                            <th>Last Purchase</th>
-                                                                            <th>Items Purchased With</th>
-                                                                            <th>Probability</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <%
-                                                                            if (sortBestSellingMenuItem != null) {
-                                                                                for (int i = 0; i < sortBestSellingMenuItem.size(); i++) {
-                                                                                    
-                                                                                    LineItemEntity item = sortBestSellingMenuItem.get(i);
-                                                                                    ItemEntity itemEntity = item.getItem();
-                                                                        %>
-                                                                        <tr>                   
-                                                                            <td>
-                                                                                <input type="checkbox" name="delete" value="<%=item.getId()%>" />
-                                                                            </td>
-                                                                            <td>
-                                                                                <%=itemEntity.getName()%>
-                                                                            </td>
-                                                                            <td >
-                                                                                <%=item.getQuantity()%>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%=sortBestSellingMenuItem1Year.get(i)%>
-                                                                            </td>
-                                                                            <td>
-                                                                                 <%
-                                                                                 if (dateOfLastPurchaseRetailProduct.get(i) != null) {
-    out.print(dateFormat.format(dateOfLastPurchaseRetailProduct.get(i)));
-            }%>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%
-                                                                        
-                                                                        if (listOfSecondProductMenuItem.get(i).getItem() != null) {
-                                                                        out.println(listOfSecondProductMenuItem.get(i).getItem().getName() + " (" + listOfSecondProductMenuItem.get(i).getQuantity() + ")");
-                                                                        
-                                                                        
-                                                                        }
-                                                                        %>
-                                                                            </td>
-                                                                            <td>
-                                                                                <%
-                                                                        out.print(df.format((double)listOfSecondProductMenuItem.get(i).getQuantity()/(double)item.getQuantity()));
-                                                                        %>
-                                                                                
-                                                                            </td>
-
-                                                                        </tr>
-                                                                        <%
-                                                                                }
-                                                                            }
-                                                                        %>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <!-- /.table-responsive -->
-
-                                                            <input type="hidden" name="id" value="">    
-                                                        </div>
-                                                    </div>   
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="id" value="">    
-                                            </div>
-                                            </div>
-                                            <!-- /.panel-body -->
-                                        </form>
+                                        <!-- /.col-lg-12 -->
                                     </div>
-                                    <!-- /.panel -->
+                                    <!-- /.row -->
                                 </div>
-                                <!-- /.col-lg-12 -->
+                                <!-- /.container-fluid -->
                             </div>
-                            <!-- /.row -->
+                            <!-- /#page-wrapper -->
                         </div>
-                        <!-- /.container-fluid -->
-                    </div>
-                    <!-- /#page-wrapper -->
-                </div>
-                <!-- /#wrapper -->
+                        <!-- /#wrapper -->
 
-                <div role="dialog" class="modal fade" id="myModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4>Alert</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p id="messageBox">Enter Loyalty Amount : 
-                                    <input type="number" name="loyaltyPoints"></p>
-                            </div>
-                            <div class="modal-footer">                        
-                                <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="sendLoyaltyPoints()"  />
-                                <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                        <div role="dialog" class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Alert</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="messageBox">Enter Loyalty Amount : 
+                                            <input type="number" name="loyaltyPoints"></p>
+                                    </div>
+                                    <div class="modal-footer">                        
+                                        <input class="btn btn-primary" name="btnRemove" type="submit" value="Confirm" onclick="sendLoyaltyPoints()"  />
+                                        <a class="btn btn-default" data-dismiss ="modal">Close</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-                <script>
-                    $(document).ready(function() {
-                        $('#dataTables-example').dataTable();
-                        $('#dataTables-example2').dataTable();
-                        $('#dataTables-example3').dataTable();
-                    });
-                </script>
-                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-                <script type="text/javascript">
-                    google.load("visualization", "1", {packages: ["geochart"]});
-                    google.setOnLoadCallback(drawRegionsMap);
-                    <% 
-                    Integer totalNumberOfFurnitureInSG = (Integer) session.getAttribute("totalNumberOfFurnitureInSG");
-                    Integer totalNumberOfFurnitureInMS = (Integer) session.getAttribute("totalNumberOfFurnitureInMS");
-                    Integer totalNumberOfFurnitureInID = (Integer) session.getAttribute("totalNumberOfFurnitureInID");
-                    Integer getTotalRetailProductsSoldInSG = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
-                    Integer getTotalRetailProductsSoldInMS = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
-                    Integer getTotalRetailProductsSoldInID = (Integer) session.getAttribute("totalNumberOfFurnitureInID");
-                    
-                    %>
-                    function drawRegionsMap() {
+                        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+                        <script>
+                            $(document).ready(function() {
+                                $('#dataTables-example').dataTable();
+                                $('#dataTables-example2').dataTable();
+                                $('#dataTables-example3').dataTable();
+                            });
+                        </script>
+                        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                        <script type="text/javascript">
+                            google.load("visualization", "1", {packages: ["geochart"]});
+                            google.setOnLoadCallback(drawRegionsMap);
+                            <%
+                                Integer totalNumberOfFurnitureInSG = (Integer) session.getAttribute("totalNumberOfFurnitureInSG");
+                                Integer totalNumberOfFurnitureInMS = (Integer) session.getAttribute("totalNumberOfFurnitureInMS");
+                                Integer totalNumberOfFurnitureInID = (Integer) session.getAttribute("totalNumberOfFurnitureInID");
+                                Integer getTotalRetailProductsSoldInSG = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
+                                Integer getTotalRetailProductsSoldInMS = (Integer) session.getAttribute("getTotalRetailProductsSoldInSG");
+                                Integer getTotalRetailProductsSoldInID = (Integer) session.getAttribute("totalNumberOfFurnitureInID");
 
-                        var data = google.visualization.arrayToDataTable([
-                            ['Country', 'Furniture Sold', 'Retail Products Sold'],
-                            ['Singapore', <%=totalNumberOfFurnitureInSG%>, <%=getTotalRetailProductsSoldInSG%>],
-                            ['Malaysia', <%=totalNumberOfFurnitureInMS%>, <%=getTotalRetailProductsSoldInMS%>],
-                            ['Indonesia', <%=totalNumberOfFurnitureInID%>, <%=getTotalRetailProductsSoldInID%>]
-                        ]);
+                            %>
+                            function drawRegionsMap() {
 
-                        var options = {
-                            region: '035'
-                        };
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Country', 'Furniture Sold', 'Retail Products Sold'],
+                                    ['Singapore', <%=totalNumberOfFurnitureInSG%>, <%=getTotalRetailProductsSoldInSG%>],
+                                    ['Malaysia', <%=totalNumberOfFurnitureInMS%>, <%=getTotalRetailProductsSoldInMS%>],
+                                    ['Indonesia', <%=totalNumberOfFurnitureInID%>, <%=getTotalRetailProductsSoldInID%>]
+                                ]);
 
-                        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+                                var options = {
+                                    region: '035'
+                                };
 
-                        chart.draw(data, options);
-                    }
-                </script>
+                                var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 
-                </body>
-                </html>
+                                chart.draw(data, options);
+                            }
+                        </script>
+
+                        </body>
+                        </html>

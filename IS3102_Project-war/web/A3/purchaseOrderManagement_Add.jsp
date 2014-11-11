@@ -2,18 +2,18 @@
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<% List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    if (purchaseOrders == null) {
-        response.sendRedirect("../PurchaseOrderManagement_Servlet");
-    } else {
-        List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
-        List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <% List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
+                if (purchaseOrders == null) {
+                    response.sendRedirect("../PurchaseOrderManagement_Servlet");
+                } else {
+                    List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
+                    List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 

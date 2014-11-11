@@ -3,13 +3,8 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
-    } else {
-%>
-<html lang="en">
 
+<html lang="en">
     <jsp:include page="../header2.html" />
     <style>
         select{
@@ -55,8 +50,11 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
-            <%
-                try {
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+                } else {
+                    try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -269,6 +267,9 @@
                                 </div>
 
                                 <div class="col-md-8">
+                                    <h3>
+                                        Goods Receipt
+                                    </h3>
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example1">
                                         <thead>
                                             <tr>
@@ -307,7 +308,7 @@
                                                     <%=mps.getFurniture().getSKU()%>
                                                 </td>
                                                 <td>
-                                                    <%= mps.getFurniture().getName() %>
+                                                    <%= mps.getFurniture().getName()%>
                                                 </td>
                                                 <td>
                                                     <%=quantity%>

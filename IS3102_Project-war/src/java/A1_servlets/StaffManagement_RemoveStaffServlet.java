@@ -39,7 +39,8 @@ public class StaffManagement_RemoveStaffServlet extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            out.println(ex);
+            ex.printStackTrace();
+            response.sendRedirect("A1/staffManagement.jsp?errMsg=Unable to delete staff, staff still have roles assigned.");
         }
     }
 

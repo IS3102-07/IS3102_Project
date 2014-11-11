@@ -284,7 +284,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
         try {
             em.flush();
             Query q = em.createQuery("SELECT t FROM ManufacturingFacilityEntity t where t.isDeleted=false");
-            for (ManufacturingFacilityEntity mf : (List<ManufacturingFacilityEntity>)q.getResultList()) {
+            for (ManufacturingFacilityEntity mf : (List<ManufacturingFacilityEntity>) q.getResultList()) {
                 em.refresh(mf);
                 System.out.println("em.refresh(mf); mf.getStoreList().size(): " + mf.getStoreList().size());
                 ManufacturingFacilityEntity i = (ManufacturingFacilityEntity) mf;
@@ -454,31 +454,34 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
                 WarehouseEntity warehouse = new WarehouseEntity(warehouseName, address, telephone, email);
                 if (storeId != -1) {
                     StoreEntity store = em.find(StoreEntity.class, storeId);
-                    warehouse.setStore(store);
-                    warehouse.setRegionalOffice(store.getRegionalOffice());
-                    warehouse.setCountry(store.getCountry());
-                    store.setWarehouse(warehouse);
-                    em.merge(store);
+                    if (store.getWarehouse() == null) {
+                        warehouse.setStore(store);
+                        warehouse.setRegionalOffice(store.getRegionalOffice());
+                        warehouse.setCountry(store.getCountry());
+                        store.setWarehouse(warehouse);
+                        em.merge(store);
+                        em.persist(warehouse);
+                        return warehouse;
+                    }
                 } else if (mfId != -1) {
                     ManufacturingFacilityEntity mf = em.find(ManufacturingFacilityEntity.class, mfId);
-                    warehouse.setManufaturingFacility(mf);
-                    warehouse.setRegionalOffice(mf.getRegionalOffice());
-                    mf.setWarehouse(warehouse);
-                    em.merge(mf);
+                    if (mf.getWarehouse() == null) {
+                        warehouse.setManufaturingFacility(mf);
+                        warehouse.setRegionalOffice(mf.getRegionalOffice());
+                        mf.setWarehouse(warehouse);
+                        em.merge(mf);
+                        em.persist(warehouse);
+                        return warehouse;
+                    }
                 }
-                em.persist(warehouse);
-                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
-                out.println(new Date().toString() + ";" + callerStaffID + ";createWarehouse();" + warehouse.getId() + ";");
-                out.close();
-                return warehouse;
             } else {
                 System.out.println("warehouse name dupicated");
                 return null;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
+            ex.printStackTrace();            
         }
+        return null;
     }
 
     @Override
@@ -558,37 +561,41 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
             return new ArrayList<WarehouseEntity>();
         }
     }
-    
+
     @Override
     public WarehouseEntity getWarehouseEntityBasedOnStaffRole(Long staffId) {
         try {
             Query q = em.createQuery("select s from StaffEntity s where s.id=:staffId");
             q.setParameter("staffId", staffId);
-            StaffEntity staff = (StaffEntity)q.getSingleResult();
+            StaffEntity staff = (StaffEntity) q.getSingleResult();
             List<AccessRightEntity> accessRights = staff.getRoles().get(0).getAccessRightList();
-            if (staff.getRoles().get(0).getName().equals("Manufacturing Facility Manager")){
-                for (AccessRightEntity accessRight:accessRights)
-                    if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getManufacturingFacility() != null)
+            if (staff.getRoles().get(0).getName().equals("Manufacturing Facility Manager")) {
+                for (AccessRightEntity accessRight : accessRights) {
+                    if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getManufacturingFacility() != null) {
                         return accessRight.getManufacturingFacility().getWarehouse();
-            }   
-             else if (staff.getRoles().get(0).getName().equals("Store Manager")){
-                for (AccessRightEntity accessRight1: accessRights)
-                    if (accessRight1.getStaff().getId().equals(staff.getId()) && accessRight1.getStore()!= null)
+                    }
+                }
+            } else if (staff.getRoles().get(0).getName().equals("Store Manager")) {
+                for (AccessRightEntity accessRight1 : accessRights) {
+                    if (accessRight1.getStaff().getId().equals(staff.getId()) && accessRight1.getStore() != null) {
                         return accessRight1.getStore().getWarehouse();
-            } 
-              else if (staff.getRoles().get(0).getName().equals("Warehouse Manager")){
-                for (AccessRightEntity accessRight1: accessRights)
-                    if (accessRight1.getStaff().getId().equals(staff.getId()) && accessRight1.getWarehouse()!= null)
+                    }
+                }
+            } else if (staff.getRoles().get(0).getName().equals("Warehouse Manager")) {
+                for (AccessRightEntity accessRight1 : accessRights) {
+                    if (accessRight1.getStaff().getId().equals(staff.getId()) && accessRight1.getWarehouse() != null) {
                         return accessRight1.getWarehouse();
+                    }
+                }
             }
-                
-        }catch (Exception ex) {
+
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
-          return null;
+        return null;
     }
-    
+
     @Override
     public List<WarehouseEntity> getWarehouseListByRegionalOffice(Long regionalOfficeId) {
         try {
@@ -599,6 +606,7 @@ public class FacilityManagementBean implements FacilityManagementBeanLocal, Faci
         }
         return new ArrayList<>();
     }
+
     @Override
     public List<WarehouseEntity> getMFWarehouseList() {
         try {

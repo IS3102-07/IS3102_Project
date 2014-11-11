@@ -3,25 +3,24 @@
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    String id = request.getParameter("id");
-    if (purchaseOrders == null || id == null) {
-        response.sendRedirect("../PurchaseOrderManagement_Servlet");
-    } else {
-        PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
-        for (int i = 0; i < purchaseOrders.size(); i++) {
-            if (purchaseOrders.get(i).getId() == Integer.parseInt(id)) {
-                purchaseOrder = purchaseOrders.get(i);
-            }
-        }
-
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
+                String id = request.getParameter("id");
+                if (purchaseOrders == null || id == null) {
+                    response.sendRedirect("../PurchaseOrderManagement_Servlet");
+                } else {
+                    PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
+                    for (int i = 0; i < purchaseOrders.size(); i++) {
+                        if (purchaseOrders.get(i).getId() == Integer.parseInt(id)) {
+                            purchaseOrder = purchaseOrders.get(i);
+                        }
+                    }
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -99,9 +98,9 @@
                                                         <th>Item Name</th>
                                                         <th>Item Type</th>
                                                         <th>Price (Per <p style="color: black;">Lot Size)</p></th>
-                                                        <th>Lot Size</th>
-                                                        <th>Lead Time</th>
-                                                    </tr>
+                                                <th>Lot Size</th>
+                                                <th>Lead Time</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
                                                     <%

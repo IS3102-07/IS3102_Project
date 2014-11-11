@@ -508,6 +508,9 @@
                                                     Receipt No
                                                 </td>
                                                 <td>
+                                                    Currency
+                                                </td>
+                                                <td>
                                                     Amount Due
                                                 </td>
                                                 <td>
@@ -528,31 +531,28 @@
                                                 </thead>
                                                 <%
                                                     for (int i = 0; i < member.getPurchases().size(); i++) {
-
-
                                                 %>
                                                 <tr>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getReceiptNo()%>
                                                     </td>
                                                     <td>
+                                                        <%=member.getPurchases().get(i).getCurrency()%>
+                                                    </td>
+                                                    <td>
                                                         <%=member.getPurchases().get(i).getAmountDue()%>
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getAmountPaid()%>
-
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getAmountPaidUsingPoints()%>
-
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getCreatedDate()%>
-
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getLoyaltyPointsDeducted()%>
-
                                                     </td>
                                                     <td> 
                                                         <%

@@ -32,7 +32,7 @@ public interface AccountManagementBeanRemote {
 
     public RoleEntity getRoleById(Long id);
 
-    public boolean editStaff(String callerStaffID, Long staffID, String identificationNo, String name, String phone, String password, String address);
+    public boolean editStaff(String callerStaffID, Long staffID, String identificationNo, String name, String phone, String password, String address, Integer securityQuestion, String securityAnswer);
 
     public boolean editStaff(String callerStaffID, Long staffID, String phone, String password, String address);
 

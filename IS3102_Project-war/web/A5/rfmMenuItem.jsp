@@ -170,7 +170,10 @@
                                                                     <td>
                                                                         <%=member.getName()%>
                                                                     </td>
-                                                                    <td <% if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
+                                                                    <td <% if (memberFrequencyValue.get(i) == 0 && memberMonetaryValue.get(i) == 0) {
+                                                                        %>bgcolor="#ebccd1"<%
+                                                                    }
+                                                                    else if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
                                                                         %>bgcolor="#bce8f1"<%
                                                                         } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
                                                                         %>
@@ -215,7 +218,9 @@
                                                                     <td>
                                                                         <%
                                                                         Integer weightedValue = 0;
-                                                                        if (memberMonetaryValue.get(i) < (averageMemberMonetaryValue/2)) {
+                                                                        if (memberMonetaryValue.get(i) == 0) {
+                                                                            
+                                                                        } else if (memberMonetaryValue.get(i) < (averageMemberMonetaryValue/2)) {
                                                                             weightedValue += 1;
                                                                         } else if (memberMonetaryValue.get(i) > ((averageMemberMonetaryValue / 2) + averageMemberMonetaryValue)) {
                                                                             weightedValue += 3;
@@ -223,7 +228,9 @@
                                                                             weightedValue += 2;
                                                                         }
                                                                         
-                                                                        if (memberFrequencyValue.get(i) <= (averageMemberFrequency / 2)) {
+                                                                        if (memberFrequencyValue.get(i) == 0) {
+                                                                            
+                                                                        } else if (memberFrequencyValue.get(i) <= (averageMemberFrequency / 2)) {
                                                                             weightedValue += 1;
                                                                         } else if (memberFrequencyValue.get(i) > ((averageMemberFrequency / 2) + averageMemberFrequency)) {
                                                                             weightedValue += 3;
@@ -231,7 +238,9 @@
                                                                             weightedValue += 2;
                                                                         }
                                                                         
-                                                                        if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
+                                                                        if (memberFrequencyValue.get(i) == 0 && memberMonetaryValue.get(i) ==0) {
+                                                                            
+                                                                        } else if (memberRecencyValue.get(i) < (averageMemberRecency / 2)) {
                                                                             weightedValue += 3;
                                                                         } else if (memberRecencyValue.get(i) > ((averageMemberRecency / 2) + averageMemberRecency)) {
                                                                             weightedValue += 1;

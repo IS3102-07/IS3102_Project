@@ -1,38 +1,45 @@
-package A7_servlets;
+package A1_servlets;
 
-import InventoryManagement.StoreAndKitchenInventoryManagement.StoreAndKitchenInventoryManagementBeanLocal;
+import CommonInfrastructure.AccountManagement.AccountManagementBeanLocal;
+import CommonInfrastructure.SystemSecurity.SystemSecurityBeanLocal;
+import EntityManager.StaffEntity;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class RetailInventoryControl_RemoveServlet extends HttpServlet {
+public class AccountManagement_SecurityChallengeServlet extends HttpServlet {
 
     @EJB
-    private StoreAndKitchenInventoryManagementBeanLocal simbl;
+    private SystemSecurityBeanLocal systemSecurityBean;
+    private String result;
+    @EJB
+    private AccountManagementBeanLocal accountManagementBean;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            HttpSession session;
+            session = request.getSession();
+            String email = request.getParameter("email");
 
-            String lineItemID = request.getParameter("lineItemID");
-            String storageBinID = request.getParameter("storageBinId");
-            System.out.println("remove servlet storageBinID " + storageBinID);
-            System.out.println("remove servlet lineItemID " + lineItemID);
-
-            if (storageBinID != null && lineItemID != null) {
-                simbl.emptyStorageBin(Long.parseLong(lineItemID), Long.parseLong(storageBinID));
-                response.sendRedirect("RetailInventoryControl_Servlet?goodMsg=Successfully removed all instance of the selected item from storage bin.");
+            boolean ifExist = accountManagementBean.checkStaffEmailExists(email);
+            if (ifExist) {                
+                StaffEntity staff = accountManagementBean.getStaffByEmail(email);
+                session.setAttribute("staffForgetPassword", staff);
+                response.sendRedirect("/IS3102_Project-war/A1/staffForgetPasswordSecurity.jsp?email=" +email);
             } else {
-                response.sendRedirect("A7/retailInventoryControlManagement.jsp?errMsg=Nothing is selected.");
+                result = "?errMsg=Account does not exist.";
+                response.sendRedirect("/IS3102_Project-war/A1/staffForgetPassword.jsp" + result);
             }
-
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
+        } finally {
+            System.out.close();
         }
     }
 

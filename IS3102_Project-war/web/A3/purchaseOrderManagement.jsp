@@ -8,11 +8,7 @@
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="java.util.List"%>
 
-<% List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    if (purchaseOrders == null) {
-        response.sendRedirect("../PurchaseOrderManagement_Servlet");
-    } else {
-%>
+
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -33,9 +29,12 @@
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <%
-                String disable = "";
-                try {
-
+                List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
+                if (purchaseOrders == null) {
+                    response.sendRedirect("../PurchaseOrderManagement_Servlet");
+                } else {
+                    String disable = "";
+                    try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -44,7 +43,7 @@
                             <h1 class="page-header">Purchase Order Management</h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-exchange"></i> Purchase Order Management
+                                    <a href="../PurchaseOrderManagement_Servlet"><i class="icon icon-exchange"></i> Purchase Order Management</a>
                                 </li>
                             </ol>
                         </div>
@@ -110,7 +109,7 @@
                                                                         List<AccessRightEntity> accessList = role.getAccessRightList();
                                                                         for (AccessRightEntity accessRight : accessList) {
                                                                             for (PurchaseOrderEntity PO : purchaseOrders) {
-                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getRegionalOffice() != null && ((accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId()))||(accessRight.getRegionalOffice().getId().equals(PO.getDestination().getRegionalOffice().getId())))) {
+                                                                                if (accessRight.getStaff().getId().equals(staff.getId()) && accessRight.getRegionalOffice() != null && ((accessRight.getRegionalOffice().getId().equals(PO.getSupplier().getRegionalOffice().getId())) || (accessRight.getRegionalOffice().getId().equals(PO.getDestination().getRegionalOffice().getId())))) {
                                                                                     if (!finalListOfPO.contains(PO)) {
                                                                                         finalListOfPO.add(PO);
                                                                                     }
@@ -189,11 +188,11 @@
                                                             <%=date%>
                                                         </td>
                                                         <td>                                                            
-                                                            <%= finalListOfPO.get(i).getSubmittedBy() %>
+                                                            <%= finalListOfPO.get(i).getSubmittedBy()%>
                                                         </td>
                                                         <td>
-                                                            <% SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("dd-MM-yyyy hh:mm"); %>
-                                                            <%= DATE_FORMAT2.format(finalListOfPO.get(i).getCreatedDate()) %> </td>
+                                                            <% SimpleDateFormat DATE_FORMAT2 = new SimpleDateFormat("dd-MM-yyyy hh:mm");%>
+                                                            <%= DATE_FORMAT2.format(finalListOfPO.get(i).getCreatedDate())%> </td>
                                                         <td>
                                                             <%=finalListOfPO.get(i).getStatus()%>
                                                         </td>
@@ -246,7 +245,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

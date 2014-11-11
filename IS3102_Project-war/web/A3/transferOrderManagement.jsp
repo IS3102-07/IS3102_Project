@@ -3,11 +3,7 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
 
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
-    } else {
-%>
+
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -17,7 +13,7 @@
             function updateTO(id) {
                 transferOrderManagement.id.value = id;
                 document.transferOrderManagement.action = "../TransferOrderLineItemManagement_OriginBinItemsServlet";
-                
+
                 document.transferOrderManagement.submit();
             }
             function removeTO() {
@@ -52,8 +48,11 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
-            <%
-                try {
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+                } else {
+                    try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -80,7 +79,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <%                                                                     
+                                    <%
                                         String errMsg = request.getParameter("errMsg");
                                         String goodMsg = request.getParameter("goodMsg");
                                         if (errMsg == null && goodMsg == null) {

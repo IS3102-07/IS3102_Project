@@ -4,22 +4,6 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        pageContext.forward("manufacturingWarehouseManagement_view.jsp");
-    } else {
-        try {
-            String transferOrderID = request.getParameter("id");
-            List<TransferOrderEntity> transferOrders = (List<TransferOrderEntity>) (session.getAttribute("transferOrders"));
-            TransferOrderEntity transferOrder = new TransferOrderEntity();
-            for (int i = 0; i < transferOrders.size(); i++) {
-                if (transferOrders.get(i).getId() == Integer.parseInt(transferOrderID)) {
-                    transferOrder = transferOrders.get(i);
-                }
-            }
-            LineItemEntity lineItem = transferOrder.getLineItem();
-
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -35,7 +19,22 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    pageContext.forward("manufacturingWarehouseManagement_view.jsp");
+                } else {
+                    try {
+                        String transferOrderID = request.getParameter("id");
+                        List<TransferOrderEntity> transferOrders = (List<TransferOrderEntity>) (session.getAttribute("transferOrders"));
+                        TransferOrderEntity transferOrder = new TransferOrderEntity();
+                        for (int i = 0; i < transferOrders.size(); i++) {
+                            if (transferOrders.get(i).getId() == Integer.parseInt(transferOrderID)) {
+                                transferOrder = transferOrders.get(i);
+                            }
+                        }
+                        LineItemEntity lineItem = transferOrder.getLineItem();
 
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -79,8 +78,8 @@
                                                 <%
                                                     List<ItemStorageBinHelper> listOfItems1 = (List<ItemStorageBinHelper>) session.getAttribute("listOfLineItems");
                                                     if (listOfItems1 != null) {
-                                                        for (int i=0; i<listOfItems1.size(); i++) {
-                                                            out.println("<option value='" + listOfItems1.get(i).getSKU()+ "'>" + listOfItems1.get(i).getSKU() + "</option>");
+                                                        for (int i = 0; i < listOfItems1.size(); i++) {
+                                                            out.println("<option value='" + listOfItems1.get(i).getSKU() + "'>" + listOfItems1.get(i).getSKU() + "</option>");
                                                         }
                                                     }
                                                 %>

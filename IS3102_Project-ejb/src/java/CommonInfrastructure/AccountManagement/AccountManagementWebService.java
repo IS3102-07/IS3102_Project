@@ -90,7 +90,14 @@ public class AccountManagementWebService {
         try {
             StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
             CountryEntity country = storeEntity.getCountry();
-            return AccountManagementBeanLocal.registerMember(name, address, DOB, email, phone, country, city, zipCode, password);
+            Boolean result = AccountManagementBeanLocal.registerMember(name, address, DOB, email, phone, country, city, zipCode, password);
+            if (result=false)
+                return false;
+            else {
+                systemSecurityBean.sendActivationEmailForMember(email);
+                return true;
+            }
+                
         } catch (Exception ex) {
             System.out.println("kioskRegisterMember(): Error");
             ex.printStackTrace();

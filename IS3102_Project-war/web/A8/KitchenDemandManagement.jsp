@@ -84,7 +84,7 @@
 
                                         </tbody>
                                     </table>                                                    
-                                    <a href="KitchenMaterialRequirement_GET"><span class="btn btn-primary">Generate Material Requirement</span></a>
+                                    <a href="KitchenMaterialRequirement_GET"><span class="btn btn-primary">Generate Raw Ingredient Requirement</span></a>
                                 </div>                               
 
                             </div>

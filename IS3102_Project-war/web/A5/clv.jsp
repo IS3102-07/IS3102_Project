@@ -207,7 +207,7 @@
                                                     <td>
                                                         <%
                                                         Integer avgMonetaryValue = (Integer) (session.getAttribute("avgMonetaryValue"));
-                                                        out.println(avgMonetaryValue);
+                                                        out.println(df.format(avgMonetaryValue));
                                                         %>
                                                         
                                                     </td>
@@ -276,7 +276,7 @@
                                             </td>
                                             <td>
                                                 <%
-                                                    out.print(totalSalesOfMember);
+                                                    out.print(df.format(totalSalesOfMember));
                                                 %>
                                             </td>
 

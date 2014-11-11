@@ -1,11 +1,6 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
-    } else {
-%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -13,7 +8,11 @@
 
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
-
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    response.sendRedirect("../ManufacturingWarehouseManagement_Servlet");
+                } else {
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -28,7 +27,7 @@
                                     <i class="icon icon-home"></i> <a href="manufacturingWarehouseManagement_view.jsp">Manufacturing Warehouse Management</a>
                                 </li>
                                 <li>
-<i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
+                                    <i class="icon icon-home"></i> <a href="../ManufacturingWarehouseManagement_Servlet?destination=manufacturingWarehouseManagement.jsp&id=<%=warehouseEntity.getId()%>"><%=warehouseEntity.getWarehouseName()%></a>
                                 </li>
                                 <li>
                                     <i class="icon icon-archive"></i><a href="storageBinManagement.jsp"> Storage Bin Management</a>

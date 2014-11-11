@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
  * @author Administrator
  */
 public class SaleForecast_Servlet extends HttpServlet {
-    
+
     @EJB
     private AccountManagementBeanLocal amBean;
     @EJB
@@ -46,11 +46,11 @@ public class SaleForecast_Servlet extends HttpServlet {
     private FacilityManagementBeanLocal fmBean;
     @EJB
     private ItemManagementBeanLocal imBean;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String nextPage = "/A2/sop_index";
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher;
@@ -58,9 +58,9 @@ public class SaleForecast_Servlet extends HttpServlet {
         HttpSession session = request.getSession();
         List<MonthScheduleEntity> scheduleList;
         String target = request.getPathInfo();
-        
+
         switch (target) {
-            
+
             case "/SaleForecast_index_GET":
                 List<RegionalOfficeEntity> regionalOfficeList = fmBean.viewListOfRegionalOffice();
                 if (regionalOfficeList == null) {
@@ -69,7 +69,7 @@ public class SaleForecast_Servlet extends HttpServlet {
                 request.setAttribute("regionalOfficeList", regionalOfficeList);
                 nextPage = "/A2/SaleForecast_index";
                 break;
-            
+
             case "/SaleForecast_index_POST":
                 String storeName = request.getParameter("storeName");
                 StoreEntity store = fmBean.getStoreByName(storeName);
@@ -82,13 +82,13 @@ public class SaleForecast_Servlet extends HttpServlet {
                     nextPage = "/SaleForecast_Servlet/SaleForecast_index_GET";
                 }
                 break;
-            
+
             case "/SaleForecast_schedule_GET":
                 scheduleList = sopBean.getScheduleList();
                 request.setAttribute("scheduleList", scheduleList);
                 nextPage = "/A2/SaleForecast_schedule";
                 break;
-            
+
             case "/SaleForecast_schedule_POST":
                 try {
                     Long schedulelId = Long.parseLong(request.getParameter("scheduleId"));
@@ -98,7 +98,7 @@ public class SaleForecast_Servlet extends HttpServlet {
                 }
                 nextPage = "/SaleForecast_Servlet/SaleForecast_main_GET";
                 break;
-            
+
             case "/SaleForecast_main_GET":
                 try {
                     Long storeId = (long) session.getAttribute("sf_storeId");
@@ -107,29 +107,43 @@ public class SaleForecast_Servlet extends HttpServlet {
                     List<SaleForecastEntity> saleForecastList = new ArrayList<>();
                     for (ProductGroupEntity productGroup : productGroupList) {
                         SaleForecastEntity saleForecast = sfBean.getSalesForecast(storeId, productGroup.getId(), schedulelId);
+                        System.out.println("saleForecast.getId(): " + saleForecast.getId());
                         saleForecastList.add(saleForecast);
                     }
-                    
+
                     store = fmBean.viewStoreEntity(storeId);
                     MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
-                    
+
+                    System.out.println("store: " + store.getName());
+                    System.out.println("schedule: " + schedule.getYear() + schedule.getMonth());
+                    System.out.println("saleForecastList: " + saleForecastList.size());
+                    try {
+                        for (SaleForecastEntity s : saleForecastList) {
+                            System.out.println("s.getId(): " + s.getId());
+                            System.out.println("s.getMethod(): " + s.getMethod());
+                            System.out.println("s.getProductGroup().getName(): " + s.getProductGroup().getName());
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
                     request.setAttribute("store", store);
                     request.setAttribute("schedule", schedule);
                     request.setAttribute("saleForecastList", saleForecastList);
-                    
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 nextPage = "/A2/SaleForecast_main";
-                break;            
-            
+                break;
+
             case "/SaleForecast_main_POST":
                 Long productGroupId = Long.parseLong(request.getParameter("productGroupId"));
                 session.setAttribute("productGroupId", productGroupId);
                 nextPage = "/SaleForecast_Servlet/ViewSaleFigure_GET";
-                break;            
-            
-            case "/editSaleForecast":                
+                break;
+
+            case "/editSaleForecast":
                 System.out.println("editSaleForecast is called.");
                 Long saleForecastId = Long.parseLong(request.getParameter("saleForecastId"));
                 Integer quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -138,16 +152,16 @@ public class SaleForecast_Servlet extends HttpServlet {
                 sfBean.editSaleForecast(saleForecastId, quantity);
                 nextPage = "/SaleForecast_Servlet/SaleForecast_main_GET";
                 break;
-            
+
             case "/ViewSaleFigure_GET":
-                productGroupId = (long) session.getAttribute("productGroupId");                
+                productGroupId = (long) session.getAttribute("productGroupId");
                 Long storeId = (long) session.getAttribute("sf_storeId");
                 Long schedulelId = (long) session.getAttribute("scheduleId");
-                
+
                 ProductGroupEntity productGroup = imBean.getProductGroup(productGroupId);
-                store = fmBean.viewStoreEntity(storeId);                
+                store = fmBean.viewStoreEntity(storeId);
                 MonthScheduleEntity schedule = sopBean.getScheduleById(schedulelId);
-                
+
                 List<SalesFigureEntity> list1;
                 List<SalesFigureEntity> list2;
                 List<SalesFigureEntity> list3;
@@ -159,11 +173,11 @@ public class SaleForecast_Servlet extends HttpServlet {
                     list1 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 3);
                     list2 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 2);
                     list3 = sfBean.getYearlySalesFigureList(storeId, productGroupId, schedule.getYear() - 1);
-                }                
+                }
                 System.out.println("list1.size(): " + list1.size());
                 System.out.println("list2.size(): " + list2.size());
                 System.out.println("list3.size(): " + list3.size());
-                
+
                 request.setAttribute("productGroup", productGroup);
                 request.setAttribute("store", store);
                 request.setAttribute("schedule", schedule);
@@ -172,11 +186,11 @@ public class SaleForecast_Servlet extends HttpServlet {
                 request.setAttribute("saleDate3", list3);
                 nextPage = "/A2/ViewSaleFigure";
                 break;
-            
+
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

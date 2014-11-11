@@ -3,22 +3,6 @@
 <%@page import="EntityManager.PromotionEntity"%>
 <%@page import="EntityManager.RoleEntity"%>
 <%@page import="java.util.List"%>
-<%
-    StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
-    boolean roleCanEditPromo = false;
-    if (staffEntity != null) {
-        List<RoleEntity> roles = staffEntity.getRoles();
-        Long[] approvedRolesID = new Long[]{1L, 2L, 5L, 11L};
-        for (RoleEntity roleEntity : roles) {
-            for (Long ID : approvedRolesID) {
-                if (roleEntity.getId().equals(ID)) {
-                    roleCanEditPromo = true;
-                    break;
-                }
-            }
-        }
-    }
-%>
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -62,6 +46,22 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                StaffEntity staffEntity = (StaffEntity) (session.getAttribute("staffEntity"));
+                boolean roleCanEditPromo = false;
+                if (staffEntity != null) {
+                    List<RoleEntity> roles = staffEntity.getRoles();
+                    Long[] approvedRolesID = new Long[]{1L, 2L, 5L, 11L};
+                    for (RoleEntity roleEntity : roles) {
+                        for (Long ID : approvedRolesID) {
+                            if (roleEntity.getId().equals(ID)) {
+                                roleCanEditPromo = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
@@ -231,7 +231,7 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

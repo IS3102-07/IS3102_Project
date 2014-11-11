@@ -10,29 +10,7 @@
 <%@page import="EntityManager.PurchaseOrderEntity"%>
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
-    System.out.println(purchaseOrders.size());
-    String id = request.getParameter("id");
-    System.out.println(id);
 
-    if (purchaseOrders == null || id == null) {
-        response.sendRedirect("../PurchaseOrderManagement_Servlet");
-    } else {
-        List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
-        System.out.println(activeSuppliers.size());
-
-        List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
-        System.out.println(warehouses.size());
-
-        PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
-        for (int i = 0; i < purchaseOrders.size(); i++) {
-            if (purchaseOrders.get(i).getId() == Integer.parseInt(id)) {
-                purchaseOrder = purchaseOrders.get(i);
-            }
-        }
-
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -77,6 +55,29 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
+            <%
+                List<PurchaseOrderEntity> purchaseOrders = (List<PurchaseOrderEntity>) (session.getAttribute("purchaseOrders"));
+                System.out.println(purchaseOrders.size());
+                String id = request.getParameter("id");
+                System.out.println(id);
+
+                if (purchaseOrders == null || id == null) {
+                    response.sendRedirect("../PurchaseOrderManagement_Servlet");
+                } else {
+                    List<SupplierEntity> activeSuppliers = (List<SupplierEntity>) (session.getAttribute("suppliers"));
+                    System.out.println(activeSuppliers.size());
+
+                    List<WarehouseEntity> warehouses = (List<WarehouseEntity>) (session.getAttribute("warehouses"));
+                    System.out.println(warehouses.size());
+
+                    PurchaseOrderEntity purchaseOrder = new PurchaseOrderEntity();
+                    for (int i = 0; i < purchaseOrders.size(); i++) {
+                        if (purchaseOrders.get(i).getId() == Integer.parseInt(id)) {
+                            purchaseOrder = purchaseOrders.get(i);
+                        }
+                    }
+
+            %>
             <div id="page-wrapper">
                 <div class="container-fluid">
 
@@ -205,7 +206,7 @@
                                     <h3 class="panel-title"> Total Price: <span class="" style="font-weight: bold;"><%
                                         Double price = 0.0;
                                         List<LineItemEntity> listOfLineItems = purchaseOrder.getLineItems();
-                                        if (listOfLineItems.size()==0) {
+                                        if (listOfLineItems.size() == 0) {
                                             out.println(price);
                                         } else {
                                             SupplierEntity supplier = purchaseOrder.getSupplier();
@@ -216,7 +217,7 @@
                                                     if (lineItem.getItem().getSKU().equals(supplierItemInfo.getItem().getSKU())) {
                                                         double qty = lineItem.getQuantity();
                                                         double priceOfOneItem = supplierItemInfo.getCostPrice();
-                                                        double priceOfLineItem = qty /supplierItemInfo.getLotSize() * priceOfOneItem;
+                                                        double priceOfLineItem = qty / supplierItemInfo.getLotSize() * priceOfOneItem;
                                                         price += priceOfLineItem;
                                                     }
                                                 }
@@ -296,7 +297,7 @@
                                                                 <%=supplierItemInfo.getLotSize()%>
                                                             </td>
                                                             <td>
-                                                                <%=lineItem.getQuantity()/supplierItemInfo.getLotSize()%>
+                                                                <%=lineItem.getQuantity() / supplierItemInfo.getLotSize()%>
                                                             </td>
                                                             <td>
                                                                 <%=lineItem.getQuantity()%>
@@ -375,7 +376,7 @@
         </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
         </script>

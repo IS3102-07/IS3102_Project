@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class RetailInventoryControl_Servlet extends HttpServlet {
 
     @EJB
-    private StoreAndKitchenInventoryManagementBeanLocal manufacturingInventoryControlBean;
+    private StoreAndKitchenInventoryManagementBeanLocal sakimbl;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -30,7 +30,7 @@ public class RetailInventoryControl_Servlet extends HttpServlet {
             if (warehouseEntity == null) {
                 response.sendRedirect("ManufacturingWarehouseManagement_Servlet");
             } else {
-                List<ItemStorageBinHelper> itemStorageBinHelpers = manufacturingInventoryControlBean.getItemList(warehouseEntity.getId());
+                List<ItemStorageBinHelper> itemStorageBinHelpers = sakimbl.getItemList(warehouseEntity.getId());
                 System.out.println("Retrieving itemStorageBinHelpers list...");
                 System.out.println("Size of itemStorageBinHelpers: " + itemStorageBinHelpers.size());
                 session.setAttribute("itemStorageBinHelpers", itemStorageBinHelpers);

@@ -2,11 +2,7 @@
 <%@page import="EntityManager.WarehouseEntity"%>
 <%@page import="EntityManager.StorageBinEntity"%>
 <%@page import="java.util.List"%>
-<% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
-    if (warehouseEntity == null) {
-        response.sendRedirect("../RetailWarehouseManagement_Servlet");
-    } else {
-%>
+
 <html lang="en">
 
     <jsp:include page="../header2.html" />
@@ -32,8 +28,11 @@
         </script>
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
-            <%
-                try {
+            <% WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
+                if (warehouseEntity == null) {
+                    response.sendRedirect("../RetailWarehouseManagement_Servlet");
+                } else {
+                    try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -86,7 +85,7 @@
                                                         <tr>
                                                             <th>SKU</th>
                                                             <th>Item Name</th>
-                                                            <th>Storage Bin ID</th>
+                                                            <th>Storage Bin Name</th>
                                                             <th>Bin Type</th>
                                                             <th>Item Quantity</th>
                                                             <th>Item Type</th>
@@ -107,7 +106,7 @@
                                                                 <%=itemStorageBinHelpers.get(i).getItemName()%>
                                                             </td>
                                                             <td>
-                                                                <%=itemStorageBinHelpers.get(i).getStorageBinID()%>
+                                                                <%=itemStorageBinHelpers.get(i).getStorageBinName()%>
                                                             </td>
                                                             <td>
                                                                 <%=itemStorageBinHelpers.get(i).getStorageBinType()%>

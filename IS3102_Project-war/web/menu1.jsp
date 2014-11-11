@@ -84,6 +84,8 @@
                 <%}%>
             </ul>
         </li>
+        <% if (roles.size() != 0) {%>
+
         <li class="dropdown">
             <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="icon icon-group"></i> 
@@ -162,8 +164,7 @@
                 %>                       
             </ul>
 
-
-        </li>
+        </li><%}%>
         <li class="dropdown">
             <a style="color: #C5C5C5;" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon icon-user"></i> <%=staffEntity.getName()%><b class="caret"></b></a>
             <ul class="dropdown-menu">

@@ -1,11 +1,5 @@
 <%@page import="EntityManager.SalesFigureEntity"%>
 <%@page import="java.util.List"%>
-<%
-    List<SalesFigureEntity> salesFigures = (List<SalesFigureEntity>) (session.getAttribute("salesFigures"));
-    if (salesFigures == null) {
-        response.sendRedirect("../HistoricalSalesFigureManagement_Servlet");
-    } else {
-%>
 <html lang="en">
     <jsp:include page="../header2.html" />
     <body>
@@ -19,7 +13,11 @@
         <div id="wrapper">
             <jsp:include page="../menu1.jsp" />
             <%
-                try {
+                List<SalesFigureEntity> salesFigures = (List<SalesFigureEntity>) (session.getAttribute("salesFigures"));
+                if (salesFigures == null) {
+                    response.sendRedirect("../HistoricalSalesFigureManagement_Servlet");
+                } else {
+                    try {
             %>
             <div id="page-wrapper">
                 <div class="container-fluid">
