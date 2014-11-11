@@ -14,6 +14,7 @@
      font-size: 10px;
      text-align: center;       
      white-space: nowrap;
+     padding: 2px;
    }
    </style>
         <div id="wrapper">
