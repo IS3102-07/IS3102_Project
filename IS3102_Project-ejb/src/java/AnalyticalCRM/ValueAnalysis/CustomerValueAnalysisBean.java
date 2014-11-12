@@ -21,12 +21,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
-@Stateful
+@Stateless
 public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal {
 
     @PersistenceContext(unitName = "IS3102_Project-ejbPU")

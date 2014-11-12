@@ -41,6 +41,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         try {
             Query q = em.createQuery("SELECT t FROM MemberEntity t where t.loyaltyCardId=:memberCard");
             q.setParameter("memberCard", memberCard);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             System.out.println("Returned member");
             return memberEntity;
@@ -85,6 +86,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         try {
             LoyaltyTierEntity lowestTier = new LoyaltyTierEntity();
             Query q = em.createQuery("select t from LoyaltyTierEntity t where t.isDeleted=false ORDER BY t.amtOfSpendingRequired ASC");
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             return (LoyaltyTierEntity) q.getResultList().get(0);
         } catch (Exception ex) {
             return null;
@@ -96,6 +98,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         System.out.println("getMemberLoyaltyTier() called");
         try {
             Query q = em.createQuery("select m from MemberEntity m where m.email=:email and m.isDeleted=false");
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             return memberEntity.getLoyaltyTier();
         } catch (NoResultException ex) {
@@ -138,6 +141,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         try {
             Query q = em.createQuery("select m from MemberEntity m where m.email=:email and m.isDeleted=false");
             q.setParameter("email", email);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             StoreEntity storeEntity = em.getReference(StoreEntity.class, storeID);
             memberEntity.setCummulativeSpending((memberEntity.getCummulativeSpending() + amountPaid/storeEntity.getCountry().getExchangeRate()));
@@ -225,6 +229,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         try {
             Query q = em.createQuery("SELECT t FROM LoyaltyTierEntity t where t.tier=:name ORDER BY t.amtOfSpendingRequired ASC");
             q.setParameter("name", name);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             LoyaltyTierEntity loyaltyTierEntity = (LoyaltyTierEntity) q.getSingleResult();
             return loyaltyTierEntity;
         } catch (Exception ex) {
@@ -284,6 +289,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         try {
             Query q = em.createQuery("SELECT m from MemberEntity m where m.email=:email");
             q.setParameter("email", email);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             List<LineItemEntity> shoppingListEntity = memberEntity.getShoppingList();
             return shoppingListEntity;
@@ -299,6 +305,7 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
         try {
             Query q = em.createQuery("SELECT p from QRPhoneSyncEntity p where p.qrCode=:qrCode");
             q.setParameter("qrCode", qrCode);
+             q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             QRPhoneSyncEntity phoneSyncEntity = (QRPhoneSyncEntity) q.getSingleResult();
             if (phoneSyncEntity == null) {
                 return false;

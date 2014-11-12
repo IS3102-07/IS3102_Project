@@ -34,16 +34,18 @@
                     <div class="row">
                         <div class="col-md-12">
 
+
+                            <%
+                                if (pickRequest.getCollectionStatus().equals("Collecting")) {
+                            %>
                             <a href="../PickerCollectedJob_Servlet?pickRequestId=<%=pickRequest.getId()%>">
-                                <%
-                                    if (pickRequest.getCollectionStatus().equals("Collecting")) {
-                                %>
                                 <input type="button" value="<%=queueNo%>"  style="min-height: 250px; font-size: 150px;"  class="btn btn-lg btn-success btn-block">
                             </a>
                             <%} else {%>
-                            <input type="button" value="<%=queueNo%>"  style="min-height: 250px; font-size: 150px;"  class="btn btn-lg btn-primary btn-block">
-                            <% }%>
+                            <a href="#">
+                                <input type="button" value="<%=queueNo%>"  style="min-height: 250px; font-size: 150px;"  class="btn btn-lg btn-primary btn-block">
                             </a>
+                            <% }%>
                         </div>
                     </div>
                 </div>

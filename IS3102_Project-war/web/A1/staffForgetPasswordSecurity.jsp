@@ -19,7 +19,7 @@
         <div role="main" class="main">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">  
-                    <div class="featured-box featured-boxes.login" style="height: 100%;margin-top: 100px;">
+                    <div class="featured-box featured-boxes.login" style="height: 100%;width:100%;margin-top: 100px;">
                         <div class="panel-heading"> 
                             <i class="icon-4x icon icon-unlock-alt"  style="margin-top: 10px;"></i><h6 class="panel-title">Forget Password?</h6>
                         </div>
@@ -28,15 +28,15 @@
                             <%
                                 StaffEntity staff = (StaffEntity) (session.getAttribute("staffForgetPassword"));
                             %>
-                            <div class="container">
+                            <div class="container" style="width:100%;">
                                 <jsp:include page="/displayMessage.jsp" />
                                 <div class="row">
                                     <div class="col-md-12">
 
                                         <div class="row featured-boxes login">
-                                            <div class="col-md-6">
-                                                <div class="featured-box featured-box-secundary default info-content">
-                                                    <div class="box-content">
+                                            <div class="col-md-6" style="width:100%">
+                                                <div class="featured-box featured-box-secundary default info-content" >
+                                                    <div class="box-content" >
                                                         <h4>Forgot Password</h4>
                                                         <%
                                                             if (staff.getSecurityQuestion() != null) {%>
