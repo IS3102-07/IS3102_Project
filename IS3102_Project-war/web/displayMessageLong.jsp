@@ -1,12 +1,6 @@
 <%
-    String errMsg = "";
-    if(request.getParameter("errMsg") != null){
-        errMsg = request.getParameter("errMsg");
-    }
-    String goodMsg = "";
-    if(request.getParameter("goodMsg") != null){
-        goodMsg = request.getParameter("goodMsg");
-    }
+    String errMsg = request.getParameter("errMsg");
+    String goodMsg = request.getParameter("goodMsg");
 %>
 <div class="row">
     <div class="col-lg-12">
