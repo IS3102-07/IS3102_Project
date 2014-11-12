@@ -55,7 +55,7 @@
                             <h1 class="page-header">Loyalty Management</h1>
                             <ol class="breadcrumb">
                                 <li class="active">
-                                    <i class="icon icon-users"></i><a href="../A4/operationalCRM.jsp"> Operational CRM</a>
+                                    <i class="icon icon-users"></i> Operational CRM
                                 </li>
                                 <li class="active">
                                     <i class="icon icon-user"></i> Loyalty Card Management

@@ -337,7 +337,7 @@
                                                 <option value="Ukraine">Ukraine</option>
                                                 <option value="United Arab Erimates">United Arab Emirates</option>
                                                 <option value="United Kingdom">United Kingdom</option>
-                                                <option value="United States of America">United States of America</option>
+                                                <option value="United States">United States of America</option>
                                                 <option value="Uraguay">Uruguay</option>
                                                 <option value="Uzbekistan">Uzbekistan</option>
                                                 <option value="Vanuatu">Vanuatu</option>
@@ -472,21 +472,22 @@
 
                                                             <br/><br/>
 
-                                                            My Points : <%=member.getLoyaltyPoints()%>
+                                                            My Points Balance: <%=member.getLoyaltyPoints()%><br/>
+                                                            My Cummulative Spending :  <%=df.format(member.getCummulativeSpending().doubleValue())%> USD
 
                                                             <div class="progress">
                                                                 <div class="progress-bar progress-bar-success" style="border-bottom-right-radius: 0px;border-top-right-radius: 0px; width: <%=barRemainder * 100%>%;">
-                                                                    <%=df.format(member.getLoyaltyPoints())%>
+                                                                    <%=df.format(member.getCummulativeSpending().doubleValue())%>
                                                                 </div>
                                                                 <div class="progress-bar progress-bar-warning progress-bar-striped" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; width: <%=barPercentage * 100%>%">
-                                                                    <%=df.format(nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue())%>
+                                                                    <%=df.format(nextLoyaltyTier.getAmtOfSpendingRequired() - member.getCummulativeSpending().doubleValue())%>
                                                                 </div>
                                                                 <%
-                                                                    double pointsLeft = nextLoyaltyTier.getAmtOfSpendingRequired() - member.getLoyaltyPoints().doubleValue();
-                                                                    if (pointsLeft < 0) {
+                                                                    double spendingsLeft = nextLoyaltyTier.getAmtOfSpendingRequired() - member.getCummulativeSpending().doubleValue();
+                                                                    if (spendingsLeft < 0) {
                                                                         out.write("");
                                                                     } else {
-                                                                        out.write("<br>Spend " + df.format(pointsLeft) + " USD more to reach the next tier");
+                                                                        out.write("<br>Spend " + df.format(spendingsLeft) + " USD more to reach the next tier");
                                                                     }
                                                                 %>
                                                             </div>
@@ -531,6 +532,8 @@
                                                 </thead>
                                                 <%
                                                     for (int i = 0; i < member.getPurchases().size(); i++) {
+
+
                                                 %>
                                                 <tr>
                                                     <td>
@@ -553,6 +556,7 @@
                                                     </td>
                                                     <td>
                                                         <%=member.getPurchases().get(i).getLoyaltyPointsDeducted()%>
+
                                                     </td>
                                                     <td> 
                                                         <%
