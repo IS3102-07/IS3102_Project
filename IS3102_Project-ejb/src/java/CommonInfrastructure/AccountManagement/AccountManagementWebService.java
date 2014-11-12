@@ -21,6 +21,7 @@ import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -67,7 +68,12 @@ public class AccountManagementWebService {
     @WebMethod
     public List<ItemHelper> getMemberShoppingList(@WebParam(name = "email") String email) {
         try {
-            MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
+            //MemberEntity memberEntity = AccountManagementBeanLocal.getMemberByEmail(email);
+            Query q = em.createQuery("SELECT m from MemberEntity m where m.email=:email");
+            
+            q.setParameter("email", email);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
+            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
             if (memberEntity == null) {
                 return null;
             } else {

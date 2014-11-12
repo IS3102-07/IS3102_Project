@@ -285,21 +285,6 @@ public class LoyaltyAndRewardsBean implements LoyaltyAndRewardsBeanLocal {
     }
 
     @Override
-    public List<LineItemEntity> getMemberShoppingList(String email) {
-        try {
-            Query q = em.createQuery("SELECT m from MemberEntity m where m.email=:email");
-            q.setParameter("email", email);
-            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
-            MemberEntity memberEntity = (MemberEntity) q.getSingleResult();
-            List<LineItemEntity> shoppingListEntity = memberEntity.getShoppingList();
-            return shoppingListEntity;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
     public Boolean tieMemberToSyncRequest(String email, String qrCode) {
         System.out.println("tieMemberToSyncRequest() called");
         try {
