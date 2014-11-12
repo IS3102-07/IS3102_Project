@@ -1633,6 +1633,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
                     if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Furniture")) {
                         numOfTimesPurchased++;
+                        break;
                     }
                 }
             }
@@ -1654,6 +1655,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
                     if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Retail Product")) {
                         numOfTimesPurchased++;
+                        break;
                     }
                 }
             }
@@ -1675,6 +1677,7 @@ public class CustomerValueAnalysisBean implements CustomerValueAnalysisBeanLocal
                 for (int j = 0; j < member.getPurchases().get(i).getItemsPurchased().size(); j++) {
                     if (member.getPurchases().get(i).getItemsPurchased().get(j).getItem().getType().equals("Menu Item")) {
                         numOfTimesPurchased++;
+                        break;
                     }
                 }
             }

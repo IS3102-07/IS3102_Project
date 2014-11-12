@@ -74,13 +74,13 @@
                                     <%
                                         List<MemberEntity> members = (List<MemberEntity>) (session.getAttribute("members"));
                                         DecimalFormat df = new DecimalFormat("#.00");
-                                                        DecimalFormat noDecimal = new DecimalFormat("#");
+                                        DecimalFormat noDecimal = new DecimalFormat("#");
 
                                     %>
                                     <!-- /.table-responsive -->
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            
+
                                             <table class="table">
                                                 <thead>
                                                     <tr>
@@ -194,32 +194,32 @@
 
                                                 </tr>
                                             </table>
-                                                        
-                                                        <table class ="table">
-                                                            <thead>
-                                                                <tr><td></td><th>Estimated Lifetime</th><th>Avg Monetary Value</th><th>LifeTime Value (USD)</th></tr>
-                                                            </thead>
+
+                                            <table class ="table">
+                                                <thead>
+                                                    <tr><td></td><th>Estimated Lifetime</th><th>Avg Monetary Value</th><th>LifeTime Value (USD)</th></tr>
+                                                </thead>
                                                 <tr>
-                                                    <td></td><td><%                                                        
+                                                    <td></td><td><%
                                                         Double getEstimatedCustomerLife = (Double) (session.getAttribute("getEstimatedCustomerLife"));
                                                         out.println(df.format(getEstimatedCustomerLife) + " years");
                                                         %></td>
                                                     <td>
                                                         <%
-                                                        Integer avgMonetaryValue = (Integer) (session.getAttribute("avgMonetaryValue"));
-                                                        out.println(df.format(avgMonetaryValue));
+                                                            Integer avgMonetaryValue = (Integer) (session.getAttribute("avgMonetaryValue"));
+                                                            out.println(df.format(avgMonetaryValue));
                                                         %>
-                                                        
+
                                                     </td>
                                                     <td>
-                                                    
-                                                    <% 
-                                                    Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
-                                                    %>
-                                                    <p id="lifeTimeValue">
-                                                    <%
-                                                    out.print(df.format(averageMemberMonetaryValue * getEstimatedCustomerLife * 0.2));
-                                                    %></p>
+
+                                                        <%
+                                                            Integer averageMemberMonetaryValue = (Integer) session.getAttribute("averageMemberMonetaryValue");
+                                                        %>
+                                                        <p id="lifeTimeValue">
+                                                            <%
+                                                                out.print(df.format(averageMemberMonetaryValue * getEstimatedCustomerLife * 0.2));
+                                                            %></p>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -244,7 +244,6 @@
                                     </thead>
                                     <tbody>
                                         <%
-
                                             if (members != null) {
                                                 for (int i = 0; i < members.size(); i++) {
                                                     MemberEntity member = members.get(i);
@@ -265,13 +264,16 @@
                                                 <%
                                                     Double totalSalesOfMember = (double) 0;
                                                     for (int j = 0; j < member.getPurchases().size(); j++) {
-                                                        totalSalesOfMember += member.getPurchases().get(j).getAmountDue();
+                                                        Double exchangeRate = member.getPurchases().get(j).getStore().getCountry().getExchangeRate();
+                                                        Double amountDue = member.getPurchases().get(j).getAmountDue();
+                                                        Double amountDueInUSD = amountDue / exchangeRate;
+                                                        totalSalesOfMember += amountDueInUSD;
                                                     }
-                                                    if (member.getPurchases().size()==0)
+                                                    if (member.getPurchases().size() == 0) {
                                                         out.println(0.00);
-                                                    
-                                                    else
-                                                    out.print(df.format(totalSalesOfMember / member.getPurchases().size()));
+                                                    } else {
+                                                        out.print(df.format(totalSalesOfMember / member.getPurchases().size()));
+                                                    }
                                                 %>
                                             </td>
                                             <td>
@@ -337,7 +339,7 @@
 </form>
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#dataTables-example').dataTable();
     });
 
@@ -347,8 +349,8 @@
             document.getElementById("profitMargin").value--;
             var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value / 100) * <%=customerRetentionRate%>;
             document.getElementById("acquiredYearLTV").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
-            var lifeTimeValue = (document.getElementById("profitMargin").value /100) * <%=getEstimatedCustomerLife * averageMemberMonetaryValue%>;
-            document.getElementById("lifeTimeValue").innerHTML = parseFloat(Math.round(lifeTimeValue*100) / 100).toFixed(2);
+            var lifeTimeValue = (document.getElementById("profitMargin").value / 100) * <%=getEstimatedCustomerLife * averageMemberMonetaryValue%>;
+            document.getElementById("lifeTimeValue").innerHTML = parseFloat(Math.round(lifeTimeValue * 100) / 100).toFixed(2);
         }
     }
     function plus() {
@@ -356,8 +358,8 @@
         document.getElementById("profitMargin").value++;
         var acquiredYearLTV = <%=averageOrdersPerAcquiredYear * averageOrderPriceInAcquiredYear%> * (document.getElementById("profitMargin").value / 100) * <%=customerRetentionRate%>;
         document.getElementById("acquiredYearLTV").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
-        var lifeTimeValue = (document.getElementById("profitMargin").value /100) * <%=getEstimatedCustomerLife * averageMemberMonetaryValue%>;
-            document.getElementById("lifeTimeValue").innerHTML = parseFloat(Math.round(lifeTimeValue*100)/100).toFixed(2);
+        var lifeTimeValue = (document.getElementById("profitMargin").value / 100) * <%=getEstimatedCustomerLife * averageMemberMonetaryValue%>;
+        document.getElementById("lifeTimeValue").innerHTML = parseFloat(Math.round(lifeTimeValue * 100) / 100).toFixed(2);
     }
 
     function minus2() {
@@ -366,7 +368,7 @@
             document.getElementById("profitMargin2").value--;
             var acquiredYearLTV = <%=averageOrdersPerRetainedMember * averageOrderPriceForRetainedMembers%> * (document.getElementById("profitMargin2").value / 100) * <%=getRetainedCustomerRetentionRate%>;
             document.getElementById("acquiredYearLTV2").innerHTML = parseFloat(Math.round(acquiredYearLTV * 100) / 100).toFixed(2);
-            
+
         }
     }
     function plus2() {
