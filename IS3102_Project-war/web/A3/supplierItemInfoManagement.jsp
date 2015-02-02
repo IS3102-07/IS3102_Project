@@ -190,7 +190,7 @@
                                                                 SKU:&nbsp;
                                                             </td>
                                                             <td>
-                                                                <input id="auto" class="form-control" name="sku" type="text" required/>
+                                                                <input title="To see the list of items, please go to Corporate Management->Item Management" id="auto" class="form-control" name="sku" type="text" required/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -260,18 +260,18 @@
         </div>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#dataTables-example').dataTable();
             });
 
-            $(".btnAdd").click(function() {
+            $(".btnAdd").click(function () {
                 $("html, body").animate({scrollTop: $(document).height()}, "slow");
-                $("#addItemPricingForm").show("slow", function() {
+                $("#addItemPricingForm").show("slow", function () {
                 });
             });
-            $(function() {
+            $(function () {
                 var array1 = [];
-                $.get('../SKU_ajax_servlet/*', function(responseText) {
+                $.get('../SKU_ajax_servlet/*', function (responseText) {
                     var arr = responseText.trim().split(';');
                     arr.pop();
                     for (var i = 0; i < arr.length; i++) {
@@ -280,10 +280,19 @@
                 });
 
                 $("#auto").autocomplete({source: array1});
+                $(function () {
+                    $(document).tooltip();
+                });
             });
 
         </script>
 
+        <style>
+            label {
+                display: inline-block;
+                width: 5em;
+            }
+        </style>
     </body>
 
 </html>

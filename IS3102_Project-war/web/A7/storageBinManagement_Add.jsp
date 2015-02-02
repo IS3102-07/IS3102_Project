@@ -45,10 +45,10 @@
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select  class="form-control" name="type" required="true">
-                                        <option>Pallet</option>
-                                        <option>Shelf</option>
-                                        <option>Furniture Marketplace</option>
-                                        <option>Retail Outlet</option>
+                                        <option>Pallet (Warehouse)</option>
+                                        <option>Shelf (Warehouse)</option>
+                                        <option>Furniture Marketplace (Store)</option>
+                                        <option>Retail Outlet (Store)</option>
                                         <option>Kitchen</option>
                                         <option>Inbound</option>
                                         <option>Outbound</option>
