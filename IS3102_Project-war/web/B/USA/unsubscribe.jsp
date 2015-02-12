@@ -2,7 +2,7 @@
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
 <html> <!--<![endif]-->
-    <jsp:include page="/B/header.html" />
+    <jsp:include page="header.html" />
     <body>
 
         <jsp:include page="menu2.jsp" />
@@ -24,7 +24,7 @@
                         You will be redirected to our home page in 5 seconds . . .
                         <script type="text/JavaScript">
                             <!--
-                            setTimeout("location.href = 'http://localhost:8080/IS3102_Project-war/B/index.jsp';",5000);
+                            setTimeout("location.href = '../index.jsp';",5000);
                             -->
                         </script>
                     </div>

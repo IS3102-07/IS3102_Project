@@ -3,7 +3,7 @@
 <%@page import="net.tanesha.recaptcha.ReCaptchaImpl"%>
 <%@page import="EntityManager.MemberEntity"%>
 <html> <!--<![endif]-->
-    <jsp:include page="/B/header.html" />
+    <jsp:include page="header.html" />
     <body>
         <script>
             function validatePassword() {
@@ -54,7 +54,7 @@
                                         <%
                                             if (member.getSecurityQuestion() != null) {%>
                                         <h5>Security Challenge Question</h5>
-                                        <form action="/IS3102_Project-war/ECommerce_SendResetPasswordServlet">
+                                        <form action="../../ECommerce_SendResetPasswordServlet">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">

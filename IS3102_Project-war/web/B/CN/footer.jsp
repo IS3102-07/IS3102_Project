@@ -3,7 +3,7 @@
     <script>
         function addToSubscription() {
             
-            document.subscriptionManagement.action = "/IS3102_Project-war/ECommerce_NewsletterSubscribeServlet";
+            document.subscriptionManagement.action = "../../ECommerce_NewsletterSubscribeServlet";
             document.subscriptionManagement.submit();
         }
     </script>
@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-md-1">
                     <a href="index.html" class="logo">
-                        <img alt="Island Furniture" class="img-responsive" src="/IS3102_Project-war/img/logo-footer.png">
+                        <img alt="Island Furniture" class="img-responsive" src="../../img/logo-footer.png">
                     </a>
                 </div>
                 <div class="col-md-7">
@@ -70,7 +70,7 @@
                 <div class="col-md-4">
                     <nav id="sub-menu">
                         <ul>
-                            <li><a href="/IS3102_Project-war/B/selectCountry.jsp">更改位置 (Change Location)</a></li>
+                            <li><a href="../selectCountry.jsp">更改位置 (Change Location)</a></li>
                         </ul>
                     </nav>
                 </div>

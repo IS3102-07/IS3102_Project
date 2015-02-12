@@ -34,7 +34,7 @@
             }
 
             function pdpaWindow() {
-                var myWindow = window.open("http://localhost:8080/IS3102_Project-war/B/pdpa.html");
+                var myWindow = window.open("pdpa.html");
             }
         </script>
         <jsp:include page="menu2.jsp" />
@@ -75,7 +75,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div id="overview" class="tab-pane active">
-                                    <form role="form" action="/IS3102_Project-war/ECommerce_MemberEditProfileServlet" onsubmit="return validatePassword()">
+                                    <form role="form" action="../ECommerce_MemberEditProfileServlet" onsubmit="return validatePassword()">
                                         <h4>Personal Information</h4>
                                         <div class="form-group">
                                             <label>Name</label>

@@ -26,7 +26,7 @@
     }
 %>
 <html> <!--<![endif]-->
-    <jsp:include page="/B/header.html" />
+    <jsp:include page="header.html" />
     <body>
         <%
             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
@@ -79,7 +79,7 @@
                             <div class="col-md-6">
                                 <div>
                                     <div class="thumbnail">
-                                        <img alt="" class="img-responsive img-rounded" src="<%=furniture.getImageURL()%>">
+                                        <img alt="" class="img-responsive img-rounded" src="../../..<%=furniture.getImageURL()%>">
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                                                 if (displayWishlistOption == true) {
                                             %>
 
-                                    <a href="/IS3102_Project-war/ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                    <a href="../../ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                         <input type="button" name="btnEdit" class="btn btn-primary" id="<%=furniture.getSKU()%>" value="Add To Wishlist"/>
                                     </a>
                                     <%
@@ -130,13 +130,13 @@
                                         Width: <%=furniture.getWidth()%>
                                     </p>
                                     <div class="product_meta">
-                                        <span class="posted_in">Category: <a rel="tag" href="/IS3102_Project-war/ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode(furniture.getCategory())%>"><%=furniture.getCategory()%></a></span>
+                                        <span class="posted_in">Category: <a rel="tag" href="../../ECommerce_FurnitureCategoryServlet?cat=<%=URLEncoder.encode(furniture.getCategory())%>"><%=furniture.getCategory()%></a></span>
                                     </div>
                                     <br/><br/>
 
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <form action="/IS3102_Project-war/ECommerce_StockAvailability">
+                                            <form action="../../ECommerce_StockAvailability">
                                                 View Item Availability<br/>
                                                 <select style="color: black;" name="storeID">
                                                     <option> </option>

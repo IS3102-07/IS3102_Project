@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div>
                                     <div class="thumbnail">
-                                        <img alt="" class="img-responsive img-rounded" src="<%=retailProduct.getImageURL()%>">
+                                        <img alt="" class="img-responsive img-rounded" src="../..<%=retailProduct.getImageURL()%>">
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                                 if (displayWishlistOption == true) {
                                             %>
 
-                                    <a href="/IS3102_Project-war/ECommerce_AddFurnitureToListServlet?SKU=<%=retailProduct.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                    <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProduct.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                         <input type="button" name="btnEdit" class="btn btn-primary" id="<%=retailProduct.getSKU()%>" value="Add To Wishlist"/>
                                     </a>
                                     <%

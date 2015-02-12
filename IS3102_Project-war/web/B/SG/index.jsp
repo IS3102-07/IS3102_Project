@@ -2,29 +2,31 @@
 <!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
 <!--[if gt IE 9]><!-->	
+
 <jsp:include page="checkCountry.jsp" />
 <%String URLprefix = (String) session.getAttribute("URLprefix");%>
 <html> <!--<![endif]-->
-    <jsp:include page="/B/header.html" />
+    <jsp:include page="header.html" />
     <body>
-
+<!-- ttrtrt -->
         <div class="body">
             <jsp:include page="menu2.jsp" />
-
+           
+            
             <div role="main" class="main">
                 <div class="slider-container">
                     <div class="slider" id="revolutionSlider">
                         <ul>
                             <li data-transition="fade" data-slotamount="13" data-masterspeed="300" >
 
-                                <img src="/IS3102_Project-war/img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                                <img src="../img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
 
                                 <div class="tp-caption sft stb visible-lg"
                                      data-x="72"
                                      data-y="180"
                                      data-speed="300"
                                      data-start="1000"
-                                     data-easing="easeOutExpo"><img src="/IS3102_Project-war/img/slides/slide-title-border.png" alt=""></div>
+                                     data-easing="easeOutExpo"><img src="../../img/slides/slide-title-border.png" alt=""></div>
 
                                 <div class="tp-caption top-label lfl stl"
                                      data-x="132"
@@ -38,7 +40,7 @@
                                      data-y="180"
                                      data-speed="300"
                                      data-start="1000"
-                                     data-easing="easeOutExpo"><img src="/IS3102_Project-war/img/slides/slide-title-border.png" alt=""></div>
+                                     data-easing="easeOutExpo"><img src="../../img/slides/slide-title-border.png" alt=""></div>
 
                                 <div class="tp-caption main-label sft stb"
                                      data-x="30"
@@ -59,35 +61,35 @@
                                      data-y="248"
                                      data-speed="500"
                                      data-start="2500"
-                                     data-easing="easeOutBack"><img src="/IS3102_Project-war/img/slides/slide-concept-2-1.png" alt=""></div>
+                                     data-easing="easeOutBack"><img src="../../img/slides/slide-concept-2-1.png" alt=""></div>
 
                                 <div class="tp-caption sfb"
                                      data-x="850"
                                      data-y="200"
                                      data-speed="400"
                                      data-start="3000"
-                                     data-easing="easeOutBack"><img src="/IS3102_Project-war/img/slides/slide-concept-2-2.png" alt=""></div>
+                                     data-easing="easeOutBack"><img src="../../img/slides/slide-concept-2-2.png" alt=""></div>
 
                                 <div class="tp-caption sfb"
                                      data-x="820"
                                      data-y="170"
                                      data-speed="700"
                                      data-start="3150"
-                                     data-easing="easeOutBack"><img src="/IS3102_Project-war/img/slides/slide-concept-2-3.png" alt=""></div>
+                                     data-easing="easeOutBack"><img src="../../img/slides/slide-concept-2-3.png" alt=""></div>
 
                                 <div class="tp-caption sfb"
                                      data-x="770"
                                      data-y="130"
                                      data-speed="1000"
                                      data-start="3250"
-                                     data-easing="easeOutBack"><img src="/IS3102_Project-war/img/slides/slide-concept-2-4.png" alt=""></div>
+                                     data-easing="easeOutBack"><img src="../../img/slides/slide-concept-2-4.png" alt=""></div>
 
                                 <div class="tp-caption sfb"
                                      data-x="500"
                                      data-y="80"
                                      data-speed="600"
                                      data-start="3450"
-                                     data-easing="easeOutExpo"><img src="/IS3102_Project-war/img/slides/slide-concept-2-5.png" alt=""></div>
+                                     data-easing="easeOutExpo"><img src="../../img/slides/slide-concept-2-5.png" alt=""></div>
 
                                 <div class="tp-caption blackboard-text lfb "
                                      data-x="530"
@@ -112,14 +114,14 @@
                             </li>
                             <li data-transition="fade" data-slotamount="5" data-masterspeed="1000" >
 
-                                <img src="img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                                <img src="../img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
 
                                 <div class="tp-caption fade"
                                      data-x="50"
                                      data-y="100"
                                      data-speed="1500"
                                      data-start="500"
-                                     data-easing="easeOutExpo"><img src="/IS3102_Project-war/img/slides/slide-concept.png" alt=""></div>
+                                     data-easing="easeOutExpo"><img src="../../img/slides/slide-concept.png" alt=""></div>
 
                                 <div class="tp-caption blackboard-text fade "
                                      data-x="180"
@@ -362,14 +364,15 @@
                 <jsp:include page="footer.html" />
             </div>
             <!-- Theme Initializer -->
-            <script src="/IS3102_Project-war/js/theme.plugins.js"></script>
-            <script src="/IS3102_Project-war/js/theme.js"></script>
+            <script src="../../js/theme.plugins.js"></script>
+            <script src="../../js/theme.js"></script>
 
             <!-- Current Page JS -->
-            <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-            <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-            <script src="/IS3102_Project-war/vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-            <script src="/IS3102_Project-war/js/views/view.home.js"></script>   
+            <script src="../../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+            <script src="../../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+            <script src="../../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+            <script src="../../js/views/view.home.js"></script>   
         </div>
+
     </body>
 </html>

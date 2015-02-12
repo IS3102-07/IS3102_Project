@@ -24,7 +24,7 @@
                         You will be redirected to our home page in 5 seconds . . .
                         <script type="text/JavaScript">
                             <!--
-                            setTimeout("location.href = 'http://localhost:8080/IS3102_Project-war/B/index.jsp';",5000);
+                            setTimeout("location.href = 'index.jsp';",5000);
                             -->
                         </script>
                     </div>

@@ -49,7 +49,7 @@
                                     <div class="box-content">
                                         <h4>I'm a Returning Customer</h4>
 
-                                        <form action="/IS3102_Project-war/ECommerce_MemberLoginServlet">
+                                        <form action="../ECommerce_MemberLoginServlet">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">
@@ -80,7 +80,7 @@
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
                                         <h4>Register An Account</h4>
-                                        <form action="/IS3102_Project-war/ECommerce_MemberRegisterServlet" onsubmit="return validatePassword()">
+                                        <form action="../ECommerce_MemberRegisterServlet" onsubmit="return validatePassword()">
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">

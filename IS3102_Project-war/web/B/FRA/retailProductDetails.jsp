@@ -26,7 +26,7 @@
     }
 %>
 <html> <!--<![endif]-->
-    <jsp:include page="/B/header.html" />
+    <jsp:include page="header.html" />
     <body>
         <%
             List<RetailProductEntity> retailProducts = (List<RetailProductEntity>) (session.getAttribute("retailProducts"));
@@ -79,7 +79,7 @@
                             <div class="col-md-6">
                                 <div>
                                     <div class="thumbnail">
-                                        <img alt="" class="img-responsive img-rounded" src="<%=retailProduct.getImageURL()%>">
+                                        <img alt="" class="img-responsive img-rounded" src="../../..<%=retailProduct.getImageURL()%>">
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                                                 if (displayWishlistOption == true) {
                                             %>
 
-                                    <a href="/IS3102_Project-war/ECommerce_AddFurnitureToListServlet?SKU=<%=retailProduct.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                    <a href="../../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProduct.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                         <input type="button" name="btnEdit" class="btn btn-primary" id="<%=retailProduct.getSKU()%>" value="Add To Wishlist"/>
                                     </a>
                                     <%
@@ -136,7 +136,7 @@
 
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <form action="/IS3102_Project-war/ECommerce_StockAvailability">
+                                            <form action="../../ECommerce_StockAvailability">
                                                 View Item Availability<br/>
                                                 <select style="color: black;" name="storeID">
                                                     <option> </option>

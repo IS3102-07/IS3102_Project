@@ -59,7 +59,7 @@
                                             <span class="product-thumb-info-act">                                                
                                                 <span class="product-thumb-info-act-left"><a href="retailProductDetails.jsp?sku=<%=retailProducts.get(i).getSKU()%>"  style="color: white"><em>View Details</em></a></span>
                                             </span>
-                                            <img alt="" class="img-responsive" src="<%=retailProducts.get(i).getImageURL()%>">
+                                            <img alt="" class="img-responsive" src="../..<%=retailProducts.get(i).getImageURL()%>">
                                         </span>
 
                                         <span class="product-thumb-info-content">
@@ -86,7 +86,7 @@
                                             if (displayWishlistOption == true) {
                                         %>
 
-                                        <a href="/IS3102_Project-war/ECommerce_AddFurnitureToListServlet?SKU=<%=retailProducts.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProducts.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                             <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=retailProducts.get(i).getSKU()%>" value="Add To Wishlist"/>
                                         </a>
                                         <%

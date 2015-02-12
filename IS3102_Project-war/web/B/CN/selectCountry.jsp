@@ -3,7 +3,7 @@
 <!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
 <!--[if gt IE 9]><!-->	
 <html> <!--<![endif]-->
-    <jsp:include page="/B/header.html" />
+    <jsp:include page="header.html" />
     <body >
 
         <div class="body">
@@ -11,7 +11,7 @@
 
             <div role="main" class="main">
 
-                <section class="parallax" data-stellar-background-ratio="0.5" style="background-image: url(img/map.JPG); ">
+                <section class="parallax" data-stellar-background-ratio="0.5" style="background-image: url(../img/map.JPG); ">
                     <div class="container">
 
                         <div class="container" >
@@ -21,22 +21,22 @@
                                     <div class="row">
                                         <div class="col-md-3" >
                                             <h1 style="color: white">EUROPE</h1>
-                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=France"><h3>France</h3></a>
+                                            <a href="../../ECommerce_SelectCountry?Country=France"><h3>France</h3></a>
                                         </div>
                                         <div class="col-md-3" >
                                             <h1 style="color: white">America</h1>
-                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=USA"><h3>USA</h3></a>
+                                            <a href="../../ECommerce_SelectCountry?Country=USA"><h3>USA</h3></a>
                                         </div>
                                         <div class="col-md-3" >
                                             <h1 style="color: white">ASIA</h1>
-                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=Singapore"><h3>Singapore</h3></a>
-                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=Indonesia"><h3>Indonesia</h3></a>
-                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=Malaysia"><h3>Malaysia</h3></a>
-                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=China"><h3>China</h3></a>
+                                            <a href="../../ECommerce_SelectCountry?Country=Singapore"><h3>Singapore</h3></a>
+                                            <a href="../../ECommerce_SelectCountry?Country=Indonesia"><h3>Indonesia</h3></a>
+                                            <a href="../../ECommerce_SelectCountry?Country=Malaysia"><h3>Malaysia</h3></a>
+                                            <a href="../../ECommerce_SelectCountry?Country=China"><h3>China</h3></a>
                                         </div>
                                         <div class="col-md-3" >
                                             <h1 style="color: white">Global</h1>
-                                            <a href="/IS3102_Project-war/ECommerce_SelectCountry?Country=International"><h3>International</h3></a>
+                                            <a href="../../ECommerce_SelectCountry?Country=International"><h3>International</h3></a>
                                         </div>
                                     </div>
                                 </div>
@@ -65,17 +65,17 @@
                         </div>
                     </div>
                 </section>
-                <jsp:include page="footer.jsp" />
+                <jsp:include page="footer.html" />
             </div>
             <!-- Theme Initializer -->
-            <script src="/IS3102_Project-war/js/theme.plugins.js"></script>
-            <script src="/IS3102_Project-war/js/theme.js"></script>
+            <script src="../../js/theme.plugins.js"></script>
+            <script src="../../js/theme.js"></script>
 
             <!-- Current Page JS -->
-            <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-            <script src="/IS3102_Project-war/vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-            <script src="/IS3102_Project-war/vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-            <script src="/IS3102_Project-war/js/views/view.home.js"></script>   
+            <script src="../../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+            <script src="../../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+            <script src="../../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+            <script src="../../js/views/view.home.js"></script>    
         </div>
     </body>
 </html>
