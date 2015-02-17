@@ -230,8 +230,8 @@
                 }
                 if (roleCanView) {
             %>
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#MRP" style="color: #C5C5C5;">
+            <!--<li>
+                <a href="javascript:;" data-toggle="collapse" data-target="#MRP" style="color: #C5C5C5;" >
                     <i class="icon icon-book"></i> MRP <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="MRP" class="collapse">
@@ -254,7 +254,7 @@
                     </li>
 
                 </ul>
-            </li>
+            </li>-->
             <% }
                 approvedRolesID = new Long[]{1L, 2L, 3L, 4L, 7L, 8L, 11L};
                 roleCanView = false;
@@ -359,8 +359,8 @@
                 }
                 if (roleCanView) {
             %>
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#Kitchen" style="color: #C5C5C5;">
+           <!-- <li>
+                <a href="javascript:;" data-toggle="collapse" data-target="#Kitchen" style="color: #C5C5C5;" >
                     <i class="icon icon-book"></i> Kitchen Management <i class="icon icon-caret-down"></i>
                 </a>
                 <ul id="Kitchen" class="collapse">
@@ -368,7 +368,7 @@
                         <a href="../KitchenManagement_servlet/KitchenSaleForecast_index_GET">Kitchen Requirement Planning</a>
                     </li>                                
                 </ul>
-            </li>
+            </li>-->
 
             <%}
                 approvedRolesID = new Long[]{1L, 2L, 4L, 5L, 11L, 10L};
@@ -445,7 +445,7 @@
                 }
                 if (roleCanView) {
             %>
-            <li>
+          <!--  <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#analyticalCRM" style="color: #C5C5C5;">
                     <i class="icon icon-bar-chart-o"></i> Analytical CRM <i class="icon icon-caret-down"></i>
                 </a>
@@ -454,7 +454,7 @@
                         <a href="../A5/analytical.jsp">Analytics</a>
                     </li>
                 </ul>
-            </li>
+            </li>-->
             <% }
                 approvedRolesID = new Long[]{1L, 6L, 11L};
                 roleCanView = false;

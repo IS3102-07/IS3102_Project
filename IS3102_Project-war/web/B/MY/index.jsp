@@ -112,7 +112,7 @@
                             </li>
                             <li data-transition="fade" data-slotamount="5" data-masterspeed="1000" >
 
-                                <img src="img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                                <img src="../../img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
 
                                 <div class="tp-caption fade"
                                      data-x="50"
@@ -362,14 +362,14 @@
                 <jsp:include page="footer.html" />
             </div>
             <!-- Theme Initializer -->
-            <script src="../js/theme.plugins.js"></script>
-            <script src="../js/theme.js"></script>
+            <script src="../../js/theme.plugins.js"></script>
+            <script src="../../js/theme.js"></script>
 
             <!-- Current Page JS -->
-            <script src="../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-            <script src="../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
-            <script src="../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
-            <script src="../js/views/view.home.js"></script>   
+            <script src="../../vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+            <script src="../../vendor/rs-plugin/js/jquery.themepunch.revolution.js"></script>
+            <script src="../../vendor/circle-flip-slideshow/js/jquery.flipshow.js"></script>
+            <script src="../../js/views/view.home.js"></script>    
         </div>
     </body>
 </html>

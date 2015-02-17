@@ -2220,7 +2220,7 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-    <security-constraint>
+<!--    <security-constraint>
         <web-resource-collection>
             <web-resource-name>Viewpoint Secure URLs</web-resource-name>
             <url-pattern>/A1/staffLogin.jsp</url-pattern>
@@ -2235,7 +2235,7 @@
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
-    </security-constraint>
+    </security-constraint>-->
     <welcome-file-list>
         <welcome-file>Workspace_Servlet</welcome-file>
     </welcome-file-list>

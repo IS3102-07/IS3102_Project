@@ -118,7 +118,6 @@
                                                     <input type="submit" value="Register" class="btn btn-primary">
                                                 </div>
                                             </div>
-
                                         </form>
                                     </div>
                                 </div>

@@ -112,7 +112,7 @@
                             </li>
                             <li data-transition="fade" data-slotamount="5" data-masterspeed="1000" >
 
-                                <img src="img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                                <img src="../../img/slides/slide-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
 
                                 <div class="tp-caption fade"
                                      data-x="50"
