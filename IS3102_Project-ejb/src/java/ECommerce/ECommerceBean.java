@@ -25,8 +25,8 @@ public class ECommerceBean implements ECommerceBeanLocal {
     FeedbackEntity feedback;
 
     String emailServerName = "mailauth.comp.nus.edu.sg";
-    String emailFromAddress = "a0097735@comp.nus.edu.sg";
-    String toEmailAddress = "a0097735@comp.nus.edu.sg";
+    String emailFromAddress = "a0105466@comp.nus.edu.sg";
+    String toEmailAddress = "a0105466@comp.nus.edu.sg";
     String mailer = "JavaMailer";
 
     @Override
