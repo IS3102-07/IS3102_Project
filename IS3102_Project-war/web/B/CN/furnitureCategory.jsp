@@ -7,12 +7,12 @@
 <%@page import="EntityManager.MemberEntity"%>
 <jsp:include page="checkCountry.jsp" />
 <%
-    Boolean displayWishlistOption = false;
+    Boolean displayShoppingCartOption = false;
     MemberEntity member = (MemberEntity) (session.getAttribute("member"));
     if (member == null) {
-        displayWishlistOption = false;
+        displayShoppingCartOption = false;
     } else {
-        displayWishlistOption = true;
+        displayShoppingCartOption = true;
     }
     String category = URLDecoder.decode(request.getParameter("cat"));
     if (category == null) {
@@ -100,7 +100,7 @@
 
                                         </span>
                                         <%
-                                            if (displayWishlistOption == true) {
+                                            if (displayShoppingCartOption == true) {
                                         %>
 
                                         <a href="../../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
