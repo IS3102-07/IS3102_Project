@@ -89,10 +89,11 @@
                                         <%
                                             if (displayWishlistOption == true) {
                                         %>
-
-                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Wishlist"/>
-                                        </a>
+                                        <!--
+                                                                                <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                                                                    <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Wishlist"/>
+                                                                                </a>
+                                        -->
                                         <%
                                             }
                                         %>
