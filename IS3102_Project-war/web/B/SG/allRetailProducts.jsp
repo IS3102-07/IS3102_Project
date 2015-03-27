@@ -5,15 +5,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="EntityManager.MemberEntity"%>
 <jsp:include page="checkCountry.jsp" />
-<%
-    Boolean displayWishlistOption = false;
-    MemberEntity member = (MemberEntity) (session.getAttribute("member"));
-    if (member == null) {
-        displayWishlistOption = false;
-    } else {
-        displayWishlistOption = true;
-    }
-%>
+<!--###-->
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
     <body>
@@ -90,16 +82,6 @@
                                             <a href="retailProductDetails.jsp?sku=<%=retailProducts.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
 
                                         </span>
-                                        <%
-                                            if (displayWishlistOption == true) {
-                                        %>
-
-                                        <a href="../../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProducts.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=retailProducts.get(i).getSKU()%>" value="Add To Wishlist"/>
-                                        </a>
-                                        <%
-                                            }
-                                        %>
                                     </span>
                                 </li>
                                 <%
