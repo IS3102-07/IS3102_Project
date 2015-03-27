@@ -17,12 +17,12 @@
 <jsp:forward page="index.jsp" />
 <%
     }
-    Boolean displayWishlistOption = false;
+    Boolean displayShoppingCartOption = false;
     MemberEntity member = (MemberEntity) (session.getAttribute("member"));
     if (member == null) {
-        displayWishlistOption = false;
+        displayShoppingCartOption = false;
     } else {
-        displayWishlistOption = true;
+        displayShoppingCartOption = true;
     }
 %>
 <html> <!--<![endif]-->
@@ -88,15 +88,9 @@
                                 <div class="summary entry-summary">
 
                                     <h2 class="shorter"><strong><%=furniture.getName()%></strong></h2>
-                                            <%
-                                                if (displayWishlistOption == true) {
-                                            %>
 
-                                    <a href="../../ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                        <input type="button" name="btnEdit" class="btn btn-primary" id="<%=furniture.getSKU()%>" value="Add To Wishlist"/>
-                                    </a>
                                     <%
-                                        }
+                                        String finalPrice = "";
                                         String price = "Unavailable";
                                         String promoPrice = "";
                                         String promoEndDate = "";
@@ -104,15 +98,25 @@
                                             if (curr.getItem().getSKU().equals(furniture.getSKU())) {
                                                 if (promotion == null) {
                                                     price = curr.getRetailPrice() + "0 " + curr.getCountry().getCurrency();
+                                                    finalPrice = curr.getRetailPrice() + "";
                                                 } else {
                                                     price = curr.getRetailPrice() + "0 " + curr.getCountry().getCurrency();
                                                     promoPrice = curr.getRetailPrice() * (100 - promotion.getDiscountRate()) / 100 + "0 " + curr.getCountry().getCurrency();
                                                     DateFormat df = new SimpleDateFormat("MMM dd");
                                                     promoEndDate = df.format(promotion.getEndDate());
+                                                    finalPrice = curr.getRetailPrice() * (100 - promotion.getDiscountRate()) / 100 + "";
                                                 }
                                             }
                                         }
                                     %>
+                                    <%
+                                        if (displayShoppingCartOption == true) {
+                                    %>
+                                    <a href="../../ECommerce_AddFurnitureToListServlet?id=<%=furniture.getId()%>&SKU=<%=furniture.getSKU()%>&price=<%=finalPrice%>&name=<%=furniture.getName()%>&imageURL=<%=furniture.getImageURL()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                        <input type="button" name="btnEdit" class="btn btn-primary" id="<%=furniture.getSKU()%>" value="Add To Cart"/>
+                                    </a>
+                                    <%
+                                        }%>
                                     <%if (promotion == null) {%>
                                     <p class="price"><h4 class="amount"><%=price%></h4></p>
                                     <%} else {%>
