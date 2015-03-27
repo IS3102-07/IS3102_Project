@@ -22,7 +22,7 @@
     }
 %>
 <html> <!--<![endif]-->
-    <jsp:include page="/B/header.html" />
+    <jsp:include page="header.html" />
     <body>
         <%
             List<FurnitureEntity> furnitures = (List<FurnitureEntity>) (session.getAttribute("furnitures"));
@@ -78,10 +78,11 @@
                                             <%
                                                 if (displayWishlistOption == true) {
                                             %>
-
-                                    <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                        <input type="button" name="btnEdit" class="btn btn-primary" id="<%=furniture.getSKU()%>" value="Add To Wishlist"/>
-                                    </a>
+                                    <!--
+                                                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=furniture.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                                                            <input type="button" name="btnEdit" class="btn btn-primary" id="<%=furniture.getSKU()%>" value="Add To Wishlist"/>
+                                                                        </a>
+                                    -->
                                     <%
                                         }
                                     %>
