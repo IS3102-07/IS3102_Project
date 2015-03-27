@@ -1,24 +1,20 @@
 package B_servlets;
-//<!--###-->
+//###-->
 import HelperClasses.ShoppingCartLineItem;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
-public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
+public class ECommerce_MinusFurnitureToListServlet extends HttpServlet {
 
-    String URLprefix = "";
+    private String URLprefix = "";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        System.out.println("ECommerce_AddFurnitureToListServlet");
+        System.out.println("ECommerce_MinusFurnitureToListServlet");
         try {
             Cookie[] cookies = request.getCookies();
             String email = "";
@@ -31,33 +27,46 @@ public class ECommerce_RemoveItemFromListServlet extends HttpServlet {
                 }
             }
 
-            //MemberEntity member = accountManagementBean.getMemberByEmail(email);
-            String[] deleteArr = request.getParameterValues("delete");
             HttpSession session = request.getSession();
-
             URLprefix = (String) session.getAttribute("URLprefix");
             if (URLprefix == null) {
                 response.sendRedirect("/IS3102_Project-war/B/selectCountry.jsp");
             }
 
-            List<ShoppingCartLineItem> shoppingCart = (List<ShoppingCartLineItem>) session.getAttribute("shoppingCart");
-            if (deleteArr != null) {
-                for (int i = 0; i < deleteArr.length; i++) {
-                    ShoppingCartLineItem li = new ShoppingCartLineItem();
-                    li.setSKU(deleteArr[i]);
-                    shoppingCart.remove(li);
-                }
-                session.setAttribute("shoppingCart", shoppingCart);
-                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "shoppingCart.jsp?goodMsg=Successfully removed: " + deleteArr.length + " record(s).");
+            String SKU = request.getParameter("SKU");
+            System.out.println("SKU is : " + SKU);
+            ArrayList<ShoppingCartLineItem> shoppingCart = (ArrayList<ShoppingCartLineItem>) session.getAttribute("shoppingCart");
+            if (shoppingCart == null) {
+                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "shoppingCart.jsp?errMsg=Error reducing item quantity.");
             } else {
-                response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "shoppingCart.jsp?errMsg=Nothing selected.");
+                for (ShoppingCartLineItem item : shoppingCart) {
+                    System.out.println("SKU in shoppingcart: " + item.getSKU());
+                    if (item.getSKU().equals(SKU)) {
+                        System.out.println("item quantity: " + item.getQuantity());
+                        if (item.getQuantity() > 1) {
+                            System.out.println("quantity > 1: " + item.getQuantity());
+                            item.setQuantity(item.getQuantity() - 1);
+                        } else {
+                            System.out.println("quantity <= 1: " + item.getQuantity());
+                            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "shoppingCart.jsp?errMsg=Error. Quantity cannot be less than 1.");
+                            return;
+                        }
+                        break;
+                    }
+
+                }
             }
+            session.setAttribute("shoppingCart", shoppingCart);
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "shoppingCart.jsp?goodMsg=Item quantity reduced successfully!");
+
         } catch (Exception ex) {
+            out.println(ex);
             ex.printStackTrace();
+            response.sendRedirect("/IS3102_Project-war/B/" + URLprefix + "shoppingCart.jsp?errMsg=Error reducing item quantity.");
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

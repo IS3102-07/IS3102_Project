@@ -5,13 +5,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="EntityManager.MemberEntity"%>
 <jsp:include page="checkCountry.jsp" />
+<!--###-->
 <%
-    Boolean displayWishlistOption = false;
+    Boolean displayShoppingCartOption = false;
     MemberEntity member = (MemberEntity) (session.getAttribute("member"));
     if (member == null) {
-        displayWishlistOption = false;
+        displayShoppingCartOption = false;
     } else {
-        displayWishlistOption = true;
+        displayShoppingCartOption = true;
     }
 %>
 <html> <!--<![endif]-->
@@ -72,33 +73,40 @@
                                             <span class="product-thumb-info-act-left"><em>Length: <%=furnitures.get(i).getLength()%></em></span><br/>
                                             <span class="product-thumb-info-act-left"><em>Width: <%=furnitures.get(i).getWidth()%></em></span><br/>
                                             <%
-                                                String normalPrice = item_countryList.get(j).getRetailPrice()+"0 "+item_countryList.get(j).getCountry().getCurrency();
+                                                String normalPrice = item_countryList.get(j).getRetailPrice() + "0 " + item_countryList.get(j).getCountry().getCurrency();
                                                 PromotionEntity promotion = null;
                                                 String promoPrice = "";
+                                                String furnitureID = furnitures.get(i).getId() + "";
+                                                String SKU = furnitures.get(i).getSKU();
+                                                String price = "";
+                                                String name = furnitures.get(i).getName();
+                                                String imageURL = furnitures.get(i).getImageURL();
                                                 if (promotions != null) {
                                                     for (int k = 0; k < promotions.size(); k++) {
-                                                        if (promotions.get(k).getItem().getSKU().equals(furnitures.get(i).getSKU())) {
+                                                        if (promotions.get(k).getItem().getSKU().equals(SKU)) {
                                                             promotion = promotions.get(k);
                                                             promoPrice = item_countryList.get(j).getRetailPrice() * (100 - promotion.getDiscountRate()) / 100 + "0 " + item_countryList.get(j).getCountry().getCurrency();
                                                         }
                                                     }
                                                 }
                                             %>
-                                            <%if (promotion==null) {%>
+                                            <%if (promotion == null) {%>
                                             <span class="product-thumb-info-act-left"><em>Price: <%=normalPrice%></em></span>
-                                            <%} else {%>
+                                            <%price = item_countryList.get(j).getRetailPrice() + "";
+                                            } else {%>
                                             <span class="product-thumb-info-act-left"><em>Price: <%=promoPrice%></em></span>
-                                            <%}%>
+                                            <%price = item_countryList.get(j).getRetailPrice() * (100 - promotion.getDiscountRate()) / 100 + "a";
+                                                }%>
                                             <br/>
-                                            <a href="furnitureProductDetails.jsp?sku=<%=furnitures.get(i).getSKU()%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
+                                            <a href="furnitureProductDetails.jsp?sku=<%=SKU%>"><span class="product-thumb-info-act-left"><em>More Details</em></span></a>
 
                                         </span>
                                         <%
-                                            if (displayWishlistOption == true) {
+                                            if (displayShoppingCartOption == true) {
                                         %>
 
-                                        <a href="../../ECommerce_AddFurnitureToListServlet?SKU=<%=furnitures.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Wishlist"/>
+                                        <a href="../../ECommerce_AddFurnitureToListServlet?id=<%=furnitureID%>&SKU=<%=SKU%>&price=<%=price%>&name=<%=name%>&imageURL=<%=imageURL%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                            <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=furnitures.get(i).getSKU()%>" value="Add To Cart"/>
                                         </a>
                                         <%
                                             }
