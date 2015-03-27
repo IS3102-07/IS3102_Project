@@ -44,8 +44,8 @@
                 <li>
                     <a href="../../ECommerce_StoresServlet"><i class="icon icon-map-marker"></i>Lokasi Kedai</a>
                 </li>
-                <li>
-                    <a href="../../ECommerce_WishListServlet"><i class="icon icon-shopping-cart"></i>Senarai Hajat Saya</a>
+                    <!--###-->
+                    <a href="shoppingCart.jsp"><i class="icon icon-shopping-cart"></i>troli membeli-belah</a>
                 </li>
                 <li>
                     <a href="../../B/<%=URLprefix%>memberProfile.jsp"><i class="icon icon-user"></i>Profil</a>
