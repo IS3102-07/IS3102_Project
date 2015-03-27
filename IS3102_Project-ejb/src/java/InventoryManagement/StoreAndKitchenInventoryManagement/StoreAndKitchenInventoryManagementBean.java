@@ -747,9 +747,11 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
             for (StorageBinEntity currentBin : storageBins) {
                 for (int i = 0; i < currentBin.getLineItems().size(); i++) {
                     ItemEntity itemEntity = currentBin.getLineItems().get(i).getItem();
+                    LineItemEntity l = currentBin.getLineItems().get(i);
+                    em.refresh(l);
                     if (itemEntity.getSKU().equals(SKU)) {
                         //exisiting quantity + those in the bin
-                        qty = qty + currentBin.getLineItems().get(i).getQuantity();
+                        qty = qty + l.getQuantity();
                     }
                 }
             }
@@ -1209,6 +1211,12 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
             em.flush();
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
             List<LineItemEntity> listOfLineItems = storageBinEntity.getLineItems();
+            for (int i = 0; i < listOfLineItems.size(); i++) {
+                LineItemEntity l = listOfLineItems.get(i);
+                em.refresh(l);
+                listOfLineItems.set(i, l);
+            }
+
             if (listOfLineItems == null || listOfLineItems.size() == 0) {
                 System.out.println("No items");
                 return null;
@@ -1252,6 +1260,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                         itemStorageBinHelper.setStorageBinName(storageBin.getName());
                         itemStorageBinHelper.setStorageBinType(storageBin.getType());
                         itemStorageBinHelper.setItemQty(listOfLineItemEntities.get(i).getQuantity());
+                        System.out.println("quantity inside storage bins: " + itemStorageBinHelper.getItemQty());
                         itemStorageBinHelper.setItemType(listOfLineItemEntities.get(i).getItem().getType());
                         itemStorageBinHelperList.add(itemStorageBinHelper);
                     }
@@ -1368,14 +1377,18 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
             LineItemEntity lineItemEntity = em.getReference(LineItemEntity.class, lineItemID);
 
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
+
             em.refresh(storageBinEntity);
             ItemEntity itemsDeleted = lineItemEntity.getItem();
             int totalVolumeDeleted = 0;
             totalVolumeDeleted += itemsDeleted.getVolume() * lineItemEntity.getQuantity();
+
             storageBinEntity.setFreeVolume(storageBinEntity.getFreeVolume() + totalVolumeDeleted);
             em.remove(lineItemEntity);
+
             storageBinEntity.getLineItems().remove(lineItemEntity);
             em.merge(storageBinEntity);
+
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("Storage Bin could not be found.");
@@ -1436,6 +1449,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     public Boolean removeItemFromFurnitureMarketplace(Long storeID, String SKU, Integer qty) {
         System.out.println("removeItemFromFurnitureMarketplace called()");
         int qtyRemainingToBeRemoved = qty;
+
         try {
             WarehouseEntity warehouse = em.getReference(StoreEntity.class, storeID).getWarehouse();
             List<StorageBinEntity> furnitureMarketplace = getFurnitureMarketplaceBins(warehouse.getId());
@@ -1478,6 +1492,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                 out.close();
                 throw new Exception();
             }
+
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("removeItemFromFurnitureMarketplace(): Could not find either store or furniture bin!");
@@ -1500,6 +1515,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     public Boolean removeItemFromRetailOutlet(Long storeID, String SKU, Integer qty) {
         System.out.println("removeItemFromRetailOutlet called()");
         int qtyRemainingToBeRemoved = qty;
+
         try {
             WarehouseEntity warehouse = em.getReference(StoreEntity.class, storeID).getWarehouse();
             List<StorageBinEntity> retailOutlet = getRetailOutletBins(warehouse.getId());
@@ -1543,6 +1559,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                 out.close();
                 throw new Exception();
             }
+
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("removeItemFromRetailOutlet(): Could not find either store or furniture bin!");
@@ -1564,6 +1581,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Boolean removeItemFromKitchen(Long storeID, String SKU, Integer qty) {
         System.out.println("removeItemFromKitchen called()");
+
         try {
             WarehouseEntity warehouse = em.getReference(StoreEntity.class, storeID).getWarehouse();
             StorageBinEntity kitchen = getKitchenBin(warehouse.getId());
@@ -1599,6 +1617,7 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                 }
 
             }
+
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("removeItemFromKitchen(): Could not find either store or kitchen bin!");
@@ -1615,10 +1634,12 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     public Boolean removeItemFromPallets(Long storeID, String SKU, Integer qty) {
         System.out.println("removeItemFromPallets called()");
         int qtyRemainingToBeRemoved = qty;
+
         try {
             WarehouseEntity warehouse = em.getReference(StoreEntity.class, storeID).getWarehouse();
             List<StorageBinEntity> pallets = findPalletsThatContainsItem(warehouse.getId(), SKU);
-            if (pallets == null) {
+            if (pallets
+                    == null) {
                 System.out.println("removeItemFromPallets(): bin with item does not exist.");
                 return false;
             } else {
@@ -1651,13 +1672,15 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                     }
                 }
             }
-            if (qtyRemainingToBeRemoved > 0) { //If still got remaining item to remove even after looping thru everything, throw exception to rollback
+            if (qtyRemainingToBeRemoved
+                    > 0) { //If still got remaining item to remove even after looping thru everything, throw exception to rollback
                 System.out.println("removeItemFromPallets(): Store has insufficient quantity to be removed.");
                 PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
                 out.println(new Date().toString() + ";" + storeID + ";removeItemFromPallets(); Store has insufficient quantity of " + SKU + " to be removed");
                 out.close();
                 throw new Exception();
             }
+
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("removeItemFromPallets(): Could not find either store or furniture bin!");
@@ -1680,10 +1703,12 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     public Boolean removeItemFromShelfs(Long storeID, String SKU, Integer qty) {
         System.out.println("removeItemFromShelfs called()");
         int qtyRemainingToBeRemoved = qty;
+
         try {
             WarehouseEntity warehouse = em.getReference(StoreEntity.class, storeID).getWarehouse();
             List<StorageBinEntity> shelfs = findShelfsThatContainsItem(warehouse.getId(), SKU);
-            if (shelfs == null) {
+            if (shelfs
+                    == null) {
                 System.out.println("removeItemFromShelfs(): bin with item does not exist.");
                 return false;
             } else {
@@ -1716,13 +1741,15 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
                     }
                 }
             }
-            if (qtyRemainingToBeRemoved > 0) { //If still got remaining item to remove even after looping thru everything, throw exception to rollback
+            if (qtyRemainingToBeRemoved
+                    > 0) { //If still got remaining item to remove even after looping thru everything, throw exception to rollback
                 System.out.println("removeItemFromShelfs(): Store has insufficient quantity to be removed.");
                 PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Config.logFilePath, true)));
                 out.println(new Date().toString() + ";" + storeID + ";removeItemFromShelfs(); Store has insufficient quantity of " + SKU + " to be removed");
                 out.close();
                 throw new Exception();
             }
+
             return true;
         } catch (EntityNotFoundException ex) {
             System.out.println("removeItemFromShelfs(): Could not find either store or furniture bin!");
@@ -1877,20 +1904,27 @@ public class StoreAndKitchenInventoryManagementBean implements StoreAndKitchenIn
     @Override
     public Boolean removeItemFromBin(Long storageBinID, String SKU) {
         System.out.println("removeItemFromBin() called");
+
         try {
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
             LineItemEntity lineItem = checkIfItemExistInsideStorageBin(storageBinEntity.getId(), SKU);
+
             em.merge(lineItem);
+
             //if it is the last item
-            if (lineItem.getQuantity() == 1) {
+            if (lineItem.getQuantity()
+                    == 1) {
                 storageBinEntity.getLineItems().remove(lineItem);
                 em.remove(lineItem);
             } else {
                 lineItem.setQuantity(lineItem.getQuantity() - 1);
             }
+
             em.flush();
+
             storageBinEntity.setFreeVolume(storageBinEntity.getFreeVolume() + lineItem.getItem().getVolume());
             em.flush();
+
             return true;
         } catch (Exception ex) {
             System.out.println("removeItemFromBin(): Error");
