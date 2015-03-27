@@ -26,6 +26,10 @@ public class StoreStorageBinManagement_Servlet extends HttpServlet {
             HttpSession session;
             session = request.getSession();
             String errMsg = request.getParameter("errMsg");
+            String goodMsg = request.getParameter("goodMsg");
+            if (goodMsg == null) {
+                goodMsg = "";
+            }
             WarehouseEntity warehouseEntity = (WarehouseEntity) (session.getAttribute("warehouseEntity"));
             if (warehouseEntity == null) {
                 response.sendRedirect("A7/storeWarehouseManagement_view.jsp");
@@ -33,7 +37,7 @@ public class StoreStorageBinManagement_Servlet extends HttpServlet {
                 List<StorageBinEntity> storageBins = simbl.viewAllStorageBin(warehouseEntity.getId());
                 session.setAttribute("storageBins", storageBins);
                 if (errMsg == null || errMsg.equals("")) {
-                    response.sendRedirect("A7/storageBinManagement.jsp");
+                    response.sendRedirect("A7/storageBinManagement.jsp?goodMsg=" + goodMsg);
                 } else {
                     response.sendRedirect("A7/storageBinManagement.jsp?errMsg=" + errMsg);
                 }
