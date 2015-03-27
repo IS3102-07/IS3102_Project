@@ -1109,6 +1109,26 @@
         <servlet-name>AccountManagement_SecurityChallengeServlet</servlet-name>
         <servlet-class>A1_servlets.AccountManagement_SecurityChallengeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ECommerce_MinusFurnitureToListServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_MinusFurnitureToListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_ShoppingCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Store_StorageBinManagement_AddItemToBinServlet</servlet-name>
+        <servlet-class>A7_servlets.Store_StorageBinManagement_AddItemToBinServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Store_StorageBinManagement_Servlet</servlet-name>
+        <servlet-class>A7_servlets.Store_StorageBinManagement_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ECommerce_PaymentServlet</servlet-name>
+        <servlet-class>B_servlets.ECommerce_PaymentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PurchaseOrderManagement_Servlet</servlet-name>
         <url-pattern>/PurchaseOrderManagement_Servlet</url-pattern>
@@ -2217,10 +2237,30 @@
         <servlet-name>AccountManagement_SecurityChallengeServlet</servlet-name>
         <url-pattern>/AccountManagement_SecurityChallengeServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_MinusFurnitureToListServlet</servlet-name>
+        <url-pattern>/ECommerce_MinusFurnitureToListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_ShoppingCartServlet</servlet-name>
+        <url-pattern>/ECommerce_ShoppingCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Store_StorageBinManagement_AddItemToBinServlet</servlet-name>
+        <url-pattern>/Store_StorageBinManagement_AddItemToBinServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Store_StorageBinManagement_Servlet</servlet-name>
+        <url-pattern>/Store_StorageBinManagement_Servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ECommerce_PaymentServlet</servlet-name>
+        <url-pattern>/ECommerce_PaymentServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-<!--    <security-constraint>
+    <!--    <security-constraint>
         <web-resource-collection>
             <web-resource-name>Viewpoint Secure URLs</web-resource-name>
             <url-pattern>/A1/staffLogin.jsp</url-pattern>
