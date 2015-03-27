@@ -12,12 +12,12 @@
 <jsp:forward page="index.jsp" />
 <%
     }
-    Boolean displayWishlistOption = false;
+    Boolean displayShoppingCartOption = false;
     MemberEntity member = (MemberEntity) (session.getAttribute("member"));
     if (member == null) {
-        displayWishlistOption = false;
+        displayShoppingCartOption = false;
     } else {
-        displayWishlistOption = true;
+        displayShoppingCartOption = true;
     }
 %>
 <html> <!--<![endif]-->
@@ -75,7 +75,7 @@
 
                                     <h2 class="shorter"><strong><%=retailProduct.getName()%></strong></h2>
                                             <%
-                                                if (displayWishlistOption == true) {
+                                                if (displayShoppingCartOption == true) {
                                             %>
 
                                     <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProduct.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
