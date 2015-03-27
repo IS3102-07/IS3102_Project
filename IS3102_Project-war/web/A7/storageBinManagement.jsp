@@ -185,6 +185,76 @@
                                     </div>
                                     <!-- /.panel-body -->
                                 </form>
+                                <script>
+                                    $(function () {
+                                        var array1 = [];
+                                        $.get('../SKU_ajax_servlet/*', function (responseText) {
+                                            var arr = responseText.trim().split(';');
+                                            arr.pop();
+                                            for (var i = 0; i < arr.length; i++) {
+                                                array1.push(arr[i]);
+                                            }
+                                        });
+
+                                        $("#auto").autocomplete({source: array1});
+                                    });
+                                </script>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="panel-heading">
+                                            <h3 style="display: inline">
+                                                Add Item to Bin
+                                            </h3>
+                                        </div>
+                                        <form name="addItemToBin" action="../Store_StorageBinManagement_AddItemToBinServlet">
+                                            <div id="addItemToBinForm">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12" style="padding-left: 30px"><br>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        Storage Bin:&nbsp;
+                                                                    </td>
+                                                                    <td>
+                                                                        <select class="form-control" name="storageBinID"> 
+                                                                            <%
+                                                                                List<StorageBinEntity> storageBins = (List<StorageBinEntity>) (session.getAttribute("storageBins"));
+                                                                                for (StorageBinEntity s : storageBins) {
+                                                                                    Long storageBinID = s.getId();
+                                                                                    String storageBinName = s.getName();
+                                                                                    out.print("<option value=\"" + storageBinID + "\">Bin Id " + storageBinID + ": " + storageBinName + "</option>");
+                                                                                }
+                                                                            %>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        Item SKU:&nbsp;
+                                                                    </td>
+                                                                    <td>
+                                                                        <input id="auto" required class="form-control" name="SKU" type="text"/>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        Quantity:&nbsp;
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" min="1" max="3000" required  class="form-control" name="qty">
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <br>
+                                                            <input class="btn btn-primary" type="submit" value="Add to Bin"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
 
                             </div>
                             <!-- /.panel -->
