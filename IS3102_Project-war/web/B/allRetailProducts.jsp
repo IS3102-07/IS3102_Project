@@ -86,9 +86,9 @@
                                             if (displayWishlistOption == true) {
                                         %>
 
-                                        <a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProducts.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
+                                        <!--a href="../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProducts.get(i).getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
                                             <input type="button" name="btnEdit" class="btn btn-primary btn-block" id="<%=retailProducts.get(i).getSKU()%>" value="Add To Wishlist"/>
-                                        </a>
+                                        </a-->
                                         <%
                                             }
                                         %>
