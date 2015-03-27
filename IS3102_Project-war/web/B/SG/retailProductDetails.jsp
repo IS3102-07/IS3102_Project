@@ -17,13 +17,6 @@
 <jsp:forward page="index.jsp" />
 <%
     }
-    Boolean displayWishlistOption = false;
-    MemberEntity member = (MemberEntity) (session.getAttribute("member"));
-    if (member == null) {
-        displayWishlistOption = false;
-    } else {
-        displayWishlistOption = true;
-    }
 %>
 <html> <!--<![endif]-->
     <jsp:include page="header.html" />
@@ -88,15 +81,8 @@
                                 <div class="summary entry-summary">
 
                                     <h2 class="shorter"><strong><%=retailProduct.getName()%></strong></h2>
-                                            <%
-                                                if (displayWishlistOption == true) {
-                                            %>
-
-                                    <a href="../../ECommerce_AddFurnitureToListServlet?SKU=<%=retailProduct.getSKU()%>" data-toggle="modal" class="add-to-cart-product">                                                
-                                        <input type="button" name="btnEdit" class="btn btn-primary" id="<%=retailProduct.getSKU()%>" value="Add To Wishlist"/>
-                                    </a>
+                                       
                                     <%
-                                        }
                                         String price = "Unavailable";
                                         String promoPrice = "";
                                         String promoEndDate = "";
