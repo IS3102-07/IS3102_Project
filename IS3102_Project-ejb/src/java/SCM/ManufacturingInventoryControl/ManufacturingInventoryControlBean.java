@@ -591,6 +591,11 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             em.flush();
             StorageBinEntity storageBinEntity = em.getReference(StorageBinEntity.class, storageBinID);
             List<LineItemEntity> listOfLineItems = storageBinEntity.getLineItems();
+            for (int i = 0; i < listOfLineItems.size(); i++) {
+                LineItemEntity l = listOfLineItems.get(i);
+                em.refresh(l);
+                listOfLineItems.set(i, l);
+            }
             if (listOfLineItems == null || listOfLineItems.size() == 0) {
                 System.out.println("No items");
                 return null;
@@ -805,6 +810,7 @@ public class ManufacturingInventoryControlBean implements ManufacturingInventory
             StorageBinEntity storageBinEntity = em.find(StorageBinEntity.class, storageBinID);
             Query q = em.createQuery("Select i from ItemEntity i where i.isDeleted=false and i.SKU=:SKU");
             q.setParameter("SKU", SKU);
+            q.setHint("javax.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
             ItemEntity item = (ItemEntity) q.getSingleResult();
             Integer totalVolume = item.getVolume() * quantity;
             if (storageBinEntity.getFreeVolume() >= totalVolume) {
